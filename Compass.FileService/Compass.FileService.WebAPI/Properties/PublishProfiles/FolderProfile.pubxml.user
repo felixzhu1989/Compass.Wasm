@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>E:\CSharp\repos\Compass.Wasm\Compass.Wasm.FileService\Compass.Wasm.FileService.WebAPI\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2022-10-20T08:42:15.9938891Z;True|2022-10-20T16:30:00.6571775+08:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

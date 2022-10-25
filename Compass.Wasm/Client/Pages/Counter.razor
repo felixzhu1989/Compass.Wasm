@@ -1,0 +1,58 @@
+﻿@page "/counter"
+@using Compass.Wasm.Shared.FileService
+@inject HttpClient Http
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<hr />
+<InputFile class="form-control" OnChange="OnInputFileChange"/>
+<p>@resultUri</p>
+<a href="@resultUri" target="_blank">打开这个文件</a>
+
+<button class="btn btn-primary" @onclick="IncrementCount" disabled="@(!isUploaded)">上传完成了</button>
+
+
+
+@code {
+    private int currentCount = 0;
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    //https://learn.microsoft.com/zh-cn/aspnet/core/blazor/file-uploads?view=aspnetcore-6.0&pivots=webassembly
+
+    private string resultUri;
+    private bool isUploaded;
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {   
+        isUploaded=false;
+        //e.GetMultipleFiles();//获取多个文件
+        var file = e.File;//一个文件
+        
+        using var content = new MultipartFormDataContent();
+        content.Add(content: new StreamContent(file.OpenReadStream()),
+            name: "\"files\"", fileName: file.Name);
+        try
+        {
+            var response = await Http.PostAsync("api/Uploader", content);
+            var uploadResponse = await response.Content
+                .ReadFromJsonAsync<UploadResponse>();
+            
+            resultUri = uploadResponse.RemoteUrl.ToString();
+            isUploaded = true;
+        }
+        catch (Exception ex)
+        {
+            isUploaded = false;
+            resultUri =$"上传文件异常：{ex}";
+        }
+    }
+}

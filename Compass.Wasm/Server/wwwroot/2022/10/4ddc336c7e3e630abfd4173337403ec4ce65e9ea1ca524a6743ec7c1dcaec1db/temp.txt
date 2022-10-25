@@ -1,0 +1,2 @@
+a@b.com|您好|刘总好
+b@c.com|hello|hihihiih
