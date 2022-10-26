@@ -1,5 +1,8 @@
 ﻿@inherits LayoutComponentBase
-
+@using Compass.Wasm.Client.Pages.IdentityService
+<head>
+    <link rel="stylesheet" href="lib/bootstrap-icons/font/bootstrap-icons.css" />
+</head>
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -7,7 +10,9 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            <a href="https://github.com/felixzhu1989/Compass.Wasm" target="_blank">About</a>
+            
+            <LoginLink/>
         </div>
 
         <article class="content px-4">

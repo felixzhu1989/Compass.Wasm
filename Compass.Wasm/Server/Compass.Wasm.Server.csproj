@@ -23,12 +23,15 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Compass.FileService\Compass.FileService.Infrastructure\Compass.FileService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.IdentityService\Compass.IdentityService.Infrastructure\Compass.IdentityService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.ProjectService\Compass.ProjectService.Infrastructure\Compass.ProjectService.Infrastructure.csproj" />
 		<ProjectReference Include="..\Client\Compass.Wasm.Client.csproj" />
 		<ProjectReference Include="..\Shared\Compass.Wasm.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Folder Include="wwwroot\" />
+		<Folder Include="ProjectService\" />
 	</ItemGroup>
 
 

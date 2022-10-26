@@ -1,4 +1,5 @@
 ﻿using Compass.FileService.Domain;
+using Compass.FileService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Compass.FileService.Infrastructure;

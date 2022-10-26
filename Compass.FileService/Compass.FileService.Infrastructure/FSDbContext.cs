@@ -1,4 +1,4 @@
-﻿using Compass.FileService.Domain;
+﻿using Compass.FileService.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Zack.Infrastructure.EFCore;

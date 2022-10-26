@@ -1,4 +1,6 @@
-﻿namespace Compass.FileService.Domain;
+﻿using Compass.FileService.Domain.Entities;
+
+namespace Compass.FileService.Domain;
 
 public interface IFSRepository
 {

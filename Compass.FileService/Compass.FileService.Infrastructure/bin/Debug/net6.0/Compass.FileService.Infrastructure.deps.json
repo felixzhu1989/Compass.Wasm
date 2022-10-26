@@ -8,8 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "Compass.FileService.Infrastructure/1.0.0": {
         "dependencies": {
-          "Compass.Common": "1.0.0",
           "Compass.FileService.Domain": "1.0.0",
+          "Compass.Wasm.Shared": "1.0.0",
           "Microsoft.EntityFrameworkCore.Design": "6.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
           "Zack.Infrastructure": "1.1.3"
@@ -652,14 +652,6 @@
           }
         }
       },
-      "Compass.Common/1.0.0": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10"
-        },
-        "runtime": {
-          "Compass.Common.dll": {}
-        }
-      },
       "Compass.FileService.Domain/1.0.0": {
         "dependencies": {
           "Zack.Commons": "1.1.11",
@@ -667,6 +659,14 @@
         },
         "runtime": {
           "Compass.FileService.Domain.dll": {}
+        }
+      },
+      "Compass.Wasm.Shared/1.0.0": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10"
+        },
+        "runtime": {
+          "Compass.Wasm.Shared.dll": {}
         }
       }
     }
@@ -1118,12 +1118,12 @@
       "path": "zack.infrastructure/1.1.3",
       "hashPath": "zack.infrastructure.1.1.3.nupkg.sha512"
     },
-    "Compass.Common/1.0.0": {
+    "Compass.FileService.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Compass.FileService.Domain/1.0.0": {
+    "Compass.Wasm.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -1,0 +1,13 @@
+﻿@attribute [Authorize(Roles = "admin")]
+<h3>测试授权访问</h3>
+<AuthorizeView Roles="admin">
+    <Authorized>
+        <span>已授权！:-) @context.User.Identity.Name</span>
+    </Authorized>
+    <NotAuthorized>
+        <span>未授权！:-(</span>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+
+}

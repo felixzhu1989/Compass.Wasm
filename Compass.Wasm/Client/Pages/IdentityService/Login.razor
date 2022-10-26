@@ -1,0 +1,42 @@
+﻿@page "/login"
+@using Microsoft.AspNetCore.Components
+@using Compass.Wasm.Server.IdentityService
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+@inject NavigationManager NavigationManager
+<PageTitle>Login</PageTitle>
+<EditForm Model="loginRequest" OnSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <div class="row">
+        <div class="col-lg-4 offset-lg-4 pt-4 pb-4 border">
+            <div class="mb-3 text-center">
+                <h3>L O G I N</h3>
+            </div>
+            <div class="mb-3">
+                <label>用户名</label>
+                <input @bind="loginRequest.UserName" class="form-control" placeholder="例如：felix.zhu"/>
+                <ValidationMessage For="() => loginRequest.UserName" />
+            </div>
+            <div class="mb-3">
+                <label>密码</label>
+                <input @bind="loginRequest.Password" type="password" class="form-control" placeholder="初始密码123"/>
+                <ValidationMessage For="() => loginRequest.Password" />
+            </div>
+            <div class="mb-3 d-grid gap-2">
+                <button type="submit" class="btn btn-primary">登 录</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+@code {
+    LoginByNameRequest loginRequest = new();
+    async Task HandleLogin()
+    {
+        var result = await Http.PostAsJsonAsync("api/Login/Name", loginRequest);
+        var token = await result.Content.ReadAsStringAsync();
+        await LocalStorage.SetItemAsync("token", token);
+        await AuthStateProvider.GetAuthenticationStateAsync();
+        NavigationManager.NavigateTo("./");
+    }
+}

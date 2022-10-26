@@ -1,4 +1,5 @@
-﻿using Zack.Commons;
+﻿using Compass.FileService.Domain.Entities;
+using Zack.Commons;
 
 namespace Compass.FileService.Domain;
 /// <summary>

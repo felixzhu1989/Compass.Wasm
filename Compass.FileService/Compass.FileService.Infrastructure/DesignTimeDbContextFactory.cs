@@ -1,4 +1,4 @@
-﻿using Compass.Common;
+﻿using Compass.Wasm.Shared;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace Compass.FileService.Infrastructure;

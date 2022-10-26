@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Compass.FileService.Domain;
 using Compass.FileService.Infrastructure;
+using Compass.IdentityService.Infrastructure;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Serilog;
@@ -13,6 +14,10 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Zack.EventBus;
 using Zack.JWT;
 using StackExchange.Redis;
+using Compass.IdentityService.Domain;
+using Compass.IdentityService.Domain.Entities;
+using Compass.Wasm.Server.Hubs;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,25 +31,6 @@ builder.Host.ConfigureAppConfiguration((hostCtx, configBuilder) =>
     //NuGet安装：Install-Package Zack.AnyDBConfigProvider
     configBuilder.AddDbConfiguration(() => new SqlConnection(connStr), reloadOnChange: true, reloadInterval: TimeSpan.FromSeconds(5));
 });
-#endregion
-
-#region FileService
-//数据库，DbContext
-builder.Services.AddDbContext<FSDbContext>(options =>
-{
-    //指定连接的数据库
-    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
-    options.UseSqlServer(connStr);
-});
-//文件服务(本地存储)
-builder.Services.Configure<SMBStorageOptions>(builder.Configuration.GetSection("FileService:SMB"));
-//HttpContextAccessor 默认实现了它简化了访问HttpContext。用来访问HttpContext
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IStorageClient, SMBStorageClient>();//本机磁盘当备份服务器
-builder.Services.AddScoped<IStorageClient, MockCloudStorageClient>();//文件保存在wwwroot文件夹下
-builder.Services.AddScoped<IFSRepository, FSRepository>();
-builder.Services.AddScoped<FSDomainService>();
-
 #endregion
 
 #region 工作单元
@@ -64,13 +50,14 @@ builder.Services.AddFluentValidationAutoValidation()
 
 #region 配置Serilog日志
 //NuGet安装：Install-Package Serilog.AspNetCore
-//配置Serilog日志，LogFilePath从调用者（program）初始化InitializerOptions而来
+//配置Serilog日志
 builder.Services.AddLogging(loggingBuilder =>
 {
     Log.Logger = new LoggerConfiguration()
-    // .MinimumLevel.Information().Enrich.FromLogContext()
+        .MinimumLevel.Information()
+        .Enrich.FromLogContext()
         .WriteTo.Console()
-        .WriteTo.File("d:/compass.log/compass.wasm.log") //记录日志到调用者初始化设定的位置
+        .WriteTo.File($"d:/compass.log/compass.wasm.log") //记录日志到文件
         .CreateLogger();
     loggingBuilder.AddSerilog();
 });
@@ -115,11 +102,77 @@ builder.Services.AddSingleton(typeof(IConnectionMultiplexer), redisConnMultiplex
 
 #endregion
 
+#region FileService
+//数据库，DbContext
+builder.Services.AddDbContext<FSDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+//文件服务(本地存储)
+builder.Services.Configure<SMBStorageOptions>(builder.Configuration.GetSection("FileService:SMB"));
+//HttpContextAccessor 默认实现了它简化了访问HttpContext。用来访问HttpContext
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IStorageClient, SMBStorageClient>();//本机磁盘当备份服务器
+builder.Services.AddScoped<IStorageClient, MockCloudStorageClient>();//文件保存在wwwroot文件夹下
+builder.Services.AddScoped<IFSRepository, FSRepository>();
+builder.Services.AddScoped<FSDomainService>();
+
+#endregion
+
+#region IdentityService
+//数据库，DbContext
+builder.Services.AddDbContext<IdDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+builder.Services.AddScoped<IdDomainService>();
+builder.Services.AddScoped<IIdRepository, IdRepository>();
+builder.Services.AddDataProtection();
+//登录、注册的项目除了要启用WebApplicationBuilderExtensions中的初始化之外，还要如下的初始化
+//不要用AddIdentity，而是用AddIdentityCore
+//因为用AddIdentity会导致JWT机制不起作用，AddJwtBearer中回调不会被执行，因此总是Authentication校验失败
+//https://github.com/aspnet/Identity/issues/1376
+IdentityBuilder idBuilder = builder.Services.AddIdentityCore<User>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 2;
+    options.Password.RequireLowercase = false;
+    //不能设定RequireUniqueEmail，否则不允许邮箱为空
+    //options.User.RequireUniqueEmail = true;
+    //以下两行，把GenerateEmailConfirmationTokenAsync验证码缩短
+    options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+    options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+});
+idBuilder = new IdentityBuilder(idBuilder.UserType, typeof(Role), builder.Services);
+idBuilder.AddEntityFrameworkStores<IdDbContext>().AddDefaultTokenProviders()
+    .AddRoleManager<RoleManager<Role>>()
+    .AddUserManager<IdUserManager>();
+//发送邮件
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+//获取中心服务器中的smtp设置
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+
+#endregion
+
+#region ProjectService
+
+#endregion
+
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 //Install-Package Swashbuckle.AspNetCore
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSignalR();
 
 //修改默认编译发布后的5000，5001启动端口
 //builder.WebHost.UseUrls(new[] {"http://*:80" });
@@ -130,9 +183,16 @@ var app = builder.Build();
 app.UseWebAssemblyDebugging();
 
 #region 中间件
+
+//都开启OpenApi页面
 app.UseDeveloperExceptionPage();
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.MapHub<ProjectStatusHub>("/Hubs/ProjectStatusHub");
+
+
+//集成事件
 app.UseEventBus();
 app.UseAuthentication();//JWT
 app.UseAuthorization();
