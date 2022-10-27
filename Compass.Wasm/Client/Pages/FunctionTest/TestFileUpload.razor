@@ -2,11 +2,29 @@
 @inject HttpClient Http
 
 <h3>测试上传单个文件</h3>
-<InputFile class="form-control" OnChange="OnInputFileChange" />
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange"/>
+
+<p>图片类型</p>
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange" accept="image/*" />
+
+<p>PDF类型</p>
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange" accept="application/pdf" />
+
+<p>dwg,dxf类型</p>
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange" accept=".dwg,.dxf" />
+
+<p>Excel,Word,PPT</p>
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange" accept=".xls,.xlsx,.xlsm" />
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange" accept=".doc,.docx" />
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange" accept=".ppt,.pptx" />
+
+
+
+
 <p>@resultUri</p>
-<p>
-    <a href="@resultUri" target="_blank">打开这个文件</a>
-</p>
+<p><a href="@resultUri" target="_blank">打开这个文件</a></p>
+<p>给a标签添加download属性来下载文件</p>
+<p><a href="@resultUri" download>下载这个文件</a></p>
 
 <button class="btn btn-primary" disabled="@(!isUploaded)">上传完成才能按该按钮</button>
 
@@ -43,4 +61,5 @@
             resultUri =$"上传文件异常：{ex}";
         }
     }
+
 }

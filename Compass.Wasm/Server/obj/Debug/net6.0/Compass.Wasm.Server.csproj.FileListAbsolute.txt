@@ -146,3 +146,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\libman.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\MailKit.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\MimeKit.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\AutoMapper.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

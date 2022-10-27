@@ -1,12 +1,6 @@
-﻿using Compass.IdentityService.Domain;
-using Compass.IdentityService.Infrastructure;
+﻿using Compass.Wasm.Client.IdentityService;
 using Compass.Wasm.Server.IdentityService;
 using Compass.Wasm.Shared.IdentityService;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Zack.EventBus;
 
 namespace Compass.Wasm.Server.Controllers;
 
@@ -26,17 +20,17 @@ public class UserAdminController : ControllerBase
     }
 
     [HttpGet("AllUsers")]
-    public Task<UserDto[]> FindAllUsers()
+    public Task<UserResponse[]> FindAllUsers()
     {
-       return _userManager.Users.Select(x => UserDto.Create(x)).ToArrayAsync();
+       return _userManager.Users.Select(x => new UserResponse(x.Id,x.UserName,x.Email,x.CreationTime)).ToArrayAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> FindById(Guid id)
+    public async Task<ActionResult<UserResponse>> FindById(Guid id)
     {
         var user = await _userManager.FindByIdAsync(id.ToString());
         if (user == null) return NotFound();
-        return UserDto.Create(user);
+        return new UserResponse(user.Id, user.UserName, user.Email, user.CreationTime);
     }
 
     [HttpPost("AddAdmin")]

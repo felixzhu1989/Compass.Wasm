@@ -17,7 +17,8 @@ public class ResetPasswordEventHandler : JsonIntegrationEventHandler<ResetPasswo
     public override Task HandleJson(string eventName, ResetPasswordEvent? eventData)
     {
         _logger.LogInformation($"发送密码给用户邮箱：{eventData.Email}");
-        var message = $"用户名：{eventData.UserName}<br>邮箱：{eventData.Email}<br>密码：{eventData.Password}<br>";
+        //自定义消息
+        var message = $"用户名：{eventData.UserName}<br>邮箱：{eventData.Email}<br>密码：<font color=\"red\">{eventData.Password}</font><br>";
         //发送密码给用户的邮箱
         return _emailSender.SendAsync(eventData.UserName,eventData.Email, "Compass登录密码重置", message);
     }

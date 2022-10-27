@@ -1,0 +1,93 @@
+﻿@page "/projectlist"
+@using Compass.Wasm.Client.ProjectService
+@using Compass.Wasm.Shared.ProjectService
+
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<PageTitle>Project List</PageTitle>
+<div class="row">
+    <div class="col">
+        <p>
+            <span class="fs-5">【概述】</span>
+            @if (projects != null)
+            {
+                <span>总项目数:@projects.Length</span>
+            }
+        </p>
+    </div>
+    <AuthorizeView Roles="admin,pm">
+        <Authorized >
+            <div class="col" style="text-align: right">
+                <button class="btn mb-2" @onclick="ShowAddProject">@(isAddDrop ? "△" : "▽")</button>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+    
+</div>
+@if (isAddDrop)
+{
+    <AddProject Project="addProjectRequest" SaveProject="SaveProject" />
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>项目编号</th>
+            <th>项目名称</th>
+            <th>项目分类</th>
+            <th>风险等级</th>
+            <th>烟罩类型</th>
+            <th>工作量</th>
+            <th>合同</th>
+            <th>领料单</th>
+            <th>特殊要求</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (projects == null)
+        {
+            <p>项目列表加载中...</p>
+        }
+        else if (projects.Length == 0)
+        {
+            <p>没有要显示的项目</p>
+        }
+        else
+        {
+            @foreach (var project in projects)
+            {
+                <DisplayProject Project="project" />
+            }
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    private ProjectResponse[]? projects;
+    private AddProjectRequest? addProjectRequest;
+    private bool isAddDrop = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        projects =await Http.GetFromJsonAsync<ProjectResponse[]>("api/ProjectMgr/AllProject");
+    }
+    private void ShowAddProject()
+    {
+        if (!isAddDrop) addProjectRequest = new AddProjectRequest();
+        isAddDrop = !isAddDrop;
+    }
+    private async Task SaveProject(AddProjectRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Name) || string.IsNullOrWhiteSpace(request.OdpNumber))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        isAddDrop = false; //收起添加项目
+        await Http.PostAsJsonAsync("api/ProjectMgr/AddProject", addProjectRequest);
+        projects =await Http.GetFromJsonAsync<ProjectResponse[]>("api/ProjectMgr/AllProject");//刷新数据
+    }
+
+}

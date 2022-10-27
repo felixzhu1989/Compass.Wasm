@@ -1,23 +1,5 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
-using Compass.FileService.Domain;
-using Compass.FileService.Infrastructure;
-using Compass.IdentityService.Infrastructure;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using Serilog;
-using Zack.ASPNETCore;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using Zack.EventBus;
-using Zack.JWT;
-using StackExchange.Redis;
-using Compass.IdentityService.Domain;
-using Compass.IdentityService.Domain.Entities;
-using Compass.Wasm.Server.Hubs;
-using Microsoft.AspNetCore.Identity;
+using Compass.ProjectService.Domain;
+using Compass.ProjectService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -102,6 +84,16 @@ builder.Services.AddSingleton(typeof(IConnectionMultiplexer), redisConnMultiplex
 
 #endregion
 
+#region AutoMapper
+//Install-Package AutoMapper
+//Install-Package AutoMapper.Extensions.Microsoft.DependencyInjection
+//https://dev.to/moe23/add-automapper-to-net-6-3fdn
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+#endregion
+
+
+
 #region FileService
 //数据库，DbContext
 builder.Services.AddDbContext<FSDbContext>(options =>
@@ -162,6 +154,18 @@ builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp")
 #endregion
 
 #region ProjectService
+//数据库，DbContext
+builder.Services.AddDbContext<PMDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+builder.Services.AddScoped<PMDomainService>();
+builder.Services.AddScoped<IPMRepository, PMRepository>();
+
+
+
 
 #endregion
 

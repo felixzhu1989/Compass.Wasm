@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ICyrkAxhrHyj7srF+BdzpgSxZg9iDUjPnNWXotXQd0s=",
+  "Hash": "TffHmjRfq5/+QbxdlOHFnKwt5P8zzV/NV7g7PyyIpec=",
   "Source": "Compass.Wasm.Server",
   "BasePath": "_content/Compass.Wasm.Server",
   "Mode": "Default",
@@ -39289,6 +39289,23 @@
       "OriginalItemSpec": "wwwroot\\2022\\10\\c4830b1bbf22312df26d6edbc963775fff745eabbffef2d6491aa156e8e3f051\\FileService.log"
     },
     {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\d0b1a284a9ce113eef2c9439e9352ff52ed969a4a8485a8a354f0de969a091a0\\P000182040-22-UL UV Panel.dwg",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/10/d0b1a284a9ce113eef2c9439e9352ff52ed969a4a8485a8a354f0de969a091a0/P000182040-22-UL UV Panel.dwg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\10\\d0b1a284a9ce113eef2c9439e9352ff52ed969a4a8485a8a354f0de969a091a0\\P000182040-22-UL UV Panel.dwg"
+    },
+    {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\d469b9814af87daec15664d725dd0378a68b8092841fa0e9ef9108eeaa08aa85\\Download.PDF",
       "SourceId": "Compass.Wasm.Server",
       "SourceType": "Discovered",
@@ -39355,6 +39372,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\2022\\10\\ebe1e1f2b6ab5dbed936bb3bc6840a8195955f19c33863e6375314b78c67a188\\MediaEncoder.log"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\fdffbcb45335dc2444d0a5832e5f6b3f7f5376ae8d5ea26bc83dd498d1cb1f8a\\CCW -July--20170512.xlsx",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/10/fdffbcb45335dc2444d0a5832e5f6b3f7f5376ae8d5ea26bc83dd498d1cb1f8a/CCW -July--20170512.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\10\\fdffbcb45335dc2444d0a5832e5f6b3f7f5376ae8d5ea26bc83dd498d1cb1f8a\\CCW -July--20170512.xlsx"
     }
   ]
 }

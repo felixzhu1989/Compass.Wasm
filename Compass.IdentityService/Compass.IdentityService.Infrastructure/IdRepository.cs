@@ -48,6 +48,11 @@ public class IdRepository:IIdRepository
         return _userManager.AccessFailedAsync(user);
     }
 
+    public Task<IList<User>> FindAllDesigner()
+    {
+       return _userManager.GetUsersInRoleAsync("designer");
+    }
+
     public Task<string> GenerateChangePhoneNumberTokenAsync(User user, string phoneNumber)
     {
         return _userManager.GenerateChangePhoneNumberTokenAsync(user, phoneNumber);

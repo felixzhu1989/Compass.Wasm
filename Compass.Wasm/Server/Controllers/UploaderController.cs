@@ -1,9 +1,5 @@
-﻿using Compass.FileService.Domain;
-using Compass.FileService.Infrastructure;
-using Compass.Wasm.Shared.FileService;
-using Microsoft.AspNetCore.Mvc;
+﻿using Compass.Wasm.Shared.FileService;
 using Compass.Wasm.Server.FileService;
-using Zack.ASPNETCore;
 
 namespace Compass.Wasm.Server.Controllers
 {

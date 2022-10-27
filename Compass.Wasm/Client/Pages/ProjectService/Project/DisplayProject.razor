@@ -1,0 +1,79 @@
+﻿@using Compass.Wasm.Shared.ProjectService
+
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+<tr>
+    <td>@Project.OdpNumber</td>
+    <td>@Project.Name</td>
+    <td>@Project.ProjectType</td>
+    @*根据风险值更改颜色*@
+    <td class="@(Project.RiskLevel==RiskLevel.高风险 ? "table-danger" : Project.RiskLevel==RiskLevel.中风险 ? "table-warning":"")">@Project.RiskLevel</td>
+    <td></td>
+    <td></td>
+    <td>
+        <button class="btn btn-link" @onclick="@LoadContact" disabled="@(string.IsNullOrWhiteSpace(Project.ContractUrl))">
+            <i class="bi bi-file-earmark-pdf" />
+        </button>
+        <button class="btn btn-link" @onclick="UploadContact"><i class="bi bi-cloud-upload" /></button>
+    </td>
+    <td>
+        <button class="btn btn-link" @onclick="@LoadBom" disabled="@(string.IsNullOrWhiteSpace(Project.BomUrl))">
+            <i class="bi bi-file-earmark-pdf" />
+        </button>
+        <button class="btn btn-link" @onclick="UploadBom"><i class="bi bi-cloud-upload" /></button>
+    </td>
+
+    <td><button class="btn" @onclick="Show" disabled="@(string.IsNullOrWhiteSpace(Project.SpecialNotes))">@(showSpecialNotes ? "△" : "▽")</button></td>
+    <td>
+        <button class="btn btn-link" @onclick="Update"><i class="bi bi-gear" /></button>
+        <button class="btn btn-link" @onclick="DrawingMgr"><i class="bi bi-diagram-3" /></button>
+    </td>
+</tr>
+@if (showSpecialNotes)
+{
+    <td colspan="12">
+        <textarea class="form-control" readonly="readonly" style="height:@(30*rows)px" value="@Project.SpecialNotes"></textarea>
+    </td>
+}
+
+@code {
+    [Parameter]
+    public ProjectResponse Project { get; set; }
+
+    private bool showSpecialNotes = false;
+    private int rows = 1;
+    private void Show()
+    {
+        if (!showSpecialNotes && !string.IsNullOrWhiteSpace(Project.SpecialNotes))
+            rows = Project.SpecialNotes.Split('\n').Length;//计算特殊要求有几行
+        showSpecialNotes = !showSpecialNotes;
+    }
+    private void Update()
+    {
+        NavigationManager.NavigateTo($"./updateproject/{Project.Id}");
+    }
+    async Task LoadContact()
+    {
+        await JsRuntime.InvokeVoidAsync("open", $"{Project.ContractUrl}", "_blank");
+    }
+
+    private void UploadContact()
+    {
+        NavigationManager.NavigateTo($"./updatecontact/{Project.Id}");
+    }
+
+    async Task LoadBom()
+    {
+        await JsRuntime.InvokeVoidAsync("open", $"{Project.BomUrl}", "_blank");
+    }
+
+    private void UploadBom()
+    {
+        NavigationManager.NavigateTo($"./updatebom/{Project.Id}");
+    }
+
+    private void DrawingMgr()
+    {
+        NavigationManager.NavigateTo($"./drawinglist/{Project.Id}");
+    }
+}

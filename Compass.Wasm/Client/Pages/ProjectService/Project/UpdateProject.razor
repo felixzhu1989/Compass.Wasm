@@ -1,0 +1,55 @@
+﻿@page "/updateproject/{Id}"
+@using Compass.Wasm.Shared.ProjectService
+
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Update Project</PageTitle>
+
+<div class="row">
+    <div class="col">
+        <p>
+            <span class="fs-5">更新项目信息</span>
+        </p>
+    </div>
+    <div class="col" style="text-align: right">
+        <button class="btn mb-2" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+    </div>
+</div>
+
+
+
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private ProjectResponse? project;
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/ProjectMgr/Project/{Id}");
+    }
+    private async Task Save(ProjectResponse model)
+    {
+        await Http.PutAsJsonAsync($"api/ProjectMgr/Project/{model.Id}", model);
+        NavigationManager.NavigateTo("./projectlist");
+    }
+    private async Task Delete()
+    {
+        //todo:检查项目下有没有图纸
+        //if (await Repository.CheckDrawingsInProject(project.Id))
+        //{
+        //    await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
+        //    return;
+        //}
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
+        if (confirmResult)
+        {
+            await Http.DeleteAsync($"api/ProjectMgr/Project/{Id}");
+            NavigationManager.NavigateTo("./projectlist");
+        }
+    }
+}

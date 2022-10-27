@@ -1,4 +1,4 @@
-﻿namespace Compass.ProjectService.Domain;
+﻿namespace Compass.Wasm.Shared.ProjectService;
 /// <summary>
 /// 项目分类
 /// </summary>

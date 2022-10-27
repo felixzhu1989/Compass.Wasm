@@ -1,4 +1,5 @@
 ﻿using Compass.IdentityService.Domain.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,9 @@ namespace Compass.IdentityService.Infrastructure;
 
 public class IdDbContext : IdentityDbContext<User, Role, Guid>
 {
-    public IdDbContext(DbContextOptions<IdDbContext> options) : base(options) { }
+    public IdDbContext(DbContextOptions<IdDbContext> options) : base(options)
+    {
+    }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

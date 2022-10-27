@@ -1,15 +1,9 @@
-﻿using Compass.IdentityService.Domain;
-using Compass.Wasm.Server.IdentityService;
+﻿using Compass.Wasm.Server.IdentityService;
 using Compass.Wasm.Shared.IdentityService;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
-using Zack.EventBus;
 
 namespace Compass.Wasm.Server.Controllers;
-
-//eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjRmMjcwZjcxLWEzNWYtNGU4Yi1hNDAwLTIzNjMwNTNmNDhiZCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJhZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6ImFkbWluIiwiZXhwIjoxNjY3MzA0NjUyLCJpc3MiOiJteUlzc3VlciIsImF1ZCI6Im15QXVkaWVuY2UifQ.TKBKEQyrhOQyK8SmgrpculOedqfeAMHzkXDB4qqQTrs
 
 [Route("api/[controller]")]
 [ApiController]

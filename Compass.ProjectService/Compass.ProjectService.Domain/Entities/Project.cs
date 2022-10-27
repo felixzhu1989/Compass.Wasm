@@ -1,8 +1,9 @@
-﻿using Zack.DomainCommons.Models;
+﻿using Compass.Wasm.Shared.ProjectService;
+using Zack.DomainCommons.Models;
 
 namespace Compass.ProjectService.Domain.Entities;
 
-public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime
+public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, ISoftDelete
 {
     //BasicInfo
     public Guid Id { get; init; }
