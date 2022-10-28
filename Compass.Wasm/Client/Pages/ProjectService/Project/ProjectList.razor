@@ -15,6 +15,7 @@
             }
         </p>
     </div>
+    @*todo:控制权限*@
     <AuthorizeView Roles="admin,pm">
         <Authorized >
             <div class="col" style="text-align: right">
@@ -71,8 +72,13 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        projects =await Http.GetFromJsonAsync<ProjectResponse[]>("api/ProjectMgr/AllProject");
+        projects =await RefreshData();
     }
+    Task<ProjectResponse[]?> RefreshData()
+    {
+        return Http.GetFromJsonAsync<ProjectResponse[]>("api/ProjectMgr/AllProject");//刷新数据
+    }
+
     private void ShowAddProject()
     {
         if (!isAddDrop) addProjectRequest = new AddProjectRequest();
@@ -86,8 +92,9 @@
             return;
         }
         isAddDrop = false; //收起添加项目
-        await Http.PostAsJsonAsync("api/ProjectMgr/AddProject", addProjectRequest);
-        projects =await Http.GetFromJsonAsync<ProjectResponse[]>("api/ProjectMgr/AllProject");//刷新数据
+        var result= await Http.PostAsJsonAsync("api/ProjectMgr/AddProject", addProjectRequest);
+        if (result.IsSuccessStatusCode) projects = await RefreshData();
     }
 
+    
 }

@@ -143,3 +143,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.Iden
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.ProjectService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.IdentityService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.ProjectService.Domain.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\AutoMapper.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\MailKit.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\MimeKit.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\BouncyCastle.Crypto.dll

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TffHmjRfq5/+QbxdlOHFnKwt5P8zzV/NV7g7PyyIpec=",
+  "Hash": "iAoeQF0z8tCTcncxWWT+qaciC9rMIEd2vf4rw6LtfKM=",
   "Source": "Compass.Wasm.Server",
   "BasePath": "_content/Compass.Wasm.Server",
   "Mode": "Default",
@@ -39153,6 +39153,23 @@
       "OriginalItemSpec": "wwwroot\\2022\\10\\2796e6c1f9e3456b4f3b31893bd8c1c3a03660deef27f8c099c1c7a57250672a\\屏幕截图 2022-09-15 092323.png"
     },
     {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\38fb05760c2c677542ada6d6f47ba26f2d877206eb447fad8ce5bbf44855f0ff\\FSO220370-大工单[47232].pdf",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/10/38fb05760c2c677542ada6d6f47ba26f2d877206eb447fad8ce5bbf44855f0ff/FSO220370-大工单[47232].pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\10\\38fb05760c2c677542ada6d6f47ba26f2d877206eb447fad8ce5bbf44855f0ff\\FSO220370-大工单[47232].pdf"
+    },
+    {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\4ddc336c7e3e630abfd4173337403ec4ce65e9ea1ca524a6743ec7c1dcaec1db\\temp.txt",
       "SourceId": "Compass.Wasm.Server",
       "SourceType": "Discovered",
@@ -39253,6 +39270,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\2022\\10\\88e4f81876eae38709e4d446683ff54238a0bb249f94071dbec29f0984d1bbd2\\上好佳铭牌.DXF"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\93d7281c2dfe0b8506793f0ebe58eaf66709153c5771312ba7907deff87a4436\\FSO220370.pdf",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/10/93d7281c2dfe0b8506793f0ebe58eaf66709153c5771312ba7907deff87a4436/FSO220370.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\10\\93d7281c2dfe0b8506793f0ebe58eaf66709153c5771312ba7907deff87a4436\\FSO220370.pdf"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\c1116960d4ee2321590b24498291fa0180dcef144609c84cfcd5abb5ab5fba19\\ModelB.SLDPRT",
@@ -39372,6 +39406,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\2022\\10\\ebe1e1f2b6ab5dbed936bb3bc6840a8195955f19c33863e6375314b78c67a188\\MediaEncoder.log"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\ee6669c9dd51976b9cfb6a89b88f54b383850f1b9cd914d203a6fe10fe15615d\\FSO220366.pdf",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/10/ee6669c9dd51976b9cfb6a89b88f54b383850f1b9cd914d203a6fe10fe15615d/FSO220366.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\10\\ee6669c9dd51976b9cfb6a89b88f54b383850f1b9cd914d203a6fe10fe15615d\\FSO220366.pdf"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\10\\fdffbcb45335dc2444d0a5832e5f6b3f7f5376ae8d5ea26bc83dd498d1cb1f8a\\CCW -July--20170512.xlsx",

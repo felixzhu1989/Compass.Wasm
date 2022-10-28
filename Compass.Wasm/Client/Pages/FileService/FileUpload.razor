@@ -1,0 +1,49 @@
+﻿@using Compass.Wasm.Shared.FileService
+@inject HttpClient Http
+
+@if (string.IsNullOrEmpty(result))
+{
+    <span>@Title ：</span>
+    <a href="@FileUri" target="_blank">@FileUri</a>
+}
+else
+{
+    <span>@result</span>
+}
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange" accept="@FileType" />
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string FileType { get; set; }
+
+    [Parameter]
+    public string FileUri { get; set; }
+    [Parameter]
+    public EventCallback<string> FileUriChanged { get; set; }
+    //自定义组件实现双向绑定，https://blog.csdn.net/playermaker57/article/details/105443467
+
+    public string result = string.Empty;
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;//一个文件
+        using var content = new MultipartFormDataContent();
+        content.Add(content: new StreamContent(file.OpenReadStream()),
+            name: "\"files\"", fileName: file.Name);
+        try
+        {
+            var response = await Http.PostAsync("api/Uploader", content);
+            var uploadResponse = await response.Content
+                .ReadFromJsonAsync<UploadResponse>();
+
+            FileUri = uploadResponse.RemoteUrl.ToString();
+            //双向绑定
+            await FileUriChanged.InvokeAsync(FileUri);
+        }
+        catch (Exception ex)
+        {
+            result =$"上传文件异常：{ex}";
+        }
+    }
+}

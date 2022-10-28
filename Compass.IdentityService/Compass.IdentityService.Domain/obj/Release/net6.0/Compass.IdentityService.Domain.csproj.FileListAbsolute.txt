@@ -10,3 +10,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Dom
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Domain\obj\Release\net6.0\refint\Compass.IdentityService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Domain\obj\Release\net6.0\Compass.IdentityService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Domain\obj\Release\net6.0\ref\Compass.IdentityService.Domain.dll
+E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Domain\bin\Release\net6.0\Compass.Wasm.Shared.dll
+E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Domain\bin\Release\net6.0\Compass.Wasm.Shared.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Domain\obj\Release\net6.0\Compass.IdentityService.Domain.csproj.CopyComplete

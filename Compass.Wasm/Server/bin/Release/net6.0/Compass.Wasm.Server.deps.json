@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "Compass.Wasm.Server/1.0.0": {
         "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.0",
           "Compass.FileService.Infrastructure": "1.0.0",
           "Compass.IdentityService.Infrastructure": "1.0.0",
           "Compass.ProjectService.Infrastructure": "1.0.0",
@@ -66,6 +67,29 @@
           "lib/net6.0/AsmResolver.PE.File.dll": {
             "assemblyVersion": "4.11.2.0",
             "fileVersion": "4.11.2.0"
+          }
+        }
+      },
+      "AutoMapper/12.0.0": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/AutoMapper.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.0.0"
+          }
+        }
+      },
+      "AutoMapper.Extensions.Microsoft.DependencyInjection/12.0.0": {
+        "dependencies": {
+          "AutoMapper": "12.0.0",
+          "Microsoft.Extensions.Options": "6.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/AutoMapper.Extensions.Microsoft.DependencyInjection.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.0.0"
           }
         }
       },
@@ -128,6 +152,17 @@
           "lib/netstandard2.0/Humanizer.dll": {
             "assemblyVersion": "2.8.0.0",
             "fileVersion": "2.8.26.1919"
+          }
+        }
+      },
+      "MailKit/3.4.2": {
+        "dependencies": {
+          "MimeKit": "3.4.2"
+        },
+        "runtime": {
+          "lib/net6.0/MailKit.dll": {
+            "assemblyVersion": "3.4.0.0",
+            "fileVersion": "3.4.2.0"
           }
         }
       },
@@ -418,7 +453,7 @@
           }
         }
       },
-      "Microsoft.CSharp/4.5.0": {},
+      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.Data.SqlClient/2.1.4": {
         "dependencies": {
           "Microsoft.Data.SqlClient.SNI.runtime": "2.1.1",
@@ -760,7 +795,7 @@
       },
       "Microsoft.IdentityModel.Tokens/6.15.1": {
         "dependencies": {
-          "Microsoft.CSharp": "4.5.0",
+          "Microsoft.CSharp": "4.7.0",
           "Microsoft.IdentityModel.Logging": "6.15.1",
           "System.Security.Cryptography.Cng": "4.5.0"
         },
@@ -831,6 +866,18 @@
           }
         }
       },
+      "MimeKit/3.4.2": {
+        "dependencies": {
+          "Portable.BouncyCastle": "1.9.0",
+          "System.Security.Cryptography.Pkcs": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/MimeKit.dll": {
+            "assemblyVersion": "3.4.0.0",
+            "fileVersion": "3.4.2.0"
+          }
+        }
+      },
       "Pipelines.Sockets.Unofficial/1.0.7": {
         "dependencies": {
           "System.Buffers": "4.5.0",
@@ -840,6 +887,14 @@
           "lib/netcoreapp2.1/Pipelines.Sockets.Unofficial.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.7.56431"
+          }
+        }
+      },
+      "Portable.BouncyCastle/1.9.0": {
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "assemblyVersion": "1.9.0.0",
+            "fileVersion": "1.9.0.1"
           }
         }
       },
@@ -1126,6 +1181,7 @@
           }
         }
       },
+      "System.Formats.Asn1/6.0.0": {},
       "System.Globalization/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -1228,6 +1284,11 @@
         }
       },
       "System.Security.Cryptography.Cng/4.5.0": {},
+      "System.Security.Cryptography.Pkcs/6.0.0": {
+        "dependencies": {
+          "System.Formats.Asn1": "6.0.0"
+        }
+      },
       "System.Security.Cryptography.ProtectedData/4.7.0": {
         "runtime": {
           "lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll": {
@@ -1440,6 +1501,7 @@
       },
       "Compass.IdentityService.Domain/1.0.0": {
         "dependencies": {
+          "Compass.Wasm.Shared": "1.0.0",
           "Zack.DomainCommons": "1.1.3",
           "Zack.JWT": "1.0.1"
         },
@@ -1451,6 +1513,7 @@
         "dependencies": {
           "Compass.IdentityService.Domain": "1.0.0",
           "Compass.Wasm.Shared": "1.0.0",
+          "MailKit": "3.4.2",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
           "Zack.Infrastructure": "1.1.3"
@@ -1460,6 +1523,10 @@
         }
       },
       "Compass.ProjectService.Domain/1.0.0": {
+        "dependencies": {
+          "Compass.Wasm.Shared": "1.0.0",
+          "Zack.DomainCommons": "1.1.3"
+        },
         "runtime": {
           "Compass.ProjectService.Domain.dll": {}
         }
@@ -1467,7 +1534,9 @@
       "Compass.ProjectService.Infrastructure/1.0.0": {
         "dependencies": {
           "Compass.ProjectService.Domain": "1.0.0",
-          "Compass.Wasm.Shared": "1.0.0"
+          "Compass.Wasm.Shared": "1.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
+          "Zack.Infrastructure": "1.1.3"
         },
         "runtime": {
           "Compass.ProjectService.Infrastructure.dll": {}
@@ -1529,6 +1598,20 @@
       "path": "asmresolver.pe.file/4.11.2",
       "hashPath": "asmresolver.pe.file.4.11.2.nupkg.sha512"
     },
+    "AutoMapper/12.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0Rmg0zI5AFu1O/y//o9VGyhxKjhggWpk9mOA1tp0DEVx40c61bs+lnQv+0jUq8XbniF7FKgIVvI1perqiMtLrA==",
+      "path": "automapper/12.0.0",
+      "hashPath": "automapper.12.0.0.nupkg.sha512"
+    },
+    "AutoMapper.Extensions.Microsoft.DependencyInjection/12.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XCJ4E3oKrbRl1qY9Mr+7uyC0xZj1+bqQjmQRWTiTKiVuuXTny+7YFWHi20tPjwkMukLbicN6yGlDy5PZ4wyi1w==",
+      "path": "automapper.extensions.microsoft.dependencyinjection/12.0.0",
+      "hashPath": "automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512"
+    },
     "Blazored.LocalStorage/4.2.0": {
       "type": "package",
       "serviceable": true,
@@ -1570,6 +1653,13 @@
       "sha512": "sha512-OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
+    },
+    "MailKit/3.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-BRt9YHSr5LtxUeKrsJfxuJ5t5jb+6a2dRWWZvxt/5Tm3Z+nKJ3HBvw7SaMq2ze9e2x0Izw0SS8Q7H31PxBaXSg==",
+      "path": "mailkit/3.4.2",
+      "hashPath": "mailkit.3.4.2.nupkg.sha512"
     },
     "MediatR/10.0.1": {
       "type": "package",
@@ -1795,12 +1885,12 @@
       "path": "microsoft.bcl.asyncinterfaces/1.1.0",
       "hashPath": "microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512"
     },
-    "Microsoft.CSharp/4.5.0": {
+    "Microsoft.CSharp/4.7.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
-      "path": "microsoft.csharp/4.5.0",
-      "hashPath": "microsoft.csharp.4.5.0.nupkg.sha512"
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
     "Microsoft.Data.SqlClient/2.1.4": {
       "type": "package",
@@ -2124,12 +2214,26 @@
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
     },
+    "MimeKit/3.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8bshZj8peXR9OaGb1fJJto6YWGG9zGGbDwY5Uylkz08mFU2tHKdkGtwMyFdtO6ZVq1aW41QYj+cN+4vRlE0O5Q==",
+      "path": "mimekit/3.4.2",
+      "hashPath": "mimekit.3.4.2.nupkg.sha512"
+    },
     "Pipelines.Sockets.Unofficial/1.0.7": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-n+YKaKVd9ZSa7uVeT0gyOT8eoeCWbiTdpVtnHkjthqmNopVPc4+efRQUReO+WH3WFyVKxgn5QS4BLi2Q+sioqA==",
       "path": "pipelines.sockets.unofficial/1.0.7",
       "hashPath": "pipelines.sockets.unofficial.1.0.7.nupkg.sha512"
+    },
+    "Portable.BouncyCastle/1.9.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "path": "portable.bouncycastle/1.9.0",
+      "hashPath": "portable.bouncycastle.1.9.0.nupkg.sha512"
     },
     "RabbitMQ.Client/6.2.2": {
       "type": "package",
@@ -2299,6 +2403,13 @@
       "path": "system.drawing.common/4.7.0",
       "hashPath": "system.drawing.common.4.7.0.nupkg.sha512"
     },
+    "System.Formats.Asn1/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T6fD00dQ3NTbPDy31m4eQUwKW84s03z0N2C8HpOklyeaDgaJPa/TexP4/SkORMSOwc7WhKifnA6Ya33AkzmafA==",
+      "path": "system.formats.asn1/6.0.0",
+      "hashPath": "system.formats.asn1.6.0.0.nupkg.sha512"
+    },
     "System.Globalization/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -2396,6 +2507,13 @@
       "sha512": "sha512-WG3r7EyjUe9CMPFSs6bty5doUqT+q9pbI80hlNzo2SkPkZ4VTuZkGWjpp77JB8+uaL4DFPRdBsAY+DX3dBK92A==",
       "path": "system.security.cryptography.cng/4.5.0",
       "hashPath": "system.security.cryptography.cng.4.5.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.Pkcs/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-elM3x+xSRhzQysiqo85SbidJJ2YbZlnvmh+53TuSZHsD7dNuuEWser+9EFtY+rYupBwkq2avc6ZCO3/6qACgmg==",
+      "path": "system.security.cryptography.pkcs/6.0.0",
+      "hashPath": "system.security.cryptography.pkcs.6.0.0.nupkg.sha512"
     },
     "System.Security.Cryptography.ProtectedData/4.7.0": {
       "type": "package",

@@ -1,7 +1,6 @@
 ﻿@page "/updateproject/{Id}"
 @using Compass.Wasm.Shared.ProjectService
 
-
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
@@ -14,29 +13,69 @@
             <span class="fs-5">更新项目信息</span>
         </p>
     </div>
+    @*todo:控制权限*@
     <div class="col" style="text-align: right">
-        <button class="btn mb-2" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+        <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
     </div>
 </div>
 
+<EditForm Model="project" OnSubmit="Save">
+    <!--由项目经理修改的数据-->
+    <div class="input-group mb-2">
+        <span class="input-group-text">ODP</span>
+        <input class="form-control" placeholder="ODP" @bind-value="@project.OdpNumber" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">Name</span>
+        <input class="form-control" placeholder="Name" @bind-value="@project.Name" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">ProjectType</span>
+        <select class="form-select" @bind="@project.ProjectType">
+            @foreach (var type in Enum.GetNames(typeof(ProjectType)))
+            {
+                <option>@type</option>
+            }
+        </select>
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">RiskLevel</span>
+        <select class="form-select" @bind="@project.RiskLevel">
+            @foreach (var level in Enum.GetNames(typeof(RiskLevel)))
+            {
+                <option>@level</option>
+            }
+        </select>
+        @*Todo:风险值=概率*影响，概率影响矩阵*@
+        <button class="btn btn-warning" type="button">风险评级</button>
+    </div>
 
+    <FileUpload Title="@(nameof(project.ContractUrl))" FileType="application/pdf" @bind-FileUri="@project.ContractUrl"/>
 
+    <FileUpload Title="@(nameof(project.BomUrl))" FileType="application/pdf" @bind-FileUri="@project.BomUrl"/>
+    
+    <div class="input-group mb-2">
+        <span class="input-group-text">Special Notes</span>
+        <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@project.SpecialNotes"></textarea>
+    </div>
+    <button class="btn btn-success" type="submit">保存</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("./projectlist"))">取消</button>
+
+</EditForm>
 
 
 @code {
     [Parameter]
     public string Id { get; set; }
-    private ProjectResponse? project;
+    private ProjectResponse? project=new();
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/ProjectMgr/Project/{Id}");
+        var response = await Http.GetFromJsonAsync<ProjectResponse>($"api/ProjectMgr/Project/{Id}");
+        if (response==null) NavigationManager.NavigateTo("./projectlist");
+        project = response;
     }
-    private async Task Save(ProjectResponse model)
-    {
-        await Http.PutAsJsonAsync($"api/ProjectMgr/Project/{model.Id}", model);
-        NavigationManager.NavigateTo("./projectlist");
-    }
+
     private async Task Delete()
     {
         //todo:检查项目下有没有图纸
@@ -48,8 +87,13 @@
         var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
         if (confirmResult)
         {
-            await Http.DeleteAsync($"api/ProjectMgr/Project/{Id}");
-            NavigationManager.NavigateTo("./projectlist");
+            var result = await Http.DeleteAsync($"api/ProjectMgr/Project/{Id}");
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("./projectlist");
         }
+    }
+    private async Task Save()
+    {
+        var result = await Http.PutAsJsonAsync($"api/ProjectMgr/Project/{Id}", project);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("./projectlist");
     }
 }

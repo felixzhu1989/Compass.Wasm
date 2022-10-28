@@ -89,10 +89,7 @@ builder.Services.AddSingleton(typeof(IConnectionMultiplexer), redisConnMultiplex
 //Install-Package AutoMapper.Extensions.Microsoft.DependencyInjection
 //https://dev.to/moe23/add-automapper-to-net-6-3fdn
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 #endregion
-
-
 
 #region FileService
 //Êý¾Ý¿â£¬DbContext
@@ -163,9 +160,6 @@ builder.Services.AddDbContext<PMDbContext>(options =>
 });
 builder.Services.AddScoped<PMDomainService>();
 builder.Services.AddScoped<IPMRepository, PMRepository>();
-
-
-
 
 #endregion
 

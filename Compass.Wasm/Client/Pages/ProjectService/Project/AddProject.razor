@@ -32,6 +32,9 @@
         @*Todo:风险值=概率*影响，概率影响矩阵*@
         <button class="btn btn-warning" type="button">风险评级</button>
     </div>
+
+    <FileUpload Title="@(nameof(Project.ContractUrl))" FileType="application/pdf" @bind-FileUri="@Project.ContractUrl" />
+
     <div class="input-group mb-2">
         <span class="input-group-text">特殊要求</span>
         <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@Project.SpecialNotes"></textarea>

@@ -47,27 +47,30 @@ namespace Compass.Wasm.Server.Controllers
         [HttpGet("Project/Odp/{odpNumber}")]
         public async Task<ActionResult<ProjectResponse?>> FindProjectByOdp(string odpNumber)
         {
-            var project = await _repository.GetProjectByOdpAsync(odpNumber);
-            if (project == null) return NotFound($"没有Id={odpNumber}的Project");
+            var project = await _repository.GetProjectByOdpAsync(odpNumber.ToUpper());
+            if (project == null) return NotFound($"没有Id={odpNumber.ToUpper()}的Project");
             return _mapper.Map<ProjectResponse>(project);
         }
 
         [HttpPost("AddProject")]
         public async Task<ActionResult<Guid>> AddProject(AddProjectRequest request)
         {
-            var project = new Project(Guid.NewGuid(), request.OdpNumber, request.Name, request.ProjectType,
-                request.RiskLevel, request.SpecialNotes);
+            var project = new Project(Guid.NewGuid(), request.OdpNumber.ToUpper(), request.Name, request.ProjectType, request.RiskLevel, request.SpecialNotes);
+            //包括合同地址
+            project.ChangeContractUrl(request.ContractUrl);
             await _dbContext.Projects.AddAsync(project);
             return project.Id;
         }
 
         [HttpPut("Project/{id}")]
-        public async Task<ActionResult> UpdateProject([RequiredGuid] Guid id, UpdateProjectRequest request)
+        public async Task<ActionResult> UpdateProject([RequiredGuid] Guid id, ProjectResponse request)
         {
             var project = await _repository.GetProjectByIdAsync(id);
             if (project == null) return NotFound($"没有Id={id}的Project");
+            //包括合同地址和Bom地址
             project.ChangeOdpNumber(request.OdpNumber).ChangeName(request.Name)
                 .ChangeProjectType(request.ProjectType).ChangeRiskLevel(request.RiskLevel)
+                .ChangeContractUrl(request.ContractUrl).ChangeBomUrl(request.BomUrl)
                 .ChangeSpecialNotes(request.SpecialNotes);
             return Ok();
         }
@@ -81,28 +84,7 @@ namespace Compass.Wasm.Server.Controllers
             project.SoftDelete();//软删除
             return Ok();
         }
-
-        [HttpPut("Project/ContactUrl/{id}")]
-        public async Task<ActionResult> UpdateContactUrlAsync(Guid id, string contactUrl)
-        {
-            var project = await _repository.GetProjectByIdAsync(id);
-            if (project == null) return NotFound($"没有Id={id}的Project");
-            project.ChangeContractUrl(contactUrl);
-            return Ok();
-        }
-
-        [HttpPut("Project/BomUrl/{id}")]
-        public async Task<ActionResult> UpdateBomUrlAsync(Guid id, string bomUrl)
-        {
-            var project = await _repository.GetProjectByIdAsync(id);
-            if (project == null) return NotFound($"没有Id={id}的Project");
-            project.ChangeBomUrl(bomUrl);
-            return Ok();
-        }
-
-
-
-
+        
         #endregion
 
 
