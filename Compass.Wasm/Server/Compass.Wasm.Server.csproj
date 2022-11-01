@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\Compass.CategoryService\Compass.CategoryService.Infrastructure\Compass.CategoryService.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\Compass.FileService\Compass.FileService.Infrastructure\Compass.FileService.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\Compass.IdentityService\Compass.IdentityService.Infrastructure\Compass.IdentityService.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\Compass.ProjectService\Compass.ProjectService.Infrastructure\Compass.ProjectService.Infrastructure.csproj" />

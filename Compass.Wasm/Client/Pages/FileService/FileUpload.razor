@@ -4,7 +4,10 @@
 @if (string.IsNullOrEmpty(result))
 {
     <span>@Title ：</span>
-    <a href="@FileUri" target="_blank">@FileUri</a>
+    if (!string.IsNullOrEmpty(FileUrl))
+    {
+        <FileLinkWithDelete FileUrl="@FileUrl" DeleteFile="DeleteFile"/>
+    }
 }
 else
 {
@@ -18,10 +21,16 @@ else
     public string FileType { get; set; }
 
     [Parameter]
-    public string FileUri { get; set; }
+    public string FileUrl { get; set; }
     [Parameter]
-    public EventCallback<string> FileUriChanged { get; set; }
+    public EventCallback<string> FileUrlChanged { get; set; }
     //自定义组件实现双向绑定，https://blog.csdn.net/playermaker57/article/details/105443467
+    Task DeleteFile(string file)
+    {
+        FileUrl = string.Empty;
+        //双向绑定
+        return FileUrlChanged.InvokeAsync(FileUrl);
+    }
 
     public string result = string.Empty;
 
@@ -29,7 +38,7 @@ else
     {
         var file = e.File;//一个文件
         using var content = new MultipartFormDataContent();
-        content.Add(content: new StreamContent(file.OpenReadStream()),
+        content.Add(content: new StreamContent(file.OpenReadStream(1024 * 1024*100)),
             name: "\"files\"", fileName: file.Name);
         try
         {
@@ -37,9 +46,9 @@ else
             var uploadResponse = await response.Content
                 .ReadFromJsonAsync<UploadResponse>();
 
-            FileUri = uploadResponse.RemoteUrl.ToString();
+            FileUrl = uploadResponse.RemoteUrl.ToString();
             //双向绑定
-            await FileUriChanged.InvokeAsync(FileUri);
+            await FileUrlChanged.InvokeAsync(FileUrl);
         }
         catch (Exception ex)
         {

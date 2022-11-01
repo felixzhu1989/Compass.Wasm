@@ -33,7 +33,7 @@
         <button class="btn btn-warning" type="button">风险评级</button>
     </div>
 
-    <FileUpload Title="@(nameof(Project.ContractUrl))" FileType="application/pdf" @bind-FileUri="@Project.ContractUrl" />
+    <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@Project.ContractUrl" />
 
     <div class="input-group mb-2">
         <span class="input-group-text">特殊要求</span>
@@ -48,7 +48,7 @@
     public AddProjectRequest? Project { get; set; }
     [Parameter]
     public EventCallback<AddProjectRequest> SaveProject { get; set; }
-    public Task Save()
+    Task Save()
     {
         return SaveProject.InvokeAsync(Project);
     }

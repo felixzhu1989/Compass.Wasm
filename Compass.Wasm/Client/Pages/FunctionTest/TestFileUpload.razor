@@ -44,7 +44,8 @@
         var file = e.File;//一个文件
         
         using var content = new MultipartFormDataContent();
-        content.Add(content: new StreamContent(file.OpenReadStream()),
+        //允许上传最大100M的文件
+        content.Add(content: new StreamContent(file.OpenReadStream(1024 * 1024*100)),
             name: "\"files\"", fileName: file.Name);
         try
         {

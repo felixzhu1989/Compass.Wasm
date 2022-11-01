@@ -1,0 +1,63 @@
+﻿@page "/updatedrawing/{Id}"
+@using Compass.Wasm.Client.ProjectService
+@using Compass.Wasm.Shared.ProjectService
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<div class="row">
+    <div class="col">
+        <p>
+            <span class="fs-5">更新图纸信息</span>
+        </p>
+    </div>
+    @*todo:控制权限*@
+    <div class="col" style="text-align: right">
+        <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+    </div>
+</div>
+
+<EditForm Model="drawing" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">Item编号</span>
+        <input class="form-control" placeholder="Item" @bind-value="@drawing.ItemNumber" />
+    </div>
+    <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@drawing.DrawingUrl" />
+
+    <button class="btn btn-success" type="submit">保存</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"./drawinglist/{drawing.ProjectId}"))">取消</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private DrawingResponse? drawing = new();
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var response = await Http.GetFromJsonAsync<DrawingResponse>($"api/Drawing/{Id}");
+        if (response==null) NavigationManager.NavigateTo("./drawinglist");
+        drawing = response;
+    }
+    private async Task Delete()
+    {
+        //todo:检查图纸下有没有分段Module
+        //if (await Repository.CheckDrawingsInProject(project.Id))
+        //{
+        //    await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
+        //    return;
+        //}
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除Item图纸【{drawing.ItemNumber}】吗？");
+        if (confirmResult)
+        {
+            var result = await Http.DeleteAsync($"api/Drawing/{Id}");
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"./drawinglist/{drawing.ProjectId}");
+        }
+    }
+    private async Task Save()
+    {
+        var result = await Http.PutAsJsonAsync($"api/Drawing/{Id}", drawing);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"./drawinglist/{drawing.ProjectId}");
+    }
+
+}

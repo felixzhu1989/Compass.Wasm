@@ -1,0 +1,14 @@
+﻿@inject IJSRuntime JsRuntime
+<button class="btn" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+<a href="@FileUrl" target="_blank">@(Path.GetFileName(FileUrl))</a><br/>
+@code {
+    [Parameter]
+    public string FileUrl { get; set; }
+    [Parameter] 
+    public EventCallback<string> DeleteFile { get; set; }
+    async Task Delete()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除文件【{Path.GetFileName(FileUrl)}】吗？");
+       if(confirmResult)await  DeleteFile.InvokeAsync(FileUrl);
+    }
+}

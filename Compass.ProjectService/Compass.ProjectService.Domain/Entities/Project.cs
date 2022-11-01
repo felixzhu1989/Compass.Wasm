@@ -6,7 +6,6 @@ namespace Compass.ProjectService.Domain.Entities;
 public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, ISoftDelete
 {
     //BasicInfo
-    public Guid Id { get; init; }
     public string OdpNumber { get; private set; }
     public string Name { get; private set; }
     public ProjectType ProjectType { get; private set; }

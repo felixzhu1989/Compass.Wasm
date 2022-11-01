@@ -27,6 +27,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.IdentityService.Dom
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.IdentityService.Infrastructure", "Compass.IdentityService\Compass.IdentityService.Infrastructure\Compass.IdentityService.Infrastructure.csproj", "{799D604D-98B1-4820-9BC0-F2E3D47A9D67}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.CategoryService", "Compass.CategoryService", "{6A2E6C89-BC18-493E-8A3B-E4BEE0E83A5B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.CategoryService.Domain", "Compass.CategoryService\Compass.CategoryService.Domain\Compass.CategoryService.Domain.csproj", "{B678C7D7-FAF3-4B7A-AFC1-C2D108032401}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.CategoryService.Infrastructure", "Compass.CategoryService\Compass.CategoryService.Infrastructure\Compass.CategoryService.Infrastructure.csproj", "{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +75,14 @@ Global
 		{799D604D-98B1-4820-9BC0-F2E3D47A9D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{799D604D-98B1-4820-9BC0-F2E3D47A9D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{799D604D-98B1-4820-9BC0-F2E3D47A9D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B678C7D7-FAF3-4B7A-AFC1-C2D108032401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B678C7D7-FAF3-4B7A-AFC1-C2D108032401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B678C7D7-FAF3-4B7A-AFC1-C2D108032401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B678C7D7-FAF3-4B7A-AFC1-C2D108032401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +94,8 @@ Global
 		{59A974D7-BDC8-4859-A6C6-39768DF6BEA5} = {F2C2D5BE-2938-4959-BF01-2F0504F652D9}
 		{6528CEED-7F44-4728-8E3B-2C3A4FEE8596} = {51609212-31AA-4D03-8019-560E850F22A8}
 		{799D604D-98B1-4820-9BC0-F2E3D47A9D67} = {51609212-31AA-4D03-8019-560E850F22A8}
+		{B678C7D7-FAF3-4B7A-AFC1-C2D108032401} = {6A2E6C89-BC18-493E-8A3B-E4BEE0E83A5B}
+		{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2} = {6A2E6C89-BC18-493E-8A3B-E4BEE0E83A5B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAB52DFF-F022-4E34-9511-0ED3DCEB1CBD}

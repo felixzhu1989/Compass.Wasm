@@ -1,0 +1,125 @@
+﻿@page "/drawinglist/{ProjectId}"
+@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Client.ProjectService
+
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<PageTitle>Drawing List</PageTitle>
+<div class="row">
+    <div class="col">
+        <p>
+            @if (project != null)
+            {
+                <span class="fs-5" style="font-weight: bold">@project.OdpNumber</span><br />
+                <span>@project.Name</span> <br/>
+                
+                <span style="font-weight: bold">合同：</span>
+                <a href="@project.ContractUrl" target="_blank">@(Path.GetFileName(project.ContractUrl))</a><br />
+                <span style="font-weight: bold">BOM：</span>
+                <a href="@project.BomUrl" target="_blank">@(Path.GetFileName(project.BomUrl))</a><br/>
+                @if (!string.IsNullOrWhiteSpace(project.SpecialNotes))
+                {
+                    <span style="font-weight: bold">特殊要求：</span><br />
+                    foreach (var note in project.SpecialNotes.Split('\n'))
+                    {
+                        <span style="color:red">@note</span><br />
+                    }
+                }
+            }
+        </p>
+        @*<p>
+           @if (drawings != null)
+            {
+                <span>图纸(Items)总数:@drawings.Length</span>
+            }
+        </p>*@
+    </div>
+    @*todo:控制权限*@
+    <AuthorizeView Roles="admin,pm">
+        <Authorized>
+            <div class="col" style="text-align: right">
+                <button class="btn mb-2" style="color: red" @onclick="ShowAddDrawing">@(isAddDrop ? "▲" : "▼")</button>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+</div>
+
+@if (isAddDrop)
+{
+    <AddDrawing Drawing="addDrawingRequest" SaveDrawing="SaveDrawing" />
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Item编号</th>
+        <th>明细</th>
+    </tr>
+    </thead>
+    <tbody>
+        @if (drawings == null)
+    {
+        <p>图纸列表加载中...</p>
+    }
+        else if (drawings.Length == 0)
+    {
+        <p>没有要显示的图纸，请点击右上角添加图纸</p>
+    }
+    else
+    {
+            @foreach (var drawing in drawings)
+        {
+            <DisplayDrawing Drawing="drawing" />
+        }
+    }
+    </tbody>
+</table>
+
+
+
+
+
+
+@code {
+    [Parameter]
+    public string ProjectId { get; set; }
+
+    private DrawingResponse[]? drawings;
+    private AddDrawingRequest addDrawingRequest;
+
+    private bool isAddDrop = false;
+    private ProjectResponse? project=new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        drawings = await RefreshData();
+
+        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+    }
+    Task<DrawingResponse[]?> RefreshData()
+    {
+        return Http.GetFromJsonAsync<DrawingResponse[]>($"api/Drawing/All/{ProjectId}");
+    }
+    private void ShowAddDrawing()
+    {
+        if (!isAddDrop) addDrawingRequest = new AddDrawingRequest();
+        addDrawingRequest.ProjectId = Guid.Parse(ProjectId);
+        isAddDrop = !isAddDrop;
+    }
+    
+
+    private async Task SaveDrawing(AddDrawingRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.ItemNumber))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        isAddDrop = false; //收起添加
+        var result = await Http.PostAsJsonAsync("api/Drawing/Add", addDrawingRequest);
+        if (result.IsSuccessStatusCode) drawings = await RefreshData();
+    }
+
+}

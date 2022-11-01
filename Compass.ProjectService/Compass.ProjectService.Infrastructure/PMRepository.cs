@@ -47,5 +47,9 @@ public class PMRepository: IPMRepository
     {
         return _context.Drawings.SingleOrDefaultAsync(x => x.Id.Equals(id));
     } 
+
+
+
+
     #endregion
 }

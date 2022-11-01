@@ -27,7 +27,7 @@ public class EmailSender : IEmailSender
         var builder = new BodyBuilder
         {
             // Set the html version of the message text
-            HtmlBody = $"<p>来自Compass的消息：</p><p><b><font color=\"navy\">{body}</font></b></p><a href=\"http://pdmserver\">Compass</a>"
+            HtmlBody = $"<p>来自Compass的消息：</p><p style=\"color:navy\"><b>{body}</b></p><a href=\"http://10.9.18.31\">Compass</a>"
         };
         var mineEntity = builder.ToMessageBody();
         return this.SendEmailAsync(_smtp.Value, new List<EmailAddress> { email }, subject, mineEntity);
@@ -41,7 +41,7 @@ public class EmailSender : IEmailSender
         var builder = new BodyBuilder
         {
             // Set the html version of the message text
-            HtmlBody = $"<p>来自Compass的消息：</p><p><b><font color=\"navy\">{body}</font></b></p><a href=\"http://pdmserver\">Compass</a>"
+            HtmlBody = $"<p>来自Compass的消息：</p><p style=\"color:navy\"><b>{body}</b></p><a href=\"http://10.9.18.31\">Compass</a>"
         };
         var mineEntity = builder.ToMessageBody();
         return this.SendEmailAsync(_smtp.Value, emails, subject, mineEntity);

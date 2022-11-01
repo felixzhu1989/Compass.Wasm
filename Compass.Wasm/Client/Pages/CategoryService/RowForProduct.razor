@@ -1,0 +1,26 @@
+﻿@using Compass.Wasm.Shared.CategoryService
+@inject HttpClient Http
+@for (int i = 0; i < (products?.Length ?? 1); i++)
+{
+    <tr>
+        @if (i == 0)
+        {
+            <td rowspan="@(products?.Length ?? 1)">@Sbu</td>
+        } 
+        <td>@(products?.ElementAt(i).Name ?? "")</td>
+        <RowForModel Product="@(products?.ElementAt(i) ?? null)"></RowForModel>
+    </tr>
+}
+
+
+@code {
+    [Parameter]
+    public Sbu Sbu { get; set; }
+    private ProductResponse[]? products;
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        products=await Http.GetFromJsonAsync<ProductResponse[]>($"api/Product/All/{Sbu}");
+    }
+    
+}

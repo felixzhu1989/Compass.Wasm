@@ -22,15 +22,15 @@
 <EditForm Model="project" OnSubmit="Save">
     <!--由项目经理修改的数据-->
     <div class="input-group mb-2">
-        <span class="input-group-text">ODP</span>
+        <span class="input-group-text">项目编号</span>
         <input class="form-control" placeholder="ODP" @bind-value="@project.OdpNumber" />
     </div>
     <div class="input-group mb-2">
-        <span class="input-group-text">Name</span>
+        <span class="input-group-text">项目名称</span>
         <input class="form-control" placeholder="Name" @bind-value="@project.Name" />
     </div>
     <div class="input-group mb-2">
-        <span class="input-group-text">ProjectType</span>
+        <span class="input-group-text">项目类型</span>
         <select class="form-select" @bind="@project.ProjectType">
             @foreach (var type in Enum.GetNames(typeof(ProjectType)))
             {
@@ -39,7 +39,7 @@
         </select>
     </div>
     <div class="input-group mb-2">
-        <span class="input-group-text">RiskLevel</span>
+        <span class="input-group-text">风险等级</span>
         <select class="form-select" @bind="@project.RiskLevel">
             @foreach (var level in Enum.GetNames(typeof(RiskLevel)))
             {
@@ -50,12 +50,12 @@
         <button class="btn btn-warning" type="button">风险评级</button>
     </div>
 
-    <FileUpload Title="@(nameof(project.ContractUrl))" FileType="application/pdf" @bind-FileUri="@project.ContractUrl"/>
+    <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@project.ContractUrl"/>
 
-    <FileUpload Title="@(nameof(project.BomUrl))" FileType="application/pdf" @bind-FileUri="@project.BomUrl"/>
+    <FileUpload Title="物料清单" FileType="application/pdf" @bind-FileUrl="@project.BomUrl"/>
     
     <div class="input-group mb-2">
-        <span class="input-group-text">Special Notes</span>
+        <span class="input-group-text">特殊要求</span>
         <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@project.SpecialNotes"></textarea>
     </div>
     <button class="btn btn-success" type="submit">保存</button>
@@ -71,7 +71,7 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        var response = await Http.GetFromJsonAsync<ProjectResponse>($"api/ProjectMgr/Project/{Id}");
+        var response = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Id}");
         if (response==null) NavigationManager.NavigateTo("./projectlist");
         project = response;
     }
@@ -87,13 +87,13 @@
         var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
         if (confirmResult)
         {
-            var result = await Http.DeleteAsync($"api/ProjectMgr/Project/{Id}");
+            var result = await Http.DeleteAsync($"api/Project/{Id}");
             if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("./projectlist");
         }
     }
     private async Task Save()
     {
-        var result = await Http.PutAsJsonAsync($"api/ProjectMgr/Project/{Id}", project);
+        var result = await Http.PutAsJsonAsync($"api/Project/{Id}", project);
         if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("./projectlist");
     }
 }

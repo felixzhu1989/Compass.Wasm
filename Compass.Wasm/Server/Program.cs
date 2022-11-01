@@ -1,5 +1,3 @@
-using Compass.ProjectService.Domain;
-using Compass.ProjectService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,8 +103,8 @@ builder.Services.Configure<SMBStorageOptions>(builder.Configuration.GetSection("
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IStorageClient, SMBStorageClient>();//本机磁盘当备份服务器
 builder.Services.AddScoped<IStorageClient, MockCloudStorageClient>();//文件保存在wwwroot文件夹下
-builder.Services.AddScoped<IFSRepository, FSRepository>();
 builder.Services.AddScoped<FSDomainService>();
+builder.Services.AddScoped<IFSRepository, FSRepository>();
 
 #endregion
 
@@ -162,6 +160,19 @@ builder.Services.AddScoped<PMDomainService>();
 builder.Services.AddScoped<IPMRepository, PMRepository>();
 
 #endregion
+
+#region CategoryService
+//数据库，DbContext
+builder.Services.AddDbContext<CSDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+builder.Services.AddScoped<CSDomainService>();
+builder.Services.AddScoped<ICSRepository, CSRepository>();
+#endregion
+
 
 
 builder.Services.AddControllersWithViews();

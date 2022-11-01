@@ -11,17 +11,20 @@
     <td></td>
     <td></td>
     <td>
-        <button class="btn btn-link" @onclick="@LoadContact" disabled="@(string.IsNullOrWhiteSpace(Project.ContractUrl))">
-            <i class="bi bi-file-earmark-pdf" />
-        </button>
+        @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
+        {
+            <a href="@Project.ContractUrl" target="_blank"><i class="bi bi-file-earmark-pdf"/></a>
+        }
+        
     </td>
     <td>
-        <button class="btn btn-link" @onclick="@LoadBom" disabled="@(string.IsNullOrWhiteSpace(Project.BomUrl))">
-            <i class="bi bi-file-earmark-pdf" />
-        </button>
+        @if (!string.IsNullOrWhiteSpace(Project.BomUrl))
+        {
+            <a href="@Project.BomUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
+        }
     </td>
 
-    <td><button class="btn" @onclick="Show" disabled="@(string.IsNullOrWhiteSpace(Project.SpecialNotes))">@(showSpecialNotes ? "△" : "▽")</button></td>
+    <td><button class="btn"  @onclick="Show" disabled="@(string.IsNullOrWhiteSpace(Project.SpecialNotes))">@(showSpecialNotes ? "▲" : "▼")</button></td>
     <td>
         <button class="btn btn-link" @onclick="Update"><i class="bi bi-gear" /></button>
         <button class="btn btn-link" @onclick="DrawingMgr"><i class="bi bi-diagram-3" /></button>
@@ -39,17 +42,8 @@
     public ProjectResponse Project { get; set; }
 
     private bool showSpecialNotes = false;
-    private int rows = 1;
+    private int rows = 1;   
     
-    async Task LoadContact()
-    {
-        await JsRuntime.InvokeVoidAsync("open", $"{Project.ContractUrl}", "_blank");
-    }
-    async Task LoadBom()
-    {
-        await JsRuntime.InvokeVoidAsync("open", $"{Project.BomUrl}", "_blank");
-    }
-
     private void Show()
     {
         if (!showSpecialNotes && !string.IsNullOrWhiteSpace(Project.SpecialNotes))

@@ -148,3 +148,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\MimeKit.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\BouncyCastle.Crypto.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\AutoMapper.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.CategoryService.Domain.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.CategoryService.Infrastructure.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.CategoryService.Infrastructure.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.CategoryService.Domain.pdb

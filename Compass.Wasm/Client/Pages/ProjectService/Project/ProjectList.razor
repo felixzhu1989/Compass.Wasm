@@ -19,7 +19,7 @@
     <AuthorizeView Roles="admin,pm">
         <Authorized >
             <div class="col" style="text-align: right">
-                <button class="btn mb-2" @onclick="ShowAddProject">@(isAddDrop ? "△" : "▽")</button>
+                <button class="btn mb-2" style="color: red" @onclick="ShowAddProject">@(isAddDrop ? "▲" : "▼")</button>
             </div>
         </Authorized>
     </AuthorizeView>
@@ -76,7 +76,7 @@
     }
     Task<ProjectResponse[]?> RefreshData()
     {
-        return Http.GetFromJsonAsync<ProjectResponse[]>("api/ProjectMgr/AllProject");//刷新数据
+        return Http.GetFromJsonAsync<ProjectResponse[]>("api/Project/All");//刷新数据
     }
 
     private void ShowAddProject()
@@ -92,7 +92,7 @@
             return;
         }
         isAddDrop = false; //收起添加项目
-        var result= await Http.PostAsJsonAsync("api/ProjectMgr/AddProject", addProjectRequest);
+        var result= await Http.PostAsJsonAsync("api/Project/Add", addProjectRequest);
         if (result.IsSuccessStatusCode) projects = await RefreshData();
     }
 

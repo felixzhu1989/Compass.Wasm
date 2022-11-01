@@ -2579,6 +2579,36 @@
           "lib/net6.0/Zack.JWT.dll": {}
         }
       },
+      "Compass.CategoryService.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Compass.Wasm.Shared": "1.0.0",
+          "Zack.Commons": "1.1.11",
+          "Zack.DomainCommons": "1.1.3"
+        },
+        "compile": {
+          "bin/placeholder/Compass.CategoryService.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Compass.CategoryService.Domain.dll": {}
+        }
+      },
+      "Compass.CategoryService.Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Compass.CategoryService.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
+          "Zack.Infrastructure": "1.1.3"
+        },
+        "compile": {
+          "bin/placeholder/Compass.CategoryService.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Compass.CategoryService.Infrastructure.dll": {}
+        }
+      },
       "Compass.FileService.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -6822,6 +6852,16 @@
         "zack.jwt.nuspec"
       ]
     },
+    "Compass.CategoryService.Domain/1.0.0": {
+      "type": "project",
+      "path": "../../Compass.CategoryService/Compass.CategoryService.Domain/Compass.CategoryService.Domain.csproj",
+      "msbuildProject": "../../Compass.CategoryService/Compass.CategoryService.Domain/Compass.CategoryService.Domain.csproj"
+    },
+    "Compass.CategoryService.Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../../Compass.CategoryService/Compass.CategoryService.Infrastructure/Compass.CategoryService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.CategoryService/Compass.CategoryService.Infrastructure/Compass.CategoryService.Infrastructure.csproj"
+    },
     "Compass.FileService.Domain/1.0.0": {
       "type": "project",
       "path": "../../Compass.FileService/Compass.FileService.Domain/Compass.FileService.Domain.csproj",
@@ -6866,6 +6906,7 @@
   "projectFileDependencyGroups": {
     "net6.0": [
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.0",
+      "Compass.CategoryService.Infrastructure >= 1.0.0",
       "Compass.FileService.Infrastructure >= 1.0.0",
       "Compass.IdentityService.Infrastructure >= 1.0.0",
       "Compass.ProjectService.Infrastructure >= 1.0.0",
@@ -6908,6 +6949,9 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj"
+            },
             "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj": {
               "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj"
             },

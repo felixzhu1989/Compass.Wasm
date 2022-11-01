@@ -35,6 +35,8 @@ namespace Compass.FileService.Domain.Entities
         /// </summary>
         public bool IsOldFile { get; set; }//特征5，不映射到数据库
 
+        private UploadedItem() { }
+
         //创建类的对象实例(其实就是初始化)，因为都是只读属性
         public static UploadedItem Create(Guid id, long fileSizeInBytes, string fileName, string fileSHA256Hash,
             Uri backupUrl, Uri remoteUrl)

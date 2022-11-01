@@ -1,0 +1,22 @@
+﻿@using Compass.Wasm.Shared.ProjectService
+<tr>
+    <td>
+        <a href="@($"./updatedrawing/{Drawing.Id}")"><i class="bi bi-gear" /></a>
+        <span style="font-weight: bold">@Drawing.ItemNumber</span><br />
+        <span>图纸：</span><br />
+        @if (!string.IsNullOrWhiteSpace(Drawing.DrawingUrl))
+        {
+            foreach (var fileUrl in Drawing.DrawingUrl.Split('\n'))
+            {
+                <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                <br/>
+            }
+        }
+    </td>
+    <td></td>
+</tr>
+
+@code {
+    [Parameter]
+    public DrawingResponse Drawing { get; set; }
+}

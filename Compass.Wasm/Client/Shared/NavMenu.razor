@@ -21,15 +21,39 @@
                 <i class="bi bi-journal-text me-2" /> 项目列表
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="">
-                <i class="bi bi-calendar4-week me-2" /> 制图计划
-            </NavLink>
-        </div>
+        
+        <AuthorizeView Roles="admin,pm,designer">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="drawingplan">
+                        <i class="bi bi-calendar4-week me-2" /> 制图计划
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+        
+
+        <AuthorizeView Roles="admin,product">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="productionplan">
+                        <i class="bi bi-calendar4-range me-2" /> 生产计划
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+        
 
 
-
-
+        <AuthorizeView Roles="admin">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="categorylist">
+                        <i class="bi bi-diagram-3 me-2" aria-hidden="true" /> 模型管理
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
 
         <AuthorizeView Roles="admin">
             <Authorized>
