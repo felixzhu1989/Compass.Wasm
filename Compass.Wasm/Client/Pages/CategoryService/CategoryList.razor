@@ -1,90 +1,23 @@
 ﻿@page "/categorylist"
 @using Compass.Wasm.Shared.CategoryService
-@using System.Formats.Asn1
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 
-<div class="row">
-    <div class="col input-group mb-2">
-        <span class="input-group-text">事业部</span>
-        <select class="form-select" @onchange="OnSbuChange">
-            @foreach (var sbu in Enum.GetNames(typeof(Sbu)))
-            {
-                <option>@sbu</option>
-            }
-        </select>
-    </div>
-    <div class="col input-group mb-2">
-        <span class="input-group-text">产品</span>
-        <select class="form-select" @onchange="OnProductChange">
-            @if (products !=null)
-            {
-                foreach (var product in products)
-                {
-                    <option value="@product.Id">@product.Name</option>
-                }
-            }
-        </select>
-    </div>
-    <div class="col input-group mb-2">
-        <span class="input-group-text">模型</span>
-        <select class="form-select" @onchange="OnCategoryChange">
-            @if (models !=null)
-            {
-                foreach (var model in models)
-                {
-                    <option value="@model.Id">@model.Name</option>
-                }
-            }
-        </select>
-    </div>
-</div>
+<CategoryChoose @bind-ModelId="ModelId"/>
+<p>现在选中模型Id：@ModelId</p>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>SBU</th>
-            <th>产品分类</th>
-            <th>模型分类</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var sbu in Enum.GetNames(typeof(Sbu)))
-        {
-            <RowForProduct Sbu="Enum.Parse<Sbu>(sbu)"></RowForProduct>
-        }
-    </tbody>
-</table>
-
+@foreach (var sbu in Enum.GetNames(typeof(Sbu)))
+{
+    <p class="fs-3" style="font-weight: bold">@sbu</p>
+    @*row-cols-md-5,5控制列数，g-2,控制间隙*@
+    <div class="row row-cols-1 row-cols-md-1 g-2">
+        <ProductCards Sbu="@sbu"/>
+    </div>
+    <hr />
+}
 
 @code {
+    public string ModelId { get; set; }
 
-    private ProductResponse[]? products;
-    private ModelResponse[]? models;
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        products=await Http.GetFromJsonAsync<ProductResponse[]>("api/Product/All/0");
-        models = await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{products.First().Id}");
-    }
-
-    async Task OnSbuChange(ChangeEventArgs e)
-    {
-        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
-        products=await Http.GetFromJsonAsync<ProductResponse[]>($"api/Product/All/{e.Value:int}");
-    }
-
-    async Task OnProductChange(ChangeEventArgs e)
-    {
-        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
-        models=await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{e.Value}");
-    }
-
-    async Task OnCategoryChange(ChangeEventArgs e)
-    {
-        await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
-    }
 }

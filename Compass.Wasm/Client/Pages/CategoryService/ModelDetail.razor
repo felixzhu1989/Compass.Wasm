@@ -1,0 +1,25 @@
+﻿@using Compass.Wasm.Shared.CategoryService
+@inject HttpClient Http
+<p class="card-text">@(string.Join('\n', list))</p>
+
+@code {
+    [Parameter]
+    public string ProductId { get; set; }
+    private List<string> list = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        if (!string.IsNullOrWhiteSpace(ProductId))
+        {
+            var models = await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{ProductId}");
+            if (models != null)
+            {
+                foreach (var model in models)
+                {
+                    list.Add(model.Name);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+﻿@using Compass.Wasm.Shared.CategoryService
+@inject HttpClient Http
+@if (products != null)
+{
+    @foreach (var product in products)
+    {
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-weight: bold">@product.Name</h5>
+                    <ModelDetail ProductId="@product.Id.ToString()" />
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    [Parameter]
+    public string Sbu { get; set; }
+    private ProductResponse[]? products;
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        products=await Http.GetFromJsonAsync<ProductResponse[]>($"api/Product/All/{Sbu}");
+    }
+    
+}

@@ -25,6 +25,7 @@ else
     [Parameter]
     public EventCallback<string> FileUrlChanged { get; set; }
     //自定义组件实现双向绑定，https://blog.csdn.net/playermaker57/article/details/105443467
+    
     Task DeleteFile(string file)
     {
         FileUrl = string.Empty;
