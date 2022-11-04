@@ -184,7 +184,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
 //修改默认编译发布后的5000，5001启动端口
-//builder.WebHost.UseUrls(new[] {"http://*:80" });
+builder.WebHost.UseUrls(new[] {"http://*:80" });
+
 
 var app = builder.Build();
 

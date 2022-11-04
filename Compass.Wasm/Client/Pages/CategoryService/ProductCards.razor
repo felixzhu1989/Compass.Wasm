@@ -5,7 +5,7 @@
     @foreach (var product in products)
     {
         <div class="col">
-            <div class="card shadow">
+            <div class="card shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title" style="font-weight: bold">@product.Name</h5>
                     <ModelDetail ProductId="@product.Id.ToString()" />

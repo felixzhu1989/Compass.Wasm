@@ -6,7 +6,7 @@
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 <PageTitle>Drawing List</PageTitle>
-<div class="row">
+<div class="row position-relative">
     <div class="col">
         <p>
             @if (project != null)
@@ -38,7 +38,7 @@
     @*todo:控制权限*@
     <AuthorizeView Roles="admin,pm">
         <Authorized>
-            <div class="col" style="text-align: right">
+            <div class="position-absolute bottom-0 end-0" style="text-align: right">
                 <button class="btn mb-2" style="color: red" @onclick="ShowAddDrawing">@(isAddDrop ? "▲" : "▼")</button>
             </div>
         </Authorized>
@@ -50,10 +50,10 @@
     <AddDrawing Drawing="addDrawingRequest" SaveDrawing="SaveDrawing" />
 }
 
-<table class="table">
+<table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
     <thead>
     <tr>
-        <th>Item编号</th>
+        <th style="width: 35%">Item编号</th>
         <th>明细</th>
     </tr>
     </thead>

@@ -1,0 +1,68 @@
+﻿@page "/modulelist/{DrawingId}"
+@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Client.ProjectService
+@inject HttpClient Http
+
+<PageTitle>Module List</PageTitle>
+<div class="row position-relative">
+    <div class="col">
+        <p>
+            @if (drawing != null)
+            {
+                <span class="fs-5" style="font-weight: bold">@drawing.ItemNumber</span><br />
+                <span>图纸：</span>
+                <br />
+                @if (!string.IsNullOrWhiteSpace(drawing.DrawingUrl))
+                {
+                    foreach (var fileUrl in drawing.DrawingUrl.Split('\n'))
+                    {
+                        <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a><br />
+                    }
+                }
+            }
+        </p>
+    </div>
+    @*todo:控制权限*@
+    <AuthorizeView Roles="admin,pm">
+        <Authorized>
+            <div class="position-absolute bottom-0 end-0" style="text-align: right">
+                <button class="btn mb-2" style="color: red" @onclick="ShowAddModule">@(isAddDrop ? "▲" : "▼")</button>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+
+</div>
+@if (isAddDrop)
+{
+    @*<AddModule Module="addModuleRequest" SaveModule="SaveModule" />*@
+}
+
+
+@code {
+    [Parameter]
+    public string DrawingId { get; set; }
+
+    private ModuleResponse[]? modules;
+    private AddModuleRequest addModuleRequest;
+
+    private bool isAddDrop = false;
+    private DrawingResponse? drawing=new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        modules = await RefreshData();
+        drawing = await Http.GetFromJsonAsync<DrawingResponse>($"api/Drawing/{DrawingId}");
+    }
+    Task<ModuleResponse[]?> RefreshData()
+    {
+        return Http.GetFromJsonAsync<ModuleResponse[]>($"api/Module/All/{DrawingId}");
+    }
+    private void ShowAddModule()
+    {
+        if (!isAddDrop) addModuleRequest = new AddModuleRequest();
+        addModuleRequest.DrawingId = Guid.Parse(DrawingId);
+        isAddDrop = !isAddDrop;
+    }
+
+}

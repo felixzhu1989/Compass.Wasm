@@ -46,10 +46,18 @@ public class PMRepository: IPMRepository
     public Task<Drawing?> GetDrawingByIdAsync(Guid id)
     {
         return _context.Drawings.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+    #endregion
+
+    #region Module
+    public Task<IQueryable<Module>> GetModulesByDrawingIdAsync(Guid drawingId)
+    {
+        return Task.FromResult(_context.Modules.Where(x => x.DrawingId.Equals(drawingId)).AsQueryable());
+    }
+
+    public Task<Module?> GetModuleByIdAsync(Guid id)
+    {
+        return _context.Modules.SingleOrDefaultAsync(x => x.Id.Equals(id));
     } 
-
-
-
-
     #endregion
 }

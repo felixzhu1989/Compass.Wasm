@@ -57,6 +57,8 @@ namespace Compass.ProjectService.Infrastructure.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
 
+                    b.HasIndex("ProjectId", "IsDeleted");
+
                     b.ToTable("Drawings");
                 });
 
@@ -81,12 +83,21 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("ModelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SpecialNotes")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.HasIndex("DrawingId", "IsDeleted");
 
                     b.ToTable("Modules");
                 });

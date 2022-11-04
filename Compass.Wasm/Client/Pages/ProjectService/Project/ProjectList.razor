@@ -5,7 +5,7 @@
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 <PageTitle>Project List</PageTitle>
-<div class="row">
+<div class="row position-relative">
     <div class="col">
         <p>
             <span class="fs-5">【概述】</span>
@@ -18,7 +18,7 @@
     @*todo:控制权限*@
     <AuthorizeView Roles="admin,pm">
         <Authorized >
-            <div class="col" style="text-align: right">
+            <div class="position-absolute bottom-0 end-0" style="text-align: right">
                 <button class="btn mb-2" style="color: red" @onclick="ShowAddProject">@(isAddDrop ? "▲" : "▼")</button>
             </div>
         </Authorized>
@@ -29,13 +29,13 @@
 {
     <AddProject Project="addProjectRequest" SaveProject="SaveProject" />
 }
-<table class="table">
+<table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
     <thead>
         <tr>
-            <th>项目编号</th>
-            <th>项目名称</th>
-            <th>项目分类</th>
-            <th>风险等级</th>
+            <th >项目编号</th>
+            <th style="width: 35%">项目名称</th>
+            <th >项目分类</th>
+            <th >风险等级</th>
             <th>烟罩类型</th>
             <th>工作量</th>
             <th>合同</th>

@@ -50,6 +50,9 @@ namespace Compass.CategoryService.Infrastructure.Migrations
                     b.Property<int>("SequenceNumber")
                         .HasColumnType("int");
 
+                    b.Property<double>("Workload")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);

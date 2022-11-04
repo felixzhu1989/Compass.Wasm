@@ -40,7 +40,7 @@ namespace Compass.Wasm.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> Add(AddModelRequest request)
         {
-            Model model = await _domainService.AddModelAsync(request.ProductId,request.Name);
+            Model model = await _domainService.AddModelAsync(request.ProductId,request.Name,request.Workload);
             await _dbContext.Models.AddAsync(model);
             return model.Id;
         }
@@ -49,7 +49,7 @@ namespace Compass.Wasm.Server.Controllers
         {
             var model = await _repository.GetModelByIdAsync(id);
             if (model == null) return NotFound($"没有Id={id}的Model");
-            model.ChangeName(request.Name);
+            model.ChangeName(request.Name).ChangeWorkload(request.Workload);
             return Ok();
         }
         [HttpDelete("{id}")]

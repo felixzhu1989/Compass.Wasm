@@ -5,4 +5,5 @@ public class ModelResponse
     public int SequenceNumber { get; set; }
     public Guid ProductId { get; set; }
     public string Name { get; set; }
+    public double Workload { get; set; }
 }

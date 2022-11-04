@@ -15,5 +15,8 @@ public interface IPMRepository
     //Drawing
     Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId);
     Task<Drawing?> GetDrawingByIdAsync(Guid id);
+    //Module
+    Task<IQueryable<Module>> GetModulesByDrawingIdAsync(Guid drawingId);
+    Task<Module?> GetModuleByIdAsync(Guid id);
 
 }

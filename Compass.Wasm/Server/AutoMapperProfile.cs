@@ -12,7 +12,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Project, ProjectResponse>();
         //.ForMember(dest => dest.OdpNumber, opt => opt.MapFrom(src => $"{src.OdpNumber}"))
         CreateMap<Drawing, DrawingResponse>();
-
+        CreateMap<Compass.ProjectService.Domain.Entities.Module, ModuleResponse>();
         #endregion
 
         #region CategoryService

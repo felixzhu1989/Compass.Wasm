@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using Compass.ProjectService.Domain;
-using Compass.ProjectService.Domain.Entities;
-using Compass.ProjectService.Infrastructure;
 using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;

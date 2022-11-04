@@ -7,14 +7,16 @@ public record Model:AggregateRootEntity,IAggregateRoot,IHasCreationTime,ISoftDel
     public int SequenceNumber { get; private set; }
     public Guid ProductId { get; private set; }
     public string Name { get; private set; }
+    public double Workload { get; private set; }
 
     private Model() { }
-    public Model(Guid id,Guid productId, int sequenceNumber, string name)
+    public Model(Guid id,Guid productId, int sequenceNumber, string name,double workload)
     {
         Id=id;
         ProductId=productId;
         SequenceNumber=sequenceNumber;
         Name=name;
+        Workload=workload;
     }
 
     public Model ChangeSequenceNumber(int sequenceNumber)
@@ -25,6 +27,11 @@ public record Model:AggregateRootEntity,IAggregateRoot,IHasCreationTime,ISoftDel
     public Model ChangeName(string name)
     {
         Name=name;
+        return this;
+    }
+    public Model ChangeWorkload(double workload)
+    {
+        Workload=workload;
         return this;
     }
 }

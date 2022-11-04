@@ -2,7 +2,7 @@
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 <div class="row">
-    <div class="col input-group mb-2">
+    <div class="col input-group mb-2" style="width: 100px">
         <span class="input-group-text">事业部</span>
         <select class="form-select" @onchange="OnSbuChange">
             @foreach (var sbu in Enum.GetNames(typeof(Sbu)))
@@ -34,8 +34,8 @@
                 }
             }
         </select>
-        <span class="input-group-text">@ModelId</span>
     </div>
+    <div class="col"><span class="input-group-text">@ModelId</span></div>
 </div>
 
 @code {

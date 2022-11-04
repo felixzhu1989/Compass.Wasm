@@ -9,6 +9,7 @@
       "Compass.Wasm.Server/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.0",
+          "Compass.CategoryService.Infrastructure": "1.0.0",
           "Compass.FileService.Infrastructure": "1.0.0",
           "Compass.IdentityService.Infrastructure": "1.0.0",
           "Compass.ProjectService.Infrastructure": "1.0.0",
@@ -1479,6 +1480,26 @@
           }
         }
       },
+      "Compass.CategoryService.Domain/1.0.0": {
+        "dependencies": {
+          "Compass.Wasm.Shared": "1.0.0",
+          "Zack.Commons": "1.1.11",
+          "Zack.DomainCommons": "1.1.3"
+        },
+        "runtime": {
+          "Compass.CategoryService.Domain.dll": {}
+        }
+      },
+      "Compass.CategoryService.Infrastructure/1.0.0": {
+        "dependencies": {
+          "Compass.CategoryService.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
+          "Zack.Infrastructure": "1.1.3"
+        },
+        "runtime": {
+          "Compass.CategoryService.Infrastructure.dll": {}
+        }
+      },
       "Compass.FileService.Domain/1.0.0": {
         "dependencies": {
           "Zack.Commons": "1.1.11",
@@ -2647,6 +2668,16 @@
       "sha512": "sha512-9ZBW0lLpBHlAGT9j38nV5DQvVOF4IwSXZYTCQAVigNOzAMONhno9KFCrtvos9GNN3bEpvr1IzBsEhKdSwqAfmg==",
       "path": "zack.jwt/1.0.1",
       "hashPath": "zack.jwt.1.0.1.nupkg.sha512"
+    },
+    "Compass.CategoryService.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Compass.CategoryService.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Compass.FileService.Domain/1.0.0": {
       "type": "project",
