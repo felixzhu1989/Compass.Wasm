@@ -2,6 +2,7 @@
 @using Compass.Wasm.Shared.ProjectService
 @using Compass.Wasm.Client.ProjectService
 @inject HttpClient Http
+@inject IJSRuntime JsRuntime
 
 <PageTitle>Module List</PageTitle>
 <div class="row position-relative">
@@ -9,8 +10,18 @@
         <p>
             @if (drawing != null)
             {
-                <span class="fs-5" style="font-weight: bold">@drawing.ItemNumber</span><br />
+                <span class="fs-5" style="font-weight: bold">
+                    @if (project != null)
+                    {
+                        <a href="@($"./drawinglist/{project.Id}")">@project.OdpNumber</a>
+                        <br />
+                    }
+                    @drawing.ItemNumber
+                </span>
+                <br />
+
                 <span>图纸：</span>
+
                 <br />
                 @if (!string.IsNullOrWhiteSpace(drawing.DrawingUrl))
                 {
@@ -21,21 +32,58 @@
                 }
             }
         </p>
+        @if (modules != null && modules.Length!=0)
+        {
+            <p>分段数量：@modules.Length</p>
+        }
+        else
+        {
+            <p>请添加分段！</p>
+        }
     </div>
+
     @*todo:控制权限*@
-    <AuthorizeView Roles="admin,pm">
+    <AuthorizeView Roles="admin,pm,designer">
         <Authorized>
             <div class="position-absolute bottom-0 end-0" style="text-align: right">
                 <button class="btn mb-2" style="color: red" @onclick="ShowAddModule">@(isAddDrop ? "▲" : "▼")</button>
             </div>
         </Authorized>
     </AuthorizeView>
-
 </div>
 @if (isAddDrop)
 {
-    @*<AddModule Module="addModuleRequest" SaveModule="SaveModule" />*@
+    <AddModule Module="addModuleRequest" SaveModule="SaveModule" />
 }
+
+<table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
+    <thead>
+        <tr>
+            <th style="width: 35%">分段</th>
+            <th>详细参数</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (modules == null)
+        {
+            <p>图纸列表加载中...</p>
+        }
+        else if (modules.Length == 0)
+        {
+            <p>没有要显示的图纸，请点击右上角添加图纸</p>
+        }
+        else
+        {
+            @foreach (var module in modules)
+            {
+                <tr>
+                    <td><DisplayModule Module="module" /></td>
+                    <td>...</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
 
 
 @code {
@@ -46,13 +94,15 @@
     private AddModuleRequest addModuleRequest;
 
     private bool isAddDrop = false;
-    private DrawingResponse? drawing=new();
+    private DrawingResponse? drawing;
+    private ProjectResponse? project;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         modules = await RefreshData();
         drawing = await Http.GetFromJsonAsync<DrawingResponse>($"api/Drawing/{DrawingId}");
+        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{drawing.ProjectId}");
     }
     Task<ModuleResponse[]?> RefreshData()
     {
@@ -64,5 +114,18 @@
         addModuleRequest.DrawingId = Guid.Parse(DrawingId);
         isAddDrop = !isAddDrop;
     }
+
+    private async Task SaveModule(AddModuleRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Name)&&request.ModelId.Equals(Guid.Empty))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        //isAddDrop = false; //收起添加
+        var result = await Http.PostAsJsonAsync("api/Module/Add", addModuleRequest);
+        if (result.IsSuccessStatusCode) modules = await RefreshData();
+    }
+
 
 }

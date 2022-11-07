@@ -3,7 +3,7 @@ using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
 
-namespace Compass.Wasm.Server.Controllers;
+namespace Compass.Wasm.Server.Controllers.ProjectService;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -41,7 +41,7 @@ public class DrawingController : ControllerBase
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddDrawingRequest request)
     {
-        var drawing = new Drawing(Guid.NewGuid(), request.ProjectId, request.ItemNumber,request.DrawingUrl);
+        var drawing = new Drawing(Guid.NewGuid(), request.ProjectId, request.ItemNumber, request.DrawingUrl);
         await _dbContext.Drawings.AddAsync(drawing);
         return drawing.Id;
     }

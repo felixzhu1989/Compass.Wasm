@@ -1,7 +1,7 @@
 ﻿using Compass.Wasm.Shared.FileService;
 using Compass.Wasm.Server.FileService;
 
-namespace Compass.Wasm.Server.Controllers
+namespace Compass.Wasm.Server.Controllers.OtherService
 {
     //FileService
     [Route("api/[controller]")]
@@ -52,7 +52,7 @@ namespace Compass.Wasm.Server.Controllers
             string fileName = file.FileName;
             await using Stream stream = file.OpenReadStream();
             var upItem = await _domainService.UploadAsync(stream, fileName, cancellationToken);
-            if(!upItem.IsOldFile) _dbContext.Add(upItem);
+            if (!upItem.IsOldFile) _dbContext.Add(upItem);
             return new UploadResponse(upItem.RemoteUrl);
         }
     }

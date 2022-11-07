@@ -1,0 +1,78 @@
+﻿@page "/updatemodule/{Id}"
+@using Microsoft.AspNetCore.Components
+@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Client.Pages.CategoryService
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<div class="row">
+    <div class="col">
+        <p>
+            <span class="fs-5">更新分段信息</span>
+        </p>
+    </div>
+    @*todo:控制权限*@
+    <div class="col" style="text-align: right">
+        <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+    </div>
+</div>
+@if (module != null)
+{
+    <EditForm Model="module" OnSubmit="Save">
+        <CategoryChoose @bind-ModelId="ModelId" />
+
+        <div class="input-group mb-2">
+            <span class="input-group-text">分段编号</span>
+            <input class="form-control" placeholder="M1,M2...B01,CJ01..." @bind-value="@module.Name" />
+        </div>
+
+        <div class="input-group mb-2">
+            <span class="input-group-text">特殊要求</span>
+            <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@module.SpecialNotes"></textarea>
+        </div>
+
+        <button class="btn btn-success" type="submit">保存</button>
+        <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"./modulelist/{module.DrawingId}"))">取消</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    [Parameter]
+    public string ModelId { get; set; }
+
+    private ModuleResponse? module;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var response = await Http.GetFromJsonAsync<ModuleResponse>($"api/Module/{Id}");
+        if (response==null) NavigationManager.NavigateTo("./projectlist");
+        module = response;
+        ModelId = module.ModelId.ToString();
+    }
+    private async Task Delete()
+    {
+        //todo:检查Module分段下有没有填写参数
+        //if (await Repository.CheckDrawingsInProject(project.Id))
+        //{
+        //    await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
+        //    return;
+        //}
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除分段【{module.Name}】吗？");
+        if (confirmResult)
+        {
+            var result = await Http.DeleteAsync($"api/Module/{Id}");
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"./modulelist/{module.DrawingId}");
+        }
+    }
+    private async Task Save()
+    {
+        module.ModelId = Guid.Parse(ModelId);
+        var result = await Http.PutAsJsonAsync($"api/Module/{Id}", module);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"./modulelist/{module.DrawingId}");
+    }
+}

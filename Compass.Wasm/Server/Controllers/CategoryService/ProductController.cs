@@ -3,7 +3,7 @@ using AutoMapper;
 using Compass.Wasm.Client.CategoryService;
 using Compass.Wasm.Shared.CategoryService;
 
-namespace Compass.Wasm.Server.Controllers;
+namespace Compass.Wasm.Server.Controllers.CategoryService;
 
 [Route("api/[controller]")]
 [ApiController]

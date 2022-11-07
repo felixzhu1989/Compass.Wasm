@@ -4,12 +4,12 @@
 @inject IJSRuntime JsRuntime
 <tr>
     <td>@Project.OdpNumber</td>
+    <td style="@(Project.DeliveryDate<DateTime.Today?"color: green":"font-weight: bold;")">@Project.DeliveryDate.ToShortDateString()</td>
     <td>@Project.Name</td>
     <td>@Project.ProjectType</td>
     @*根据风险值更改颜色*@
-    <td class="@(Project.RiskLevel==RiskLevel.高风险 ? "table-danger" : Project.RiskLevel==RiskLevel.中风险 ? "table-warning":"")">@Project.RiskLevel</td>
-    <td></td>
-    <td></td>
+    <td class="@(Project.RiskLevel==RiskLevel.高风险 ? "table-danger" : Project.RiskLevel==RiskLevel.中风险 ? "table-warning":"")" >@Project.RiskLevel</td>
+    <td>summary</td>
     <td>
         @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
         {
@@ -32,8 +32,8 @@
 </tr>
 @if (showSpecialNotes)
 {
-    <td colspan="12">
-        <textarea class="form-control" readonly="readonly" style="height:@(30*rows)px" value="@Project.SpecialNotes"></textarea>
+    <td colspan="10">
+        <textarea class="form-control" readonly="readonly" style="height: @(30*rows)px;color: red" value="@Project.SpecialNotes"></textarea>
     </td>
 }
 

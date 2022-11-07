@@ -8,6 +8,7 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
     //BasicInfo
     public string OdpNumber { get; private set; }
     public string Name { get; private set; }
+    public DateTime DeliveryDate { get;private set; }//交货时间，重要
     public ProjectType ProjectType { get; private set; }
     public RiskLevel RiskLevel { get; private set; }
     public string? SpecialNotes { get; private set; }
@@ -17,11 +18,12 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
     public DateTime CreationTime { get; private set; }//创建时间，根据它来排序
 
     private Project() { }
-    public Project(Guid id, string odpNumber, string name, ProjectType projectType, RiskLevel riskLevel, string? specialNotes)
+    public Project(Guid id, string odpNumber, string name,DateTime deliveryDate, ProjectType projectType, RiskLevel riskLevel, string? specialNotes)
     {
         Id = id;
         OdpNumber= odpNumber;
         Name= name;
+        DeliveryDate = deliveryDate;
         ProjectType= projectType;
         RiskLevel= riskLevel;
         SpecialNotes= specialNotes;
@@ -36,6 +38,11 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
     public Project ChangeName(string name)
     {
         Name= name;
+        return this;
+    }
+    public Project ChangeDeliveryDate(DateTime deliveryDate)
+    {
+        DeliveryDate= deliveryDate;
         return this;
     }
     public Project ChangeProjectType(ProjectType projectType)

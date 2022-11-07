@@ -1,9 +1,17 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Project Tracking</PageTitle>
 
-<h1>Hello, world!</h1>
+<h3>项目跟踪信息</h3>
+<AuthorizeView>
+    <Authorized>
+        <span style="color: green">您好，@context.User.Identity.Name，展开右侧三角形，报告项目异常。</span>
 
-Welcome to your new app.
+    </Authorized>
+    <NotAuthorized>
+        <span style="color: red">报告项目异常请先登录！</span>
+    </NotAuthorized>
+</AuthorizeView>
+
 
 

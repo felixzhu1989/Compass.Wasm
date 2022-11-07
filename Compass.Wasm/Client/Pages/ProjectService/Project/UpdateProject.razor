@@ -30,6 +30,10 @@
         <input class="form-control" placeholder="Name" @bind-value="@project.Name" />
     </div>
     <div class="input-group mb-2">
+        <span class="input-group-text" style="color: red">交货日期</span>
+        <input type="date" class="form-control" style="color: red" @bind-value="@project.DeliveryDate" />
+    </div>
+    <div class="input-group mb-2">
         <span class="input-group-text">项目类型</span>
         <select class="form-select" @bind="@project.ProjectType">
             @foreach (var type in Enum.GetNames(typeof(ProjectType)))

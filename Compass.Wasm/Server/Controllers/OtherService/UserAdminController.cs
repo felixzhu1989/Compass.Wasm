@@ -2,7 +2,7 @@
 using Compass.Wasm.Server.IdentityService;
 using Compass.Wasm.Shared.IdentityService;
 
-namespace Compass.Wasm.Server.Controllers;
+namespace Compass.Wasm.Server.Controllers.OtherService;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -22,7 +22,7 @@ public class UserAdminController : ControllerBase
     [HttpGet("AllUsers")]
     public Task<UserResponse[]> FindAllUsers()
     {
-       return _userManager.Users.Select(x => new UserResponse(x.Id,x.UserName,x.Email,x.CreationTime)).ToArrayAsync();
+        return _userManager.Users.Select(x => new UserResponse(x.Id, x.UserName, x.Email, x.CreationTime)).ToArrayAsync();
     }
 
     [HttpGet("{id}")]
@@ -69,12 +69,12 @@ public class UserAdminController : ControllerBase
     }
 
     [HttpPut("Update/{id}")]
-    public async Task<ActionResult> UpdateAdminUser(Guid id, UpdateAdminRequest request)
+    public async Task<ActionResult> UpdateUser(Guid id, UpdateUserRequest request)
     {
         var user = await _repository.FindByIdAsync(id);
         if (user == null) return NotFound("用户没找到");
         user.UserName = request.UserName;
-        user.Email=request.Email;
+        user.Email = request.Email;
         await _userManager.UpdateAsync(user);
         return Ok();
     }
@@ -87,6 +87,26 @@ public class UserAdminController : ControllerBase
         //生成密码邮件发给对方
         var eventData = new ResetPasswordEvent(user.Id, user.UserName, password, user.Email);
         _eventBus.Publish("IdentityService.User.PasswordReset", eventData);
+        return Ok();
+    }
+    [HttpPut("ChangePwd/{id}")]
+    public async Task<ActionResult> ChangeUserPassword(Guid id, string password)
+    {
+        var user = await _repository.FindByIdAsync(id);
+        if (user == null) return NotFound("用户没找到");
+        await _repository.ChangePasswordAsync(id, password);
+        //生成密码邮件发给对方
+        var eventData = new ResetPasswordEvent(user.Id, user.UserName, password, user.Email);
+        _eventBus.Publish("IdentityService.User.PasswordReset", eventData);
+        return Ok();
+    }
+
+    [HttpPut("AddToRole/{id}")]
+    public async Task<ActionResult> UpdateUserRole(Guid id, string roleName)
+    {
+        var user = await _repository.FindByIdAsync(id);
+        if (user == null) return NotFound("用户没找到");
+        await _repository.AddToRoleAsync(user, roleName);
         return Ok();
     }
 }

@@ -33,11 +33,11 @@
     <thead>
         <tr>
             <th >项目编号</th>
+            <th>交货日期</th>
             <th style="width: 35%">项目名称</th>
             <th >项目分类</th>
             <th >风险等级</th>
-            <th>烟罩类型</th>
-            <th>工作量</th>
+            <th>描述信息</th>
             <th>合同</th>
             <th>领料单</th>
             <th>特殊要求</th>
@@ -81,7 +81,7 @@
 
     private void ShowAddProject()
     {
-        if (!isAddDrop) addProjectRequest = new AddProjectRequest();
+        if (!isAddDrop) addProjectRequest = new AddProjectRequest{DeliveryDate = DateTime.Today };
         isAddDrop = !isAddDrop;
     }
     private async Task SaveProject(AddProjectRequest request)

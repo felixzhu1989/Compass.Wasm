@@ -3,7 +3,7 @@ using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
 
-namespace Compass.Wasm.Server.Controllers;
+namespace Compass.Wasm.Server.Controllers.ProjectService;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -39,7 +39,7 @@ public class ModuleController : ControllerBase
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddModuleRequest request)
     {
-        var module = new Compass.ProjectService.Domain.Entities.Module(Guid.NewGuid(), request.DrawingId, request.ModelId, request.Name,request.SpecialNotes);
+        var module = new Compass.ProjectService.Domain.Entities.Module(Guid.NewGuid(), request.DrawingId, request.ModelId, request.Name, request.SpecialNotes);
         await _dbContext.Modules.AddAsync(module);
         return module.Id;
     }

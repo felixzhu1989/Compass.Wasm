@@ -16,7 +16,7 @@ public class PMRepository: IPMRepository
     public Task<IQueryable<Project>> GetProjectsAsync()
     {
         //return _context.Projects.OrderByDescending(x => x.CreationTime).ToListAsync();
-        return Task.FromResult(_context.Projects.OrderByDescending(x => x.CreationTime).AsQueryable());
+        return Task.FromResult(_context.Projects.OrderByDescending(x => x.DeliveryDate).AsQueryable());
     }
     public Task<Project?> GetProjectByIdAsync(Guid id)
     {

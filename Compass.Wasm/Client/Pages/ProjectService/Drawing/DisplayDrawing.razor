@@ -1,4 +1,5 @@
 ﻿@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Client.Pages.ProjectService.Module
 @inject HttpClient Http
 <tr>
     <td>
@@ -15,22 +16,12 @@
         }
     </td>
     <td>
-        <a href="@($"./modulelist/{Drawing.Id}")"><i class="bi bi-gear" /></a>
+        <a href="@($"./modulelist/{Drawing.Id}")" style="color: red"><i class="bi bi-diagram-3" /></a>
         @if (modules != null && modules.Length != 0)
         {
             foreach (var module in modules)
             {
-                <p>
-                    <i class="bi bi-bullseye" />
-                    <span style="font-weight: bold">@module.Name</span> <span>@module.Name</span><br />
-                    @if (!string.IsNullOrWhiteSpace(module.SpecialNotes))
-                    {
-                        foreach (var note in module.SpecialNotes.Split('\n'))
-                        {
-                            <span style="color: blue">@note</span><br />
-                        }
-                    }
-                </p>
+                <DisplayModule Module="module"/>
             }
         }
     </td>

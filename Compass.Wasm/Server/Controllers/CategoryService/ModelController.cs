@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace Compass.Wasm.Server.Controllers
+namespace Compass.Wasm.Server.Controllers.CategoryService
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -40,7 +40,7 @@ namespace Compass.Wasm.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Guid>> Add(AddModelRequest request)
         {
-            Model model = await _domainService.AddModelAsync(request.ProductId,request.Name,request.Workload);
+            Model model = await _domainService.AddModelAsync(request.ProductId, request.Name, request.Workload);
             await _dbContext.Models.AddAsync(model);
             return model.Id;
         }

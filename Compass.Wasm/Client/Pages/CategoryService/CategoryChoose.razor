@@ -25,7 +25,8 @@
     </div>
     <div class="col input-group mb-2">
         <span class="input-group-text">模型</span>
-        <select class="form-select" @onchange="OnModelChange">
+        @*https://www.itbaoku.cn/post/2252439.html*@
+        <select class="form-select" value="@ModelId" @onchange="OnModelChange">
             @if (models !=null)
             {
                 foreach (var model in models)
@@ -44,16 +45,22 @@
     [Parameter]
     public EventCallback<string> ModelIdChanged { get; set; }
 
-
     private ProductResponse[]? products;
     private ModelResponse[]? models;
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         products=await Http.GetFromJsonAsync<ProductResponse[]>("api/Product/All/0");
         models = await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{products.First().Id}");
-        await Refresh();
+        await base.OnInitializedAsync();
+        if (string.IsNullOrWhiteSpace(ModelId))
+        {
+            await Refresh();
+        }
+        else
+        {
+            await ModelIdChanged.InvokeAsync(ModelId);
+        }
     }
 
     async Task Refresh()

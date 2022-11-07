@@ -3,7 +3,7 @@ using Compass.Wasm.Shared.IdentityService;
 using System.Net;
 using System.Security.Claims;
 
-namespace Compass.Wasm.Server.Controllers;
+namespace Compass.Wasm.Server.Controllers.OtherService;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -48,7 +48,7 @@ public class LoginController : ControllerBase
     public async Task<ActionResult<UserResponse>> GetUserInfo()
     {
         //返回我的信息（当前登录用户）
-        Guid userId = Guid.Parse(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         var user = await _repository.FindByIdAsync(userId);
         if (user == null) return NotFound();//可能用户注销了
         //出于安全考虑，不要机密信息传递到客户端

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Compass.Wasm.Shared.ProjectService;
 
-namespace Compass.Wasm.Server.Controllers;
+namespace Compass.Wasm.Server.Controllers.ProjectService;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -16,7 +16,7 @@ public class ProjectController : ControllerBase
     private readonly IPMRepository _repository;
     private readonly IMapper _mapper;
 
-    public ProjectController(PMDomainService domainService,PMDbContext dbContext,IPMRepository repository,IMapper mapper)
+    public ProjectController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper)
     {
         _domainService = domainService;
         _dbContext = dbContext;
@@ -27,7 +27,7 @@ public class ProjectController : ControllerBase
     public async Task<ProjectResponse[]> FindAll()
     {
         //使用AutoMapper将Project转换成ProjectResponse（Dto）
-        return await _mapper.ProjectTo<ProjectResponse>( await _repository.GetProjectsAsync()).ToArrayAsync();
+        return await _mapper.ProjectTo<ProjectResponse>(await _repository.GetProjectsAsync()).ToArrayAsync();
     }
 
     [HttpGet("{id}")]
@@ -50,7 +50,7 @@ public class ProjectController : ControllerBase
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddProjectRequest request)
     {
-        var project = new Project(Guid.NewGuid(), request.OdpNumber.ToUpper(), request.Name, request.ProjectType, request.RiskLevel, request.SpecialNotes);
+        var project = new Project(Guid.NewGuid(), request.OdpNumber.ToUpper(), request.Name,request.DeliveryDate ,request.ProjectType, request.RiskLevel, request.SpecialNotes);
         //包括合同地址
         project.ChangeContractUrl(request.ContractUrl);
         await _dbContext.Projects.AddAsync(project);
@@ -64,6 +64,7 @@ public class ProjectController : ControllerBase
         if (project == null) return NotFound($"没有Id={id}的Project");
         //包括合同地址和Bom地址
         project.ChangeOdpNumber(request.OdpNumber).ChangeName(request.Name)
+            .ChangeDeliveryDate(request.DeliveryDate)
             .ChangeProjectType(request.ProjectType).ChangeRiskLevel(request.RiskLevel)
             .ChangeContractUrl(request.ContractUrl).ChangeBomUrl(request.BomUrl)
             .ChangeSpecialNotes(request.SpecialNotes);

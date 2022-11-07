@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Components
+@using Compass.Wasm.Client.ProjectService
+@using Compass.Wasm.Client.Pages.CategoryService
+
+<EditForm Model="Module" OnSubmit="Save">
+    <CategoryChoose @bind-ModelId="ModelId" />
+
+    <div class="input-group mb-2">
+        <span class="input-group-text">分段编号</span>
+        <input class="form-control" placeholder="M1,M2...B01,CJ01..." @bind-value="@Module.Name"/>
+    </div>
+
+    <div class="input-group mb-2">
+        <span class="input-group-text">特殊要求</span>
+        <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@Module.SpecialNotes"></textarea>
+    </div>
+
+    <button class="btn btn-success" type="submit">新增分段</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public AddModuleRequest? Module { get; set; }
+    [Parameter]
+    public EventCallback<AddModuleRequest> SaveModule { get; set; }
+    [Parameter]
+    public string ModelId { get; set; }
+    public Task Save()
+    {
+        Module.ModelId =Guid.Parse(ModelId); 
+        return SaveModule.InvokeAsync(Module);
+    }
+}
