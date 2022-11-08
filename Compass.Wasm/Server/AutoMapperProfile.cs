@@ -13,6 +13,9 @@ public class AutoMapperProfile : Profile
         //.ForMember(dest => dest.OdpNumber, opt => opt.MapFrom(src => $"{src.OdpNumber}"))
         CreateMap<Drawing, DrawingResponse>();
         CreateMap<Compass.ProjectService.Domain.Entities.Module, ModuleResponse>();
+        CreateMap<DrawingPlan, DrawingPlanResponse>();
+
+
         #endregion
 
         #region CategoryService

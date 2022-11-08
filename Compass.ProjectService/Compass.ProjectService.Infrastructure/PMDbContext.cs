@@ -10,7 +10,7 @@ public class PMDbContext:BaseDbContext
     public DbSet<Project> Projects { get; set; }
     public DbSet<Drawing> Drawings { get; set; }
     public DbSet<Module> Modules { get; set; }
-
+    public DbSet<DrawingPlan> DrawingsPlan { get; set; }
 
     public PMDbContext(DbContextOptions<PMDbContext> options, IMediator? mediator) : base(options, mediator)
     {

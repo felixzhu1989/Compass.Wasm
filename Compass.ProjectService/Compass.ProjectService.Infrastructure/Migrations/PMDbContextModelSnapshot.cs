@@ -57,9 +57,46 @@ namespace Compass.ProjectService.Infrastructure.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
 
+                    b.HasIndex("Id", "IsDeleted");
+
                     b.HasIndex("ProjectId", "IsDeleted");
 
                     b.ToTable("Drawings");
+                });
+
+            modelBuilder.Entity("Compass.ProjectService.Domain.Entities.DrawingPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ReleaseTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.HasIndex("Id", "IsDeleted");
+
+                    b.HasIndex("ProjectId", "IsDeleted");
+
+                    b.ToTable("DrawingsPlan");
                 });
 
             modelBuilder.Entity("Compass.ProjectService.Domain.Entities.Module", b =>
@@ -99,6 +136,8 @@ namespace Compass.ProjectService.Infrastructure.Migrations
 
                     b.HasIndex("DrawingId", "IsDeleted");
 
+                    b.HasIndex("Id", "IsDeleted");
+
                     b.ToTable("Modules");
                 });
 
@@ -135,7 +174,7 @@ namespace Compass.ProjectService.Infrastructure.Migrations
 
                     b.Property<string>("OdpNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ProjectType")
                         .HasColumnType("int");
@@ -149,6 +188,10 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.HasIndex("Id", "IsDeleted");
+
+                    b.HasIndex("OdpNumber", "IsDeleted");
 
                     b.ToTable("Projects");
                 });

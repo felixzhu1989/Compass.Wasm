@@ -10,5 +10,6 @@ public class ModuleConfig:IEntityTypeConfiguration<Module>
     {
         builder.HasKey(x => x.Id).IsClustered(false);
         builder.HasIndex(x => new { x.DrawingId, x.IsDeleted });//组合索引
+        builder.HasIndex(x => new { x.Id, x.IsDeleted });//组合索引
     }
 }

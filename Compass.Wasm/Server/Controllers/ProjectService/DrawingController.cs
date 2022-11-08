@@ -34,7 +34,7 @@ public class DrawingController : ControllerBase
     public async Task<ActionResult<DrawingResponse?>> FindById([RequiredGuid] Guid id)
     {
         var drawing = await _repository.GetDrawingByIdAsync(id);
-        if (drawing == null) return NotFound($"没有Id={id}的Project");
+        if (drawing == null) return NotFound($"没有Id={id}的Drawing");
         return _mapper.Map<DrawingResponse>(drawing);
     }
 
@@ -56,6 +56,7 @@ public class DrawingController : ControllerBase
             .ChangeDrawingUrl(request.DrawingUrl);
         return Ok();
     }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([RequiredGuid] Guid id)
     {

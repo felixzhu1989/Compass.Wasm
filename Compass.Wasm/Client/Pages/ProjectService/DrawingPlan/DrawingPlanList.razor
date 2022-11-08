@@ -1,0 +1,122 @@
+﻿@page "/drawingplan"
+@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Client.ProjectService
+
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Drawing Plan</PageTitle>
+
+<div class="row position-relative">
+    <div class="col">
+        <p>
+            <span class="badge   rounded-pill @(projectsCountNotPlanned == 0?"bg-success":"bg-danger")">@projectsCountNotPlanned</span>
+            <span>个未计划项目</span>
+        </p>
+        <span class="badge bg-secondary rounded-pill mb-2">生产周期=发货日期-发图日期</span>
+    </div>
+    @*todo:控制权限*@
+    <AuthorizeView Roles="admin,pm">
+        <Authorized>
+            <div class="position-absolute bottom-0 end-0" style="text-align: right">
+                <span class="btn mb-2" style="color: red" @onclick="ShowAddDrawingPlan">@(isAddDrop ? "▲" : "▼")</span>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+</div>
+
+
+
+@if (isAddDrop)
+{
+    <AddDrawingPlan DrawingPlan="addDrawingPlanRequest" SaveDrawingPlan="SaveDrawingPlan" />
+}
+@if (drawingsPlan==null)
+{
+    <p>制图计划加载中...</p>
+    <div class="row">
+        <div class="col-md-1 d-flex justify-content-center align-items-center time-line">
+            <span class="badge rounded-pill bg-primary">yyyy-MM-dd</span>
+        </div>
+        <div class="col-md-11 rounded-3 mb-2">
+            <div class="card rounded-3 border-0 shadow my-0">
+                <div class="card-body">
+                    <h5 class="card-title">OdpNumber</h5>
+                    <p class="card-text">List of user</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (drawingsPlan.Length==0)
+{
+    <p>没有要显示的制图计划.</p>
+}
+else
+{
+    <div class="pt-1">
+        @foreach (var drawingPlan in drawingsPlan)
+        {
+            <DisplayDrawingPlan DrawingPlan="drawingPlan" />
+        }
+    </div>
+}
+
+@code {
+    private DrawingPlanResponse[]? drawingsPlan;
+    private int projectsCountNotPlanned;
+    private AddDrawingPlanRequest? addDrawingPlanRequest;
+    private bool isAddDrop = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await RefreshData();
+    }
+    private void ShowAddDrawingPlan()
+    {
+        if (!isAddDrop) addDrawingPlanRequest = new AddDrawingPlanRequest();
+        isAddDrop = !isAddDrop;
+    }
+    private async Task SaveDrawingPlan(AddDrawingPlanRequest request)
+    {
+        isAddDrop = false; //收起添加项目
+        if (request.ProjectId.Equals(Guid.Empty))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "请选择项目");
+            return;
+        }
+        isAddDrop = false; //收起添加
+        var result = await Http.PostAsJsonAsync("api/DrawingPlan/Add", addDrawingPlanRequest);
+        if (result.IsSuccessStatusCode) await RefreshData();
+    }
+    async Task RefreshData()
+    {
+        projectsCountNotPlanned = (await Http.GetFromJsonAsync<ProjectResponse[]>("api/DrawingPlan/ProjectsNotPlanned"))!.Length;
+        drawingsPlan=await Http.GetFromJsonAsync<DrawingPlanResponse[]>("api/DrawingPlan/All");
+
+    }
+
+}
+
+
+@*竖直时间线样式*@
+<style>
+    .time-line {
+        position: relative;
+    }
+
+        .time-line:before {
+            background-color: #e7e7e7;
+            position: absolute;
+            content: "";
+            display: block;
+            width: 2px;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            z-index: -1;
+        }
+</style>

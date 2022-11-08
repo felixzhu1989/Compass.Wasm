@@ -3,6 +3,7 @@ using Compass.IdentityService.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Compass.IdentityService.Infrastructure;
@@ -48,9 +49,15 @@ public class IdRepository:IIdRepository
         return _userManager.AccessFailedAsync(user);
     }
 
-    public Task<IList<User>> FindAllDesigner()
+    public async Task<IEnumerable<User>> FindUsersByRoles(string roleNames)
     {
-       return _userManager.GetUsersInRoleAsync("designer");
+        IEnumerable<User> users=new List<User>();
+        var roles=roleNames.Split(',');
+        foreach (var role in roles)
+        {
+            users = users.Concat(await _userManager.GetUsersInRoleAsync(role));
+        }
+        return users;
     }
 
     public Task<string> GenerateChangePhoneNumberTokenAsync(User user, string phoneNumber)

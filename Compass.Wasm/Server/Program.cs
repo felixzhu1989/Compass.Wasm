@@ -148,19 +148,6 @@ builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp")
 
 #endregion
 
-#region ProjectService
-//数据库，DbContext
-builder.Services.AddDbContext<PMDbContext>(options =>
-{
-    //指定连接的数据库
-    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
-    options.UseSqlServer(connStr);
-});
-builder.Services.AddScoped<PMDomainService>();
-builder.Services.AddScoped<IPMRepository, PMRepository>();
-
-#endregion
-
 #region CategoryService
 //数据库，DbContext
 builder.Services.AddDbContext<CSDbContext>(options =>
@@ -172,6 +159,20 @@ builder.Services.AddDbContext<CSDbContext>(options =>
 builder.Services.AddScoped<CSDomainService>();
 builder.Services.AddScoped<ICSRepository, CSRepository>();
 #endregion
+
+#region ProjectService
+//数据库，DbContext
+builder.Services.AddDbContext<PMDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+builder.Services.AddScoped<PMDomainService>();
+builder.Services.AddScoped<IPMRepository, PMRepository>();
+#endregion
+
+
 
 
 

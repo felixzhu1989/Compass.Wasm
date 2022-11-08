@@ -1,5 +1,4 @@
-﻿using Compass.Wasm.Client.IdentityService;
-using Compass.Wasm.Server.IdentityService;
+﻿using Compass.Wasm.Server.IdentityService;
 using Compass.Wasm.Shared.IdentityService;
 
 namespace Compass.Wasm.Server.Controllers.OtherService;
@@ -20,9 +19,30 @@ public class UserAdminController : ControllerBase
     }
 
     [HttpGet("AllUsers")]
-    public Task<UserResponse[]> FindAllUsers()
+    public async Task<UserResponse[]> FindAllUsers()
     {
-        return _userManager.Users.Select(x => new UserResponse(x.Id, x.UserName, x.Email, x.CreationTime)).ToArrayAsync();
+        List<UserResponse> responses = new List<UserResponse>();
+        var users =_userManager.Users;
+        foreach (var user in users)
+        {
+            var roles = await _repository.GetRolesAsync(user);
+            responses.Add(new UserResponse(user.Id, user.UserName, user.Email, string.Join(',', roles), user.CreationTime));
+        }
+        return responses.ToArray();
+    }
+
+    //获取所有的设计师的请求"api/UserAdmin/UsersInRoles?roleNames=designer"
+    [HttpGet("UsersInRoles")]
+    public async Task<UserResponse[]> FindUsersByRoles(string roleNames)
+    {
+        List<UserResponse> responses = new List<UserResponse>();
+        var users =await _repository.FindUsersByRoles(roleNames);
+        foreach (var user in users)
+        {
+            var roles = await _repository.GetRolesAsync(user);
+            responses.Add(new UserResponse(user.Id, user.UserName, user.Email, string.Join(',', roles), user.CreationTime));
+        }
+        return responses.ToArray();
     }
 
     [HttpGet("{id}")]
@@ -30,7 +50,8 @@ public class UserAdminController : ControllerBase
     {
         var user = await _userManager.FindByIdAsync(id.ToString());
         if (user == null) return NotFound();
-        return new UserResponse(user.Id, user.UserName, user.Email, user.CreationTime);
+        var roles = await _repository.GetRolesAsync(user);
+        return new UserResponse(user.Id, user.UserName, user.Email,string.Join(',',roles), user.CreationTime);
     }
 
     [HttpPost("AddAdmin")]

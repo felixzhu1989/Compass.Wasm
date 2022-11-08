@@ -3,15 +3,20 @@
 @inject HttpClient Http
 <tr>
     <td>
-        <a href="@($"./updatedrawing/{Drawing.Id}")"><i class="bi bi-gear" /></a>
-        <span style="font-weight: bold">@Drawing.ItemNumber</span><br />
-        <span>图纸：</span><br />
+        <AuthorizeView Roles="admin,pm">
+            <Authorized>
+                <a href="@($"./updatedrawing/{Drawing.Id}")"><i class="bi bi-gear" /></a>
+            </Authorized>
+        </AuthorizeView>
+
+        <span style="font-weight: bold">@Drawing.ItemNumber</span><br/>
+        <span>图纸：</span><br/>
         @if (!string.IsNullOrWhiteSpace(Drawing.DrawingUrl))
         {
             foreach (var fileUrl in Drawing.DrawingUrl.Split('\n'))
             {
                 <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
-                <br />
+                <br/>
             }
         }
     </td>

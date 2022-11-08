@@ -12,5 +12,6 @@ public class DrawingConfig:IEntityTypeConfiguration<Drawing>
         //因此我们取消主键的默认的聚集索引
         builder.HasKey(x => x.Id).IsClustered(false);
         builder.HasIndex(x => new { x.ProjectId, x.IsDeleted });//组合索引
+        builder.HasIndex(x => new { x.Id, x.IsDeleted });//组合索引
     }
 }

@@ -2,10 +2,11 @@
 using Compass.ProjectService.Domain.Entities;
 using Compass.Wasm.Shared.ProjectService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Compass.ProjectService.Infrastructure;
 
-public class PMRepository: IPMRepository
+public class PMRepository : IPMRepository
 {
     private readonly PMDbContext _context;
     public PMRepository(PMDbContext context)
@@ -22,7 +23,7 @@ public class PMRepository: IPMRepository
     {
         return _context.Projects.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
-   
+
     public Task<Project?> GetProjectByOdpAsync(string odpNumber)
     {
         return _context.Projects.SingleOrDefaultAsync(x => x.OdpNumber.Contains(odpNumber));
@@ -34,8 +35,6 @@ public class PMRepository: IPMRepository
         return project.OdpNumber;
     }
     #endregion
-
-    
 
     #region Drawing
     public Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId)
@@ -58,6 +57,84 @@ public class PMRepository: IPMRepository
     public Task<Module?> GetModuleByIdAsync(Guid id)
     {
         return _context.Modules.SingleOrDefaultAsync(x => x.Id.Equals(id));
-    } 
+    }
     #endregion
+
+    #region DrawingPlan
+
+    public Task<IQueryable<DrawingPlan>> GetDrawingPlansAsync()
+    {
+        return Task.FromResult(_context.DrawingsPlan.OrderByDescending(x => x.ReleaseTime).AsQueryable());
+    }
+
+    public Task<DrawingPlan?> GetDrawingPlanByIdAsync(Guid id)
+    {
+        return _context.DrawingsPlan.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+    public Task<DrawingPlan?> GetDrawingPlanByProjectIdAsync(Guid projectId)
+    {
+        return _context.DrawingsPlan.SingleOrDefaultAsync(x => x.ProjectId.Equals(projectId));
+    }
+
+    public async Task<IEnumerable<Project>> GetProjectsNotDrawingPlannedAsync()
+    {
+        var projects =await _context.Projects.ToListAsync();//所有项目
+        var plannedProjects =await _context.DrawingsPlan.ToListAsync() ;//所有制图计划
+        var notDrawingPlannedProjects = projects.Where(x => !plannedProjects.Exists(dp => x.Id.Equals(dp.ProjectId)));
+        return notDrawingPlannedProjects;
+    }
+
+    public async Task<IEnumerable<Drawing>> GetDrawingsNotAssignedByProjectIdAsync(Guid projectId)
+    {
+        var drawings = await GetDrawingsByProjectIdAsync(projectId);
+        var notAssignedDrawings = new List<Drawing>();
+        foreach (var drawing in drawings)
+        {
+            if (drawing.UserId == null)//空的
+            {
+                notAssignedDrawings.Add(drawing);
+            }
+            else if (drawing.UserId.Equals(Guid.Empty))//全部是0
+            {
+                notAssignedDrawings.Add(drawing);
+            }
+        }
+        return notAssignedDrawings;
+    }
+
+    public async Task<Dictionary<Guid, List<Drawing>>> GetDrawingsAssignedByProjectIdAsync(Guid projectId)
+    {
+        var drawings = await GetDrawingsByProjectIdAsync(projectId);
+        var userIds = drawings.Where(x => !string.IsNullOrWhiteSpace(x.UserId.ToString())).Select(x => x.UserId).Distinct();
+        var assignedDrawings = new Dictionary<Guid, List<Drawing>>();
+        foreach (var userId in userIds.OfType<Guid>())
+        {
+            var drawingItems = drawings.Where(x => x.UserId.Equals(userId)).ToList();
+            assignedDrawings.Add(userId, drawingItems);
+        }
+        return assignedDrawings;
+    }
+
+    public async Task AssignDrawingsToUserAsync(List<Guid> drawingIds, Guid userId)
+    {
+        foreach (var drawingId in drawingIds)
+        {
+            var dbDrawing = await GetDrawingByIdAsync(drawingId);
+            dbDrawing.ChangeUserId(userId);
+        }
+    }
+
+    public int GetDrawingsCountByProjectId(Guid projectId)
+    {
+        return _context.Drawings.Count(x => x.ProjectId.Equals(projectId));
+    }
+
+    public int GetDrawingsCountNotAssignedByProjectId(Guid projectId)
+    {
+        return _context.Drawings.Count(x => x.ProjectId.Equals(projectId)&& string.IsNullOrWhiteSpace(x.UserId.ToString()));
+    }
+    #endregion
+
+
 }

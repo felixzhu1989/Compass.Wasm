@@ -11,11 +11,22 @@
         <p>
             @if (project != null)
             {
+                <AuthorizeView Roles="admin,pm">
+                    <Authorized>
+                        <a href="@($"./updateproject/{project.Id}")"><i class="bi bi-gear" /></a>
+                    </Authorized>
+                </AuthorizeView>
                 <span class="fs-5" style="font-weight: bold">@project.OdpNumber</span><br />
                 <span>@project.Name</span> <br/>
+                @*todo:控制权限*@
+                <AuthorizeView Roles="admin,pm,designer,quality,inspector">
+                    <Authorized>
+                    <span style="font-weight: bold">合同：</span>
+                    <a href="@project.ContractUrl" target="_blank">@(Path.GetFileName(project.ContractUrl))</a><br/>
+                    </Authorized>
+                </AuthorizeView>
                 
-                <span style="font-weight: bold">合同：</span>
-                <a href="@project.ContractUrl" target="_blank">@(Path.GetFileName(project.ContractUrl))</a><br />
+
                 <span style="font-weight: bold">BOM：</span>
                 <a href="@project.BomUrl" target="_blank">@(Path.GetFileName(project.BomUrl))</a><br/>
                 @if (!string.IsNullOrWhiteSpace(project.SpecialNotes))
@@ -39,7 +50,7 @@
     <AuthorizeView Roles="admin,pm">
         <Authorized>
             <div class="position-absolute bottom-0 end-0" style="text-align: right">
-                <button class="btn mb-2" style="color: red" @onclick="ShowAddDrawing">@(isAddDrop ? "▲" : "▼")</button>
+                <span class="btn mb-2" style="color: red" @onclick="ShowAddDrawing">@(isAddDrop ? "▲" : "▼")</span>
             </div>
         </Authorized>
     </AuthorizeView>
@@ -112,7 +123,7 @@
 
     private async Task SaveDrawing(AddDrawingRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.ItemNumber))
+        if ( string.IsNullOrWhiteSpace(request.ItemNumber))
         {
             await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
             return;

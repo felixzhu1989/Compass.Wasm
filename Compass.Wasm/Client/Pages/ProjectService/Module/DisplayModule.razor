@@ -4,7 +4,11 @@
 @inject HttpClient Http
 
 <p>
-    <a href="@($"./updatemodule/{Module.Id}")"><i class="bi bi-gear" /></a>
+    <AuthorizeView Roles="admin,pm,designer">
+        <Authorized>
+            <a href="@($"./updatemodule/{Module.Id}")"><i class="bi bi-gear" /></a>
+        </Authorized>
+    </AuthorizeView>
     <span style="font-weight: bold">@Module.Name</span>
     @if (model != null)
     {
@@ -12,10 +16,12 @@
     }
     @if (!string.IsNullOrWhiteSpace(Module.SpecialNotes))
     {
-            <br />
+        <br />
         foreach (var note in Module.SpecialNotes.Split('\n'))
         {
-            <span style="color: blue">@note</span><br />
+            <span style="color: blue">@note</span>
+
+            <br />
         }
     }
 </p>

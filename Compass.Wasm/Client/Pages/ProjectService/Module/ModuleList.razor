@@ -46,7 +46,7 @@
     <AuthorizeView Roles="admin,pm,designer">
         <Authorized>
             <div class="position-absolute bottom-0 end-0" style="text-align: right">
-                <button class="btn mb-2" style="color: red" @onclick="ShowAddModule">@(isAddDrop ? "▲" : "▼")</button>
+                <span class="btn mb-2" style="color: red" @onclick="ShowAddModule">@(isAddDrop ? "▲" : "▼")</span>
             </div>
         </Authorized>
     </AuthorizeView>

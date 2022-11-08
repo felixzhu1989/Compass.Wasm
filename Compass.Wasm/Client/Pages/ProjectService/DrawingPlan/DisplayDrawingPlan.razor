@@ -1,0 +1,88 @@
+﻿@using Compass.Wasm.Shared.ProjectService
+
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+<div class="row">
+    <div class="col-md-1 d-flex justify-content-center align-items-center time-line">
+        <span class="badge rounded-pill @(DrawingPlan.ReleaseTime<DateTime.Today?"bg-success":"bg-danger")  ">@DrawingPlan.ReleaseTime.ToString("yyyy-MM-dd")</span>
+    </div>
+    <div class="col-md-11 rounded-3 mb-2 @(DrawingPlan.ReleaseTime<DateTime.Today?"text-success":"") ">
+        <div class="card rounded-3 border-0 shadow-sm my-0">
+            <div class="card-body">
+                <h5 class="card-title">
+                    @if (project != null)
+                    {
+                        <span>@project.OdpNumber - @project.Name</span>
+                    }
+                </h5>
+                <p class="card-text">
+                    @if (project != null)
+                    {
+                        <span class="badge  rounded-pill @(project.DeliveryDate < DateTime.Today ? "bg-success" : "bg-danger") ">
+                            发货日期 @project.DeliveryDate.ToString("MM/dd")
+                            生产周期@(project.DeliveryDate.Subtract(DrawingPlan.ReleaseTime).Days)天
+                        </span>
+                    }
+                    <p>
+                        <span>预估工作量：</span>
+                    </p>
+                    
+
+                    @*<button class="btn btn-link" @onclick="Update"><i class="bi bi-gear" /></button>
+                    @if (DrawingPlan.AllDrawingsCount != 0)
+                    {
+                    <span>图纸总数<span class="badge bg-primary rounded-pill">@DrawingPlan.AllDrawingsCount</span> </span>
+                    }
+                    else
+                    {
+                    <span class="text-warning">未添加图纸</span>
+                    }*@
+                </p>
+                @*@if (DrawingPlan.DrawingAssigns.Count!=0)
+                {
+                @foreach (var drawingAssign in DrawingPlan.DrawingAssigns)
+                {
+                <p>
+                <span style="font-weight: bold"> @drawingAssign.Key.Name:</span>
+                <span>@(GetDrawingsDetail(drawingAssign.Value)) </span>
+                </p>
+                }
+
+                }
+                @if (DrawingPlan.NotAssignedCount!=0)
+                {
+                <p>未分配图纸数<span class="badge bg-danger rounded-pill">@DrawingPlan.NotAssignedCount</span> </p>
+                }*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public DrawingPlanResponse DrawingPlan { get; set; }
+
+    private ProjectResponse project;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{DrawingPlan.ProjectId}");
+    }
+
+    public void Update()
+    {
+        NavigationManager.NavigateTo($"./updatedrawingplan/{DrawingPlan.Id}");
+    }
+
+    private string GetDrawingsDetail(List<DrawingResponse> list)
+    {
+        List<string> detail = new List<string>();
+        foreach (var item in list)
+        {
+            detail.Add(item.ItemNumber);
+        }
+        return string.Join("、", detail);
+    }
+}

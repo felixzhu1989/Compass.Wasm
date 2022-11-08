@@ -51,9 +51,10 @@ public class LoginController : ControllerBase
         Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         var user = await _repository.FindByIdAsync(userId);
         if (user == null) return NotFound();//可能用户注销了
+        var roles = await _repository.GetRolesAsync(user);
         //出于安全考虑，不要机密信息传递到客户端
         //除非确认没问题，否则尽量不要直接把实体类对象返回给前端
-        return new UserResponse(user.Id, user.UserName, user.Email, user.CreationTime);
+        return new UserResponse(user.Id, user.UserName, user.Email,string.Join(',',roles), user.CreationTime);
     }
     [HttpPost("ChangePwd")]
     //[Authorize]

@@ -1,0 +1,46 @@
+﻿@using Compass.Wasm.Client.ProjectService
+@using Compass.Wasm.Shared.ProjectService
+@using Microsoft.AspNetCore.Components
+@inject HttpClient Http
+
+@if (projectsNotPlanned != null&& projectsNotPlanned.Length!=0)
+{
+    <EditForm Model="DrawingPlan" OnSubmit="Save">
+        <div class="input-group mb-2">
+            <span class="input-group-text">选择项目</span>
+            <select class="form-select" @bind="@DrawingPlan.ProjectId">
+                @foreach (var project in projectsNotPlanned)
+                {
+                    <option value="@project.Id">
+                        @project.OdpNumber【@project.DeliveryDate.ToString("MM/dd")】@project.Name
+                    </option>
+                }
+            </select>
+        </div>
+
+        <div class="input-group mb-2">
+            <span class="input-group-text">计划发图</span>
+            <input type="date" class="form-control" @bind-value="@DrawingPlan.ReleaseTime" />
+        </div>
+        <button class="btn btn-success" type="submit">新增制图计划</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public AddDrawingPlanRequest? DrawingPlan { get; set; }
+    [Parameter]
+    public EventCallback<AddDrawingPlanRequest> SaveDrawingPlan { get; set; }
+
+    private ProjectResponse[]? projectsNotPlanned;
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        projectsNotPlanned = await Http.GetFromJsonAsync<ProjectResponse[]>("api/DrawingPlan/ProjectsNotPlanned");
+        DrawingPlan.ReleaseTime=DateTime.Now;//将日期定到今天吗，这样好改动
+    }
+    public Task Save()
+    {
+        return SaveDrawingPlan.InvokeAsync(DrawingPlan);
+    }
+}
