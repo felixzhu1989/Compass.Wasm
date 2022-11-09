@@ -1,79 +1,85 @@
 ﻿@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Shared.CategoryService
+@using AsmResolver.DotNet.Resources
+@using Compass.Wasm.Shared.IdentityService
 
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
-<div class="row">
-    <div class="col-md-1 d-flex justify-content-center align-items-center time-line">
-        <span class="badge rounded-pill @(DrawingPlan.ReleaseTime<DateTime.Today?"bg-success":"bg-danger")  ">@DrawingPlan.ReleaseTime.ToString("yyyy-MM-dd")</span>
-    </div>
-    <div class="col-md-11 rounded-3 mb-2 @(DrawingPlan.ReleaseTime<DateTime.Today?"text-success":"") ">
-        <div class="card rounded-3 border-0 shadow-sm my-0">
-            <div class="card-body">
-                <h5 class="card-title">
-                    @if (project != null)
-                    {
-                        <span>@project.OdpNumber - @project.Name</span>
-                    }
-                </h5>
-                <p class="card-text">
-                    @if (project != null)
-                    {
-                        <span class="badge  rounded-pill @(project.DeliveryDate < DateTime.Today ? "bg-success" : "bg-danger") ">
-                            发货日期 @project.DeliveryDate.ToString("MM/dd")
-                            生产周期@(project.DeliveryDate.Subtract(DrawingPlan.ReleaseTime).Days)天
-                        </span>
-                    }
-                    <p>
-                        <span>预估工作量：</span>
-                    </p>
-                    
-
-                    @*<button class="btn btn-link" @onclick="Update"><i class="bi bi-gear" /></button>
-                    @if (DrawingPlan.AllDrawingsCount != 0)
-                    {
-                    <span>图纸总数<span class="badge bg-primary rounded-pill">@DrawingPlan.AllDrawingsCount</span> </span>
-                    }
-                    else
-                    {
-                    <span class="text-warning">未添加图纸</span>
-                    }*@
-                </p>
-                @*@if (DrawingPlan.DrawingAssigns.Count!=0)
-                {
-                @foreach (var drawingAssign in DrawingPlan.DrawingAssigns)
-                {
-                <p>
-                <span style="font-weight: bold"> @drawingAssign.Key.Name:</span>
-                <span>@(GetDrawingsDetail(drawingAssign.Value)) </span>
-                </p>
-                }
-
-                }
-                @if (DrawingPlan.NotAssignedCount!=0)
-                {
-                <p>未分配图纸数<span class="badge bg-danger rounded-pill">@DrawingPlan.NotAssignedCount</span> </p>
-                }*@
-
-            </div>
+    <div class="row">
+        <div class="col-md-1 d-flex justify-content-center align-items-center time-line">
+            <span class="badge rounded-pill @(DrawingPlan.ReleaseTime<DateTime.Today?"bg-success":"bg-warning text-dark")  ">@DrawingPlan.ReleaseTime.ToString("yyyy-MM-dd")</span>
         </div>
-    </div>
-</div>
+        @if (project != null)
+        {
+            <div class="col-md-11 rounded-3 mb-2 @(project.DeliveryDate < DateTime.Today ? "text-success" : "") ">
+                <div class="card rounded-3 border-0 shadow-sm my-0">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <AuthorizeView Roles="admin,pm">
+                                <Authorized>
+                                    <a href="./updatedrawingplan/@DrawingPlan.Id"><i class="bi bi-gear" /></a>
+                                </Authorized>
+                            </AuthorizeView>
+                            <a href="./drawinglist/@project.Id">@project.OdpNumber</a>
+                        </h5>
+                        <p class="card-text">
+                            <span>@project.Name</span><br />
+                            <span class="badge  @(project.DeliveryDate < DateTime.Today ? "bg-success" : "bg-warning text-dark") ">
+                                发货日期 @project.DeliveryDate.ToString("MM/dd")
+                                生产周期@(project.DeliveryDate.Subtract(DrawingPlan.ReleaseTime).Days)天
+                            </span>
 
+                            <span>预估工作量：@totalWorkload ；@workloadSummary</span><br />
+
+
+                            @if (totalDrawings != 0)
+                            {
+                                <span>图纸总数</span>
+                                <span class="badge bg-primary rounded-pill">@totalDrawings</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">未添加图纸</span>
+                            }
+                            @if (drawingsCountNotAssigned!=0)
+                            {
+                                <span>；未分配图纸数</span>
+                                <span class="badge bg-danger rounded-pill">@drawingsCountNotAssigned</span>
+                            }
+                            @if (assignedDrawingsSummary.Any())
+                            {
+                                <br />
+                                @foreach (var d in assignedDrawingsSummary)
+                                {
+                                    <span style="font-weight: bold">@d.Key :</span>
+                                    <span>@d.Value </span><br />
+                                }
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 @code {
     [Parameter]
     public DrawingPlanResponse DrawingPlan { get; set; }
 
-    private ProjectResponse project;
+    private ProjectResponse? project;
+
+    string? workloadSummary;
+    double totalWorkload;
+    int totalDrawings;
+    int drawingsCountNotAssigned;
+    Dictionary<string, string> assignedDrawingsSummary = new();
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{DrawingPlan.ProjectId}");
-    }
-
-    public void Update()
-    {
-        NavigationManager.NavigateTo($"./updatedrawingplan/{DrawingPlan.Id}");
+        project = await Http.GetFromJsonAsync<ProjectResponse?>($"api/Project/{DrawingPlan.ProjectId}");
+        await GetProjectWorkload();
+        await GetDrawingsCount();
+        await GetDrawingsAssigned();
     }
 
     private string GetDrawingsDetail(List<DrawingResponse> list)
@@ -84,5 +90,48 @@
             detail.Add(item.ItemNumber);
         }
         return string.Join("、", detail);
+    }
+
+    private async Task GetProjectWorkload()
+    {
+        Dictionary<string, double> workload = new Dictionary<string, double>();
+        //首先获取订单中所有的图纸（Item）
+        var drawings = await Http.GetFromJsonAsync<DrawingResponse[]>($"api/Drawing/All/{DrawingPlan.ProjectId}");
+        foreach (var drawing in drawings)
+        {
+            var modules = await Http.GetFromJsonAsync<ModuleResponse[]>($"api/Module/All/{drawing.Id}");
+            foreach (var module in modules)
+            {
+                var model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{module.ModelId}");
+                if (workload.ContainsKey(model.Name)) workload[model.Name] += model.Workload;
+                else workload.Add(model.Name, model.Workload);
+            }
+        }
+        foreach (var d in workload)
+        {
+            workloadSummary+=$"({d.Key}:{d.Value})";
+            totalWorkload += d.Value;
+        }
+    }
+
+    private async Task GetDrawingsCount()
+    {
+        totalDrawings = (await Http.GetFromJsonAsync<DrawingResponse[]>($"api/Drawing/All/{DrawingPlan.ProjectId}"))!.Length;
+        drawingsCountNotAssigned=(await Http.GetFromJsonAsync<DrawingResponse[]>($"api/DrawingPlan/DrawingsNotAssigned/{DrawingPlan.ProjectId}"))!.Length;
+    }
+
+    private async Task GetDrawingsAssigned()
+    {
+        var dic = await Http.GetFromJsonAsync<Dictionary<Guid, DrawingResponse[]>>($"api/DrawingPlan/DrawingsAssigned/{DrawingPlan.ProjectId}");
+        foreach (var d in dic)
+        {
+            var user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{d.Key}");
+            List<string> itemNumbers = new List<string>();
+            foreach (var r in d.Value)
+            {
+                itemNumbers.Add(r.ItemNumber);
+            }
+            assignedDrawingsSummary.Add(user.UserName, string.Join(',', itemNumbers));
+        }
     }
 }

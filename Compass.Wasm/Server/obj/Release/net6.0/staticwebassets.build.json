@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "aX1RSoOSObifhHLITj4OjYPLEfGPOEHnrQuvu5uVYFQ=",
+  "Hash": "tgVeagnRtZ+WYIrLpCV2jyxv8P+GOAIse+vVuZ/MKtA=",
   "Source": "Compass.Wasm.Server",
   "BasePath": "_content/Compass.Wasm.Server",
   "Mode": "Default",
@@ -39542,6 +39542,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\2022\\11\\54eab248cc0a5289a4d44fa755a03da16cee16eb6deab2b67e47de81d2b16455\\CLK-36.pdf"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\11\\61207161131f389635ee030c03cbc76cc53e84442fe7884f37fbc57be0df0d05\\FSO220419.pdf",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/11/61207161131f389635ee030c03cbc76cc53e84442fe7884f37fbc57be0df0d05/FSO220419.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\11\\61207161131f389635ee030c03cbc76cc53e84442fe7884f37fbc57be0df0d05\\FSO220419.pdf"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\11\\d1da413823c75668dbc8bbf22525de2237ac38f0d72f23e046d7b48473fc1cd5\\CLK-48.pdf",

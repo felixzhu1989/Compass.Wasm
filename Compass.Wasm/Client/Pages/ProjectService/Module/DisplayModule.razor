@@ -6,7 +6,7 @@
 <p>
     <AuthorizeView Roles="admin,pm,designer">
         <Authorized>
-            <a href="@($"./updatemodule/{Module.Id}")"><i class="bi bi-gear" /></a>
+            <a href="./updatemodule/@Module.Id"><i class="bi bi-gear" /></a>
         </Authorized>
     </AuthorizeView>
     <span style="font-weight: bold">@Module.Name</span>

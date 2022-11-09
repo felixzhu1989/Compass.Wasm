@@ -5,7 +5,7 @@
     <td>
         <AuthorizeView Roles="admin,pm">
             <Authorized>
-                <a href="@($"./updatedrawing/{Drawing.Id}")"><i class="bi bi-gear" /></a>
+                <a href="./updatedrawing/@Drawing.Id"><i class="bi bi-gear" /></a>
             </Authorized>
         </AuthorizeView>
 
@@ -21,7 +21,7 @@
         }
     </td>
     <td>
-        <a href="@($"./modulelist/{Drawing.Id}")" style="color: red"><i class="bi bi-diagram-3" /></a>
+        <a href="./modulelist/@Drawing.Id" style="color: red"><i class="bi bi-diagram-3" /></a>
         @if (modules != null && modules.Length != 0)
         {
             foreach (var module in modules)

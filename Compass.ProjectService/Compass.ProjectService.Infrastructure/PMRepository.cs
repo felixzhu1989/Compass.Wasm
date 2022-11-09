@@ -103,20 +103,24 @@ public class PMRepository : IPMRepository
         return notAssignedDrawings;
     }
 
-    public async Task<Dictionary<Guid, List<Drawing>>> GetDrawingsAssignedByProjectIdAsync(Guid projectId)
+    public async Task<Dictionary<Guid?, IQueryable<Drawing>>> GetDrawingsAssignedByProjectIdAsync(Guid projectId)
     {
         var drawings = await GetDrawingsByProjectIdAsync(projectId);
         var userIds = drawings.Where(x => !string.IsNullOrWhiteSpace(x.UserId.ToString())).Select(x => x.UserId).Distinct();
-        var assignedDrawings = new Dictionary<Guid, List<Drawing>>();
-        foreach (var userId in userIds.OfType<Guid>())
+        var assignedDrawings = new Dictionary<Guid?, IQueryable<Drawing>>();
+        if (userIds != null && userIds.Count()!=0)
         {
-            var drawingItems = drawings.Where(x => x.UserId.Equals(userId)).ToList();
-            assignedDrawings.Add(userId, drawingItems);
+            //userIds.OfType<Guid>()
+            foreach (var userId in userIds)
+            {
+                var items = drawings.Where(x => x.UserId.Equals(userId));
+                assignedDrawings.Add(userId, items);
+            }
         }
         return assignedDrawings;
     }
 
-    public async Task AssignDrawingsToUserAsync(List<Guid> drawingIds, Guid userId)
+    public async Task AssignDrawingsToUserAsync(IEnumerable<Guid> drawingIds, Guid userId)
     {
         foreach (var drawingId in drawingIds)
         {

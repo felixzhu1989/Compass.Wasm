@@ -34,9 +34,9 @@ builder.Services.AddFluentValidationAutoValidation()
 builder.Services.AddLogging(loggingBuilder =>
 {
     Log.Logger = new LoggerConfiguration()
-        .MinimumLevel.Information()
+        .MinimumLevel.Warning()
         .Enrich.FromLogContext()
-        .WriteTo.Console()
+        //.WriteTo.Console()
         .WriteTo.File($"d:/compass.log/compass.wasm.log") //记录日志到文件
         .CreateLogger();
     loggingBuilder.AddSerilog();

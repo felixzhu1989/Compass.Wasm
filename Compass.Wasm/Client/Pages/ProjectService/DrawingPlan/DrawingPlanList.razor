@@ -4,6 +4,7 @@
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
 
 <PageTitle>Drawing Plan</PageTitle>
 
@@ -88,13 +89,15 @@ else
         }
         isAddDrop = false; //收起添加
         var result = await Http.PostAsJsonAsync("api/DrawingPlan/Add", addDrawingPlanRequest);
-        if (result.IsSuccessStatusCode) await RefreshData();
+        if (result.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("./projectlist");
+        }
     }
     async Task RefreshData()
     {
         projectsCountNotPlanned = (await Http.GetFromJsonAsync<ProjectResponse[]>("api/DrawingPlan/ProjectsNotPlanned"))!.Length;
         drawingsPlan=await Http.GetFromJsonAsync<DrawingPlanResponse[]>("api/DrawingPlan/All");
-
     }
 
 }

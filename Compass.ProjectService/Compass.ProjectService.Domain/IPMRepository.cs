@@ -28,8 +28,8 @@ public interface IPMRepository
     //编制计划时查找项目中那些图纸没有分配人员
     Task<IEnumerable<Drawing>> GetDrawingsNotAssignedByProjectIdAsync(Guid projectId);
     //编制计划时查找项目中那些图纸已经分配人员，并按照人员分组
-    Task<Dictionary<Guid, List<Drawing>>> GetDrawingsAssignedByProjectIdAsync(Guid projectId);
-    Task AssignDrawingsToUserAsync(List<Guid> drawingIds, Guid userId);
+    Task<Dictionary<Guid?, IQueryable<Drawing>>> GetDrawingsAssignedByProjectIdAsync(Guid projectId);
+    Task AssignDrawingsToUserAsync(IEnumerable<Guid> drawingIds, Guid userId);
     int GetDrawingsCountByProjectId(Guid projectId);
     int GetDrawingsCountNotAssignedByProjectId(Guid projectId);
 }

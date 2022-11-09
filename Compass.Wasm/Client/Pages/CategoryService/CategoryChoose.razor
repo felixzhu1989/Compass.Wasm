@@ -47,7 +47,6 @@
 
     private ProductResponse[]? products;
     private ModelResponse[]? models;
-
     protected override async Task OnInitializedAsync()
     {
         products=await Http.GetFromJsonAsync<ProductResponse[]>("api/Product/All/0");

@@ -13,7 +13,7 @@
             {
                 <AuthorizeView Roles="admin,pm">
                     <Authorized>
-                        <a href="@($"./updateproject/{project.Id}")"><i class="bi bi-gear" /></a>
+                        <a href="./updateproject/@project.Id"><i class="bi bi-gear" /></a>
                     </Authorized>
                 </AuthorizeView>
                 <span class="fs-5" style="font-weight: bold">@project.OdpNumber</span><br />

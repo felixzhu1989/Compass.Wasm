@@ -1,0 +1,86 @@
+﻿@page "/updatedrawingplan/{Id}"
+@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Shared.IdentityService
+@using Compass.Wasm.Client.ProjectService
+
+
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<PageTitle>Update Drawing Plan</PageTitle>
+
+@if (drawingPlan != null)
+{
+    <DisplayDrawingPlan DrawingPlan="drawingPlan"></DisplayDrawingPlan>
+}
+@if (drawingsNotAssigned != null&&drawingsNotAssigned.Length !=0)
+{
+    <EditForm Model="drawingsNotAssigned" OnSubmit="Save">
+
+        @foreach (var drawing in drawingsNotAssigned)
+        {
+            <div class="form-control mb-2">
+                <input class="form-check-input" type="checkbox" @bind-value="@drawing.IsChecked" />
+                <label class="form-check-label">@drawing.ItemNumber</label>
+            </div>
+        }
+
+        @if (designers!=null)
+        {
+            <div class="input-group mb-2">
+                <span class="input-group-text">制图人</span>
+                <select class="form-select" @bind="@selectedUserId">
+                    @foreach (var user in designers)
+                    {
+                        <option value="@user.Id">@user.UserName</option>
+                    }
+                </select>
+            </div>
+        }
+        <button class="btn btn-success" type="submit">分配图纸</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private DrawingPlanResponse? drawingPlan;
+    DrawingResponse[]? drawingsNotAssigned;
+    UserResponse[]? designers;
+    Guid selectedUserId;
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        await RefreshData();
+    }
+
+    async Task RefreshData()
+    {
+        drawingPlan =await Http.GetFromJsonAsync<DrawingPlanResponse>($"api/DrawingPlan/{Id}");
+        drawingsNotAssigned = await Http.GetFromJsonAsync<DrawingResponse[]>($"api/DrawingPlan/DrawingsNotAssigned/{drawingPlan!.ProjectId}");
+        designers = await Http.GetFromJsonAsync<UserResponse[]>("api/UserAdmin/UsersInRoles?roleNames=pm,designer");
+    }
+
+    async Task Save()
+    {
+        //将勾选的Item图纸，分配给选中的designer（过滤未选中的Item）
+        if (selectedUserId.Equals(Guid.Empty))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "请选择制图人");
+            return;
+        }
+        var selectedDrawings = drawingsNotAssigned.Where(x => x.IsChecked).Select(x => x.Id);
+        if (!selectedDrawings.Any())
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "请选择Item图纸");
+            return;
+        }
+        AssignDrawingsToUserRequest request = new AssignDrawingsToUserRequest{
+            DrawingIds = selectedDrawings, UserId = selectedUserId
+        };
+        await Http.PutAsJsonAsync("api/DrawingPlan/AssignDrawingsToUser",request);
+        NavigationManager.NavigateTo("./drawingplan");
+    }
+}

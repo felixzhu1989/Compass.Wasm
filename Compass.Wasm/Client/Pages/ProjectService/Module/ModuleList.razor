@@ -13,7 +13,7 @@
                 <span class="fs-5" style="font-weight: bold">
                     @if (project != null)
                     {
-                        <a href="@($"./drawinglist/{project.Id}")">@project.OdpNumber</a>
+                        <a href="./drawinglist/@project.Id">@project.OdpNumber</a>
                         <br />
                     }
                     @drawing.ItemNumber

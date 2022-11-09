@@ -77,10 +77,19 @@ namespace Compass.Wasm.Server.Controllers.ProjectService
             //return await _mapper.ProjectTo<DrawingResponse>(await _repository.GetDrawingsNotAssignedByProjectIdAsync(projectId)).ToArrayAsync();
         }
 
-
-
-
-
+        [HttpGet("DrawingsAssigned/{projectId}")]
+        public async  Task<Dictionary<Guid, DrawingResponse[]>> FindDrawingsAssigned([RequiredGuid] Guid projectId)
+        {
+            var dic = await _repository.GetDrawingsAssignedByProjectIdAsync(projectId);
+            var responses = new Dictionary<Guid, DrawingResponse[]>();
+            foreach (var d in dic)
+            {
+                //将Drawing类型使用AutoMapper转换成DrawingResponse
+                responses.Add(d.Key.GetValueOrDefault(),await _mapper.ProjectTo<DrawingResponse>(d.Value).ToArrayAsync());
+            }
+            return responses;
+        }
+        
         [HttpPost("Add")]
         public async Task<ActionResult<Guid>> Add(AddDrawingPlanRequest request)
         {
@@ -96,6 +105,13 @@ namespace Compass.Wasm.Server.Controllers.ProjectService
             if (drawingPlan == null) return NotFound($"没有Id={id}的DrawingPlan");
             drawingPlan.ChangeReleaseTime(request.ReleaseTime);
             return Ok();
+        }
+
+        [HttpPut("AssignDrawingsToUser")]
+        public async Task<ActionResult> AssignDrawingsToUser(AssignDrawingsToUserRequest request)
+        {
+           await  _repository.AssignDrawingsToUserAsync(request.DrawingIds, request.UserId);
+           return Ok();
         }
 
         [HttpDelete("{id}")]

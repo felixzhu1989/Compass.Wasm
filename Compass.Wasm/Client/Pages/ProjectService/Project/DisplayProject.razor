@@ -6,10 +6,10 @@
     <td>
         <AuthorizeView Roles="admin,pm">
             <Authorized>
-                <a href="@($"./updateproject/{Project.Id}")"><i class="bi bi-gear" /></a>
+                <a href="./updateproject/@Project.Id"><i class="bi bi-gear" /></a>
             </Authorized>
         </AuthorizeView>
-        <a href="@($"./drawinglist/{Project.Id}")">@Project.OdpNumber</a>
+        <a href="./drawinglist/@Project.Id">@Project.OdpNumber</a>
     </td>
     <td style="@(Project.DeliveryDate<DateTime.Today?"font-weight: bold;color: green":"font-weight: bold;")">@Project.DeliveryDate.ToString("MM/dd")</td>
     <td>@Project.Name</td>
