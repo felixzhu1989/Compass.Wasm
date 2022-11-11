@@ -1,6 +1,7 @@
 ﻿using Compass.CategoryService.Domain;
 using Compass.CategoryService.Domain.Entities;
 using Compass.Wasm.Shared.CategoryService;
+using Compass.Wasm.Shared.ProjectService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Compass.CategoryService.Infrastructure;
@@ -12,19 +13,21 @@ public class CSRepository : ICSRepository
     {
         _context = context;
     }
+
+    #region ProductCategory
     public Task<Product?> GetProductByIdAsync(Guid id)
     {
-        return _context.Products.SingleOrDefaultAsync(x=>x.Id.Equals(id));
+        return _context.Products.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
 
     public Task<IQueryable<Product>> GetProductsAsync(Sbu sbu)
     {
-        return Task.FromResult(_context.Products.Where(x=>x.Sbu.Equals(sbu)).OrderBy(x => x.SequenceNumber).AsQueryable());
+        return Task.FromResult(_context.Products.Where(x => x.Sbu.Equals(sbu)).OrderBy(x => x.SequenceNumber).AsQueryable());
     }
 
     public async Task<int> GetMaxSeqOfProductsAsync(Sbu sbu)
     {
-        var maxSeq = await _context.Query<Product>().Where(x=>x.Sbu.Equals(sbu)).MaxAsync(x => (int?)x.SequenceNumber);
+        var maxSeq = await _context.Query<Product>().Where(x => x.Sbu.Equals(sbu)).MaxAsync(x => (int?)x.SequenceNumber);
         return maxSeq ?? 0;
     }
 
@@ -43,4 +46,17 @@ public class CSRepository : ICSRepository
         var maxSeq = await _context.Query<Model>().Where(x => x.ProductId.Equals(productId)).MaxAsync(x => (int?)x.SequenceNumber);
         return maxSeq ?? 0;
     }
+    #endregion
+
+    #region IssueType
+    public Task<IssueType?> GetIssueTypeByIdAsync(Guid id)
+    {
+        return _context.IssueTypes.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+    public Task<IQueryable<IssueType>> GetIssueTypesAsync(Stakeholder stakeholder)
+    {
+        return Task.FromResult(_context.IssueTypes.Where(x => x.Stakeholder.Equals(stakeholder)).AsQueryable());
+    } 
+    #endregion
 }

@@ -13,3 +13,17 @@ public enum RiskLevel
 {
     低风险, 中风险, 高风险
 }
+/// <summary>
+/// 项目状态
+/// </summary>
+public enum ProjectStatus
+{
+    计划,制图,生产,检验,完工,结束
+}
+/// <summary>
+/// 相关方
+/// </summary>
+public enum Stakeholder
+{
+    客户,销售,技术,采购,生产,物流
+}

@@ -21,6 +21,7 @@ public class AutoMapperProfile : Profile
         #region CategoryService
         CreateMap<Product, ProductResponse>();
         CreateMap<Model, ModelResponse>();
+        CreateMap<IssueType, IssueTypeResponse>();
         #endregion
     }
 }

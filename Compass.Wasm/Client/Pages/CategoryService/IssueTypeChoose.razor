@@ -1,0 +1,67 @@
+﻿@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Shared.CategoryService
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<div class="row">
+    <div class="col input-group mb-2" style="width: 100px">
+        <span class="input-group-text">相关方</span>
+        <select class="form-select" @onchange="OnStakeholderChange">
+            @foreach (var stakeholder in Enum.GetNames(typeof(Stakeholder)))
+            {
+                <option>@stakeholder</option>
+            }
+        </select>
+    </div>
+    <div class="col input-group mb-2">
+        <span class="input-group-text">异常类型</span>
+        <select class="form-select" value="@IssueTypeId" @onchange="OnIssueTypeChange">
+            @if (issueTypes !=null)
+            {
+                foreach (var issueType in issueTypes)
+                {
+                    <option value="@issueType.Id">@issueType.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col"><span class="input-group-text">@IssueTypeId</span></div>
+</div>
+@code {
+    [Parameter]
+    public string IssueTypeId { get; set; }
+    [Parameter]
+    public EventCallback<string> IssueTypeIdChanged { get; set; }
+
+    private IssueTypeResponse[]? issueTypes;
+    protected override async Task OnInitializedAsync()
+    {
+        issueTypes=await Http.GetFromJsonAsync<IssueTypeResponse[]>($"api/IssueType/All/0");
+        await base.OnInitializedAsync();
+        if (string.IsNullOrWhiteSpace(IssueTypeId))
+        {
+            await Refresh();
+        }
+        else
+        {
+            await IssueTypeIdChanged.InvokeAsync(IssueTypeId);
+        }
+    }
+    async Task Refresh()
+    {
+        IssueTypeId =issueTypes.First().Id.ToString();
+        await IssueTypeIdChanged.InvokeAsync(IssueTypeId);
+    }
+    
+    async Task OnStakeholderChange(ChangeEventArgs e)
+    {
+        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
+        issueTypes=await Http.GetFromJsonAsync<IssueTypeResponse[]>($"api/IssueType/All/{e.Value:int}");
+        await Refresh();
+    }
+    async Task OnIssueTypeChange(ChangeEventArgs e)
+    {
+        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
+        IssueTypeId =e.Value!.ToString()!;
+        await IssueTypeIdChanged.InvokeAsync(IssueTypeId);
+    }
+}

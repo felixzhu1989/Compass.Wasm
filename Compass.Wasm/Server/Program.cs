@@ -72,6 +72,7 @@ builder.Services.AddEventBus("Compass.Wasm", Assembly.GetExecutingAssembly());
 #region Redis
 //RedisÎ´¿ªÆô£¿wsl
 //sudo service redis-server start
+//ÃÜÂë123
 //redis-cli
 //ping
 //keys *

@@ -1,5 +1,5 @@
 ﻿@page "/"
-
+@using Compass.Wasm.Client.Pages.CategoryService
 <PageTitle>Project Tracking</PageTitle>
 
 <h3>项目跟踪信息</h3>
@@ -13,5 +13,10 @@
     </NotAuthorized>
 </AuthorizeView>
 
+<IssueTypeChoose @bind-IssueTypeId="IssueTypeId" />
+<p>现在选中异常类型Id：@IssueTypeId</p>
 
+@code {
+    public string IssueTypeId { get; set; }
 
+}
