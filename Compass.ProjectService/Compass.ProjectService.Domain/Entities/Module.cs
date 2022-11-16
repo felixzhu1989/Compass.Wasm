@@ -8,6 +8,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public Guid ModelId { get; private set; }//标明该分段是属于什么什么模型
     public string Name { get; private set; }
     public string? SpecialNotes { get;private set; }
+    public bool IsReleased { get; private set; }//图纸是否已经下发
 
     private Module() { }
     public Module(Guid id,Guid drawingId,Guid modelId,string name,string? specialNotes)
@@ -31,6 +32,11 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public Module ChangeSpecialNotes(string? specialNotes)
     {
         SpecialNotes = specialNotes;
+        return this;
+    }
+    public Module ChangeIsReleased(bool isReleased)
+    {
+        IsReleased = isReleased;
         return this;
     }
 }

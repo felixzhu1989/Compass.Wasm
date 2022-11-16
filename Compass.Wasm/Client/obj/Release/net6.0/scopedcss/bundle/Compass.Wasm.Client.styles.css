@@ -10,14 +10,14 @@ main[b-vmkc5g0nza] {
 }
 
 .sidebar[b-vmkc5g0nza] {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, #196a94 0%, #2499d5 70%);
 }
 
 .top-row[b-vmkc5g0nza] {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-end;
-    height: 3.5rem;
+    height: 3rem;
     display: flex;
     align-items: center;
 }
@@ -57,27 +57,30 @@ main[b-vmkc5g0nza] {
     }
 
     .sidebar[b-vmkc5g0nza] {
-        width: 250px;
+        width: 160px;
         height: 100vh;
         position: sticky;
         top: 0;
     }
 
     .top-row[b-vmkc5g0nza] {
-        position: sticky;
+        position: center;
         top: 0;
         z-index: 1;
+        position: sticky;
     }
 
-    .top-row.auth[b-vmkc5g0nza]  a:first-child {
-        flex: 1;
-        text-align: right;
-        width: 0;
-    }
+        .top-row.auth[b-vmkc5g0nza]  a:first-child {
+            flex: 1;
+            text-align: right;
+            width: 0;
+            position: sticky;
+        }
 
     .top-row[b-vmkc5g0nza], article[b-vmkc5g0nza] {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
+        position: sticky;
     }
 }
 /* /Shared/NavMenu.razor.rz.scp.css */
@@ -86,8 +89,8 @@ main[b-vmkc5g0nza] {
 }
 
 .top-row[b-rv6utcsw62] {
-    height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    height: 3rem;
+    background-color: rgba(0,0,0,0.2);
 }
 
 .navbar-brand[b-rv6utcsw62] {
@@ -102,7 +105,7 @@ main[b-vmkc5g0nza] {
 }
 
 .nav-item[b-rv6utcsw62] {
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding-bottom: 0.5rem;
 }
 
@@ -117,10 +120,10 @@ main[b-vmkc5g0nza] {
     .nav-item[b-rv6utcsw62]  a {
         color: #d7d7d7;
         border-radius: 4px;
-        height: 3rem;
+        height: 2.6rem;
         display: flex;
         align-items: center;
-        line-height: 3rem;
+        line-height: 2.5rem;
     }
 
 .nav-item[b-rv6utcsw62]  a.active {
@@ -140,6 +143,6 @@ main[b-vmkc5g0nza] {
 
     .collapse[b-rv6utcsw62] {
         /* Never collapse the sidebar for wide screens */
-        display: block;
+        display:block;
     }
 }

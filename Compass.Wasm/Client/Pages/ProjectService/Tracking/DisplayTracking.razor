@@ -1,0 +1,58 @@
+﻿@using Compass.Wasm.Shared.ProjectService
+@inject HttpClient Http
+
+@if (project != null)
+{
+    <tr class="@(Tracking.ProblemNotResolved?"table-danger":"")">
+        <td style="text-align: center">
+            <span class="badge @(Tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark":
+                Tracking.ProjectStatus==ProjectStatus.制图?"bg-primary":
+                Tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark":
+                Tracking.ProjectStatus==ProjectStatus.入库?"bg-success":
+                "bg-secondary")">@Tracking.ProjectStatus</span>
+        </td>
+        <td>
+            <a href="./drawinglist/@project.Id">@project.OdpNumber</a>
+        </td>
+        <td>@project.Name</td>
+        <td style="text-align: center">@project.ReceiveDate.ToString("MM/dd")</td>
+        <td style="text-align: center">@(Tracking.DrawingPlanedTime!=null ? Tracking.DrawingPlanedTime.Value.ToString("MM/dd") : "")</td>
+        <td style="text-align: center">@(Tracking.ModuleReleaseTime!=null ? Tracking.ModuleReleaseTime.Value.ToString("MM/dd") : "")</td>
+        <td style="text-align: center">-</td>
+        <td style="text-align: center">@(Tracking.WarehousingTime!=null ? Tracking.WarehousingTime.Value.ToString("MM/dd") : "")</td>
+        <td style="text-align: center">@project.DeliveryDate.ToString("MM/dd")</td>
+        <td style="text-align: center">
+            <a href="./reportproblem/@project.Id">报告异常</a>
+        </td>
+        <td style="text-align: center">
+            <a href="./reportissue/@project.Id">经验教训</a>
+        </td>
+    </tr>
+}
+@if (Tracking.ProblemNotResolved)
+{
+    <tr class="table-danger">
+        <td  colspan="11">
+            <img class="ms-1 me-2" src="andon_red.gif" /><span class="badge bg-danger ms-3 me-3">项目异常</span>
+            <span>异常详细内容...</span>
+        </td>
+    </tr>
+}
+
+
+
+@code {
+    [Parameter]
+    public TrackingResponse Tracking { get; set; }
+    private ProjectResponse? project;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Tracking.Id}");
+
+
+    }
+
+}

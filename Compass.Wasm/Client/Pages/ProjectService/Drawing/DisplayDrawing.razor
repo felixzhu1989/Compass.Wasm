@@ -1,32 +1,51 @@
 ﻿@using Compass.Wasm.Shared.ProjectService
 @using Compass.Wasm.Client.Pages.ProjectService.Module
+@using Compass.Wasm.Shared.IdentityService
 @inject HttpClient Http
 <tr>
     <td>
-        <AuthorizeView Roles="admin,pm">
-            <Authorized>
-                <a href="./updatedrawing/@Drawing.Id"><i class="bi bi-gear" /></a>
-            </Authorized>
-        </AuthorizeView>
+        <h5>
+            <AuthorizeView Roles="admin,pm">
+                <Authorized>
+                    <a href="./updatedrawing/@Drawing.Id"><i class="bi bi-gear" /></a>
+                </Authorized>
+            </AuthorizeView>
 
-        <span style="font-weight: bold">@Drawing.ItemNumber</span><br/>
-        <span>图纸：</span><br/>
-        @if (!string.IsNullOrWhiteSpace(Drawing.DrawingUrl))
-        {
-            foreach (var fileUrl in Drawing.DrawingUrl.Split('\n'))
-            {
-                <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
-                <br/>
-            }
-        }
+            <a href="./modulelist/@Drawing.Id">
+                <span style="font-weight: bold">@Drawing.ItemNumber</span>
+            </a>
+        </h5>
+
+        <div class="row">
+            <div class="col-sm-3" style="width: 65px">负责:</div>
+            <div class="col-sm-9">
+                @if (user != null)
+                {
+                    <span>@user.UserName</span>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" style="width: 65px">图纸:</div>
+            <div class="col-sm-9">
+                @if (!string.IsNullOrWhiteSpace(Drawing.DrawingUrl))
+                {
+                    foreach (var fileUrl in Drawing.DrawingUrl.Split('\n'))
+                    {
+                        <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                        <br />
+                    }
+                }
+            </div>
+        </div>
+
     </td>
     <td>
-        <a href="./modulelist/@Drawing.Id" style="color: red"><i class="bi bi-diagram-3" /></a>
         @if (modules != null && modules.Length != 0)
         {
             foreach (var module in modules)
             {
-                <DisplayModule Module="module"/>
+                <DisplayModule Module="module" ShowModuleRelease="ShowModuleRelease" />
             }
         }
     </td>
@@ -35,13 +54,20 @@
 @code {
     [Parameter]
     public DrawingResponse Drawing { get; set; }
+    [Parameter]
+    public bool ShowModuleRelease { get; set; }
 
     private ModuleResponse[]? modules;
+    private UserResponse? user;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         modules=await Http.GetFromJsonAsync<ModuleResponse[]>($"api/Module/All/{Drawing.Id}");
+        if (Drawing.UserId!=null&&!Drawing.UserId.Equals(Guid.Empty))
+        {
+            user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Drawing.UserId}");
+        }
     }
 
 }

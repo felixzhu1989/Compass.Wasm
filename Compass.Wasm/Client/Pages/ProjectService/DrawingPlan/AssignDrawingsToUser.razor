@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Components
+@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Shared.IdentityService
+@using Compass.Wasm.Client.ProjectService
+
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<EditForm Model="DrawingsNotAssigned" OnSubmit="Save">
+
+    @foreach (var drawing in DrawingsNotAssigned)
+    {
+        <div class="form-control mb-2">
+            <input class="form-check-input" type="checkbox" @bind-value="@drawing.IsChecked" />
+            <label class="form-check-label">@drawing.ItemNumber</label>
+        </div>
+    }
+
+    @if (designers!=null)
+    {
+        <div class="input-group mb-2">
+            <span class="input-group-text">制图人</span>
+            <select class="form-select" @bind="@selectedUserId">
+                @foreach (var user in designers)
+                {
+                    <option value="@user.Id">@user.UserName</option>
+                }
+            </select>
+        </div>
+    }
+    <button class="btn btn-primary" type="submit">分配图纸</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public DrawingResponse[]? DrawingsNotAssigned { get; set; }
+    [Parameter]
+    public EventCallback<AssignDrawingsToUserRequest> SaveAssign { get; set; }
+
+    Guid selectedUserId;
+    UserResponse[]? designers;
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        designers = await Http.GetFromJsonAsync<UserResponse[]>("api/UserAdmin/UsersInRoles?roleNames=pm,designer");
+    }
+
+    async Task Save()
+    {
+        if (selectedUserId.Equals(Guid.Empty))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "请选择制图人");
+            return;
+        }
+        //将勾选的Item图纸，分配给选中的designer（过滤未选中的Item）
+        var selectedDrawings = DrawingsNotAssigned.Where(x => x.IsChecked).Select(x => x.Id);
+        if (!selectedDrawings.Any())
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "请选择Item图纸");
+            return;
+        }
+        AssignDrawingsToUserRequest request = new AssignDrawingsToUserRequest{DrawingIds = selectedDrawings, UserId = selectedUserId };
+
+        await SaveAssign.InvokeAsync(request);
+    }
+
+}

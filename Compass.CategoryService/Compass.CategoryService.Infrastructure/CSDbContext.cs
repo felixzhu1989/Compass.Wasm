@@ -10,7 +10,7 @@ public class CSDbContext : BaseDbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Model> Models { get; set; }
 
-    public DbSet<IssueType> IssueTypes { get; set; }
+    public DbSet<ProblemType> ProblemTypes { get; set; }
 
     public CSDbContext(DbContextOptions<CSDbContext> options, IMediator? mediator) : base(options, mediator)
     {

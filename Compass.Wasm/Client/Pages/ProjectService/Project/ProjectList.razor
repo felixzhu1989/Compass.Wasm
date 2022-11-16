@@ -8,7 +8,6 @@
 <div class="row position-relative">
     <div class="col">
         <p>
-            <span class="fs-5">【概述】</span>
             @if (projects != null)
             {
                 <span>总项目数:@projects.Length</span>
@@ -32,10 +31,10 @@
 <table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
     <thead>
         <tr>
-            <th style="width: 13%">项目编号</th>
-            <th>交货日期</th>
-            <th style="width: 30%">项目名称</th>
-            <th>项目分类</th>
+            <th style="width: 10%">项目编号</th>
+            <th style="text-align: center">交货日期</th>
+            <th style="width: 35%">项目名称</th>
+            <th style="text-align: center">项目分类</th>
             <th style="text-align: center">风险等级</th>
             <th style="text-align: center">合同</th>
             <th style="text-align: center">领料单</th>
@@ -79,7 +78,7 @@
 
     private void ShowAddProject()
     {
-        if (!isAddDrop) addProjectRequest = new AddProjectRequest { DeliveryDate = DateTime.Today };
+        if (!isAddDrop) addProjectRequest = new AddProjectRequest {ReceiveDate = DateTime.Today , DeliveryDate = DateTime.Today };
         isAddDrop = !isAddDrop;
     }
     private async Task SaveProject(AddProjectRequest request)

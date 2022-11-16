@@ -30,12 +30,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlTZXJ2aWNlXENhdGVnb3J5TGlzdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/CategoryService/IssueTypeChoose.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlTZXJ2aWNlXElzc3VlVHlwZUNob29zZS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/CategoryService/ModelDetail.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlTZXJ2aWNlXE1vZGVsRGV0YWlsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/CategoryService/ProblemTypeChoose.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlTZXJ2aWNlXFByb2JsZW1UeXBlQ2hvb3NlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/CategoryService/ProductCards.razor]
@@ -86,6 +86,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcRHJhd2luZ1BsYW5cQWRkRHJhd2luZ1BsYW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/DrawingPlan/AssignDrawingsToUser.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcRHJhd2luZ1BsYW5cQXNzaWduRHJhd2luZ3NUb1VzZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/DrawingPlan/DisplayDrawingPlan.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcRHJhd2luZ1BsYW5cRGlzcGxheURyYXdpbmdQbGFuLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -130,6 +134,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcTW9kdWxlXFVwZGF0ZU1vZHVsZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/Problem/ReportProblem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcUHJvYmxlbVxSZXBvcnRQcm9ibGVtLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/Project/AddProject.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcUHJvamVjdFxBZGRQcm9qZWN0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -144,6 +152,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/Project/UpdateProject.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcUHJvamVjdFxVcGRhdGVQcm9qZWN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/Tracking/DisplayTracking.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcVHJhY2tpbmdcRGlzcGxheVRyYWNraW5nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Shared/PrintLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFByaW50TGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/_Imports.razor]

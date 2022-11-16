@@ -1,0 +1,10 @@
+﻿@using Compass.Wasm.Client.Pages.CategoryService
+
+
+<ProblemTypeChoose @bind-ProblemTypeId="ProblemTypeId" />
+<p>现在选中异常类型Id：@ProblemTypeId</p>
+
+
+@code {
+    public string ProblemTypeId { get; set; }
+}

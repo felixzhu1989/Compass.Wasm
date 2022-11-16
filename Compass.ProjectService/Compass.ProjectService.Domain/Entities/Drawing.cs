@@ -13,6 +13,7 @@ public record Drawing : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     
     public Guid? UserId { get; private set; }
 
+
     private Drawing() { }
     public Drawing(Guid id, Guid projectId, string itemNumber,string? drawingUrl)
     {

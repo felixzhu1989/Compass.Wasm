@@ -3,8 +3,8 @@
 }
 
 .top-row[b-rv6utcsw62] {
-    height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    height: 3rem;
+    background-color: rgba(0,0,0,0.2);
 }
 
 .navbar-brand[b-rv6utcsw62] {
@@ -19,7 +19,7 @@
 }
 
 .nav-item[b-rv6utcsw62] {
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding-bottom: 0.5rem;
 }
 
@@ -34,10 +34,10 @@
     .nav-item[b-rv6utcsw62]  a {
         color: #d7d7d7;
         border-radius: 4px;
-        height: 3rem;
+        height: 2.6rem;
         display: flex;
         align-items: center;
-        line-height: 3rem;
+        line-height: 2.5rem;
     }
 
 .nav-item[b-rv6utcsw62]  a.active {
@@ -57,6 +57,6 @@
 
     .collapse[b-rv6utcsw62] {
         /* Never collapse the sidebar for wide screens */
-        display: block;
+        display:block;
     }
 }

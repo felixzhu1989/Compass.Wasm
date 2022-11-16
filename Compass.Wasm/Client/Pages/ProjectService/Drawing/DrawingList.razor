@@ -1,4 +1,5 @@
 ﻿@page "/drawinglist/{ProjectId}"
+
 @using Compass.Wasm.Shared.ProjectService
 @using Compass.Wasm.Client.ProjectService
 
@@ -11,39 +12,81 @@
         <p>
             @if (project != null)
             {
-                <AuthorizeView Roles="admin,pm">
-                    <Authorized>
-                        <a href="./updateproject/@project.Id"><i class="bi bi-gear" /></a>
-                    </Authorized>
-                </AuthorizeView>
-                <span class="fs-5" style="font-weight: bold">@project.OdpNumber</span><br />
-                <span>@project.Name</span> <br/>
-                @*todo:控制权限*@
-                <AuthorizeView Roles="admin,pm,designer,quality,inspector">
-                    <Authorized>
-                    <span style="font-weight: bold">合同：</span>
-                    <a href="@project.ContractUrl" target="_blank">@(Path.GetFileName(project.ContractUrl))</a><br/>
-                    </Authorized>
-                </AuthorizeView>
-                
+                <h5>
+                    <AuthorizeView Roles="admin,pm">
+                        <Authorized>
+                            <a href="./updateproject/@project.Id"><i class="bi bi-gear" /></a>
+                        </Authorized>
+                    </AuthorizeView>
+                    <span>@project.OdpNumber</span>
+                    <a href="./updatedrawingplan/@project.Id">
+                        <span class="ms-2">制图计划</span>
+                    </a>
+                </h5>
 
-                <span style="font-weight: bold">BOM：</span>
-                <a href="@project.BomUrl" target="_blank">@(Path.GetFileName(project.BomUrl))</a><br/>
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">项目名称:</div>
+                    <div class="col-sm-9">@project.Name</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">交货日期:</div>
+                    <div class="col-sm-9" style="color: red">@project.DeliveryDate.ToString("MM/dd") （合同周期：@(project.DeliveryDate.Subtract(project.ReceiveDate).Days)天）</div>
+                </div>
+
+                @*todo:控制权限*@
+                <AuthorizeView Roles="admin,manager,pm,designer,quality,inspector">
+                    <Authorized>
+                        <div class="row">
+                            <div class="col-sm-3" style="width: 95px">系统合同:</div>
+                            <div class="col-sm-9"><a href="@project.ContractUrl" target="_blank">@(Path.GetFileName(project.ContractUrl))</a></div>
+                        </div>
+                    </Authorized>
+                </AuthorizeView>
+
+                @if (!string.IsNullOrWhiteSpace(project.BomUrl))
+                {
+                    <div class="row">
+                        <div class="col-sm-3" style="width: 95px">物料清单:</div>
+                        <div class="col-sm-9"><a href="@project.BomUrl" target="_blank">@(Path.GetFileName(project.BomUrl))</a></div>
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(project.AttachmentsUrl))
+                {
+
+                    <div class="row">
+                        <div class="col-sm-3" style="width: 95px">其他附件:</div>
+                        <div class="col-sm-9">
+                            @foreach (var fileUrl in project.AttachmentsUrl.Split('\n'))
+                            {
+                                <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+
+                                <br />
+                            }
+                        </div>
+                    </div>
+                }
                 @if (!string.IsNullOrWhiteSpace(project.SpecialNotes))
                 {
-                    <span style="font-weight: bold">特殊要求：</span><br />
-                    foreach (var note in project.SpecialNotes.Split('\n'))
-                    {
-                        <span style="color:red">@note</span><br />
-                    }
+                    <div class="row">
+                        <div class="col-sm-3" style="width: 95px">特殊要求:</div>
+                        <div class="col-sm-9" style="color: red">
+                            @foreach (var note in project.SpecialNotes.Split('\n'))
+                            {
+                                <span>@note</span>
+
+                                <br />
+                            }
+                        </div>
+                    </div>
                 }
             }
         </p>
         @*<p>
-           @if (drawings != null)
-            {
-                <span>图纸(Items)总数:@drawings.Length</span>
-            }
+        @if (drawings != null)
+        {
+        <span>图纸(Items)总数:@drawings.Length</span>
+        }
         </p>*@
     </div>
     @*todo:控制权限*@
@@ -63,33 +106,38 @@
 
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
     <thead>
-    <tr>
-        <th style="width: 35%">Item编号</th>
-        <th>分段明细</th>
-    </tr>
+        <tr>
+            <th style="width: 30%">Item编号</th>
+            <th>
+                <div class="row">
+                    <div class="col">
+                        分段明细
+                    </div>
+                    <div class="col">
+                        <span @onclick="ModuleRelease" style="@(isModuleRelease?"":"color: red")">@(isModuleRelease ? "下发状态" : "点这★发图")</span>
+                    </div>
+                </div>
+            </th>
+        </tr>
     </thead>
     <tbody>
         @if (drawings == null)
-    {
-        <p>图纸列表加载中...</p>
-    }
-        else if (drawings.Length == 0)
-    {
-        <p>没有要显示的图纸，请点击右上角添加图纸</p>
-    }
-    else
-    {
-            @foreach (var drawing in drawings)
         {
-            <DisplayDrawing Drawing="drawing" />
+            <p>图纸列表加载中...</p>
         }
-    }
+        else if (drawings.Length == 0)
+        {
+            <p>没有要显示的图纸，请点击右上角添加图纸</p>
+        }
+        else
+        {
+            @foreach (var drawing in drawings)
+            {
+                <DisplayDrawing Drawing="drawing" ShowModuleRelease="isModuleRelease" />
+            }
+        }
     </tbody>
 </table>
-
-
-
-
 
 
 @code {
@@ -99,8 +147,10 @@
     private DrawingResponse[]? drawings;
     private AddDrawingRequest addDrawingRequest;
 
+
     private bool isAddDrop = false;
-    private ProjectResponse? project=new();
+    private ProjectResponse? project = new();
+    private bool isModuleRelease;
 
     protected override async Task OnInitializedAsync()
     {
@@ -108,6 +158,8 @@
         drawings = await RefreshData();
 
         project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+        var tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{ProjectId}");
+        isModuleRelease = tracking.ModuleReleaseTime != null;
     }
     Task<DrawingResponse[]?> RefreshData()
     {
@@ -119,11 +171,11 @@
         addDrawingRequest.ProjectId = Guid.Parse(ProjectId);
         isAddDrop = !isAddDrop;
     }
-    
+
 
     private async Task SaveDrawing(AddDrawingRequest request)
     {
-        if ( string.IsNullOrWhiteSpace(request.ItemNumber))
+        if (string.IsNullOrWhiteSpace(request.ItemNumber))
         {
             await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
             return;
@@ -131,6 +183,28 @@
         isAddDrop = false; //收起添加
         var result = await Http.PostAsJsonAsync("api/Drawing/Add", addDrawingRequest);
         if (result.IsSuccessStatusCode) drawings = await RefreshData();
+    }
+
+
+    private async Task ModuleRelease()
+    {
+        if (!isModuleRelease)
+        {
+            if (drawings == null || drawings.Length == 0)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", "该项目下还没有添加图纸！");
+                return;
+            }
+            var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要下发【{project.OdpNumber}】的图纸吗？\n这将会在项目跟踪中产生发图记录。");
+            if (confirmResult)
+            {
+                //发布集成时间，记录下发图纸时间并显示下发图纸状态
+                await Http.PostAsync($"api/Module/Release/{project.Id}", null);
+                isModuleRelease = true;
+                StateHasChanged();
+            }
+        }
+
     }
 
 }

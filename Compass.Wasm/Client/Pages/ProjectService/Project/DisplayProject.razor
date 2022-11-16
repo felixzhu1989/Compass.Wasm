@@ -11,18 +11,22 @@
         </AuthorizeView>
         <a href="./drawinglist/@Project.Id">@Project.OdpNumber</a>
     </td>
-    <td style="@(Project.DeliveryDate<DateTime.Today?"font-weight: bold;color: green":"font-weight: bold;")">@Project.DeliveryDate.ToString("MM/dd")</td>
+    <td style="@(Project.DeliveryDate<DateTime.Today?"font-weight: bold;color: green":"font-weight: bold;");text-align: center">@Project.DeliveryDate.ToString("MM/dd")</td>
     <td>@Project.Name</td>
-    <td>@Project.ProjectType</td>
+    <td style="text-align: center">@Project.ProjectType</td>
     @*根据风险值更改颜色*@
-    <td class="@(Project.RiskLevel==RiskLevel.高风险 ? "table-danger" : Project.RiskLevel==RiskLevel.中风险 ? "table-warning":"")" style="text-align: center">@Project.RiskLevel</td>
+    @*<td class="@(Project.RiskLevel==RiskLevel.高风险 ? "table-danger" : Project.RiskLevel==RiskLevel.中风险 ? "table-warning":"")" style="text-align: center">@Project.RiskLevel</td>*@
+    <td style="text-align: center">
+        <span class="badge @(Project.RiskLevel==RiskLevel.高风险 ? "bg-danger" : Project.RiskLevel==RiskLevel.中风险 ? "bg-warning text-dark":"bg-light text-dark")">@Project.RiskLevel</span>
+    </td>
+
     <td style="text-align: center">
         @*todo:控制权限*@
-        <AuthorizeView Roles="admin,pm,designer,quality,inspector">
+        <AuthorizeView Roles="admin,manager,pm,designer,quality,inspector">
             <Authorized>
                 @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
                 {
-                    <a href="@Project.ContractUrl" target="_blank"><i class="bi bi-file-earmark-pdf"/></a>
+                    <a href="@Project.ContractUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
                 }
             </Authorized>
         </AuthorizeView>
@@ -38,14 +42,22 @@
         <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(Project.SpecialNotes))">@(showSpecialNotes ? "▲" : "▼")</span>
     </td>
     @*<td style="text-align: center">
-        <a href="@($"./drawinglist/{Project.Id}")"><i class="bi bi-diagram-3" /></a>
+    <a href="@($"./drawinglist/{Project.Id}")"><i class="bi bi-diagram-3" /></a>
     </td>*@
 </tr>
 @if (showSpecialNotes)
 {
-    <td colspan="8">
-        <textarea class="form-control" readonly="readonly" style="height: @(30*rows)px;color: red" value="@Project.SpecialNotes"></textarea>
-    </td>
+    <tr>
+        <td colspan="8" style="color: red">
+            @foreach (var note in Project.SpecialNotes.Split('\n'))
+            {
+                <span>@note</span>
+
+                <br />
+            }
+            @*<textarea class="form-control" readonly="readonly" style="height: @(30 * rows)px; color: red" value="@Project.SpecialNotes"></textarea>*@
+        </td>
+    </tr>
 }
 
 @code {
@@ -53,12 +65,12 @@
     public ProjectResponse Project { get; set; }
 
     private bool showSpecialNotes = false;
-    private int rows = 1;   
-    
+    private int rows = 1;
+
     private void Show()
     {
-        if (!showSpecialNotes && !string.IsNullOrWhiteSpace(Project.SpecialNotes))
-            rows = Project.SpecialNotes.Split('\n').Length;//计算特殊要求有几行
+        //if (!showSpecialNotes && !string.IsNullOrWhiteSpace(Project.SpecialNotes))
+        //    rows = Project.SpecialNotes.Split('\n').Length;//计算特殊要求有几行
         showSpecialNotes = !showSpecialNotes;
     }
 }

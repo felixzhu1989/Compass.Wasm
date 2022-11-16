@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Compass.Wasm.Server.ProjectService;
+using Zack.EventBus;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService
 {
@@ -17,13 +17,15 @@ namespace Compass.Wasm.Server.Controllers.ProjectService
         private readonly PMDbContext _dbContext;
         private readonly IPMRepository _repository;
         private readonly IMapper _mapper;
+        private readonly IEventBus _eventBus;
 
-        public DrawingPlanController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper)
+        public DrawingPlanController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus)
         {
             _domainService = domainService;
             _dbContext = dbContext;
             _repository = repository;
             _mapper = mapper;
+            _eventBus = eventBus;
         }
 
         [HttpGet("All")]
@@ -39,14 +41,7 @@ namespace Compass.Wasm.Server.Controllers.ProjectService
             if (drawingPlan == null) return NotFound($"没有Id={id}的DrawingPlan");
             return _mapper.Map<DrawingPlanResponse>(drawingPlan);
         }
-
-        [HttpGet("ProjectId/{projectId}")]
-        public async Task<ActionResult<DrawingPlanResponse?>> FindByProjectId([RequiredGuid] Guid projectId)
-        {
-            var drawingPlan = await _repository.GetDrawingPlanByProjectIdAsync(projectId);
-            if (drawingPlan == null) return NotFound($"没有ProjectId={projectId}的DrawingPlan");
-            return _mapper.Map<DrawingPlanResponse>(drawingPlan);
-        }
+        
 
         [HttpGet("ProjectsNotPlanned")]
         public async Task<ProjectResponse[]> FindProjectsNotPlanned()
@@ -93,8 +88,14 @@ namespace Compass.Wasm.Server.Controllers.ProjectService
         [HttpPost("Add")]
         public async Task<ActionResult<Guid>> Add(AddDrawingPlanRequest request)
         {
-            var drawingPlan = new DrawingPlan(Guid.NewGuid(), request.ProjectId, request.ReleaseTime);
+            var drawingPlan = new DrawingPlan( request.ProjectId, request.ReleaseTime);
             await _dbContext.DrawingsPlan.AddAsync(drawingPlan);
+            
+            //添加计划后，将项目跟踪修改成制图状态
+            var eventData = new DrawingPlanCreatedEvent(drawingPlan.Id);
+            //发布集成事件
+            _eventBus.Publish("ProjectService.DrawingPlan.Created", eventData);
+
             return drawingPlan.Id;
         }
 

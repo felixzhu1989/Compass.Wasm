@@ -1,22 +1,101 @@
 ﻿@page "/"
-@using Compass.Wasm.Client.Pages.CategoryService
+@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Client.Pages.ProjectService.Tracking
+@using System.Timers
+@using System.Security.Cryptography.X509Certificates
+
+
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+@implements IDisposable
+
 <PageTitle>Project Tracking</PageTitle>
 
-<h3>项目跟踪信息</h3>
 <AuthorizeView>
-    <Authorized>
-        <span style="color: green">您好，@context.User.Identity.Name，展开右侧三角形，报告项目异常。</span>
-
-    </Authorized>
     <NotAuthorized>
         <span style="color: red">报告项目异常请先登录！</span>
     </NotAuthorized>
 </AuthorizeView>
+@*<button class="btn" @onclick="Refresh"><i class="bi bi-arrow-repeat fs-4" style="color: green"/></button>*@
+<table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
+    <thead>
+        <tr>
+            <th style="width: 60px;text-align: center">状态</th>
+            <th style="width: 10%">项目编号</th>
+            <th style="width: 30%">项目名称</th>
+            <th style="text-align: center">开始</th>
+            <th style="text-align: center">计划</th>
+            <th style="text-align: center">发图</th>
+            <th style="text-align: center">生产</th>
+            <th style="text-align: center">入库</th>
+            <th style="text-align: center">结束</th>
+            <th style="text-align: center">报告异常</th>
+            <th style="text-align: center">经验教训</th>
+        </tr>
+    </thead>
+    <tbody>
+    @if (trackings == null)
+    {
+        <p>跟踪列表加载中...</p>
+    }
+    else if (trackings.Count == 0)
+    {
+            <p>没有要显示的跟踪</p>
+    }
+    else
+    {
+        @foreach (var tracking in trackings)
+        {
+                <DisplayTracking Tracking="tracking" />
+        }
+    }
+    </tbody>
+</table>
 
-<IssueTypeChoose @bind-IssueTypeId="IssueTypeId" />
-<p>现在选中异常类型Id：@IssueTypeId</p>
+
 
 @code {
-    public string IssueTypeId { get; set; }
+    private List<TrackingResponse> trackings = new ();
 
+    private Timer timer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        timer = new Timer();
+        timer.Interval = 30000;
+        timer.Elapsed += OnTimeElapsed;//每隔30s钟就会执行一次这个方法
+        timer.Enabled = true;
+        await RefreshData();
+    }
+    async Task RefreshData()
+    {
+        var responses = await Http.GetFromJsonAsync<TrackingResponse[]>("api/Tracking/All");//刷新数据
+        trackings.Clear();
+        foreach (var response in responses)
+        {
+            var project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{response.Id}");
+            response.DeliveryDate = project.DeliveryDate;
+            trackings.Add(response);
+        }
+        trackings= trackings.Distinct().OrderByDescending(x => x.DeliveryDate).ToList();
+    }
+
+    //async Task Refresh()
+    //{
+    //    await JsRuntime.InvokeVoidAsync("alert", "刷新喽！");
+    //    await RefreshData();
+    //    //StateHasChanged();
+    //}
+
+    private async void OnTimeElapsed(object? sender, ElapsedEventArgs e)
+    {
+        await RefreshData();
+        await InvokeAsync(StateHasChanged);
+        
+    }
+    public void Dispose()
+    {
+        timer.Dispose();
+    }
 }

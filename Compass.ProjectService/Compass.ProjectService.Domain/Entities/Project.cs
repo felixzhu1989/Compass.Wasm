@@ -8,26 +8,33 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
     //BasicInfo
     public string OdpNumber { get; private set; }
     public string Name { get; private set; }
-    public DateTime DeliveryDate { get;private set; }//交货时间，重要
+    //合同参数
+    public DateTime ReceiveDate { get; private set; }
+    public DateTime DeliveryDate { get; private set; }//交货时间，重要，根据它来排序
+    //其他参数
     public ProjectType ProjectType { get; private set; }
     public RiskLevel RiskLevel { get; private set; }
     public string? SpecialNotes { get; private set; }
     public string? ContractUrl { get; private set; }
     public string? BomUrl { get; private set; }
+    public string? AttachmentsUrl { get; private set; }//上传得附件，多文件
     //AdditionalInfo
-    public DateTime CreationTime { get; private set; }//创建时间，根据它来排序
+
+
+
+
 
     private Project() { }
-    public Project(Guid id, string odpNumber, string name,DateTime deliveryDate, ProjectType projectType, RiskLevel riskLevel, string? specialNotes)
+    public Project(Guid id, string odpNumber, string name, DateTime receiveDate, DateTime deliveryDate, ProjectType projectType, RiskLevel riskLevel, string? specialNotes)
     {
         Id = id;
         OdpNumber= odpNumber;
         Name= name;
-        DeliveryDate = deliveryDate;
+        ReceiveDate = receiveDate;
+        DeliveryDate= deliveryDate;
         ProjectType= projectType;
         RiskLevel= riskLevel;
         SpecialNotes= specialNotes;
-        CreationTime=DateTime.Now;
     }
     #region ChangeProperty
     public Project ChangeOdpNumber(string odpNumber)
@@ -40,11 +47,18 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
         Name= name;
         return this;
     }
+
+    public Project ChangeReceiveDate(DateTime receiveDate)
+    {
+        ReceiveDate = receiveDate;
+        return this;
+    }
     public Project ChangeDeliveryDate(DateTime deliveryDate)
     {
         DeliveryDate= deliveryDate;
         return this;
     }
+
     public Project ChangeProjectType(ProjectType projectType)
     {
         ProjectType= projectType;
@@ -71,8 +85,11 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
         BomUrl= bomUrl;
         return this;
     }
+    public Project ChangeAttachmentsUrl(string attachmentsUrl)
+    {
+        AttachmentsUrl= attachmentsUrl;
+        return this;
+    }
     #endregion
-
-
 
 }

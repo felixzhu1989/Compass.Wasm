@@ -11,6 +11,8 @@ public class PMDbContext:BaseDbContext
     public DbSet<Drawing> Drawings { get; set; }
     public DbSet<Module> Modules { get; set; }
     public DbSet<DrawingPlan> DrawingsPlan { get; set; }
+    public DbSet<Tracking> Trackings { get; set; }
+    public DbSet<Problem> Problems { get; set; }
 
     public PMDbContext(DbContextOptions<PMDbContext> options, IMediator? mediator) : base(options, mediator)
     {

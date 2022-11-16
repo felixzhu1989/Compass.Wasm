@@ -3,7 +3,7 @@
 @inject IJSRuntime JsRuntime
 <div class="row">
     <div class="col input-group mb-2" style="width: 100px">
-        <span class="input-group-text">事业部</span>
+        <span class="input-group-text">①事业部</span>
         <select class="form-select" @onchange="OnSbuChange">
             @foreach (var sbu in Enum.GetNames(typeof(Sbu)))
             {
@@ -12,7 +12,7 @@
         </select>
     </div>
     <div class="col input-group mb-2">
-        <span class="input-group-text">产品</span>
+        <span class="input-group-text">②产品</span>
         <select class="form-select" @onchange="OnProductChange">
             @if (products !=null)
             {
@@ -24,7 +24,7 @@
         </select>
     </div>
     <div class="col input-group mb-2">
-        <span class="input-group-text">模型</span>
+        <span class="input-group-text">③模型</span>
         @*https://www.itbaoku.cn/post/2252439.html*@
         <select class="form-select" value="@ModelId" @onchange="OnModelChange">
             @if (models !=null)

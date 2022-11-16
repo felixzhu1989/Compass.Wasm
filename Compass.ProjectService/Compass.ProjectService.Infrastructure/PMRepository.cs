@@ -1,8 +1,6 @@
 ﻿using Compass.ProjectService.Domain;
 using Compass.ProjectService.Domain.Entities;
-using Compass.Wasm.Shared.ProjectService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Compass.ProjectService.Infrastructure;
 
@@ -72,16 +70,11 @@ public class PMRepository : IPMRepository
         return _context.DrawingsPlan.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
 
-    public Task<DrawingPlan?> GetDrawingPlanByProjectIdAsync(Guid projectId)
-    {
-        return _context.DrawingsPlan.SingleOrDefaultAsync(x => x.ProjectId.Equals(projectId));
-    }
-
     public async Task<IEnumerable<Project>> GetProjectsNotDrawingPlannedAsync()
     {
         var projects =await _context.Projects.ToListAsync();//所有项目
         var plannedProjects =await _context.DrawingsPlan.ToListAsync() ;//所有制图计划
-        var notDrawingPlannedProjects = projects.Where(x => !plannedProjects.Exists(dp => x.Id.Equals(dp.ProjectId)));
+        var notDrawingPlannedProjects = projects.Where(x => !plannedProjects.Exists(dp => x.Id.Equals(dp.Id)));
         return notDrawingPlannedProjects;
     }
 
@@ -128,17 +121,21 @@ public class PMRepository : IPMRepository
             dbDrawing.ChangeUserId(userId);
         }
     }
+    #endregion
 
-    public int GetDrawingsCountByProjectId(Guid projectId)
+
+    #region Tracking
+    public Task<IQueryable<Tracking>> GetTrackingsAsync()
     {
-        return _context.Drawings.Count(x => x.ProjectId.Equals(projectId));
+        return Task.FromResult(_context.Trackings.AsQueryable());
     }
 
-    public int GetDrawingsCountNotAssignedByProjectId(Guid projectId)
+    public Task<Tracking?> GetTrackingByIdAsync(Guid id)
     {
-        return _context.Drawings.Count(x => x.ProjectId.Equals(projectId)&& string.IsNullOrWhiteSpace(x.UserId.ToString()));
+        return _context.Trackings.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
     #endregion
+
 
 
 }

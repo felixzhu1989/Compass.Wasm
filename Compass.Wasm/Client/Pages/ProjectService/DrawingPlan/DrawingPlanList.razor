@@ -11,10 +11,14 @@
 <div class="row position-relative">
     <div class="col">
         <p>
-            <span class="badge   rounded-pill @(projectsCountNotPlanned == 0?"bg-success":"bg-danger")">@projectsCountNotPlanned</span>
-            <span>个未计划项目</span>
+            <span>未计划项目</span>
+            <span class="badge   rounded-pill @(projectsCountNotPlanned == 0 ? "bg-success" : "bg-danger")">@projectsCountNotPlanned</span>
+            <span class="badge bg-secondary rounded-pill">生产周期=发货日期-发图日期</span>
+            <span class="badge bg-success rounded-pill">日期已过</span>
+            <span class="badge bg-warning text-black rounded-pill">正在进行</span>
+            <span class="badge bg-black rounded-pill">缺少信息</span>
+            <span class="badge bg-danger rounded-pill">存在问题</span>
         </p>
-        <span class="badge bg-secondary rounded-pill mb-2">生产周期=发货日期-发图日期</span>
     </div>
     @*todo:控制权限*@
     <AuthorizeView Roles="admin,pm">
@@ -26,8 +30,6 @@
     </AuthorizeView>
 </div>
 
-
-
 @if (isAddDrop)
 {
     <AddDrawingPlan DrawingPlan="addDrawingPlanRequest" SaveDrawingPlan="SaveDrawingPlan" />
@@ -35,19 +37,6 @@
 @if (drawingsPlan==null)
 {
     <p>制图计划加载中...</p>
-    <div class="row">
-        <div class="col-md-1 d-flex justify-content-center align-items-center time-line">
-            <span class="badge rounded-pill bg-primary">yyyy-MM-dd</span>
-        </div>
-        <div class="col-md-11 rounded-3 mb-2">
-            <div class="card rounded-3 border-0 shadow my-0">
-                <div class="card-body">
-                    <h5 class="card-title">OdpNumber</h5>
-                    <p class="card-text">List of user</p>
-                </div>
-            </div>
-        </div>
-    </div>
 }
 else if (drawingsPlan.Length==0)
 {
@@ -96,7 +85,9 @@ else
     }
     async Task RefreshData()
     {
+
         projectsCountNotPlanned = (await Http.GetFromJsonAsync<ProjectResponse[]>("api/DrawingPlan/ProjectsNotPlanned"))!.Length;
+        drawingsPlan = null;
         drawingsPlan=await Http.GetFromJsonAsync<DrawingPlanResponse[]>("api/DrawingPlan/All");
     }
 

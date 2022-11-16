@@ -82,9 +82,6 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("ReleaseTime")
                         .HasColumnType("datetime2");
 
@@ -93,8 +90,6 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
 
                     b.HasIndex("Id", "IsDeleted");
-
-                    b.HasIndex("ProjectId", "IsDeleted");
 
                     b.ToTable("DrawingsPlan");
                 });
@@ -115,6 +110,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReleased")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
@@ -141,11 +139,76 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.ToTable("Modules");
                 });
 
+            modelBuilder.Entity("Compass.ProjectService.Domain.Entities.Problem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CloseTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProblemTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReportUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ResponseUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Solution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SolutionUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.HasIndex("Id", "IsDeleted");
+
+                    b.HasIndex("ProjectId", "IsDeleted");
+
+                    b.ToTable("Problems");
+                });
+
             modelBuilder.Entity("Compass.ProjectService.Domain.Entities.Project", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AttachmentsUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BomUrl")
                         .HasColumnType("nvarchar(max)");
@@ -179,6 +242,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<int>("ProjectType")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ReceiveDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("RiskLevel")
                         .HasColumnType("int");
 
@@ -194,6 +260,51 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.HasIndex("OdpNumber", "IsDeleted");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("Compass.ProjectService.Domain.Entities.Tracking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CloseTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DrawingPlanedTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModuleReleaseTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("ProblemNotResolved")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProjectStatus")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("WarehousingTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.HasIndex("Id", "IsDeleted");
+
+                    b.ToTable("Trackings");
                 });
 #pragma warning restore 612, 618
         }

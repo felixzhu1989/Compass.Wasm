@@ -1,4 +1,5 @@
-﻿using Compass.Wasm.Server.IdentityService;
+﻿using AutoMapper;
+using Compass.Wasm.Server.IdentityService;
 using Compass.Wasm.Shared.IdentityService;
 
 namespace Compass.Wasm.Server.Controllers.OtherService;
@@ -11,11 +12,14 @@ public class UserAdminController : ControllerBase
     private readonly IdUserManager _userManager;
     private readonly IEventBus _eventBus;
     private readonly IIdRepository _repository;
-    public UserAdminController(IdUserManager userManager, IEventBus eventBus, IIdRepository repository)
+    private readonly IMapper _mapper;
+
+    public UserAdminController(IdUserManager userManager, IIdRepository repository,IMapper mapper, IEventBus eventBus)
     {
         _userManager = userManager;
         _eventBus = eventBus;
         _repository = repository;
+        _mapper = mapper;
     }
 
     [HttpGet("AllUsers")]
@@ -26,7 +30,7 @@ public class UserAdminController : ControllerBase
         foreach (var user in users)
         {
             var roles = await _repository.GetRolesAsync(user);
-            responses.Add(new UserResponse(user.Id, user.UserName, user.Email, string.Join(',', roles), user.CreationTime));
+            responses.Add(new UserResponse { Id = user.Id,UserName = user.UserName,Email= user.Email,Roles = string.Join(',', roles),CreationTime = user.CreationTime });
         }
         return responses.ToArray();
     }
@@ -40,7 +44,8 @@ public class UserAdminController : ControllerBase
         foreach (var user in users)
         {
             var roles = await _repository.GetRolesAsync(user);
-            responses.Add(new UserResponse(user.Id, user.UserName, user.Email, string.Join(',', roles), user.CreationTime));
+            responses.Add(new UserResponse{Id=user.Id,UserName = user.UserName,Email= user.Email,Roles= string.Join(',', roles),CreationTime = user.CreationTime });
+
         }
         return responses.ToArray();
     }
@@ -51,7 +56,8 @@ public class UserAdminController : ControllerBase
         var user = await _userManager.FindByIdAsync(id.ToString());
         if (user == null) return NotFound();
         var roles = await _repository.GetRolesAsync(user);
-        return new UserResponse(user.Id, user.UserName, user.Email,string.Join(',',roles), user.CreationTime);
+        return new UserResponse{Id=user.Id,UserName = user.UserName,Email= user.Email,Roles=string.Join(',',roles),CreationTime = user.CreationTime};
+        
     }
 
     [HttpPost("AddAdmin")]

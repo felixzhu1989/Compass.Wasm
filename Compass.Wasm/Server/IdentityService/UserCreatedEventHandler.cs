@@ -1,7 +1,4 @@
-﻿using Compass.IdentityService.Domain;
-using Zack.EventBus;
-
-namespace Compass.Wasm.Server.IdentityService;
+﻿namespace Compass.Wasm.Server.IdentityService;
 
 //处理UserAdminController发出的集成事件，创建新用户后发送邮件通知对方
 [EventName("IdentityService.User.Created")]

@@ -30,6 +30,10 @@
         <input class="form-control" placeholder="Name" @bind-value="@project.Name" />
     </div>
     <div class="input-group mb-2">
+        <span class="input-group-text" style="color: green">合同日期</span>
+        <input type="date" class="form-control" style="color: green" @bind-value="@project.ReceiveDate" />
+    </div>
+    <div class="input-group mb-2">
         <span class="input-group-text" style="color: red">交货日期</span>
         <input type="date" class="form-control" style="color: red" @bind-value="@project.DeliveryDate" />
     </div>
@@ -58,6 +62,8 @@
 
     <FileUpload Title="物料清单" FileType="application/pdf" @bind-FileUrl="@project.BomUrl"/>
     
+    <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl"></MultiFileUpload>
+
     <div class="input-group mb-2">
         <span class="input-group-text">特殊要求</span>
         <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@project.SpecialNotes"></textarea>
@@ -88,6 +94,8 @@
         //    await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
         //    return;
         //}
+
+
         var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
         if (confirmResult)
         {

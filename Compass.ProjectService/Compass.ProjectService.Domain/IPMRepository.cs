@@ -21,7 +21,7 @@ public interface IPMRepository
     //DrawingPlan
     Task<IQueryable<DrawingPlan>> GetDrawingPlansAsync();
     Task<DrawingPlan?> GetDrawingPlanByIdAsync(Guid id);
-    Task<DrawingPlan?> GetDrawingPlanByProjectIdAsync(Guid projectId);
+    
 
     //编制计划时查找那些项目还没有编制计划
     Task<IEnumerable<Project>> GetProjectsNotDrawingPlannedAsync();
@@ -30,6 +30,12 @@ public interface IPMRepository
     //编制计划时查找项目中那些图纸已经分配人员，并按照人员分组
     Task<Dictionary<Guid?, IQueryable<Drawing>>> GetDrawingsAssignedByProjectIdAsync(Guid projectId);
     Task AssignDrawingsToUserAsync(IEnumerable<Guid> drawingIds, Guid userId);
-    int GetDrawingsCountByProjectId(Guid projectId);
-    int GetDrawingsCountNotAssignedByProjectId(Guid projectId);
+
+
+    //Tracking
+    Task<IQueryable<Tracking>> GetTrackingsAsync();
+    Task<Tracking?> GetTrackingByIdAsync(Guid id);
+    
+
+
 }

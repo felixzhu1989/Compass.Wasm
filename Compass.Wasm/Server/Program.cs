@@ -1,4 +1,3 @@
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -188,6 +187,34 @@ builder.Services.AddSignalR();
 //修改默认编译发布后的5000，5001启动端口
 builder.WebHost.UseUrls(new[] {"http://*:80" });
 
+
+#region Console
+/*http://patorjk.com/software/taag/
+_____ ____  __  __ _____         _____ _____ 
+/ ____/ __ \|  \/  |  __ \ /\    / ____/ ____|
+| |   | |  | | \  / | |__) /  \  | (___| (___  
+| |   | |  | | |\/| |  ___/ /\ \  \___ \\___ \ 
+| |___| |__| | |  | | |  / ____ \ ____) |___) |
+\_____\____/|_|  |_|_| /_/    \_\_____/_____/ 
+
+Author: felix
+Version: v3.0.1
+Link: https://github.com/felixzhu1989/Compass.Wasm
+2022/10/28 10:07:52.282  http server Running on http://10.9.18.31
+*/
+Console.WriteLine("   _____ ____  __  __ _____         _____ _____");
+Console.WriteLine("  / ____/ __ \\|  \\/  |  __ \\ /\\    / ____/ ____|");
+Console.WriteLine(" | |   | |  | | \\  / | |__) /  \\  | (___| (___");
+Console.WriteLine(" | |   | |  | | |\\/| |  ___/ /\\ \\  \\___ \\\\___ \\");
+Console.WriteLine(" | |___| |__| | |  | | |  / ____ \\ ____) |___) |");
+Console.WriteLine("  \\_____\\____/|_|  |_|_| /_/    \\_\\_____/_____/");
+Console.WriteLine("");
+Console.WriteLine("Author: felix");
+Console.WriteLine("Version: v3.0.1");
+Console.WriteLine("Link: https://github.com/felixzhu1989/Compass.Wasm");
+Console.WriteLine($"{DateTime.Now} http server Running on http://10.9.18.31");
+
+#endregion
 
 var app = builder.Build();
 

@@ -48,15 +48,15 @@ public class CSRepository : ICSRepository
     }
     #endregion
 
-    #region IssueType
-    public Task<IssueType?> GetIssueTypeByIdAsync(Guid id)
+    #region ProblemType
+    public Task<ProblemType?> GetProblemTypeByIdAsync(Guid id)
     {
-        return _context.IssueTypes.SingleOrDefaultAsync(x => x.Id.Equals(id));
+        return _context.ProblemTypes.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
 
-    public Task<IQueryable<IssueType>> GetIssueTypesAsync(Stakeholder stakeholder)
+    public Task<IQueryable<ProblemType>> GetProblemTypesAsync(Stakeholder stakeholder)
     {
-        return Task.FromResult(_context.IssueTypes.Where(x => x.Stakeholder.Equals(stakeholder)).AsQueryable());
+        return Task.FromResult(_context.ProblemTypes.Where(x => x.Stakeholder.Equals(stakeholder)).AsQueryable());
     } 
     #endregion
 }

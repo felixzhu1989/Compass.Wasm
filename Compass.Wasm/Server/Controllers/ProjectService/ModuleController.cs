@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Client.ProjectService;
+using Compass.Wasm.Server.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,13 +16,15 @@ public class ModuleController : ControllerBase
     private readonly PMDbContext _dbContext;
     private readonly IPMRepository _repository;
     private readonly IMapper _mapper;
+    private readonly IEventBus _eventBus;
 
-    public ModuleController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper)
+    public ModuleController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus)
     {
         _domainService = domainService;
         _dbContext = dbContext;
         _repository = repository;
         _mapper = mapper;
+        _eventBus = eventBus;
     }
 
     [HttpGet("All/{drawingId}")]
@@ -39,7 +42,7 @@ public class ModuleController : ControllerBase
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddModuleRequest request)
     {
-        var module = new Compass.ProjectService.Domain.Entities.Module(Guid.NewGuid(), request.DrawingId, request.ModelId, request.Name, request.SpecialNotes);
+        var module = new Compass.ProjectService.Domain.Entities.Module(Guid.NewGuid(), request.DrawingId, request.ModelId, request.Name.ToUpper(), request.SpecialNotes);
         await _dbContext.Modules.AddAsync(module);
         return module.Id;
     }
@@ -49,9 +52,27 @@ public class ModuleController : ControllerBase
     {
         var module = await _repository.GetModuleByIdAsync(id);
         if (module == null) return NotFound($"没有Id={id}的Module");
-        module.ChangeModelId(request.ModelId).ChangeName(request.Name).ChangeSpecialNotes(request.SpecialNotes);
+        module.ChangeModelId(request.ModelId).ChangeName(request.Name.ToUpper()).ChangeSpecialNotes(request.SpecialNotes);
         return Ok();
     }
+    [HttpPut("Release/{id}")]
+    public async Task<ActionResult> ReleaseModule([RequiredGuid] Guid id, bool isReleased)
+    {
+        var module = await _repository.GetModuleByIdAsync(id);
+        if (module == null) return NotFound($"没有Id={id}的Module");
+        module.ChangeIsReleased(isReleased);
+        return Ok();
+    }
+    [HttpPost("Release/{projectId}")]
+    public async Task<ActionResult> ReleaseModuleEvent([RequiredGuid] Guid projectId)
+    {
+        var eventData = new ModuleReleasedEvent(projectId);
+        //发布集成事件
+        _eventBus.Publish("ProjectService.Module.Released", eventData);
+        return Ok();
+    }
+
+
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([RequiredGuid] Guid id)
     {
