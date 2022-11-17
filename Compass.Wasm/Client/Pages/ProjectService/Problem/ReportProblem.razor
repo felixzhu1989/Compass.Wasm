@@ -1,10 +1,33 @@
-﻿@using Compass.Wasm.Client.Pages.CategoryService
+﻿@page "/reportproblem/{ProjectId}"
+@using Compass.Wasm.Client.Pages.CategoryService
+<PageTitle>Report Problem</PageTitle>
+
+<AuthorizeView>
+    <NotAuthorized>
+        <span style="color: red">报告项目异常，请先登录！</span>
+    </NotAuthorized>
+</AuthorizeView>
 
 
-<ProblemTypeChoose @bind-ProblemTypeId="ProblemTypeId" />
-<p>现在选中异常类型Id：@ProblemTypeId</p>
+<AuthorizeView>
+    <Authorized>
+        <ProblemTypeChoose @bind-ProblemTypeId="ProblemTypeId" />
+        <p>现在选中异常类型Id：@ProblemTypeId</p>
+        
+        
+        
+        
+        
+        
+
+    </Authorized>
+</AuthorizeView>
+
 
 
 @code {
+    [Parameter]
+    public string ProjectId { get; set; }
+
     public string ProblemTypeId { get; set; }
 }

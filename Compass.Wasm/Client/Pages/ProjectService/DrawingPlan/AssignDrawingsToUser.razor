@@ -40,7 +40,6 @@
     UserResponse[]? designers;
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         designers = await Http.GetFromJsonAsync<UserResponse[]>("api/UserAdmin/UsersInRoles?roleNames=pm,designer");
     }
 

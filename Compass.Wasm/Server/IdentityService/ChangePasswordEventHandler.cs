@@ -17,7 +17,7 @@ public class ChangePasswordEventHandler : JsonIntegrationEventHandler<ChangePass
     }
     public override Task HandleJson(string eventName, ChangePasswordEvent? eventData)
     {
-        _logger.LogInformation($"发送密码给用户邮箱：{eventData.Email}");
+        _logger.LogInformation($"发送密码给用户邮箱：{eventData!.Email}");
         //自定义消息
         var message = $"用户名：{eventData.UserName}<br>邮箱：{eventData.Email}<br>密码：<span style=\"color:red\">{eventData.Password}</span><br>";
         //发送密码给用户的邮箱

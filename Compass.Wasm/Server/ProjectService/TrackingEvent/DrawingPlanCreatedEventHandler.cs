@@ -1,6 +1,6 @@
 ﻿using Compass.Wasm.Shared.ProjectService;
 
-namespace Compass.Wasm.Server.ProjectService;
+namespace Compass.Wasm.Server.ProjectService.TrackingEvent;
 //处理DrawingPlanController发出的集成事件，创建制图计划后，将项目跟踪得项目状态修改成制图
 [EventName("ProjectService.DrawingPlan.Created")]
 public class DrawingPlanCreatedEventHandler : JsonIntegrationEventHandler<DrawingPlanCreatedEvent>
@@ -13,7 +13,7 @@ public class DrawingPlanCreatedEventHandler : JsonIntegrationEventHandler<Drawin
     }
     public override async Task HandleJson(string eventName, DrawingPlanCreatedEvent? eventData)
     {
-        var tracking = await _dbContext.Trackings.SingleAsync(x => x.Id.Equals(eventData.ProjectId) );
+        var tracking = await _dbContext.Trackings.SingleAsync(x => x.Id.Equals(eventData!.ProjectId));
         tracking.ChangeDrawingPlanedTime(DateTime.Now).ChangeProjectStatus(ProjectStatus.制图);
         await _dbContext.SaveChangesAsync();
     }

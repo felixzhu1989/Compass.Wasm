@@ -42,7 +42,6 @@ else
     protected override void OnInitialized()
     {
         if (!string.IsNullOrWhiteSpace(MultiFileUrl)) fileUrls = MultiFileUrl.Split('\n').ToList();
-        base.OnInitialized();
     }
     private async Task OnInputFileChange(InputFileChangeEventArgs e)
     {

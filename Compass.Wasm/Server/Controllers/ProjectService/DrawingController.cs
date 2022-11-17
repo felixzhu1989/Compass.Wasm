@@ -15,13 +15,15 @@ public class DrawingController : ControllerBase
     private readonly PMDbContext _dbContext;
     private readonly IPMRepository _repository;
     private readonly IMapper _mapper;
+    private readonly IEventBus _eventBus;
 
-    public DrawingController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper)
+    public DrawingController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper,IEventBus eventBus)
     {
         _domainService = domainService;
         _dbContext = dbContext;
         _repository = repository;
         _mapper = mapper;
+        _eventBus = eventBus;
     }
 
 
@@ -53,7 +55,7 @@ public class DrawingController : ControllerBase
         var drawing = await _repository.GetDrawingByIdAsync(id);
         if (drawing == null) return NotFound($"没有Id={id}的Drawing");
         drawing.ChangeItemNumber(request.ItemNumber)
-            .ChangeDrawingUrl(request.DrawingUrl);
+            .ChangeDrawingUrl(request.DrawingUrl!);
         return Ok();
     }
 

@@ -10,7 +10,7 @@
 <div class="row position-relative">
     <div class="col">
         <p>
-            @if (project != null)
+            @if (project != null && tracking!=null)
             {
                 <h5>
                     <AuthorizeView Roles="admin,pm">
@@ -20,7 +20,22 @@
                     </AuthorizeView>
                     <span>@project.OdpNumber</span>
                     <a href="./updatedrawingplan/@project.Id">
-                        <span class="ms-2">制图计划</span>
+                        <span class="ms-2 fs-6">制图计划</span>
+                    </a>
+                    <span class="badge ms-2 bg-light text-black ">@project.ProjectType</span>
+                    <span class="badge ms-2 @(project.RiskLevel==RiskLevel.高风险 ? "bg-danger" : project.RiskLevel==RiskLevel.中风险 ? "bg-warning text-dark":"bg-light text-dark")">@project.RiskLevel</span>
+                    <a href="/">
+                    <span class="badge ms-2 @(tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus.入库?"bg-success": "bg-secondary")">@tracking.ProjectStatus</span>
+                    </a>
+                    <a href="./reportproblem/@project.Id">
+                        @if (tracking.ProblemNotResolved)
+                        {
+                            <span class="badge bg-danger ms-2 me-2">项目异常</span><img class="ms-1 me-2" src="andon_red.gif" />
+                        }
+                        else
+                        {
+                            <span class="ms-2 fs-6">报告异常</span>
+                        }
                     </a>
                 </h5>
 
@@ -77,6 +92,15 @@
 
                                 <br />
                             }
+                        </div>
+                    </div>
+                }
+                @if (tracking.ProblemNotResolved)
+                {
+                    <div class="row">
+                        <div class="col-sm-3" style="width: 95px">异常信息:</div>
+                        <div class="col-sm-9" style="color: red">
+                            <span>异常详细信息...</span>
                         </div>
                     </div>
                 }
@@ -152,13 +176,14 @@
     private ProjectResponse? project = new();
     private bool isModuleRelease;
 
+    private TrackingResponse tracking;
+
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         drawings = await RefreshData();
 
         project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
-        var tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{ProjectId}");
+        tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{ProjectId}");
         isModuleRelease = tracking.ModuleReleaseTime != null;
     }
     Task<DrawingResponse[]?> RefreshData()
@@ -193,6 +218,11 @@
             if (drawings == null || drawings.Length == 0)
             {
                 await JsRuntime.InvokeVoidAsync("alert", "该项目下还没有添加图纸！");
+                return;
+            }
+            if (tracking.ProjectStatus!=ProjectStatus.制图)
+            {
+                await JsRuntime.InvokeVoidAsync("alert", "项目状态不是制图！\n请项目经理添加制图计划。");
                 return;
             }
             var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要下发【{project.OdpNumber}】的图纸吗？\n这将会在项目跟踪中产生发图记录。");

@@ -62,7 +62,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         modules=await Http.GetFromJsonAsync<ModuleResponse[]>($"api/Module/All/{Drawing.Id}");
         if (Drawing.UserId!=null&&!Drawing.UserId.Equals(Guid.Empty))
         {

@@ -35,7 +35,12 @@ public interface IPMRepository
     //Tracking
     Task<IQueryable<Tracking>> GetTrackingsAsync();
     Task<Tracking?> GetTrackingByIdAsync(Guid id);
-    
+
+    //Problem
+    Task<IQueryable<Problem>> GetProblemsAsync();
+    Task<IQueryable<Problem>> GetProblemsByProjectIdAsync(Guid projectId);
+    Task<Problem?> GetProblemByIdAsync(Guid id);
+
 
 
 }

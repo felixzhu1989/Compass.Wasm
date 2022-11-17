@@ -11,9 +11,14 @@
         </p>
     </div>
     @*todo:控制权限*@
-    <div class="col" style="text-align: right">
-        <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
-    </div>
+    <AuthorizeView Roles="admin">
+        <Authorized>
+            <div class="col" style="text-align: right">
+                <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+    
 </div>
 
 @if (drawing != null)
@@ -36,7 +41,6 @@
     private DrawingResponse? drawing;
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         var response = await Http.GetFromJsonAsync<DrawingResponse>($"api/Drawing/{Id}");
         if (response==null) NavigationManager.NavigateTo("./projectlist");
         drawing = response;

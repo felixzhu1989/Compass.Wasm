@@ -110,7 +110,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         drawingPlan =await Http.GetFromJsonAsync<DrawingPlanResponse>($"api/DrawingPlan/{Id}");
         project = await Http.GetFromJsonAsync<ProjectResponse?>($"api/Project/{drawingPlan.Id}");
         drawingsNotAssigned = await Http.GetFromJsonAsync<DrawingResponse[]>($"api/DrawingPlan/DrawingsNotAssigned/{drawingPlan!.Id}");

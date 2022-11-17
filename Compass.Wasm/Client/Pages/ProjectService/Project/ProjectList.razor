@@ -68,7 +68,6 @@
     private bool isAddDrop = false;
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         projects =await RefreshData();
     }
     Task<ProjectResponse[]?> RefreshData()

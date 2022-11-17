@@ -117,7 +117,7 @@
     public string DrawingId { get; set; }
 
     private ModuleResponse[]? modules;
-    private AddModuleRequest addModuleRequest;
+    private AddModuleRequest? addModuleRequest;
     private UserResponse? user;
 
     private bool isAddDrop = false;
@@ -127,7 +127,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         modules = await RefreshData();
         drawing = await Http.GetFromJsonAsync<DrawingResponse>($"api/Drawing/{DrawingId}");
         project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{drawing.ProjectId}");

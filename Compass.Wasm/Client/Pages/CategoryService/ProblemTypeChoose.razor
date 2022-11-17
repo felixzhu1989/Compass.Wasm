@@ -36,7 +36,6 @@
     protected override async Task OnInitializedAsync()
     {
         problemTypes=await Http.GetFromJsonAsync<ProblemTypeResponse[]>($"api/ProblemType/All/0");
-        await base.OnInitializedAsync();
         if (string.IsNullOrWhiteSpace(ProblemTypeId))
         {
             await Refresh();

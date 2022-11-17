@@ -35,9 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.CategoryService.Inf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.PlanService", "Compass.PlanService", "{5FF8DC3C-B7C1-4AAC-A03D-95979FD7566C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.PlanService.Domain", "Compass.PlanService\Compass.PlanService.Domain\Compass.PlanService.Domain.csproj", "{94A4332D-8630-4883-9090-1874190535E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.PlanService.Domain", "Compass.PlanService\Compass.PlanService.Domain\Compass.PlanService.Domain.csproj", "{94A4332D-8630-4883-9090-1874190535E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.PlanService.Infrastructure", "Compass.PlanService\Compass.PlanService.Infrastructure\Compass.PlanService.Infrastructure.csproj", "{2F643117-0771-4D1F-9608-C8F093BA898C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.PlanService.Infrastructure", "Compass.PlanService\Compass.PlanService.Infrastructure\Compass.PlanService.Infrastructure.csproj", "{2F643117-0771-4D1F-9608-C8F093BA898C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

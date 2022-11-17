@@ -84,7 +84,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         project = await Http.GetFromJsonAsync<ProjectResponse?>($"api/Project/{DrawingPlan.Id}");
         await GetProjectWorkload();
         await GetDrawingsCount();

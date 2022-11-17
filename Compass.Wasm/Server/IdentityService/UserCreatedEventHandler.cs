@@ -13,7 +13,7 @@ public class UserCreatedEventHandler : JsonIntegrationEventHandler<UserCreatedEv
     }
     public override Task HandleJson(string eventName, UserCreatedEvent? eventData)
     {
-        _logger.LogInformation($"发送初始密码给被创建用户的邮箱：{eventData.Email}");
+        _logger.LogInformation($"发送初始密码给被创建用户的邮箱：{eventData!.Email}");
         //自定义消息
         var message = $"用户名：{eventData.UserName}<br>邮箱：{eventData.Email}<br>密码：<span style=\"color:navy\">{eventData.Password}</span><br>";
         //发送初始密码给被创建用户的邮箱

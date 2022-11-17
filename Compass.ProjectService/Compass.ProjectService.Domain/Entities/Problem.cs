@@ -2,7 +2,7 @@
 
 namespace Compass.ProjectService.Domain.Entities;
 /// <summary>
-/// 记录项目异常日志
+/// 记录项目异常
 /// </summary>
 public record Problem : AggregateRootEntity, IAggregateRoot, IHasCreationTime, ISoftDelete
 {
@@ -23,7 +23,7 @@ public record Problem : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     public string? Solution { get; private set; }//解决方案
     public string? SolutionUrl { get; private set; }//上传得附件，多文件
     public DateTime? CloseTime { get; private set; }//问题解决的时间
-    public bool IsClosed { get; set; }//是否结束
+    public bool IsClosed { get;private set; }//是否结束
 
     private Problem() { }
     public Problem(Guid id,Guid projectId,Guid reportUserId, Guid problemTypeId, string? description, string? descriptionUrl)
@@ -54,7 +54,7 @@ public record Problem : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         return this;
     }
 
-    public Problem ChangeResponseUserId(Guid responseUserId)
+    public Problem ChangeResponseUserId(Guid? responseUserId)
     {
         ResponseUserId = responseUserId;
         return this;

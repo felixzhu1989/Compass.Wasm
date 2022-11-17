@@ -51,7 +51,6 @@
     bool isReleased;
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{Module.ModelId}");
         isReleased = Module.IsReleased;
     }

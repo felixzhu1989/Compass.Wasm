@@ -70,9 +70,9 @@ public class UserAdminController : ControllerBase
         //生成的密码短信发给对方
         //可以同时或者选择性的把新增用户的密码短信/邮件/打印给用户(EventHandler中指定操作)
         //体现了领域事件对于代码“高内聚、低耦合”的追求
-        var UserCreatedEvent = new UserCreatedEvent(user.Id, request.UserName, password, request.Email);
+        var userCreatedEvent = new UserCreatedEvent(user!.Id, request.UserName, password!, request.Email);
         //发布集成事件
-        _eventBus.Publish("IdentityService.User.Created", UserCreatedEvent);
+        _eventBus.Publish("IdentityService.User.Created", userCreatedEvent);
         return Ok();
     }
 
@@ -82,7 +82,7 @@ public class UserAdminController : ControllerBase
         var (results, user, password) =
             await _repository.AddUserAsync(request.UserName, request.Email, request.RoleName);
         if (!results.Succeeded) return BadRequest(results.Errors.SumErrors());
-        var eventData = new UserCreatedEvent(user.Id, request.UserName, password, request.Email);
+        var eventData = new UserCreatedEvent(user!.Id, request.UserName, password!, request.Email);
         //发布集成事件
         _eventBus.Publish("IdentityService.User.Created", eventData);
         return Ok();
@@ -112,7 +112,7 @@ public class UserAdminController : ControllerBase
         var (result, user, password) = await _repository.ResetPasswordAsync(id);
         if (!result.Succeeded) return BadRequest(result.Errors.SumErrors());
         //生成密码邮件发给对方
-        var eventData = new ResetPasswordEvent(user.Id, user.UserName, password, user.Email);
+        var eventData = new ResetPasswordEvent(user!.Id, user.UserName, password!, user.Email);
         _eventBus.Publish("IdentityService.User.PasswordReset", eventData);
         return Ok();
     }

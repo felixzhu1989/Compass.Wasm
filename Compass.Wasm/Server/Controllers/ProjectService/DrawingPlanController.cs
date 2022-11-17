@@ -3,6 +3,7 @@ using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
 using Compass.Wasm.Server.ProjectService;
+using Compass.Wasm.Server.ProjectService.TrackingEvent;
 using Zack.EventBus;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService

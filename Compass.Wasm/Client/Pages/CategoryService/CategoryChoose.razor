@@ -50,8 +50,7 @@
     protected override async Task OnInitializedAsync()
     {
         products=await Http.GetFromJsonAsync<ProductResponse[]>("api/Product/All/0");
-        models = await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{products.First().Id}");
-        await base.OnInitializedAsync();
+        models = await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{products!.First().Id}");
         if (string.IsNullOrWhiteSpace(ModelId))
         {
             await Refresh();

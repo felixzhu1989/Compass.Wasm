@@ -37,7 +37,7 @@ namespace Compass.Wasm.Server.Controllers.OtherService
             CancellationToken cancellationToken = default)
         {
             var file = request.File;
-            string fileName = file.FileName;
+            string fileName = file!.FileName;
             await using Stream stream = file.OpenReadStream();
             var upItem = await _domainService.UploadAsync(stream, fileName, cancellationToken);
             _dbContext.Add(upItem);

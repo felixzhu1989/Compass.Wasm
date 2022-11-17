@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Compass.ProjectService.Infrastructure.Configs;
 
-public class IssueConfig:IEntityTypeConfiguration<Problem>
+public class ProblemConfig:IEntityTypeConfiguration<Problem>
 {
     public void Configure(EntityTypeBuilder<Problem> builder)
     {

@@ -35,7 +35,6 @@
     private ProjectResponse[]? projectsNotPlanned;
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         projectsNotPlanned = await Http.GetFromJsonAsync<ProjectResponse[]>("api/DrawingPlan/ProjectsNotPlanned");
         DrawingPlan.ReleaseTime=DateTime.Now;//将日期定到今天吗，这样好改动
     }

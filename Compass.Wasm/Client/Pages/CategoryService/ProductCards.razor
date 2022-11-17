@@ -21,7 +21,6 @@
     private ProductResponse[]? products;
     protected override async Task OnInitializedAsync()
     {
-        await base.OnInitializedAsync();
         products=await Http.GetFromJsonAsync<ProductResponse[]>($"api/Product/All/{Sbu}");
     }
     

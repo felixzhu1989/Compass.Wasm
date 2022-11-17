@@ -1,0 +1,19 @@
+﻿@page "/reportissue/{ProjectId}"
+<PageTitle>Report Issue</PageTitle>
+<AuthorizeView>
+    <NotAuthorized>
+        <span style="color: red">登记项目经验教训，请先登录！</span>
+    </NotAuthorized>
+</AuthorizeView>
+<p>待设计...</p>
+
+
+
+
+@code {
+    [Parameter]
+    public string ProjectId { get; set; }
+
+
+
+}

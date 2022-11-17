@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Client.ProjectService;
-using Compass.Wasm.Server.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
+using Compass.Wasm.Server.ProjectService.TrackingEvent;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
@@ -64,12 +64,12 @@ public class ModuleController : ControllerBase
         return Ok();
     }
     [HttpPost("Release/{projectId}")]
-    public async Task<ActionResult> ReleaseModuleEvent([RequiredGuid] Guid projectId)
+    public Task<ActionResult> ReleaseModuleEvent([RequiredGuid] Guid projectId)
     {
         var eventData = new ModuleReleasedEvent(projectId);
         //发布集成事件
         _eventBus.Publish("ProjectService.Module.Released", eventData);
-        return Ok();
+        return Task.FromResult<ActionResult>(Ok());
     }
 
 

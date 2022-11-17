@@ -122,8 +122,7 @@ public class PMRepository : IPMRepository
         }
     }
     #endregion
-
-
+    
     #region Tracking
     public Task<IQueryable<Tracking>> GetTrackingsAsync()
     {
@@ -137,5 +136,18 @@ public class PMRepository : IPMRepository
     #endregion
 
 
-
+    #region Problem
+    public Task<IQueryable<Problem>> GetProblemsAsync()
+    {
+        return Task.FromResult(_context.Problems.AsQueryable());
+    }
+    public Task<IQueryable<Problem>> GetProblemsByProjectIdAsync(Guid projectId)
+    {
+        return Task.FromResult(_context.Problems.Where(x => x.ProjectId.Equals(projectId)).AsQueryable());
+    }
+    public Task<Problem?> GetProblemByIdAsync(Guid id)
+    {
+        return _context.Problems.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+    #endregion
 }
