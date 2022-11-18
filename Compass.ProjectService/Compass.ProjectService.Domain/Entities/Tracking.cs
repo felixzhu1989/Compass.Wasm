@@ -17,7 +17,7 @@ public record Tracking : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     public DateTime? DrawingPlanedTime { get; private set; }//制定制图计划的时间->进入制图状态
     public DateTime? ModuleReleaseTime { get; private set; }//发出生产图纸的时间->进入生产状态
     public DateTime? WarehousingTime { get; private set; }//生产完工入库的时间->进入库存状态
-    public DateTime? CloseTime { get; private set; }//项目真实发货的时间->进入结束状态，用减去WarehousingTime，用户计算成品库存时间
+    public DateTime? ShippingTime { get; private set; }//项目真实发货的时间->进入结束状态，用减去WarehousingTime，用户计算成品库存时间
 
 
     private Tracking() { }
@@ -51,9 +51,9 @@ public record Tracking : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
         WarehousingTime = warehousingTime;
         return this;
     }
-    public Tracking ChangeCloseTime(DateTime closeTime)
+    public Tracking ChangeShippingTime(DateTime shippingTime)
     {
-        CloseTime = closeTime;
+        ShippingTime = shippingTime;
         return this;
     }
 }

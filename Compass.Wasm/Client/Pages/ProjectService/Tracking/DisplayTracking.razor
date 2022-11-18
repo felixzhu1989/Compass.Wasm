@@ -1,7 +1,7 @@
 ﻿@using Compass.Wasm.Shared.ProjectService
 @inject HttpClient Http
 
-@if (project != null)
+@if (project != null&&Tracking!=null)
 {
     <tr class="@(Tracking.ProblemNotResolved?"table-danger":"")">
         <td style="text-align: center">
@@ -16,6 +16,7 @@
         <td style="text-align: center">@(Tracking.ModuleReleaseTime!=null ? Tracking.ModuleReleaseTime.Value.ToString("MM/dd") : "")</td>
         <td style="text-align: center">- - -</td>
         <td style="text-align: center">@(Tracking.WarehousingTime!=null ? Tracking.WarehousingTime.Value.ToString("MM/dd") : "")</td>
+        <td style="text-align: center">@(Tracking.ShippingTime!=null ? Tracking.ShippingTime.Value.ToString("MM/dd") : "")</td>
         <td style="text-align: center">@project.DeliveryDate.ToString("MM/dd")</td>
         <td style="text-align: center">
             <a href="./reportproblem/@project.Id">报告异常</a>
@@ -27,7 +28,7 @@
     @if (Tracking.ProblemNotResolved)
     {
         <tr class="table-danger">
-            <td colspan="11">
+            <td colspan="12">
                 <img class="ms-1 me-2" src="andon_red.gif" />
                 <a href="./reportproblem/@project.Id">
                     <span class="badge bg-danger ms-3 me-3">项目异常</span>
@@ -47,8 +48,6 @@
     protected override async Task OnInitializedAsync()
     {
         project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Tracking.Id}");
-
-
     }
 
 }

@@ -86,12 +86,12 @@ public class TrackingController : ControllerBase
         tracking.ChangeWarehousingTime(warehousingTime);
         return Ok();
     }
-    [HttpPut("CloseTime/{id}")]
-    public async Task<ActionResult> UpdateCloseTime([RequiredGuid] Guid id, DateTime closeTime)
+    [HttpPut("ShippingTime/{id}")]
+    public async Task<ActionResult> UpdateShippingTime([RequiredGuid] Guid id, DateTime shippingTime)
     {
         var tracking = await _repository.GetTrackingByIdAsync(id);
         if (tracking == null) return NotFound($"没有Id={id}的Tracking");
-        tracking.ChangeCloseTime(closeTime);
+        tracking.ChangeShippingTime(shippingTime);
         return Ok();
     }
 

@@ -268,9 +268,6 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("CloseTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -294,6 +291,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
 
                     b.Property<int>("ProjectStatus")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ShippingTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("WarehousingTime")
                         .HasColumnType("datetime2");

@@ -16,7 +16,7 @@ public record TrackingResponse
     public DateTime? DrawingPlanedTime { get;set; }//制定制图计划的时间->进入制图状态
     public DateTime? ModuleReleaseTime { get;set; }//发出生产图纸的时间->进入生产状态
     public DateTime? WarehousingTime { get;set; }//生产完工入库的时间->进入库存状态
-    public DateTime? CloseTime { get;set; }//项目真实发货的时间->进入结束状态，减去WarehousingTime，用户计算成品库存时间
+    public DateTime? ShippingTime { get;set; }//项目真实发货的时间->进入结束状态，减去WarehousingTime，用户计算成品库存时间
 
     //附加Project中DeliveryDate的属性，用于排序
     public DateTime DeliveryDate { get; set; }
