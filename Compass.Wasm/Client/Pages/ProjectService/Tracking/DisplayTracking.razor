@@ -29,11 +29,18 @@
     {
         <tr class="table-danger">
             <td colspan="12">
-                <img class="ms-1 me-2" src="andon_red.gif" />
                 <a href="./reportproblem/@project.Id">
-                    <span class="badge bg-danger ms-3 me-3">项目异常</span>
+                    <span class="badge bg-danger ms-1 me-1">异常</span>
                 </a>
-                <span>异常详细内容...</span>
+                <img class="ms-1 me-2" src="andon_red.gif" />
+                <br />
+                @if (problems != null && problems.Length != 0)
+                {
+                    foreach (var problem in problems)
+                    {
+                        <ShowProblem Problem="@problem" />
+                    }
+                }
             </td>
         </tr>
     }
@@ -43,11 +50,12 @@
     [Parameter]
     public TrackingResponse Tracking { get; set; }
     private ProjectResponse? project;
+    private ProblemResponse[]? problems;
 
-
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Tracking.Id}");
+        problems = await Http.GetFromJsonAsync<ProblemResponse[]>($"api/Problem/NotResolved/{Tracking.Id}");
     }
 
 }

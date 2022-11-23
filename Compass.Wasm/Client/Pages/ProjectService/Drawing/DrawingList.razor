@@ -2,6 +2,7 @@
 
 @using Compass.Wasm.Shared.ProjectService
 @using Compass.Wasm.Client.ProjectService
+@using Compass.Wasm.Client.Pages.ProjectService.Tracking
 
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
@@ -22,20 +23,26 @@
                     <a href="./updatedrawingplan/@project.Id">
                         <span class="ms-2 fs-6">制图计划</span>
                     </a>
+                    <a href="./assigndrawings/@project.Id">
+                        <span class="ms-2 fs-6">图纸分配</span>
+                    </a>
                     <span class="badge ms-2 bg-light text-black ">@project.ProjectType</span>
                     <span class="badge ms-2 @(project.RiskLevel==RiskLevel.高风险 ? "bg-danger" : project.RiskLevel==RiskLevel.中风险 ? "bg-warning text-dark":"bg-light text-dark")">@project.RiskLevel</span>
                     <a href="/">
                     <span class="badge ms-2 @(tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus.入库?"bg-success": "bg-secondary")">@tracking.ProjectStatus</span>
                     </a>
-                    <a href="./reportproblem/@project.Id">
+                    <a href="./reportproblem/@ProjectId">
                         @if (tracking.ProblemNotResolved)
                         {
-                            <span class="badge bg-danger ms-2 me-2">项目异常</span><img class="ms-1 me-2" src="andon_red.gif" />
+                            <span class="badge bg-danger ms-2 me-2">异常</span><img class="ms-1 me-2" src="andon_red.gif" />
                         }
                         else
                         {
                             <span class="ms-2 fs-6">报告异常</span>
                         }
+                    </a>
+                    <a href="/reportissue/@ProjectId">
+                        <span class="ms-2 fs-6">经验教训</span>
                     </a>
                 </h5>
 
@@ -98,9 +105,15 @@
                 @if (tracking.ProblemNotResolved)
                 {
                     <div class="row">
-                        <div class="col-sm-3" style="width: 95px">异常信息:</div>
+                        <div class="col-sm-3" style="width: 95px">异常列表:</div>
                         <div class="col-sm-9" style="color: red">
-                            <span>异常详细信息...</span>
+                            @if (problems != null && problems.Length != 0)
+                            {
+                                foreach (var problem in problems)
+                                {
+                                    <ShowProblem Problem="@problem" />
+                                }
+                            }
                         </div>
                     </div>
                 }
@@ -177,6 +190,7 @@
     private bool isModuleRelease;
 
     private TrackingResponse tracking;
+    private ProblemResponse[]? problems;
 
     protected override async Task OnInitializedAsync()
     {
@@ -185,6 +199,7 @@
         project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
         tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{ProjectId}");
         isModuleRelease = tracking.ModuleReleaseTime != null;
+        problems = await Http.GetFromJsonAsync<ProblemResponse[]>($"api/Problem/NotResolved/{ProjectId}");
     }
     Task<DrawingResponse[]?> RefreshData()
     {

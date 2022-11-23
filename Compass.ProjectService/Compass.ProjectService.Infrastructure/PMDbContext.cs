@@ -13,6 +13,7 @@ public class PMDbContext:BaseDbContext
     public DbSet<DrawingPlan> DrawingsPlan { get; set; }
     public DbSet<Tracking> Trackings { get; set; }
     public DbSet<Problem> Problems { get; set; }
+    public DbSet<Issue> Issues { get; set; }
 
     public PMDbContext(DbContextOptions<PMDbContext> options, IMediator? mediator) : base(options, mediator)
     {

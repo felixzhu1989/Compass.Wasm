@@ -5,7 +5,7 @@
 <tr>
     <td>
         <h5>
-            <AuthorizeView Roles="admin,pm">
+            <AuthorizeView Roles="admin,pm,designer">
                 <Authorized>
                     <a href="./updatedrawing/@Drawing.Id"><i class="bi bi-gear" /></a>
                 </Authorized>
@@ -21,7 +21,9 @@
             <div class="col-sm-9">
                 @if (user != null)
                 {
-                    <span>@user.UserName</span>
+                    <a href="/userdrawinglist/@user.UserName">
+                        <span>@user.UserName</span>
+                    </a>
                 }
             </div>
         </div>
@@ -59,8 +61,7 @@
 
     private ModuleResponse[]? modules;
     private UserResponse? user;
-
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         modules=await Http.GetFromJsonAsync<ModuleResponse[]>($"api/Module/All/{Drawing.Id}");
         if (Drawing.UserId!=null&&!Drawing.UserId.Equals(Guid.Empty))

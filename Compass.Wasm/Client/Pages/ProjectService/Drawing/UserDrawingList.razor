@@ -1,0 +1,34 @@
+﻿@page "/userdrawinglist/{UserName}"
+@using Compass.Wasm.Shared.ProjectService
+@inject HttpClient Http
+<PageTitle>My Drawings</PageTitle>
+<table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
+    <thead>
+        <tr>
+            <th style="width: 30%">项目</th>
+            <th>Item编号</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (drawingsGroup != null && drawingsGroup.Count != 0)
+        {
+            foreach (var group in drawingsGroup)
+            {
+                <DisplayDrawingsGroup ProjectId="group.Key" DrawingResponses="group.Value" />
+            }
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    [Parameter]
+    public string UserName { get; set; }
+    Dictionary<Guid, List<DrawingResponse>>? drawingsGroup;
+
+    protected override async Task OnInitializedAsync()
+    {
+        drawingsGroup = await Http.GetFromJsonAsync<Dictionary<Guid, List<DrawingResponse>>>($"api/Drawing/User/{UserName}");
+    }
+}

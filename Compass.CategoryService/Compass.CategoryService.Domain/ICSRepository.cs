@@ -17,5 +17,6 @@ public interface ICSRepository
     //ProblemType
     public Task<ProblemType?> GetProblemTypeByIdAsync(Guid id);
     public Task<IQueryable<ProblemType>> GetProblemTypesAsync(Stakeholder stakeholder);
+    
 
 }

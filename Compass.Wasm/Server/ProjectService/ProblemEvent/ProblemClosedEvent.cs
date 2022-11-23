@@ -1,3 +1,3 @@
 ﻿namespace Compass.Wasm.Server.ProjectService.ProblemEvent;
 
-public record CloseProblemEvent(Guid ProjectId);
+public record ProblemClosedEvent(Guid ProjectId);

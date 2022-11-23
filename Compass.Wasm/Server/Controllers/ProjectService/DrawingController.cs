@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Compass.ProjectService.Domain.Entities;
 using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
@@ -16,22 +17,42 @@ public class DrawingController : ControllerBase
     private readonly IPMRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
+    private readonly IdUserManager _userManager;
 
-    public DrawingController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper,IEventBus eventBus)
+    public DrawingController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper,IEventBus eventBus, IdUserManager userManager)
     {
         _domainService = domainService;
         _dbContext = dbContext;
         _repository = repository;
         _mapper = mapper;
         _eventBus = eventBus;
+        _userManager = userManager;
     }
-
+    
 
     [HttpGet("All/{projectId}")]
     public async Task<DrawingResponse[]> FindAll([RequiredGuid] Guid projectId)
     {
         return await _mapper.ProjectTo<DrawingResponse>(await _repository.GetDrawingsByProjectIdAsync(projectId)).ToArrayAsync();
     }
+    [HttpGet("User/{userName}")]
+    public async Task<Dictionary<Guid, List<DrawingResponse>>> FindAllByUserName(string userName)
+    {
+        Dictionary<Guid, List<DrawingResponse>> dic = new ();
+        var user = await _userManager.FindByNameAsync(userName);
+        var drawings= await _mapper.ProjectTo<DrawingResponse>(await _repository.GetDrawingsByUserIdAsync(user.Id)).ToListAsync();
+        var group= drawings.GroupBy(x => x.ProjectId);
+        foreach (var g in group)
+        {
+            if (!dic.ContainsKey(g.Key)) dic.Add(g.Key, new List<DrawingResponse>());
+            foreach (var d in g)
+            {
+                dic[g.Key].Add(d);
+            }
+        }
+        return dic;
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<DrawingResponse?>> FindById([RequiredGuid] Guid id)
     {
@@ -39,6 +60,23 @@ public class DrawingController : ControllerBase
         if (drawing == null) return NotFound($"没有Id={id}的Drawing");
         return _mapper.Map<DrawingResponse>(drawing);
     }
+
+    [HttpGet("Exists/{projectId}")]
+    public async Task<ActionResult<bool>> DrawingExists([RequiredGuid] Guid projectId)
+    {
+        return await _repository.DrawingExistsInProjectAsync(projectId);
+    }
+    [HttpGet("Total/{projectId}")]
+    public async Task<ActionResult<int>> TotalDrawingsCount([RequiredGuid] Guid projectId)
+    {
+        return await _repository.GetTotalDrawingsCountInProjectAsync(projectId);
+    }
+    [HttpGet("NotAssigned/{projectId}")]
+    public async Task<ActionResult<int>> NotAssignedDrawingsCount([RequiredGuid] Guid projectId)
+    {
+        return await _repository.GetNotAssignedDrawingsCountInProjectAsync(projectId);
+    }
+
 
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddDrawingRequest request)

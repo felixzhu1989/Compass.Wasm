@@ -27,7 +27,7 @@
     public string ModelId { get; set; }
     public Task Save()
     {
-        Module.ModelId =Guid.Parse(ModelId); 
+        Module.ModelId =Guid.Parse(ModelId);
         return SaveModule.InvokeAsync(Module);
     }
 }

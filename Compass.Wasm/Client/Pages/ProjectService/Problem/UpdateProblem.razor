@@ -1,0 +1,69 @@
+﻿@page "/updateproblem/{Id}"
+@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Client.Pages.CategoryService
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Update Problem</PageTitle>
+<div class="row">
+    <div class="col">
+        <p>
+            <span class="fs-5">更新异常信息</span>
+        </p>
+    </div>
+    @*todo:控制权限*@
+    <AuthorizeView Roles="admin,manager,pm">
+        <Authorized>
+            <div class="col" style="text-align: right">
+                <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+</div>
+@if (problem != null)
+{
+    <EditForm Model="problem" OnSubmit="Save">
+        <ProblemTypeChoose @bind-ProblemTypeId="ProblemTypeId" />
+
+        <div class="input-group mb-2">
+            <span class="input-group-text">问题描述</span>
+            <textarea class="form-control" placeholder="请选选择上述①②异常类型，再详细描述异常问题，可输入多行" style="height: 120px" @bind="@problem.Description"></textarea>
+        </div>
+        <MultiFileUpload Title="描述附件（可上传多个附件）" FileType="image/*" @bind-MultiFileUrl="@problem.DescriptionUrl" />
+
+        <button class="btn btn-success" type="submit">保存</button>
+        <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"./reportproblem/{problem.ProjectId}"))">取消</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    [Parameter]
+    public string ProblemTypeId { get; set; }
+
+    private ProblemResponse? problem;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        problem = await Http.GetFromJsonAsync<ProblemResponse>($"api/Problem/{Id}");
+        ProblemTypeId = problem.ProblemTypeId.ToString();
+    }
+    private async Task Delete()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除异常吗？");
+        if (confirmResult)
+        {
+            var result = await Http.DeleteAsync($"api/Problem/{Id}");
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"./reportproblem/{problem.ProjectId}");
+        }
+    }
+    private async Task Save()
+    {
+        problem.ProblemTypeId = Guid.Parse(ProblemTypeId);
+        var result = await Http.PutAsJsonAsync($"api/Problem/{Id}", problem);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"./reportproblem/{problem.ProjectId}");
+    }
+}

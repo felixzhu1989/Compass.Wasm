@@ -94,6 +94,50 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.ToTable("DrawingsPlan");
                 });
 
+            modelBuilder.Entity("Compass.ProjectService.Domain.Entities.Issue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DescriptionUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProjectStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ReportUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.HasIndex("Id", "IsDeleted");
+
+                    b.HasIndex("ProjectId", "IsDeleted");
+
+                    b.ToTable("Issues");
+                });
+
             modelBuilder.Entity("Compass.ProjectService.Domain.Entities.Module", b =>
                 {
                     b.Property<Guid>("Id")
@@ -267,6 +311,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ClosedTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");

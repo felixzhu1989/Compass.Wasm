@@ -57,6 +57,6 @@ public class CSRepository : ICSRepository
     public Task<IQueryable<ProblemType>> GetProblemTypesAsync(Stakeholder stakeholder)
     {
         return Task.FromResult(_context.ProblemTypes.Where(x => x.Stakeholder.Equals(stakeholder)).AsQueryable());
-    } 
+    }
     #endregion
 }

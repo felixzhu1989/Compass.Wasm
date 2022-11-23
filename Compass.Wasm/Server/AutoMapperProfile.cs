@@ -19,7 +19,7 @@ public class AutoMapperProfile : Profile
         CreateMap<DrawingPlan, DrawingPlanResponse>();
         CreateMap<Tracking, TrackingResponse>();
         CreateMap<Problem, ProblemResponse>();
-
+        CreateMap<Issue, IssueResponse>();
         #endregion
 
         #region CategoryService

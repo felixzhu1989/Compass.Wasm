@@ -94,7 +94,14 @@ public class TrackingController : ControllerBase
         tracking.ChangeShippingTime(shippingTime);
         return Ok();
     }
-
+    [HttpPut("ClosedTime/{id}")]
+    public async Task<ActionResult> UpdateClosedTime([RequiredGuid] Guid id, DateTime closedTime)
+    {
+        var tracking = await _repository.GetTrackingByIdAsync(id);
+        if (tracking == null) return NotFound($"没有Id={id}的Tracking");
+        tracking.ChangeClosedTime(closedTime);
+        return Ok();
+    }
     //由eventbus发出事件来维护，但是保留手动修改的接口
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([RequiredGuid] Guid id)

@@ -1,4 +1,4 @@
-﻿namespace Compass.Wasm.Server.ProjectService.TrackingEvent;
+﻿namespace Compass.Wasm.Server.ProjectService.ProjectEvent;
 
 //处理ProjectController发出的集成事件，创建新订单后，继续创建跟踪对象
 [EventName("ProjectService.Project.Created")]

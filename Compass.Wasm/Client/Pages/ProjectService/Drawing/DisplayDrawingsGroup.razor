@@ -1,0 +1,41 @@
+﻿@using Compass.Wasm.Shared.ProjectService
+@inject HttpClient Http
+@if (project != null)
+{
+    <tr>
+        <td>
+            <a href="/drawinglist/@ProjectId">
+                <span>@project.OdpNumber</span>
+            </a>
+        </td>
+        <td>
+            @if (DrawingResponses != null && DrawingResponses.Count != 0)
+            {
+                foreach (var drawingResponse in DrawingResponses)
+                {
+                    <a href="/modulelist/@drawingResponse.Id">
+                        <span>@drawingResponse.ItemNumber</span>
+                    </a>
+                    <a/>
+                }
+            }
+        </td>
+    </tr>
+}
+
+
+
+@code {
+    [Parameter]
+    public Guid ProjectId { get; set; }
+    [Parameter]
+    public List<DrawingResponse> DrawingResponses { get; set; }
+
+    private ProjectResponse? project;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        project =await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+    }
+
+}

@@ -12,13 +12,14 @@
             @if (drawing != null)
             {
                 @if (project != null)
-                    {
-                        <h5><a href="./drawinglist/@project.Id">@project.OdpNumber</a></h5>
-                    }
-                <div class="row">
-                    <div class="col-sm-3" style="width: 95px">项目名称:</div>
-                    <div class="col-sm-9">@project.Name</div>
-                </div>
+                {
+                    <h5><a href="./drawinglist/@project.Id">@project.OdpNumber</a></h5>
+                    <div class="row">
+                        <div class="col-sm-3" style="width: 95px">项目名称:</div>
+                        <div class="col-sm-9">@project.Name</div>
+                    </div>
+                }
+
                 <div class="row">
                     <div class="col-sm-3" style="width: 95px">Item编号:</div>
                     <div class="col-sm-9">@drawing.ItemNumber</div>
@@ -39,7 +40,9 @@
                         {
                             foreach (var fileUrl in drawing.DrawingUrl.Split('\n'))
                             {
-                                <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a><br />
+                                <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+
+                                <br />
                             }
                         }
                     </div>

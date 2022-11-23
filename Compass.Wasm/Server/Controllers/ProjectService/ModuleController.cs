@@ -3,6 +3,7 @@ using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
 using Compass.Wasm.Server.ProjectService.TrackingEvent;
+using Compass.ProjectService.Domain.Entities;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
@@ -32,6 +33,19 @@ public class ModuleController : ControllerBase
     {
         return await _mapper.ProjectTo<ModuleResponse>(await _repository.GetModulesByDrawingIdAsync(drawingId)).ToArrayAsync();
     }
+    [HttpGet("Project/{projectId}")]
+    public async Task<List<ModuleResponse>> FindAllByProject([RequiredGuid] Guid projectId)
+    {
+        List<ModuleResponse> modules = new List<ModuleResponse>();
+        var drawings = await _repository.GetDrawingsByProjectIdAsync(projectId);
+        foreach (var drawing in drawings)
+        {
+            modules.AddRange(_mapper.ProjectTo<ModuleResponse>(await _repository.GetModulesByDrawingIdAsync(drawing.Id)));
+        }
+        return modules;
+    }
+
+
     [HttpGet("{id}")]
     public async Task<ActionResult<ModuleResponse?>> FindById([RequiredGuid] Guid id)
     {
@@ -39,6 +53,14 @@ public class ModuleController : ControllerBase
         if (module == null) return NotFound($"没有Id={id}的Module");
         return _mapper.Map<ModuleResponse>(module);
     }
+
+    [HttpGet("Exists/{drawingId}")]
+    public async Task<ActionResult<bool>> ModuleExists([RequiredGuid] Guid drawingId)
+    {
+        return await _repository.ModuleExistsInDrawing(drawingId);
+    }
+
+
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddModuleRequest request)
     {

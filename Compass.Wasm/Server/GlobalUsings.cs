@@ -8,7 +8,6 @@ global using Swashbuckle.AspNetCore.SwaggerGen;
 global using Zack.EventBus;
 global using Zack.JWT;
 global using StackExchange.Redis;
-global using Compass.Wasm.Server.Hubs;
 global using Microsoft.AspNetCore.Identity;
 global using MediatR;
 global using Microsoft.AspNetCore.Mvc;

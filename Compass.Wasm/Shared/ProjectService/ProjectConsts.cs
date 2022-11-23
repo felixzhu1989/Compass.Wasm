@@ -18,7 +18,7 @@ public enum RiskLevel
 /// </summary>
 public enum ProjectStatus
 {
-    计划,制图,生产,入库,结束
+    计划,制图,生产,入库,发货,结束
 }
 /// <summary>
 /// 相关方

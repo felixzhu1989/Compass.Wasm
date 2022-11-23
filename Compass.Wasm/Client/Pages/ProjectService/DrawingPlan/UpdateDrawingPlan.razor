@@ -1,75 +1,13 @@
 ﻿@page "/updatedrawingplan/{Id}"
 @using Compass.Wasm.Shared.ProjectService
-@using Compass.Wasm.Client.ProjectService
-@using Compass.Wasm.Shared.CategoryService
-@using Compass.Wasm.Shared.IdentityService
 
 @inject HttpClient Http
-@inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 
 <PageTitle>Update Drawing Plan</PageTitle>
-<p>
-    @if (drawingPlan != null && project!=null)
-    {
-        <h5><a href="./drawinglist/@project.Id">@project.OdpNumber</a></h5>
-        <div class="row">
-            <div class="col-sm-3" style="width: 95px">发图日期:</div>
-            <div class="col-sm-9">
-                <span class="badge rounded-pill @(totalDrawings == 0 ? "bg-dark" : drawingsCountNotAssigned != 0 ? "bg-danger" : drawingPlan.ReleaseTime < DateTime.Today ? "bg-success" : "bg-warning text-dark")  ">
-                    @drawingPlan.ReleaseTime.ToString("yyyy-MM-dd")
-                </span>
-                <span class="badge  @(project.DeliveryDate.Subtract(drawingPlan.ReleaseTime).Days < 0 ? "bg-danger" : project.DeliveryDate < DateTime.Today ? "bg-success" : "bg-warning text-dark") ">
-                    发货日期 @project.DeliveryDate.ToString("MM/dd")
-                    生产周期 @(project.DeliveryDate.Subtract(drawingPlan.ReleaseTime).Days)天
-                </span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3" style="width: 95px">项目名称:</div>
-            <div class="col-sm-9">@project.Name</div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3" style="width: 95px">模型概况:</div>
-            <div class="col-sm-9">
-                <span>工作量</span>
-                <span class="badge bg-info text-dark">@totalWorkload</span>
-                <span>@workloadSummary</span>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-3" style="width: 95px">图纸分配:</div>
+<DisplayDrawingPlan Id="@Id"/>
 
-            <div class="col-sm-9">
-                @if (totalDrawings != 0)
-                {
-                    <span>总数</span>
-                    <span class="badge bg-primary">@totalDrawings</span>
-                }
-                else
-                {
-                    <span class="badge bg-dark">未添加</span>
-                }
-                @if (drawingsCountNotAssigned != 0)
-                {
-                    <span>未分配</span>
-                    <span class="badge bg-danger">@drawingsCountNotAssigned</span>
-                }
-                @if (assignedDrawingsSummary.Any())
-                {
-                    <br />
-                    @foreach (var d in assignedDrawingsSummary)
-                    {
-                        <span style="font-weight: bold">@d.Key :</span>
-                        <span>@d.Value </span>
-                        <br />
-                    }
-                }
-            </div>
-        </div>
-    }
-</p>
 <EditForm Model="drawingPlan" OnSubmit="Save">
     <AuthorizeView Roles="admin,pm">
         <Authorized Context="auth">
@@ -82,94 +20,20 @@
     </AuthorizeView>
     <button class="btn btn-secondary mb-2" type="button" @onclick="@(() => NavigationManager.NavigateTo("./drawingplan"))">取消</button>
 </EditForm>
-<AuthorizeView Roles="admin,pm">
-    <Authorized>
-
-        @if (drawingsNotAssigned != null&&drawingsNotAssigned.Length !=0)
-        {
-            <AssignDrawingsToUser DrawingsNotAssigned="drawingsNotAssigned" SaveAssign="SaveAssign" />
-        }
-    </Authorized>
-</AuthorizeView>
 
 @code {
     [Parameter]
     public string Id { get; set; }
-
     private DrawingPlanResponse? drawingPlan = new();
 
-    DrawingResponse[]? drawingsNotAssigned;
-    private ProjectResponse? project;
-    int totalDrawings;
-    int drawingsCountNotAssigned;
-
-    double totalWorkload;
-    string? workloadSummary;
-
-    Dictionary<string, string> assignedDrawingsSummary = new();
-
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
         drawingPlan =await Http.GetFromJsonAsync<DrawingPlanResponse>($"api/DrawingPlan/{Id}");
-        project = await Http.GetFromJsonAsync<ProjectResponse?>($"api/Project/{drawingPlan.Id}");
-        drawingsNotAssigned = await Http.GetFromJsonAsync<DrawingResponse[]>($"api/DrawingPlan/DrawingsNotAssigned/{drawingPlan!.Id}");
-        await GetDrawingsCount();
-        await GetProjectWorkload();
-        await GetDrawingsAssigned();
     }
-    
+
     private async Task Save()
     {
         var result = await Http.PutAsJsonAsync($"api/DrawingPlan/{Id}", drawingPlan);
         if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("./drawingplan");
     }
-
-    async Task SaveAssign(AssignDrawingsToUserRequest request)
-    {
-        var result = await Http.PutAsJsonAsync("api/DrawingPlan/AssignDrawingsToUser", request);
-        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("./drawingplan");
-    }
-    private async Task GetDrawingsCount()
-    {
-        totalDrawings = (await Http.GetFromJsonAsync<DrawingResponse[]>($"api/Drawing/All/{drawingPlan.Id}"))!.Length;
-        drawingsCountNotAssigned=(await Http.GetFromJsonAsync<DrawingResponse[]>($"api/DrawingPlan/DrawingsNotAssigned/{drawingPlan.Id}"))!.Length;
-    }
-    private async Task GetProjectWorkload()
-    {
-        Dictionary<string, double> workload = new Dictionary<string, double>();
-        //首先获取订单中所有的图纸（Item）
-        var drawings = await Http.GetFromJsonAsync<DrawingResponse[]>($"api/Drawing/All/{drawingPlan.Id}");
-        foreach (var drawing in drawings)
-        {
-            var modules = await Http.GetFromJsonAsync<ModuleResponse[]>($"api/Module/All/{drawing.Id}");
-            foreach (var module in modules)
-            {
-                var model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{module.ModelId}");
-                if (workload.ContainsKey(model.Name)) workload[model.Name] += model.Workload;
-                else workload.Add(model.Name, model.Workload);
-            }
-        }
-        foreach (var d in workload)
-        {
-            //保留一位小数
-            workloadSummary+=$"({d.Key}:{Math.Round(d.Value, 1)})";
-            totalWorkload += Math.Round(d.Value, 1);
-        }
-    }
-
-    private async Task GetDrawingsAssigned()
-    {
-        var dic = await Http.GetFromJsonAsync<Dictionary<Guid, DrawingResponse[]>>($"api/DrawingPlan/DrawingsAssigned/{drawingPlan.Id}");
-        foreach (var d in dic)
-        {
-            var user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{d.Key}");
-            List<string> itemNumbers = new List<string>();
-            foreach (var r in d.Value)
-            {
-                itemNumbers.Add(r.ItemNumber);
-            }
-            assignedDrawingsSummary.Add(user.UserName, string.Join(',', itemNumbers));
-        }
-    }
-
 }

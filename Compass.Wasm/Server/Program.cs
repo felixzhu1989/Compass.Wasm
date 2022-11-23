@@ -227,7 +227,7 @@ app.UseDeveloperExceptionPage();
 
 app.UseSwagger();
 
-app.MapHub<ProjectStatusHub>("/Hubs/ProjectStatusHub");
+//app.MapHub<XxxHub>("/Hubs/XxxHub");
 
 
 //集成事件

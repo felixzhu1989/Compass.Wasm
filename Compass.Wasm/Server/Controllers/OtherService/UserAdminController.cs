@@ -60,6 +60,28 @@ public class UserAdminController : ControllerBase
         
     }
 
+    [HttpGet("ByName/{userName}")]
+    public async Task<ActionResult<UserResponse>> FindByUserName(string userName)
+    {
+        var user = await _userManager.FindByNameAsync(userName);
+        if (user == null) return NotFound();
+        var roles = await _repository.GetRolesAsync(user);
+        return new UserResponse { Id=user.Id, UserName = user.UserName, Email= user.Email, Roles=string.Join(',', roles), CreationTime = user.CreationTime };
+    }
+    [HttpGet("IdByName/{userName}")]
+    public async Task<ActionResult<Guid>> GetIdByName(string userName)
+    {
+        var user = await _userManager.FindByNameAsync(userName);
+        if (user == null) return NotFound();
+        return user.Id;
+    }
+    [HttpGet("NameById/{id}")]
+    public async Task<ActionResult<string>> GetIdByName(Guid id)
+    {
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        if (user == null) return NotFound();
+        return user.UserName;
+    }
     [HttpPost("AddAdmin")]
     //[AllowAnonymous]//创建第一个管理员时使用
     public async Task<ActionResult> AddAdminUser(AddAdminRequest request)

@@ -93,12 +93,11 @@
     private async Task Delete()
     {
         //todo:检查项目下有没有图纸
-        //if (await Repository.CheckDrawingsInProject(project.Id))
-        //{
-        //    await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
-        //    return;
-        //}
-
+        if (await Http.GetFromJsonAsync<bool>($"api/Drawing/Exists/{project.Id}"))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！\n请先删除图纸。");
+            return;
+        }
 
         var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
         if (confirmResult)

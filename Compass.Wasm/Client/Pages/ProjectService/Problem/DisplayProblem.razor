@@ -1,0 +1,178 @@
+﻿@using Compass.Wasm.Shared.ProjectService
+@using Compass.Wasm.Shared.CategoryService
+@using Compass.Wasm.Shared.IdentityService
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<tr>
+    <td>
+        <AuthorizeView>
+            <Authorized>
+                <a href="/updateproblem/@Problem.Id">更新异常情况</a>
+            </Authorized>
+        </AuthorizeView>
+        <div class="row">
+            <div class="col-sm-3" style="width: 95px">异常状态:</div>
+            <div class="col-sm-9">
+                <span class="badge @(Problem.IsClosed ? "bg-success" : "bg-danger")">@(Problem.IsClosed ? "异常关闭" : "问题未决")</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" style="width: 95px">上报时间:</div>
+            <div class="col-sm-9">@Problem.CreationTime</div>
+        </div>
+        @if (reporter != null)
+        {
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">上报人:</div>
+                <div class="col-sm-9">@reporter.UserName</div>
+            </div>
+        }
+        <div class="row">
+            <div class="col-sm-3" style="width: 95px">异常类型:</div>
+            <div class="col-sm-9">@problemType</div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3" style="width: 95px">问题描述:</div>
+            <div class="col-sm-9" style="color: red">
+                @foreach (var row in Problem.Description.Split('\n'))
+                {
+                    <span>@row</span>
+                    <br />
+                }
+            </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Problem.DescriptionUrl))
+        {
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">描述附件:</div>
+                <div class="col-sm-9">
+                    @foreach (var fileUrl in Problem.DescriptionUrl.Split('\n'))
+                    {
+                        <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                        <br />
+                    }
+                </div>
+            </div>
+        }
+        @if (Problem.IsClosed)
+        {
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">关闭时间:</div>
+                <div class="col-sm-9">@Problem.CloseTime</div>
+            </div>
+        }
+    </td>
+
+    <td>
+
+        @if (Problem.ResponseUserId != null && !Problem.ResponseUserId.Equals(Guid.Empty))
+        {
+            if (responder != null)
+            {
+                <AuthorizeView>
+                    <Authorized>
+                        @*只能负责人修改解决方案*@
+                        @if (context.User.Identity!.Name!.ToLower().Equals(responder.UserName.ToLower()))
+                        {
+                            <a href="/updatesolution/@Problem.Id">更新解决方案</a>
+                        }
+                    </Authorized>
+                </AuthorizeView>
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">负责人:</div>
+                    <div class="col-sm-9">@responder.UserName</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">截止日期:</div>
+                    <div class="col-sm-9" style="color: red">@Problem.Deadline!.Value.ToString("yyyy/MM/dd")</div>
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Problem.Solution))
+            {
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">解决方案:</div>
+                    <div class="col-sm-9" style="color: green">
+                        @foreach (var row in Problem.Solution.Split('\n'))
+                        {
+                            <span>@row</span>
+                            <br />
+                        }
+                    </div>
+                </div>
+            }
+            @if (!string.IsNullOrWhiteSpace(Problem.SolutionUrl))
+            {
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">方案附件:</div>
+                    <div class="col-sm-9">
+                        @foreach (var fileUrl in Problem.SolutionUrl.Split('\n'))
+                        {
+                            <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                            <br />
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </td>
+    <td style="width: 15%;text-align: center">
+        <AuthorizeView Roles="admin,manager,pm">
+            <Authorized>
+                <a href="/assignproblem/@Problem.Id">指派负责人</a><br />
+                <span class="btn mb-2" style="color:@(Problem.IsClosed?"green":"red") " @onclick="CloseProblem">@(Problem.IsClosed ? "重新打开" : "关闭异常")</span>
+            </Authorized>
+        </AuthorizeView>
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public ProblemResponse Problem { get; set; }
+
+    private string problemType = string.Empty;
+    private UserResponse? reporter;
+    private UserResponse? responder;
+    protected override async Task OnParametersSetAsync()
+    {
+        var response = await Http.GetFromJsonAsync<ProblemTypeResponse>($"api/ProblemType/{Problem.ProblemTypeId}");
+        problemType = $"{response.Name}({response.Stakeholder})";
+        reporter = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Problem.ReportUserId}");
+        if (Problem.ResponseUserId != null && !Problem.ResponseUserId.Equals(Guid.Empty))
+        {
+            responder = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Problem.ResponseUserId}");
+        }
+    }
+    private async Task CloseProblem()
+    {
+        if (Problem.IsClosed)
+        {
+            //确认重新打开异常
+            var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要重新打开异常【{Problem.Description}】吗？");
+            if (confirmResult)
+            {
+                Problem.IsClosed = false;
+                await Http.PutAsJsonAsync($"api/Problem/Close/{Problem.Id}", Problem);
+            }
+        }
+        else
+        {
+            //判断是否已经分配责任人，并且有解决方案
+            if (Problem.ResponseUserId == null || Problem.ResponseUserId.Equals(Guid.Empty) ||string.IsNullOrWhiteSpace(Problem.Solution))
+            {
+                await JsRuntime.InvokeVoidAsync("alert", "没有解决方案，不能关闭异常！\n请先指派责任人，让责任人完成解决方案的填写。");
+                return;
+            }
+            //确认关闭
+            var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要关闭异常【{Problem.Description}】吗？");
+            if (confirmResult)
+            {
+                Problem.IsClosed = true;
+                Problem.CloseTime=DateTime.Now;
+                await Http.PutAsJsonAsync($"api/Problem/Close/{Problem.Id}", Problem);
+            }
+        }
+        StateHasChanged();
+    }
+}
