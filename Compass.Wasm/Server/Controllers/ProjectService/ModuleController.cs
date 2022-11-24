@@ -18,14 +18,16 @@ public class ModuleController : ControllerBase
     private readonly IPMRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
+    private readonly IdUserManager _userManager;
 
-    public ModuleController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus)
+    public ModuleController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus,IdUserManager userManager)
     {
         _domainService = domainService;
         _dbContext = dbContext;
         _repository = repository;
         _mapper = mapper;
         _eventBus = eventBus;
+        _userManager = userManager;
     }
 
     [HttpGet("All/{drawingId}")]
@@ -59,7 +61,6 @@ public class ModuleController : ControllerBase
     {
         return await _repository.ModuleExistsInDrawing(drawingId);
     }
-
 
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddModuleRequest request)

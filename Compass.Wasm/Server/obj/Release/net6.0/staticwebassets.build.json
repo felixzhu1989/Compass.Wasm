@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "60JNSYHwhz4X6I9BmeHXsg+FEGT3ritC3E3R3g/jePA=",
+  "Hash": "mz/nOe8mBR8aE2sjkpYdTWe8/5IMqvVznbn+2kjPTGc=",
   "Source": "Compass.Wasm.Server",
   "BasePath": "_content/Compass.Wasm.Server",
   "Mode": "Default",
@@ -39578,6 +39578,23 @@
       "OriginalItemSpec": "wwwroot\\2022\\11\\10a426a65ee6aa3774f6d5d286cd559cbbb55829c6e97fe35ff50b574777cf40\\andon_blue.gif"
     },
     {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\11\\349f23cfc87ed2d4650a35d052f7ab01bd6ed81f18bda51a1761c6087f058dbe\\FSO220432-大工单.pdf",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/11/349f23cfc87ed2d4650a35d052f7ab01bd6ed81f18bda51a1761c6087f058dbe/FSO220432-大工单.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\11\\349f23cfc87ed2d4650a35d052f7ab01bd6ed81f18bda51a1761c6087f058dbe\\FSO220432-大工单.pdf"
+    },
+    {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\11\\35e7feeb02d9c6883e363ef4b90cf7bf67a1049773f595427710551bcb7790dd\\CLK-34.pdf",
       "SourceId": "Compass.Wasm.Server",
       "SourceType": "Discovered",
@@ -39593,6 +39610,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\2022\\11\\35e7feeb02d9c6883e363ef4b90cf7bf67a1049773f595427710551bcb7790dd\\CLK-34.pdf"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\11\\494e58fb4ec99325dd12707f40cbf1ff62262906c3eda17932cb6c79f322f368\\FSO220433.pdf",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/11/494e58fb4ec99325dd12707f40cbf1ff62262906c3eda17932cb6c79f322f368/FSO220433.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\11\\494e58fb4ec99325dd12707f40cbf1ff62262906c3eda17932cb6c79f322f368\\FSO220433.pdf"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\11\\4c7fc33192163cb2d9622c7337f9f5ccb5384415d877195416ff522a1ad3fc87\\CLK-48-ansul.pdf",
@@ -39729,6 +39763,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\2022\\11\\d1da413823c75668dbc8bbf22525de2237ac38f0d72f23e046d7b48473fc1cd5\\CLK-48.pdf"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\11\\d9282a7fe0fd491bb86ba2be95c68521e1b7e02bba780f6bba80e4c8c6e9f281\\FSC048-22 久事大厦 Jiu Shi Building-双签合同.pdf",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2022/11/d9282a7fe0fd491bb86ba2be95c68521e1b7e02bba780f6bba80e4c8c6e9f281/FSC048-22 久事大厦 Jiu Shi Building-双签合同.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2022\\11\\d9282a7fe0fd491bb86ba2be95c68521e1b7e02bba780f6bba80e4c8c6e9f281\\FSC048-22 久事大厦 Jiu Shi Building-双签合同.pdf"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2022\\11\\e0260b09e8b061767bbb8c9cf2899350c3dcd529f8ba79ea50087fb63b2aaffe\\屏幕截图 2022-10-08 145211.png",

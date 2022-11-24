@@ -19,12 +19,9 @@
         <div class="row">
             <div class="col-sm-3" style="width: 65px">负责:</div>
             <div class="col-sm-9">
-                @if (user != null)
-                {
-                    <a href="/userdrawinglist/@user.UserName">
-                        <span>@user.UserName</span>
-                    </a>
-                }
+                <a href="/userdrawinglist/@userName">
+                    <span>@userName</span>
+                </a>
             </div>
         </div>
         <div class="row">
@@ -40,7 +37,6 @@
                 }
             </div>
         </div>
-
     </td>
     <td>
         @if (modules != null && modules.Length != 0)
@@ -60,14 +56,11 @@
     public bool ShowModuleRelease { get; set; }
 
     private ModuleResponse[]? modules;
-    private UserResponse? user;
+    private string userName = "";
     protected override async Task OnParametersSetAsync()
     {
         modules=await Http.GetFromJsonAsync<ModuleResponse[]>($"api/Module/All/{Drawing.Id}");
-        if (Drawing.UserId!=null&&!Drawing.UserId.Equals(Guid.Empty))
-        {
-            user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Drawing.UserId}");
-        }
+        userName = await Http.GetStringAsync($"api/Drawing/UserName/{Drawing.Id}");
     }
 
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Compass.ProjectService.Domain.Entities;
 using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
@@ -35,12 +34,14 @@ public class DrawingController : ControllerBase
     {
         return await _mapper.ProjectTo<DrawingResponse>(await _repository.GetDrawingsByProjectIdAsync(projectId)).ToArrayAsync();
     }
+
     [HttpGet("User/{userName}")]
     public async Task<Dictionary<Guid, List<DrawingResponse>>> FindAllByUserName(string userName)
     {
         Dictionary<Guid, List<DrawingResponse>> dic = new ();
         var user = await _userManager.FindByNameAsync(userName);
         var drawings= await _mapper.ProjectTo<DrawingResponse>(await _repository.GetDrawingsByUserIdAsync(user.Id)).ToListAsync();
+        //按照项目对Drawings进行分组
         var group= drawings.GroupBy(x => x.ProjectId);
         foreach (var g in group)
         {
@@ -77,6 +78,17 @@ public class DrawingController : ControllerBase
         return await _repository.GetNotAssignedDrawingsCountInProjectAsync(projectId);
     }
 
+    [HttpGet("UserName/{drawingId}")]
+    public async Task<ActionResult<string>> GetUserName([RequiredGuid] Guid drawingId)
+    {
+        //查找图纸负责人名字
+        var drawing = await _repository.GetDrawingByIdAsync(drawingId);
+        if (drawing!.UserId != null && !drawing.Equals(Guid.Empty))
+        {
+            return (await _userManager.FindByIdAsync(drawing.UserId.ToString())).UserName;
+        }
+        return "";
+    }
 
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddDrawingRequest request)

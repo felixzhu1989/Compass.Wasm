@@ -29,7 +29,7 @@
                     <span class="badge ms-2 bg-light text-black ">@project.ProjectType</span>
                     <span class="badge ms-2 @(project.RiskLevel==RiskLevel.高风险 ? "bg-danger" : project.RiskLevel==RiskLevel.中风险 ? "bg-warning text-dark":"bg-light text-dark")">@project.RiskLevel</span>
                     <a href="/">
-                    <span class="badge ms-2 @(tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus.入库?"bg-success": "bg-secondary")">@tracking.ProjectStatus</span>
+                        <span class="badge ms-2 @(tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus.入库?"bg-success": tracking.ProjectStatus==ProjectStatus.发货?"bg-secondary":"bg-dark")">@tracking.ProjectStatus</span>
                     </a>
                     <a href="./reportproblem/@ProjectId">
                         @if (tracking.ProblemNotResolved)
@@ -56,7 +56,7 @@
                 </div>
 
                 @*todo:控制权限*@
-                <AuthorizeView Roles="admin,manager,pm,designer,quality,inspector">
+                <AuthorizeView Roles="admin,manager,pm,designer,quality,inspector,pmc">
                     <Authorized>
                         <div class="row">
                             <div class="col-sm-3" style="width: 95px">系统合同:</div>
@@ -151,7 +151,7 @@
                         分段明细
                     </div>
                     <div class="col">
-                        <span @onclick="ModuleRelease" style="@(isModuleRelease?"":"color: red")">@(isModuleRelease ? "下发状态" : "点这★发图")</span>
+                        <span @onclick="ModuleRelease" style="@(isModuleRelease?"":"color: red")">@(isModuleRelease ? "发图状态" : "点这★发图")</span>
                     </div>
                 </div>
             </th>
@@ -189,7 +189,7 @@
     private ProjectResponse? project = new();
     private bool isModuleRelease;
 
-    private TrackingResponse tracking;
+    private TrackingResponse? tracking;
     private ProblemResponse[]? problems;
 
     protected override async Task OnInitializedAsync()

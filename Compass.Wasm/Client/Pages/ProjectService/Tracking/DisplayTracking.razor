@@ -5,7 +5,7 @@
 {
     <tr class="@(Tracking.ProblemNotResolved?"table-danger":"")">
         <td style="text-align: center">
-            <span class="badge @(Tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": Tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": Tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": Tracking.ProjectStatus==ProjectStatus.入库?"bg-success": "bg-secondary")">@Tracking.ProjectStatus</span>
+            <span class="badge @(Tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": Tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": Tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": Tracking.ProjectStatus==ProjectStatus.入库?"bg-success": Tracking.ProjectStatus==ProjectStatus.发货?"bg-secondary":"bg-dark")">@Tracking.ProjectStatus</span>
         </td>
         <td>
             <a href="./drawinglist/@project.Id">@project.OdpNumber</a>
@@ -17,6 +17,7 @@
         <td style="text-align: center">- - -</td>
         <td style="text-align: center">@(Tracking.WarehousingTime!=null ? Tracking.WarehousingTime.Value.ToString("MM/dd") : "")</td>
         <td style="text-align: center">@(Tracking.ShippingTime!=null ? Tracking.ShippingTime.Value.ToString("MM/dd") : "")</td>
+        <td style="text-align: center">@(Tracking.ClosedTime!=null ? Tracking.ClosedTime.Value.ToString("MM/dd") : "")</td>
         <td style="text-align: center">@project.DeliveryDate.ToString("MM/dd")</td>
         <td style="text-align: center">
             <a href="./reportproblem/@project.Id">报告异常</a>
@@ -28,7 +29,7 @@
     @if (Tracking.ProblemNotResolved)
     {
         <tr class="table-danger">
-            <td colspan="12">
+            <td colspan="13">
                 <a href="./reportproblem/@project.Id">
                     <span class="badge bg-danger ms-1 me-1">异常</span>
                 </a>

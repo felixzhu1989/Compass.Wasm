@@ -22,7 +22,7 @@
 
     <td style="text-align: center">
         @*todo:控制权限*@
-        <AuthorizeView Roles="admin,manager,pm,designer,quality,inspector">
+        <AuthorizeView Roles="admin,manager,pm,designer,quality,inspector,pmc">
             <Authorized>
                 @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
                 {
