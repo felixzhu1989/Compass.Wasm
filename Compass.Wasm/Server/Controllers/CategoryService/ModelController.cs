@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Compass.Wasm.Client.CategoryService;
 using Compass.Wasm.Shared.CategoryService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

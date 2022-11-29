@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oXnEzVY/Q3RmqxAZhnS4rsOt0lWnOnFbajd9Z7hBe5M47V3fGRqxnrKjXngBomjFMpPUwURjpPcbA0mKDspTBg==",
+  "dgSpecHash": "BtYn/9af2dbsoA1eugocK1YwUN2dfuoawf1xgk5a9PDSK1x2mtQuKI6RAcBjUS5Ld7dpCevQB/ysfZbdRd70UQ==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj",
   "expectedPackageFiles": [

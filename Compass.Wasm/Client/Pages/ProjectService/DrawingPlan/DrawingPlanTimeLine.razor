@@ -120,11 +120,10 @@
         }
         modelSummary = string.Join('、', modelList);
     }
-
     
-
     private async Task GetDrawingsAssigned()
     {
+        assignedDrawingsSummary.Clear();
         var dic = await Http.GetFromJsonAsync<Dictionary<Guid, DrawingResponse[]>>($"api/DrawingPlan/DrawingsAssigned/{DrawingPlan.Id}");
         foreach (var d in dic)
         {
@@ -134,7 +133,14 @@
             {
                 itemNumbers.Add(r.ItemNumber);
             }
-            assignedDrawingsSummary.Add(user.UserName, string.Join('、', itemNumbers));
+            if (assignedDrawingsSummary.ContainsKey(user.UserName))
+            {
+                assignedDrawingsSummary[user.UserName] = string.Join(',', itemNumbers);
+            }
+            else
+            {
+                assignedDrawingsSummary.Add(user.UserName, string.Join(',', itemNumbers));
+            }
         }
     }
 }

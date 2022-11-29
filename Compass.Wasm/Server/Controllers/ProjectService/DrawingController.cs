@@ -109,6 +109,17 @@ public class DrawingController : ControllerBase
         return Ok();
     }
 
+    [HttpPut("RemoveUser/{id}")]
+    public async Task<ActionResult> RemoveUser([RequiredGuid] Guid id)
+    {
+        var drawing = await _repository.GetDrawingByIdAsync(id);
+        if (drawing == null) return NotFound($"没有Id={id}的Drawing");
+        drawing.ChangeUserId(null);
+        return Ok();
+    }
+
+
+
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([RequiredGuid] Guid id)
     {

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Compass.Wasm.Server.ProjectService.ProjectEvent;
 using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
@@ -26,11 +27,16 @@ public class ProjectController : ControllerBase
         _mapper = mapper;
         _eventBus = eventBus;
     }
-    [HttpGet("All")]
-    public async Task<ProjectResponse[]> FindAll()
+    [HttpGet("All/{page}")]
+    public async Task<PaginationResult<List<ProjectResponse>>> FindAll(int page)
     {
-        //使用AutoMapper将Project转换成ProjectResponse（Dto）
-        return await _mapper.ProjectTo<ProjectResponse>(await _repository.GetProjectsAsync()).ToArrayAsync();
+        var result = await _repository.GetProjectsAsync(page);
+        return new PaginationResult<List<ProjectResponse>>
+        {
+            Data = await _mapper.ProjectTo<ProjectResponse>(result.Data).ToListAsync(),
+            CurrentPage = result.CurrentPage,
+            Pages = result.Pages
+        };
     }
 
     [HttpGet("{id}")]

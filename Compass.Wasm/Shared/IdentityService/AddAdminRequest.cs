@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Compass.Wasm.Server.IdentityService;
+namespace Compass.Wasm.Shared.IdentityService;
 
 public record AddAdminRequest(string UserName, string Email);
 public class AddAdminRequestValidator : AbstractValidator<AddAdminRequest>

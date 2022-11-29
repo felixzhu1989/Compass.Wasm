@@ -36,14 +36,14 @@ main[b-vmkc5g0nza] {
     background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-end;
-    height: 3rem;
+    height: 3.5rem;
     display: flex;
     align-items: center;
 }
 
     .top-row[b-vmkc5g0nza]  a, .top-row[b-vmkc5g0nza]  .btn-link {
         white-space: nowrap;
-        margin-left: 1.5rem;
+        margin-left: 1rem;
         text-decoration: none;
     }
 
@@ -57,9 +57,9 @@ main[b-vmkc5g0nza] {
     }
 
 @media (max-width: 640.98px) {
-    .top-row:not(.auth)[b-vmkc5g0nza] {
+    /*.top-row:not(.auth) {
         display: none;
-    }
+    }*/
 
     .top-row.auth[b-vmkc5g0nza] {
         justify-content: space-between;
@@ -97,8 +97,8 @@ main[b-vmkc5g0nza] {
         }
 
     .top-row[b-vmkc5g0nza], article[b-vmkc5g0nza] {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
+        padding-left: 1rem !important;
+        padding-right:1rem !important;
         position: sticky;
     }
 }
@@ -108,7 +108,7 @@ main[b-vmkc5g0nza] {
 }
 
 .top-row[b-rv6utcsw62] {
-    height: 3rem;
+    height: 3.5rem;
     background-color: rgba(0,0,0,0.2);
 }
 
@@ -164,4 +164,7 @@ main[b-vmkc5g0nza] {
         /* Never collapse the sidebar for wide screens */
         display:block;
     }
+}
+/* /Shared/Search.razor.rz.scp.css */
+body[b-wqxq1845qi] {
 }

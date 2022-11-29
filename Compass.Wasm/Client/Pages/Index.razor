@@ -1,4 +1,6 @@
 ﻿@page "/"
+@page "/{CurrentPage:int}"
+@page "/search/{SearchText}/{CurrentPage:int}"
 @using Compass.Wasm.Shared.ProjectService
 @using Compass.Wasm.Client.Pages.ProjectService.Tracking
 @using System.Timers
@@ -10,7 +12,6 @@
 
 <PageTitle>Project Tracking</PageTitle>
 
-@*<button class="btn" @onclick="Refresh"><i class="bi bi-arrow-repeat fs-4" style="color: green"/></button>*@
 <table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
     <thead>
         <tr>
@@ -30,65 +31,97 @@
         </tr>
     </thead>
     <tbody>
-    @if (trackings == null)
-    {
-        <p>跟踪列表加载中...</p>
-    }
-    else if (trackings.Count == 0)
-    {
-            <p>没有要显示的跟踪</p>
-    }
-    else
-    {
-        @foreach (var tracking in trackings)
+        @if (trackings == null)
         {
-                <DisplayTracking Tracking="tracking" />
+            <p>加载中...</p>
         }
-    }
+        else if (trackings.Count == 0)
+        {
+            <p>未找到</p>
+        }
+        else
+        {
+            @foreach (var tracking in trackings)
+            {
+                <DisplayTracking Tracking="tracking" />
+            }
+        }
     </tbody>
 </table>
-
-
+@if (SearchText != null)
+{
+    @for (int i = 1; i <= PageCount; i++)
+    {
+        <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
+   style="margin-right: 15px;margin-bottom: 30px;"
+   href="/search/@LastSearchText/@i">@i</a>
+    }
+}
+else
+{
+    @for (int i = 1; i <= PageCount; i++)
+    {
+        <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
+   style="margin-right: 15px;margin-bottom: 30px;"
+   href="/@i">@i</a>
+    }
+}
 
 @code {
-    private List<TrackingResponse> trackings = new ();
+    [Parameter]
+    public string SearchText { get; set; }
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
+    public int PageCount { get; set; } = 0;
+    public string LastSearchText { get; set; } = string.Empty;
+
+    private List<TrackingResponse> trackings = new();
 
     private Timer timer;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await base.OnInitializedAsync();
         timer = new Timer();
         timer.Interval = 10000;
         timer.Elapsed += OnTimeElapsed;//每隔30s钟就会执行一次这个方法
         timer.Enabled = true;
-        await RefreshData();
-    }
-    async Task RefreshData()
-    {
-        var responses = await Http.GetFromJsonAsync<TrackingResponse[]>("api/Tracking/All");//刷新数据
-        trackings.Clear();
-        foreach (var response in responses)
-        {
-            var project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{response.Id}");
-            response.DeliveryDate = project.DeliveryDate;
-            trackings.Add(response);
-        }
-        trackings= trackings.Distinct().OrderByDescending(x => x.DeliveryDate).ToList();
     }
 
-    //async Task Refresh()
-    //{
-    //    await JsRuntime.InvokeVoidAsync("alert", "刷新喽！");
-    //    await RefreshData();
-    //    //StateHasChanged();
-    //}
+    protected override async Task OnParametersSetAsync()
+    {
+        await RefreshData();
+    }
+
+    async Task RefreshData()
+    {
+        //刷新数据
+        PaginationResult<List<TrackingResponse>>? result = new();
+        if (SearchText != null)
+        {
+            LastSearchText = SearchText;//查询字符串
+            result = await Http.GetFromJsonAsync<PaginationResult<List<TrackingResponse>>>($"api/Tracking/search/{SearchText}/{CurrentPage}");
+        }
+        else
+        {
+            if (CurrentPage == 0) CurrentPage = 1;
+            result = await Http.GetFromJsonAsync<PaginationResult<List<TrackingResponse>>>($"api/Tracking/All/{CurrentPage}");
+        }
+
+        CurrentPage = result!.CurrentPage;
+        PageCount = result.Pages;
+        trackings= result.Data!;
+    }
 
     private async void OnTimeElapsed(object? sender, ElapsedEventArgs e)
     {
+        //每一次timer，当前页码加一，如果大于总页数则返回第一页
+        if (PageCount > 1)
+        {
+            CurrentPage ++;
+            if (CurrentPage> PageCount) CurrentPage = 1;
+        }
         await RefreshData();
         await InvokeAsync(StateHasChanged);
-        
     }
     public void Dispose()
     {

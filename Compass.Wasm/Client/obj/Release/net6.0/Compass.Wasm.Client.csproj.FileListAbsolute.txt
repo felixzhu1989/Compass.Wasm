@@ -939,3 +939,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\xmp
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\3vTL5yG2.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\F428dumt.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\scopedcss\Pages\ProjectService\DrawingPlan\DrawingPlanList.razor.rz.scp.css
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\scopedcss\Shared\Search.razor.rz.scp.css

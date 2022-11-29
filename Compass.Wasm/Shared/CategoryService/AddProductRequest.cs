@@ -1,5 +1,4 @@
-﻿using Compass.Wasm.Shared.CategoryService;
-namespace Compass.Wasm.Client.CategoryService;
+﻿namespace Compass.Wasm.Shared.CategoryService;
 public class AddProductRequest
 {
     public string Name { get; set; }

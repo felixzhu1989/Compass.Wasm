@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
-using Compass.Wasm.Client.CategoryService;
 using Compass.Wasm.Shared.CategoryService;
 
 namespace Compass.Wasm.Server.Controllers.CategoryService;

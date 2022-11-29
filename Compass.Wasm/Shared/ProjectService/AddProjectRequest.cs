@@ -1,6 +1,4 @@
-﻿using Compass.Wasm.Shared.ProjectService;
-
-namespace Compass.Wasm.Client.ProjectService;
+﻿namespace Compass.Wasm.Shared.ProjectService;
 
 public class AddProjectRequest
 {

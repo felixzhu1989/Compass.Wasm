@@ -30,7 +30,7 @@
         <input type="date" class="form-control" @bind-value="@drawingPlan.ReleaseTime" />
     </div>
     <button class="btn btn-success" type="submit">新增制图计划</button>
-    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("./drawingplan"))">取消</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("/drawingplan/1"))">取消</button>
 </EditForm>
 
 
@@ -52,6 +52,6 @@
             return;
         }
         var result = await Http.PostAsJsonAsync("api/DrawingPlan/Add", drawingPlan);
-        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("./drawingplan");
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("/drawingplan/1");
     }
 }

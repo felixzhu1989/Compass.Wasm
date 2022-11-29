@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Compass.Wasm.Server.IdentityService;
+namespace Compass.Wasm.Shared.IdentityService;
 
 public record LoginByPhoneRequest(string PhoneNumber, string Password);
 public class LoginByPhoneRequestValidator : AbstractValidator<LoginByPhoneRequest>

@@ -1,4 +1,5 @@
 ﻿using Compass.ProjectService.Domain.Entities;
+using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.ProjectService;
 
 namespace Compass.ProjectService.Domain;
@@ -8,10 +9,11 @@ namespace Compass.ProjectService.Domain;
 public interface IPMRepository
 {
     //Project
-    Task<IQueryable<Project>> GetProjectsAsync();
+    Task<PaginationResult<IQueryable<Project>>> GetProjectsAsync(int page);
     Task<Project?> GetProjectByIdAsync(Guid id);
     Task<Project?> GetProjectByOdpAsync(string odpNumber);
     Task<string> GetOdpNumberByIdAsync(Guid id);
+    Task<DateTime> GetDeliveryDateByIdAsync(Guid id);
     //Drawing
     Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId);
     Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId);
@@ -27,7 +29,7 @@ public interface IPMRepository
     Task<bool> ModuleExistsInDrawing(Guid drawingId);
 
     //DrawingPlan
-    Task<IQueryable<DrawingPlan>> GetDrawingPlansAsync();
+    Task<PaginationResult<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page);
     Task<DrawingPlan?> GetDrawingPlanByIdAsync(Guid id);
 
     //编制计划时查找那些项目还没有编制计划
@@ -46,8 +48,11 @@ public interface IPMRepository
 
 
     //Tracking
-    Task<IQueryable<Tracking>> GetTrackingsAsync();
+    Task<PaginationResult<IQueryable<Tracking>>> GetTrackingsAsync(int page);
     Task<Tracking?> GetTrackingByIdAsync(Guid id);
+    //搜索针对Tracking
+    Task<PaginationResult<IQueryable<Tracking>>> SearchTrackingsAsync(string searchText,int page);
+    Task<List<string>> GetProjectSearchSuggestions(string searchText);
 
     //Problem
     Task<IQueryable<Problem>> GetProblemsAsync();

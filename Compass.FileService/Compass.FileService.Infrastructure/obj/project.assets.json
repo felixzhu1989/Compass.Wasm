@@ -1115,7 +1115,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10"
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
+          "zack.commons": "1.1.11"
         },
         "compile": {
           "bin/placeholder/Compass.Wasm.Shared.dll": {}

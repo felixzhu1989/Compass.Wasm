@@ -1,6 +1,6 @@
 ﻿using Compass.Wasm.Shared.ProjectService;
 
-namespace Compass.Wasm.Client.CategoryService;
+namespace Compass.Wasm.Shared.CategoryService;
 
 public class AddProblemTypeRequest
 {

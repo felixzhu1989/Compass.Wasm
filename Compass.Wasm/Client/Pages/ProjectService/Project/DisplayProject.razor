@@ -22,14 +22,15 @@
 
     <td style="text-align: center">
         @*todo:控制权限*@
-        <AuthorizeView Roles="admin,manager,pm,designer,quality,inspector,pmc">
+        @*<AuthorizeView Roles="admin,manager,pm,designer,quality,inspector,pmc">
             <Authorized>
-                @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
-                {
-                    <a href="@Project.ContractUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
-                }
+                
             </Authorized>
-        </AuthorizeView>
+        </AuthorizeView>*@
+        @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
+        {
+            <a href="@Project.ContractUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
+        }
     </td>
     <td style="text-align: center">
         @if (!string.IsNullOrWhiteSpace(Project.BomUrl))

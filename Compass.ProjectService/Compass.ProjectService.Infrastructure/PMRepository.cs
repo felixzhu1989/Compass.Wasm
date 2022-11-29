@@ -1,6 +1,9 @@
 ﻿using Compass.ProjectService.Domain;
 using Compass.ProjectService.Domain.Entities;
+using Compass.Wasm.Shared;
+using Compass.Wasm.Shared.ProjectService;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.WebRequestMethods;
 
 namespace Compass.ProjectService.Infrastructure;
 
@@ -12,10 +15,19 @@ public class PMRepository : IPMRepository
         _context = context;
     }
     #region Project
-    public Task<IQueryable<Project>> GetProjectsAsync()
+    public Task<PaginationResult<IQueryable<Project>>> GetProjectsAsync(int page)
     {
-        //return _context.Projects.OrderByDescending(x => x.CreationTime).ToListAsync();
-        return Task.FromResult(_context.Projects.OrderByDescending(x => x.DeliveryDate).AsQueryable());
+        var pageResults = 15f;//默认一页显示数据条数
+        var pageCount = Math.Ceiling(_context.Projects.Count() / pageResults);//计算页总数
+        return Task.FromResult(new PaginationResult<IQueryable<Project>>
+        {
+            Data = _context.Projects
+                .OrderByDescending(x => x.DeliveryDate)
+                .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
+                .Take((int)pageResults),
+            CurrentPage = page,
+            Pages = (int)pageCount
+        });
     }
     public Task<Project?> GetProjectByIdAsync(Guid id)
     {
@@ -32,6 +44,13 @@ public class PMRepository : IPMRepository
         var project = await _context.Projects.SingleOrDefaultAsync(x => x.Id.Equals(id));
         return project.OdpNumber;
     }
+
+    public async Task<DateTime> GetDeliveryDateByIdAsync(Guid id)
+    {
+        var project = await _context.Projects.SingleOrDefaultAsync(x => x.Id.Equals(id));
+        return project.DeliveryDate;
+    }
+
     #endregion
 
     #region Drawing
@@ -87,9 +106,20 @@ public class PMRepository : IPMRepository
 
     #region DrawingPlan
 
-    public Task<IQueryable<DrawingPlan>> GetDrawingPlansAsync()
+    public Task<PaginationResult<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page)
     {
-        return Task.FromResult(_context.DrawingsPlan.OrderByDescending(x => x.ReleaseTime).AsQueryable());
+        var pageResults = 5f;//默认一页显示数据条数
+        var pageCount = Math.Ceiling(_context.DrawingsPlan.Count() / pageResults);//计算页总数
+        return Task.FromResult(new PaginationResult<IQueryable<DrawingPlan>>
+        {
+            Data = _context.DrawingsPlan
+                .OrderByDescending(x => x.ReleaseTime)
+                .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
+                .Take((int)pageResults),
+                
+            CurrentPage = page,
+            Pages = (int)pageCount
+        });
     }
 
     public Task<DrawingPlan?> GetDrawingPlanByIdAsync(Guid id)
@@ -157,19 +187,129 @@ public class PMRepository : IPMRepository
         }
     }
 
-    
     #endregion
 
     #region Tracking
-    public Task<IQueryable<Tracking>> GetTrackingsAsync()
+    public async Task<PaginationResult<IQueryable<Tracking>>> GetTrackingsAsync(int page)
     {
-        return Task.FromResult(_context.Trackings.AsQueryable());
+        var pageResults = 10f;//默认一页显示数据条数
+        var pageCount = Math.Ceiling(_context.Trackings.Count() / pageResults);//计算页总数
+        return new PaginationResult<IQueryable<Tracking>>
+        {
+            Data = _context.Trackings.AsQueryable()
+                .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
+                .Take((int)pageResults),
+            CurrentPage = page,
+            Pages = (int)pageCount
+        };
     }
 
     public Task<Tracking?> GetTrackingByIdAsync(Guid id)
     {
         return _context.Trackings.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
+    //搜索针对Tracking
+    public async Task<PaginationResult<IQueryable<Tracking>>> SearchTrackingsAsync(string searchText,int page)
+    {
+        var pageResults = 10f;//默认一页显示数据条数
+        var pageCount = Math.Ceiling(SearchProjects(searchText).Count() / pageResults);//计算页总数
+        //查询其实是project的内容，但只获取id
+        var ids1=await SearchProjects(searchText)
+            .Select(x => x.Id).ToListAsync();
+        var ids2 = await SearchProblems(searchText)
+            .Select(x => x.ProjectId).ToListAsync();
+        var ids= ids1.Union(ids2).ToList();
+
+        var trackings= _context.Trackings.Where(x=>ids.Contains(x.Id))
+            .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
+            .Take((int)pageResults);
+        return new PaginationResult<IQueryable<Tracking>>
+        {
+            Data = trackings,
+            CurrentPage = page,
+            Pages = (int)pageCount
+        };
+    }
+
+    private IQueryable<Problem> SearchProblems(string serchText)
+    {
+        return _context.Problems
+            .Where(x => x.Description.ToLower().Contains(serchText.ToLower()) 
+                        || x.Solution.ToLower().Contains(serchText.ToLower()));
+    }
+    private IQueryable<Project> SearchProjects(string searchText)
+    {
+        return _context.Projects
+            .Where(x => x.OdpNumber.ToLower().Contains(searchText.ToLower())
+                        || x.Name.ToLower().Contains(searchText.ToLower())
+                        || x.SpecialNotes.ToLower().Contains(searchText.ToLower()));
+    }
+
+    public Task<List<string>> GetProjectSearchSuggestions(string searchText)
+    {
+        List<string> result = new List<string>();
+        var projects = SearchProjects(searchText);
+        foreach (var project in projects)
+        {
+            if (project.OdpNumber.ToLower().Contains(searchText.ToLower()))
+            {
+                result.Add(project.OdpNumber);
+            }
+            if (project.Name.ToLower().Contains(searchText.ToLower()))
+            {
+                result.Add(project.Name);
+            }
+
+            if (project.SpecialNotes != null)
+            {
+                var punctuation = project.SpecialNotes.Where(char.IsPunctuation)
+                    .Distinct().ToArray();//punctuation是标点符号
+                var words = project.SpecialNotes.Split()
+                    .Select(s => s.Trim(punctuation));
+                foreach (var word in words)
+                {
+                    if (word.ToLower().Contains(searchText.ToLower()) && !result.Contains(word))
+                    {
+                        result.Add(word);
+                    }
+                }
+            }
+        }
+        var problems = SearchProblems(searchText);
+        foreach (var problem in problems)
+        {
+            if (problem.Description != null)
+            {
+                var punctuation = problem.Description.Where(char.IsPunctuation)
+                    .Distinct().ToArray();//punctuation是标点符号
+                var words = problem.Description.Split()
+                    .Select(s => s.Trim(punctuation));
+                foreach (var word in words)
+                {
+                    if (word.ToLower().Contains(searchText.ToLower()) && !result.Contains(word))
+                    {
+                        result.Add(word);
+                    }
+                }
+            }
+            if (problem.Solution != null)
+            {
+                var punctuation = problem.Solution.Where(char.IsPunctuation)
+                    .Distinct().ToArray();//punctuation是标点符号
+                var words = problem.Solution.Split()
+                    .Select(s => s.Trim(punctuation));
+                foreach (var word in words)
+                {
+                    if (word.ToLower().Contains(searchText.ToLower()) && !result.Contains(word))
+                    {
+                        result.Add(word);
+                    }
+                }
+            }
+        }
+        return Task.FromResult(result);
+    }
+
     #endregion
 
 

@@ -19,7 +19,8 @@ public record Tracking : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     public DateTime? WarehousingTime { get; private set; }//第一台生产完工入库的时间->进入库存状态
     public DateTime? ShippingTime { get; private set; }//项目第一台真实发货的时间->进入发货状态，用减去WarehousingTime，用户计算成品库存时间
     public DateTime? ClosedTime { get; private set; }//所有产品都发货了的时间->进入结束状态（是否需要售后状态？）
-
+    
+    //public DateTime DeliveryDate { get; set; }//特征5，不映射到数据库
 
     private Tracking() { }
     public Tracking(Guid id)//使用Project的Id作为Tracking的Id

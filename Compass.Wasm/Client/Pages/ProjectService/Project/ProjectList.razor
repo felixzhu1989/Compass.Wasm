@@ -1,16 +1,18 @@
 ﻿@page "/projectlist"
-@using Compass.Wasm.Client.ProjectService
+@page "/projectlist/1"
 @using Compass.Wasm.Shared.ProjectService
+
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 <PageTitle>Project List</PageTitle>
+
 <div class="row position-relative">
     <div class="col">
         <p>
             @if (projects != null)
             {
-                <span>总项目数:@projects.Length</span>
+                <span>总项目数:@projects.Count</span>
             }
         </p>
     </div>
@@ -30,49 +32,60 @@
 }
 <table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
     <thead>
-        <tr>
-            <th style="width: 10%">项目编号</th>
-            <th style="text-align: center">交货日期</th>
-            <th style="width: 35%">项目名称</th>
-            <th style="text-align: center">项目分类</th>
-            <th style="text-align: center">风险等级</th>
-            <th style="text-align: center">合同</th>
-            <th style="text-align: center">领料单</th>
-            <th style="text-align: center">特殊要求</th>
-        </tr>
+    <tr>
+        <th style="width: 10%">项目编号</th>
+        <th style="text-align: center">交货日期</th>
+        <th style="width: 35%">项目名称</th>
+        <th style="text-align: center">项目分类</th>
+        <th style="text-align: center">风险等级</th>
+        <th style="text-align: center">合同</th>
+        <th style="text-align: center">领料单</th>
+        <th style="text-align: center">特殊要求</th>
+    </tr>
     </thead>
     <tbody>
-        @if (projects == null)
+    @if (projects.Count == 0)
+    {
+        <p>加载中...</p>
+    }
+    else
+    {
+        @foreach (var project in projects)
         {
-            <p>项目列表加载中...</p>
+            <DisplayProject Project="project" />
         }
-        else if (projects.Length == 0)
-        {
-            <p>没有要显示的项目</p>
-        }
-        else
-        {
-            @foreach (var project in projects)
-            {
-                <DisplayProject Project="project" />
-            }
-        }
+    }
     </tbody>
 </table>
 
-
+@for (int i = 1; i <= PageCount; i++)
+{
+    <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
+       style="margin-right: 15px;margin-bottom: 30px;"
+       href="/@i">@i</a>
+}
 
 @code {
-    private ProjectResponse[]? projects;
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
+    public int PageCount { get; set; } = 0;
+
+    private List<ProjectResponse>? projects=new();
     private AddProjectRequest? addProjectRequest;
-    private bool isAddDrop = false;
-    protected override async Task OnInitializedAsync()
+    private bool isAddDrop;
+
+    protected override async Task OnParametersSetAsync()
     {
-        projects =await RefreshData();
+        await RefreshData();
     }
-    Task<ProjectResponse[]?> RefreshData()
+
+    async Task RefreshData()
     {
-        return Http.GetFromJsonAsync<ProjectResponse[]>("api/Project/All");//刷新数据
+        if (CurrentPage == 0) CurrentPage = 1;
+        var result = await Http.GetFromJsonAsync<PaginationResult<List<ProjectResponse>>>($"api/Project/All/{CurrentPage}");
+        CurrentPage = result!.CurrentPage;
+        PageCount = result.Pages;
+        projects = result.Data;
     }
 
     private void ShowAddProject()
@@ -89,8 +102,6 @@
         }
         isAddDrop = false; //收起添加项目
         var result = await Http.PostAsJsonAsync("api/Project/Add", addProjectRequest);
-        if (result.IsSuccessStatusCode) projects = await RefreshData();
+        if (result.IsSuccessStatusCode) await RefreshData();
     }
-
-
 }

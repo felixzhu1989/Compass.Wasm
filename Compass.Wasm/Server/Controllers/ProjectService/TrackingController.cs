@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
+using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
@@ -26,11 +27,21 @@ public class TrackingController : ControllerBase
         _eventBus = eventBus;
     }
 
-    [HttpGet("All")]
-    public async Task<TrackingResponse[]> FindAll()
+    [HttpGet("All/{page}")]
+    public async Task<PaginationResult<List<TrackingResponse>>> FindAll(int page)
     {
-        //Todo:需要将项目信息和异常信息一起查询？还是再界面查询后组合？
-        return await _mapper.ProjectTo<TrackingResponse>(await _repository.GetTrackingsAsync()).ToArrayAsync();
+        var result = await _repository.GetTrackingsAsync(page);
+        var responses = await _mapper.ProjectTo<TrackingResponse>(result.Data).ToListAsync();
+        foreach (var response in responses)
+        {
+            response.DeliveryDate =await _repository.GetDeliveryDateByIdAsync(response.Id);
+        }
+        return new PaginationResult<List<TrackingResponse>>
+        {
+            Data = responses.OrderByDescending(x=>x.DeliveryDate).ToList(),
+            CurrentPage = result.CurrentPage,
+            Pages = result.Pages
+        };
     }
     [HttpGet("{id}")]
     public async Task<ActionResult<TrackingResponse?>> FindById([RequiredGuid] Guid id)
@@ -39,7 +50,25 @@ public class TrackingController : ControllerBase
         if (tracking == null) return NotFound($"没有Id={id}的Tracking");
         return _mapper.Map<TrackingResponse>(tracking);
     }
-    
+    //搜索项目
+    [HttpGet("search/{searchText}/{page}")]
+    public async Task<PaginationResult<List<TrackingResponse>>> SearchTrackings(string searchText,int page)
+    {
+        var result=await _repository.SearchTrackingsAsync(searchText,page);
+        return new PaginationResult<List<TrackingResponse>>
+        {
+            Data = await _mapper.ProjectTo<TrackingResponse>(result.Data).ToListAsync(),
+            CurrentPage = result.CurrentPage,
+            Pages = result.Pages
+        };
+    }
+    [HttpGet("searchsuggestions/{searchText}")]
+    public  Task<List<string>> GetProjectSearchSuggestions(string searchText)
+    {
+        return _repository.GetProjectSearchSuggestions(searchText);
+    }
+
+
     //无需Add,由集成事件自动创建
 
     //项目状态和问题解决是由eventbus发出事件来维护，但是保留手动修改的接口

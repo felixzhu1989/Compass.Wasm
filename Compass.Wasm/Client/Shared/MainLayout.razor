@@ -1,6 +1,5 @@
 ﻿@inherits LayoutComponentBase
 @using Compass.Wasm.Client.Pages.IdentityService
-@using System.Globalization
 <head>
     <link rel="stylesheet" href="lib/bootstrap-icons/font/bootstrap-icons.css" />
 </head>
@@ -10,13 +9,18 @@
     </div>
 
     <main>
-        <div class="top-row px-2">
-            <span>@DateTime.Today.ToString("yyyy年MM月dd日")</span>
-            <a href="https://github.com/felixzhu1989/Compass.Wasm" target="_blank">About</a>
-            <LoginLink/>
+        <div class="top-row px-1">
+            <div class="col">
+                <Search/>
+            </div>
+            <div class="col" style="color: green;text-align: right">
+                 <span>@DateTime.Today.ToString("yyyy年MM月dd日")</span>
+                    <a href="https://github.com/felixzhu1989/Compass.Wasm" target="_blank">About</a>
+                    <LoginLink/>
+            </div>
         </div>
 
-        <article class="content px-2">
+        <article class="content px-1">
             @Body
         </article>
     </main>

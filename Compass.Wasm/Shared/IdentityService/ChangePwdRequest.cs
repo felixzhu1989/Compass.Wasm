@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
-namespace Compass.Wasm.Server.IdentityService;
+
+namespace Compass.Wasm.Shared.IdentityService;
 public record ChangePwdRequest(string Password, string Password2);
 public class ChangePwdRequestValidator : AbstractValidator<ChangePwdRequest>
 {

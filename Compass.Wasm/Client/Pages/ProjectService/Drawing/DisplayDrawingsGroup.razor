@@ -1,5 +1,6 @@
 ﻿@using Compass.Wasm.Shared.ProjectService
 @inject HttpClient Http
+@inject IJSRuntime JsRuntime
 @if (project != null)
 {
     <tr>
@@ -13,10 +14,7 @@
             {
                 foreach (var drawingResponse in DrawingResponses)
                 {
-                    <a href="/modulelist/@drawingResponse.Id">
-                        <span>@drawingResponse.ItemNumber</span>
-                    </a>
-                    <a/>
+                    <DeleteDrawingUser DrawingResponse="drawingResponse" DeleteUser="Delete"/> 
                 }
             }
         </td>
@@ -36,6 +34,13 @@
     protected override async Task OnParametersSetAsync()
     {
         project =await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+    }
+
+    private async Task Delete(DrawingResponse drawingResponse)
+    {
+        var result = await Http.PutAsync($"api/Drawing/RemoveUser/{drawingResponse.Id}", null);
+        if (result.IsSuccessStatusCode) DrawingResponses.Remove(drawingResponse);
+        StateHasChanged();
     }
 
 }

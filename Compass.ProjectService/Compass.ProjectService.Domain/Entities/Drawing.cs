@@ -32,7 +32,7 @@ public record Drawing : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         DrawingUrl = drawingUrl;
         return this;
     }
-    public Drawing ChangeUserId(Guid userId)
+    public Drawing ChangeUserId(Guid? userId)
     {
         UserId= userId;
         return this;

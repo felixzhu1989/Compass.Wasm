@@ -572,7 +572,8 @@
       },
       "Compass.Wasm.Shared/1.0.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10"
+          "Microsoft.EntityFrameworkCore.SqlServer": "6.0.10",
+          "Zack.Commons": "1.1.11"
         },
         "runtime": {
           "Compass.Wasm.Shared.dll": {}

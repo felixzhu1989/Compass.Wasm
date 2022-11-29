@@ -4,14 +4,76 @@
 @using Compass.Wasm.Shared.ProjectService
 @using Compass.Wasm.Shared.IdentityService
 @using Compass.Wasm.Client.ProjectService
+@using Compass.Wasm.Shared.CategoryService
 <PageTitle>Assign Drawings</PageTitle>
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 
-<DisplayDrawingPlan Id="@Id" />
-@if (isDrawingsNotAssigned && drawingsNotAssigned != null && drawingsNotAssigned.Length != 0)
+@if (drawingPlan != null && project!=null)
+{
+    <h5><a href="./drawinglist/@project.Id">@project.OdpNumber</a></h5>
+    <div class="row">
+        <div class="col-sm-3" style="width: 95px">发图日期:</div>
+        <div class="col-sm-9">
+            <span class="badge rounded-pill @(totalDrawings == 0 ? "bg-dark" : drawingsCountNotAssigned != 0 ? "bg-danger" : drawingPlan.ReleaseTime < DateTime.Today ? "bg-success" : "bg-warning text-dark")  ">
+                @drawingPlan.ReleaseTime.ToString("yyyy-MM-dd")
+            </span>
+            <span class="badge  @(project.DeliveryDate.Subtract(drawingPlan.ReleaseTime).Days < 0 ? "bg-danger" : project.DeliveryDate < DateTime.Today ? "bg-success" : "bg-warning text-dark") ">
+                发货日期 @project.DeliveryDate.ToString("MM/dd")
+                生产周期 @(project.DeliveryDate.Subtract(drawingPlan.ReleaseTime).Days)天
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3" style="width: 95px">项目名称:</div>
+        <div class="col-sm-9">@project.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3" style="width: 95px">模型概况:</div>
+        <div class="col-sm-9">
+            <span>工作量</span>
+            <span class="badge bg-info text-dark">@(Math.Round(totalWorkload, 1))</span>
+            <span>@modelSummary</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3" style="width: 95px">图纸分配:</div>
+
+        <div class="col-sm-9">
+            @if (totalDrawings != 0)
+            {
+                <span>Item总数</span>
+                <span class="badge bg-primary">@totalDrawings</span>
+            }
+            else
+            {
+                <span class="badge bg-dark">未添加图纸</span>
+            }
+            @if (drawingsCountNotAssigned != 0)
+            {
+                <span>未分配</span>
+                <span class="badge bg-danger">@drawingsCountNotAssigned</span>
+            }
+            @if (assignedDrawingsSummary.Any())
+            {
+                <br />
+                @foreach (var d in assignedDrawingsSummary)
+                {
+                    <a href="/userdrawinglist/@d.Key">
+                        <span style="font-weight: bold">@d.Key :</span>
+                    </a>
+                    <span>@d.Value </span>
+                    <br />
+                }
+            }
+        </div>
+    </div>
+}
+
+@if (isDrawingsNotAssigned && drawingsNotAssigned != null && drawingsNotAssigned.Count != 0)
 {
     <EditForm Model="drawingsNotAssigned" OnSubmit="Save">
 
@@ -45,22 +107,40 @@ else
 {
     <p style="color: red">没有需要分配的图纸</p>
 }
-<button class="btn btn-secondary mt-2" type="button" @onclick="@(() => NavigationManager.NavigateTo("/drawingplan"))">取消</button>
+<button class="btn btn-secondary mt-2" type="button" @onclick="@(() => NavigationManager.NavigateTo("/drawingplan/1"))">取消</button>
 @code {
     [Parameter]
     public string Id { get; set; }
 
     bool isDrawingsNotAssigned;
-    private DrawingResponse[]? drawingsNotAssigned;
+    private List<DrawingResponse>? drawingsNotAssigned;
     private Guid selectedUserId;
     private UserResponse[]? designers;
 
+
+    private DrawingPlanResponse? drawingPlan = new();
+    private ProjectResponse? project = new();
+    int totalDrawings;
+    int drawingsCountNotAssigned;
+    double totalWorkload;
+    string? modelSummary;
+    Dictionary<string, string> assignedDrawingsSummary = new();
+
+
+
     protected override async Task OnParametersSetAsync()
     {
-        drawingsNotAssigned = await Http.GetFromJsonAsync<DrawingResponse[]>($"api/DrawingPlan/DrawingsNotAssigned/{Id}");
+        drawingsNotAssigned = await Http.GetFromJsonAsync<List<DrawingResponse>>($"api/DrawingPlan/DrawingsNotAssigned/{Id}");
         designers = await Http.GetFromJsonAsync<UserResponse[]>("api/UserAdmin/UsersInRoles?roleNames=pm,designer");
         //判断有没有需要分配的图纸
         isDrawingsNotAssigned = await Http.GetFromJsonAsync<bool>($"api/DrawingPlan/IsDrawingsNotAssigned/{Id}");
+
+        drawingPlan =await Http.GetFromJsonAsync<DrawingPlanResponse>($"api/DrawingPlan/{Id}");
+        project = await Http.GetFromJsonAsync<ProjectResponse?>($"api/Project/{Id}");
+        totalDrawings = (await Http.GetFromJsonAsync<DrawingResponse[]>($"api/Drawing/All/{drawingPlan.Id}"))!.Length;
+        await GetProjectWorkload();
+        await GetNotAssignedDrawingsCount();
+        await GetDrawingsAssigned();
     }
 
     async Task Save()
@@ -71,19 +151,69 @@ else
             return;
         }
         //将勾选的Item图纸，分配给选中的designer（过滤未选中的Item）
-        var selectedDrawings = drawingsNotAssigned.Where(x => x.IsChecked).Select(x => x.Id);
+        var selectedDrawings = drawingsNotAssigned.Where(x => x.IsChecked);
         if (!selectedDrawings.Any())
         {
             await JsRuntime.InvokeVoidAsync("alert", "请选择Item图纸");
             return;
         }
-        AssignDrawingsToUserRequest request = new AssignDrawingsToUserRequest { DrawingIds = selectedDrawings, UserId = selectedUserId };
-
+        AssignDrawingsToUserRequest request = new AssignDrawingsToUserRequest { DrawingIds = selectedDrawings.Select(x => x.Id), UserId = selectedUserId };
         var result = await Http.PutAsJsonAsync("api/DrawingPlan/AssignDrawingsToUser", request);
-
-        drawingsNotAssigned = await Http.GetFromJsonAsync<DrawingResponse[]>($"api/DrawingPlan/DrawingsNotAssigned/{Id}");
-        NavigationManager.NavigateTo("/drawingplan");
-        //StateHasChanged();
+        
         //todo:如何更新子组件界面数据?
+        if (!result.IsSuccessStatusCode)return;        
+        drawingsCountNotAssigned -= selectedDrawings.Count();
+        await GetDrawingsAssigned();
+        drawingsNotAssigned = await Http.GetFromJsonAsync<List<DrawingResponse>>($"api/DrawingPlan/DrawingsNotAssigned/{Id}");
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task GetNotAssignedDrawingsCount()
+    {
+        drawingsCountNotAssigned=(await Http.GetFromJsonAsync<DrawingResponse[]>($"api/DrawingPlan/DrawingsNotAssigned/{drawingPlan.Id}"))!.Length;
+    }
+    private async Task GetProjectWorkload()
+    {
+        Dictionary<string, int> modelCount = new Dictionary<string, int>();//统计模型个数
+        List<string> modelList = new();
+        totalWorkload = 0d;
+        var modules = await Http.GetFromJsonAsync<List<ModuleResponse>>($"api/Module/Project/{Id}");
+        if (modules==null) return;
+        foreach (var module in modules)
+        {
+            var model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{module.ModelId}");
+            if (modelCount.ContainsKey(model!.Name)) modelCount[model.Name] += 1;
+            else modelCount.Add(model.Name, 1);
+
+            totalWorkload += model.Workload;//最终显示时只保留一位小数
+        }
+        foreach (var d in modelCount)
+        {
+            modelList.Add($"{d.Key}:{d.Value}");
+        }
+        modelSummary = string.Join('、', modelList);
+    }
+
+    private async Task GetDrawingsAssigned()
+    {
+        assignedDrawingsSummary.Clear();
+        var dic = await Http.GetFromJsonAsync<Dictionary<Guid, DrawingResponse[]>>($"api/DrawingPlan/DrawingsAssigned/{drawingPlan.Id}");
+        foreach (var d in dic)
+        {
+            var user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{d.Key}");
+            List<string> itemNumbers = new List<string>();
+            foreach (var r in d.Value)
+            {
+                itemNumbers.Add(r.ItemNumber);
+            }
+            if (assignedDrawingsSummary.ContainsKey(user.UserName))
+            {
+                assignedDrawingsSummary[user.UserName] = string.Join(',', itemNumbers);
+            }
+            else
+            {
+                assignedDrawingsSummary.Add(user.UserName, string.Join(',', itemNumbers)); 
+            }
+        }
     }
 }

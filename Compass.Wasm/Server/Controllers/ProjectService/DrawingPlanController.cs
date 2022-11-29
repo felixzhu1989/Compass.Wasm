@@ -3,6 +3,8 @@ using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
 using Compass.Wasm.Server.ProjectService.TrackingEvent;
+using Compass.Wasm.Shared;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
@@ -27,10 +29,16 @@ public class DrawingPlanController : ControllerBase
         _eventBus = eventBus;
     }
 
-    [HttpGet("All")]
-    public async Task<DrawingPlanResponse[]> FindAll()
+    [HttpGet("All/{page}")]
+    public async Task<PaginationResult<List<DrawingPlanResponse>>> FindAll(int page)
     {
-        return await _mapper.ProjectTo<DrawingPlanResponse>(await _repository.GetDrawingPlansAsync()).ToArrayAsync();
+        var result = await _repository.GetDrawingPlansAsync(page);
+        return new PaginationResult<List<DrawingPlanResponse>>
+        {
+            Data = await _mapper.ProjectTo<DrawingPlanResponse>(result.Data).ToListAsync(),
+            CurrentPage = result.CurrentPage,
+            Pages = result.Pages
+        };
     }
 
     [HttpGet("{id}")]
@@ -64,7 +72,7 @@ public class DrawingPlanController : ControllerBase
     }
 
     [HttpGet("DrawingsNotAssigned/{projectId}")]
-    public async Task<DrawingResponse[]> FindDrawingsNotAssigned([RequiredGuid] Guid projectId)
+    public async Task<List<DrawingResponse>> FindDrawingsNotAssigned([RequiredGuid] Guid projectId)
     {
         var drawings = await _repository.GetDrawingsNotAssignedByProjectIdAsync(projectId);
         var response = new List<DrawingResponse>();
@@ -72,7 +80,7 @@ public class DrawingPlanController : ControllerBase
         {
             response.Add(new DrawingResponse{Id = drawing.Id,ItemNumber = drawing.ItemNumber,DrawingUrl = drawing.DrawingUrl});
         }
-        return response.ToArray();
+        return response;
 
         //return await _mapper.ProjectTo<DrawingResponse>(await _repository.GetDrawingsNotAssignedByProjectIdAsync(projectId)).ToArrayAsync();
     }

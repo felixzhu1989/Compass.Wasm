@@ -6,8 +6,6 @@
 
 <PageTitle>Update Drawing Plan</PageTitle>
 
-<DisplayDrawingPlan Id="@Id"/>
-
 <EditForm Model="drawingPlan" OnSubmit="Save">
     <AuthorizeView Roles="admin,pm">
         <Authorized Context="auth">
@@ -18,7 +16,7 @@
             <button class="btn btn-success mb-2" type="submit">保存</button>
         </Authorized>
     </AuthorizeView>
-    <button class="btn btn-secondary mb-2" type="button" @onclick="@(() => NavigationManager.NavigateTo("./drawingplan"))">取消</button>
+    <button class="btn btn-secondary mb-2" type="button" @onclick="@(() => NavigationManager.NavigateTo("/drawingplan/1"))">取消</button>
 </EditForm>
 
 @code {
@@ -34,6 +32,6 @@
     private async Task Save()
     {
         var result = await Http.PutAsJsonAsync($"api/DrawingPlan/{Id}", drawingPlan);
-        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("./drawingplan");
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("/drawingplan/1");
     }
 }
