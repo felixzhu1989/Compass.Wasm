@@ -1,11 +1,20 @@
 ﻿@inject HttpClient Http
 
 <EditForm Model="Issue" OnSubmit="Save">
+    <div class="input-group mb-2" style="width: 200px">
+        <span class="input-group-text">①相关方</span>
+        <select class="form-select" @bind="Issue.Stakeholder">
+            @foreach (var stakeholder in Enum.GetNames(typeof(Stakeholder)))
+            {
+                <option>@stakeholder</option>
+            }
+        </select>
+    </div>
     <div class="input-group mb-2">
         <span class="input-group-text">经验教训</span>
         <textarea class="form-control" placeholder="请详细描述经验教训，可输入多行" style="height: 120px" @bind="@Issue.Description"></textarea>
     </div>
-    <MultiFileUpload Title="经验附件（可上传多个附件）" FileType="image/*" @bind-MultiFileUrl="@Issue.DescriptionUrl" />
+    <MultiFileUpload Title="经验附件（可上传多个附件）" FileType="image/*" @bind-MultiFileUrl="@Issue.DescriptionUrl"/>
 
     <button class="btn btn-success" type="submit">新增经验教训</button>
 </EditForm>

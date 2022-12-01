@@ -9,6 +9,11 @@
             </a>
         </td>
         <td>
+            <span class="badge rounded-pill @(drawingPlan.ReleaseTime < DateTime.Today ? "bg-success" : "bg-warning text-dark")  ">
+                @drawingPlan.ReleaseTime.ToString("yyyy-MM-dd")
+            </span>
+        </td>
+        <td>
             @if (DrawingResponses != null && DrawingResponses.Count != 0)
             {
                 foreach (var drawingResponse in DrawingResponses)
@@ -27,12 +32,12 @@
     public Guid ProjectId { get; set; }
     [Parameter]
     public List<DrawingResponse> DrawingResponses { get; set; }
-
     private ProjectResponse? project;
-
+    private DrawingPlanResponse? drawingPlan;
     protected override async Task OnParametersSetAsync()
     {
         project =await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+        drawingPlan = await Http.GetFromJsonAsync<DrawingPlanResponse>($"api/DrawingPlan/{ProjectId}");
     }
 
     private async Task Delete(DrawingResponse drawingResponse)

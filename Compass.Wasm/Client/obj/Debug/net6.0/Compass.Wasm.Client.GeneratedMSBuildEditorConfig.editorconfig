@@ -86,10 +86,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcRHJhd2luZ1BsYW5cQWRkRHJhd2luZ1BsYW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/DrawingPlan/AssignDrawingsToUser.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcRHJhd2luZ1BsYW5cQXNzaWduRHJhd2luZ3NUb1VzZXIucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/DrawingPlan/DrawingPlanTimeLine.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcRHJhd2luZ1BsYW5cRHJhd2luZ1BsYW5UaW1lTGluZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

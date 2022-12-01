@@ -7,6 +7,16 @@
             <span>@($"{type.Name}({type.Stakeholder})")：@Problem.Description</span>
         </div>
     </div>
+    if (responder != null)
+    {
+        <div class="row">
+            <div class="col-sm-3" style="width: 61px">负责:</div>
+            <div class="col-sm-9" >
+                <span>@responder.UserName</span>
+                <span>( @Problem.Deadline!.Value.ToString("yyyy/MM/dd") )</span>
+            </div>
+        </div>
+    }
     @if (!string.IsNullOrWhiteSpace(Problem.Solution))
     {
         <div class="row">
@@ -21,10 +31,14 @@
 @code {
     [Parameter]
     public ProblemResponse Problem { get; set; }
-
     private ProblemTypeResponse? type;
+    private UserResponse? responder;
     protected override async Task OnParametersSetAsync()
     {
         type = await Http.GetFromJsonAsync<ProblemTypeResponse>($"api/ProblemType/{Problem.ProblemTypeId}");
+        if (Problem.ResponseUserId != null && !Problem.ResponseUserId.Equals(Guid.Empty))
+        {
+            responder = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Problem.ResponseUserId}");
+        }
     }
 }

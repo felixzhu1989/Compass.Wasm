@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Compass.FileService.Domain": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:9214;http://localhost:9215"
+    }
+  }
+}

@@ -46,7 +46,7 @@ public class IssueController : ControllerBase
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddIssueRequest request)
     {
-        var issue = new Issue(Guid.NewGuid(), request.ProjectId, request.ReportUserId, request.ProjectStatus, request.Description, request.DescriptionUrl);
+        var issue = new Issue(Guid.NewGuid(), request.ProjectId, request.ReportUserId, request.ProjectStatus,request.Stakeholder, request.Description, request.DescriptionUrl);
         await _dbContext.Issues.AddAsync(issue);
         return issue.Id;
     }
@@ -55,7 +55,7 @@ public class IssueController : ControllerBase
     {
         var issue = await _repository.GetIssueByIdAsync(id);
         if (issue == null) return NotFound($"没有Id={id}的Issue");
-        issue.ChangeDescription(request.Description).ChangeDescriptionUrl(request.DescriptionUrl);
+        issue.ChangeStakeholder(request.Stakeholder).ChangeDescription(request.Description).ChangeDescriptionUrl(request.DescriptionUrl);
         return Ok();
     }
     [HttpDelete("{id}")]

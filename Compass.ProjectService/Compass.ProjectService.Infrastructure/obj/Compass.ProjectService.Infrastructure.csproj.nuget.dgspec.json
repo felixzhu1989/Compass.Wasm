@@ -93,9 +93,6 @@
             "projectReferences": {
               "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj": {
                 "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj"
-              },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj"
               }
             }
           }
@@ -114,11 +111,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.10, )"
+              "version": "[7.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.10, )"
+              "version": "[7.0.0, )"
             },
             "Zack.Infrastructure": {
               "target": "Package",
@@ -182,7 +179,7 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.10, )"
+              "version": "[7.0.0, )"
             },
             "zack.commons": {
               "target": "Package",

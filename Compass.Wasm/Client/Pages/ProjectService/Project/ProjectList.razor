@@ -18,7 +18,7 @@
     <AuthorizeView Roles="admin,pm">
         <Authorized>
             <div class="position-absolute bottom-0 end-0" style="text-align: right">
-                <span class="btn mb-2" style="color: red" @onclick="ShowAddProject">@(isAddDrop ? "▲" : "▼")</span>
+                <span class="btn btn-outline-danger mb-2" @onclick="ShowAddProject">@(isAddDrop ? "收起" : "展开")</span>
             </div>
         </Authorized>
     </AuthorizeView>

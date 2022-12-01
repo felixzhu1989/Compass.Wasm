@@ -4,7 +4,7 @@
 /// </summary>
 public enum ProjectType
 {
-    国内, 港澳台, 日本, 韩国, 中东, 华为, 其他
+    国内, 港澳台, 日本, 韩国, 中东, 华为, 海工,其他
 }
 /// <summary>
 /// 风险等级

@@ -3,11 +3,6 @@
 
 <div class="row">
     <div class="col-md-1 d-flex justify-content-center align-items-center time-line">
-        <AuthorizeView Roles="admin,pm">
-            <Authorized>
-                <a href="./updatedrawingplan/@DrawingPlan.Id"><i class="bi bi-gear"/></a>
-            </Authorized>
-        </AuthorizeView>
         <span class="badge rounded-pill @(totalDrawingsCount == 0 ? "bg-dark" : notAssignedDrawingsCount != 0 ? "bg-danger" : DrawingPlan.ReleaseTime < DateTime.Today ? "bg-success" : "bg-warning text-dark")  ">
             @DrawingPlan.ReleaseTime.ToString("yyyy-MM-dd")
         </span>
@@ -20,7 +15,7 @@
                     <h6 class="card-title">
                         <div class="row">
                             <div class="col">
-                                <a href="./assigndrawings/@DrawingPlan.Id">@project.OdpNumber</a>
+                                <a href="./updatedrawingplan/@DrawingPlan.Id">@project.OdpNumber</a>
                                 <span class="fs-6">@project.Name</span>
                             </div>
                             <div class="col">

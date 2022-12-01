@@ -93,9 +93,6 @@
             "projectReferences": {
               "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj": {
                 "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj"
-              },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj"
               }
             }
           }
@@ -166,7 +163,7 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.10, )"
+              "version": "[7.0.0, )"
             },
             "zack.commons": {
               "target": "Package",

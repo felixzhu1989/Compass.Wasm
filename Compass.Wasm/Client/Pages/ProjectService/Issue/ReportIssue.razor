@@ -24,7 +24,7 @@
         <Authorized>
             <span style="color: green">登记经验教训，请点击右侧展开！</span>
             <div class="position-absolute bottom-0 end-0" style="text-align: right">
-                <span class="btn btn-outline-danger mb-2" style="color: red" @onclick="ShowAddIssue">@(isAddDrop ? "点击收起" : "点击展开")</span>
+                <span class="btn btn-outline-danger mb-2" @onclick="ShowAddIssue">@(isAddDrop ? "收起" : "展开")</span>
             </div>
         </Authorized>
     </AuthorizeView>

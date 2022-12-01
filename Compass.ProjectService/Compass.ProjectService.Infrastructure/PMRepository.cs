@@ -1,5 +1,6 @@
 ﻿using Compass.ProjectService.Domain;
 using Compass.ProjectService.Domain.Entities;
+using Compass.ProjectService.Infrastructure.Migrations;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.ProjectService;
 using Microsoft.EntityFrameworkCore;
@@ -218,7 +219,9 @@ public class PMRepository : IPMRepository
             .Select(x => x.Id).ToListAsync();
         var ids2 = await SearchProblems(searchText)
             .Select(x => x.ProjectId).ToListAsync();
-        var ids= ids1.Union(ids2).ToList();
+        var ids3=await SearchIssues(searchText)
+            .Select(x=>x.ProjectId).ToListAsync();
+        var ids= ids1.Union(ids2).Union(ids3).ToList();
 
         var trackings= _context.Trackings.Where(x=>ids.Contains(x.Id))
             .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
@@ -236,6 +239,11 @@ public class PMRepository : IPMRepository
         return _context.Problems
             .Where(x => x.Description.ToLower().Contains(serchText.ToLower()) 
                         || x.Solution.ToLower().Contains(serchText.ToLower()));
+    }
+    private IQueryable<Issue> SearchIssues(string serchText)
+    {
+        return _context.Issues
+            .Where(x => x.Description.ToLower().Contains(serchText.ToLower()));
     }
     private IQueryable<Project> SearchProjects(string searchText)
     {
@@ -259,55 +267,38 @@ public class PMRepository : IPMRepository
             {
                 result.Add(project.Name);
             }
-
-            if (project.SpecialNotes != null)
-            {
-                var punctuation = project.SpecialNotes.Where(char.IsPunctuation)
-                    .Distinct().ToArray();//punctuation是标点符号
-                var words = project.SpecialNotes.Split()
-                    .Select(s => s.Trim(punctuation));
-                foreach (var word in words)
-                {
-                    if (word.ToLower().Contains(searchText.ToLower()) && !result.Contains(word))
-                    {
-                        result.Add(word);
-                    }
-                }
-            }
+            GetSuggestText(searchText, project.SpecialNotes, ref result);
         }
         var problems = SearchProblems(searchText);
         foreach (var problem in problems)
         {
-            if (problem.Description != null)
+            GetSuggestText(searchText, problem.Description, ref result);
+            GetSuggestText(searchText, problem.Solution, ref result);
+        }
+        var issues = SearchIssues(searchText);
+        foreach (var issue in issues)
+        {
+            GetSuggestText(searchText, issue.Description,ref result);
+        }
+        return Task.FromResult(result);
+    }
+
+    private void GetSuggestText(string searchText, string? str,ref List<string> result )
+    {
+        if (str != null)
+        {
+            var punctuation = str.Where(char.IsPunctuation)
+                .Distinct().ToArray(); //punctuation是标点符号
+            var words = str.Split()
+                .Select(s => s.Trim(punctuation));
+            foreach (var word in words)
             {
-                var punctuation = problem.Description.Where(char.IsPunctuation)
-                    .Distinct().ToArray();//punctuation是标点符号
-                var words = problem.Description.Split()
-                    .Select(s => s.Trim(punctuation));
-                foreach (var word in words)
+                if (word.ToLower().Contains(searchText.ToLower()) && !result.Contains(word))
                 {
-                    if (word.ToLower().Contains(searchText.ToLower()) && !result.Contains(word))
-                    {
-                        result.Add(word);
-                    }
-                }
-            }
-            if (problem.Solution != null)
-            {
-                var punctuation = problem.Solution.Where(char.IsPunctuation)
-                    .Distinct().ToArray();//punctuation是标点符号
-                var words = problem.Solution.Split()
-                    .Select(s => s.Trim(punctuation));
-                foreach (var word in words)
-                {
-                    if (word.ToLower().Contains(searchText.ToLower()) && !result.Contains(word))
-                    {
-                        result.Add(word);
-                    }
+                    result.Add(word);
                 }
             }
         }
-        return Task.FromResult(result);
     }
 
     #endregion

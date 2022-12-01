@@ -20,9 +20,6 @@
                     <a href="/updatedrawingplan/@project.Id">
                         <span class="ms-2 fs-6">制图计划</span>
                     </a>
-                    <a href="/assigndrawings/@project.Id">
-                        <span class="ms-2 fs-6">图纸分配</span>
-                    </a>
                     <a href="/projectlist/1">
                         <span class="badge ms-2 bg-light text-black ">@project.ProjectType</span>
                     </a>
@@ -35,7 +32,9 @@
                     <a href="/reportproblem/@ProjectId">
                         @if (tracking.ProblemNotResolved)
                         {
-                            <span class="badge bg-danger ms-2 me-2">异常</span><img class="ms-1 me-2" src="andon_red.gif" />
+                            <span class="badge bg-danger ms-2 me-2">异常</span>
+
+                            <img class="ms-1 me-2" src="andon_red.gif" />
                         }
                         else
                         {
@@ -58,38 +57,69 @@
 
                 @*todo:控制权限*@
                 @*<AuthorizeView Roles="admin,manager,pm,designer,quality,inspector,pmc">
-                    <Authorized>
-                        
-                    </Authorized>
-                </AuthorizeView>*@
+            <Authorized>
+
+            </Authorized>
+            </AuthorizeView>*@
                 <div class="row">
                     <div class="col-sm-3" style="width: 95px">系统合同:</div>
                     <div class="col-sm-9"><a href="@project.ContractUrl" target="_blank">@(Path.GetFileName(project.ContractUrl))</a></div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">物料清单:</div>
+                    @if (!string.IsNullOrWhiteSpace(project.BomUrl))
+                    {
+                        <div class="col-sm-9"><a href="@project.BomUrl" target="_blank">@(Path.GetFileName(project.BomUrl))</a>
+                            <AuthorizeView Roles="admin,pm,designer">
+                                <Authorized>
+                                    <a class="ms-3" href="/updateproject/@project.Id">修改</a>
+                                </Authorized>
+                            </AuthorizeView>
+                        </div>
+                    }
+                    else
+                    {
+                        <AuthorizeView Roles="admin,pm,designer">
+                            <Authorized>
+                                <div class="col-sm-9">
+                                    <a href="/updateproject/@project.Id">添加</a>
+                                </div>
+                            </Authorized>
+                        </AuthorizeView>
+                    }
+                </div>
 
-                @if (!string.IsNullOrWhiteSpace(project.BomUrl))
-                {
-                    <div class="row">
-                        <div class="col-sm-3" style="width: 95px">物料清单:</div>
-                        <div class="col-sm-9"><a href="@project.BomUrl" target="_blank">@(Path.GetFileName(project.BomUrl))</a></div>
-                    </div>
-                }
-
-                @if (!string.IsNullOrWhiteSpace(project.AttachmentsUrl))
-                {
-
-                    <div class="row">
-                        <div class="col-sm-3" style="width: 95px">其他附件:</div>
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">其他附件:</div>
+                    @if (!string.IsNullOrWhiteSpace(project.AttachmentsUrl))
+                    {
                         <div class="col-sm-9">
                             @foreach (var fileUrl in project.AttachmentsUrl.Split('\n'))
                             {
                                 <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
-
                                 <br />
                             }
+                            <AuthorizeView Roles="admin,pm,designer">
+                                <Authorized>
+                                    <a class="ms-3" href="/updateproject/@project.Id">修改</a>
+                                </Authorized>
+                            </AuthorizeView>
                         </div>
-                    </div>
-                }
+                    }
+                    else
+                    {
+                        <AuthorizeView Roles="admin,pm,designer">
+                            <Authorized>
+                                <div class="col-sm-9">
+                                    <a href="/updateproject/@project.Id">添加</a>
+                                </div>
+                            </Authorized>
+                        </AuthorizeView>
+                    }
+                </div>
+
+
+
                 @if (!string.IsNullOrWhiteSpace(project.SpecialNotes))
                 {
                     <div class="row">
@@ -132,7 +162,7 @@
     <AuthorizeView Roles="admin,pm">
         <Authorized>
             <div class="position-absolute bottom-0 end-0" style="text-align: right">
-                <span class="btn mb-2" style="color: red" @onclick="ShowAddDrawing">@(isAddDrop ? "▲" : "▼")</span>
+                <span class="btn btn-outline-danger mb-2" @onclick="ShowAddDrawing">@(isAddDrop ? "收起" : "展开")</span>
             </div>
         </Authorized>
     </AuthorizeView>

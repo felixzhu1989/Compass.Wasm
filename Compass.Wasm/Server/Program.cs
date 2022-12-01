@@ -1,3 +1,6 @@
+using Compass.DataService.Domain;
+using Compass.DataService.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -172,7 +175,17 @@ builder.Services.AddScoped<PMDomainService>();
 builder.Services.AddScoped<IPMRepository, PMRepository>();
 #endregion
 
-
+#region DataService
+//数据库，DbContext
+builder.Services.AddDbContext<DataDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+builder.Services.AddScoped<DataDomainService>();
+builder.Services.AddScoped<IDataRepository, DataRepository>();
+#endregion
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

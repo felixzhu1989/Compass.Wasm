@@ -97,9 +97,6 @@
             "projectReferences": {
               "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj": {
                 "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj"
-              },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj"
               }
             }
           }
@@ -116,7 +113,7 @@
           "dependencies": {
             "MailKit": {
               "target": "Package",
-              "version": "[3.4.2, )"
+              "version": "[3.4.3, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -126,11 +123,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.10, )"
+              "version": "[7.0.0, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.10, )"
+              "version": "[7.0.0, )"
             },
             "Zack.Infrastructure": {
               "target": "Package",
@@ -194,7 +191,7 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.10, )"
+              "version": "[7.0.0, )"
             },
             "zack.commons": {
               "target": "Package",

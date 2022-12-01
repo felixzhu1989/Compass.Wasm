@@ -1,7 +1,7 @@
 ﻿@inject HttpClient Http
 @inject IJSRuntime JsRuntime
 <div class="row">
-    <div class="col input-group mb-2" style="width: 100px">
+    <div class="col input-group mb-2">
         <span class="input-group-text">①相关方</span>
         <select class="form-select" @onchange="OnStakeholderChange">
             @foreach (var stakeholder in Enum.GetNames(typeof(Stakeholder)))

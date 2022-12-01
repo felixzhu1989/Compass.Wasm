@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Compass.CategoryService.Domain": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:9213;http://localhost:9216"
+    }
+  }
+}

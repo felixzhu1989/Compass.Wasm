@@ -25,63 +25,67 @@
 
 <EditForm Model="project" OnSubmit="Save">
     <!--由项目经理修改的数据-->
-    <div class="input-group mb-2">
-        <span class="input-group-text">项目编号</span>
-        <input class="form-control" placeholder="ODP" @bind-value="@project.OdpNumber" />
-    </div>
-    <div class="input-group mb-2">
-        <span class="input-group-text">项目名称</span>
-        <input class="form-control" placeholder="Name" @bind-value="@project.Name" />
-    </div>
-    <div class="input-group mb-2">
-        <span class="input-group-text" style="color: green">合同日期</span>
-        <input type="date" class="form-control" style="color: green" @bind-value="@project.ReceiveDate" />
-    </div>
-    <div class="input-group mb-2">
-        <span class="input-group-text" style="color: red">交货日期</span>
-        <input type="date" class="form-control" style="color: red" @bind-value="@project.DeliveryDate" />
-    </div>
-    <div class="input-group mb-2">
-        <span class="input-group-text">项目类型</span>
-        <select class="form-select" @bind="@project.ProjectType">
-            @foreach (var type in Enum.GetNames(typeof(ProjectType)))
-            {
-                <option>@type</option>
-            }
-        </select>
-    </div>
-    <div class="input-group mb-2">
-        <span class="input-group-text">风险等级</span>
-        <select class="form-select" @bind="@project.RiskLevel">
-            @foreach (var level in Enum.GetNames(typeof(RiskLevel)))
-            {
-                <option>@level</option>
-            }
-        </select>
-        @*Todo:风险值=概率*影响，概率影响矩阵*@
-        <button class="btn btn-warning" type="button">风险评级</button>
-    </div>
+    <AuthorizeView Roles="admin,pm">
+        <Authorized Context="auth">
+            <div class="input-group mb-2">
+                <span class="input-group-text">项目编号</span>
+                <input class="form-control" placeholder="ODP" @bind-value="@project.OdpNumber" />
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">项目名称</span>
+                <input class="form-control" placeholder="Name" @bind-value="@project.Name" />
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text" style="color: green">合同日期</span>
+                <input type="date" class="form-control" style="color: green" @bind-value="@project.ReceiveDate" />
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text" style="color: red">交货日期</span>
+                <input type="date" class="form-control" style="color: red" @bind-value="@project.DeliveryDate" />
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">项目类型</span>
+                <select class="form-select" @bind="@project.ProjectType">
+                    @foreach (var type in Enum.GetNames(typeof(ProjectType)))
+                    {
+                        <option>@type</option>
+                    }
+                </select>
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">风险等级</span>
+                <select class="form-select" @bind="@project.RiskLevel">
+                    @foreach (var level in Enum.GetNames(typeof(RiskLevel)))
+                    {
+                        <option>@level</option>
+                    }
+                </select>
+                @*Todo:风险值=概率*影响，概率影响矩阵*@
+                <button class="btn btn-warning" type="button">风险评级</button>
+            </div>
+            
+            <div class="input-group mb-2">
+                <span class="input-group-text">特殊要求</span>
+                <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@project.SpecialNotes"></textarea>
+            </div>
 
-    <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@project.ContractUrl"/>
-
-    <FileUpload Title="物料清单" FileType="application/pdf" @bind-FileUrl="@project.BomUrl"/>
+            <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@project.ContractUrl" />
+        </Authorized>
+    </AuthorizeView>
     
-    <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl"></MultiFileUpload>
+    <FileUpload Title="物料清单" FileType="application/pdf" @bind-FileUrl="@project.BomUrl" />
 
-    <div class="input-group mb-2">
-        <span class="input-group-text">特殊要求</span>
-        <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@project.SpecialNotes"></textarea>
-    </div>
+    <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl"></MultiFileUpload>
+    
     <button class="btn btn-success" type="submit">保存</button>
     <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("/projectlist/1"))">取消</button>
-
 </EditForm>
 
 
 @code {
     [Parameter]
     public string Id { get; set; }
-    private ProjectResponse? project=new();
+    private ProjectResponse? project = new();
     protected override async Task OnInitializedAsync()
     {
         var response = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Id}");

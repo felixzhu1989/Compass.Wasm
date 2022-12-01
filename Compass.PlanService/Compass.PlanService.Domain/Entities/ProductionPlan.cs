@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Compass.Wasm.Shared.PlanService;
 using Zack.DomainCommons.Models;
 
 namespace Compass.PlanService.Domain.Entities;

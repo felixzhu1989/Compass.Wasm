@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿namespace Compass.Wasm.Shared.PlanService;
+/// <summary>
 /// 计划分类
 /// </summary>
 public enum ProductionPlanClass
