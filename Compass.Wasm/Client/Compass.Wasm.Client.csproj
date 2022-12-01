@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Shared\Compass.Wasm.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CategoryService\" />
-  </ItemGroup>
-
 </Project>

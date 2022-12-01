@@ -1,4 +1,4 @@
-﻿namespace Compass.Wasm.Client.ProjectService;
+﻿namespace Compass.Wasm.Shared.ProjectService;
 
 public class AssignDrawingsToUserRequest
 {

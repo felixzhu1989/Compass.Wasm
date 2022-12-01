@@ -1,5 +1,4 @@
-﻿using Compass.Wasm.Client.ProjectService;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Compass.Wasm.Server.ProjectService.ProjectEvent;
 using Compass.Wasm.Shared.ProjectService;

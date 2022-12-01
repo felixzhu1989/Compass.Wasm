@@ -1,6 +1,4 @@
 ﻿@page "/reportproblem/{ProjectId}"
-@using Compass.Wasm.Client.ProjectService
-@using Compass.Wasm.Shared.ProjectService
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
@@ -36,11 +34,11 @@
 
 @if (isAddDrop)
 {
-<AuthorizeView>
-    <Authorized>
+    <AuthorizeView>
+        <Authorized>
             <AddProblem Problem="addProblemRequest" SaveProblem="SaveProblem" ReportUserName="@context.User.Identity.Name"/>
-    </Authorized>
-</AuthorizeView>
+        </Authorized>
+    </AuthorizeView>
 }
 
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">

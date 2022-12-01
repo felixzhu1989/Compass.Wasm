@@ -3,6 +3,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Inf
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\bin\Debug\net6.0\Compass.IdentityService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\bin\Debug\net6.0\Compass.IdentityService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\bin\Debug\net6.0\Compass.IdentityService.Domain.dll
+E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\bin\Debug\net6.0\Compass.Wasm.Shared.dll
+E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\bin\Debug\net6.0\Compass.Wasm.Shared.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\bin\Debug\net6.0\Compass.IdentityService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\obj\Debug\net6.0\Compass.IdentityService.Infrastructure.csproj.AssemblyReference.cache
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\obj\Debug\net6.0\Compass.IdentityService.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
@@ -15,5 +17,3 @@ E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Inf
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\obj\Debug\net6.0\Compass.IdentityService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\obj\Debug\net6.0\Compass.IdentityService.Infrastructure.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\obj\Debug\net6.0\ref\Compass.IdentityService.Infrastructure.dll
-E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\bin\Debug\net6.0\Compass.Wasm.Shared.dll
-E:\CSharp\repos\Compass.Wasm\Compass.IdentityService\Compass.IdentityService.Infrastructure\bin\Debug\net6.0\Compass.Wasm.Shared.pdb

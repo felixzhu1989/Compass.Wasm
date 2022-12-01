@@ -1,10 +1,8 @@
 ﻿@page "/"
 @page "/{CurrentPage:int}"
 @page "/search/{SearchText}/{CurrentPage:int}"
-@using Compass.Wasm.Shared.ProjectService
 @using Compass.Wasm.Client.Pages.ProjectService.Tracking
 @using System.Timers
-
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime

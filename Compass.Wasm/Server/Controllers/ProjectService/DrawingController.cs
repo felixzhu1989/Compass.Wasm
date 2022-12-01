@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Compass.Wasm.Client.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
 

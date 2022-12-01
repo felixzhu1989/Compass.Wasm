@@ -1,4 +1,5 @@
 E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\bin\Debug\net6.0\Compass.CategoryService.Infrastructure.deps.json
+E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\bin\Debug\net6.0\Compass.CategoryService.Infrastructure.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\bin\Debug\net6.0\Compass.CategoryService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\bin\Debug\net6.0\Compass.CategoryService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\bin\Debug\net6.0\Compass.CategoryService.Domain.dll
@@ -14,6 +15,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Inf
 E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\Compass.CategoryService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\refint\Compass.CategoryService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\Compass.CategoryService.Infrastructure.pdb
-E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\ref\Compass.CategoryService.Infrastructure.dll
-E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\bin\Debug\net6.0\Compass.CategoryService.Infrastructure.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\Compass.CategoryService.Infrastructure.genruntimeconfig.cache
+E:\CSharp\repos\Compass.Wasm\Compass.CategoryService\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\ref\Compass.CategoryService.Infrastructure.dll
