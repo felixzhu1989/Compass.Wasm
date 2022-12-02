@@ -2,8 +2,8 @@
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 
-<CategoryChoose @bind-ModelId="ModelId"/>
-<p>现在选中模型Id：@ModelId</p>
+<CategoryChoose @bind-ModelTypeId="ModelTypeId"/>
+<p>现在选中子类型Id：@ModelTypeId</p>
 
 
 @foreach (var sbu in Enum.GetNames(typeof(Sbu)))
@@ -17,5 +17,5 @@
 }
 
 @code {
-    public string ModelId { get; set; }
+    public string ModelTypeId { get; set; }
 }

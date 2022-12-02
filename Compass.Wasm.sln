@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Infrastructure", "Compass.DataService\Compass.DataService.Infrastructure\Compass.DataService.Infrastructure.csproj", "{12933E07-C646-451D-B37E-5C5FBD33FFE0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.Test", "Compass.Test\Compass.Test.csproj", "{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{12933E07-C646-451D-B37E-5C5FBD33FFE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12933E07-C646-451D-B37E-5C5FBD33FFE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12933E07-C646-451D-B37E-5C5FBD33FFE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

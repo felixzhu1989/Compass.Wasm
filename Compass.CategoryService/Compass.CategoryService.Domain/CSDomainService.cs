@@ -55,4 +55,26 @@ public class CSDomainService
             seqNum++;
         }
     }
+    public async Task<ModelType> AddModelTypeAsync(Guid modelId, string name)
+    {
+        int maxSeq = await _repository.GetMaxSeqOfModelTypesAsync(modelId);
+        return new ModelType(Guid.NewGuid(), modelId, maxSeq + 1, name);
+    }
+    public async Task SortModelTypesAsync(Guid modelId, Guid[] sortedModelTypeIds)
+    {
+        var modelTypes = await _repository.GetModelTypesByProductIdAsync(modelId);
+        var idsInDb = modelTypes.Select(x => x.Id);
+        if (!idsInDb.SequenceIgnoredEqual(sortedModelTypeIds))
+        {
+            throw new Exception($"提交的待排序Id中必须是modelIdId={modelId}分类下所有的Id");
+        }
+        int seqNum = 1;
+        foreach (var modelTypeId in sortedModelTypeIds)
+        {
+            var modelType = await _repository.GetModelTypeByIdAsync(modelTypeId);
+            if (modelType == null) throw new Exception($"modelTypeId={modelTypeId}不存在");
+            modelType.ChangeSequenceNumber(seqNum);
+            seqNum++;
+        }
+    }
 }

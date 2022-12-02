@@ -17,10 +17,10 @@
 @code {
     [Parameter]
     public string Sbu { get; set; }
-    private ProductResponse[]? products;
+    private List<ProductResponse>? products;
     protected override async Task OnInitializedAsync()
     {
-        products=await Http.GetFromJsonAsync<ProductResponse[]>($"api/Product/All/{Sbu}");
+        products=await Http.GetFromJsonAsync<List<ProductResponse>>($"api/Product/All/{Sbu}");
     }
     
 }

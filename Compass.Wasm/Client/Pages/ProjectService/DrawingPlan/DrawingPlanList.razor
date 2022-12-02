@@ -8,6 +8,11 @@
 <div class="row position-relative">
     <div class="col">
         <p>
+            <AuthorizeView Roles="pm,designer">
+                <Authorized>
+                    <a href="/userdrawinglist/@context.User.Identity.Name" class="btn btn-outline-primary me-4" >我的制图列表</a>
+                </Authorized>
+            </AuthorizeView>
             @if (_projectsCountNotPlanned != 0)
             {
                 @*todo:控制权限*@

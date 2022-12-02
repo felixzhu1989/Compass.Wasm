@@ -13,6 +13,9 @@ public interface ICSRepository
     public Task<Model?> GetModelByIdAsync(Guid id);
     public Task<IQueryable<Model>> GetModelsByProductIdAsync(Guid productId);
     public Task<int> GetMaxSeqOfModelsAsync(Guid productId);
+    public Task<ModelType?> GetModelTypeByIdAsync(Guid id);
+    public Task<IQueryable<ModelType>> GetModelTypesByProductIdAsync(Guid modelId);
+    public Task<int> GetMaxSeqOfModelTypesAsync(Guid modelId);
 
     //ProblemType
     public Task<ProblemType?> GetProblemTypeByIdAsync(Guid id);

@@ -11,7 +11,7 @@
             <span style="font-weight: bold">@Module.Name</span>
             @if (model != null)
             {
-                <span>（@model.Name）</span>
+                <span>（@model.Name-@modelType.Name）</span>
             }
         </div>
         @if (ShowModuleRelease)
@@ -62,11 +62,13 @@
     public bool ShowModuleRelease { get; set; }
 
     private ModelResponse? model;
+    private ModelTypeResponse? modelType;
     private string userName="";
     bool isReleased;
     protected override async Task OnInitializedAsync()
     {
-        model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{Module.ModelId}");
+        modelType = await Http.GetFromJsonAsync<ModelTypeResponse>($"api/ModelType/{Module.ModelTypeId}");
+        model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{modelType.ModelId}");
         isReleased = Module.IsReleased;
         userName = await Http.GetStringAsync($"api/Drawing/UserName/{Module.DrawingId}");
     }

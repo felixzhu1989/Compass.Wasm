@@ -62,7 +62,7 @@ public class PMRepository : IPMRepository
 
     public Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId)
     {
-        return Task.FromResult(_context.Drawings.Where(x => x.UserId.Equals(userId)).AsQueryable());
+        return Task.FromResult(_context.Drawings.Where(x => x.UserId.Equals(userId)).OrderByDescending(x=>x.CreationTime).AsQueryable());
     }
 
     public Task<Drawing?> GetDrawingByIdAsync(Guid id)

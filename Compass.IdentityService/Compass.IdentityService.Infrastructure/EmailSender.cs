@@ -1,4 +1,5 @@
-﻿using Compass.IdentityService.Domain;
+﻿using System.Text;
+using Compass.IdentityService.Domain;
 using Compass.IdentityService.Infrastructure;
 using Compass.Wasm.Shared.IdentityService;
 using Microsoft.Extensions.Options;
@@ -22,12 +23,15 @@ public class EmailSender : IEmailSender
         var email = new EmailAddress(toName, toEmail);//单个收件人
         //简单消息
         //var mineEntity= new TextPart(TextFormat.Plain) { Text = body };
-
         //HTML消息，Using a BodyBuilder
+        StringBuilder message = new StringBuilder();
+        message.Append("<p>来自Compass的消息：</p>");
+        message.Append($"<p style=\"color:navy\"><b>{body}</b></p>");
+        message.Append("<a href=\"http://10.9.18.31\">Compass</a>");
         var builder = new BodyBuilder
         {
             // Set the html version of the message text
-            HtmlBody = $"<p>来自Compass的消息：</p><p style=\"color:navy\"><b>{body}</b></p><a href=\"http://10.9.18.31\">Compass</a>"
+            HtmlBody = message.ToString()
         };
         var mineEntity = builder.ToMessageBody();
         return this.SendEmailAsync(_smtp.Value, new List<EmailAddress> { email }, subject, mineEntity);
@@ -38,10 +42,14 @@ public class EmailSender : IEmailSender
     public Task MassSendAsync(List<EmailAddress> emails, string subject, string body)
     {
         //HTML消息，Using a BodyBuilder
+        StringBuilder message=new StringBuilder();
+        message.Append("<p>来自Compass的消息：</p>");
+        message.Append($"<p style=\"color:navy\"><b>{body}</b></p>");
+        message.Append("<a href=\"http://10.9.18.31\">Compass</a>");
         var builder = new BodyBuilder
         {
             // Set the html version of the message text
-            HtmlBody = $"<p>来自Compass的消息：</p><p style=\"color:navy\"><b>{body}</b></p><a href=\"http://10.9.18.31\">Compass</a>"
+            HtmlBody = message.ToString()
         };
         var mineEntity = builder.ToMessageBody();
         return this.SendEmailAsync(_smtp.Value, emails, subject, mineEntity);

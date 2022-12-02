@@ -98,7 +98,8 @@
         if (modules==null) return;
         foreach (var module in modules)
         {
-            var model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{module.ModelId}");
+            var modelType = await Http.GetFromJsonAsync<ModelTypeResponse>($"api/ModelType/{module.ModelTypeId}");
+            var model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{modelType.ModelId}");
             if (modelCount.ContainsKey(model!.Name)) modelCount[model.Name] += 1;
             else modelCount.Add(model.Name, 1);
 

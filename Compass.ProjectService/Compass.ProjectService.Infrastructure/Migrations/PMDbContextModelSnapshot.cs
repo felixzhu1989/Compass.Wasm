@@ -165,7 +165,7 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ModelId")
+                    b.Property<Guid>("ModelTypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")

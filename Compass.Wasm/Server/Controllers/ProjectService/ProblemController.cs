@@ -2,6 +2,7 @@
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
 using Compass.Wasm.Server.ProjectService.ProblemEvent;
+using Compass.Wasm.Shared.IdentityService;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
@@ -16,8 +17,9 @@ public class ProblemController : ControllerBase
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
     private readonly IdUserManager _userManager;
+    private readonly IIdRepository _idRepository;
 
-    public ProblemController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus,IdUserManager userManager)
+    public ProblemController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus,IdUserManager userManager,IIdRepository idRepository)
     {
         _domainService = domainService;
         _dbContext = dbContext;
@@ -25,6 +27,7 @@ public class ProblemController : ControllerBase
         _mapper = mapper;
         _eventBus = eventBus;
         _userManager = userManager;
+        _idRepository = idRepository;
     }
     [HttpGet("All")]
     public async Task<ProblemResponse[]> FindAll()
@@ -58,9 +61,16 @@ public class ProblemController : ControllerBase
         var problem = new Problem(Guid.NewGuid(), request.ProjectId, request.ReportUserId, request.ProblemTypeId,request.Description,request.DescriptionUrl);
         await _dbContext.Problems.AddAsync(problem);
         //todo:发出集成事件，修改项目跟踪状态，是否需要发邮件，"ProjectService.Problem.Created"
-        var eventData = new ProblemCreatedEvent(problem.ProjectId);
+        var users = await _idRepository.FindUsersByRoles("admin,manager,pm");
+        List<EmailAddress> emails = new List<EmailAddress>();
+        foreach (var user in users)
+        {
+            emails.Add(new EmailAddress(user.UserName,user.Email));
+        }
+        var repoter= await _userManager.FindByIdAsync(request.ReportUserId.ToString());
+        var project = await _repository.GetProjectByIdAsync(problem.ProjectId);
+        var eventData = new ProblemCreatedEvent(emails,problem.ProjectId,project.OdpNumber,project.Name, repoter.UserName,problem.Description, $"http://10.9.18.31/reportproblem/{problem.ProjectId}");
         _eventBus.Publish("ProjectService.Problem.Created", eventData);
-
         return problem.Id;
     }
 

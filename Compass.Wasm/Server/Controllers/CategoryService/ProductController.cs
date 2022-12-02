@@ -22,10 +22,10 @@ public class ProductController : ControllerBase
         _mapper = mapper;
     }
     [HttpGet("All/{sbu}")]
-    public async Task<ProductResponse[]> FindAllBySbu([Required] Sbu sbu)
+    public async Task<List<ProductResponse>> FindAllBySbu([Required] Sbu sbu)
     {
         //使用AutoMapper将Product转换成ProductResponse（Dto）
-        return await _mapper.ProjectTo<ProductResponse>(await _repository.GetProductsAsync(sbu)).ToArrayAsync();
+        return await _mapper.ProjectTo<ProductResponse>(await _repository.GetProductsAsync(sbu)).ToListAsync();
     }
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductResponse?>> FindById([RequiredGuid] Guid id)

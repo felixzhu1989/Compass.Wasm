@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Shared.CategoryService;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Compass.Wasm.Server.Controllers.CategoryService
@@ -24,10 +22,10 @@ namespace Compass.Wasm.Server.Controllers.CategoryService
             _mapper = mapper;
         }
         [HttpGet("All/{productId}")]
-        public async Task<ModelResponse[]> FindAllByProductId([RequiredGuid] Guid productId)
+        public async Task<List<ModelResponse>> FindAllByProductId([RequiredGuid] Guid productId)
         {
             //使用AutoMapper将Model转换成ModelResponse（Dto）
-            return await _mapper.ProjectTo<ModelResponse>(await _repository.GetModelsByProductIdAsync(productId)).ToArrayAsync();
+            return await _mapper.ProjectTo<ModelResponse>(await _repository.GetModelsByProductIdAsync(productId)).ToListAsync();
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<ModelResponse?>> FindById([RequiredGuid] Guid id)

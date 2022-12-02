@@ -64,8 +64,10 @@ public class ModuleController : ControllerBase
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddModuleRequest request)
     {
-        var module = new Compass.ProjectService.Domain.Entities.Module(Guid.NewGuid(), request.DrawingId, request.ModelId, request.Name.ToUpper(), request.SpecialNotes);
+        var module = new Compass.ProjectService.Domain.Entities.Module(Guid.NewGuid(), request.DrawingId, request.ModelTypeId, request.Name.ToUpper(), request.SpecialNotes);
         await _dbContext.Modules.AddAsync(module);
+        //todo:发出集成事件，创建Module的参数
+
         return module.Id;
     }
 
@@ -74,7 +76,7 @@ public class ModuleController : ControllerBase
     {
         var module = await _repository.GetModuleByIdAsync(id);
         if (module == null) return NotFound($"没有Id={id}的Module");
-        module.ChangeModelId(request.ModelId).ChangeName(request.Name.ToUpper()).ChangeSpecialNotes(request.SpecialNotes);
+        module.ChangeModelTypeId(request.ModelTypeId).ChangeName(request.Name.ToUpper()).ChangeSpecialNotes(request.SpecialNotes);
         return Ok();
     }
     [HttpPut("Release/{id}")]
@@ -102,6 +104,8 @@ public class ModuleController : ControllerBase
         if (module == null) return NotFound($"没有Id={id}的Module");
         //这样做仍然是幂等的，因为“调用N次，确保服务器处于与第一次调用相同的状态。”与响应无关
         module.SoftDelete();//软删除
+        //todo:发出集成事件，删除Module的参数
+
         return Ok();
     }
 }

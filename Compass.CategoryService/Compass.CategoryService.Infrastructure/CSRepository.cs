@@ -46,6 +46,23 @@ public class CSRepository : ICSRepository
         var maxSeq = await _context.Query<Model>().Where(x => x.ProductId.Equals(productId)).MaxAsync(x => (int?)x.SequenceNumber);
         return maxSeq ?? 0;
     }
+
+    public Task<ModelType?> GetModelTypeByIdAsync(Guid id)
+    {
+        return _context.ModelTypes.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+    public Task<IQueryable<ModelType>> GetModelTypesByProductIdAsync(Guid modelId)
+    {
+        return Task.FromResult(_context.ModelTypes.Where(x => x.ModelId.Equals(modelId)).OrderBy(x => x.SequenceNumber).AsQueryable());
+    }
+
+    public async Task<int> GetMaxSeqOfModelTypesAsync(Guid modelId)
+    {
+        var maxSeq = await _context.Query<ModelType>().Where(x => x.ModelId.Equals(modelId)).MaxAsync(x => (int?)x.SequenceNumber);
+        return maxSeq ?? 0;
+    }
+
     #endregion
 
     #region ProblemType

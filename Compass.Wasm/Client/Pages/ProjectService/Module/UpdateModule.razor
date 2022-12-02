@@ -23,7 +23,7 @@
 @if (module != null)
 {
     <EditForm Model="module" OnSubmit="Save">
-        <CategoryChoose @bind-ModelId="ModelId" />
+        <CategoryChoose @bind-ModelTypeId="ModelTypeId" />
 
         <div class="input-group mb-2">
             <span class="input-group-text">分段编号</span>
@@ -44,7 +44,7 @@
     [Parameter]
     public string Id { get; set; }
     [Parameter]
-    public string ModelId { get; set; }
+    public string ModelTypeId { get; set; }
 
     private ModuleResponse? module;
 
@@ -53,16 +53,10 @@
         var response = await Http.GetFromJsonAsync<ModuleResponse>($"api/Module/{Id}");
         if (response==null) NavigationManager.NavigateTo("./projectlist");
         module = response;
-        ModelId = module.ModelId.ToString();
+        ModelTypeId = module.ModelTypeId.ToString();
     }
     private async Task Delete()
     {
-        //todo:检查Module分段下有没有填写参数
-        //if (await Repository.CheckDrawingsInProject(project.Id))
-        //{
-        //    await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
-        //    return;
-        //}
         var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除分段【{module.Name}】吗？");
         if (confirmResult)
         {
@@ -72,7 +66,7 @@
     }
     private async Task Save()
     {
-        module.ModelId = Guid.Parse(ModelId);
+        module.ModelTypeId = Guid.Parse(ModelTypeId);
         var result = await Http.PutAsJsonAsync($"api/Module/{Id}", module);
         if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"./modulelist/{module.DrawingId}");
     }

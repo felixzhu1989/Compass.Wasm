@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Compass.DataService.Infrastructure.Migrations
 {
     [DbContext(typeof(DataDbContext))]
-    [Migration("20221201071402_moduledata")]
+    [Migration("20221202052208_moduledata")]
     partial class moduledata
     {
         /// <inheritdoc />
@@ -31,10 +31,6 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("Height")
                         .HasColumnType("float");
 
@@ -51,11 +47,9 @@ namespace Compass.DataService.Infrastructure.Migrations
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
 
-                    b.ToTable("ModulesData");
+                    b.ToTable((string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("ModuleData");
-
-                    b.UseTphMappingStrategy();
+                    b.UseTpcMappingStrategy();
                 });
 
             modelBuilder.Entity("Compass.DataService.Domain.Entities.KvfData", b =>
@@ -74,10 +68,13 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.Property<int>("AnsulSide")
                         .HasColumnType("int");
 
+                    b.Property<bool>("BackCj")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("BackToBack")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("Bluetooth")
+                    b.Property<bool>("CoverBoard")
                         .HasColumnType("bit");
 
                     b.Property<int>("DrainType")
@@ -122,13 +119,83 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.Property<double>("SupplySpigotNumber")
                         .HasColumnType("float");
 
+                    b.Property<bool>("WaterCollection")
+                        .HasColumnType("bit");
+
+                    b.ToTable("KvfData", (string)null);
+                });
+
+            modelBuilder.Entity("Compass.DataService.Domain.Entities.UviData", b =>
+                {
+                    b.HasBaseType("Compass.DataService.Domain.Entities.ModuleData");
+
+                    b.Property<bool>("Ansul")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("AnsulDetector")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AnsulDrop")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AnsulSide")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("BackCj")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("BackToBack")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Bluetooth")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("CoverBoard")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("DrainType")
+                        .HasColumnType("int");
+
+                    b.Property<double>("ExhaustSpigotHeight")
+                        .HasColumnType("float");
+
+                    b.Property<double>("ExhaustSpigotLength")
+                        .HasColumnType("float");
+
+                    b.Property<int>("ExhaustSpigotNumber")
+                        .HasColumnType("int");
+
+                    b.Property<double>("ExhaustSpigotWidth")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("LedLogo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LightType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Marvel")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("MiddleToRight")
+                        .HasColumnType("float");
+
+                    b.Property<int>("SidePanel")
+                        .HasColumnType("int");
+
+                    b.Property<double>("SpotLightDistance")
+                        .HasColumnType("float");
+
+                    b.Property<int>("SpotLightNumber")
+                        .HasColumnType("int");
+
                     b.Property<int>("UvLightType")
                         .HasColumnType("int");
 
                     b.Property<bool>("WaterCollection")
                         .HasColumnType("bit");
 
-                    b.HasDiscriminator().HasValue("KvfData");
+                    b.ToTable("UviData", (string)null);
                 });
 #pragma warning restore 612, 618
         }

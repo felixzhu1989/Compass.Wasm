@@ -2,7 +2,7 @@
 
 
 <EditForm Model="Module" OnSubmit="Save">
-    <CategoryChoose @bind-ModelId="ModelId" />
+    <CategoryChoose @bind-ModelTypeId="ModelTypeId" />
 
     <div class="input-group mb-2">
         <span class="input-group-text">分段编号</span>
@@ -23,10 +23,10 @@
     [Parameter]
     public EventCallback<AddModuleRequest> SaveModule { get; set; }
     [Parameter]
-    public string ModelId { get; set; }
+    public string ModelTypeId { get; set; }
     public Task Save()
     {
-        Module.ModelId =Guid.Parse(ModelId);
+        Module.ModelTypeId =Guid.Parse(ModelTypeId);
         return SaveModule.InvokeAsync(Module);
     }
 }

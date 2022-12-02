@@ -150,7 +150,7 @@
 
     private async Task SaveModule(AddModuleRequest request)
     {
-        if (string.IsNullOrWhiteSpace(request.Name)&&request.ModelId.Equals(Guid.Empty))
+        if (string.IsNullOrWhiteSpace(request.Name)&&request.ModelTypeId.Equals(Guid.Empty))
         {
             await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
             return;

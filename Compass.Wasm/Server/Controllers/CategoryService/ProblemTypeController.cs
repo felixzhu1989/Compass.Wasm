@@ -23,10 +23,10 @@ public class ProblemTypeController : ControllerBase
         _mapper = mapper;
     }
     [HttpGet("All/{stakeholder}")]
-    public async Task<ProblemTypeResponse[]> FindAllByStakeholder([Required] Stakeholder stakeholder)
+    public async Task<List<ProblemTypeResponse>> FindAllByStakeholder([Required] Stakeholder stakeholder)
     {
         //使用AutoMapper将ProblemType转换成ProblemTypeResponse（Dto）
-        return await _mapper.ProjectTo<ProblemTypeResponse>(await _repository.GetProblemTypesAsync(stakeholder)).ToArrayAsync();
+        return await _mapper.ProjectTo<ProblemTypeResponse>(await _repository.GetProblemTypesAsync(stakeholder)).ToListAsync();
     }
     [HttpGet("{id}")]
     public async Task<ActionResult<ProblemTypeResponse?>> FindById([RequiredGuid] Guid id)
@@ -35,6 +35,7 @@ public class ProblemTypeController : ControllerBase
         if (problemType == null) return NotFound($"没有Id={id}的ProblemType");
         return _mapper.Map<ProblemTypeResponse>(problemType);
     }
+
     [HttpPost]
     public async Task<ActionResult<Guid>> Add(AddProblemTypeRequest request)
     {

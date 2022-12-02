@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col input-group mb-2" style="width: 100px">
         <span class="input-group-text">①事业部</span>
-        <select class="form-select" @onchange="OnSbuChange">
+        <select class="form-select" value="@_categoryResponse.Sbu" @onchange="OnSbuChange">
             @foreach (var sbu in Enum.GetNames(typeof(Sbu)))
             {
                 <option>@sbu</option>
@@ -12,10 +12,10 @@
     </div>
     <div class="col input-group mb-2">
         <span class="input-group-text">②产品</span>
-        <select class="form-select" @onchange="OnProductChange">
-            @if (products !=null)
+        <select class="form-select" value="@_categoryResponse.ProductId" @onchange="OnProductChange">
+            @if (_products !=null)
             {
-                foreach (var product in products)
+                foreach (var product in _products)
                 {
                     <option value="@product.Id">@product.Name</option>
                 }
@@ -24,73 +24,104 @@
     </div>
     <div class="col input-group mb-2">
         <span class="input-group-text">③模型</span>
-        @*https://www.itbaoku.cn/post/2252439.html*@
-        <select class="form-select" value="@ModelId" @onchange="OnModelChange">
-            @if (models !=null)
+        <select class="form-select" value="@_categoryResponse.ModelId" @onchange="OnModelChange">
+            @if (_models !=null)
             {
-                foreach (var model in models)
+                foreach (var model in _models)
                 {
                     <option value="@model.Id">@model.Name</option>
                 }
             }
         </select>
     </div>
-    <div class="col"><span class="input-group-text">@ModelId</span></div>
+    
+    <div class="col input-group mb-2">
+        <span class="input-group-text">④子类型</span>
+        @*https://www.itbaoku.cn/post/2252439.html*@
+        <select class="form-select" value="@ModelTypeId" @onchange="OnModelTypeChange">
+            @if (_modelTypes !=null)
+            {
+                foreach (var modelType in _modelTypes)
+                {
+                    <option value="@modelType.Id">@modelType.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col"><span class="input-group-text">@ModelTypeId</span></div>
 </div>
 
 @code {
     [Parameter]
-    public string ModelId { get; set; }
+    public string ModelTypeId { get; set; }
     [Parameter]
-    public EventCallback<string> ModelIdChanged { get; set; }
+    public EventCallback<string> ModelTypeIdChanged { get; set; }
 
-    private ProductResponse[]? products;
-    private ModelResponse[]? models;
+    private List<ProductResponse>? _products;
+    private List<ModelResponse>? _models;
+    private List<ModelTypeResponse>? _modelTypes;
+    private CategoryResponse? _categoryResponse=new();
+
     protected override async Task OnInitializedAsync()
     {
-        products=await Http.GetFromJsonAsync<ProductResponse[]>("api/Product/All/0");
-        models = await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{products!.First().Id}");
-        if (string.IsNullOrWhiteSpace(ModelId))
+        _products=await Http.GetFromJsonAsync<List<ProductResponse>>("api/Product/All/0");
+        _models = await Http.GetFromJsonAsync<List<ModelResponse>>($"api/Model/All/{_products!.First().Id}");
+        _modelTypes = await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{_models!.First().Id}");
+        
+        if (string.IsNullOrWhiteSpace(ModelTypeId))
         {
             await Refresh();
         }
         else
         {
-            await ModelIdChanged.InvokeAsync(ModelId);
+            await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
+            _categoryResponse = await Http.GetFromJsonAsync<CategoryResponse>($"api/ModelType/Category/{ModelTypeId}");
+            //todo:此时product变更了，没有引起ModelType列表更新（一连串的变更）
         }
     }
-
     async Task Refresh()
     {
-        if (products != null && products.Length != 0 && models != null && models.Length != 0)
+        if (_products != null && _products.Count != 0 
+            && _models != null && _models.Count != 0
+            && _modelTypes != null && _modelTypes.Count != 0)
         {
-            ModelId =models.First().Id.ToString();
-            await ModelIdChanged.InvokeAsync(ModelId);
+            ModelTypeId =_modelTypes.First().Id.ToString();
+            await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
         }
     }
-
     async Task OnSbuChange(ChangeEventArgs e)
     {
         //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
-        products=await Http.GetFromJsonAsync<ProductResponse[]>($"api/Product/All/{e.Value:int}");
-        if (products != null && products.Length != 0)
+        _products=await Http.GetFromJsonAsync<List<ProductResponse>>($"api/Product/All/{e.Value:int}");
+        if (_products != null && _products.Count != 0)
         {
-            models = await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{products.First().Id}");
+            _models = await Http.GetFromJsonAsync<List<ModelResponse>>($"api/Model/All/{_products.First().Id}");
+            if (_models != null && _models.Count != 0)
+            {
+                _modelTypes=await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{_models!.First().Id}");
+            }
         }
         await Refresh();
     }
-
     async Task OnProductChange(ChangeEventArgs e)
     {
-        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
-        models=await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{e.Value}");
+        _models = await Http.GetFromJsonAsync<List<ModelResponse>>($"api/Model/All/{e.Value}");
+        if (_models != null && _models.Count != 0)
+        {
+            _modelTypes=await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{_models!.First().Id}");
+        }
         await Refresh();
     }
-
     async Task OnModelChange(ChangeEventArgs e)
     {
+        _modelTypes=await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{e.Value}");
+        await Refresh();
+    }
+    async Task OnModelTypeChange(ChangeEventArgs e)
+    {
         //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
-        ModelId =e.Value!.ToString()!;
-        await ModelIdChanged.InvokeAsync(ModelId);
+        ModelTypeId =e.Value!.ToString()!;
+        await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
     }
 }

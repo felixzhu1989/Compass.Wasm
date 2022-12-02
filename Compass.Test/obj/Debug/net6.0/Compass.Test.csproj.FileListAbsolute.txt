@@ -1,0 +1,15 @@
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Test.exe
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Test.deps.json
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Test.runtimeconfig.json
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Test.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Test.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.csproj.AssemblyReference.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.GeneratedMSBuildEditorConfig.editorconfig
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.AssemblyInfoInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.AssemblyInfo.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.csproj.CoreCompileInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\refint\Compass.Test.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.genruntimeconfig.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\ref\Compass.Test.dll
