@@ -26,7 +26,7 @@
 </div>
 @code {
     [Parameter]
-    public string ProblemTypeId { get; set; }
+    public string? ProblemTypeId { get; set; }
     [Parameter]
     public EventCallback<string> ProblemTypeIdChanged { get; set; }
 
@@ -34,21 +34,24 @@
     private ProblemTypeResponse? _problemType=new ();
     protected override async Task OnInitializedAsync()
     {
-        _problemTypes=await Http.GetFromJsonAsync<List<ProblemTypeResponse>>($"api/ProblemType/All/0");
-        if (string.IsNullOrWhiteSpace(ProblemTypeId))
+        if (ProblemTypeId!=null)
         {
-            await Refresh();
+            _problemType = await Http.GetFromJsonAsync<ProblemTypeResponse>($"api/ProblemType/{ProblemTypeId}");
+            //todo:此时sbu变更了，没有引起，列表更新（一连串的变更），解决办法，先查询列表再赋值更新
+            await GetProblemTypes(_problemType.Stakeholder);
+            await ProblemTypeIdChanged.InvokeAsync(ProblemTypeId);
         }
         else
         {
-            await ProblemTypeIdChanged.InvokeAsync(ProblemTypeId);
-            _problemType = await Http.GetFromJsonAsync<ProblemTypeResponse>($"api/ProblemType/{ProblemTypeId}");
-            //todo:此时sbu变更了，没有引起，列表更新（一连串的变更）
-
+            await GetProblemTypes(Stakeholder.客户);
+            await InitProblemType();
         }
     }
-
-    async Task Refresh()
+    async Task GetProblemTypes(Stakeholder stakeholder)
+    {
+        _problemTypes=await Http.GetFromJsonAsync<List<ProblemTypeResponse>>($"api/ProblemType/All/{stakeholder}");
+    }
+    async Task InitProblemType()
     {
         if (_problemTypes != null && _problemTypes.Count != 0)
         {
@@ -59,13 +62,11 @@
     
     async Task OnStakeholderChange(ChangeEventArgs e)
     {
-        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
         _problemTypes=await Http.GetFromJsonAsync<List<ProblemTypeResponse>>($"api/ProblemType/All/{e.Value:int}");
-        await Refresh();
+        await InitProblemType();
     }
     async Task OnProblemTypeChange(ChangeEventArgs e)
     {
-        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
         ProblemTypeId =e.Value!.ToString()!;
         await ProblemTypeIdChanged.InvokeAsync(ProblemTypeId);
     }

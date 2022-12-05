@@ -54,7 +54,7 @@
 
 @code {
     [Parameter]
-    public string ModelTypeId { get; set; }
+    public string? ModelTypeId { get; set; }
     [Parameter]
     public EventCallback<string> ModelTypeIdChanged { get; set; }
 
@@ -65,22 +65,26 @@
 
     protected override async Task OnInitializedAsync()
     {
-        _products=await Http.GetFromJsonAsync<List<ProductResponse>>("api/Product/All/0");
-        _models = await Http.GetFromJsonAsync<List<ModelResponse>>($"api/Model/All/{_products!.First().Id}");
-        _modelTypes = await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{_models!.First().Id}");
-        
-        if (string.IsNullOrWhiteSpace(ModelTypeId))
+        if (ModelTypeId!=null)
         {
-            await Refresh();
+            _categoryResponse = await Http.GetFromJsonAsync<CategoryResponse>($"api/ModelType/Category/{ModelTypeId}");
+            //todo:此时product变更了，没有引起ModelType列表更新（一连串的变更），解决办法，先查询列表再赋值更新
+            await GetProducts(_categoryResponse!.Sbu);
+            await GetModels(_categoryResponse.ProductId.ToString());
+            await GetModelTypes(_categoryResponse.ModelId.ToString());
+
+            await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
         }
         else
         {
-            await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
-            _categoryResponse = await Http.GetFromJsonAsync<CategoryResponse>($"api/ModelType/Category/{ModelTypeId}");
-            //todo:此时product变更了，没有引起ModelType列表更新（一连串的变更）
+            await GetProducts(Sbu.FS);
+            await GetModels(_products!.First().Id.ToString());
+            await GetModelTypes(_models!.First().Id.ToString());
+            await InitModelType();
         }
     }
-    async Task Refresh()
+
+    async Task InitModelType()
     {
         if (_products != null && _products.Count != 0 
             && _models != null && _models.Count != 0
@@ -90,37 +94,49 @@
             await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
         }
     }
+    async Task GetProducts(Sbu sbu)
+    {
+        _products=await Http.GetFromJsonAsync<List<ProductResponse>>($"api/Product/All/{sbu}");
+    }
+    async Task GetModels(string productId)
+    {
+        _models = await Http.GetFromJsonAsync<List<ModelResponse>>($"api/Model/All/{productId}");
+    }
+    async Task GetModelTypes(string modelId)
+    {
+        _modelTypes = await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{modelId}");
+    }
+
     async Task OnSbuChange(ChangeEventArgs e)
     {
-        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
         _products=await Http.GetFromJsonAsync<List<ProductResponse>>($"api/Product/All/{e.Value:int}");
+
         if (_products != null && _products.Count != 0)
         {
-            _models = await Http.GetFromJsonAsync<List<ModelResponse>>($"api/Model/All/{_products.First().Id}");
+            await GetModels(_products!.First().Id.ToString());            
             if (_models != null && _models.Count != 0)
             {
-                _modelTypes=await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{_models!.First().Id}");
+                await GetModelTypes(_models!.First().Id.ToString());
             }
         }
-        await Refresh();
+        await InitModelType();
     }
     async Task OnProductChange(ChangeEventArgs e)
     {
-        _models = await Http.GetFromJsonAsync<List<ModelResponse>>($"api/Model/All/{e.Value}");
+        await GetModels(e.Value!.ToString()!);
         if (_models != null && _models.Count != 0)
         {
-            _modelTypes=await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{_models!.First().Id}");
+            await GetModelTypes(_models!.First().Id.ToString());
         }
-        await Refresh();
+        await InitModelType();
     }
     async Task OnModelChange(ChangeEventArgs e)
     {
-        _modelTypes=await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{e.Value}");
-        await Refresh();
+        await GetModelTypes(e.Value!.ToString()!);
+        await InitModelType();
     }
     async Task OnModelTypeChange(ChangeEventArgs e)
     {
-        //await JsRuntime.InvokeVoidAsync("alert", $"您选择了{e.Value}");
         ModelTypeId =e.Value!.ToString()!;
         await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
     }
