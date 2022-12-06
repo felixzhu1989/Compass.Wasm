@@ -34,7 +34,7 @@ public class ModelTypeController : ControllerBase
         if (modelType == null) return NotFound($"没有Id={id}的ModelType");
         return _mapper.Map<ModelTypeResponse>(modelType);
     }
-    //todo:根据Id查询SBU，Product，Model，ModelType
+    //根据Id查询SBU，Product，Model，ModelType
     [HttpGet("Category/{id}")]
     public async Task<ActionResult<CategoryResponse?>> CategoryById([RequiredGuid] Guid id)
     {
@@ -42,13 +42,13 @@ public class ModelTypeController : ControllerBase
         if (modelType == null) return NotFound($"没有Id={id}的ModelType");
         var model = await _repository.GetModelByIdAsync(modelType.ModelId);
         var product = await _repository.GetProductByIdAsync(model.ProductId);
-        return new CategoryResponse { Sbu = product.Sbu, ProductId = product.Id, ModelId = model.Id };
+        return new CategoryResponse { Sbu = product.Sbu, ProductId = product.Id, ModelId = model.Id ,Description = modelType.Description};
     }
 
     [HttpPost]
     public async Task<ActionResult<Guid>> Add(AddModelTypeRequest request)
     {
-        ModelType modelType = await _domainService.AddModelTypeAsync(request.ModelId, request.Name);
+        ModelType modelType = await _domainService.AddModelTypeAsync(request.ModelId, request.Name,request.Description);
         await _dbContext.ModelTypes.AddAsync(modelType);
         return modelType.Id;
     }
@@ -57,7 +57,7 @@ public class ModelTypeController : ControllerBase
     {
         var modelType = await _repository.GetModelTypeByIdAsync(id);
         if (modelType == null) return NotFound($"没有Id={id}的ModelType");
-        modelType.ChangeName(request.Name);
+        modelType.ChangeName(request.Name).ChangeDescription(request.Description);
         return Ok();
     }
     [HttpDelete("{id}")]

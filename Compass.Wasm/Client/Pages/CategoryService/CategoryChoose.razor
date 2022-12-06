@@ -49,7 +49,7 @@
         </select>
     </div>
 
-    <div class="col"><span class="input-group-text">@ModelTypeId</span></div>
+    <div class="col"><span class="input-group-text">@_categoryResponse.Description</span></div>
 </div>
 
 @code {
@@ -91,6 +91,7 @@
             && _modelTypes != null && _modelTypes.Count != 0)
         {
             ModelTypeId =_modelTypes.First().Id.ToString();
+            _categoryResponse!.Description = _modelTypes.First().Description;
             await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
         }
     }
@@ -138,6 +139,7 @@
     async Task OnModelTypeChange(ChangeEventArgs e)
     {
         ModelTypeId =e.Value!.ToString()!;
+        _categoryResponse!.Description = _modelTypes!.Find(x => x.Id.Equals(Guid.Parse(e.Value.ToString()!)))?.Description!;
         await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
     }
 }

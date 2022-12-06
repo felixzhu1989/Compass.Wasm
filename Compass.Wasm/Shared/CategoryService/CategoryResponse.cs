@@ -5,4 +5,5 @@ public class CategoryResponse
     public Sbu Sbu { get; set; }
     public Guid ProductId { get; set; }
     public Guid ModelId { get; set; }
+    public string Description { get; set; } = string.Empty;
 }

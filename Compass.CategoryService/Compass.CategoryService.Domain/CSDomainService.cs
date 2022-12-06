@@ -55,10 +55,10 @@ public class CSDomainService
             seqNum++;
         }
     }
-    public async Task<ModelType> AddModelTypeAsync(Guid modelId, string name)
+    public async Task<ModelType> AddModelTypeAsync(Guid modelId, string name,string description)
     {
         int maxSeq = await _repository.GetMaxSeqOfModelTypesAsync(modelId);
-        return new ModelType(Guid.NewGuid(), modelId, maxSeq + 1, name);
+        return new ModelType(Guid.NewGuid(), modelId, maxSeq + 1, name, description);
     }
     public async Task SortModelTypesAsync(Guid modelId, Guid[] sortedModelTypeIds)
     {
