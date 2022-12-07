@@ -88,7 +88,7 @@ public class PMRepository : IPMRepository
     #region Module
     public Task<IQueryable<Module>> GetModulesByDrawingIdAsync(Guid drawingId)
     {
-        return Task.FromResult(_context.Modules.Where(x => x.DrawingId.Equals(drawingId)).AsQueryable());
+        return Task.FromResult(_context.Modules.Where(x => x.DrawingId.Equals(drawingId)).OrderBy(x=>x.Name).AsQueryable());
     }
     
 

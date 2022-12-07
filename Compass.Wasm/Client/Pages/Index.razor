@@ -80,7 +80,7 @@ else
     protected override void OnInitialized()
     {
         timer = new Timer();
-        timer.Interval = 10000;
+        timer.Interval = 30000;
         timer.Elapsed += OnTimeElapsed;//每隔30s钟就会执行一次这个方法
         timer.Enabled = true;
     }
