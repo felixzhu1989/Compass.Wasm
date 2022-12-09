@@ -1,10 +1,7 @@
 ﻿using Compass.ProjectService.Domain;
 using Compass.ProjectService.Domain.Entities;
-using Compass.ProjectService.Infrastructure.Migrations;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.ProjectService;
 using Microsoft.EntityFrameworkCore;
-using static System.Net.WebRequestMethods;
 
 namespace Compass.ProjectService.Infrastructure;
 
@@ -52,12 +49,17 @@ public class PMRepository : IPMRepository
         return project.DeliveryDate;
     }
 
+    public Task<IQueryable<Project>> GetUnbindProjectsAsync(List<Guid?> ids)
+    {
+       return Task.FromResult(_context.Projects.Where(x => !ids.Contains(x.Id)));
+    }
+
     #endregion
 
     #region Drawing
     public Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId)
     {
-        return Task.FromResult(_context.Drawings.Where(x => x.ProjectId.Equals(projectId)).AsQueryable());
+        return Task.FromResult(_context.Drawings.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x=>x.ItemNumber).AsQueryable());
     }
 
     public Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId)
@@ -197,7 +199,11 @@ public class PMRepository : IPMRepository
         var pageCount = Math.Ceiling(_context.Trackings.Count() / pageResults);//计算页总数
         return new PaginationResult<IQueryable<Tracking>>
         {
-            Data = _context.Trackings.AsQueryable()
+            /* 使用查询子句先修改掉排序日期
+             * update Trackings set Trackings.SortDate=
+             * (select Projects.DeliveryDate from Projects where Projects.Id=Trackings.Id)
+             */
+            Data = _context.Trackings.OrderByDescending(x=>x.SortDate)
                 .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
                 .Take((int)pageResults),
             CurrentPage = page,
@@ -302,8 +308,7 @@ public class PMRepository : IPMRepository
     }
 
     #endregion
-
-
+    
     #region Problem
     public Task<IQueryable<Problem>> GetProblemsAsync()
     {
@@ -323,7 +328,6 @@ public class PMRepository : IPMRepository
         return Task.FromResult(_context.Problems.Where(x => x.ProjectId.Equals(projectId)&&!x.IsClosed).AsQueryable());
     }
     #endregion
-
 
     #region Issue
     public Task<IQueryable<Issue>> GetIssuesAsync()

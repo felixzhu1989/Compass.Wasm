@@ -1,0 +1,53 @@
+﻿@page "/bindproductionplan/{Id}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+<PageTitle>Bind Production Plan</PageTitle>
+<span>@_project.OdpNumber-@_project.Name</span>
+<EditForm Model="_project" OnSubmit="Save">
+    @if (_prodPlans != null && _prodPlans.Count!=0)
+        {
+            <div class="input-group mb-2">
+                <span class="input-group-text">选择计划</span>
+                <select class="form-select" @bind="@_selectedProdId">
+                    @foreach (var prodPlan in _prodPlans)
+                    {
+                        <option value="@prodPlan.Id">
+                            @prodPlan.SqNumber-@prodPlan.Name
+                        </option>
+                    }
+                </select>
+            </div>
+        <button class="btn btn-success me-2" type="submit">绑定计划</button>
+        }
+        else
+        {
+            <span>没有未绑定的计划</span><br/>
+        }
+    
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("1"))">取消</button>
+</EditForm>
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private ProjectResponse? _project = new();
+    private string _selectedProdId = string.Empty;
+    private List<ProductionPlanResponse>? _prodPlans = new();
+    protected override async Task OnInitializedAsync()
+    {        
+        _project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Id}");
+        _prodPlans = await Http.GetFromJsonAsync<List<ProductionPlanResponse>>("api/ProductionPlan/Unbind");
+    }
+    public async Task Save()
+    {
+        if (string.IsNullOrEmpty(_selectedProdId))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "请选择计划");
+            return;
+        }
+        var prodPlan = _prodPlans.Single(x => x.Id.Equals(Guid.Parse(_selectedProdId)));
+        prodPlan.ProjectId = _project.Id;
+        var result = await Http.PutAsJsonAsync("api/ProductionPlan/BindProject", prodPlan);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("1");
+    }
+}

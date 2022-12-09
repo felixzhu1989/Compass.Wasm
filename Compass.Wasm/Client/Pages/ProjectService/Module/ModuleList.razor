@@ -5,64 +5,62 @@
 <PageTitle>Module List</PageTitle>
 <div class="row position-relative">
     <div class="col">
-        <p>
-            @if (drawing != null)
+        @if (drawing != null)
+        {
+            @if (project != null)
             {
-                @if (project != null)
-                {
-                    <h5><a href="./drawinglist/@project.Id">@project.OdpNumber</a></h5>
-                    <div class="row">
-                        <div class="col-sm-3" style="width: 95px">项目名称:</div>
-                        <div class="col-sm-9">@project.Name</div>
-                    </div>
-                }
+                <h5><a href="./drawinglist/@project.Id">@project.OdpNumber</a></h5>
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">项目名称:</div>
+                    <div class="col-sm-9">@project.Name</div>
+                </div>
+            }
 
-                <div class="row">
-                    <div class="col-sm-3" style="width: 95px">Item编号:</div>
-                    <div class="col-sm-9">@drawing.ItemNumber</div>
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">Item编号:</div>
+                <div class="col-sm-9">@drawing.ItemNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">制图人员:</div>
+                <div class="col-sm-9">
+                    @if (user != null)
+                    {
+                        <span>@user.UserName</span>
+                    }
                 </div>
-                <div class="row">
-                    <div class="col-sm-3" style="width: 95px">制图人员:</div>
-                    <div class="col-sm-9">
-                        @if (user != null)
+            </div>
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">图纸链接:</div>
+                <div class="col-sm-9">
+                    @if (!string.IsNullOrWhiteSpace(drawing.DrawingUrl))
+                    {
+                        foreach (var fileUrl in drawing.DrawingUrl.Split('\n'))
                         {
-                            <span>@user.UserName</span>
-                        }
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3" style="width: 95px">图纸链接:</div>
-                    <div class="col-sm-9">
-                        @if (!string.IsNullOrWhiteSpace(drawing.DrawingUrl))
-                        {
-                            foreach (var fileUrl in drawing.DrawingUrl.Split('\n'))
-                            {
-                                <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                            <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
 
-                                <br />
-                            }
+                            <br />
                         }
-                    </div>
+                    }
                 </div>
-            }
-            @if (modules != null && modules.Length!=0)
-            {
-                <div class="row">
-                    <div class="col-sm-3" style="width: 95px">分段数量:</div>
-                    <div class="col-sm-9">@modules.Length</div>
-                </div>
-            }
-            else
-            {
-                <span style="color: red">请添加分段！</span>
-            }
-        </p>
+            </div>
+        }
+        @if (modules != null && modules.Length!=0)
+        {
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">分段数量:</div>
+                <div class="col-sm-9">@modules.Length</div>
+            </div>
+        }
+        else
+        {
+            <span style="color: red">请添加分段！</span>
+        }
     </div>
 
     @*todo:控制权限*@
     <AuthorizeView Roles="admin,pm,designer">
         <Authorized>
-            <div class="position-absolute bottom-0 end-0" style="text-align: right">
+            <div class="col position-absolute bottom-0 end-0" style="text-align: right;width: 10%">
                 <span class="btn btn-outline-danger mb-2" @onclick="ShowAddModule">@(isAddDrop ? "收起" : "展开")</span>
             </div>
         </Authorized>

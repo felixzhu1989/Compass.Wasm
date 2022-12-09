@@ -1,0 +1,134 @@
+﻿@page "/productionplanlist"
+@page "/productionplanlist/{Year:int}/{Month:int}/{PlanType}"
+
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Production Plan</PageTitle>
+<div class="row position-relative">
+
+    <div class="col input-group mb-2" style="max-width: 230px">
+        <span class="input-group-text">月份</span>
+        <input class="form-control" type="month" value="@(_selectedMonth.ToString("yyyy-MM"))" format="" @onchange="OnMonthChange" />
+    </div>
+
+    <div class="col input-group mb-2" style="max-width: 180px">
+        <span class="input-group-text">分类</span>
+        <select class="form-select" value="@PlanType" @onchange="OnPlanTypeChange">
+            @foreach (var type in Enum.GetNames(typeof(ProductionPlanType)))
+            {
+                <option>@type</option>
+            }
+        </select>
+    </div>
+    <div class="col">
+        @if (_productionPlans != null)
+        {
+            <span class="mx-3">项目数:@_productionPlans.Count</span>
+        }
+    </div>
+    @*todo:控制权限*@
+    <AuthorizeView Roles="admin,pm">
+        <Authorized>
+            <div class="col position-absolute bottom-0 end-0" style="text-align: right; width: 10%">
+                <span class="btn btn-outline-danger mb-2" @onclick="ShowAddPlan">@(_isAddDrop ? "收起" : "展开")</span>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+</div>
+<hr />
+@if (_isAddDrop)
+{
+    <AddProductionPlan ProductionPlan="_addProductionPlan" SaveProductionPlan="SaveProductionPlan" />
+}
+
+<table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
+    <thead>
+        <tr>
+            <th style="width: 7%">创建时间</th>
+            <th style="width: 10%">SQ号</th>
+            <th style="width: 11%">ODP号</th>
+            <th style="width: 20%">项目名称</th>
+            <th >烟罩数量</th>
+            <th>烟罩型号</th>
+            <th style="text-align: center">完工时间</th>
+            <th style="text-align: center">计划发图</th>
+            <th style="text-align: center">实际发图</th>
+            <th style="text-align: center">项目类型</th>
+            <th >项目备注</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (_productionPlans.Count == 0)
+        {
+            <p>加载中...</p>
+        }
+        else
+        {
+            @foreach (var plan in _productionPlans)
+            {
+                <DisplayProductionPlan ProductionPlan="plan" />
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public int Year { get; set; }
+    [Parameter]
+    public int Month { get; set; }
+    [Parameter]
+    public string? PlanType { get; set; }
+
+
+
+    private DateTime _selectedMonth = DateTime.Today;
+    private List<ProductionPlanResponse>? _productionPlans = new();
+    private AddProductionPlanRequest _addProductionPlan;
+    private bool _isAddDrop;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Year= _selectedMonth.Year;
+        Month= _selectedMonth.Month;
+        PlanType??=ProductionPlanType.No.ToString();
+        await RefreshData();
+    }
+
+    async Task RefreshData()
+    {
+        _productionPlans = await Http.GetFromJsonAsync<List<ProductionPlanResponse>>($"api/ProductionPlan/{Year}/{Month}/{PlanType}");
+        StateHasChanged();
+    }
+
+    async Task OnMonthChange(ChangeEventArgs e)
+    {
+        _selectedMonth = Convert.ToDateTime(e.Value);
+        Year= _selectedMonth.Year;
+        Month= _selectedMonth.Month;
+        await RefreshData();
+    }
+    async Task OnPlanTypeChange(ChangeEventArgs e)
+    {
+        PlanType = e.Value.ToString();
+        await RefreshData();
+    }
+    private void ShowAddPlan()
+    {
+        if (!_isAddDrop) _addProductionPlan = new AddProductionPlanRequest { OdpReleaseTime = DateTime.Today, ProductionFinishTime = DateTime.Today, DrawingReleaseTarget =DateTime.Today, MonthOfInvoice = _selectedMonth };
+        _isAddDrop = !_isAddDrop;
+    }
+
+    private async Task SaveProductionPlan(AddProductionPlanRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Name) || string.IsNullOrWhiteSpace(request.SqNumber))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        _isAddDrop = false; //收起添加项目
+        var result = await Http.PostAsJsonAsync("api/ProductionPlan/Add", _addProductionPlan);
+        if (result.IsSuccessStatusCode) await RefreshData();
+    }
+}

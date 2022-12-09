@@ -4,7 +4,7 @@ namespace Compass.DataService.Domain.Entities;
 
 public record KvfData:ModuleData
 {
-    public string ModelTag { get; init; } //不映射到数据库
+    
     public SidePanel SidePanel { get; set; }//大侧板：左, 右, 中, 双
     //排风口参数
     public double MiddleToRight { get; private set; }//中心距离右端
@@ -39,6 +39,6 @@ public record KvfData:ModuleData
 
     public KvfData()
     {
-        ModelTag = "KVF";
+        
     }
 }

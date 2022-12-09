@@ -1,0 +1,43 @@
+﻿@page "/updateproductionplan/{Id}"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+<PageTitle>Update Production Plan</PageTitle>
+<div class="row">
+    <div class="col">
+        <p>
+            <span class="fs-5">更新生产计划</span>
+        </p>
+    </div>
+    @*todo:控制权限*@
+    <AuthorizeView Roles="admin">
+        <Authorized>
+            <div class="col" style="text-align: right">
+                <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+
+</div>
+
+
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private ProductionPlanResponse? prodPlan = new();
+    protected override async Task OnInitializedAsync()
+    {        
+        prodPlan = await Http.GetFromJsonAsync<ProductionPlanResponse>($"api/ProductionPlan/{Id}");
+    }
+    private async Task Delete()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除生产计划【{prodPlan.Name}】吗？");
+        if (confirmResult)
+        {
+            var result = await Http.DeleteAsync($"api/ProductionPlan/{Id}");
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("productionplanlist");
+        }
+    }
+}

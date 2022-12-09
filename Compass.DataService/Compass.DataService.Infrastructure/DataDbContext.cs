@@ -12,19 +12,18 @@ public class DataDbContext : BaseDbContext
      * EF 可以将 .NET 类型层次结构映射到数据库。
      * 这允许你像往常一样使用基类型和派生类型在代码中编写 .NET 实体，
      * 并让 EF 无缝创建适当的数据库架构、发出查询等。
-     * TPC：Table Per Concrete Type
-     * 在 TPC 映射模式中，所有类型都映射到单个表。 每个表包含对应实体类型上所有属性的列。
-     * 这解决了 TPT 策略的一些常见性能问题。
-     * 在每个类的config中配置如下
-     * builder.UseTpcMappingStrategy();//基类
-     * builder.ToTable("XXX");//子类
+     * 共享列
+     * 默认情况下，当层次结构中的两个同级实体类型具有同名的属性时，它们将映射到两个单独的列。 
+     * 但是，如果它们的类型相同，则可以映射到相同的数据库列
+     * modelBuilder.Entity<Blog>().Property(b => b.Url).HasColumnName("Url"); 
+     * 可以通过foreach批量配置：property.SetColumnName(property.Name);
      */
-
     public virtual DbSet<ModuleData> ModulesData { get; set; }
     public DbSet<KvfData> KvfData { get; set; }
+    public DbSet<KviData> KviData { get; set; }
+    public DbSet<UvfData> UvfData { get; set; }
     public DbSet<UviData> UviData { get; set; }
-
-
+    
     public DataDbContext(DbContextOptions<DataDbContext> options, IMediator? mediator) : base(options, mediator)
     {
     }
@@ -32,5 +31,13 @@ public class DataDbContext : BaseDbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+        //批量配置列名，配置共享列
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            foreach (var property in entityType.GetProperties())
+            {
+                property.SetColumnName(property.Name);//将属性名设置为列名
+            }
+        }
     }
 }

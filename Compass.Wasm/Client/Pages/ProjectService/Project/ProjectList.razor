@@ -7,60 +7,57 @@
 
 <div class="row position-relative">
     <div class="col">
-        <p>
-            @if (projects != null)
-            {
-                <span>总项目数:@projects.Count</span>
-            }
-        </p>
+        @if (_projects != null)
+        {
+            <span>总项目数:@_projects.Count</span>
+        }
     </div>
     @*todo:控制权限*@
     <AuthorizeView Roles="admin,pm">
         <Authorized>
-            <div class="position-absolute bottom-0 end-0" style="text-align: right">
-                <span class="btn btn-outline-danger mb-2" @onclick="ShowAddProject">@(isAddDrop ? "收起" : "展开")</span>
+            <div class="col position-absolute bottom-0 end-0" style="text-align: right;width: 10%">
+                <span class="btn btn-outline-danger mb-2" @onclick="ShowAddProject">@(_isAddDrop ? "收起" : "展开")</span>
             </div>
         </Authorized>
     </AuthorizeView>
-
 </div>
-@if (isAddDrop)
+@if (_isAddDrop)
 {
-    <AddProject Project="addProjectRequest" SaveProject="SaveProject" />
+    <AddProject Project="_addProjectRequest" SaveProject="SaveProject" />
 }
 <table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
     <thead>
-    <tr>
-        <th style="width: 10%">项目编号</th>
-        <th style="text-align: center">交货日期</th>
-        <th style="width: 35%">项目名称</th>
-        <th style="text-align: center">项目分类</th>
-        <th style="text-align: center">风险等级</th>
-        <th style="text-align: center">合同</th>
-        <th style="text-align: center">领料单</th>
-        <th style="text-align: center">特殊要求</th>
-    </tr>
+        <tr>
+            <th style="width: 10%">项目编号</th>
+            <th style="text-align: center">交货日期</th>
+            <th style="width: 35%">项目名称</th>
+            <th style="text-align: center">项目分类</th>
+            <th style="text-align: center">风险等级</th>
+            <th style="text-align: center">合同</th>
+            <th style="text-align: center">领料单</th>
+            <th style="text-align: center">特殊要求</th>
+        </tr>
     </thead>
     <tbody>
-    @if (projects.Count == 0)
-    {
-        <p>加载中...</p>
-    }
-    else
-    {
-        @foreach (var project in projects)
+        @if (_projects.Count == 0)
         {
-            <DisplayProject Project="project" />
+            <p>加载中...</p>
         }
-    }
+        else
+        {
+            @foreach (var project in _projects)
+            {
+                <DisplayProject Project="project" />
+            }
+        }
     </tbody>
 </table>
 
 @for (int i = 1; i <= PageCount; i++)
 {
     <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
-       style="margin-right: 15px;margin-bottom: 30px;"
-       href="/@i">@i</a>
+   style="margin-right: 15px;margin-bottom: 30px;"
+   href="/@i">@i</a>
 }
 
 @code {
@@ -68,9 +65,9 @@
     public int CurrentPage { get; set; } = 1;
     public int PageCount { get; set; } = 0;
 
-    private List<ProjectResponse>? projects=new();
-    private AddProjectRequest? addProjectRequest;
-    private bool isAddDrop;
+    private List<ProjectResponse>? _projects = new();
+    private AddProjectRequest? _addProjectRequest;
+    private bool _isAddDrop;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -83,13 +80,13 @@
         var result = await Http.GetFromJsonAsync<PaginationResult<List<ProjectResponse>>>($"api/Project/All/{CurrentPage}");
         CurrentPage = result!.CurrentPage;
         PageCount = result.Pages;
-        projects = result.Data;
+        _projects = result.Data;
     }
 
     private void ShowAddProject()
     {
-        if (!isAddDrop) addProjectRequest = new AddProjectRequest {ReceiveDate = DateTime.Today , DeliveryDate = DateTime.Today };
-        isAddDrop = !isAddDrop;
+        if (!_isAddDrop) _addProjectRequest = new AddProjectRequest { ReceiveDate = DateTime.Today, DeliveryDate = DateTime.Today };
+        _isAddDrop = !_isAddDrop;
     }
     private async Task SaveProject(AddProjectRequest request)
     {
@@ -98,8 +95,8 @@
             await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
             return;
         }
-        isAddDrop = false; //收起添加项目
-        var result = await Http.PostAsJsonAsync("api/Project/Add", addProjectRequest);
+        _isAddDrop = false; //收起添加项目
+        var result = await Http.PostAsJsonAsync("api/Project/Add", _addProjectRequest);
         if (result.IsSuccessStatusCode) await RefreshData();
     }
 }

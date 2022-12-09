@@ -1,11 +1,13 @@
 ﻿@page "/"
-@page "/{CurrentPage:int}"
-@page "/search/{SearchText}/{CurrentPage:int}"
-@using Compass.Wasm.Client.Pages.ProjectService.Tracking
+@page "/{Page:int}"
+@page "/search/{SearchText}/{Page:int}"
 @using System.Timers
+@using Compass.Wasm.Client.ProjectServices
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject ITrackingService TrackingService
 @implements IDisposable
 
 <PageTitle>Project Tracking</PageTitle>
@@ -13,76 +15,104 @@
 <table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
     <thead>
         <tr>
-            <th style="width: 60px;text-align: center">状态</th>
-            <th style="width: 10%">项目编号</th>
-            <th style="width: 30%">项目名称</th>
-            <th style="text-align: center">开始</th>
-            <th style="text-align: center">计划</th>
-            <th style="text-align: center">发图</th>
-            <th style="text-align: center">生产</th>
-            <th style="text-align: center">入库</th>
-            <th style="text-align: center">发货S</th>
-            <th style="text-align: center">发货E</th>
-            <th style="text-align: center">结束</th>
-            <th style="text-align: center">报告异常</th>
-            <th style="text-align: center">经验教训</th>
+            <th style="width: 60px; text-align: center;color:dodgerblue">状态</th>
+            <th style="width: 10%;color: dodgerblue">项目编号</th>
+            <th style="width: 30%;color: dodgerblue">项目名称</th>
+            <th style="text-align: center;color: purple">创建时间</th>
+            <th style="text-align: center;color: purple">计划发图</th>
+            <th style="text-align: center;color: purple">实际发图</th>
+            <th style="text-align: center;color: purple">计划完工</th>
+            <th style="text-align: center;color:blue">生产状态</th>
+            <th style="text-align: center;color: darkgreen">入库时间</th>
+            <th style="text-align: center;color: darkgreen">发货开始</th>
+            <th style="text-align: center;color: darkgreen">发货结束</th>
+            <th style="text-align: center;color: red">报告异常</th>
+            <th style="text-align: center;color: red">经验教训</th>
         </tr>
     </thead>
     <tbody>
-        @if (trackings == null)
+        @if (TrackingService.Trackings == null||TrackingService.Trackings.Count==0)
         {
             <p>加载中...</p>
         }
-        else if (trackings.Count == 0)
-        {
-            <p>未找到</p>
-        }
         else
         {
-            @foreach (var tracking in trackings)
+            @foreach (var tracking in TrackingService.Trackings)
             {
-                <DisplayTracking Tracking="tracking" />
+                @*<DisplayTracking Id="tracking.Id" />*@
+                <tr class="@(tracking.ProblemNotResolved?"table-danger":"")">
+                    <td style="text-align: center">
+                        <span class="badge @(tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus.入库?"bg-success": tracking.ProjectStatus==ProjectStatus.发货?"bg-secondary":"bg-dark")">@tracking.ProjectStatus</span>
+                    </td>
+                
+                <td>
+                <a href="./drawinglist/@tracking.Id">@tracking.OdpNumber</a>
+                </td>
+            <td>@tracking.ProjectName</td>
+                @if (tracking.ProductionPlanOk)
+                {
+                    <td style="text-align: center">@tracking.OdpReleaseTime.ToString("MM/dd")</td>
+                    <td style="text-align: center">@tracking.DrawingReleaseTarget.ToString("MM/dd")</td>
+                <td style="text-align: center">@(tracking.DrawingReleaseActual!=null ? tracking.DrawingReleaseActual.Value.ToString("MM/dd") : "")</td>
+                    <td style="text-align: center">@tracking.ProductionFinishTime.ToString("MM/dd")</td>
+                }
+                else
+                {
+                    <td>
+                    <a href="bindproductionplan/@tracking.Id">绑定计划</a>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                }
+
+
+                </tr>
             }
         }
     </tbody>
 </table>
-@if (SearchText != null)
+@*@if (string.IsNullOrWhiteSpace(SearchText))
 {
-    @for (int i = 1; i <= PageCount; i++)
+    @for (int i = 1; i <= TrackingService.PageCount; i++)
     {
-        <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
-   style="margin-right: 15px;margin-bottom: 30px;"
-   href="/search/@LastSearchText/@i">@i</a>
+        <a class="btn @(i==TrackingService.CurrentPage?"btn-info":"btn-outline-info")"
+           style="margin-right: 15px;margin-bottom: 30px;"
+   href="search/@TrackingService.LastSearchText/@i">@i</a>
     }
 }
 else
 {
-    @for (int i = 1; i <= PageCount; i++)
+    @for (int i = 1; i <= TrackingService.PageCount; i++)
     {
-        <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
-   style="margin-right: 15px;margin-bottom: 30px;"
-   href="/@i">@i</a>
-    }
-}
+        <a class="btn @(i==TrackingService.CurrentPage?"btn-info":"btn-outline-info")"
+           style="margin-right: 15px;margin-bottom: 30px;"
+           href="/@i">@i</a>
+    }  
+}*@
+
+
 
 @code {
+
     [Parameter]
-    public string SearchText { get; set; }
+    public string SearchText { get; set; } = string.Empty;
     [Parameter]
-    public int CurrentPage { get; set; } = 1;
-    public int PageCount { get; set; } = 0;
-    public string LastSearchText { get; set; } = string.Empty;
+    public int Page { get; set; } = 1;
 
-    private List<TrackingResponse> trackings = new();
+    //public int PageCount { get; set; } = 0;
+    //public string LastSearchText { get; set; } = string.Empty;
+    //private List<TrackingResponse> _trackings = new();
 
-    private Timer timer;
 
+    private int _pageFlag = 1;
+    private Timer _timer;
     protected override void OnInitialized()
     {
-        timer = new Timer();
-        timer.Interval = 30000;
-        timer.Elapsed += OnTimeElapsed;//每隔30s钟就会执行一次这个方法
-        timer.Enabled = true;
+        _timer = new Timer();
+        _timer.Interval = 30000;
+        _timer.Elapsed += OnTimeElapsed;//每隔30s钟就会执行一次这个方法
+        _timer.Enabled = true;
     }
 
     protected override async Task OnParametersSetAsync()
@@ -92,37 +122,33 @@ else
 
     async Task RefreshData()
     {
-        //刷新数据
-        PaginationResult<List<TrackingResponse>>? result = new();
-        if (SearchText != null)
-        {
-            LastSearchText = SearchText;//查询字符串
-            result = await Http.GetFromJsonAsync<PaginationResult<List<TrackingResponse>>>($"api/Tracking/search/{SearchText}/{CurrentPage}");
-        }
-        else
-        {
-            if (CurrentPage == 0) CurrentPage = 1;
-            result = await Http.GetFromJsonAsync<PaginationResult<List<TrackingResponse>>>($"api/Tracking/All/{CurrentPage}");
-        }
+        if (Page == 0) Page = 1;
+        await TrackingService.GetTrackingsAsync(Page);
 
-        CurrentPage = result!.CurrentPage;
-        PageCount = result.Pages;
-        trackings= result.Data!;
+        //if (string.IsNullOrWhiteSpace(SearchText))
+        //{
+        //    await TrackingService.SearchTrackings(SearchText, Page);
+        //}
+        //else
+        //{
+        //    await TrackingService.GetTrackingsAsync(Page);
+        //}
     }
 
-    private async void OnTimeElapsed(object? sender, ElapsedEventArgs e)
+    private void OnTimeElapsed(object? sender, ElapsedEventArgs e)
     {
-        //每一次timer，当前页码加一，如果大于总页数则返回第一页
-        if (PageCount > 1)
-        {
-            CurrentPage ++;
-            if (CurrentPage> PageCount) CurrentPage = 1;
-        }
-        await RefreshData();
-        await InvokeAsync(StateHasChanged);
+    //方式二，直接跳转
+        //if (TrackingService.PageCount > 1)
+        //{
+        //    _pageFlag++;
+        //    if (_pageFlag > TrackingService.PageCount) _pageFlag = 1;
+        //}
+        //NavigationManager.NavigateTo(string.IsNullOrWhiteSpace(SearchText) ? $"{_pageFlag}" : $"search/{TrackingService.LastSearchText}/{_pageFlag}");
+
+        //StateHasChanged();
     }
     public void Dispose()
     {
-        timer.Dispose();
+        _timer.Dispose();
     }
 }

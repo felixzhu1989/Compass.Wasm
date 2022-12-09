@@ -8,7 +8,7 @@
 <EditForm Model="drawingPlan" OnSubmit="Save">
     <div class="input-group mb-2">
         <span class="input-group-text">选择项目</span>
-        @if (projectsNotPlanned != null && projectsNotPlanned.Length!=0)
+        @if (projectsNotPlanned != null && projectsNotPlanned.Count!=0)
         {
             <select class="form-select" @bind="@drawingPlan.ProjectId">
                 @foreach (var project in projectsNotPlanned)
@@ -32,13 +32,12 @@
 
 @code {
     private AddDrawingPlanRequest? drawingPlan = new();
-
-    private ProjectResponse[]? projectsNotPlanned;
+    private List<ProjectResponse>? projectsNotPlanned=new();
 
     protected override async Task OnInitializedAsync()
     {
         drawingPlan.ReleaseTime=DateTime.Today;
-        projectsNotPlanned = await Http.GetFromJsonAsync<ProjectResponse[]>("api/DrawingPlan/ProjectsNotPlanned");
+        projectsNotPlanned = await Http.GetFromJsonAsync<List<ProjectResponse>>("api/DrawingPlan/ProjectsNotPlanned");
     }
     public async Task Save()
     {

@@ -16,12 +16,19 @@
                 <i class="bi bi-house me-2" /> 项目跟踪
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="productionplan">
-                <i class="bi bi-calendar4-range me-2" /> 生产计划
-            </NavLink>
-        </div>
-        <AuthorizeView Roles="admin,pm">
+
+        <AuthorizeView Roles="admin,manager,pmc">
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="productionplanlist">
+                        <i class="bi bi-calendar4-range me-2" /> 生产计划
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+
+        
+        <AuthorizeView Roles="admin,manager,pm">
             <Authorized>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="projectlist/1">
@@ -61,9 +68,8 @@
 
 @code {
     private bool collapseNavMenu = true;
-
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
+    
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;

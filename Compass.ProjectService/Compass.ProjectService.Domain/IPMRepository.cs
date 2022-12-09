@@ -1,6 +1,5 @@
 ﻿using Compass.ProjectService.Domain.Entities;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.ProjectService;
 
 namespace Compass.ProjectService.Domain;
 /// <summary>
@@ -14,6 +13,7 @@ public interface IPMRepository
     Task<Project?> GetProjectByOdpAsync(string odpNumber);
     Task<string> GetOdpNumberByIdAsync(Guid id);
     Task<DateTime> GetDeliveryDateByIdAsync(Guid id);
+    Task<IQueryable<Project>> GetUnbindProjectsAsync(List<Guid?> ids);
     //Drawing
     Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId);
     Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId);

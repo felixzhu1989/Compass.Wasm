@@ -23,7 +23,7 @@ public class UserAdminController : ControllerBase
     }
 
     [HttpGet("AllUsers")]
-    public async Task<UserResponse[]> FindAllUsers()
+    public async Task<List<UserResponse>> FindAllUsers()
     {
         List<UserResponse> responses = new List<UserResponse>();
         var users =_userManager.Users;
@@ -32,12 +32,12 @@ public class UserAdminController : ControllerBase
             var roles = await _repository.GetRolesAsync(user);
             responses.Add(new UserResponse { Id = user.Id,UserName = user.UserName,Email= user.Email,Roles = string.Join(',', roles),CreationTime = user.CreationTime });
         }
-        return responses.ToArray();
+        return responses.ToList();
     }
 
     //获取所有的设计师的请求"api/UserAdmin/UsersInRoles?roleNames=designer"
     [HttpGet("UsersInRoles")]
-    public async Task<UserResponse[]> FindUsersByRoles(string roleNames)
+    public async Task<List<UserResponse>> FindUsersByRoles(string roleNames)
     {
         List<UserResponse> responses = new List<UserResponse>();
         var users =await _repository.FindUsersByRoles(roleNames);
@@ -47,7 +47,7 @@ public class UserAdminController : ControllerBase
             responses.Add(new UserResponse{Id=user.Id,UserName = user.UserName,Email= user.Email,Roles= string.Join(',', roles),CreationTime = user.CreationTime });
 
         }
-        return responses.ToArray();
+        return responses.ToList();
     }
 
     [HttpGet("{id}")]

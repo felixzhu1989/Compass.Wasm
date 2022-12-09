@@ -62,7 +62,7 @@ public class ProjectController : ControllerBase
         //包括合同地址
         project.ChangeContractUrl(request.ContractUrl!);
         await _dbContext.Projects.AddAsync(project);
-        var eventData =new ProjectCreatedEvent(project.Id);
+        var eventData =new ProjectCreatedEvent(project.Id,project.Name,project.DeliveryDate);
         //发布集成事件
         _eventBus.Publish("ProjectService.Project.Created", eventData);
 

@@ -345,6 +345,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<DateTime?>("ShippingTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("SortDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("WarehousingTime")
                         .HasColumnType("datetime2");
 

@@ -30,21 +30,21 @@ public class ProblemController : ControllerBase
         _idRepository = idRepository;
     }
     [HttpGet("All")]
-    public async Task<ProblemResponse[]> FindAll()
+    public async Task<List<ProblemResponse>> FindAll()
     {
-        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetProblemsAsync()).ToArrayAsync();
+        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetProblemsAsync()).ToListAsync();
     }
 
     [HttpGet("All/{projectId}")]
-    public async Task<ProblemResponse[]> FindProblemsByProject([RequiredGuid] Guid projectId)
+    public async Task<List<ProblemResponse>> FindProblemsByProject([RequiredGuid] Guid projectId)
     {
-        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetProblemsByProjectIdAsync(projectId)).ToArrayAsync();
+        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetProblemsByProjectIdAsync(projectId)).ToListAsync();
     }
     //NotResolved
     [HttpGet("NotResolved/{projectId}")]
-    public async Task<ProblemResponse[]> FindNotResolvedProblemsByProject([RequiredGuid] Guid projectId)
+    public async Task<List<ProblemResponse>> FindNotResolvedProblemsByProject([RequiredGuid] Guid projectId)
     {
-        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetNotResolvedProblemsByProjectIdAsync(projectId)).ToArrayAsync();
+        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetNotResolvedProblemsByProjectIdAsync(projectId)).ToListAsync();
     }
 
     [HttpGet("{id}")]
@@ -61,7 +61,7 @@ public class ProblemController : ControllerBase
         var problem = new Problem(Guid.NewGuid(), request.ProjectId, request.ReportUserId, request.ProblemTypeId,request.Description,request.DescriptionUrl);
         await _dbContext.Problems.AddAsync(problem);
         //todo:发出集成事件，修改项目跟踪状态，是否需要发邮件，"ProjectService.Problem.Created"
-        var users = await _idRepository.FindUsersByRoles("admin,manager,pm");
+        var users = await _idRepository.FindUsersByRoles("manager,pm");
         List<EmailAddress> emails = new List<EmailAddress>();
         foreach (var user in users)
         {

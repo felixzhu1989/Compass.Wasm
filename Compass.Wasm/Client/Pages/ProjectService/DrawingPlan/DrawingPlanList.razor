@@ -7,32 +7,29 @@
 
 <div class="row position-relative">
     <div class="col">
-        <p>
-            <AuthorizeView Roles="pm,designer">
+        <AuthorizeView Roles="pm,designer">
+            <Authorized>
+                <a href="/userdrawinglist/@context.User.Identity.Name" class="btn btn-outline-primary me-4">我的制图列表</a>
+            </Authorized>
+        </AuthorizeView>
+        @if (_projectsCountNotPlanned != 0)
+        {
+            @*todo:控制权限*@
+            <AuthorizeView Roles="admin,pm">
                 <Authorized>
-                    <a href="/userdrawinglist/@context.User.Identity.Name" class="btn btn-outline-primary me-4" >我的制图列表</a>
+                    <a href="/adddrawingplan" class="me-2" style="color: red">添加计划</a>
                 </Authorized>
             </AuthorizeView>
-            @if (_projectsCountNotPlanned != 0)
-            {
-                @*todo:控制权限*@
-                <AuthorizeView Roles="admin,pm">
-                    <Authorized>
-                        <a href="/adddrawingplan" class="me-2" style="color: red">添加计划</a>
-                    </Authorized>
-                </AuthorizeView>
-                <span>未计划项目</span>
-                <span class="badge   rounded-pill @(_projectsCountNotPlanned == 0 ? "bg-success" : "bg-danger")">@_projectsCountNotPlanned</span>
-            }
+            <span>未计划项目</span>
+            <span class="badge   rounded-pill @(_projectsCountNotPlanned == 0 ? "bg-success" : "bg-danger")">@_projectsCountNotPlanned</span>
+        }
 
-            <span class="badge bg-secondary rounded-pill">生产周期=发货日期-发图日期</span>
-            <span class="badge bg-success rounded-pill">日期已过</span>
-            <span class="badge bg-warning text-black rounded-pill">正在进行</span>
-            <span class="badge bg-black rounded-pill">缺少信息</span>
-            <span class="badge bg-danger rounded-pill">存在问题</span>
-        </p>
+        <span class="badge bg-secondary rounded-pill">生产周期=发货日期-发图日期</span>
+        <span class="badge bg-success rounded-pill">日期已过</span>
+        <span class="badge bg-warning text-black rounded-pill">正在进行</span>
+        <span class="badge bg-black rounded-pill">缺少信息</span>
+        <span class="badge bg-danger rounded-pill">存在问题</span>
     </div>
-    
 </div>
 
 @if (_drawingsPlan.Count==0)
@@ -51,15 +48,15 @@ else
 @for (int i = 1; i <= PageCount; i++)
 {
     <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
-       style="margin-right: 15px;margin-bottom: 30px;"
-       href="/drawingplan/@i">@i</a>
+   style="margin-right: 15px;margin-bottom: 30px;"
+   href="/drawingplan/@i">@i</a>
 }
 @code {
     [Parameter]
     public int CurrentPage { get; set; } = 1;
     public int PageCount { get; set; } = 0;
 
-    private List<DrawingPlanResponse> _drawingsPlan=new();
+    private List<DrawingPlanResponse> _drawingsPlan = new();
     private int _projectsCountNotPlanned;
 
     protected override async Task OnInitializedAsync()
@@ -69,7 +66,7 @@ else
     protected override async Task OnParametersSetAsync()
     {
         if (CurrentPage == 0) CurrentPage = 1;
-        PaginationResult<List<DrawingPlanResponse>>? result= await Http.GetFromJsonAsync<PaginationResult<List<DrawingPlanResponse>>>($"api/DrawingPlan/All/{CurrentPage}");
+        PaginationResult<List<DrawingPlanResponse>>? result = await Http.GetFromJsonAsync<PaginationResult<List<DrawingPlanResponse>>>($"api/DrawingPlan/All/{CurrentPage}");
         CurrentPage = result.CurrentPage;
         PageCount = result.Pages;
         _drawingsPlan = result.Data;

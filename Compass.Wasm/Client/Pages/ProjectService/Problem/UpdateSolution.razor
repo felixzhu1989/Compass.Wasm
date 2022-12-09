@@ -23,7 +23,7 @@
     [Parameter]
     public string Id { get; set; }
 
-    private ProblemResponse? problem;
+    private ProblemResponse? problem=new();
 
     protected override async Task OnParametersSetAsync()
     {

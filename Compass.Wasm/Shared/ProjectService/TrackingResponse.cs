@@ -16,5 +16,5 @@ public record TrackingResponse
     public DateTime? ClosedTime { get; set; }//所有产品都发货了的时间->进入结束状态（是否需要售后状态？）
 
     //附加Project中DeliveryDate的属性，用于排序
-    public DateTime DeliveryDate { get; set; }
+    public DateTime SortDate { get; init; }
 }

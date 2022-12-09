@@ -1,42 +1,54 @@
 ﻿@inject HttpClient Http
 
-@if (project != null&&Tracking!=null)
+@if (_project != null&&_tracking!=null)
 {
-    <tr class="@(Tracking.ProblemNotResolved?"table-danger":"")">
+    <tr class="@(_tracking.ProblemNotResolved?"table-danger":"")">
         <td style="text-align: center">
-            <span class="badge @(Tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": Tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": Tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": Tracking.ProjectStatus==ProjectStatus.入库?"bg-success": Tracking.ProjectStatus==ProjectStatus.发货?"bg-secondary":"bg-dark")">@Tracking.ProjectStatus</span>
+            <span class="badge @(_tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": _tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": _tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": _tracking.ProjectStatus==ProjectStatus.入库?"bg-success": _tracking.ProjectStatus==ProjectStatus.发货?"bg-secondary":"bg-dark")">@_tracking.ProjectStatus</span>
         </td>
         <td>
-            <a href="./drawinglist/@project.Id">@project.OdpNumber</a>
+            <a href="./drawinglist/@_project.Id">@_project.OdpNumber</a>
         </td>
-        <td>@project.Name</td>
-        <td style="text-align: center">@project.ReceiveDate.ToString("MM/dd")</td>
-        <td style="text-align: center">@(Tracking.DrawingPlanedTime!=null ? Tracking.DrawingPlanedTime.Value.ToString("MM/dd") : "")</td>
-        <td style="text-align: center">@(Tracking.ModuleReleaseTime!=null ? Tracking.ModuleReleaseTime.Value.ToString("MM/dd") : "")</td>
-        <td style="text-align: center">- - -</td>
-        <td style="text-align: center">@(Tracking.WarehousingTime!=null ? Tracking.WarehousingTime.Value.ToString("MM/dd") : "")</td>
-        <td style="text-align: center">@(Tracking.ShippingTime!=null ? Tracking.ShippingTime.Value.ToString("MM/dd") : "")</td>
-        <td style="text-align: center">@(Tracking.ClosedTime!=null ? Tracking.ClosedTime.Value.ToString("MM/dd") : "")</td>
-        <td style="text-align: center">@project.DeliveryDate.ToString("MM/dd")</td>
+        <td>@_project.Name</td>
+        @if (_prodPlan != null)
+        {
+            <td style="text-align: center">@_prodPlan.OdpReleaseTime.ToString("MM/dd")</td>
+            <td style="text-align: center">@_prodPlan.DrawingReleaseTarget.ToString("MM/dd")</td>
+            <td style="text-align: center">@(_prodPlan.DrawingReleaseActual!=null ? _prodPlan.DrawingReleaseActual.Value.ToString("MM/dd") : "")</td>
+            <td style="text-align: center">@_prodPlan.ProductionFinishTime.ToString("MM/dd")</td>
+        }
+        else
+        {
+            <td>
+                <a href="bindproductionplan/@_tracking.Id">绑定计划</a>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        }
+        <td style="text-align: center">?</td>
+        <td style="text-align: center">@(_tracking.WarehousingTime!=null ? _tracking.WarehousingTime.Value.ToString("MM/dd") : "")</td>
+        <td style="text-align: center">@(_tracking.ShippingTime!=null ? _tracking.ShippingTime.Value.ToString("MM/dd") : "")</td>
+        <td style="text-align: center">@(_tracking.ClosedTime!=null ? _tracking.ClosedTime.Value.ToString("MM/dd") : "")</td>
         <td style="text-align: center">
-            <a href="./reportproblem/@project.Id">报告异常</a>
+            <a href="./reportproblem/@_project.Id">报告异常</a>
         </td>
         <td style="text-align: center">
-            <a href="./reportissue/@project.Id">经验教训</a>
+            <a href="./reportissue/@_project.Id">经验教训</a>
         </td>
     </tr>
-    @if (Tracking.ProblemNotResolved)
+    @if (_tracking.ProblemNotResolved)
     {
         <tr class="table-danger">
             <td colspan="13">
-                <a href="./reportproblem/@project.Id">
+                <a href="./reportproblem/@_project.Id">
                     <span class="badge bg-danger ms-1 me-1">异常</span>
                 </a>
                 <img class="ms-1 me-2" src="andon_red.gif" />
                 <br />
-                @if (problems != null && problems.Length != 0)
+                @if (_problems != null && _problems.Count != 0)
                 {
-                    foreach (var problem in problems)
+                    foreach (var problem in _problems)
                     {
                         <ShowProblem Problem="@problem" />
                     }
@@ -48,14 +60,23 @@
 
 @code {
     [Parameter]
-    public TrackingResponse Tracking { get; set; }
-    private ProjectResponse? project;
-    private ProblemResponse[]? problems;
+    public Guid Id { get; set; }
 
+    public EventCallback Refresh { get; set; }
+
+    private TrackingResponse? _tracking = new();
+    private ProjectResponse? _project=new();
+    private List<ProblemResponse>? _problems=new();
+    private ProductionPlanResponse? _prodPlan;
+    
     protected override async Task OnParametersSetAsync()
     {
-        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Tracking.Id}");
-        problems = await Http.GetFromJsonAsync<ProblemResponse[]>($"api/Problem/NotResolved/{Tracking.Id}");
+        _tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{Id}");
+        _project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Id}");
+        _problems = await Http.GetFromJsonAsync<List<ProblemResponse>>($"api/Problem/NotResolved/{Id}");
+        var result = await Http.GetAsync($"api/ProductionPlan/ProjectId/{Id}");
+        if (result.IsSuccessStatusCode) _prodPlan = await result.Content.ReadFromJsonAsync<ProductionPlanResponse>();
+        
     }
 
 }

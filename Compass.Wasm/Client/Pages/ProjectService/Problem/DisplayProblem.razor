@@ -129,8 +129,8 @@
     public ProblemResponse Problem { get; set; }
 
     private string problemType = string.Empty;
-    private UserResponse? reporter;
-    private UserResponse? responder;
+    private UserResponse? reporter=new();
+    private UserResponse? responder=new();
     protected override async Task OnParametersSetAsync()
     {
         var response = await Http.GetFromJsonAsync<ProblemTypeResponse>($"api/ProblemType/{Problem.ProblemTypeId}");

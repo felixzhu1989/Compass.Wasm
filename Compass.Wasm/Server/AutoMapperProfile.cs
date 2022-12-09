@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Compass.PlanService.Domain.Entities;
 using Compass.Wasm.Shared.CategoryService;
 using Compass.Wasm.Shared.IdentityService;
+using Compass.Wasm.Shared.PlanService;
 using Compass.Wasm.Shared.ProjectService;
 
 namespace Compass.Wasm.Server;
@@ -27,6 +29,10 @@ public class AutoMapperProfile : Profile
         CreateMap<Model, ModelResponse>();
         CreateMap<ModelType, ModelTypeResponse>();
         CreateMap<ProblemType, ProblemTypeResponse>();
+        #endregion
+
+        #region PlanService
+        CreateMap<ProductionPlan, ProductionPlanResponse>();
         #endregion
     }
 }

@@ -2869,7 +2869,9 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Compass.PlanService.Domain": "1.0.0"
+          "Compass.PlanService.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.0",
+          "Zack.Infrastructure": "1.1.3"
         },
         "compile": {
           "bin/placeholder/Compass.PlanService.Infrastructure.dll": {}

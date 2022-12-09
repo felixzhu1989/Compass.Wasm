@@ -32,13 +32,9 @@ public class TrackingController : ControllerBase
     {
         var result = await _repository.GetTrackingsAsync(page);
         var responses = await _mapper.ProjectTo<TrackingResponse>(result.Data).ToListAsync();
-        foreach (var response in responses)
-        {
-            response.DeliveryDate =await _repository.GetDeliveryDateByIdAsync(response.Id);
-        }
         return new PaginationResult<List<TrackingResponse>>
         {
-            Data = responses.OrderByDescending(x=>x.DeliveryDate).ToList(),
+            Data = responses,
             CurrentPage = result.CurrentPage,
             Pages = result.Pages
         };

@@ -36,6 +36,7 @@
 	<ItemGroup>
 	  <Folder Include="Hubs\" />
 	  <Folder Include="ProjectService\ModuleEvent\" />
+	  <Folder Include="新文件夹\" />
 	</ItemGroup>
 
 

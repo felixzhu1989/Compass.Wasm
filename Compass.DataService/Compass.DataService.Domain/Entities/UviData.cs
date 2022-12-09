@@ -4,7 +4,6 @@ namespace Compass.DataService.Domain.Entities;
 
 public record UviData:ModuleData
 {
-    public string ModelTag { get; init; } //不映射到数据库
     public SidePanel SidePanel { get; set; }//大侧板：左, 右, 中, 双
     //排风口参数
     public double MiddleToRight { get; private set; }//中心距离右端
@@ -18,7 +17,7 @@ public record UviData:ModuleData
     public double SpotLightDistance { get; private set; } = 400d;//默认为400
     //UV灯类型
     public UvLightType UvLightType { get; private set; }
-    public bool Bluetooth { get; private set; }
+    public bool BlueTooth { get; private set; }
     //其他配置
     public bool LedLogo { get; private set; }
     public DrainType DrainType { get; private set; }
@@ -38,6 +37,6 @@ public record UviData:ModuleData
 
     public UviData()
     {
-        ModelTag = "UVI";
+        
     }
 }

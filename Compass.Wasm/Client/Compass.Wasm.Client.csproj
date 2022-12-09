@@ -20,4 +20,8 @@
 		<ProjectReference Include="..\Shared\Compass.Wasm.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="PlanServices\" />
+	</ItemGroup>
+
 </Project>
