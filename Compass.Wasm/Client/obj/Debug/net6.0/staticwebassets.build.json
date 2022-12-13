@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+4TOeYfhp6XWvzdgIEcwRSxESHTi+UFZ1FjpeS4HjRs=",
+  "Hash": "VARnWW6GcRvbMtxR/BqZ9jh9s4ao7SQ0fZLp2+J/r74=",
   "Source": "Compass.Wasm.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -8447,6 +8447,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\wwwroot\\js\\download.js",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "js/download.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\download.js"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\wwwroot\\js\\scripts.js",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "js/scripts.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\scripts.js"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\wwwroot\\lib\\bootstrap-icons\\bootstrap-icons.svg",

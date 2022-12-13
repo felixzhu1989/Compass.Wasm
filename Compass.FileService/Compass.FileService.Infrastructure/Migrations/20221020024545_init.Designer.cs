@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.Wasm.FileService.Infrastructure.Migrations
 {
-    [DbContext(typeof(FSDbContext))]
+    [DbContext(typeof(FileDbContext))]
     [Migration("20221020024545_init")]
     partial class init
     {

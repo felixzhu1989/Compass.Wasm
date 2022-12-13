@@ -9,12 +9,12 @@ namespace Compass.Wasm.Server.Controllers.OtherService;
 //[Authorize(Roles = "admin")]
 public class UserAdminController : ControllerBase
 {
-    private readonly IdUserManager _userManager;
+    private readonly IdentityUserManager _userManager;
     private readonly IEventBus _eventBus;
-    private readonly IIdRepository _repository;
+    private readonly IIdentityRepository _repository;
     private readonly IMapper _mapper;
 
-    public UserAdminController(IdUserManager userManager, IIdRepository repository,IMapper mapper, IEventBus eventBus)
+    public UserAdminController(IdentityUserManager userManager, IIdentityRepository repository,IMapper mapper, IEventBus eventBus)
     {
         _userManager = userManager;
         _eventBus = eventBus;

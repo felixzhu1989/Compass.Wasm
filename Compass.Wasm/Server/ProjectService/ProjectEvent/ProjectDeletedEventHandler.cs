@@ -6,10 +6,10 @@ namespace Compass.Wasm.Server.ProjectService.ProjectEvent;
 [EventName("ProjectService.Project.Deleted")]
 public class ProjectDeletedEventHandler : JsonIntegrationEventHandler<ProjectDeletedEvent>
 {
-    private readonly PMDbContext _dbContext;
-    private readonly PSDbContext _psDbContext;
+    private readonly ProjectDbContext _dbContext;
+    private readonly PlanDbContext _psDbContext;
 
-    public ProjectDeletedEventHandler(PMDbContext dbContext, PSDbContext psDbContext)
+    public ProjectDeletedEventHandler(ProjectDbContext dbContext, PlanDbContext psDbContext)
     {
         _dbContext = dbContext;
         _psDbContext = psDbContext;

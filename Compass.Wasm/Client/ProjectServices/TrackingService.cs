@@ -25,8 +25,8 @@ public class TrackingService : ITrackingService
         var result =
             await _http.GetFromJsonAsync<PaginationResult<List<TrackingResponse>>>($"api/Tracking/All/{page}");
         if (result is { Data: { } }) trackingResponses = result.Data;
-        CurrentPage = 1;
-        PageCount = 0;
+        CurrentPage = result.CurrentPage;
+        PageCount = result.Pages;
         if (trackingResponses.Count == 0) Message = "No trackings found.";
         else await BuildTrackings(trackingResponses);
     }
@@ -53,15 +53,14 @@ public class TrackingService : ITrackingService
         foreach (var response in trackingResponses)
         {
             var project = await _http.GetFromJsonAsync<ProjectResponse>($"api/Project/{response.Id}");
-
             var trackingModel = new TrackingModel
             {
                 Id = response.Id,
                 ProjectStatus = response.ProjectStatus,
                 SortDate = response.SortDate,
                 WarehousingTime = response.WarehousingTime,
-                ShippingStartTime = response.ShippingTime,
-                ShippingEndTime = response.ClosedTime,
+                ShippingStartTime = response.ShippingStartTime,
+                ShippingEndTime = response.ShippingEndTime,
                 ProblemNotResolved = response.ProblemNotResolved,
                 #region Project
                 OdpNumber = project.OdpNumber,
@@ -82,6 +81,8 @@ public class TrackingService : ITrackingService
             {
                 trackingModel.ProductionPlanOk = false;
             }
+            var problems = await _http.GetFromJsonAsync<List<ProblemResponse>>($"api/Problem/NotResolved/{response.Id}");
+            trackingModel.Problems = problems;
             Trackings.Add(trackingModel);
         }
         TrackingsChanged?.Invoke();//发出属性变更事件，告诉事件订阅者，需要开始干活了

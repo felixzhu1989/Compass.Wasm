@@ -903,7 +903,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\staticwebasset
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Pages\ProjectService\DrawingPlan\DrawingPlanList.razor.rz.scp.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Shared\Search.razor.rz.scp.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\bundle\Compass.Wasm.Client.styles.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\projectbundle\Compass.Wasm.Client.bundle.scp.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\Compass.Wasm.Client.csproj.CopyComplete
@@ -968,3 +967,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\+Qk9l
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\UCQXQkon.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\hK+S+qro.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\14CA1I9F.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Pages\ProjectService\Tracking\SearchTrackings.razor.rz.scp.css

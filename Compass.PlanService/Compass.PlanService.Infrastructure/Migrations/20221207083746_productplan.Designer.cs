@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.PlanService.Infrastructure.Migrations
 {
-    [DbContext(typeof(PSDbContext))]
+    [DbContext(typeof(PlanDbContext))]
     [Migration("20221207083746_productplan")]
     partial class productplan
     {

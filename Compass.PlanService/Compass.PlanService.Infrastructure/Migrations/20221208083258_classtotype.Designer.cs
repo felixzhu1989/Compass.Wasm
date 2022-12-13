@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.PlanService.Infrastructure.Migrations
 {
-    [DbContext(typeof(PSDbContext))]
+    [DbContext(typeof(PlanDbContext))]
     [Migration("20221208083258_classtotype")]
     partial class classtotype
     {

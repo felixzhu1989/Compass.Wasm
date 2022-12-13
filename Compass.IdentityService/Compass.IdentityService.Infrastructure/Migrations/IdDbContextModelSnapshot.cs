@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.IdentityService.Infrastructure.Migrations
 {
-    [DbContext(typeof(IdDbContext))]
+    [DbContext(typeof(IdentityDbContext))]
     partial class IdDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

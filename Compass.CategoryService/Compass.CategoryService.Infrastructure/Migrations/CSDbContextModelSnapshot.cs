@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.CategoryService.Infrastructure.Migrations
 {
-    [DbContext(typeof(CSDbContext))]
+    [DbContext(typeof(CateDbContext))]
     partial class CSDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

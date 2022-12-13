@@ -1,12 +1,12 @@
 ﻿@page "/projectlist"
-@page "/projectlist/1"
+@page "/projectlist/{CurrentPage:int}"
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 <PageTitle>Project List</PageTitle>
 
-<div class="row position-relative">
-    <div class="col">
+<div class="row position-relative" style="border: 1px solid lightgray;border-radius: 10px">
+    <div class="col my-3">
         @if (_projects != null)
         {
             <span>总项目数:@_projects.Count</span>
@@ -57,7 +57,7 @@
 {
     <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
    style="margin-right: 15px;margin-bottom: 30px;"
-   href="/@i">@i</a>
+   href="projectlist/@i">@i</a>
 }
 
 @code {

@@ -3,10 +3,10 @@
 <AuthorizeView>
     <Authorized>
         <span class="ms-3">@context.User.Identity.Name</span>
-        <a @onclick="Logout" href="javascript:void(0)">Logout</a>
+        <a @onclick="Logout" href="javascript:void(0)">退出</a>
     </Authorized>
     <NotAuthorized>
-        <a href="./login">Login</a>
+        <a href="login">登录</a>
     </NotAuthorized>
 </AuthorizeView>
 

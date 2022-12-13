@@ -10,12 +10,12 @@ namespace Compass.Wasm.Server.Controllers.OtherService;
 [ApiController]
 public class LoginController : ControllerBase
 {
-    private readonly IdDomainService _idService;
-    private readonly IIdRepository _repository;
+    private readonly IdentityDomainService _idService;
+    private readonly IIdentityRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
 
-    public LoginController(IdDomainService idService, IIdRepository repository,IMapper mapper, IEventBus eventBus)
+    public LoginController(IdentityDomainService idService, IIdentityRepository repository,IMapper mapper, IEventBus eventBus)
     {
         _idService = idService;
         _repository = repository;

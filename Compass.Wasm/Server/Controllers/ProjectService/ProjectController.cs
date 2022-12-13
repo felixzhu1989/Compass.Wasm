@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
+using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Server.ProjectService.ProjectEvent;
 using Compass.Wasm.Shared.ProjectService;
 using Compass.Wasm.Shared;
@@ -8,23 +9,25 @@ namespace Compass.Wasm.Server.Controllers.ProjectService;
 
 [Route("api/[controller]")]
 [ApiController]
-[UnitOfWork(typeof(PMDbContext))]
+[UnitOfWork(typeof(ProjectDbContext))]
 //[Authorize(Roles = "admin,pm,designer")]
 public class ProjectController : ControllerBase
 {
-    private readonly PMDomainService _domainService;
-    private readonly PMDbContext _dbContext;
-    private readonly IPMRepository _repository;
+    private readonly ProjectDomainService _domainService;
+    private readonly ProjectDbContext _dbContext;
+    private readonly IProjectRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
+    private readonly ExportExcelService _export;
 
-    public ProjectController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper,IEventBus eventBus)
+    public ProjectController(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IMapper mapper, IEventBus eventBus, ExportExcelService export)
     {
         _domainService = domainService;
         _dbContext = dbContext;
         _repository = repository;
         _mapper = mapper;
         _eventBus = eventBus;
+        _export = export;
     }
     [HttpGet("All/{page}")]
     public async Task<PaginationResult<List<ProjectResponse>>> FindAll(int page)
@@ -58,11 +61,11 @@ public class ProjectController : ControllerBase
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddProjectRequest request)
     {
-        var project = new Project(Guid.NewGuid(), request.OdpNumber.ToUpper(), request.Name,request.ReceiveDate,request.DeliveryDate,request.ProjectType, request.RiskLevel, request.SpecialNotes);
+        var project = new Project(Guid.NewGuid(), request.OdpNumber.ToUpper(), request.Name, request.ReceiveDate, request.DeliveryDate, request.ProjectType, request.RiskLevel, request.SpecialNotes);
         //包括合同地址
         project.ChangeContractUrl(request.ContractUrl!);
         await _dbContext.Projects.AddAsync(project);
-        var eventData =new ProjectCreatedEvent(project.Id,project.Name,project.DeliveryDate);
+        var eventData = new ProjectCreatedEvent(project.Id, project.Name, project.DeliveryDate);
         //发布集成事件
         _eventBus.Publish("ProjectService.Project.Created", eventData);
 
@@ -96,4 +99,22 @@ public class ProjectController : ControllerBase
         _eventBus.Publish("ProjectService.Project.Deleted", eventData);
         return Ok();
     }
+    #region 测试导出excel表格
+    //https://www.puresourcecode.com/dotnet/blazor/how-to-export-data-to-excel-in-blazor/
+    //Install-Package ClosedXML
+    /* Also, I recommend to look at ClosedXML.Report repository
+     * because it allows you to create very nice report with Excel based on an Excel template.
+     *  
+     */
+    [HttpGet("ExportExcel")]
+    public async Task<IActionResult> DownloadProjectExport()
+    {
+        string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        string fileName = "projects.xlsx";
+        var result = await _repository.GetProjectsAsync(1);
+        var projects = await _mapper.ProjectTo<ProjectResponse>(result.Data).ToListAsync();
+        return File(_export.CreateProjectExport(projects), contentType, fileName);
+    }
+
+    #endregion
 }

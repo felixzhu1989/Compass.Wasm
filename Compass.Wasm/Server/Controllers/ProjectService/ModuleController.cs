@@ -1,25 +1,24 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
-using Compass.Wasm.Server.ProjectService.TrackingEvent;
-using Compass.ProjectService.Domain.Entities;
+using Compass.Wasm.Server.ProjectService.ModuleEvent;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
 [Route("api/[controller]")]
 [ApiController]
-[UnitOfWork(typeof(PMDbContext))]
+[UnitOfWork(typeof(ProjectDbContext))]
 //[Authorize(Roles = "admin,pm,designer")]
 public class ModuleController : ControllerBase
 {
-    private readonly PMDomainService _domainService;
-    private readonly PMDbContext _dbContext;
-    private readonly IPMRepository _repository;
+    private readonly ProjectDomainService _domainService;
+    private readonly ProjectDbContext _dbContext;
+    private readonly IProjectRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
-    private readonly IdUserManager _userManager;
+    private readonly IdentityUserManager _userManager;
 
-    public ModuleController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus,IdUserManager userManager)
+    public ModuleController(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IMapper mapper, IEventBus eventBus,IdentityUserManager userManager)
     {
         _domainService = domainService;
         _dbContext = dbContext;

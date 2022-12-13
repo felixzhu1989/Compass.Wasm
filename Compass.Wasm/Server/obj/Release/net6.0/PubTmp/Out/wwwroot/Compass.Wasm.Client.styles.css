@@ -17,6 +17,9 @@
     margin: auto;
     z-index: -1;
 }
+/* /Pages/ProjectService/Tracking/SearchTrackings.razor.rz.scp.css */
+body[b-e9lbnz4p09] {
+}
 /* /Shared/MainLayout.razor.rz.scp.css */
 .page[b-vmkc5g0nza] {
     position: relative;
@@ -164,7 +167,4 @@ main[b-vmkc5g0nza] {
         /* Never collapse the sidebar for wide screens */
         display:block;
     }
-}
-/* /Shared/Search.razor.rz.scp.css */
-body[b-wqxq1845qi] {
 }

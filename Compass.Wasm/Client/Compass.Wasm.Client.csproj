@@ -24,4 +24,8 @@
 	  <Folder Include="PlanServices\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Include="wwwroot\js\scripts.js" />
+	</ItemGroup>
+
 </Project>

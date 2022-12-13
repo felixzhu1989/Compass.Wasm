@@ -7,17 +7,17 @@ namespace Compass.Wasm.Server.Controllers.ProjectService;
 
 [Route("api/[controller]")]
 [ApiController]
-[UnitOfWork(typeof(PMDbContext))]
+[UnitOfWork(typeof(ProjectDbContext))]
 public class IssueController : ControllerBase
 {
-    private readonly PMDomainService _domainService;
-    private readonly PMDbContext _dbContext;
-    private readonly IPMRepository _repository;
+    private readonly ProjectDomainService _domainService;
+    private readonly ProjectDbContext _dbContext;
+    private readonly IProjectRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
-    private readonly IdUserManager _userManager;
+    private readonly IdentityUserManager _userManager;
 
-    public IssueController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus, IdUserManager userManager)
+    public IssueController(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IMapper mapper, IEventBus eventBus, IdentityUserManager userManager)
     {
         _domainService = domainService;
         _dbContext = dbContext;

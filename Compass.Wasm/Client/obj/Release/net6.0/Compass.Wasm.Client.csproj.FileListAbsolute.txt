@@ -910,7 +910,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\pQr
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\bYInvGoA.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\F428dumt.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\scopedcss\Pages\ProjectService\DrawingPlan\DrawingPlanList.razor.rz.scp.css
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\scopedcss\Shared\Search.razor.rz.scp.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_framework\Azure.Core.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_framework\Azure.Identity.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_framework\Microsoft.Bcl.AsyncInterfaces.dll
@@ -968,3 +967,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\+Qk
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\UCQXQkon.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\hK+S+qro.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\14CA1I9F.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\scopedcss\Pages\ProjectService\Tracking\SearchTrackings.razor.rz.scp.css

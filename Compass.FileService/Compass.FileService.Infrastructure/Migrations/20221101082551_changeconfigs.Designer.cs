@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.Wasm.FileService.Infrastructure.Migrations
 {
-    [DbContext(typeof(FSDbContext))]
+    [DbContext(typeof(FileDbContext))]
     [Migration("20221101082551_changeconfigs")]
     partial class changeconfigs
     {

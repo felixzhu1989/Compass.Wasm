@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.Wasm.FileService.Infrastructure.Migrations
 {
-    [DbContext(typeof(FSDbContext))]
+    [DbContext(typeof(FileDbContext))]
     partial class FSDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

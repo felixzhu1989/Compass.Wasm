@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.ProjectService.Infrastructure.Migrations
 {
-    [DbContext(typeof(PMDbContext))]
+    [DbContext(typeof(ProjectDbContext))]
     partial class PMDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -315,16 +315,10 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("ClosedTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DrawingPlanedTime")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -333,16 +327,16 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ModuleReleaseTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("ProblemNotResolved")
                         .HasColumnType("bit");
 
                     b.Property<int>("ProjectStatus")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ShippingTime")
+                    b.Property<DateTime?>("ShippingEndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ShippingStartTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("SortDate")

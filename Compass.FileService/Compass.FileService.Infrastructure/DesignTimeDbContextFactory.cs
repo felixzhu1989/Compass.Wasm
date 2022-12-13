@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Compass.FileService.Infrastructure;
 
-public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<FSDbContext>
+public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<FileDbContext>
 {
-    public FSDbContext CreateDbContext(string[] args)
+    public FileDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = DbContextOptionsBuilderFactory.Create<FSDbContext>();
-        return new FSDbContext(optionsBuilder.Options, null);
+        var optionsBuilder = DbContextOptionsBuilderFactory.Create<FileDbContext>();
+        return new FileDbContext(optionsBuilder.Options, null);
     }
 }

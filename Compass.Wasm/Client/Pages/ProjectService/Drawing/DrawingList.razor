@@ -223,7 +223,8 @@
 
         project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
         tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{ProjectId}");
-        isModuleRelease = tracking.ModuleReleaseTime != null;
+
+        isModuleRelease = tracking.ProjectStatus >ProjectStatus.制图;
         problems = await Http.GetFromJsonAsync<ProblemResponse[]>($"api/Problem/NotResolved/{ProjectId}");
     }
     Task<DrawingResponse[]?> RefreshData()

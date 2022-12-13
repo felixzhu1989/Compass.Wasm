@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Compass.IdentityService.Infrastructure;
 
-public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<IdDbContext>
+public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<IdentityDbContext>
 {
-    public IdDbContext CreateDbContext(string[] args)
+    public IdentityDbContext CreateDbContext(string[] args)
     {
-        var optionsBuilder = DbContextOptionsBuilderFactory.Create<IdDbContext>();
-        return new IdDbContext(optionsBuilder.Options);
+        var optionsBuilder = DbContextOptionsBuilderFactory.Create<IdentityDbContext>();
+        return new IdentityDbContext(optionsBuilder.Options);
     }
 }

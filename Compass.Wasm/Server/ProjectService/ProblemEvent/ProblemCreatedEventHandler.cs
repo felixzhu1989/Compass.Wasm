@@ -6,10 +6,10 @@ namespace Compass.Wasm.Server.ProjectService.ProblemEvent;
 [EventName("ProjectService.Problem.Created")]
 public class ProblemCreatedEventHandler : JsonIntegrationEventHandler<ProblemCreatedEvent>
 {
-    private readonly PMDbContext _dbContext;
+    private readonly ProjectDbContext _dbContext;
     private readonly IEmailSender _emailSender;
 
-    public ProblemCreatedEventHandler(PMDbContext dbContext, IEmailSender emailSender)
+    public ProblemCreatedEventHandler(ProjectDbContext dbContext, IEmailSender emailSender)
     {
         _dbContext = dbContext;
         _emailSender = emailSender;

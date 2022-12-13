@@ -7,15 +7,15 @@ namespace Compass.Wasm.Server.Controllers.CategoryService;
 
 [Route("api/[controller]")]
 [ApiController]
-[UnitOfWork(typeof(CSDbContext))]
+[UnitOfWork(typeof(CateDbContext))]
 //[Authorize(Roles = "admin,pm")]
 public class ProblemTypeController : ControllerBase
 {
-    private readonly CSDomainService _domainService;
-    private readonly CSDbContext _dbContext;
-    private readonly ICSRepository _repository;
+    private readonly CateDomainService _domainService;
+    private readonly CateDbContext _dbContext;
+    private readonly ICateRepository _repository;
     private readonly IMapper _mapper;
-    public ProblemTypeController(CSDomainService domainService, CSDbContext dbContext, ICSRepository repository, IMapper mapper)
+    public ProblemTypeController(CateDomainService domainService, CateDbContext dbContext, ICateRepository repository, IMapper mapper)
     {
         _domainService = domainService;
         _dbContext = dbContext;

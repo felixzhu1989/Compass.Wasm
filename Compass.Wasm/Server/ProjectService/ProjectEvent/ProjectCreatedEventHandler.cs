@@ -1,5 +1,7 @@
 ﻿using Compass.PlanService.Infrastructure;
+using Compass.Wasm.Server.PlanService.ProductionPlanEvent;
 using Compass.Wasm.Shared.Extensions;
+using Zack.EventBus;
 
 namespace Compass.Wasm.Server.ProjectService.ProjectEvent;
 
@@ -8,13 +10,15 @@ namespace Compass.Wasm.Server.ProjectService.ProjectEvent;
 public class ProjectCreatedEventHandler : JsonIntegrationEventHandler<ProjectCreatedEvent>
 {
     //todo:是否需要发送邮件
-    private readonly PMDbContext _dbContext;
-    private readonly PSDbContext _psDbContext;
+    private readonly ProjectDbContext _dbContext;
+    private readonly PlanDbContext _psDbContext;
+    private readonly IEventBus _eventBus;
 
-    public ProjectCreatedEventHandler(PMDbContext dbContext, PSDbContext psDbContext)
+    public ProjectCreatedEventHandler(ProjectDbContext dbContext, PlanDbContext psDbContext,IEventBus eventBus)
     {
         _dbContext = dbContext;
         _psDbContext = psDbContext;
+        _eventBus = eventBus;
     }
     public override async Task HandleJson(string eventName, ProjectCreatedEvent? eventData)
     {
@@ -36,6 +40,9 @@ public class ProjectCreatedEventHandler : JsonIntegrationEventHandler<ProjectCre
             var index = results.FindIndex(x => x.Equals(maxResult));
             prodPlans[index].ChangeProjectId(eventData.Id);
             await _psDbContext.SaveChangesAsync();
+            //todo:发出集成事件，修改Tracking的排序时间为ProductionFinishTime
+            var eData = new BindProjectEvent(eventData.Id, prodPlans[index].ProductionFinishTime);
+            _eventBus.Publish("PlanService.ProductionPlan.BindProject", eData);
         }
     }
 }

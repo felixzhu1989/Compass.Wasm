@@ -7,13 +7,13 @@ namespace Compass.Wasm.Server.Controllers.OtherService
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize(Roles = "admin,pm")]//权限
-    [UnitOfWork(typeof(FSDbContext))]
+    [UnitOfWork(typeof(FileDbContext))]
     public class UploaderController : ControllerBase
     {
-        private readonly FSDomainService _domainService;
-        private readonly FSDbContext _dbContext;
-        private readonly IFSRepository _repository;
-        public UploaderController(FSDomainService domainService, FSDbContext dbContext, IFSRepository repository)
+        private readonly FileDomainService _domainService;
+        private readonly FileDbContext _dbContext;
+        private readonly IFileRepository _repository;
+        public UploaderController(FileDomainService domainService, FileDbContext dbContext, IFileRepository repository)
         {
             _domainService = domainService;
             _dbContext = dbContext;

@@ -6,8 +6,8 @@ namespace Compass.Wasm.Server.ProjectService.ProblemEvent;
 [EventName("ProjectService.Problem.Closed")]
 public class ProblemClosedEventHandler : JsonIntegrationEventHandler<ProblemClosedEvent>
 {
-    private readonly PMDbContext _dbContext;
-    public ProblemClosedEventHandler(PMDbContext dbContext)
+    private readonly ProjectDbContext _dbContext;
+    public ProblemClosedEventHandler(ProjectDbContext dbContext)
     {
         _dbContext = dbContext;
     }

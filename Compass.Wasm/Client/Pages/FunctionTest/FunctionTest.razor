@@ -1,7 +1,26 @@
 ﻿@page "/functiontest"
 @inject IJSRuntime JsRuntime
+@inject HttpClient Http
 
 <PageTitle>Function Test</PageTitle>
+<p>
+    <button @onclick="TriggerPrompt">按需加载JavaScript脚本</button>
+</p>
+<p>@_result</p>
+
+<a href="api/Project/ExportExcel" target="_blank">测试下载文件</a>
+
+<h3>Click Button to download Excel</h3>
+<button @onclick="@(async() => await DownloadFile())">Download</button>
+@if (IsDownloadStarted == 1)
+{
+    <p>Downloading...Please wait</p>
+}
+else if (IsDownloadStarted == 2)
+{
+    <p>Download complete.</p>
+}
+
 
 
 <h3>测试QRCode API</h3>
@@ -17,11 +36,43 @@
 <hr />
 
 
-
 @code {
-
-
-
     //await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
     //var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
+
+    public int IsDownloadStarted { get; set; } = 0;
+    private IJSObjectReference _moduleDownload;
+    protected async Task DownloadFile()
+    {
+        if (await JsRuntime.InvokeAsync<bool>("confirm", "Do you want to Export?"))
+        {
+            IsDownloadStarted = 1;
+            StateHasChanged();
+
+            var response = await Http.GetAsync("api/Project/ExportExcel");
+            response.EnsureSuccessStatusCode();
+
+            var fileBytes = await response.Content.ReadAsByteArrayAsync();
+            var fileName = $"Projects{DateTime.Now.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)}.xlsx";
+            
+            //使用JS代码下载
+            await _moduleDownload.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+            IsDownloadStarted = 2;
+        }
+    }
+
+    private IJSObjectReference _module;
+    private string _result;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/scripts.js");
+            _moduleDownload = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/download.js");
+        }
+    }
+    private async Task TriggerPrompt()
+    {
+        _result=  await _module.InvokeAsync<string>("showPrompt", "输入文字：");
+    }
 }

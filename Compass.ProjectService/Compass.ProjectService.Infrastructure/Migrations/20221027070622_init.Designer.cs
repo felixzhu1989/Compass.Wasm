@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.ProjectService.Infrastructure.Migrations
 {
-    [DbContext(typeof(PMDbContext))]
+    [DbContext(typeof(ProjectDbContext))]
     [Migration("20221027070622_init")]
     partial class init
     {

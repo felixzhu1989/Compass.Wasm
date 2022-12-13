@@ -30,7 +30,7 @@ public class TrackingModel
 
     public bool ProblemNotResolved { get; set; }
     #region Problem
-    public List<ProblemResponse> Problems { get; set; } = new();
+    public List<ProblemResponse>? Problems { get; set; } = new();
     #endregion
 
 }

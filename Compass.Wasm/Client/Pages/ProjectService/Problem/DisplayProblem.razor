@@ -70,7 +70,7 @@
                 <AuthorizeView>
                     <Authorized>
                         @*只能负责人修改解决方案*@
-                        @if (context.User.Identity!.Name!.ToLower().Equals(responder.UserName.ToLower()))
+                        @if (context.User.Identity.Name == responder.UserName)
                         {
                             <a href="/updatesolution/@Problem.Id">更新解决方案</a>
                         }

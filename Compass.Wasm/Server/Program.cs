@@ -2,6 +2,7 @@ using Compass.DataService.Domain;
 using Compass.DataService.Infrastructure;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Infrastructure;
+using Compass.Wasm.Server.ExportExcel;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,7 +97,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 #region FileService
 //数据库，DbContext
-builder.Services.AddDbContext<FSDbContext>(options =>
+builder.Services.AddDbContext<FileDbContext>(options =>
 {
     //指定连接的数据库
     var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
@@ -108,21 +109,21 @@ builder.Services.Configure<SMBStorageOptions>(builder.Configuration.GetSection("
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IStorageClient, SMBStorageClient>();//本机磁盘当备份服务器
 builder.Services.AddScoped<IStorageClient, MockCloudStorageClient>();//文件保存在wwwroot文件夹下
-builder.Services.AddScoped<FSDomainService>();
-builder.Services.AddScoped<IFSRepository, FSRepository>();
+builder.Services.AddScoped<FileDomainService>();
+builder.Services.AddScoped<IFileRepository, FileRepository>();
 
 #endregion
 
 #region IdentityService
 //数据库，DbContext
-builder.Services.AddDbContext<IdDbContext>(options =>
+builder.Services.AddDbContext<IdentityDbContext>(options =>
 {
     //指定连接的数据库
     var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
     options.UseSqlServer(connStr);
 });
-builder.Services.AddScoped<IdDomainService>();
-builder.Services.AddScoped<IIdRepository, IdRepository>();
+builder.Services.AddScoped<IdentityDomainService>();
+builder.Services.AddScoped<IIdentityRepository, IdentityRepository>();
 builder.Services.AddDataProtection();
 //登录、注册的项目除了要启用WebApplicationBuilderExtensions中的初始化之外，还要如下的初始化
 //不要用AddIdentity，而是用AddIdentityCore
@@ -143,9 +144,9 @@ IdentityBuilder idBuilder = builder.Services.AddIdentityCore<User>(options =>
     options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
 });
 idBuilder = new IdentityBuilder(idBuilder.UserType, typeof(Role), builder.Services);
-idBuilder.AddEntityFrameworkStores<IdDbContext>().AddDefaultTokenProviders()
+idBuilder.AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders()
     .AddRoleManager<RoleManager<Role>>()
-    .AddUserManager<IdUserManager>();
+    .AddUserManager<IdentityUserManager>();
 //发送邮件
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 //获取中心服务器中的smtp设置
@@ -155,26 +156,26 @@ builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp")
 
 #region CategoryService
 //数据库，DbContext
-builder.Services.AddDbContext<CSDbContext>(options =>
+builder.Services.AddDbContext<CateDbContext>(options =>
 {
     //指定连接的数据库
     var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
     options.UseSqlServer(connStr);
 });
-builder.Services.AddScoped<CSDomainService>();
-builder.Services.AddScoped<ICSRepository, CSRepository>();
+builder.Services.AddScoped<CateDomainService>();
+builder.Services.AddScoped<ICateRepository, CateRepository>();
 #endregion
 
 #region ProjectService
 //数据库，DbContext
-builder.Services.AddDbContext<PMDbContext>(options =>
+builder.Services.AddDbContext<ProjectDbContext>(options =>
 {
     //指定连接的数据库
     var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
     options.UseSqlServer(connStr);
 });
-builder.Services.AddScoped<PMDomainService>();
-builder.Services.AddScoped<IPMRepository, PMRepository>();
+builder.Services.AddScoped<ProjectDomainService>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 #endregion
 
 #region DataService
@@ -191,16 +192,25 @@ builder.Services.AddScoped<IDataRepository, DataRepository>();
 
 #region PlanService
 //数据库，DbContext
-builder.Services.AddDbContext<PSDbContext>(options =>
+builder.Services.AddDbContext<PlanDbContext>(options =>
 {
     //指定连接的数据库
     var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
     options.UseSqlServer(connStr);
 });
-builder.Services.AddScoped<PSDomainService>();
-builder.Services.AddScoped<IPSRepository, PSRepository>();
+builder.Services.AddScoped<PlanDomainService>();
+builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 #endregion
 
+
+
+
+#region ExprotExcel
+builder.Services.AddScoped<ExportExcelService>();
+
+
+
+#endregion
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -245,6 +255,7 @@ Console.WriteLine($"{DateTime.Now} http server Running on http://10.9.18.31");
 #endregion
 
 var app = builder.Build();
+
 #region 中间件
 //都开启OpenApi页面
 app.UseSwaggerUI();
@@ -256,7 +267,6 @@ app.UseDeveloperExceptionPage();
 app.UseSwagger();
 
 //app.MapHub<XxxHub>("/Hubs/XxxHub");
-
 
 //集成事件
 app.UseEventBus();

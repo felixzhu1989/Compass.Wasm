@@ -30,16 +30,26 @@
     <td>@ProductionPlan.ModelSummary</td>
     <td style="text-align: center">@ProductionPlan.ProductionFinishTime.ToString("MM/dd")</td>
     <td style="text-align: center">@ProductionPlan.DrawingReleaseTarget.ToString("MM/dd")</td>
-    <td style="text-align: center">@(ProductionPlan.DrawingReleaseActual!=null ? ProductionPlan.DrawingReleaseActual.Value.ToString("MM/dd") : "")</td>
+    <td style="text-align: center">
+        <AuthorizeView Roles="admin,pmc">
+            <Authorized>
+                <a href="updatedrawingreleaseactual/@ProductionPlan.Id"><i class="bi bi-gear" /></a>
+            </Authorized>
+        </AuthorizeView>
+        @(ProductionPlan.DrawingReleaseActual != null ? ProductionPlan.DrawingReleaseActual.Value.ToString("MM/dd") : "")
+    </td>
     <td style="text-align: center">@ProductionPlan.ProductionPlanType</td>
-    <td style="text-align: center">@ProductionPlan.Remarks</td>
-
-
-
-
-
-
 </tr>
+
+@if (!string.IsNullOrWhiteSpace(ProductionPlan.Remarks))
+{
+    <tr>
+        <td colspan="10">
+            <span style="color: red">备注：@ProductionPlan.Remarks</span>
+        </td>
+    </tr>
+}
+
 
 @code {
     [Parameter]

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.IdentityService.Infrastructure.Migrations
 {
-    [DbContext(typeof(IdDbContext))]
+    [DbContext(typeof(IdentityDbContext))]
     [Migration("20221025090914_idinit")]
     partial class idinit
     {

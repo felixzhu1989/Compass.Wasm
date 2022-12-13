@@ -1,18 +1,24 @@
 ﻿@page "/productionplanlist"
+@page "/productionplanlist/{Year:int}/{PlanType}"
 @page "/productionplanlist/{Year:int}/{Month:int}/{PlanType}"
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 
 <PageTitle>Production Plan</PageTitle>
-<div class="row position-relative">
-
-    <div class="col input-group mb-2" style="max-width: 230px">
+<div class="row position-relative" style="border: 1px solid lightgray;border-radius: 10px">
+    <div class="col form-check ms-3 my-3" style="max-width: 70px">
+        <input class="form-check-input" type="checkbox" value="@_annual" @onchange="OnAnnualChange">
+        <label class="form-check-label">
+            全年
+        </label>
+    </div>
+    <div class="col input-group mb-2 mt-2" style="max-width: 230px">
         <span class="input-group-text">月份</span>
         <input class="form-control" type="month" value="@(_selectedMonth.ToString("yyyy-MM"))" format="" @onchange="OnMonthChange" />
     </div>
 
-    <div class="col input-group mb-2" style="max-width: 180px">
+    <div class="col input-group mb-2 mt-2" style="max-width: 180px">
         <span class="input-group-text">分类</span>
         <select class="form-select" value="@PlanType" @onchange="OnPlanTypeChange">
             @foreach (var type in Enum.GetNames(typeof(ProductionPlanType)))
@@ -21,14 +27,17 @@
             }
         </select>
     </div>
-    <div class="col">
+    <div class="col my-3">
+        <a href="cycletime/@Year">Cycle Time</a>
         @if (_productionPlans != null)
         {
-            <span class="mx-3">项目数:@_productionPlans.Count</span>
+            <span class="mx-3">Project Qty:@_productionPlans.Count</span>
         }
+        <span class="mx-3">Factory:@_cycleTime.FactoryCycleTime</span>
+        <span class="mx-3">Production:@_cycleTime.ProductionCycleTime</span>
     </div>
     @*todo:控制权限*@
-    <AuthorizeView Roles="admin,pm">
+    <AuthorizeView Roles="admin,pmc">
         <Authorized>
             <div class="col position-absolute bottom-0 end-0" style="text-align: right; width: 10%">
                 <span class="btn btn-outline-danger mb-2" @onclick="ShowAddPlan">@(_isAddDrop ? "收起" : "展开")</span>
@@ -36,7 +45,7 @@
         </Authorized>
     </AuthorizeView>
 </div>
-<hr />
+
 @if (_isAddDrop)
 {
     <AddProductionPlan ProductionPlan="_addProductionPlan" SaveProductionPlan="SaveProductionPlan" />
@@ -49,13 +58,12 @@
             <th style="width: 10%">SQ号</th>
             <th style="width: 11%">ODP号</th>
             <th style="width: 20%">项目名称</th>
-            <th >烟罩数量</th>
-            <th>烟罩型号</th>
+            <th style="width: 5%">数量</th>
+            <th style="width: 20%">型号</th>
             <th style="text-align: center">完工时间</th>
             <th style="text-align: center">计划发图</th>
             <th style="text-align: center">实际发图</th>
-            <th style="text-align: center">项目类型</th>
-            <th >项目备注</th>
+            <th style="width: 7%;text-align: center">类型</th>
         </tr>
     </thead>
     <tbody>
@@ -81,8 +89,9 @@
     [Parameter]
     public string? PlanType { get; set; }
 
+    private bool _annual = false;
 
-
+    private CycleTimeResponse? _cycleTime=new();
     private DateTime _selectedMonth = DateTime.Today;
     private List<ProductionPlanResponse>? _productionPlans = new();
     private AddProductionPlanRequest _addProductionPlan;
@@ -98,8 +107,23 @@
 
     async Task RefreshData()
     {
-        _productionPlans = await Http.GetFromJsonAsync<List<ProductionPlanResponse>>($"api/ProductionPlan/{Year}/{Month}/{PlanType}");
+        if (_annual)
+        {
+            _productionPlans = await Http.GetFromJsonAsync<List<ProductionPlanResponse>>($"api/ProductionPlan/{Year}/{PlanType}");
+            _cycleTime = await Http.GetFromJsonAsync<CycleTimeResponse>($"api/ProductionPlan/CycleTime/{Year}");
+        }
+        else
+        {
+            _productionPlans = await Http.GetFromJsonAsync<List<ProductionPlanResponse>>($"api/ProductionPlan/{Year}/{Month}/{PlanType}");
+            _cycleTime = await Http.GetFromJsonAsync<CycleTimeResponse>($"api/ProductionPlan/CycleTime/{Year}/{Month}");
+        }
         StateHasChanged();
+    }
+
+    async Task OnAnnualChange(ChangeEventArgs e)
+    {
+        _annual =Convert.ToBoolean(e.Value);
+        await RefreshData();
     }
 
     async Task OnMonthChange(ChangeEventArgs e)

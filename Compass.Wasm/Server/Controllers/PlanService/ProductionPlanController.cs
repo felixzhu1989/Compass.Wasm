@@ -5,23 +5,24 @@ using Compass.Wasm.Shared.PlanService;
 using System.ComponentModel.DataAnnotations;
 using Compass.PlanService.Domain.Entities;
 using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Server.PlanService.ProductionPlanEvent;
 
 namespace Compass.Wasm.Server.Controllers.PlanService;
 
 [Route("api/[controller]")]
 [ApiController]
-[UnitOfWork(typeof(PSDbContext))]
+[UnitOfWork(typeof(PlanDbContext))]
 //[Authorize(Roles = "admin,pmc")]
 public class ProductionPlanController : ControllerBase
 {
-    private readonly PSDomainService _domainService;
-    private readonly PSDbContext _dbContext;
-    private readonly IPSRepository _repository;
+    private readonly PlanDomainService _domainService;
+    private readonly PlanDbContext _dbContext;
+    private readonly IPlanRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
-    private readonly IPMRepository _pmRepository;
+    private readonly IProjectRepository _pmRepository;
 
-    public ProductionPlanController(PSDomainService domainService, PSDbContext dbContext, IPSRepository repository, IMapper mapper, IEventBus eventBus, IPMRepository pmRepository)
+    public ProductionPlanController(PlanDomainService domainService, PlanDbContext dbContext, IPlanRepository repository, IMapper mapper, IEventBus eventBus, IProjectRepository pmRepository)
     {
         _domainService = domainService;
         _dbContext = dbContext;
@@ -34,6 +35,11 @@ public class ProductionPlanController : ControllerBase
     public async Task<List<ProductionPlanResponse>> FindByMonthAndClass(int year, int month, ProductionPlanType planType)
     {
         return await _mapper.ProjectTo<ProductionPlanResponse>(await _repository.GetProductionPlansAsync(year, month, planType)).ToListAsync();
+    }
+    [HttpGet("{year}/{planType}")]
+    public async Task<List<ProductionPlanResponse>> FindByYearAndClass(int year, ProductionPlanType planType)
+    {
+        return await _mapper.ProjectTo<ProductionPlanResponse>(await _repository.GetProductionPlansAsync(year, planType)).ToListAsync();
     }
     [HttpGet("Unbind")]
     public async Task<List<ProductionPlanResponse>> FindByUnbindStatus()
@@ -55,6 +61,7 @@ public class ProductionPlanController : ControllerBase
         if (productionPlan == null) return NotFound($"没有Id={id}的ProductionPlan");
         return _mapper.Map<ProductionPlanResponse>(productionPlan);
     }
+
     [HttpGet("ProjectId/{projectId}")]
     public async Task<ActionResult<ProductionPlanResponse?>> FindByProjectId([RequiredGuid] Guid projectId)
     {
@@ -64,29 +71,80 @@ public class ProductionPlanController : ControllerBase
         return _mapper.Map<ProductionPlanResponse>(productionPlan);
     }
 
+    [HttpGet("CycleTime/{year}/{month}")]
+    public async Task<ActionResult<CycleTimeResponse>> GetCycleTimeByMonth(int year, int month)
+    {
+        return await _repository.GetCycleTimeByMonthAsync(year,month);
+    }
+
+    [HttpGet("CycleTime/{year}")]
+    public async Task<ActionResult<CycleTimeResponse>> GetCycleTimeByYear(int year)
+    {
+        return await _repository.GetCycleTimeByYearAsync(year);
+    }
+
+
+
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddProductionPlanRequest request)
     {
         var plan = new ProductionPlan(Guid.NewGuid(), request.OdpReleaseTime, request.SqNumber, request.Name, request.Quantity, request.ModelSummary, request.ProductionFinishTime, request.DrawingReleaseTarget, request.MonthOfInvoice, request.ProductionPlanType, request.Remarks);
         await _dbContext.ProductionPlans.AddAsync(plan);
-        //Todo:是否需要
-        //var eventData = new ProjectCreatedEvent(plan.Id, plan.DeliveryDate);
-        ////发布集成事件
-        //_eventBus.Publish("ProjectService.Project.Created", eventData);
+        //Todo:发出集成事件，绑定潜在的项目
+        var eventData = new ProductionPlanCreatedEvent(plan.Id, plan.Name);
+        //发布集成事件
+        _eventBus.Publish("PlanService.ProductionPlan.Created", eventData);
 
         return plan.Id;
     }
-
-
-
+    
     [HttpPut("BindProject")]
     public async Task<ActionResult> BindProject(ProductionPlanResponse request)
     {
         var prodPlan = await _repository.GetProductionPlanByIdAsync(request.Id);
         if (prodPlan == null) return NotFound($"没有Id={request.Id}的ProductionPlan");
         prodPlan.ChangeProjectId(request.ProjectId);
+        if (request.ProjectId != null)
+        {
+            //发出集成事件
+            var eventData = new BindProjectEvent(request.ProjectId, prodPlan.ProductionFinishTime);
+            _eventBus.Publish("PlanService.ProductionPlan.BindProject", eventData);
+        }
         return Ok();
     }
+    [HttpPut("DrawingReleaseActual")]
+    public async Task<ActionResult> DrawingReleaseActual(ProductionPlanResponse request)
+    {
+        var prodPlan = await _repository.GetProductionPlanByIdAsync(request.Id);
+        if (prodPlan == null) return NotFound($"没有Id={request.Id}的ProductionPlan");
+        prodPlan.ChangeDrawingReleaseActual(request.DrawingReleaseActual);
+        return Ok();
+    }
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Update([RequiredGuid] Guid id, ProductionPlanResponse request)
+    {
+        var prodPlan = await _repository.GetProductionPlanByIdAsync(id);
+        if (prodPlan == null) return NotFound($"没有Id={id}的ProductionPlan");
+
+        prodPlan.ChangeOdpReleaseTime(request.OdpReleaseTime)
+            .ChangeSqNumber(request.SqNumber)
+            .ChangeName(request.Name)
+            .ChangeQuantity(request.Quantity)
+            .ChangeModelSummary(request.ModelSummary)
+            .ChangeProductionFinishTime(request.ProductionFinishTime)
+            .ChangeDrawingReleaseTarget(request.DrawingReleaseTarget)
+            .ChangeMonthOfInvoice(request.MonthOfInvoice)
+            .ChangeProductionPlanType(request.ProductionPlanType)
+            .ChangeRemarks(request.Remarks);
+        if (prodPlan.ProjectId != null)
+        {
+            //发出集成事件
+            var eventData = new BindProjectEvent(prodPlan.ProjectId, prodPlan.ProductionFinishTime);
+            _eventBus.Publish("PlanService.ProductionPlan.BindProject", eventData);
+        }
+        return Ok();
+    }
+
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete([RequiredGuid] Guid id)

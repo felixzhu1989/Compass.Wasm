@@ -88,7 +88,7 @@ public record ProductionPlan : AggregateRootEntity, IAggregateRoot, IHasCreation
         DrawingReleaseTarget = drawingReleaseTarget;
         return this;
     }
-    public ProductionPlan ChangeDrawingMonthOfInvoice(DateTime monthOfInvoice)
+    public ProductionPlan ChangeMonthOfInvoice(DateTime monthOfInvoice)
     {
         MonthOfInvoice = monthOfInvoice;
         return this;
@@ -111,7 +111,7 @@ public record ProductionPlan : AggregateRootEntity, IAggregateRoot, IHasCreation
         ProjectId=projectId;
         return this;
     }
-    public ProductionPlan ChangeDrawingReleaseActual(DateTime drawingReleaseActual)
+    public ProductionPlan ChangeDrawingReleaseActual(DateTime? drawingReleaseActual)
     {
         DrawingReleaseActual = drawingReleaseActual;
         return this;

@@ -14,13 +14,13 @@ public record Tracking : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
 
     //对象初始化时-> 项目进入计划状态（产生该跟踪记录时必填）
     //实际发生时间，进度相关参数
-    public DateTime? DrawingPlanedTime { get; private set; }//制定制图计划的时间->进入制图状态
-    public DateTime? ModuleReleaseTime { get; private set; }//第一台发出生产图纸的时间->进入生产状态
+    //制定制图计划的时间->进入制图状态
+    //第一台发出生产图纸的时间->进入生产状态
     public DateTime? WarehousingTime { get; private set; }//第一台生产完工入库的时间->进入库存状态
-    public DateTime? ShippingTime { get; private set; }//项目第一台真实发货的时间->进入发货状态，用减去WarehousingTime，用户计算成品库存时间
-    public DateTime? ClosedTime { get; private set; }//所有产品都发货了的时间->进入结束状态（是否需要售后状态？）
+    public DateTime? ShippingStartTime { get; private set; }//项目第一台真实发货的时间->进入发货状态，用减去WarehousingTime，用户计算成品库存时间
+    public DateTime? ShippingEndTime { get; private set; }//所有产品都发货了的时间->进入结束状态（是否需要售后状态？）
 
-    public DateTime SortDate { get; init; }
+    public DateTime SortDate { get; private set; }
     //public DateTime DeliveryDate { get; set; }//特征5，不映射到数据库
 
     private Tracking() { }
@@ -35,34 +35,29 @@ public record Tracking : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
         ProjectStatus = projectStatus;
         return this;
     }
+    public Tracking ChangeSortDate(DateTime sortDate)
+    {
+        SortDate = sortDate;
+        return this;
+    }
     public Tracking ChangeProblemNotResolved(bool problemNotResolved)
     {
         ProblemNotResolved = problemNotResolved;
         return this;
     }
-    public Tracking ChangeDrawingPlanedTime(DateTime drawingPlanedTime)
-    {
-        DrawingPlanedTime = drawingPlanedTime;
-        return this;
-    }
-    public Tracking ChangeModuleReleaseTime(DateTime moduleReleaseTime)
-    {
-        ModuleReleaseTime = moduleReleaseTime;
-        return this;
-    }
-    public Tracking ChangeWarehousingTime(DateTime warehousingTime)
+    public Tracking ChangeWarehousingTime(DateTime? warehousingTime)
     {
         WarehousingTime = warehousingTime;
         return this;
     }
-    public Tracking ChangeShippingTime(DateTime shippingTime)
+    public Tracking ChangeShippingStartTime(DateTime? shippingStartTime)
     {
-        ShippingTime = shippingTime;
+        ShippingStartTime = shippingStartTime;
         return this;
     }
-    public Tracking ChangeClosedTime(DateTime closedTime)
+    public Tracking ChangeShippingEndTime(DateTime? shippingEndTime)
     {
-        ClosedTime = closedTime;
+        ShippingEndTime = shippingEndTime;
         return this;
     }
 }

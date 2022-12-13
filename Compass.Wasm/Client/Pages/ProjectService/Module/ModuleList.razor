@@ -133,7 +133,7 @@
             user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{drawing.UserId}");
         }
         var tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{drawing.ProjectId}");
-        isModuleRelease = tracking.ModuleReleaseTime != null;
+        isModuleRelease = tracking.ProjectStatus >ProjectStatus.制图;
     }
     Task<ModuleResponse[]?> RefreshData()
     {

@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Compass.ProjectService.Infrastructure;
 
-public class DesignTimeDbContextFactory:IDesignTimeDbContextFactory<PMDbContext>
+public class DesignTimeDbContextFactory:IDesignTimeDbContextFactory<ProjectDbContext>
 {
-    public PMDbContext CreateDbContext(string[] args)
+    public ProjectDbContext CreateDbContext(string[] args)
     {
-        var optionBuilder = DbContextOptionsBuilderFactory.Create<PMDbContext>();
-        return new PMDbContext(optionBuilder.Options, null);
+        var optionBuilder = DbContextOptionsBuilderFactory.Create<ProjectDbContext>();
+        return new ProjectDbContext(optionBuilder.Options, null);
     }
 }

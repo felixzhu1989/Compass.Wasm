@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.PlanService.Infrastructure.Migrations
 {
-    [DbContext(typeof(PSDbContext))]
+    [DbContext(typeof(PlanDbContext))]
     partial class PSDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

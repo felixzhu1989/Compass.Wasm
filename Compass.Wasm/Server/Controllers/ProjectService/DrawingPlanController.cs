@@ -9,17 +9,17 @@ namespace Compass.Wasm.Server.Controllers.ProjectService;
 
 [Route("api/[controller]")]
 [ApiController]
-[UnitOfWork(typeof(PMDbContext))]
+[UnitOfWork(typeof(ProjectDbContext))]
 //[Authorize(Roles = "admin,pm")]
 public class DrawingPlanController : ControllerBase
 {
-    private readonly PMDomainService _domainService;
-    private readonly PMDbContext _dbContext;
-    private readonly IPMRepository _repository;
+    private readonly ProjectDomainService _domainService;
+    private readonly ProjectDbContext _dbContext;
+    private readonly IProjectRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
 
-    public DrawingPlanController(PMDomainService domainService, PMDbContext dbContext, IPMRepository repository, IMapper mapper, IEventBus eventBus)
+    public DrawingPlanController(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IMapper mapper, IEventBus eventBus)
     {
         _domainService = domainService;
         _dbContext = dbContext;

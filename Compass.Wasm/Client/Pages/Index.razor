@@ -3,6 +3,7 @@
 @page "/search/{SearchText}/{Page:int}"
 @using System.Timers
 @using Compass.Wasm.Client.ProjectServices
+@using Compass.Wasm.Client.Pages.ProjectService.Tracking
 
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
@@ -11,7 +12,9 @@
 @implements IDisposable
 
 <PageTitle>Project Tracking</PageTitle>
-
+<div class="row" style="border: 1px solid lightgray; border-radius: 10px">
+    <SearchTrackings />
+</div>
 <table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
     <thead>
         <tr>
@@ -44,40 +47,100 @@
                     <td style="text-align: center">
                         <span class="badge @(tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus.入库?"bg-success": tracking.ProjectStatus==ProjectStatus.发货?"bg-secondary":"bg-dark")">@tracking.ProjectStatus</span>
                     </td>
-                
-                <td>
-                <a href="./drawinglist/@tracking.Id">@tracking.OdpNumber</a>
-                </td>
-            <td>@tracking.ProjectName</td>
-                @if (tracking.ProductionPlanOk)
-                {
-                    <td style="text-align: center">@tracking.OdpReleaseTime.ToString("MM/dd")</td>
-                    <td style="text-align: center">@tracking.DrawingReleaseTarget.ToString("MM/dd")</td>
-                <td style="text-align: center">@(tracking.DrawingReleaseActual!=null ? tracking.DrawingReleaseActual.Value.ToString("MM/dd") : "")</td>
-                    <td style="text-align: center">@tracking.ProductionFinishTime.ToString("MM/dd")</td>
-                }
-                else
-                {
+
                     <td>
-                    <a href="bindproductionplan/@tracking.Id">绑定计划</a>
+                        <a href="./drawinglist/@tracking.Id">@tracking.OdpNumber</a>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                }
-
-
+                    <td>@tracking.ProjectName</td>
+                    @if (tracking.ProductionPlanOk)
+                    {
+                        <td style="text-align: center">@tracking.OdpReleaseTime.ToString("MM/dd")</td>
+                        <td style="text-align: center;font-weight: bold;
+                                @(tracking.DrawingReleaseTarget<DateTime.Today&&
+                                  tracking.DrawingReleaseActual==null? "color:red":
+                                    tracking.DrawingReleaseTarget<DateTime.Today ?
+                                        "color:green" : "")
+                               ">@tracking.DrawingReleaseTarget.ToString("MM/dd")</td>
+                        <td style="text-align: center">@(tracking.DrawingReleaseActual!=null ? tracking.DrawingReleaseActual.Value.ToString("MM/dd") : "")</td>
+                        <td style="text-align: center; font-weight: bold;
+                               @(tracking.ProductionFinishTime < DateTime.Today
+                                   && tracking.ProjectStatus < ProjectStatus.入库? "color:red" :
+                                   tracking.ProductionFinishTime < DateTime.Today ?
+                                       "color:green" : "")">
+                            @tracking.ProductionFinishTime.ToString("MM/dd")
+                        </td>
+                    }
+                    else
+                    {
+                        <td style="text-align: center">
+                            <a href="bindproductionplan/@tracking.Id">生产计划</a>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    }
+                    <td style="text-align: center">?</td>
+                    <td style="text-align: center">
+                        <AuthorizeView Roles="admin">
+                            <Authorized>
+                                <a href="update/warehousing/@tracking.Id"><i class="bi bi-gear" /></a>
+                            </Authorized>
+                        </AuthorizeView>
+                        @(tracking.WarehousingTime != null ? tracking.WarehousingTime.Value.ToString("MM/dd") : "")
+                    </td>
+                    <td style="text-align: center">
+                        <AuthorizeView Roles="admin">
+                            <Authorized>
+                                <a href="update/shippingstart/@tracking.Id"><i class="bi bi-gear" /></a>
+                            </Authorized>
+                        </AuthorizeView>
+                        @(tracking.ShippingStartTime != null ? tracking.ShippingStartTime.Value.ToString("MM/dd") : "")
+                    </td>
+                    <td style="text-align: center">
+                        <AuthorizeView Roles="admin">
+                            <Authorized>
+                                <a href="update/shippingend/@tracking.Id"><i class="bi bi-gear" /></a>
+                            </Authorized>
+                        </AuthorizeView>
+                        @(tracking.ShippingEndTime != null ? tracking.ShippingEndTime.Value.ToString("MM/dd") : "")
+                    </td>
+                    <td style="text-align: center">
+                        <a href="./reportproblem/@tracking.Id">报告异常</a>
+                    </td>
+                    <td style="text-align: center">
+                        <a href="./reportissue/@tracking.Id">经验教训</a>
+                    </td>
                 </tr>
+                @if (tracking.ProblemNotResolved)
+                {
+                    <tr class="table-danger">
+                        <td colspan="13">
+                            <a href="./reportproblem/@tracking.Id">
+                                <span class="badge bg-danger ms-1 me-1">异常</span>
+                            </a>
+                            <img class="ms-1 me-2" src="andon_red.gif" />
+                            <br />
+                            @if (tracking.Problems != null && tracking.Problems.Count != 0)
+                            {
+                                foreach (var problem in tracking.Problems)
+                                {
+                                    <ShowProblem Problem="@problem" />
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
             }
         }
     </tbody>
 </table>
-@*@if (string.IsNullOrWhiteSpace(SearchText))
+
+@if (SearchText!=null)
 {
     @for (int i = 1; i <= TrackingService.PageCount; i++)
     {
         <a class="btn @(i==TrackingService.CurrentPage?"btn-info":"btn-outline-info")"
-           style="margin-right: 15px;margin-bottom: 30px;"
+   style="margin-right: 15px;margin-bottom: 30px;"
    href="search/@TrackingService.LastSearchText/@i">@i</a>
     }
 }
@@ -86,66 +149,53 @@ else
     @for (int i = 1; i <= TrackingService.PageCount; i++)
     {
         <a class="btn @(i==TrackingService.CurrentPage?"btn-info":"btn-outline-info")"
-           style="margin-right: 15px;margin-bottom: 30px;"
-           href="/@i">@i</a>
-    }  
-}*@
+   style="margin-right: 15px;margin-bottom: 30px;"
+   href="@i">@i</a>
+    }
+}
 
 
 
 @code {
 
     [Parameter]
-    public string SearchText { get; set; } = string.Empty;
+    public string? SearchText { get; set; }
     [Parameter]
     public int Page { get; set; } = 1;
-
-    //public int PageCount { get; set; } = 0;
-    //public string LastSearchText { get; set; } = string.Empty;
-    //private List<TrackingResponse> _trackings = new();
-
 
     private int _pageFlag = 1;
     private Timer _timer;
     protected override void OnInitialized()
     {
         _timer = new Timer();
-        _timer.Interval = 30000;
-        _timer.Elapsed += OnTimeElapsed;//每隔30s钟就会执行一次这个方法
+        _timer.Interval = 60000;
+        _timer.Elapsed += OnTimeElapsed;//每隔1分钟就会执行一次这个方法
         _timer.Enabled = true;
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        await RefreshData();
-    }
-
-    async Task RefreshData()
-    {
         if (Page == 0) Page = 1;
-        await TrackingService.GetTrackingsAsync(Page);
+        if (SearchText != null)
+        {
+            await TrackingService.SearchTrackings(SearchText, Page);
+        }
+        else
+        {
+            await TrackingService.GetTrackingsAsync(Page);
+        }
 
-        //if (string.IsNullOrWhiteSpace(SearchText))
-        //{
-        //    await TrackingService.SearchTrackings(SearchText, Page);
-        //}
-        //else
-        //{
-        //    await TrackingService.GetTrackingsAsync(Page);
-        //}
     }
 
     private void OnTimeElapsed(object? sender, ElapsedEventArgs e)
     {
-    //方式二，直接跳转
-        //if (TrackingService.PageCount > 1)
-        //{
-        //    _pageFlag++;
-        //    if (_pageFlag > TrackingService.PageCount) _pageFlag = 1;
-        //}
-        //NavigationManager.NavigateTo(string.IsNullOrWhiteSpace(SearchText) ? $"{_pageFlag}" : $"search/{TrackingService.LastSearchText}/{_pageFlag}");
-
-        //StateHasChanged();
+        //直接跳转页面
+        if (TrackingService.PageCount > 1)
+        {
+            _pageFlag++;
+            if (_pageFlag > TrackingService.PageCount) _pageFlag = 1;
+        }
+        NavigationManager.NavigateTo(SearchText==null ? $"{_pageFlag}" : $"search/{TrackingService.LastSearchText}/{_pageFlag}");
     }
     public void Dispose()
     {

@@ -1,5 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@using Compass.Wasm.Client.Pages.IdentityService
 <head>
     <link rel="stylesheet" href="lib/bootstrap-icons/font/bootstrap-icons.css" />
 </head>
@@ -10,15 +9,11 @@
 
     <main>
         <div class="top-row px-1">
-            @*<div class="col">
-                <Search/>
-            </div>*@
             <div style="color: green; text-align: right">
-                <a href="https://github.com/felixzhu1989/Compass.Wasm" target="_blank">About</a>
+                <a href="https://github.com/felixzhu1989/Compass.Wasm" target="_blank">关于</a>
                 <LoginLink/>
             </div>
         </div>
-
         <article class="content px-1">
             @Body
         </article>
