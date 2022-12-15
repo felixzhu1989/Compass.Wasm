@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
+using Compass.Wasm.Server.ProjectService.TrackingEvent;
 using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
@@ -93,6 +94,24 @@ public class TrackingController : ControllerBase
         tracking.ChangeWarehousingTime(request.WarehousingTime)
             .ChangeShippingStartTime(request.ShippingStartTime)
             .ChangeShippingEndTime(request.ShippingEndTime);
+        if (request.WarehousingTime != null && request.ShippingStartTime == null && request.ShippingEndTime == null)
+        {
+            //todo:发出集成事件，状态修改为入库
+            var eventData = new WarehousingEvent(request.Id);
+            _eventBus.Publish("ProjectService.Tracking.Warehousing",eventData);
+        }
+        if (request.WarehousingTime != null && request.ShippingStartTime != null && request.ShippingEndTime == null)
+        {
+            //todo:发出集成事件，状态修改为发货
+            var eventData = new ShippingStartEvent(request.Id);
+            _eventBus.Publish("ProjectService.Tracking.ShippingStart", eventData);
+        }
+        if (request.ShippingEndTime != null)
+        {
+            //todo:发出集成事件，状态修改为结束
+            var eventData = new ShippingEndEvent(request.Id);
+            _eventBus.Publish("ProjectService.Tracking.ShippingEnd", eventData);
+        }
         return Ok();
     }
 

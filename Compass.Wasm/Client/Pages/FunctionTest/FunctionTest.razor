@@ -4,11 +4,17 @@
 
 <PageTitle>Function Test</PageTitle>
 <p>
+    <a class="mb-3" href="update/@_category.ModelName/@_module.Id">测试分段数据页面</a>
+</p>
+
+
+
+<p>
     <button @onclick="TriggerPrompt">按需加载JavaScript脚本</button>
 </p>
 <p>@_result</p>
 
-<a href="api/Project/ExportExcel" target="_blank">测试下载文件</a>
+<a class="btn btn-success" href="api/Project/ExportExcel" target="_blank">测试下载文件</a>
 
 <h3>Click Button to download Excel</h3>
 <button @onclick="@(async() => await DownloadFile())">Download</button>
@@ -39,6 +45,15 @@ else if (IsDownloadStarted == 2)
 @code {
     //await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
     //var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
+    private ModuleResponse? _module = new();
+    private CategoryResponse? _category = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var id = "0B4CC771-D029-4838-9004-92A14DC21D7E";
+        _module = await Http.GetFromJsonAsync<ModuleResponse>($"api/Module/{id}");
+        _category = await Http.GetFromJsonAsync<CategoryResponse>($"api/ModelType/Category/{_module.ModelTypeId}");
+    }
+
 
     public int IsDownloadStarted { get; set; } = 0;
     private IJSObjectReference _moduleDownload;
@@ -61,18 +76,18 @@ else if (IsDownloadStarted == 2)
         }
     }
 
-    private IJSObjectReference _module;
+    private IJSObjectReference _jsModule;
     private string _result;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/scripts.js");
+            _jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/scripts.js");
             _moduleDownload = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/download.js");
         }
     }
     private async Task TriggerPrompt()
     {
-        _result=  await _module.InvokeAsync<string>("showPrompt", "输入文字：");
+        _result=  await _jsModule.InvokeAsync<string>("showPrompt", "输入文字：");
     }
 }

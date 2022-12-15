@@ -27,6 +27,7 @@ public interface IProjectRepository
     Task<IQueryable<Module>> GetModulesByDrawingIdAsync(Guid drawingId);
     Task<Module?> GetModuleByIdAsync(Guid id);
     Task<bool> ModuleExistsInDrawing(Guid drawingId);
+    Task<string?> GetDrawingUrlByModuleIdAsync(Guid id);
 
     //DrawingPlan
     Task<PaginationResult<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page);

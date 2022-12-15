@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace Compass.ProjectService.Infrastructure;
 
-public class DesignTimeDbContextFactory:IDesignTimeDbContextFactory<CateDbContext>
+public class DesignTimeDbContextFactory:IDesignTimeDbContextFactory<CategoryDbContext>
 {
-    public CateDbContext CreateDbContext(string[] args)
+    public CategoryDbContext CreateDbContext(string[] args)
     {
-        var optionBuilder = DbContextOptionsBuilderFactory.Create<CateDbContext>();
-        return new CateDbContext(optionBuilder.Options, null);
+        var optionBuilder = DbContextOptionsBuilderFactory.Create<CategoryDbContext>();
+        return new CategoryDbContext(optionBuilder.Options, null);
     }
 }

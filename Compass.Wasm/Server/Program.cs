@@ -156,14 +156,14 @@ builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp")
 
 #region CategoryService
 //数据库，DbContext
-builder.Services.AddDbContext<CateDbContext>(options =>
+builder.Services.AddDbContext<CategoryDbContext>(options =>
 {
     //指定连接的数据库
     var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
     options.UseSqlServer(connStr);
 });
-builder.Services.AddScoped<CateDomainService>();
-builder.Services.AddScoped<ICateRepository, CateRepository>();
+builder.Services.AddScoped<CategoryDomainService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 #endregion
 
 #region ProjectService

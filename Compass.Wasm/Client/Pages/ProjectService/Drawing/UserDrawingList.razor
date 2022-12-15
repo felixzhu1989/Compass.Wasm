@@ -14,7 +14,14 @@
         {
             foreach (var group in drawingsGroup)
             {
-                <DisplayDrawingsGroup ProjectId="group.Key" DrawingResponses="group.Value" />
+                //todo:排序group.Value.Sort(),实现IComparable接口
+                group.Value.Sort();
+                //lambda表达式实现更简单：
+                //group.Value.Sort((x, y) => x.ItemNumber.CompareTo(y.ItemNumber));
+                //OrderBy方法:
+                //var list = group.Value.OrderBy(x => x.ItemNumber).ToList();//升序
+                
+                <DisplayDrawingsGroup ProjectId="group.Key" DrawingResponses="@group.Value" />
             }
         }
     </tbody>

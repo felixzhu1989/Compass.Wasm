@@ -1,0 +1,30 @@
+﻿@inject HttpClient Http
+@if (!string.IsNullOrWhiteSpace(_drawingUrl))
+{
+    if (_isDrawingShow)
+    {
+        <object data="@_drawingUrl" type="application/pdf" width="100%" height="700"></object>
+    }
+    <span class="btn btn-outline-primary mb-2" @onclick="ShowDrawing">@(_isDrawingShow ? "收起图纸" : "显示图纸")</span>
+    <a class="btn btn-primary mb-2" href="@_drawingUrl" target="_blank">在新标签页中显示图纸</a>
+}
+else
+{
+    <span class="text-danger">请在Item中添加图纸</span>
+}
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private string? _drawingUrl = string.Empty;
+    private bool _isDrawingShow;
+    //https://www.cnblogs.com/itjeff/p/12881534.html
+    //在HTML页面中，要嵌入PDF，可以完全不用Javascript代码,使用 <object> 标签
+    protected override async Task OnParametersSetAsync()
+    {
+        _drawingUrl = await Http.GetStringAsync($"api/Module/DrawingUrl/{Id}");
+    }
+    private void ShowDrawing()
+    {
+        _isDrawingShow = !_isDrawingShow;
+    }
+}

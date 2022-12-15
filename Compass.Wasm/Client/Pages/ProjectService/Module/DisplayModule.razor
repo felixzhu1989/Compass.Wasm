@@ -1,81 +1,98 @@
-﻿@inject HttpClient Http
+﻿@using Compass.Wasm.Shared.DataService.Entities
+@inject HttpClient Http
 @inject IJSRuntime JsRuntime
-<p>
-    <div class="row">
-        <div class="col">
-            <AuthorizeView Roles="admin,pm,designer">
-                <Authorized>
-                    <a href="./updatemodule/@Module.Id"><i class="bi bi-gear"/></a>
-                </Authorized>
-            </AuthorizeView>
-            <span style="font-weight: bold">@Module.Name</span>
-            @if (model != null)
-            {
-                <span>（@model.Name-@modelType.Name）</span>
-            }
-        </div>
-        @if (ShowModuleRelease)
+<td>
+    <AuthorizeView Roles="admin,pm,designer">
+        <Authorized>
+            <a class="mx-2" href="./updatemodule/@Module.Id"><i class="bi bi-gear"/></a>
+        </Authorized>
+    </AuthorizeView>
+    @if (_model != null)
+    {
+        @*todo:如果添加了数据，则点击链接进入，否则在旁边点击添加数据*@
+        @if (Module.IsModuleDataOk)
         {
-            <div class="col">
-                @*Todo:控制权限，谁的图纸谁负责下发，否则只能看状态，用disabled属性控制*@
-                <AuthorizeView Roles="admin,pm,designer">
-                    <Authorized>
-                        @if (context.User.Identity!.Name!.Equals(userName))
-                        {
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="@isReleased" @onchange="OnChecked" checked="@isReleased">
-                                <label class="form-check-label">@(isReleased ? "已下发" : "未下发")</label>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" checked="@isReleased" disabled="disabled">
-                                <label class="form-check-label">@(isReleased ? "已下发" : "未下发")</label>
-                            </div>
-                        }
-                    </Authorized>
-                    <NotAuthorized>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" checked="@isReleased" disabled="disabled">
-                            <label class="form-check-label">@(isReleased ? "已下发" : "未下发")</label>
-                        </div>
-                    </NotAuthorized>
-                </AuthorizeView>
-            </div>
+            <a href="update/@_model.Name/@Module.Id">
+                <span style="font-weight: bold">@Module.Name</span>
+                <span>（@_model.Name-@_modelType.Name）</span>
+            </a>
         }
-    </div>
-
+        else
+        {
+            <span style="font-weight: bold">@Module.Name</span>
+            <span>（@_model.Name-@_modelType.Name）</span>
+        }
+        
+    }
     @if (!string.IsNullOrWhiteSpace(Module.SpecialNotes))
     {
         foreach (var note in Module.SpecialNotes.Split('\n'))
         {
-            <span style="color: blue">@note</span><br/>
+            <br />
+            <span class="mx-2" style="color: blue">@note</span>
         }
     }
-</p>
-
+</td>
+<td>
+    @if (Module.IsModuleDataOk)
+    {
+        <span>@_moduleData.Length x @_moduleData.Width x @_moduleData.Height</span>
+    }
+</td>
+<td>
+    @*Todo:控制权限，谁的图纸谁负责下发，否则只能看状态，用disabled属性控制*@
+    <AuthorizeView Roles="admin,pm,designer">
+        <Authorized>
+            @if (context.User.Identity!.Name!.Equals(_userName))
+            {
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" value="@_isReleased" @onchange="OnChecked" checked="@_isReleased">
+                    <label class="form-check-label">@(_isReleased ? "已下发" : "未下发")</label>
+                </div>
+            }
+            else
+            {
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" checked="@_isReleased" disabled="disabled">
+                    <label class="form-check-label">@(_isReleased ? "已下发" : "未下发")</label>
+                </div>
+            }
+        </Authorized>
+        <NotAuthorized>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" checked="@_isReleased" disabled="disabled">
+                <label class="form-check-label">@(_isReleased ? "已下发" : "未下发")</label>
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
+</td>
 @code {
     [Parameter]
     public ModuleResponse Module { get; set; }
     [Parameter]
     public bool ShowModuleRelease { get; set; }
 
-    private ModelResponse? model;
-    private ModelTypeResponse? modelType;
-    private string userName="";
-    bool isReleased;
+    private ModelResponse? _model=new();
+    private ModelTypeResponse? _modelType=new();
+    private string _userName=string.Empty;
+    bool _isReleased;
+    private ModuleData? _moduleData = new();
     protected override async Task OnInitializedAsync()
     {
-        modelType = await Http.GetFromJsonAsync<ModelTypeResponse>($"api/ModelType/{Module.ModelTypeId}");
-        model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{modelType.ModelId}");
-        isReleased = Module.IsReleased;
-        userName = await Http.GetStringAsync($"api/Drawing/UserName/{Module.DrawingId}");
+        _modelType = await Http.GetFromJsonAsync<ModelTypeResponse>($"api/ModelType/{Module.ModelTypeId}");
+        _model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{_modelType.ModelId}");
+        _isReleased = Module.IsReleased;
+        _userName = await Http.GetStringAsync($"api/Drawing/UserName/{Module.DrawingId}");
+        if (Module.IsModuleDataOk)
+        {
+            _moduleData = await Http.GetFromJsonAsync<ModuleData>($"api/Data/{Module.Id}");
+            if (_moduleData!=null) _moduleData.ChangeId(Module.Id);
+        }
     }
 
     private async Task OnChecked(ChangeEventArgs args){
-        isReleased=Convert.ToBoolean(args.Value);
-        await Http.PutAsync($"api/Module/Release/{Module.Id}?isReleased={isReleased}", null);
+        _isReleased=Convert.ToBoolean(args.Value);
+        await Http.PutAsync($"api/Module/Release/{Module.Id}?isReleased={_isReleased}", null);
         StateHasChanged();
     }
 

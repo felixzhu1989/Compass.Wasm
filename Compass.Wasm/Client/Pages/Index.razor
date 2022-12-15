@@ -83,7 +83,7 @@
                     <td style="text-align: center">
                         <AuthorizeView Roles="admin">
                             <Authorized>
-                                <a href="update/warehousing/@tracking.Id"><i class="bi bi-gear" /></a>
+                                <a href="updatedate/warehousing/@tracking.Id"><i class="bi bi-gear" /></a>
                             </Authorized>
                         </AuthorizeView>
                         @(tracking.WarehousingTime != null ? tracking.WarehousingTime.Value.ToString("MM/dd") : "")
@@ -91,7 +91,7 @@
                     <td style="text-align: center">
                         <AuthorizeView Roles="admin">
                             <Authorized>
-                                <a href="update/shippingstart/@tracking.Id"><i class="bi bi-gear" /></a>
+                                <a href="updatedate/shippingstart/@tracking.Id"><i class="bi bi-gear" /></a>
                             </Authorized>
                         </AuthorizeView>
                         @(tracking.ShippingStartTime != null ? tracking.ShippingStartTime.Value.ToString("MM/dd") : "")
@@ -99,7 +99,7 @@
                     <td style="text-align: center">
                         <AuthorizeView Roles="admin">
                             <Authorized>
-                                <a href="update/shippingend/@tracking.Id"><i class="bi bi-gear" /></a>
+                                <a href="updatedate/shippingend/@tracking.Id"><i class="bi bi-gear" /></a>
                             </Authorized>
                         </AuthorizeView>
                         @(tracking.ShippingEndTime != null ? tracking.ShippingEndTime.Value.ToString("MM/dd") : "")

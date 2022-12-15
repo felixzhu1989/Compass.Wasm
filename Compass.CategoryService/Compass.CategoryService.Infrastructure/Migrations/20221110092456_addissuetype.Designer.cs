@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.CategoryService.Infrastructure.Migrations
 {
-    [DbContext(typeof(CateDbContext))]
+    [DbContext(typeof(CategoryDbContext))]
     [Migration("20221110092456_addissuetype")]
     partial class addissuetype
     {

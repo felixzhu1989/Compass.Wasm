@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col input-group mb-2" style="width: 100px">
         <span class="input-group-text">①事业部</span>
-        <select class="form-select" value="@_categoryResponse.Sbu" @onchange="OnSbuChange">
+        <select class="form-select" value="@_category.Sbu" @onchange="OnSbuChange">
             @foreach (var sbu in Enum.GetNames(typeof(Sbu)))
             {
                 <option>@sbu</option>
@@ -12,7 +12,7 @@
     </div>
     <div class="col input-group mb-2">
         <span class="input-group-text">②产品</span>
-        <select class="form-select" value="@_categoryResponse.ProductId" @onchange="OnProductChange">
+        <select class="form-select" value="@_category.ProductId" @onchange="OnProductChange">
             @if (_products !=null)
             {
                 foreach (var product in _products)
@@ -24,7 +24,7 @@
     </div>
     <div class="col input-group mb-2">
         <span class="input-group-text">③模型</span>
-        <select class="form-select" value="@_categoryResponse.ModelId" @onchange="OnModelChange">
+        <select class="form-select" value="@_category.ModelId" @onchange="OnModelChange">
             @if (_models !=null)
             {
                 foreach (var model in _models)
@@ -49,7 +49,7 @@
         </select>
     </div>
 
-    <div class="col"><span class="input-group-text">@_categoryResponse.Description</span></div>
+    <div class="col"><span class="input-group-text">@_category.Description (@_category.Length,@_category.Width,@_category.Height)</span></div>
 </div>
 
 @code {
@@ -61,17 +61,17 @@
     private List<ProductResponse>? _products;
     private List<ModelResponse>? _models;
     private List<ModelTypeResponse>? _modelTypes;
-    private CategoryResponse? _categoryResponse=new();
+    private CategoryResponse? _category=new();
 
     protected override async Task OnInitializedAsync()
     {
         if (ModelTypeId!=null)
         {
-            _categoryResponse = await Http.GetFromJsonAsync<CategoryResponse>($"api/ModelType/Category/{ModelTypeId}");
+            _category = await Http.GetFromJsonAsync<CategoryResponse>($"api/ModelType/Category/{ModelTypeId}");
             //todo:此时product变更了，没有引起ModelType列表更新（一连串的变更），解决办法，先查询列表再赋值更新
-            await GetProducts(_categoryResponse!.Sbu);
-            await GetModels(_categoryResponse.ProductId.ToString());
-            await GetModelTypes(_categoryResponse.ModelId.ToString());
+            await GetProducts(_category!.Sbu);
+            await GetModels(_category.ProductId.ToString());
+            await GetModelTypes(_category.ModelId.ToString());
 
             await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
         }
@@ -91,7 +91,11 @@
             && _modelTypes != null && _modelTypes.Count != 0)
         {
             ModelTypeId =_modelTypes.First().Id.ToString();
-            _categoryResponse!.Description = _modelTypes.First().Description;
+            var modelType = _modelTypes.First();
+            _category!.Description = modelType.Description;
+            _category!.Length = modelType.Length;
+            _category!.Width = modelType.Width;
+            _category!.Height = modelType.Height;
             await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
         }
     }
@@ -139,7 +143,11 @@
     async Task OnModelTypeChange(ChangeEventArgs e)
     {
         ModelTypeId =e.Value!.ToString()!;
-        _categoryResponse!.Description = _modelTypes!.Find(x => x.Id.Equals(Guid.Parse(e.Value.ToString()!)))?.Description!;
+        var modelType = _modelTypes!.Find(x => x.Id.Equals(Guid.Parse(e.Value.ToString()!)));
+        _category!.Description = modelType!.Description;
+        _category!.Length = modelType.Length;
+        _category!.Width = modelType.Width;
+        _category!.Height = modelType.Height;
         await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
     }
 }

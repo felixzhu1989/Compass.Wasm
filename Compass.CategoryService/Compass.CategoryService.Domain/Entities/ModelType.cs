@@ -8,16 +8,21 @@ public record ModelType : AggregateRootEntity, IAggregateRoot, IHasCreationTime,
     public Guid ModelId { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
-
+    public double Length { get; private set; }
+    public double Width { get; private set; }
+    public double Height { get; private set; }
     private ModelType() { }
 
-    public ModelType(Guid id, Guid modelId, int sequenceNumber, string name,string description)
+    public ModelType(Guid id, Guid modelId, int sequenceNumber, string name,string description,double length,double width,double height)
     {
         Id = id;
         ModelId = modelId;
         SequenceNumber = sequenceNumber;
         Name = name;
         Description = description;
+        Length=length;
+        Width=width;
+        Height=height;
     }
     public ModelType ChangeSequenceNumber(int sequenceNumber)
     {
@@ -32,6 +37,21 @@ public record ModelType : AggregateRootEntity, IAggregateRoot, IHasCreationTime,
     public ModelType ChangeDescription(string description)
     {
         Description=description;
+        return this;
+    }
+    public ModelType ChangeLength(double length)
+    {
+        Length=length;
+        return this;
+    }
+    public ModelType ChangeWidth(double width)
+    {
+        Width=width;
+        return this;
+    }
+    public ModelType ChangeHeight(double height)
+    {
+        Height=height;
         return this;
     }
 }

@@ -9,6 +9,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public string Name { get; private set; }
     public string? SpecialNotes { get;private set; }
     public bool IsReleased { get; private set; }//图纸是否已经下发
+    public bool IsModuleDataOk { get;private set; }//是否添加了图纸参数
 
     private Module() { }
     public Module(Guid id,Guid drawingId,Guid modelTypeId, string name,string? specialNotes)
@@ -37,6 +38,11 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public Module ChangeIsReleased(bool isReleased)
     {
         IsReleased = isReleased;
+        return this;
+    }
+    public Module ChangeIsModuleDataOk(bool isModuleDataOk)
+    {
+        IsModuleDataOk = isModuleDataOk;
         return this;
     }
 }

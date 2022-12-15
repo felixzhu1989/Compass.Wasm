@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Compass.CategoryService.Infrastructure.Migrations
 {
-    [DbContext(typeof(CateDbContext))]
+    [DbContext(typeof(CategoryDbContext))]
     [Migration("20221101082629_init")]
     partial class init
     {

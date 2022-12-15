@@ -74,17 +74,10 @@
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
     <thead>
         <tr>
-            <th style="width: 35%">
-                <div class="row">
-                    <div class="col">
-                        分段明细
-                    </div>
-                    <div class="col">
-                        发图状态
-                    </div>
-                </div>
-            </th>
-            <th>详细参数</th>
+            <th >分段明细</th>
+            <th >尺寸</th>
+            <th >发图状态</th>
+            <th style="width: 60%">详细参数</th>
         </tr>
     </thead>
     <tbody>
@@ -101,8 +94,17 @@
             @foreach (var module in modules)
             {
                 <tr>
-                    <td><DisplayModule Module="module" ShowModuleRelease="isModuleRelease" /></td>
-                    <td>...</td>
+                    <DisplayModule Module="module" ShowModuleRelease="isModuleRelease" />
+                    <td>
+                        @if (module.IsModuleDataOk)
+                        {
+                            <DisplayModuleData Id="@module.Id"/>
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </td>
                 </tr>
             }
         }
@@ -154,8 +156,12 @@
             return;
         }
         //isAddDrop = false; //收起添加
-        var result = await Http.PostAsJsonAsync("api/Module/Add", addModuleRequest);
-        if (result.IsSuccessStatusCode) modules = await RefreshData();
+        var result = await Http.PostAsJsonAsync("api/Module/Add", request);
+        if (result.IsSuccessStatusCode)
+        {
+            modules = await RefreshData();
+            await JsRuntime.InvokeVoidAsync("alert", $"{request.Name}添加成功");
+        }
     }
 
 

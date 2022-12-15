@@ -6,15 +6,15 @@ namespace Compass.Wasm.Server.Controllers.CategoryService;
 
 [Route("api/[controller]")]
 [ApiController]
-[UnitOfWork(typeof(CateDbContext))]
+[UnitOfWork(typeof(CategoryDbContext))]
 //[Authorize(Roles = "admin,pm,designer")]
 public class ModelTypeController : ControllerBase
 {
-    private readonly CateDomainService _domainService;
-    private readonly CateDbContext _dbContext;
-    private readonly ICateRepository _repository;
+    private readonly CategoryDomainService _domainService;
+    private readonly CategoryDbContext _dbContext;
+    private readonly ICategoryRepository _repository;
     private readonly IMapper _mapper;
-    public ModelTypeController(CateDomainService domainService, CateDbContext dbContext, ICateRepository repository, IMapper mapper)
+    public ModelTypeController(CategoryDomainService domainService, CategoryDbContext dbContext, ICategoryRepository repository, IMapper mapper)
     {
         _domainService = domainService;
         _dbContext = dbContext;
@@ -42,13 +42,25 @@ public class ModelTypeController : ControllerBase
         if (modelType == null) return NotFound($"没有Id={id}的ModelType");
         var model = await _repository.GetModelByIdAsync(modelType.ModelId);
         var product = await _repository.GetProductByIdAsync(model.ProductId);
-        return new CategoryResponse { Sbu = product.Sbu, ProductId = product.Id, ModelId = model.Id ,Description = modelType.Description};
+        return new CategoryResponse
+        {
+            Sbu = product.Sbu,
+            ProductId = product.Id,
+            ModelId = model.Id,
+            ModelTypeId = id,
+            ModelName = model.Name,
+            ModelTypeName = modelType.Name,
+            Description = modelType.Description,
+            Length = modelType.Length,
+            Width = modelType.Width,
+            Height = modelType.Height
+        };
     }
 
     [HttpPost]
     public async Task<ActionResult<Guid>> Add(AddModelTypeRequest request)
     {
-        ModelType modelType = await _domainService.AddModelTypeAsync(request.ModelId, request.Name,request.Description);
+        ModelType modelType = await _domainService.AddModelTypeAsync(request.ModelId, request.Name, request.Description, request.Length, request.Width, request.Height);
         await _dbContext.ModelTypes.AddAsync(modelType);
         return modelType.Id;
     }
@@ -57,7 +69,8 @@ public class ModelTypeController : ControllerBase
     {
         var modelType = await _repository.GetModelTypeByIdAsync(id);
         if (modelType == null) return NotFound($"没有Id={id}的ModelType");
-        modelType.ChangeName(request.Name).ChangeDescription(request.Description);
+        modelType.ChangeName(request.Name).ChangeDescription(request.Description)
+            .ChangeLength(request.Length).ChangeWidth(request.Width).ChangeHeight(request.Height);
         return Ok();
     }
     [HttpDelete("{id}")]

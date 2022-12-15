@@ -3,10 +3,25 @@
 
 <EditForm Model="Module" OnSubmit="Save">
     <CategoryChoose @bind-ModelTypeId="ModelTypeId" />
-
-    <div class="input-group mb-2">
-        <span class="input-group-text">分段编号</span>
-        <input class="form-control" placeholder="M1,M2...B01,CJ01..." @bind-value="@Module.Name"/>
+    <hr/>
+    <div class="row">
+        <div class="col input-group mb-2">
+            <span class="input-group-text">分段编号</span>
+            <input class="form-control" placeholder="M1,M2...B01,CJ01..." @bind-value="@Module.Name"/>
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">①长度</span>
+            <input class="form-control" type="number" placeholder="烟罩长度" @bind-value="@Module.Length"/>
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">②宽度</span>
+            <input class="form-control" type="number" placeholder="烟罩宽度" @bind-value="@Module.Width"/>
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">③高度</span>
+            <input class="form-control" type="number" placeholder="烟罩高度" @bind-value="@Module.Height"/>
+        </div>
+        <div class="col"><span class="input-group-text">只填变化尺寸，标准尺寸不填</span></div>
     </div>
 
     <div class="input-group mb-2">

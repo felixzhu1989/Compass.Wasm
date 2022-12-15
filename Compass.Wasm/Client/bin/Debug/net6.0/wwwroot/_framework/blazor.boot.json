@@ -15,6 +15,8 @@
       "Azure.Identity.dll": "sha256-3I+KiqSx+vChzrz8oSO5j2hbj7gSL1YGcIsSOkurkYI=",
       "Blazored.LocalStorage.dll": "sha256-Jq\/dS58mO5wtL2d0x\/FeAdDZ1bUTpTzPODJpBZUre\/4=",
       "FluentValidation.dll": "sha256-gjc+GD0VRKiSN0bg6bll5SWpWfd7EILjgbqMFwk\/slA=",
+      "MediatR.dll": "sha256-5JP3MguhkAHQ+bz8WyGxc8bqkRX2InbWKVplJEsFzGQ=",
+      "MediatR.Contracts.dll": "sha256-jbWZnge7bolAMw8ppWQLC7bKPAY6DjkJn2ezN9OXafU=",
       "Microsoft.AspNetCore.Authorization.dll": "sha256-gbA+AujHUUBawZgIGQVo3vLdHlkaD7QLRM0dStUecSM=",
       "Microsoft.AspNetCore.Components.dll": "sha256-+gNaJML9x0hS\/cLcBimAURDK\/S8nSWJZkTCaP5lgRys=",
       "Microsoft.AspNetCore.Components.Authorization.dll": "sha256-9+8\/yERgTpi3ZfI6AAGlVvAMp+l67mW6GLhfzVwz7KY=",
@@ -24,10 +26,10 @@
       "Microsoft.AspNetCore.Metadata.dll": "sha256-\/8AsKpzt2ePKd\/B1\/dolnQ2PeDqEV+rYUcJOnL4\/PXE=",
       "Microsoft.Bcl.AsyncInterfaces.dll": "sha256-EcDo\/GQZkQrOT1Xd0jMPE3NwT5lsMq5DNsPxHVidLDQ=",
       "Microsoft.Data.SqlClient.dll": "sha256-PGg6gVwXx1Y63UlgP63wJyiehXdRScm2RIyuoMMkUYE=",
-      "Microsoft.EntityFrameworkCore.dll": "sha256-fkB0k4ufcfowVFOPu44Q5vIgndrRW59pKZEwCgkVvBE=",
-      "Microsoft.EntityFrameworkCore.Abstractions.dll": "sha256-ki3HFT2MaMyFEpujQHD8LVuUNXYs+YaeJN+0Gr+Z0kY=",
-      "Microsoft.EntityFrameworkCore.Relational.dll": "sha256-rYh1dfpwtMLvmtKSqlJKBXHbScSem78+I9lRNY5k+qY=",
-      "Microsoft.EntityFrameworkCore.SqlServer.dll": "sha256-J89F5UafxNQusWR64z0JOQ0ahPTftMXKzEwzlrequg8=",
+      "Microsoft.EntityFrameworkCore.dll": "sha256-2bye6kmJdKdsaD5VUxKxEhQJjzaC62yw3BYWUvNZB6o=",
+      "Microsoft.EntityFrameworkCore.Abstractions.dll": "sha256-jo+5cE6q2d5qobTsn6oA+DqRZ+PcU0i\/BrUvb856Ckc=",
+      "Microsoft.EntityFrameworkCore.Relational.dll": "sha256-4WtNSgPPCPNtkxQ0XTsirCA5KsjfDwkePGl83PIDsCY=",
+      "Microsoft.EntityFrameworkCore.SqlServer.dll": "sha256-Gu1C+JWV0kRHlvh75Pqi187wRe2mIp3o72jxI54Krs8=",
       "Microsoft.Extensions.Caching.Abstractions.dll": "sha256-wAT3jZ+DeMX3msOojpBiWhF7lwCnX18CJmKJ3U0o5FE=",
       "Microsoft.Extensions.Caching.Memory.dll": "sha256-nvEfC1lNW+djQcplpTvzkwqoB8MSoniuIgQ9z025ziU=",
       "Microsoft.Extensions.Configuration.dll": "sha256-c8yYhfrOBLEnOBglLTu9peXSbJDwFpuT4UQiXSv28Og=",
@@ -66,6 +68,7 @@
       "System.Security.Permissions.dll": "sha256-AW\/sG8Kc4uNCDcvJW3C4knYf5kBPjdRR8bV5mb8A4pg=",
       "System.Windows.Extensions.dll": "sha256-BbG3Acl8iXmfE3LuNvbKYS6X2odUBKq\/rEdnj+dGEos=",
       "Zack.Commons.dll": "sha256-CQ17+2GiGUjp72ai4NmOBPdDk\/dI+HmhFG432ipyTo8=",
+      "Zack.DomainCommons.dll": "sha256-65sL11PP5KNxb1WqFSk7CZNIOmUYPg7WyeaE3P8NvI8=",
       "Microsoft.CSharp.dll": "sha256-adCs59jXuFGmtyjMTyWaNaa2vMMxs8lP4OPdOktevIM=",
       "Microsoft.VisualBasic.Core.dll": "sha256-jskDMBxgkm7uy2i\/WTbKbCMF8OjxJ5oddbfJJoN6Pvo=",
       "Microsoft.VisualBasic.dll": "sha256-lfQlpb42VjujEtG3HVoN9H31CjedNMytpYZlowc+CCc=",
@@ -232,15 +235,15 @@
       "mscorlib.dll": "sha256-SboUbkX8s5RVQGtnN5Q67MBZW0I\/P3aeEMENJq8gv8M=",
       "netstandard.dll": "sha256-lZ8L5iiSghlvyt2ie2YdBYAtJbVa4mvpvBX3W9ihjLc=",
       "System.Private.CoreLib.dll": "sha256-jECkJy2Sjpl59QEL3nO3p8nwKGXvnJpXaKQF\/+MTw04=",
-      "Compass.Wasm.Shared.dll": "sha256-gfyqmhyHehRvBvCIaVEj\/WPDJu1LCOS9hsvd52FpIPI=",
-      "Compass.Wasm.Client.dll": "sha256-eQxCeUlY93EV45WoNM3pW0xFpgH3y80GYb4fxaocxUs="
+      "Compass.Wasm.Shared.dll": "sha256-5tDqymZqlZDOh3xg1yjAjpXKCX8d1eEnaMADkpAhB\/4=",
+      "Compass.Wasm.Client.dll": "sha256-IsJB+xpCAjnPWd8lh7cmNAYlwqjfxkt68BrcWAAZb3E="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "Compass.Wasm.Shared.pdb": "sha256-yJScHk6IG\/rmpjUZ2MengLodmwYOqzHMaojbuQUDL7A=",
-      "Compass.Wasm.Client.pdb": "sha256-xRryqDx1pGoB+3241qYmxqlG1zasJT5xfkW6k9hn2zc="
+      "Compass.Wasm.Shared.pdb": "sha256-5A\/FB22sDeWM7XCV3fu08ZnRFtdb4vaiVmGkidRd7IE=",
+      "Compass.Wasm.Client.pdb": "sha256-d\/W5uP6e4zbgQXmd389EtExAPC\/3IbNVrocuIO9RVF0="
     },
     "runtime": {
       "dotnet.6.0.10.km7e80ppcz.js": "sha256-KtM3Wrooexmrt5NmqvZfWoDPtNIe6wZqLopR6ToqUPg=",

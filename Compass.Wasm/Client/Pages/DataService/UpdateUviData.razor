@@ -1,0 +1,29 @@
+﻿@page "/update/uvi/{Id}"
+@using Compass.Wasm.Shared.DataService.Entities
+@inject HttpClient Http
+@if (_uviData != null)
+{
+    <ShowPdfDrawings Id="@Id"/>
+    <p>@_uviData.ToString()</p>
+    <EditForm Model="_uviData" OnSubmit="Save">
+        
+        
+
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private UviData? _uviData;
+    protected override async Task OnParametersSetAsync()
+    {
+        _uviData = await Http.GetFromJsonAsync<UviData>($"api/Data/{Id}");
+        if(_uviData!=null) _uviData.ChangeId(Guid.Parse(Id));
+    }
+
+    async Task Save()
+    {
+
+    }
+}

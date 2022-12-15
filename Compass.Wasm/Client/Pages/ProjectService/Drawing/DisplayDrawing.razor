@@ -37,13 +37,21 @@
         </div>
     </td>
     <td>
-        @if (modules != null && modules.Length != 0)
-        {
-            foreach (var module in modules)
-            {
-                <DisplayModule Module="module" ShowModuleRelease="ShowModuleRelease" />
-            }
-        }
+        <table class="table table-hover " style="table-layout: fixed; word-break: break-all;">
+            <tbody>
+
+                @if (modules != null && modules.Length != 0)
+                {
+
+                    foreach (var module in modules)
+                    {
+                        <tr>
+                            <DisplayModule Module="module" ShowModuleRelease="ShowModuleRelease" />
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
     </td>
 </tr>
 

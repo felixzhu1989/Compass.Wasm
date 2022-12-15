@@ -176,3 +176,10 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.Data
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.PlanService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.DataService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.PlanService.Domain.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\ClosedXML.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\DocumentFormat.OpenXml.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\ExcelNumberFormat.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Irony.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\SixLabors.Fonts.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\System.IO.Packaging.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\XLParser.dll

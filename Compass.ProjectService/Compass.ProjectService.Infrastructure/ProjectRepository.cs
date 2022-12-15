@@ -103,7 +103,13 @@ public class ProjectRepository : IProjectRepository
     {
         return _context.Modules.AnyAsync(x => x.DrawingId.Equals(drawingId));
     }
-   
+
+    public async Task<string?> GetDrawingUrlByModuleIdAsync(Guid id)
+    {
+        var module =await GetModuleByIdAsync(id);
+        var drawing = await GetDrawingByIdAsync(module.DrawingId);
+        return drawing.DrawingUrl;
+    }
 
     #endregion
 

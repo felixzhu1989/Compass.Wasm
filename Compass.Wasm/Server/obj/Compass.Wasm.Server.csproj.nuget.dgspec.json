@@ -42,16 +42,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "Zack.Commons": {
-              "target": "Package",
-              "version": "[1.1.11, )"
-            },
-            "Zack.DomainCommons": {
-              "target": "Package",
-              "version": "[1.1.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -115,11 +105,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Zack.Infrastructure": {
               "target": "Package",
@@ -184,12 +174,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "Zack.DomainCommons": {
-              "target": "Package",
-              "version": "[1.1.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -251,13 +235,13 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Zack.Infrastructure": {
               "target": "Package",
@@ -306,7 +290,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -318,16 +306,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "Zack.Commons": {
-              "target": "Package",
-              "version": "[1.1.11, )"
-            },
-            "Zack.DomainCommons": {
-              "target": "Package",
-              "version": "[1.1.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -394,11 +372,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Zack.Infrastructure": {
               "target": "Package",
@@ -467,10 +445,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Zack.DomainCommons": {
-              "target": "Package",
-              "version": "[1.1.3, )"
-            },
             "Zack.JWT": {
               "target": "Package",
               "version": "[1.0.1, )"
@@ -547,11 +521,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Zack.Infrastructure": {
               "target": "Package",
@@ -616,12 +590,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "zack.domaincommons": {
-              "target": "Package",
-              "version": "[1.1.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -685,11 +653,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Zack.Infrastructure": {
               "target": "Package",
@@ -754,12 +722,6 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "dependencies": {
-            "Zack.DomainCommons": {
-              "target": "Package",
-              "version": "[1.1.3, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -823,11 +785,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Zack.Infrastructure": {
               "target": "Package",
@@ -1026,7 +988,7 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
@@ -1113,7 +1075,11 @@
           "dependencies": {
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[7.0.1, )"
+            },
+            "zack.DomainCommons": {
+              "target": "Package",
+              "version": "[1.1.3, )"
             },
             "zack.commons": {
               "target": "Package",

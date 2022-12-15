@@ -5,6 +5,6 @@
     {
       "library": "bootstrap-icons@1.9.1",
       "destination": "wwwroot/lib/bootstrap-icons/"
-    }
+    }    
   ]
 }

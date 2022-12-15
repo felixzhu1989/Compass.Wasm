@@ -42,6 +42,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcnlTZXJ2aWNlXFByb2R1Y3RDYXJkcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/DataService/UpdateUviData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVNlcnZpY2VcVXBkYXRlVXZpRGF0YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/FileService/FileLinkWithDelete.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmlsZVNlcnZpY2VcRmlsZUxpbmtXaXRoRGVsZXRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -168,6 +172,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/Module/DisplayModule.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcTW9kdWxlXERpc3BsYXlNb2R1bGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/Module/DisplayModuleData.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvamVjdFNlcnZpY2VcTW9kdWxlXERpc3BsYXlNb2R1bGVEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/ProjectService/Module/ModuleList.razor]

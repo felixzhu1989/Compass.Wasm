@@ -1,4 +1,4 @@
-﻿using Compass.DataService.Domain.Entities;
+﻿using Compass.Wasm.Shared.DataService.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Zack.Infrastructure.EFCore;
@@ -9,21 +9,26 @@ public class DataDbContext : BaseDbContext
 {
 
     /* https://learn.microsoft.com/zh-cn/ef/core/modeling/inheritance
+     * https://www.cnblogs.com/dotnet261010/p/8018266.html
      * EF 可以将 .NET 类型层次结构映射到数据库。
      * 这允许你像往常一样使用基类型和派生类型在代码中编写 .NET 实体，
      * 并让 EF 无缝创建适当的数据库架构、发出查询等。
+     * Table per Class Hierarchy(TPH)继承
      * 共享列
      * 默认情况下，当层次结构中的两个同级实体类型具有同名的属性时，它们将映射到两个单独的列。 
      * 但是，如果它们的类型相同，则可以映射到相同的数据库列
      * modelBuilder.Entity<Blog>().Property(b => b.Url).HasColumnName("Url"); 
      * 可以通过foreach批量配置：property.SetColumnName(property.Name);
      */
-    public virtual DbSet<ModuleData> ModulesData { get; set; }
+    public DbSet<ModuleData> ModulesData { get; set; }
+
     public DbSet<KvfData> KvfData { get; set; }
     public DbSet<KviData> KviData { get; set; }
     public DbSet<UvfData> UvfData { get; set; }
     public DbSet<UviData> UviData { get; set; }
     
+   
+
     public DataDbContext(DbContextOptions<DataDbContext> options, IMediator? mediator) : base(options, mediator)
     {
     }
