@@ -201,7 +201,7 @@ public class ProjectRepository : IProjectRepository
     #region Tracking
     public async Task<PaginationResult<IQueryable<Tracking>>> GetTrackingsAsync(int page)
     {
-        var pageResults = 10f;//默认一页显示数据条数
+        var pageResults = 15f;//默认一页显示数据条数
         var pageCount = Math.Ceiling(_context.Trackings.Count() / pageResults);//计算页总数
         return new PaginationResult<IQueryable<Tracking>>
         {

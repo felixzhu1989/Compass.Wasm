@@ -81,6 +81,7 @@ builder.Services.AddEventBus("Compass.Wasm", Assembly.GetExecutingAssembly());
 //redis-cli
 //ping
 //keys *
+//访问http://127.0.0.1:15672/#/
 //配置Redis的服务器，分布式缓存
 string redisConnStr = builder.Configuration.GetValue<string>("Redis:ConnStr");
 IConnectionMultiplexer redisConnMultiplexer = ConnectionMultiplexer.Connect(redisConnStr);
