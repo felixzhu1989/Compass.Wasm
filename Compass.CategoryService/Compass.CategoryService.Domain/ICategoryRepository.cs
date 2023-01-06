@@ -10,6 +10,7 @@ public interface ICategoryRepository
     Task<Product?> GetProductByIdAsync(Guid id);
     Task<IQueryable<Product>> GetProductsAsync(Sbu sbu);
     Task<int> GetMaxSeqOfProductsAsync(Sbu sbu);//获取最大序号
+
     Task<Model?> GetModelByIdAsync(Guid id);
     Task<IQueryable<Model>> GetModelsByProductIdAsync(Guid productId);
     Task<int> GetMaxSeqOfModelsAsync(Guid productId);

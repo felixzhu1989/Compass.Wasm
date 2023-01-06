@@ -33,6 +33,9 @@ public class CategoryDomainService
             seqNum++;
         }
     }
+
+
+
     public async Task<Model> AddModelAsync(Guid productId, string name,double workload)
     {
         int maxSeq = await _repository.GetMaxSeqOfModelsAsync(productId);

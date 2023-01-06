@@ -10,6 +10,12 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public string? SpecialNotes { get;private set; }
     public bool IsReleased { get; private set; }//图纸是否已经下发
     public bool IsModuleDataOk { get;private set; }//是否添加了图纸参数
+    //报检
+
+    //检验
+
+
+
 
     private Module() { }
     public Module(Guid id,Guid drawingId,Guid modelTypeId, string name,string? specialNotes)

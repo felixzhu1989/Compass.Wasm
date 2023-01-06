@@ -63,7 +63,7 @@
                 @*Todo:风险值=概率*影响，概率影响矩阵*@
                 <button class="btn btn-warning" type="button">风险评级</button>
             </div>
-            
+
             <div class="input-group mb-2">
                 <span class="input-group-text">特殊要求</span>
                 <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@project.SpecialNotes"></textarea>
@@ -72,11 +72,23 @@
             <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@project.ContractUrl" />
         </Authorized>
     </AuthorizeView>
-    
-    <FileUpload Title="物料清单" FileType="application/pdf" @bind-FileUrl="@project.BomUrl" />
 
-    <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl"></MultiFileUpload>
-    
+    <AuthorizeView Roles="admin,pm,designer">
+        <Authorized Context="auth">
+            <FileUpload Title="物料清单" FileType="application/pdf" @bind-FileUrl="@project.BomUrl" />
+            <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl"></MultiFileUpload>
+        </Authorized>
+    </AuthorizeView>
+
+    <AuthorizeView Roles="admin,inspector">
+        <Authorized Context="auth">
+            <MultiFileUpload Title="最终检验" @bind-MultiFileUrl="@project.FinalInspectionUrl"></MultiFileUpload>
+        </Authorized>
+    </AuthorizeView>
+
+
+
+
     <button class="btn btn-success" type="submit">保存</button>
     <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("/projectlist/1"))">取消</button>
 </EditForm>

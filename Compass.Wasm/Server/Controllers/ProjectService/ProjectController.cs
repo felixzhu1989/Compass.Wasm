@@ -82,6 +82,7 @@ public class ProjectController : ControllerBase
             .ChangeReceiveDate(request.ReceiveDate).ChangeDeliveryDate(request.DeliveryDate)
             .ChangeProjectType(request.ProjectType).ChangeRiskLevel(request.RiskLevel)
             .ChangeContractUrl(request.ContractUrl!).ChangeBomUrl(request.BomUrl!)
+            .ChangeFinalInspectionUrl(request.FinalInspectionUrl!)
             .ChangeAttachmentsUrl(request.AttachmentsUrl!)
             .ChangeSpecialNotes(request.SpecialNotes!);
         return Ok();

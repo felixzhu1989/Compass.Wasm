@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Compass.PlanService.Domain.Entities;
+using Compass.QualityService.Domain.Entities;
 using Compass.Wasm.Shared.CategoryService;
 using Compass.Wasm.Shared.IdentityService;
 using Compass.Wasm.Shared.PlanService;
 using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Shared.QualityService;
 
 namespace Compass.Wasm.Server;
 
@@ -34,5 +36,12 @@ public class AutoMapperProfile : Profile
         #region PlanService
         CreateMap<ProductionPlan, ProductionPlanResponse>();
         #endregion
+
+        #region QualityService
+        CreateMap<FinalInspectionCheckItemType, FinalInspectionCheckItemTypeResponse>();
+
+
+        #endregion
+
     }
 }

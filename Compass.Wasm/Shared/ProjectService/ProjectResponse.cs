@@ -13,5 +13,5 @@ public record ProjectResponse
     public string? ContractUrl { get; set; }
     public string? BomUrl { get; set; }
     public string? AttachmentsUrl { get;set; }
-
+    public string? FinalInspectionUrl { get; set; }
 }

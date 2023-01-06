@@ -22,10 +22,13 @@ public class ProjectCreatedEventHandler : JsonIntegrationEventHandler<ProjectCre
     }
     public override async Task HandleJson(string eventName, ProjectCreatedEvent? eventData)
     {
-        //当项目创建时，同时创建跟踪对象
-        var tracking = new Tracking(eventData!.Id, eventData.SortDate);
-        _dbContext.Trackings.Add(tracking);
-        await _dbContext.SaveChangesAsync();
+        //当项目创建时，同时创建跟踪对象，如果跟踪对象存在那么不执行
+        if (!_dbContext.Trackings.Any(x => x.Id.Equals(eventData.Id)))
+        {
+            var tracking = new Tracking(eventData!.Id, eventData.SortDate);
+            _dbContext.Trackings.Add(tracking);
+            await _dbContext.SaveChangesAsync();
+        }
         //搜索未绑定的生产计划，匹配项目名称，相似度最高且大于0.5的关联起来
         var prodPlans = await _psDbContext.ProductionPlans.Where(x => x.ProjectId == null).ToArrayAsync();
         List<float> results = new List<float>();

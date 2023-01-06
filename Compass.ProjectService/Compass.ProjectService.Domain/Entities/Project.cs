@@ -18,8 +18,8 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
     public string? ContractUrl { get; private set; }
     public string? BomUrl { get; private set; }
     public string? AttachmentsUrl { get; private set; }//上传得附件，多文件
-    //AdditionalInfo
-
+    
+    public string? FinalInspectionUrl { get;private set; }//上传最终检验单，多文件
 
 
 
@@ -88,6 +88,11 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
     public Project ChangeAttachmentsUrl(string attachmentsUrl)
     {
         AttachmentsUrl= attachmentsUrl;
+        return this;
+    }
+    public Project ChangeFinalInspectionUrl(string finalInspectionUrl)
+    {
+        FinalInspectionUrl= finalInspectionUrl;
         return this;
     }
     #endregion

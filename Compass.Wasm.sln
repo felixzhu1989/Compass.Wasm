@@ -47,6 +47,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Infrast
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Test", "Compass.Test\Compass.Test.csproj", "{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.QualityService", "Compass.QualityService", "{31627F27-DE7F-4A77-B4CF-58D493B22BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.QualityService.Domain", "Compass.QualityService\Compass.QualityService.Domain\Compass.QualityService.Domain.csproj", "{EA69AB69-061A-4906-9A45-6ADC7F4155FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.QualityService.Infrastructure", "Compass.QualityService\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj", "{094675AD-D856-47E3-8FC3-486F93D017C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +123,14 @@ Global
 		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA69AB69-061A-4906-9A45-6ADC7F4155FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA69AB69-061A-4906-9A45-6ADC7F4155FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA69AB69-061A-4906-9A45-6ADC7F4155FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA69AB69-061A-4906-9A45-6ADC7F4155FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{094675AD-D856-47E3-8FC3-486F93D017C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{094675AD-D856-47E3-8FC3-486F93D017C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{094675AD-D856-47E3-8FC3-486F93D017C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{094675AD-D856-47E3-8FC3-486F93D017C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,6 +148,8 @@ Global
 		{2F643117-0771-4D1F-9608-C8F093BA898C} = {5FF8DC3C-B7C1-4AAC-A03D-95979FD7566C}
 		{A8D799EA-768B-4AE1-BA67-7BE1B9AE4890} = {72CBB3AF-5C03-4A8A-A234-C19539C3E6D6}
 		{12933E07-C646-451D-B37E-5C5FBD33FFE0} = {72CBB3AF-5C03-4A8A-A234-C19539C3E6D6}
+		{EA69AB69-061A-4906-9A45-6ADC7F4155FE} = {31627F27-DE7F-4A77-B4CF-58D493B22BA0}
+		{094675AD-D856-47E3-8FC3-486F93D017C3} = {31627F27-DE7F-4A77-B4CF-58D493B22BA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAB52DFF-F022-4E34-9511-0ED3DCEB1CBD}

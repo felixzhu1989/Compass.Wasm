@@ -183,3 +183,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Irony.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\SixLabors.Fonts.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\System.IO.Packaging.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\XLParser.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.QualityService.Domain.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.QualityService.Infrastructure.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.QualityService.Infrastructure.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.QualityService.Domain.pdb

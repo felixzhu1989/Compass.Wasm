@@ -2,6 +2,8 @@ using Compass.DataService.Domain;
 using Compass.DataService.Infrastructure;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Infrastructure;
+using Compass.QualityService.Domain;
+using Compass.QualityService.Infrastructure;
 using Compass.Wasm.Server.ExportExcel;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -203,7 +205,17 @@ builder.Services.AddScoped<PlanDomainService>();
 builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 #endregion
 
-
+#region QualityService
+//数据库，DbContext
+builder.Services.AddDbContext<QualityDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+builder.Services.AddScoped<QualityDomainService>();
+builder.Services.AddScoped<IQualityRepository, QualityRepository>();
+#endregion
 
 
 #region ExprotExcel

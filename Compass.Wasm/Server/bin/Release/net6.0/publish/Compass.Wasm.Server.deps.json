@@ -16,6 +16,7 @@
           "Compass.IdentityService.Infrastructure": "1.0.0",
           "Compass.PlanService.Infrastructure": "1.0.0",
           "Compass.ProjectService.Infrastructure": "1.0.0",
+          "Compass.QualityService.Infrastructure": "1.0.0",
           "Compass.Wasm.Client": "1.0.0",
           "Compass.Wasm.Shared": "1.0.0",
           "FluentValidation.AspNetCore": "11.2.2",
@@ -2347,6 +2348,24 @@
           "Compass.ProjectService.Infrastructure.dll": {}
         }
       },
+      "Compass.QualityService.Domain/1.0.0": {
+        "dependencies": {
+          "Compass.Wasm.Shared": "1.0.0"
+        },
+        "runtime": {
+          "Compass.QualityService.Domain.dll": {}
+        }
+      },
+      "Compass.QualityService.Infrastructure/1.0.0": {
+        "dependencies": {
+          "Compass.QualityService.Domain": "1.0.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.1",
+          "Zack.Infrastructure": "1.1.3"
+        },
+        "runtime": {
+          "Compass.QualityService.Infrastructure.dll": {}
+        }
+      },
       "Compass.Wasm.Client/1.0.0": {
         "dependencies": {
           "Blazored.LocalStorage": "4.3.0",
@@ -4008,6 +4027,16 @@
       "sha512": ""
     },
     "Compass.ProjectService.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Compass.QualityService.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Compass.QualityService.Infrastructure/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
