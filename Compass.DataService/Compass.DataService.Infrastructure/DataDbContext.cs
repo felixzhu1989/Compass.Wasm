@@ -22,12 +22,22 @@ public class DataDbContext : BaseDbContext
      */
     public DbSet<ModuleData> ModulesData { get; set; }
 
+    #region 标准烟罩
     public DbSet<KvfData> KvfData { get; set; }
     public DbSet<KviData> KviData { get; set; }
     public DbSet<UvfData> UvfData { get; set; }
     public DbSet<UviData> UviData { get; set; }
-    
-   
+    #endregion
+
+    #region 华为烟罩
+    public DbSet<UvfHuaweiData> UvfHuaweiData { get; set; }
+    public DbSet<UviHuaweiData> UviHuaweiData { get; set; }
+
+    #endregion
+
+
+
+
 
     public DataDbContext(DbContextOptions<DataDbContext> options, IMediator? mediator) : base(options, mediator)
     {
