@@ -1,4 +1,5 @@
-﻿using Zack.DomainCommons.Models;
+﻿using Compass.Wasm.Shared.ProjectService.Notification;
+using Zack.DomainCommons.Models;
 
 namespace Compass.ProjectService.Domain.Entities;
 
@@ -11,6 +12,8 @@ public record DrawingPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTim
     {
         Id=id;
         ReleaseTime = releaseTime;
+        //添加领域事件，添加计划后，将项目跟踪修改成制图状态
+        AddDomainEvent(new DrawingPlanCreatedNotification(id));
     }
     public DrawingPlan ChangeReleaseTime(DateTime releaseTime)
     {

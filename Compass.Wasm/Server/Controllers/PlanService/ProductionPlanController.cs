@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using Compass.PlanService.Domain.Entities;
 using Compass.Wasm.Shared.ProjectService;
 using Compass.Wasm.Server.PlanService.ProductionPlanEvent;
+using Compass.Wasm.Shared.PlanService.Notification;
 
 namespace Compass.Wasm.Server.Controllers.PlanService;
 
@@ -90,6 +91,7 @@ public class ProductionPlanController : ControllerBase
     {
         var plan = new ProductionPlan(Guid.NewGuid(), request.OdpReleaseTime, request.SqNumber, request.Name, request.Quantity, request.ModelSummary, request.ProductionFinishTime, request.DrawingReleaseTarget, request.MonthOfInvoice, request.ProductionPlanType, request.Remarks);
         await _dbContext.ProductionPlans.AddAsync(plan);
+
         //Todo:发出集成事件，绑定潜在的项目
         var eventData = new ProductionPlanCreatedEvent(plan.Id, plan.Name);
         //发布集成事件

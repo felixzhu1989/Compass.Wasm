@@ -1,4 +1,5 @@
 ﻿using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Shared.ProjectService.Notification;
 using Zack.DomainCommons.Models;
 
 namespace Compass.ProjectService.Domain.Entities;
@@ -18,12 +19,8 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
     public string? ContractUrl { get; private set; }
     public string? BomUrl { get; private set; }
     public string? AttachmentsUrl { get; private set; }//上传得附件，多文件
-    
     public string? FinalInspectionUrl { get;private set; }//上传最终检验单，多文件
-
-
-
-
+    
     private Project() { }
     public Project(Guid id, string odpNumber, string name, DateTime receiveDate, DateTime deliveryDate, ProjectType projectType, RiskLevel riskLevel, string? specialNotes)
     {
@@ -35,11 +32,16 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
         ProjectType= projectType;
         RiskLevel= riskLevel;
         SpecialNotes= specialNotes;
+        //发布领域事件
+        AddDomainEvent(new ProjectCreatedNotification(id,name, deliveryDate));
+
     }
     #region ChangeProperty
     public Project ChangeOdpNumber(string odpNumber)
     {
         OdpNumber= odpNumber;
+        //测试发布领域事件
+        //AddDomainEvent(new TestNotification(odpNumber));
         return this;
     }
     public Project ChangeName(string name)
@@ -95,6 +97,13 @@ public record Project : AggregateRootEntity, IAggregateRoot,IHasCreationTime, IS
         FinalInspectionUrl= finalInspectionUrl;
         return this;
     }
+
+    public override void SoftDelete()
+    {
+        base.SoftDelete();
+        AddDomainEvent(new ProjectDeletedNotification(Id));
+    }
+
     #endregion
 
 }

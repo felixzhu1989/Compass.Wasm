@@ -1,5 +1,6 @@
 ﻿using Compass.PlanService.Infrastructure;
 using Compass.Wasm.Shared.Extensions;
+using Compass.Wasm.Shared.PlanService.Notification;
 
 namespace Compass.Wasm.Server.PlanService.ProductionPlanEvent;
 

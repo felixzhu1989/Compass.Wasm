@@ -102,12 +102,6 @@ public class DrawingPlanController : ControllerBase
     {
         var drawingPlan = new DrawingPlan( request.ProjectId, request.ReleaseTime);
         await _dbContext.DrawingsPlan.AddAsync(drawingPlan);
-            
-        //添加计划后，将项目跟踪修改成制图状态
-        var eventData = new DrawingPlanCreatedEvent(drawingPlan.Id);
-        //发布集成事件
-        _eventBus.Publish("ProjectService.DrawingPlan.Created", eventData);
-
         return drawingPlan.Id;
     }
 

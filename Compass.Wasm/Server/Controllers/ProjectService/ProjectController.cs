@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Compass.Wasm.Server.ExportExcel;
-using Compass.Wasm.Server.ProjectService.ProjectEvent;
 using Compass.Wasm.Shared.ProjectService;
 using Compass.Wasm.Shared;
 
@@ -65,9 +64,6 @@ public class ProjectController : ControllerBase
         //包括合同地址
         project.ChangeContractUrl(request.ContractUrl!);
         await _dbContext.Projects.AddAsync(project);
-        var eventData = new ProjectCreatedEvent(project.Id, project.Name, project.DeliveryDate);
-        //发布集成事件
-        _eventBus.Publish("ProjectService.Project.Created", eventData);
 
         return project.Id;
     }
@@ -95,9 +91,6 @@ public class ProjectController : ControllerBase
         //这样做仍然是幂等的，因为“调用N次，确保服务器处于与第一次调用相同的状态。”与响应无关
         if (project == null) return NotFound($"没有Id={id}的Project");
         project.SoftDelete();//软删除
-        var eventData = new ProjectDeletedEvent(project.Id);
-        //发布集成事件
-        _eventBus.Publish("ProjectService.Project.Deleted", eventData);
         return Ok();
     }
     #region 测试导出excel表格
