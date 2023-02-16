@@ -32,13 +32,13 @@
     [Parameter]
     public ProblemResponse Problem { get; set; }
     private ProblemTypeResponse? type;
-    private UserResponse? responder;
+    private UserDto? responder;
     protected override async Task OnParametersSetAsync()
     {
         type = await Http.GetFromJsonAsync<ProblemTypeResponse>($"api/ProblemType/{Problem.ProblemTypeId}");
         if (Problem.ResponseUserId != null && !Problem.ResponseUserId.Equals(Guid.Empty))
         {
-            responder = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Problem.ResponseUserId}");
+            responder = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{Problem.ResponseUserId}");
         }
     }
 }

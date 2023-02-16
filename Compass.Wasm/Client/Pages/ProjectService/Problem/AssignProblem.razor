@@ -38,13 +38,13 @@
     public string Id { get; set; }
     private ProblemResponse? problem=new();
     private Guid selectedUserId;
-    private List<UserResponse>? responders=new();
+    private List<UserDto>? responders=new();
 
     protected override async Task OnParametersSetAsync()
     {
         problem=await Http.GetFromJsonAsync<ProblemResponse>($"api/Problem/{Id}");
         problem!.Deadline ??= DateTime.Today;
-        responders = await Http.GetFromJsonAsync<List<UserResponse>>("api/UserAdmin/AllUsers");
+        responders = await Http.GetFromJsonAsync<List<UserDto>>("api/UserAdmin/AllUsers");
         if (problem.ResponseUserId != null && !problem.ResponseUserId.Equals(Guid.Empty))
         {
             selectedUserId = problem.ResponseUserId.Value;

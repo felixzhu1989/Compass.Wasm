@@ -118,7 +118,7 @@
         var dic = await Http.GetFromJsonAsync<Dictionary<Guid, DrawingResponse[]>>($"api/DrawingPlan/DrawingsAssigned/{DrawingPlan.Id}");
         foreach (var d in dic)
         {
-            var user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{d.Key}");
+            var user = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{d.Key}");
             List<string> itemNumbers = new List<string>();
             foreach (var r in d.Value)
             {

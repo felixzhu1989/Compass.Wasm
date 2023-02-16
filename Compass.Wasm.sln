@@ -49,9 +49,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Test", "Compass.Tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.QualityService", "Compass.QualityService", "{31627F27-DE7F-4A77-B4CF-58D493B22BA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.QualityService.Domain", "Compass.QualityService\Compass.QualityService.Domain\Compass.QualityService.Domain.csproj", "{EA69AB69-061A-4906-9A45-6ADC7F4155FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.QualityService.Domain", "Compass.QualityService\Compass.QualityService.Domain\Compass.QualityService.Domain.csproj", "{EA69AB69-061A-4906-9A45-6ADC7F4155FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.QualityService.Infrastructure", "Compass.QualityService\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj", "{094675AD-D856-47E3-8FC3-486F93D017C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.QualityService.Infrastructure", "Compass.QualityService\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj", "{094675AD-D856-47E3-8FC3-486F93D017C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Wpf", "Compass.Wpf\Compass.Wpf.csproj", "{ED3F208C-4E70-403E-B218-A2A01E531EE8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.TodoService", "Compass.TodoService", "{274452C6-38B7-4D8C-AE9B-ADC98DE69731}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.TodoService.Domain", "Compass.TodoService\Compass.TodoService.Domain\Compass.TodoService.Domain.csproj", "{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.TodoService.Infrastructure", "Compass.TodoService\Compass.TodoService.Infrastructure\Compass.TodoService.Infrastructure.csproj", "{2DCC59AC-4186-42C3-A8FB-00D43E713AED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +139,18 @@ Global
 		{094675AD-D856-47E3-8FC3-486F93D017C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{094675AD-D856-47E3-8FC3-486F93D017C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{094675AD-D856-47E3-8FC3-486F93D017C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED3F208C-4E70-403E-B218-A2A01E531EE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED3F208C-4E70-403E-B218-A2A01E531EE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED3F208C-4E70-403E-B218-A2A01E531EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED3F208C-4E70-403E-B218-A2A01E531EE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DCC59AC-4186-42C3-A8FB-00D43E713AED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DCC59AC-4186-42C3-A8FB-00D43E713AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DCC59AC-4186-42C3-A8FB-00D43E713AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DCC59AC-4186-42C3-A8FB-00D43E713AED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +170,8 @@ Global
 		{12933E07-C646-451D-B37E-5C5FBD33FFE0} = {72CBB3AF-5C03-4A8A-A234-C19539C3E6D6}
 		{EA69AB69-061A-4906-9A45-6ADC7F4155FE} = {31627F27-DE7F-4A77-B4CF-58D493B22BA0}
 		{094675AD-D856-47E3-8FC3-486F93D017C3} = {31627F27-DE7F-4A77-B4CF-58D493B22BA0}
+		{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B} = {274452C6-38B7-4D8C-AE9B-ADC98DE69731}
+		{2DCC59AC-4186-42C3-A8FB-00D43E713AED} = {274452C6-38B7-4D8C-AE9B-ADC98DE69731}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAB52DFF-F022-4E34-9511-0ED3DCEB1CBD}

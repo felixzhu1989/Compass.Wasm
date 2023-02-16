@@ -121,7 +121,7 @@ else
     bool isDrawingsNotAssigned;
     private List<DrawingResponse>? drawingsNotAssigned=new();
     private Guid selectedUserId;
-    private List<UserResponse>? designers=new();
+    private List<UserDto>? designers=new();
 
     private DrawingPlanResponse? drawingPlan = new();
     private ProjectResponse? project = new();
@@ -134,7 +134,7 @@ else
     protected override async Task OnParametersSetAsync()
     {
         drawingsNotAssigned = await Http.GetFromJsonAsync<List<DrawingResponse>>($"api/DrawingPlan/DrawingsNotAssigned/{Id}");
-        designers = await Http.GetFromJsonAsync<List<UserResponse>>("api/UserAdmin/UsersInRoles?roleNames=pm,designer");
+        designers = await Http.GetFromJsonAsync<List<UserDto>>("api/UserAdmin/UsersInRoles?roleNames=pm,designer");
         //判断有没有需要分配的图纸
         isDrawingsNotAssigned = await Http.GetFromJsonAsync<bool>($"api/DrawingPlan/IsDrawingsNotAssigned/{Id}");
 
@@ -210,7 +210,7 @@ else
         var dic = await Http.GetFromJsonAsync<Dictionary<Guid, DrawingResponse[]>>($"api/DrawingPlan/DrawingsAssigned/{drawingPlan.Id}");
         foreach (var d in dic)
         {
-            var user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{d.Key}");
+            var user = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{d.Key}");
             List<string> itemNumbers = new List<string>();
             foreach (var r in d.Value)
             {

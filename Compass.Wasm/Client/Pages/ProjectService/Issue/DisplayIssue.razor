@@ -58,11 +58,11 @@
 @code {
     [Parameter]
     public IssueResponse Issue { get; set; }
-    private UserResponse? reporter;
+    private UserDto? reporter;
 
     protected override async Task OnParametersSetAsync()
     {
-        reporter = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Issue.ReportUserId}");
+        reporter = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{Issue.ReportUserId}");
     }
 
 }

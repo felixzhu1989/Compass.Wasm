@@ -31,6 +31,7 @@
 		<ProjectReference Include="..\..\Compass.PlanService\Compass.PlanService.Infrastructure\Compass.PlanService.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\Compass.ProjectService\Compass.ProjectService.Infrastructure\Compass.ProjectService.Infrastructure.csproj" />
 		<ProjectReference Include="..\..\Compass.QualityService\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.TodoService\Compass.TodoService.Infrastructure\Compass.TodoService.Infrastructure.csproj" />
 		<ProjectReference Include="..\Client\Compass.Wasm.Client.csproj" />
 		<ProjectReference Include="..\Shared\Compass.Wasm.Shared.csproj" />
 	</ItemGroup>

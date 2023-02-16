@@ -129,16 +129,16 @@
     public ProblemResponse Problem { get; set; }
 
     private string problemType = string.Empty;
-    private UserResponse? reporter=new();
-    private UserResponse? responder=new();
+    private UserDto? reporter=new();
+    private UserDto? responder=new();
     protected override async Task OnParametersSetAsync()
     {
         var response = await Http.GetFromJsonAsync<ProblemTypeResponse>($"api/ProblemType/{Problem.ProblemTypeId}");
         problemType = $"{response.Name}({response.Stakeholder})";
-        reporter = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Problem.ReportUserId}");
+        reporter = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{Problem.ReportUserId}");
         if (Problem.ResponseUserId != null && !Problem.ResponseUserId.Equals(Guid.Empty))
         {
-            responder = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{Problem.ResponseUserId}");
+            responder = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{Problem.ResponseUserId}");
         }
     }
     private async Task CloseProblem()

@@ -4,7 +4,10 @@ using Compass.PlanService.Domain;
 using Compass.PlanService.Infrastructure;
 using Compass.QualityService.Domain;
 using Compass.QualityService.Infrastructure;
+using Compass.TodoService.Domain;
+using Compass.TodoService.Infrastructure;
 using Compass.Wasm.Server.ExportExcel;
+using Compass.Wasm.Server.TodoService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -217,6 +220,20 @@ builder.Services.AddScoped<QualityDomainService>();
 builder.Services.AddScoped<IQualityRepository, QualityRepository>();
 #endregion
 
+#region TodoService
+//数据库，DbContext
+builder.Services.AddDbContext<TodoDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+builder.Services.AddScoped<TodoDomainService>();
+builder.Services.AddScoped<ITodoRepository,TodoRepository>();
+builder.Services.AddScoped<ITodoService, TodoService>();
+builder.Services.AddScoped<IMemoService, MemoService>();
+#endregion
+
 
 #region ExprotExcel
 builder.Services.AddScoped<ExportExcelService>();
@@ -225,7 +242,7 @@ builder.Services.AddScoped<ExportExcelService>();
 
 #endregion
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 builder.Services.AddRazorPages();
 
 //Install-Package Swashbuckle.AspNetCore

@@ -118,7 +118,7 @@
 
     private ModuleResponse[]? modules;
     private AddModuleRequest? addModuleRequest;
-    private UserResponse? user;
+    private UserDto? user;
 
     private bool isAddDrop = false;
     private DrawingResponse? drawing;
@@ -132,7 +132,7 @@
         project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{drawing.ProjectId}");
         if (drawing.UserId!=null&&!drawing.UserId.Equals(Guid.Empty))
         {
-            user = await Http.GetFromJsonAsync<UserResponse>($"api/UserAdmin/{drawing.UserId}");
+            user = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{drawing.UserId}");
         }
         var tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{drawing.ProjectId}");
         isModuleRelease = tracking.ProjectStatus >ProjectStatus.制图;
