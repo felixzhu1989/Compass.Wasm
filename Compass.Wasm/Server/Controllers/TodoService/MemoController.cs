@@ -3,6 +3,10 @@ using Compass.Wasm.Shared.TodoService;
 using System.ComponentModel.DataAnnotations;
 using Compass.Wasm.Server.TodoService;
 using Compass.Wasm.Shared;
+using System.Security.Claims;
+using Compass.TodoService.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Compass.Wasm.Shared.Parameter;
 
 namespace Compass.Wasm.Server.Controllers.TodoService;
 
@@ -16,7 +20,19 @@ public class MemoController : ControllerBase
     {
         _service = service;
     }
-
+    private Guid GetUserId()
+    {
+        try
+        {
+            //获取当前请求的用户的ID
+            return Guid.Parse(Request.HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
+        }
+        catch (Exception e)
+        {
+            return Guid.Empty;
+        }
+    }
+    #region 标准增删改查
     [HttpGet("All")]
     public async Task<ApiResponse<List<MemoDto>>> GetAll() => await _service.GetAllAsync();
 
@@ -31,7 +47,24 @@ public class MemoController : ControllerBase
 
     [HttpDelete("{id}")]
     public async Task<ApiResponse<MemoDto>> Delete([RequiredGuid] Guid id) => await _service.DeleteAsync(id);
+    #endregion
 
+    #region 增加了特定用户的基本增查(删改不需要)
+    [Authorize]
+    [HttpGet("User/All")]
+    public async Task<ApiResponse<List<MemoDto>>> GetUserAll() => await _service.GetUserAllAsync(GetUserId());
 
+    [Authorize]
+    [HttpPost("User/Add")]
+    public async Task<ApiResponse<MemoDto>> UserAdd(MemoDto dto) => await _service.UserAddAsync(dto, GetUserId());
+
+    #endregion
+
+    /// <summary>
+    /// 根据查询条件筛选结果
+    /// </summary>
+    [Authorize]
+    [HttpGet("Filter")]
+    public async Task<ApiResponse<List<MemoDto>>> GetAllFilter(QueryParameter parameter) => await _service.GetAllFilterAsync(parameter, GetUserId());
 
 }

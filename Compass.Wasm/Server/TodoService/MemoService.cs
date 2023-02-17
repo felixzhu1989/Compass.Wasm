@@ -4,6 +4,7 @@ using Compass.TodoService.Domain;
 using Compass.TodoService.Infrastructure;
 using Compass.Wasm.Shared.TodoService;
 using Compass.Wasm.Shared;
+using Compass.Wasm.Shared.Parameter;
 
 namespace Compass.Wasm.Server.TodoService;
 
@@ -60,7 +61,7 @@ public class MemoService:IMemoService
     {
         try
         {
-            var model = new Memo(Guid.NewGuid(), dto.Title, dto.Content);
+            var model = new Memo(Guid.NewGuid(), dto.Title, dto.Content,dto.UserId);
             await _dbContext.Memos.AddAsync(model);
             dto.Id= model.Id;
             return new ApiResponse<MemoDto> { Status = true, Result = dto };
@@ -105,9 +106,53 @@ public class MemoService:IMemoService
         {
             return new ApiResponse<MemoDto> { Status = false, Message = e.Message };
         }
-    } 
+    }
     #endregion
 
+    #region 增加了特定用户的基本增查
+    public async Task<ApiResponse<List<MemoDto>>> GetUserAllAsync(Guid userId)
+    {
+        var result = await GetAllAsync();
+        if (result.Status)
+        {
+            var dtos = result.Result.Where(x => x.UserId.Equals(userId)).ToList();
+            return new ApiResponse<List<MemoDto>> { Status = true, Result = dtos };
+        }
+        return result;
+    }
 
+    public async Task<ApiResponse<MemoDto>> UserAddAsync(MemoDto dto, Guid userId)
+    {
+        try
+        {
+            var model = new Memo(Guid.NewGuid(), dto.Title, dto.Content,  userId);
+            await _dbContext.Memos.AddAsync(model);
+            dto.Id= model.Id;
+            return new ApiResponse<MemoDto> { Status = true, Result = dto };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<MemoDto> { Status = false, Message = e.Message };
+        }
+    }
+    #endregion
 
+    /// <summary>
+    /// 根据筛选条件查询
+    /// </summary>
+    public async Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParameter parameter, Guid userId)
+    {
+        try
+        {
+            var dtos = (await GetUserAllAsync(userId)).Result;
+            //筛选结果，按照创建时间排序
+            var filterdtos = dtos.Where(x =>
+                string.IsNullOrWhiteSpace(parameter.Search) || x.Title.Contains(parameter.Search) || x.Content.Contains(parameter.Search)).OrderBy(x => x.CreationTime).ToList();
+            return new ApiResponse<List<MemoDto>> { Status = true, Result = filterdtos };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<List<MemoDto>> { Status = false, Message = e.Message };
+        }
+    }
 }

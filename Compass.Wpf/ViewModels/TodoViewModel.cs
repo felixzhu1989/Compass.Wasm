@@ -1,19 +1,14 @@
 ﻿using Compass.Wasm.Shared.TodoService;
 using Prism.Commands;
-using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using Compass.Wpf.Service;
 using Prism.Ioc;
-using RestSharp;
 using Prism.Regions;
-using System.CodeDom.Compiler;
-using System.Windows.Controls.Primitives;
 using Compass.Wpf.Common;
 using System;
 using System.Linq;
 using Compass.Wasm.Shared.Parameter;
 using Compass.Wpf.Extensions;
-using MaterialDesignThemes.Wpf;
 using Prism.Services.Dialogs;
 
 namespace Compass.Wpf.ViewModels;
@@ -152,7 +147,7 @@ public class TodoViewModel : NavigationViewModel
             }
             else//新增ToDo
             {
-                var addResult = await _service.AddAsync(CurrentDto);
+                var addResult = await _service.UserAddAsync(CurrentDto);
                 if (addResult.Status)
                 {
                     //更新界面显示

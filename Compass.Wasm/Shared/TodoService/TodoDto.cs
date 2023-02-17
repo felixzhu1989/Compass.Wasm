@@ -20,4 +20,10 @@ public class TodoDto:BaseDto
         get => status;
         set { status = value; OnPropertyChanged(); }
     }
+    private Guid userId;
+    public Guid UserId
+    {
+        get => userId;
+        set { userId = value; OnPropertyChanged(); }
+    }
 }

@@ -8,6 +8,7 @@ using System.CodeDom.Compiler;
 using System.Windows.Controls.Primitives;
 using System;
 using System.Linq;
+using Compass.Wasm.Shared.Parameter;
 using Prism.Regions;
 using Compass.Wpf.Common;
 using Compass.Wpf.Extensions;
@@ -139,7 +140,7 @@ public class MemoViewModel : NavigationViewModel
             }
             else//新增ToDo
             {
-                var addResult = await _service.AddAsync(CurrentDto);
+                var addResult = await _service.UserAddAsync(CurrentDto);
                 if (addResult.Status)
                 {
                     //更新界面显示
@@ -190,14 +191,12 @@ public class MemoViewModel : NavigationViewModel
     private async void GetDataAsync()
     {
         UpdateLoading(true);//打开等待窗口
-        var result = await _service.GetAllAsync();
+        QueryParameter parameter = new() { Search = this.Search };
+        var result = await _service.GetAllFilterAsync(parameter);
         if (result.Status)
         {
             MemoDtos.Clear();
-            //Todo:以后优化此处执行筛选，让传输的数据更少
-            var filterResult = result.Result.Where(x =>
-                string.IsNullOrWhiteSpace(Search) || x.Title.Contains(Search) || x.Content.Contains(Search));
-            MemoDtos.AddRange(filterResult);
+            MemoDtos.AddRange(result.Result);
         }
         UpdateLoading(false);//数据加载完毕后关闭等待窗口
     }

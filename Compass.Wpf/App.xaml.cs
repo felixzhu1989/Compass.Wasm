@@ -1,23 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using Compass.Wpf.Common;
-using Compass.Wpf.Identity;
+using Compass.Wpf.Extensions;
 using Compass.Wpf.Service;
 using Compass.Wpf.ViewModels;
 using Compass.Wpf.ViewModels.Dialogs;
 using Compass.Wpf.Views;
 using Compass.Wpf.Views.Dialogs;
 using DryIoc;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Regions;
 using Prism.Services.Dialogs;
-using IView = Compass.Wpf.Views.IView;
 
 namespace Compass.Wpf
 {
@@ -30,7 +24,9 @@ namespace Compass.Wpf
         {
             return Container.Resolve<MainView>();
         }
-
+        /// <summary>
+        /// 初始化时跳转登录页面，并配置默认启动页
+        /// </summary>
         protected override void OnInitialized()
         {
             var dialog = Container.Resolve<IDialogService>();
@@ -48,6 +44,27 @@ namespace Compass.Wpf
                 base.OnInitialized();
             });
         }
+        /// <summary>
+        /// 退出登录
+        /// </summary>
+        /// <param name="containerProvider"></param>
+        public static void Logout(IContainerProvider containerProvider, IRegionManager regionManager)
+        {
+            Current.MainWindow.Hide();
+            var dialog = containerProvider.Resolve<IDialogService>();
+            dialog.ShowDialog("LoginView", callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+                Current.MainWindow.Show();
+                //显示页面后重新加载一次Index，以更新界面显示
+                regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
+            });
+        }
+
 
         //依赖注入
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -65,7 +82,9 @@ namespace Compass.Wpf
             //获取容器，然后注册HttpRestClient，并给构造函数设置默认值
             containerRegistry.GetContainer()
                 .Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey: "apiUrl"));
-            containerRegistry.GetContainer().RegisterInstance(@"http://10.9.18.31/", serviceKey: "apiUrl");
+            //containerRegistry.GetContainer().RegisterInstance(@"http://10.9.18.31/", serviceKey: "apiUrl");
+            //测试环境
+            containerRegistry.GetContainer().RegisterInstance(@"http://localhost/", serviceKey: "apiUrl");
 
             //注册服务
             containerRegistry.Register<ITodoService, TodoService>();
@@ -86,27 +105,5 @@ namespace Compass.Wpf
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
 
         }
-
-
-
-
-
-        //protected override void OnStartup(StartupEventArgs e)
-        //{
-        //    //Create a custom principal with an anonymous identity at startup
-        //    CustomPrincipal customPrincipal = new CustomPrincipal();
-        //    //请务必注意，在应用程序的生存期内，只能调用一次 SetThreadPrincipal
-        //    //因此，在最初设置线程的默认标识后，无法重置线程的主体。
-        //    AppDomain.CurrentDomain.SetThreadPrincipal(customPrincipal);
-
-        //    base.OnStartup(e);
-
-        //    //Show the login view
-        //    AuthenticationViewModel viewModel = new AuthenticationViewModel(new AuthenticationService());
-        //    IView loginWindow = new AuthenticationView(viewModel);
-        //    loginWindow.Show();
-        //}
-
-
     }
 }

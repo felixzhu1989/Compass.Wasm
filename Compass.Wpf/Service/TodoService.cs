@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameter;
 using Compass.Wasm.Shared.TodoService;
+using Zack.DomainCommons.Models;
 
 namespace Compass.Wpf.Service;
 
@@ -13,6 +14,17 @@ public class TodoService : BaseService<TodoDto>, ITodoService
     public TodoService(HttpRestClient client) : base(client, "Todo")
     {
         _client = client;
+    }
+
+    public async Task<ApiResponse<TodoDto>> UserAddAsync(TodoDto dto)
+    {
+        BaseRequest request = new BaseRequest
+        {
+            Method = RestSharp.Method.Post,
+            Route = "api/Todo/User/Add",
+            Parameter = dto
+        };
+        return await _client.ExecuteAsync<TodoDto>(request);
     }
 
     public async Task<ApiResponse<List<TodoDto>>> GetAllFilterAsync(TodoParameter parameter)

@@ -7,22 +7,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Identity\AdminWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\AboutView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\AuthenticationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Dialogs\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\IndexView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Identity\SecretWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MemoView.xaml.cs">
@@ -44,13 +35,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Identity\AdminWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\AboutView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AuthenticationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\AddMemoView.xaml">
@@ -75,9 +60,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProcessView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Identity\SecretWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingsView.xaml">

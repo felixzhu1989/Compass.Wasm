@@ -17,7 +17,7 @@ namespace Compass.Wpf.Views
         {
             _dialogHost = dialogHost;
             InitializeComponent();
-            //注册snackbar提示消息
+            //注册snackbar提示消息,只订阅来自Main的消息，默认的消息。
             aggregator.RegisterMessage(arg =>
             {
                 Snackbar.MessageQueue!.Enqueue(arg.Message);//往消息队列中添加消息

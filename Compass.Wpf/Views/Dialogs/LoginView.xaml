@@ -11,6 +11,9 @@
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
              Width="600"
              Height="350">
+    <UserControl.Resources>
+        
+    </UserControl.Resources>
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="Width"
@@ -32,6 +35,10 @@
             </Grid.ColumnDefinitions>
         <!--左边的图片-->
         <Image Source="/Images/login.png"/>
+        <materialDesign:Snackbar x:Name="LoginSnackBar"
+                                 MessageQueue="{materialDesign:MessageQueue }"
+                                 Panel.ZIndex="1"
+                                 Grid.ColumnSpan="2" />
         <!--右边的输入框-->
         <DockPanel Grid.Column="1"
                    VerticalAlignment="Center"
@@ -45,6 +52,14 @@
                      Text="{Binding UserName}"
                      Margin="0,10"
                      DockPanel.Dock="Top" />
+            <!--<ComboBox x:Name="UserName"
+                      materialDesign:HintAssist.Hint="请输入账号，如felix.zhu"
+                      Text="{Binding UserName}"
+                      Margin="0,10"
+                      DockPanel.Dock="Top"
+                      IsEditable="True"
+                      ItemsSource="{Binding Source={StaticResource XmlDataProvider}, XPath=SavedLoginNames/LoginName}"
+                      SelectedIndex="0" />-->
             <PasswordBox materialDesign:HintAssist.Hint="请输入密码，默认密码123"
                          pwdExt:PasswordExtensions.Password="{Binding Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 Margin="0,10"
@@ -53,6 +68,10 @@ Margin="0,10"
                     <pwdExt:PasswordBehavior />
                 </behavior:Interaction.Behaviors>
             </PasswordBox>
+            <CheckBox x:Name="CkSaveUser"
+                      IsChecked="{Binding SaveUser}"
+                      Margin="0,10"
+                      DockPanel.Dock="Top">记住账号密码</CheckBox>
             <Button Content="登录系统"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="Login"

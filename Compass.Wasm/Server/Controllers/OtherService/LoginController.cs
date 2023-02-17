@@ -3,6 +3,7 @@ using Compass.Wasm.Shared.IdentityService;
 using System.Net;
 using System.Security.Claims;
 using AutoMapper;
+using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Controllers.OtherService;
 
@@ -24,13 +25,18 @@ public class LoginController : ControllerBase
     }
 
     [HttpPost("Name")]
-    public async Task<ActionResult<string?>> LoginByUserName(UserDto dto)
+    public async Task<ApiResponse<string?>> LoginByUserName(UserDto dto)
     {
         var (checkResult, token) = await _idService.LoginByUserNameAndPwdAsync(dto.UserName, dto.Password);
-        if (checkResult.Succeeded) return token;
+        /* if (checkResult.Succeeded) return token;
         else if (checkResult.IsLockedOut)
             return StatusCode((int)HttpStatusCode.Locked, "账号已锁定，请稍后再试");
-        else return StatusCode((int)HttpStatusCode.BadRequest, "登录失败");
+        else return StatusCode((int)HttpStatusCode.BadRequest, "登录失败");         
+         */
+        if (checkResult.Succeeded) return new ApiResponse<string?>{Status =true,Result = token};
+        else if (checkResult.IsLockedOut)
+            return new ApiResponse<string?> { Status = false,Message = "账号已锁定，请稍后再试"};
+        else return new ApiResponse<string?>{Status = false,Message = "登录失败" };
     }
 
     [HttpPost("Phone")]

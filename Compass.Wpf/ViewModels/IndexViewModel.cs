@@ -81,8 +81,6 @@ public class IndexViewModel : NavigationViewModel
         EditMemoCommand=new DelegateCommand<MemoDto>(AddMemo);
         ToDoCompletedCommand=new DelegateCommand<TodoDto>(Completed);
         NavigateCommand=new DelegateCommand<TaskBar>(Navigate);
-
-        Title=$"您好，Admin!今天是{DateTime.Now.GetDateTimeFormats('D')[1]}。";
     }
     void CreateTaskBars()
     {
@@ -151,7 +149,7 @@ public class IndexViewModel : NavigationViewModel
                 else
                 {
                     //新增
-                    var addResult = await _todoService.AddAsync(dto);
+                    var addResult = await _todoService.UserAddAsync(dto);
                     if (addResult.Status)
                     {
                         Summary.TodoDtos.Add(addResult.Result);//界面显示
@@ -200,7 +198,7 @@ public class IndexViewModel : NavigationViewModel
                 else
                 {
                     //新增
-                    var addResult = await _memoService.AddAsync(dto);
+                    var addResult = await _memoService.UserAddAsync(dto);
                     if (addResult.Status)
                     {
                         Summary.MemoDtos.Add(addResult.Result);
@@ -244,6 +242,7 @@ public class IndexViewModel : NavigationViewModel
     }
     public override async void OnNavigatedTo(NavigationContext navigationContext)
     {
+        Title=$"您好，{AppSession.UserName}! 今天是{DateTime.Now.GetDateTimeFormats('D')[1]}。";
         var summaryResult = await _todoService.GetSummaryAsync();
         if (summaryResult.Status)
         {

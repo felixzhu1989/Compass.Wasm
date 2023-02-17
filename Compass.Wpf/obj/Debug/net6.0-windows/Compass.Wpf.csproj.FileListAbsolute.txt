@@ -82,12 +82,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\runtimes\win-x
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wasm.Shared.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wasm.Shared.pdb
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\AuthenticationView.g.cs
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\AuthenticationView.baml
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Identity\AdminWindow.g.cs
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Identity\SecretWindow.g.cs
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\IDentity\AdminWindow.baml
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\IDentity\SecretWindow.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MemoView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MemoView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\AboutView.g.cs

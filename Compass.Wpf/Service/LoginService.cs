@@ -4,11 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Text.Json;
-using AsmResolver.DotNet;
-using Zack.DomainCommons.Models;
+using Compass.Wpf.Common;
 
 
 namespace Compass.Wpf.Service;
@@ -29,18 +27,19 @@ public class LoginService : ILoginService
             Route=$"api/{serviceName}/Name",
             Parameter=user
         };
-        //Todo:api返回的是token字符串，不是apiresponse，需要改造一番
-
         var loginResult = await _client.ExecuteAsync<string>(request);
         if (loginResult.Status)
         {
-            //获取token
+            //获取token，并从token中解析出用户名、id和角色
             var token = loginResult.Result;
+            AppSession.Token=token;
             ClaimsIdentity identity = new(ParseClaimsFromJwt(token), "jwt");
-            UserDto dto = new UserDto { UserName = identity.Name };
+            var id = identity.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            var role = identity.Claims.First(x => x.Type == ClaimTypes.Role).Value;
+            UserDto dto = new UserDto {Id = Guid.Parse(id),UserName = identity.Name,Roles = role};
             return new ApiResponse<UserDto> { Status = true, Result = dto };
         }
-        return new ApiResponse<UserDto> { Status = false,Message = "登录失败"};
+        return new ApiResponse<UserDto> { Status = false,Message = loginResult.Message};
     }
 
 

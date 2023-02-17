@@ -1,9 +1,7 @@
 ﻿E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\GeneratedInternalTypeHelper.g.cs
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml;;
-FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Identity\AdminWindow.xaml;;
-FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Identity\SecretWindow.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\AboutView.xaml;;
-FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\AuthenticationView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Dialogs\LoginView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\IndexView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\MainView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\MemoView.xaml;;

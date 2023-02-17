@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Configuration;
+using Compass.Wpf.Extensions;
+using Prism.Events;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Compass.Wpf.Views.Dialogs
 {
@@ -20,9 +11,14 @@ namespace Compass.Wpf.Views.Dialogs
     /// </summary>
     public partial class LoginView : UserControl
     {
-        public LoginView()
+        public LoginView(IEventAggregator aggregator)
         {
             InitializeComponent();
+            //注册snackbar提示消息,只订阅来自Login的消息，默认的消息。
+            aggregator.RegisterMessage(arg =>
+            {
+                LoginSnackBar.MessageQueue.Enqueue(arg.Message);
+            }, "Login");
         }
     }
 }

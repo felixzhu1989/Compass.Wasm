@@ -13,4 +13,10 @@ public class MemoDto:BaseDto
         get => content;
         set { content = value; OnPropertyChanged(); }
     }
+    private Guid userId;
+    public Guid UserId
+    {
+        get => userId;
+        set { userId = value; OnPropertyChanged(); }
+    }
 }

@@ -5,6 +5,7 @@ using System;
 using Newtonsoft.Json;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Compass.Wpf.Common;
 
 namespace Compass.Wpf.Service;
 
@@ -23,19 +24,23 @@ public class HttpRestClient
 
     public async Task<ApiResponse<T>> ExecuteAsync<T>(BaseRequest baseRequest)
     {
-        //获取token，给请求添加token
-        var token = string.Empty;
-        if (!string.IsNullOrEmpty(token))
-        {
-            _client.AddDefaultHeader("Authorization", $"Bearer {token.Replace("\"", "")}");
-        }
+        
         var resource = new Uri($"{_apiUrl}{baseRequest.Route}");
         var request = new RestRequest(resource, baseRequest.Method);
         request.AddHeader("Content-Type", baseRequest.ContentType);
+        //获取token，给请求添加token
+        var token = AppSession.Token;
+        if (!string.IsNullOrEmpty(token))
+        {
+            request.AddOrUpdateHeader("Authorization", $"Bearer {token.Replace("\"", "")}");
+        }
         //传递的参数，必须使用Newtonsoft.Json，不能使用微软自带Json
         if (baseRequest.Parameter != null) request.AddJsonBody(baseRequest.Parameter);
         var response = await _client.ExecuteAsync(request);
-        var result= JsonConvert.DeserializeObject<ApiResponse<T>>(response.Content!)!;
-        return result;
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            return JsonConvert.DeserializeObject<ApiResponse<T>>(response.Content!)!;
+        }
+        return new ApiResponse<T>{Status = false,Message = response.ErrorMessage};
     }
 }

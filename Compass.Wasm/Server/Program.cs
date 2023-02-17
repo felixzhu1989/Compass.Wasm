@@ -300,13 +300,16 @@ app.UseSwagger();
 
 //集成事件
 app.UseEventBus();
-app.UseAuthentication();//JWT
-app.UseAuthorization();
-#endregion
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.UseAuthentication();//JWT
+app.UseAuthorization();
+
+#endregion
+
 app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");

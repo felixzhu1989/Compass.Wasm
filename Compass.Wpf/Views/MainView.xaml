@@ -31,7 +31,7 @@
             <!--弹出菜单-->
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="220">
-                    <!--添加头像，名字（暂时写死，以后绑定属性）和菜单的代码，ListBox中绑定MenuBars-->
+                    <!--添加头像，名字和菜单的代码，ListBox中绑定MenuBars-->
                     <StackPanel DockPanel.Dock="Top"
                                 Margin="0,20">
                         <materialDesign:PackIcon Kind="AccountTie"
@@ -39,7 +39,7 @@
                                                  Height="50"
                                                  Foreground="DodgerBlue"
                                                  HorizontalAlignment="Center" />
-                        <TextBlock Text="Admin"
+                        <TextBlock Text="{Binding UserName}"
                                    Foreground="DodgerBlue"
                                    HorizontalAlignment="Center"
                                    Margin="0,10" />
@@ -73,7 +73,7 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <!--全局通知消息-->
+                <!--Snackbar全局通知消息-->
                 <materialDesign:Snackbar x:Name="Snackbar"
                                          MessageQueue="{materialDesign:MessageQueue}"
                                          Panel.ZIndex="1" />
@@ -112,10 +112,15 @@
                                                          Margin="16,0" />
                             </materialDesign:PopupBox.ToggleContent>
                             <StackPanel>
-                                <Button Content="个人中心"
-                                        Command="{Binding AppCenterCommand}" />
+                                <TextBlock Text="{Binding UserName}"
+                                           HorizontalAlignment="Center"
+                                           Foreground="DodgerBlue"/>
+                                <!--<Button Content="个人中心"
+                                        Command="{Binding AppCenterCommand}" />-->
+
                                 <Button Content="注销登录"
-                                        Command="{Binding LogoutCommand}" />
+                                        Command="{Binding LogoutCommand}"
+                                        Foreground="Red"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                         <!--#endregion-->
@@ -128,19 +133,27 @@
                                           AutomationProperties.Name="HamburgerToggleButton" />
                             <!--#region 上一页，下一页，标题 -->
                             <Button Margin="15,0,0,0"
-                                    ToolTip="Previous Item"
+                                    ToolTip="上一页"
                                     Command="{Binding GoBackCommand }"
                                     Content="{materialDesign:PackIcon Kind=ArrowLeft, Size=24}"
                                     Style="{StaticResource MaterialDesignToolButton}"
                                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
                                     materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}" />
                             <Button Margin="15,0,0,0"
-                                    ToolTip="Next Item"
+                                    ToolTip="下一页"
                                     Command="{Binding GoForwardCommand  }"
                                     Content="{materialDesign:PackIcon Kind=ArrowRight, Size=24}"
                                     Style="{StaticResource MaterialDesignToolButton}"
                                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
                                     materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}" />
+                            <Button Margin="16,0,0,0"
+                                    materialDesign:RippleAssist.Feedback="{Binding RelativeSource={RelativeSource Self}, Path=Foreground, Converter={StaticResource BrushRoundConverter}}"
+                                    Command="{Binding HomeCommand}"
+                                    Content="{materialDesign:PackIcon Kind=Home,
+                                                        Size=24}"
+                                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}"
+                                    Style="{StaticResource MaterialDesignToolButton}"
+                                    ToolTip="主页" />
                             <materialDesign:PackIcon Kind="AppleSafari"
                                                      VerticalAlignment="Center"
                                                      Margin="15,0,5,0"
