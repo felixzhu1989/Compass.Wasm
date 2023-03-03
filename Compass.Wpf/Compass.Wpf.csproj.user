@@ -10,7 +10,16 @@
     <Compile Update="Views\AboutView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\BatchWorksView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\DetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Dialogs\LoginView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Hoods\KviDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\IndexView.xaml.cs">
@@ -20,6 +29,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MsgView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ProjectInfoView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ProjectView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SettingsView.xaml.cs">
@@ -38,6 +53,12 @@
     <Page Update="Views\AboutView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\BatchWorksView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DetailView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Dialogs\AddMemoView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -45,6 +66,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\LoginView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Hoods\KviDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\IndexView.xaml">
@@ -60,6 +84,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProcessView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProjectInfoView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProjectView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingsView.xaml">

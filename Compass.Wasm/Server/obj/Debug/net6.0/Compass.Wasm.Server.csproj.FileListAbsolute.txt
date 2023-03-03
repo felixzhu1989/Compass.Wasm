@@ -191,3 +191,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.TodoSe
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.TodoService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.TodoService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.TodoService.Domain.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets\msbuild.Compass.Wasm.Server.Microsoft.AspNetCore.StaticWebAssets.props
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets\msbuild.build.Compass.Wasm.Server.props
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Compass.Wasm.Server.props
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Compass.Wasm.Server.props
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets.pack.json

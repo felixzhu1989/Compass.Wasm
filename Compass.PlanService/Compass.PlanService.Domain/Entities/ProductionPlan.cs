@@ -13,7 +13,7 @@ public record ProductionPlan : AggregateRootEntity, IAggregateRoot, IHasCreation
     public DateTime ProductionFinishTime { get; private set; }
     public DateTime DrawingReleaseTarget { get; private set; }
     public DateTime MonthOfInvoice { get; private set; }//开票月份，input type=month
-    public ProductionPlanType ProductionPlanType { get; private set; }//海工, ETO, KFC
+    public ProductionPlanType_e ProductionPlanType { get; private set; }//海工, ETO, KFC
     public string? Remarks { get; private set; }
 
     public Guid? ProjectId { get; private set; }//关联项目
@@ -39,7 +39,7 @@ public record ProductionPlan : AggregateRootEntity, IAggregateRoot, IHasCreation
     //public DateTime PackingDate { get; private set; }
 
     private ProductionPlan(){}
-    public ProductionPlan(Guid id, DateTime odpReleaseTime, string sqNumber, string name, int quantity,string? modelSummary, DateTime productionFinishTime,DateTime drawingReleaseTarget,DateTime monthOfInvoice, ProductionPlanType productionPlanType, string? remarks)
+    public ProductionPlan(Guid id, DateTime odpReleaseTime, string sqNumber, string name, int quantity,string? modelSummary, DateTime productionFinishTime,DateTime drawingReleaseTarget,DateTime monthOfInvoice, ProductionPlanType_e productionPlanType, string? remarks)
     {
         Id = id;
         OdpReleaseTime = odpReleaseTime;
@@ -94,7 +94,7 @@ public record ProductionPlan : AggregateRootEntity, IAggregateRoot, IHasCreation
         return this;
     }
 
-    public ProductionPlan ChangeProductionPlanType(ProductionPlanType productionPlanType)
+    public ProductionPlan ChangeProductionPlanType(ProductionPlanType_e productionPlanType)
     {
         ProductionPlanType = productionPlanType;
         return this;

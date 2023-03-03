@@ -1,4 +1,5 @@
-﻿using Compass.Wasm.Shared.DataService.Entities;
+﻿using Compass.Wasm.Shared.DataService;
+using Compass.Wasm.Shared.DataService.Hoods;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Zack.Infrastructure.EFCore;

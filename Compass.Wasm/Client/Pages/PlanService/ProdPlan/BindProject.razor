@@ -32,12 +32,12 @@
     [Parameter]
     public string Id { get; set; }
     private ProductionPlanResponse? _prodPlan = new();
-    private List<ProjectResponse>? _projects = new();
+    private List<ProjectDto>? _projects = new();
     private string _selectedProjectId = string.Empty;
     protected override async Task OnInitializedAsync()
     {
         _prodPlan = await Http.GetFromJsonAsync<ProductionPlanResponse>($"api/ProductionPlan/{Id}");
-        _projects = await Http.GetFromJsonAsync<List<ProjectResponse>>("api/ProductionPlan/UnbindProjects");
+        _projects = await Http.GetFromJsonAsync<List<ProjectDto>>("api/ProductionPlan/UnbindProjects");
     }
     public async Task Save()
     {

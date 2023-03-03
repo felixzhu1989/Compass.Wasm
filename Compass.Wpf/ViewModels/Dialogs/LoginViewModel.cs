@@ -44,8 +44,8 @@ public class LoginViewModel : BindableBase, IDialogAware
         _aggregator = aggregator;
         SaveUser=true;
         //使用记住的用户名和密码
-        UserName = GetSettingString("UserName");
-        Password = GetSettingString("Password");
+        UserName = string.IsNullOrEmpty(GetSettingString("UserName")) ? Environment.UserName:GetSettingString("UserName");//如果是空的那么使用当前计算机登录用户
+        Password = string.IsNullOrEmpty(GetSettingString("Password"))?"123": GetSettingString("Password");//如果是空的那么使用默认密码123
         ExecuteCommand =new DelegateCommand<string>(Execute);
     }
     private void Execute(string obj)
@@ -98,7 +98,8 @@ public class LoginViewModel : BindableBase, IDialogAware
     {
         RequestClose?.Invoke(new DialogResult(ButtonResult.No));
     }
-
+    
+    #region 记住密码
     /// <summary>
     /// 读取客户设置,初始化的时候给其赋值,LoginName = GetSettingString("UserName");
     /// </summary>
@@ -127,9 +128,9 @@ public class LoginViewModel : BindableBase, IDialogAware
         config.AppSettings.Settings.Add(settingName, valueName);
         config.Save(ConfigurationSaveMode.Modified);
         ConfigurationManager.RefreshSection("appSettings");
-    }
-
-
+    } 
+    #endregion
+    
 
     public bool CanCloseDialog()
     {

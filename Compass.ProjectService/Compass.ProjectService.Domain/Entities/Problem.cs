@@ -8,7 +8,6 @@ public record Problem : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
 {
     //todo：记录问题时向相关方发送电子邮件
     public Guid ProjectId { get; init; }
-    public DateTime CreationTime { get; init; }//记录问题的时间（不允许修改）
     public Guid ReportUserId { get; init; }//记录问题的人
     //问题描述
     public Guid ProblemTypeId { get; private set; }//问题分类
@@ -30,7 +29,6 @@ public record Problem : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     {
         Id=id;
         ProjectId=projectId;
-        CreationTime = DateTime.Now;
         ReportUserId = reportUserId;
 
         ProblemTypeId = problemTypeId;

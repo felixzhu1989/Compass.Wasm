@@ -1,12 +1,7 @@
-﻿@using Compass.Wasm.Shared.DataService.Entities
+﻿@using Compass.Wasm.Shared.DataService
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 <td>
-    <AuthorizeView Roles="admin,pm,designer">
-        <Authorized>
-            <a class="mx-2" href="./updatemodule/@Module.Id"><i class="bi bi-gear"/></a>
-        </Authorized>
-    </AuthorizeView>
     @if (_model != null)
     {
         @*todo:如果添加了数据，则点击链接进入，否则在旁边点击添加数据*@
@@ -68,25 +63,25 @@
 </td>
 @code {
     [Parameter]
-    public ModuleResponse Module { get; set; }
+    public ModuleDto Module { get; set; }
     [Parameter]
     public bool ShowModuleRelease { get; set; }
 
-    private ModelResponse? _model=new();
-    private ModelTypeResponse? _modelType=new();
+    private ModelDto? _model=new();
+    private ModelTypeDto? _modelType=new();
     private string _userName=string.Empty;
     bool _isReleased;
     private ModuleData? _moduleData = new();
     protected override async Task OnInitializedAsync()
     {
-        _modelType = await Http.GetFromJsonAsync<ModelTypeResponse>($"api/ModelType/{Module.ModelTypeId}");
-        _model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{_modelType.ModelId}");
+        _modelType = await Http.GetFromJsonAsync<ModelTypeDto>($"api/ModelType/{Module.ModelTypeId}");
+        _model = await Http.GetFromJsonAsync<ModelDto>($"api/Model/{_modelType.ModelId}");
         _isReleased = Module.IsReleased;
         _userName = await Http.GetStringAsync($"api/Drawing/UserName/{Module.DrawingId}");
         if (Module.IsModuleDataOk)
         {
             _moduleData = await Http.GetFromJsonAsync<ModuleData>($"api/Data/{Module.Id}");
-            if (_moduleData!=null) _moduleData.ChangeId(Module.Id);
+            if (_moduleData!=null) _moduleData.ChangeId(Module.Id.Value);
         }
     }
 

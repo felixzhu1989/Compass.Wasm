@@ -1,5 +1,5 @@
 ﻿using Compass.DataService.Domain;
-using Compass.Wasm.Shared.DataService.Entities;
+using Compass.Wasm.Shared.DataService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Compass.DataService.Infrastructure;
@@ -13,8 +13,7 @@ public class DataRepository : IDataRepository
     }
     public Task<List<ModuleData>> GetModulesDataAsync()
     {
-        
-       return _context.ModulesData.ToListAsync();
+        return _context.ModulesData.ToListAsync();
     }
     public Task<ModuleData?> GetModuleDataByIdAsync(Guid id)
     {

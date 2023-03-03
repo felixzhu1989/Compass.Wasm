@@ -1,5 +1,8 @@
 ﻿namespace Compass.Wasm.Shared;
-//添加泛型支持
+
+/// <summary>
+/// api返回结果，添加泛型支持
+/// </summary>
 public class ApiResponse<T>
 {
     public bool Status { get; set; }

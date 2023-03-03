@@ -2,7 +2,7 @@
 
 public class CategoryResponse
 {
-    public Sbu Sbu { get; set; }
+    public Sbu_e Sbu { get; set; }
     public Guid ProductId { get; set; }
     public Guid ModelId { get; set; }
     public Guid ModelTypeId { get; set; }

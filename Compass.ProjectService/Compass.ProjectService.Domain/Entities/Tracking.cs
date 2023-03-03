@@ -7,9 +7,6 @@ namespace Compass.ProjectService.Domain.Entities;
 /// </summary>
 public record Tracking : AggregateRootEntity, IAggregateRoot, IHasCreationTime, ISoftDelete
 {
-    //状态表示当前，根据EventBus接收到事件，自动修改
-    public ProjectStatus ProjectStatus { get;private set; }//计划,制图,生产,入库,结束
-    
     public bool ProblemNotResolved { get;private set; }//有没有待解决得问题，如果有则另起一行显示异常详细信息
 
     //对象初始化时-> 项目进入计划状态（产生该跟踪记录时必填）
@@ -28,12 +25,6 @@ public record Tracking : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     {
         Id = id;
         SortDate = sortDate;
-        ProjectStatus = ProjectStatus.计划;//初始状态是计划状态
-    }
-    public Tracking ChangeProjectStatus(ProjectStatus projectStatus)
-    {
-        ProjectStatus = projectStatus;
-        return this;
     }
     public Tracking ChangeSortDate(DateTime sortDate)
     {

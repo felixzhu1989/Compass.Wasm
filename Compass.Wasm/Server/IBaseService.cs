@@ -1,9 +1,8 @@
 ﻿using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameter;
 
 namespace Compass.Wasm.Server;
 
-public interface IBaseService<T>
+public interface IBaseService<T> where T : class
 {
 
     Task<ApiResponse<List<T>>> GetAllAsync();

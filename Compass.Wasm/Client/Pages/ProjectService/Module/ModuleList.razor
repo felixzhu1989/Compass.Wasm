@@ -5,36 +5,27 @@
 <PageTitle>Module List</PageTitle>
 <div class="row position-relative">
     <div class="col">
-        @if (drawing != null)
+        @if (_drawing != null)
         {
-            @if (project != null)
+            @if (_project != null)
             {
-                <h5><a href="./drawinglist/@project.Id">@project.OdpNumber</a></h5>
+                <h5><a href="./drawinglist/@_project.Id">@_project.OdpNumber</a></h5>
                 <div class="row">
                     <div class="col-sm-3" style="width: 95px">项目名称:</div>
-                    <div class="col-sm-9">@project.Name</div>
+                    <div class="col-sm-9">@_project.Name</div>
                 </div>
             }
 
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">Item编号:</div>
-                <div class="col-sm-9">@drawing.ItemNumber</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3" style="width: 95px">制图人员:</div>
-                <div class="col-sm-9">
-                    @if (user != null)
-                    {
-                        <span>@user.UserName</span>
-                    }
-                </div>
+                <div class="col-sm-9">@_drawing.ItemNumber</div>
             </div>
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">图纸链接:</div>
                 <div class="col-sm-9">
-                    @if (!string.IsNullOrWhiteSpace(drawing.DrawingUrl))
+                    @if (!string.IsNullOrWhiteSpace(_drawing.DrawingUrl))
                     {
-                        foreach (var fileUrl in drawing.DrawingUrl.Split('\n'))
+                        foreach (var fileUrl in _drawing.DrawingUrl.Split('\n'))
                         {
                             <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
 
@@ -44,11 +35,11 @@
                 </div>
             </div>
         }
-        @if (modules != null && modules.Length!=0)
+        @if (_modules != null && _modules.Count!=0)
         {
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">分段数量:</div>
-                <div class="col-sm-9">@modules.Length</div>
+                <div class="col-sm-9">@_modules.Count</div>
             </div>
         }
         else
@@ -56,20 +47,7 @@
             <span style="color: red">请添加分段！</span>
         }
     </div>
-
-    @*todo:控制权限*@
-    <AuthorizeView Roles="admin,pm,designer">
-        <Authorized>
-            <div class="col position-absolute bottom-0 end-0" style="text-align: right;width: 10%">
-                <span class="btn btn-outline-danger mb-2" @onclick="ShowAddModule">@(isAddDrop ? "收起" : "展开")</span>
-            </div>
-        </Authorized>
-    </AuthorizeView>
 </div>
-@if (isAddDrop)
-{
-    <AddModule Module="addModuleRequest" SaveModule="SaveModule" />
-}
 
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
     <thead>
@@ -81,24 +59,24 @@
         </tr>
     </thead>
     <tbody>
-        @if (modules == null)
+        @if (_modules == null)
         {
             <p>图纸列表加载中...</p>
         }
-        else if (modules.Length == 0)
+        else if (_modules.Count == 0)
         {
             <p>没有要显示的图纸，请点击右上角添加图纸</p>
         }
         else
         {
-            @foreach (var module in modules)
+            @foreach (var module in _modules)
             {
                 <tr>
-                    <DisplayModule Module="module" ShowModuleRelease="isModuleRelease" />
+                    <DisplayModule Module="module" ShowModuleRelease="_isModuleRelease" />
                     <td>
                         @if (module.IsModuleDataOk)
                         {
-                            <DisplayModuleData Id="@module.Id"/>
+                            <DisplayModuleData Id="@module.Id.Value"/>
                         }
                         else
                         {
@@ -116,53 +94,26 @@
     [Parameter]
     public string DrawingId { get; set; }
 
-    private ModuleResponse[]? modules;
-    private AddModuleRequest? addModuleRequest;
-    private UserDto? user;
+    private List<ModuleDto> _modules=new();
+    private ModuleDto? _currentModuleDto;
 
-    private bool isAddDrop = false;
-    private DrawingResponse? drawing;
-    private ProjectResponse? project;
-    private bool isModuleRelease;
+    private DrawingDto? _drawing;
+    private ProjectDto? _project;
+    private bool _isModuleRelease;
 
     protected override async Task OnInitializedAsync()
     {
-        modules = await RefreshData();
-        drawing = await Http.GetFromJsonAsync<DrawingResponse>($"api/Drawing/{DrawingId}");
-        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{drawing.ProjectId}");
-        if (drawing.UserId!=null&&!drawing.UserId.Equals(Guid.Empty))
-        {
-            user = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{drawing.UserId}");
-        }
-        var tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{drawing.ProjectId}");
-        isModuleRelease = tracking.ProjectStatus >ProjectStatus.制图;
+        await RefreshData();
+        var drawingResponse = await Http.GetFromJsonAsync<ApiResponse<DrawingDto>>($"api/Drawing/{DrawingId}");
+        if (drawingResponse.Status) _drawing = drawingResponse.Result;
+        
+        var projectResponse = await Http.GetFromJsonAsync<ApiResponse<ProjectDto>>($"api/Project/{_drawing.ProjectId}");
+        if (projectResponse.Status) _project = projectResponse.Result;
+        _isModuleRelease = _project.ProjectStatus >ProjectStatus_e.制图;
     }
-    Task<ModuleResponse[]?> RefreshData()
+    private async Task RefreshData()
     {
-        return Http.GetFromJsonAsync<ModuleResponse[]>($"api/Module/All/{DrawingId}");
+        var moduleResponse = await Http.GetFromJsonAsync<ApiResponse<List<ModuleDto>>>($"api/Module/Drawing/{DrawingId}");
+        if (moduleResponse.Status) _modules = moduleResponse.Result;
     }
-    private void ShowAddModule()
-    {
-        if (!isAddDrop) addModuleRequest = new AddModuleRequest();
-        addModuleRequest.DrawingId = Guid.Parse(DrawingId);
-        isAddDrop = !isAddDrop;
-    }
-
-    private async Task SaveModule(AddModuleRequest request)
-    {
-        if (string.IsNullOrWhiteSpace(request.Name)&&request.ModelTypeId.Equals(Guid.Empty))
-        {
-            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
-            return;
-        }
-        //isAddDrop = false; //收起添加
-        var result = await Http.PostAsJsonAsync("api/Module/Add", request);
-        if (result.IsSuccessStatusCode)
-        {
-            modules = await RefreshData();
-            await JsRuntime.InvokeVoidAsync("alert", $"{request.Name}添加成功");
-        }
-    }
-
-
 }

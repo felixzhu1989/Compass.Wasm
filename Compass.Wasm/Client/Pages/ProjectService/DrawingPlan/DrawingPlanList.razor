@@ -61,14 +61,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _projectsCountNotPlanned = (await Http.GetFromJsonAsync<ProjectResponse[]>("api/DrawingPlan/ProjectsNotPlanned"))!.Length;
+        _projectsCountNotPlanned = (await Http.GetFromJsonAsync<ProjectDto[]>("api/DrawingPlan/ProjectsNotPlanned"))!.Length;
     }
     protected override async Task OnParametersSetAsync()
     {
         if (CurrentPage == 0) CurrentPage = 1;
-        PaginationResult<List<DrawingPlanResponse>>? result = await Http.GetFromJsonAsync<PaginationResult<List<DrawingPlanResponse>>>($"api/DrawingPlan/All/{CurrentPage}");
+        ApiPaginationResponse<List<DrawingPlanResponse>>? result = await Http.GetFromJsonAsync<ApiPaginationResponse<List<DrawingPlanResponse>>>($"api/DrawingPlan/All/{CurrentPage}");
         CurrentPage = result.CurrentPage;
         PageCount = result.Pages;
-        _drawingsPlan = result.Data;
+        _drawingsPlan = result.Result;
     }
 }

@@ -1,6 +1,4 @@
 ﻿@page "/projectlist"
-@page "/projectlist/{CurrentPage:int}"
-
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
 <PageTitle>Project List</PageTitle>
@@ -29,7 +27,6 @@
     <thead>
         <tr>
             <th style="width: 10%">项目编号</th>
-            <th style="text-align: center">交货日期</th>
             <th style="width: 35%">项目名称</th>
             <th style="text-align: center">项目分类</th>
             <th style="text-align: center">风险等级</th>
@@ -47,28 +44,16 @@
         {
             @foreach (var project in _projects)
             {
-                <DisplayProject Project="project" />
+                <DisplayProject Project="project"/>
             }
         }
     </tbody>
 </table>
 
-@for (int i = 1; i <= PageCount; i++)
-{
-    <a class="btn @(i==CurrentPage?"btn-info":"btn-outline-info")"
-   style="margin-right: 15px;margin-bottom: 30px;"
-   href="projectlist/@i">@i</a>
-}
-
 @code {
-    [Parameter]
-    public int CurrentPage { get; set; } = 1;
-    public int PageCount { get; set; } = 0;
-
-    private List<ProjectResponse>? _projects = new();
-    private AddProjectRequest? _addProjectRequest;
+    private List<ProjectDto>? _projects = new();
+    private ProjectDto? _addProjectRequest;
     private bool _isAddDrop;
-
     protected override async Task OnParametersSetAsync()
     {
         await RefreshData();
@@ -76,19 +61,16 @@
 
     async Task RefreshData()
     {
-        if (CurrentPage == 0) CurrentPage = 1;
-        var result = await Http.GetFromJsonAsync<PaginationResult<List<ProjectResponse>>>($"api/Project/All/{CurrentPage}");
-        CurrentPage = result!.CurrentPage;
-        PageCount = result.Pages;
-        _projects = result.Data;
+        var result = await Http.GetFromJsonAsync<ApiResponse<List<ProjectDto>>>($"api/Project/All");
+        _projects = result.Result;
     }
 
     private void ShowAddProject()
     {
-        if (!_isAddDrop) _addProjectRequest = new AddProjectRequest { ReceiveDate = DateTime.Today, DeliveryDate = DateTime.Today };
+        if (!_isAddDrop) _addProjectRequest = new ProjectDto();
         _isAddDrop = !_isAddDrop;
     }
-    private async Task SaveProject(AddProjectRequest request)
+    private async Task SaveProject(ProjectDto request)
     {
         if (string.IsNullOrWhiteSpace(request.Name) || string.IsNullOrWhiteSpace(request.OdpNumber))
         {

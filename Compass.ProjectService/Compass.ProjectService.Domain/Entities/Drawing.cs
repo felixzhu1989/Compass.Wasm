@@ -10,10 +10,6 @@ public record Drawing : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     //图纸链接，多张图纸使用回车\n隔开
     public string? DrawingUrl { get; private set; }
 
-    
-    public Guid? UserId { get; private set; }
-
-
     private Drawing() { }
     public Drawing(Guid id, Guid projectId, string itemNumber,string? drawingUrl)
     {
@@ -30,11 +26,6 @@ public record Drawing : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     public Drawing ChangeDrawingUrl(string drawingUrl)
     {
         DrawingUrl = drawingUrl;
-        return this;
-    }
-    public Drawing ChangeUserId(Guid? userId)
-    {
-        UserId= userId;
         return this;
     }
 }

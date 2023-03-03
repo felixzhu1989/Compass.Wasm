@@ -8,17 +8,13 @@
         <input class="form-control" placeholder="Name" @bind-value="@Project.Name" />
     </div>
     <div class="input-group mb-2">
-        <span class="input-group-text" style="color: green">合同日期</span>
-        <input type="date" class="form-control" style="color: green" @bind-value="@Project.ReceiveDate" />
-    </div>
-    <div class="input-group mb-2">
         <span class="input-group-text" style="color: red">交货日期</span>
         <input type="date" class="form-control" style="color: red" @bind-value="@Project.DeliveryDate" />
     </div>
     <div class="input-group mb-2">
         <span class="input-group-text">项目类型</span>
         <select class="form-select" @bind="@Project.ProjectType">
-            @foreach (var type in Enum.GetNames(typeof(ProjectType)))
+            @foreach (var type in Enum.GetNames(typeof(ProjectType_e)))
             {
                 <option>@type</option>
             }
@@ -27,7 +23,7 @@
     <div class="input-group mb-2">
         <span class="input-group-text">风险等级</span>
         <select class="form-select" @bind="@Project.RiskLevel">
-            @foreach (var level in Enum.GetNames(typeof(RiskLevel)))
+            @foreach (var level in Enum.GetNames(typeof(RiskLevel_e)))
             {
                 <option>@level</option>
             }
@@ -47,9 +43,9 @@
 
 @code {
     [Parameter]
-    public AddProjectRequest? Project { get; set; }
+    public ProjectDto? Project { get; set; }
     [Parameter]
-    public EventCallback<AddProjectRequest> SaveProject { get; set; }
+    public EventCallback<ProjectDto> SaveProject { get; set; }
     Task Save()
     {
         return SaveProject.InvokeAsync(Project);

@@ -29,13 +29,13 @@ public class TrackingController : ControllerBase
     }
 
     [HttpGet("All/{page}")]
-    public async Task<PaginationResult<List<TrackingResponse>>> FindAll(int page)
+    public async Task<ApiPaginationResponse<List<TrackingResponse>>> FindAll(int page)
     {
         var result = await _repository.GetTrackingsAsync(page);
-        var responses = await _mapper.ProjectTo<TrackingResponse>(result.Data).ToListAsync();
-        return new PaginationResult<List<TrackingResponse>>
+        var responses = await _mapper.ProjectTo<TrackingResponse>(result.Result).ToListAsync();
+        return new ApiPaginationResponse<List<TrackingResponse>>
         {
-            Data = responses,
+            Result = responses,
             CurrentPage = result.CurrentPage,
             Pages = result.Pages
         };
@@ -49,12 +49,12 @@ public class TrackingController : ControllerBase
     }
     //搜索项目
     [HttpGet("search/{searchText}/{page}")]
-    public async Task<PaginationResult<List<TrackingResponse>>> SearchTrackings(string searchText,int page)
+    public async Task<ApiPaginationResponse<List<TrackingResponse>>> SearchTrackings(string searchText,int page)
     {
         var result=await _repository.SearchTrackingsAsync(searchText,page);
-        return new PaginationResult<List<TrackingResponse>>
+        return new ApiPaginationResponse<List<TrackingResponse>>
         {
-            Data = await _mapper.ProjectTo<TrackingResponse>(result.Data).ToListAsync(),
+            Result = await _mapper.ProjectTo<TrackingResponse>(result.Result).ToListAsync(),
             CurrentPage = result.CurrentPage,
             Pages = result.Pages
         };
@@ -68,15 +68,7 @@ public class TrackingController : ControllerBase
 
     //无需Add,由集成事件自动创建
 
-    //项目状态和问题解决是由eventbus发出事件来维护，但是保留手动修改的接口
-    [HttpPut("ProjectStatus/{id}")]
-    public async Task<ActionResult> UpdateProjectStatus([RequiredGuid] Guid id, ProjectStatus projectStatus)
-    {
-        var tracking = await _repository.GetTrackingByIdAsync(id);
-        if (tracking == null) return NotFound($"没有Id={id}的Tracking");
-        tracking.ChangeProjectStatus(projectStatus);
-        return Ok();
-    }
+    
     [HttpPut("ProblemNotResolved/{id}")]
     public async Task<ActionResult> UpdateProblemNotResolved([RequiredGuid] Guid id, bool problemNotResolved)
     {

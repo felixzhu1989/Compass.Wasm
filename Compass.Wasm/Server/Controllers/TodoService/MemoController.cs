@@ -27,7 +27,7 @@ public class MemoController : ControllerBase
             //获取当前请求的用户的ID
             return Guid.Parse(Request.HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return Guid.Empty;
         }

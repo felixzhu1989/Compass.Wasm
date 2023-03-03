@@ -11,14 +11,14 @@ public class CategoryDomainService
         _repository = repository;
     }
 
-    public async Task<Product> AddProductAsync(string name, Sbu sbu)
+    public async Task<Product> AddProductAsync(string name, Sbu_e sbu)
     {
         int maxSeq = await _repository.GetMaxSeqOfProductsAsync(sbu);
         return new Product(Guid.NewGuid(), maxSeq+1, name, sbu);
     }
-    public async Task SortProductsAsync(Sbu sbu,Guid[] sortedProductIds)
+    public async Task SortProductsAsync(Sbu_e sbu,Guid[] sortedProductIds)
     {
-        var products = await _repository.GetProductsAsync(sbu);
+        var products = await _repository.GetProductsBySbuAsync(sbu);
         var idsInDb = products.Select(x => x.Id);
         if (!idsInDb.SequenceIgnoredEqual(sortedProductIds))
         {
@@ -65,7 +65,7 @@ public class CategoryDomainService
     }
     public async Task SortModelTypesAsync(Guid modelId, Guid[] sortedModelTypeIds)
     {
-        var modelTypes = await _repository.GetModelTypesByProductIdAsync(modelId);
+        var modelTypes = await _repository.GetModelTypesByModelIdAsync(modelId);
         var idsInDb = modelTypes.Select(x => x.Id);
         if (!idsInDb.SequenceIgnoredEqual(sortedModelTypeIds))
         {

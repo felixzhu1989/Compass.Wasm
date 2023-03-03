@@ -1,5 +1,5 @@
 ﻿@page "/update/uvi/{Id}"
-@using Compass.Wasm.Shared.DataService.Entities
+@using Compass.Wasm.Shared.DataService.Hoods
 @inject HttpClient Http
 @if (_uviData != null)
 {
@@ -22,8 +22,8 @@
         if(_uviData!=null) _uviData.ChangeId(Guid.Parse(Id));
     }
 
-    async Task Save()
+    Task Save()
     {
-
+        return Task.CompletedTask;
     }
 }

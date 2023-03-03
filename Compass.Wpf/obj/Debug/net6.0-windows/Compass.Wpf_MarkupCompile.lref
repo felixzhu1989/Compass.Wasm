@@ -1,11 +1,16 @@
 ﻿
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\AboutView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\BatchWorksView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\DetailView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Dialogs\LoginView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Hoods\KviDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\IndexView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\MainView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\MemoView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\MsgView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\ProjectInfoView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\ProjectView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\SettingsView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\TodoView.xaml;;
 

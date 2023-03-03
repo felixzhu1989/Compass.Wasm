@@ -37,12 +37,12 @@
 @code {
     [Parameter]
     public string Id { get; set; }
-    private DrawingResponse? drawing;
+    private DrawingDto? drawing;
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<DrawingResponse>($"api/Drawing/{Id}");
-        if (response==null) NavigationManager.NavigateTo("./projectlist");
-        drawing = response;
+        var response = await Http.GetFromJsonAsync<ApiResponse<DrawingDto>>($"api/Drawing/{Id}");
+        if (!response.Status) NavigationManager.NavigateTo("./projectlist");
+        drawing = response.Result;
     }
     private async Task Delete()
     {

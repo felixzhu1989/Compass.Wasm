@@ -4,7 +4,7 @@
     <div class="col input-group mb-2">
         <span class="input-group-text">①相关方</span>
         <select class="form-select" value="@_problemType.Stakeholder" @onchange="OnStakeholderChange">
-            @foreach (var stakeholder in Enum.GetNames(typeof(Stakeholder)))
+            @foreach (var stakeholder in Enum.GetNames(typeof(Stakeholder_e)))
             {
                 <option>@stakeholder</option>
             }
@@ -43,11 +43,11 @@
         }
         else
         {
-            await GetProblemTypes(Stakeholder.客户);
+            await GetProblemTypes(Stakeholder_e.客户);
             await InitProblemType();
         }
     }
-    async Task GetProblemTypes(Stakeholder stakeholder)
+    async Task GetProblemTypes(Stakeholder_e stakeholder)
     {
         _problemTypes=await Http.GetFromJsonAsync<List<ProblemTypeResponse>>($"api/ProblemType/All/{stakeholder}");
     }

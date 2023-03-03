@@ -9,7 +9,7 @@
     </div>
     @if (project != null)
     {
-        <div class="col-md-11 rounded-3 mb-2 @(project.DeliveryDate < DateTime.Today ? "text-success" : "") ">
+        <div class="col-md-11 rounded-3 mb-2">
             <div class="card rounded-3 border-0 shadow-sm my-0">
                 <div class="card-body">
                     <h6 class="card-title">
@@ -19,10 +19,6 @@
                                 <span class="fs-6">@project.Name</span>
                             </div>
                             <div class="col">
-                                <span class="badge me-2  @(project.DeliveryDate.Subtract(DrawingPlan.ReleaseTime).Days < 0 ? "bg-danger" : project.DeliveryDate < DateTime.Today ? "bg-success" : "bg-warning text-dark") ">
-                                    发货日期 @project.DeliveryDate.ToString("MM/dd")
-                                    生产周期 @(project.DeliveryDate.Subtract(DrawingPlan.ReleaseTime).Days)天
-                                </span>
                                 @if (totalDrawingsCount != 0)
                                 {
                                     <span class="badge bg-light text-black">Item总数 @totalDrawingsCount</span>
@@ -70,7 +66,7 @@
     [Parameter]
     public DrawingPlanResponse DrawingPlan { get; set; }
 
-    private ProjectResponse? project;
+    private ProjectDto? project;
     private int totalDrawingsCount;
     private int notAssignedDrawingsCount;
 
@@ -81,7 +77,9 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        project = await Http.GetFromJsonAsync<ProjectResponse?>($"api/Project/{DrawingPlan.Id}");
+        var projectResponse = await Http.GetFromJsonAsync<ApiResponse<ProjectDto>>($"api/Project/{DrawingPlan.Id}");
+        if (projectResponse.Status) project = projectResponse.Result;
+
         totalDrawingsCount = await Http.GetFromJsonAsync<int>($"api/Drawing/Total/{DrawingPlan.Id}");
         notAssignedDrawingsCount = await Http.GetFromJsonAsync<int>($"api/Drawing/NotAssigned/{DrawingPlan.Id}");
 
@@ -94,12 +92,12 @@
         Dictionary<string, int> modelCount = new Dictionary<string, int>();//统计模型个数
         List<string> modelList = new();
         totalWorkload = 0d;
-        var modules = await Http.GetFromJsonAsync<List<ModuleResponse>>($"api/Module/Project/{DrawingPlan.Id}");
+        var modules = await Http.GetFromJsonAsync<List<ModuleDto>>($"api/Module/Project/{DrawingPlan.Id}");
         if (modules==null) return;
         foreach (var module in modules)
         {
-            var modelType = await Http.GetFromJsonAsync<ModelTypeResponse>($"api/ModelType/{module.ModelTypeId}");
-            var model = await Http.GetFromJsonAsync<ModelResponse>($"api/Model/{modelType.ModelId}");
+            var modelType = await Http.GetFromJsonAsync<ModelTypeDto>($"api/ModelType/{module.ModelTypeId}");
+            var model = await Http.GetFromJsonAsync<ModelDto>($"api/Model/{modelType.ModelId}");
             if (modelCount.ContainsKey(model!.Name)) modelCount[model.Name] += 1;
             else modelCount.Add(model.Name, 1);
 
@@ -115,7 +113,7 @@
     private async Task GetDrawingsAssigned()
     {
         assignedDrawingsSummary.Clear();
-        var dic = await Http.GetFromJsonAsync<Dictionary<Guid, DrawingResponse[]>>($"api/DrawingPlan/DrawingsAssigned/{DrawingPlan.Id}");
+        var dic = await Http.GetFromJsonAsync<Dictionary<Guid, DrawingDto[]>>($"api/DrawingPlan/DrawingsAssigned/{DrawingPlan.Id}");
         foreach (var d in dic)
         {
             var user = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{d.Key}");

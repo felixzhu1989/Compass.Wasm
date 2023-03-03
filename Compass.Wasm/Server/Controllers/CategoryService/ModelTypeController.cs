@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Shared.CategoryService;
 using System.ComponentModel.DataAnnotations;
+using Compass.Wasm.Server.CategoryService;
+using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Controllers.CategoryService;
 
@@ -10,83 +12,29 @@ namespace Compass.Wasm.Server.Controllers.CategoryService;
 //[Authorize(Roles = "admin,pm,designer")]
 public class ModelTypeController : ControllerBase
 {
-    private readonly CategoryDomainService _domainService;
-    private readonly CategoryDbContext _dbContext;
-    private readonly ICategoryRepository _repository;
-    private readonly IMapper _mapper;
-    public ModelTypeController(CategoryDomainService domainService, CategoryDbContext dbContext, ICategoryRepository repository, IMapper mapper)
+    private readonly IModelTypeService _service;
+
+    public ModelTypeController(IModelTypeService service)
     {
-        _domainService = domainService;
-        _dbContext = dbContext;
-        _repository = repository;
-        _mapper = mapper;
-    }
-    [HttpGet("All/{modelId}")]
-    public async Task<List<ModelTypeResponse>> FindAllByProductId([RequiredGuid] Guid modelId)
-    {
-        //使用AutoMapper将Model转换成ModelResponse（Dto）
-        return await _mapper.ProjectTo<ModelTypeResponse>(await _repository.GetModelTypesByProductIdAsync(modelId)).ToListAsync();
-    }
-    [HttpGet("{id}")]
-    public async Task<ActionResult<ModelTypeResponse?>> FindById([RequiredGuid] Guid id)
-    {
-        var modelType = await _repository.GetModelTypeByIdAsync(id);
-        if (modelType == null) return NotFound($"没有Id={id}的ModelType");
-        return _mapper.Map<ModelTypeResponse>(modelType);
-    }
-    //根据Id查询SBU，Product，Model，ModelType
-    [HttpGet("Category/{id}")]
-    public async Task<ActionResult<CategoryResponse?>> CategoryById([RequiredGuid] Guid id)
-    {
-        var modelType = await _repository.GetModelTypeByIdAsync(id);
-        if (modelType == null) return NotFound($"没有Id={id}的ModelType");
-        var model = await _repository.GetModelByIdAsync(modelType.ModelId);
-        var product = await _repository.GetProductByIdAsync(model.ProductId);
-        return new CategoryResponse
-        {
-            Sbu = product.Sbu,
-            ProductId = product.Id,
-            ModelId = model.Id,
-            ModelTypeId = id,
-            ModelName = model.Name,
-            ModelTypeName = modelType.Name,
-            Description = modelType.Description,
-            Length = modelType.Length,
-            Width = modelType.Width,
-            Height = modelType.Height
-        };
+        _service = service;
     }
 
-    [HttpPost]
-    public async Task<ActionResult<Guid>> Add(AddModelTypeRequest request)
-    {
-        ModelType modelType = await _domainService.AddModelTypeAsync(request.ModelId, request.Name, request.Description, request.Length, request.Width, request.Height);
-        await _dbContext.ModelTypes.AddAsync(modelType);
-        return modelType.Id;
-    }
+    #region 基本增删改查
+    [HttpGet("All")]
+    public async Task<ApiResponse<List<ModelTypeDto>>> GetAll() => await _service.GetAllAsync();
+
+    [HttpGet("{id}")]
+    public async Task<ApiResponse<ModelTypeDto>> GetSingle([RequiredGuid] Guid id) => await _service.GetSingleAsync(id);
+
+    [HttpPost("Add")]
+    public async Task<ApiResponse<ModelTypeDto>> Add(ModelTypeDto dto) => await _service.AddAsync(dto);
+
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update([RequiredGuid] Guid id, ModelTypeResponse request)
-    {
-        var modelType = await _repository.GetModelTypeByIdAsync(id);
-        if (modelType == null) return NotFound($"没有Id={id}的ModelType");
-        modelType.ChangeName(request.Name).ChangeDescription(request.Description)
-            .ChangeLength(request.Length).ChangeWidth(request.Width).ChangeHeight(request.Height);
-        return Ok();
-    }
+    public async Task<ApiResponse<ModelTypeDto>> Update([RequiredGuid] Guid id, ModelTypeDto dto) => await _service.UpdateAsync(id, dto);
+
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete([RequiredGuid] Guid id)
-    {
-        var modelType = await _repository.GetModelTypeByIdAsync(id);
-        //这样做仍然是幂等的，因为“调用N次，确保服务器处于与第一次调用相同的状态。”与响应无关
-        if (modelType == null) return NotFound($"没有Id={id}的ModelType");
-        modelType.SoftDelete();
-        return Ok();
-    }
-    [HttpPut("Sort/{modelId}")]
-    public async Task<ActionResult> Sort([RequiredGuid] Guid modelId, CategorySortRequest request)
-    {
-        await _domainService.SortModelTypesAsync(modelId, request.SortedIds);
-        return Ok();
-    }
+    public async Task<ApiResponse<ModelTypeDto>> Delete([RequiredGuid] Guid id) => await _service.DeleteAsync(id);
+
+    #endregion
 
 }

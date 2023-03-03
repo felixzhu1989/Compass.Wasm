@@ -36,17 +36,13 @@
                 <input class="form-control" placeholder="Name" @bind-value="@project.Name" />
             </div>
             <div class="input-group mb-2">
-                <span class="input-group-text" style="color: green">合同日期</span>
-                <input type="date" class="form-control" style="color: green" @bind-value="@project.ReceiveDate" />
-            </div>
-            <div class="input-group mb-2">
                 <span class="input-group-text" style="color: red">交货日期</span>
                 <input type="date" class="form-control" style="color: red" @bind-value="@project.DeliveryDate" />
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text">项目类型</span>
                 <select class="form-select" @bind="@project.ProjectType">
-                    @foreach (var type in Enum.GetNames(typeof(ProjectType)))
+                    @foreach (var type in Enum.GetNames(typeof(ProjectType_e)))
                     {
                         <option>@type</option>
                     }
@@ -55,7 +51,7 @@
             <div class="input-group mb-2">
                 <span class="input-group-text">风险等级</span>
                 <select class="form-select" @bind="@project.RiskLevel">
-                    @foreach (var level in Enum.GetNames(typeof(RiskLevel)))
+                    @foreach (var level in Enum.GetNames(typeof(RiskLevel_e)))
                     {
                         <option>@level</option>
                     }
@@ -90,19 +86,19 @@
 
 
     <button class="btn btn-success" type="submit">保存</button>
-    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("/projectlist/1"))">取消</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("/projectlist"))">取消</button>
 </EditForm>
 
 
 @code {
     [Parameter]
     public string Id { get; set; }
-    private ProjectResponse? project = new();
+    private ProjectDto? project = new();
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Id}");
-        if (response==null) NavigationManager.NavigateTo("/projectlist/1");
-        project = response;
+        var response = await Http.GetFromJsonAsync<ApiResponse<ProjectDto>>($"api/Project/{Id}");
+        if (!response.Status) NavigationManager.NavigateTo("/projectlist");
+        project = response.Result;
     }
 
     private async Task Delete()
@@ -118,12 +114,12 @@
         if (confirmResult)
         {
             var result = await Http.DeleteAsync($"api/Project/{Id}");
-            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("/projectlist/1");
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("/projectlist");
         }
     }
     private async Task Save()
     {
         var result = await Http.PutAsJsonAsync($"api/Project/{Id}", project);
-        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("/projectlist/1");
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("/projectlist");
     }
 }

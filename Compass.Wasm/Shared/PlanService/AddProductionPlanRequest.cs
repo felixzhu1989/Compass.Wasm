@@ -10,6 +10,6 @@ public class AddProductionPlanRequest
     public DateTime ProductionFinishTime { get; set; }
     public DateTime DrawingReleaseTarget { get; set; }
     public DateTime MonthOfInvoice { get; set; }//开票月份，input type=month
-    public ProductionPlanType ProductionPlanType { get; set; }//海工, ETO, KFC
+    public ProductionPlanType_e ProductionPlanType { get; set; }//海工, ETO, KFC
     public string? Remarks { get; set; }
 }

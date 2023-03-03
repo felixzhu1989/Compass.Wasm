@@ -45,7 +45,7 @@
                 @*<DisplayTracking Id="tracking.Id" />*@
                 <tr class="@(tracking.ProblemNotResolved?"table-danger":"")">
                     <td style="text-align: center">
-                        <span class="badge @(tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus.入库?"bg-success": tracking.ProjectStatus==ProjectStatus.发货?"bg-secondary":"bg-dark")">@tracking.ProjectStatus</span>
+                        <span class="badge @(tracking.ProjectStatus==ProjectStatus_e.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus_e.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus_e.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus_e.入库?"bg-success": tracking.ProjectStatus==ProjectStatus_e.发货?"bg-secondary":"bg-dark")">@tracking.ProjectStatus</span>
                     </td>
 
                     <td>
@@ -64,7 +64,7 @@
                         <td style="text-align: center">@(tracking.DrawingReleaseActual!=null ? tracking.DrawingReleaseActual.Value.ToString("MM/dd") : "")</td>
                         <td style="text-align: center; font-weight: bold;
                                @(tracking.ProductionFinishTime < DateTime.Today
-                                   && tracking.ProjectStatus < ProjectStatus.入库? "color:red" :
+                                   && tracking.ProjectStatus < ProjectStatus_e.入库? "color:red" :
                                    tracking.ProductionFinishTime < DateTime.Today ?
                                        "color:green" : "")">
                             @tracking.ProductionFinishTime.ToString("MM/dd")

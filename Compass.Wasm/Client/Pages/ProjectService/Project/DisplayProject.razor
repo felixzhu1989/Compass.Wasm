@@ -9,13 +9,12 @@
         </AuthorizeView>
         <a href="./drawinglist/@Project.Id">@Project.OdpNumber</a>
     </td>
-    <td style="@(Project.DeliveryDate<DateTime.Today?"font-weight: bold;color: green":"font-weight: bold;");text-align: center">@Project.DeliveryDate.ToString("MM/dd")</td>
     <td>@Project.Name</td>
     <td style="text-align: center">@Project.ProjectType</td>
     @*根据风险值更改颜色*@
     @*<td class="@(Project.RiskLevel==RiskLevel.高风险 ? "table-danger" : Project.RiskLevel==RiskLevel.中风险 ? "table-warning":"")" style="text-align: center">@Project.RiskLevel</td>*@
     <td style="text-align: center">
-        <span class="badge @(Project.RiskLevel==RiskLevel.高风险 ? "bg-danger" : Project.RiskLevel==RiskLevel.中风险 ? "bg-warning text-dark":"bg-light text-dark")">@Project.RiskLevel</span>
+        <span class="badge @(Project.RiskLevel==RiskLevel_e.高风险 ? "bg-danger" : Project.RiskLevel==RiskLevel_e.中风险 ? "bg-warning text-dark":Project.RiskLevel==RiskLevel_e.低风险 ? "bg-info text-dark":"bg-light text-dark")">@Project.RiskLevel</span>
     </td>
 
     <td style="text-align: center">
@@ -61,7 +60,7 @@
 
 @code {
     [Parameter]
-    public ProjectResponse Project { get; set; }
+    public ProjectDto Project { get; set; }
 
     private bool showSpecialNotes = false;
     //private int rows = 1;

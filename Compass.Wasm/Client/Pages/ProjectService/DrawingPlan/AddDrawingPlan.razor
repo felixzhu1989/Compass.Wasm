@@ -14,7 +14,7 @@
                 @foreach (var project in projectsNotPlanned)
                 {
                     <option value="@project.Id">
-                        @project.OdpNumber【@project.DeliveryDate.ToString("MM/dd")】@project.Name
+                        @project.OdpNumber - @project.Name
                     </option>
                 }
             </select>
@@ -32,12 +32,12 @@
 
 @code {
     private AddDrawingPlanRequest? drawingPlan = new();
-    private List<ProjectResponse>? projectsNotPlanned=new();
+    private List<ProjectDto>? projectsNotPlanned=new();
 
     protected override async Task OnInitializedAsync()
     {
         drawingPlan.ReleaseTime=DateTime.Today;
-        projectsNotPlanned = await Http.GetFromJsonAsync<List<ProjectResponse>>("api/DrawingPlan/ProjectsNotPlanned");
+        projectsNotPlanned = await Http.GetFromJsonAsync<List<ProjectDto>>("api/DrawingPlan/ProjectsNotPlanned");
     }
     public async Task Save()
     {

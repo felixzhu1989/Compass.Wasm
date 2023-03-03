@@ -10,7 +10,7 @@
     {
         if (!string.IsNullOrWhiteSpace(ProductId))
         {
-            var models = await Http.GetFromJsonAsync<ModelResponse[]>($"api/Model/All/{ProductId}");
+            var models = await Http.GetFromJsonAsync<ModelDto[]>($"api/Model/All/{ProductId}");
             if (models != null)
             {
                 foreach (var model in models)

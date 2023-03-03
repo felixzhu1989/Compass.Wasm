@@ -29,6 +29,12 @@ public class TodoViewModel : NavigationViewModel
         get => isRightDrawerOpen;
         set { isRightDrawerOpen = value; RaisePropertyChanged(); }
     }
+    private string rightDrawerTitle;
+    public string RightDrawerTitle
+    {
+        get => rightDrawerTitle;
+        set { rightDrawerTitle = value; RaisePropertyChanged(); }
+    }
 
     private ObservableCollection<TodoDto> todoDtos;
     public ObservableCollection<TodoDto> TodoDtos
@@ -95,6 +101,7 @@ public class TodoViewModel : NavigationViewModel
     {
         CurrentDto = new TodoDto();
         IsRightDrawerOpen=true;
+        RightDrawerTitle = "添加待办";
     }
     /// <summary>
     /// 选中待办弹出修改界面
@@ -110,6 +117,7 @@ public class TodoViewModel : NavigationViewModel
             {
                 CurrentDto = todoResult.Result;
                 IsRightDrawerOpen = true;//展开右边的窗口
+                RightDrawerTitle = "修改待办";
             }
         }
         catch (Exception)

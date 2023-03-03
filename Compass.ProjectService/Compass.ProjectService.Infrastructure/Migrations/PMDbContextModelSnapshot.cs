@@ -50,9 +50,6 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
@@ -70,6 +67,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("AssignTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -82,8 +82,8 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ReleaseTime")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -167,6 +167,10 @@ namespace Compass.ProjectService.Infrastructure.Migrations
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ModelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModelTypeId")
                         .HasColumnType("uniqueidentifier");
@@ -292,11 +296,11 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ProjectType")
+                    b.Property<int>("ProjectStatus")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ReceiveDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ProjectType")
+                        .HasColumnType("int");
 
                     b.Property<int>("RiskLevel")
                         .HasColumnType("int");
@@ -335,9 +339,6 @@ namespace Compass.ProjectService.Infrastructure.Migrations
 
                     b.Property<bool>("ProblemNotResolved")
                         .HasColumnType("bit");
-
-                    b.Property<int>("ProjectStatus")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("ShippingEndTime")
                         .HasColumnType("datetime2");

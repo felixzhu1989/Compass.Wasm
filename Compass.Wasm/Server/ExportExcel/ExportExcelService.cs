@@ -7,7 +7,7 @@ namespace Compass.Wasm.Server.ExportExcel;
 public class ExportExcelService
 {
     #region Csv
-    public string GetCsv(IEnumerable<ProjectResponse> list)
+    public string GetCsv(IEnumerable<ProjectDto> list)
     {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.AppendLine("Id,OdpNumber,Name");
@@ -28,7 +28,7 @@ public class ExportExcelService
         return content;
     }
 
-    public byte[] CreateProjectExport(List<ProjectResponse> projects)
+    public byte[] CreateProjectExport(List<ProjectDto> projects)
     {
         var workbook=new XLWorkbook();//create an Excel workbook
         workbook.Properties.Title = "Exprot from projects";
@@ -41,7 +41,7 @@ public class ExportExcelService
         return ConvertToByte(workbook);
     }
 
-    public void CreateProjectWorksheet(XLWorkbook package, List<ProjectResponse> projects)
+    public void CreateProjectWorksheet(XLWorkbook package, List<ProjectDto> projects)
     {
         //create and add worksheets to the workbook
         var worksheet = package.Worksheets.Add("Projects");

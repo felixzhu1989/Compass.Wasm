@@ -18,7 +18,7 @@ public class DialogHostService : DialogService, IDialogHostService
         this.containerExtension=containerExtension;
     }
     //这里指定的DialogHost为MainView中的RootDialog。
-    public async Task<IDialogResult?> ShowDialog(string name, IDialogParameters parameters, string dialogHostName = "RootDialog")
+    public async Task<IDialogResult> ShowDialog(string name, IDialogParameters? parameters, string dialogHostName = "RootDialog")
     {
 
         if (parameters == null)

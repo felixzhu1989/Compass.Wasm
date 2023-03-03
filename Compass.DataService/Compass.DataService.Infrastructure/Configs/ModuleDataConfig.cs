@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.DataService.Entities;
+﻿using Compass.Wasm.Shared.DataService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

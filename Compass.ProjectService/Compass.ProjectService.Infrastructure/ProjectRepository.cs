@@ -13,24 +13,30 @@ public class ProjectRepository : IProjectRepository
         _context = context;
     }
     #region Project
-    public Task<PaginationResult<IQueryable<Project>>> GetProjectsAsync(int page)
+    public Task<IQueryable<Project>> GetProjectsAsync()
     {
-        var pageResults = 15f;//默认一页显示数据条数
-        var pageCount = Math.Ceiling(_context.Projects.Count() / pageResults);//计算页总数
-        return Task.FromResult(new PaginationResult<IQueryable<Project>>
-        {
-            Data = _context.Projects
-                .OrderByDescending(x => x.DeliveryDate)
-                .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
-                .Take((int)pageResults),
-            CurrentPage = page,
-            Pages = (int)pageCount
-        });
+        return Task.FromResult(_context.Projects.AsQueryable());
+
+        //分页基本逻辑
+        //var pageResults = 15f;//默认一页显示数据条数
+        //var pageCount = Math.Ceiling(_context.Projects.Count() / pageResults);//计算页总数
+        //return Task.FromResult(new PaginationResult<IQueryable<Project>>
+        //{
+        //    Result = _context.Projects
+        //        .OrderByDescending(x => x.DeliveryDate)
+        //        .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
+        //        .Take((int)pageResults),
+        //    CurrentPage = page,
+        //    Pages = (int)pageCount
+        //});
     }
     public Task<Project?> GetProjectByIdAsync(Guid id)
     {
         return _context.Projects.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
+
+
+
 
     public Task<Project?> GetProjectByOdpAsync(string odpNumber)
     {
@@ -42,13 +48,7 @@ public class ProjectRepository : IProjectRepository
         var project = await _context.Projects.SingleOrDefaultAsync(x => x.Id.Equals(id));
         return project.OdpNumber;
     }
-
-    public async Task<DateTime> GetDeliveryDateByIdAsync(Guid id)
-    {
-        var project = await _context.Projects.SingleOrDefaultAsync(x => x.Id.Equals(id));
-        return project.DeliveryDate;
-    }
-
+    
     public Task<IQueryable<Project>> GetUnbindProjectsAsync(List<Guid?> ids)
     {
        return Task.FromResult(_context.Projects.Where(x => !ids.Contains(x.Id)));
@@ -57,19 +57,25 @@ public class ProjectRepository : IProjectRepository
     #endregion
 
     #region Drawing
-    public Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId)
+    public Task<IQueryable<Drawing>> GetDrawingsAsync()
     {
-        return Task.FromResult(_context.Drawings.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x=>x.ItemNumber).AsQueryable());
+        return Task.FromResult(_context.Drawings.AsQueryable());
     }
-
-    public Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId)
-    {
-        return Task.FromResult(_context.Drawings.Where(x => x.UserId.Equals(userId)).OrderByDescending(x=>x.CreationTime).AsQueryable());
-    }
-
     public Task<Drawing?> GetDrawingByIdAsync(Guid id)
     {
         return _context.Drawings.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+
+    public Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId)
+    {
+        return Task.FromResult(_context.Drawings.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x => x.ItemNumber).AsQueryable());
+    }
+
+
+    public Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId)
+    {
+        throw new NotImplementedException();
     }
     public Task<bool> DrawingExistsInProjectAsync(Guid projectId)
     {
@@ -82,21 +88,25 @@ public class ProjectRepository : IProjectRepository
 
     public Task<int> GetNotAssignedDrawingsCountInProjectAsync(Guid projectId)
     {
-        return _context.Drawings.CountAsync(x => x.ProjectId.Equals(projectId)&& x.UserId == null || x.UserId.Equals(Guid.Empty));
+        throw new NotImplementedException();
     }
 
     #endregion
 
     #region Module
-    public Task<IQueryable<Module>> GetModulesByDrawingIdAsync(Guid drawingId)
+    public Task<IQueryable<Module>> GetModulesAsync()
     {
-        return Task.FromResult(_context.Modules.Where(x => x.DrawingId.Equals(drawingId)).OrderBy(x=>x.Name).AsQueryable());
+        return Task.FromResult(_context.Modules.AsQueryable());
     }
-    
-
     public Task<Module?> GetModuleByIdAsync(Guid id)
     {
         return _context.Modules.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+
+    public Task<IQueryable<Module>> GetModulesByDrawingIdAsync(Guid drawingId)
+    {
+        return Task.FromResult(_context.Modules.Where(x => x.DrawingId.Equals(drawingId)).OrderBy(x => x.Name).AsQueryable());
     }
 
     public Task<bool> ModuleExistsInDrawing(Guid drawingId)
@@ -115,16 +125,16 @@ public class ProjectRepository : IProjectRepository
 
     #region DrawingPlan
 
-    public Task<PaginationResult<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page)
+    public Task<ApiPaginationResponse<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page)
     {
         var pageResults = 5f;//默认一页显示数据条数
         var pageCount = Math.Ceiling(_context.DrawingsPlan.Count() / pageResults);//计算页总数
-        return Task.FromResult(new PaginationResult<IQueryable<DrawingPlan>>
+        return Task.FromResult(new ApiPaginationResponse<IQueryable<DrawingPlan>>
         {
-            Data = _context.DrawingsPlan
-                .OrderByDescending(x => x.ReleaseTime)
-                .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
-                .Take((int)pageResults),
+            //Result = _context.DrawingsPlan
+            //    .OrderByDescending(x => x.ReleaseTime)
+            //    .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
+            //    .Take((int)pageResults),
                 
             CurrentPage = page,
             Pages = (int)pageCount
@@ -146,44 +156,44 @@ public class ProjectRepository : IProjectRepository
         return notDrawingPlannedProjects;
     }
 
-    public async Task<bool> IsDrawingsNotAssignedByProjectIdAsync(Guid projectId)
-    {
-        var drawings = await GetDrawingsByProjectIdAsync(projectId);
-        return drawings.Any(x => x.UserId == null || x.UserId.Equals(Guid.Empty));
-    }
+    //public async Task<bool> IsDrawingsNotAssignedByProjectIdAsync(Guid projectId)
+    //{
+    //    var drawings = await GetDrawingsByProjectIdAsync(projectId);
+    //    return drawings.Any(x => x.UserId == null || x.UserId.Equals(Guid.Empty));
+    //}
 
     public async Task<IEnumerable<Drawing>> GetDrawingsNotAssignedByProjectIdAsync(Guid projectId)
     {
         var drawings = await GetDrawingsByProjectIdAsync(projectId);
         var notAssignedDrawings = new List<Drawing>();
-        foreach (var drawing in drawings)
-        {
-            if (drawing.UserId == null)//空的
-            {
-                notAssignedDrawings.Add(drawing);
-            }
-            else if (drawing.UserId.Equals(Guid.Empty))//全部是0
-            {
-                notAssignedDrawings.Add(drawing);
-            }
-        }
+        //foreach (var drawing in drawings)
+        //{
+        //    if (drawing.UserId == null)//空的
+        //    {
+        //        notAssignedDrawings.Add(drawing);
+        //    }
+        //    else if (drawing.UserId.Equals(Guid.Empty))//全部是0
+        //    {
+        //        notAssignedDrawings.Add(drawing);
+        //    }
+        //}
         return notAssignedDrawings;
     }
 
     public async Task<Dictionary<Guid, IQueryable<Drawing>>> GetDrawingsAssignedByProjectIdAsync(Guid projectId)
     {
         var drawings = await GetDrawingsByProjectIdAsync(projectId);
-        var userIds = drawings.Where(x => !string.IsNullOrWhiteSpace(x.UserId.ToString())).Select(x => x.UserId).Distinct();
+        //var userIds = drawings.Where(x => !string.IsNullOrWhiteSpace(x.UserId.ToString())).Select(x => x.UserId).Distinct();
         var assignedDrawings = new Dictionary<Guid, IQueryable<Drawing>>();
-        if (userIds != null && userIds.Count()!=0)
-        {
-            //userIds.OfType<Guid>()
-            foreach (var userId in userIds)
-            {
-                var items = drawings.Where(x => x.UserId.Equals(userId));
-                assignedDrawings.Add(userId.GetValueOrDefault(), items);
-            }
-        }
+        //if (userIds != null )
+        //{
+        //    //userIds.OfType<Guid>()
+        //    foreach (var userId in userIds)
+        //    {
+        //        var items = drawings.Where(x => x.UserId.Equals(userId));
+        //        assignedDrawings.Add(userId.GetValueOrDefault(), items);
+        //    }
+        //}
         return assignedDrawings;
     }
 
@@ -192,29 +202,28 @@ public class ProjectRepository : IProjectRepository
         foreach (var drawingId in drawingIds)
         {
             var dbDrawing = await GetDrawingByIdAsync(drawingId);
-            dbDrawing.ChangeUserId(userId);
         }
     }
 
     #endregion
 
     #region Tracking
-    public async Task<PaginationResult<IQueryable<Tracking>>> GetTrackingsAsync(int page)
+    public Task<ApiPaginationResponse<IQueryable<Tracking>>> GetTrackingsAsync(int page)
     {
         var pageResults = 15f;//默认一页显示数据条数
         var pageCount = Math.Ceiling(_context.Trackings.Count() / pageResults);//计算页总数
-        return new PaginationResult<IQueryable<Tracking>>
+        return Task.FromResult(new ApiPaginationResponse<IQueryable<Tracking>>
         {
             /* 使用查询子句先修改掉排序日期
              * update Trackings set Trackings.SortDate=
              * (select Projects.DeliveryDate from Projects where Projects.Id=Trackings.Id)
              */
-            Data = _context.Trackings.OrderByDescending(x=>x.SortDate)
+            Result = _context.Trackings.OrderByDescending(x=>x.SortDate)
                 .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
                 .Take((int)pageResults),
             CurrentPage = page,
             Pages = (int)pageCount
-        };
+        });
     }
 
     public Task<Tracking?> GetTrackingByIdAsync(Guid id)
@@ -222,7 +231,7 @@ public class ProjectRepository : IProjectRepository
         return _context.Trackings.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
     //搜索针对Tracking
-    public async Task<PaginationResult<IQueryable<Tracking>>> SearchTrackingsAsync(string searchText,int page)
+    public async Task<ApiPaginationResponse<IQueryable<Tracking>>> SearchTrackingsAsync(string searchText,int page)
     {
         var pageResults = 10f;//默认一页显示数据条数
         var pageCount = Math.Ceiling(SearchProjects(searchText).Count() / pageResults);//计算页总数
@@ -238,9 +247,9 @@ public class ProjectRepository : IProjectRepository
         var trackings= _context.Trackings.Where(x=>ids.Contains(x.Id))
             .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
             .Take((int)pageResults);
-        return new PaginationResult<IQueryable<Tracking>>
+        return new ApiPaginationResponse<IQueryable<Tracking>>
         {
-            Data = trackings,
+            Result = trackings,
             CurrentPage = page,
             Pages = (int)pageCount
         };

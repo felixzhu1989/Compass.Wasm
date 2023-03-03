@@ -13,9 +13,9 @@
 
 @code {
     [Parameter]
-    public DrawingResponse DrawingResponse { get; set; }
+    public DrawingDto DrawingResponse { get; set; }
     [Parameter]
-    public EventCallback<DrawingResponse> DeleteUser { get; set; }
+    public EventCallback<DrawingDto> DeleteUser { get; set; }
 
     async Task Delete()
     {

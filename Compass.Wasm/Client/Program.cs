@@ -20,4 +20,5 @@ builder.Services.AddBlazoredLocalStorage();//浏览器LocalStorage，用于存储和读取t
 builder.Services.AddScoped<ITrackingService, TrackingService>();
 
 
+
 await builder.Build().RunAsync();

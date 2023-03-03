@@ -6,7 +6,11 @@ using Compass.QualityService.Domain;
 using Compass.QualityService.Infrastructure;
 using Compass.TodoService.Domain;
 using Compass.TodoService.Infrastructure;
+using Compass.Wasm.Server.CategoryService;
+using Compass.Wasm.Server.DataService;
 using Compass.Wasm.Server.ExportExcel;
+using Compass.Wasm.Server.HoodService;
+using Compass.Wasm.Server.ProjectService;
 using Compass.Wasm.Server.TodoService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -170,6 +174,11 @@ builder.Services.AddDbContext<CategoryDbContext>(options =>
 });
 builder.Services.AddScoped<CategoryDomainService>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IModelService,ModelService>();
+builder.Services.AddScoped<IModelTypeService,ModelTypeService>();
+
 #endregion
 
 #region ProjectService
@@ -182,6 +191,13 @@ builder.Services.AddDbContext<ProjectDbContext>(options =>
 });
 builder.Services.AddScoped<ProjectDomainService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IDrawingService, DrawingService>();
+builder.Services.AddScoped<IModuleService, ModuleService>();
+
+
+
 #endregion
 
 #region DataService
@@ -194,6 +210,16 @@ builder.Services.AddDbContext<DataDbContext>(options =>
 });
 builder.Services.AddScoped<DataDomainService>();
 builder.Services.AddScoped<IDataRepository, DataRepository>();
+
+builder.Services.AddScoped<IModuleDataService, ModuleDataService>();
+#region HoodService
+
+builder.Services.AddScoped<IKviDataService,KviDataService>();
+
+#endregion
+
+
+
 #endregion
 
 #region PlanService

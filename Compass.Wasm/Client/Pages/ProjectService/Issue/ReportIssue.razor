@@ -66,13 +66,13 @@
     private bool isAddDrop;
     private AddIssueRequest? addIssueRequest;
 
-    private ProjectResponse? project;
+    private ProjectDto? project;
     private TrackingResponse? tracking;
     private IssueResponse[]? issues;
 
     protected override async Task OnParametersSetAsync()
     {
-        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+        project = await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{ProjectId}");
         tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{ProjectId}");
         issues = await Http.GetFromJsonAsync<IssueResponse[]>($"api/Issue/All/{ProjectId}");
     }
@@ -80,7 +80,7 @@
     {
         if (!isAddDrop) addIssueRequest = new AddIssueRequest();
         addIssueRequest.ProjectId = Guid.Parse(ProjectId);
-        addIssueRequest.ProjectStatus = tracking.ProjectStatus;
+        addIssueRequest.ProjectStatus = project.ProjectStatus;
         isAddDrop = !isAddDrop;
     }
 

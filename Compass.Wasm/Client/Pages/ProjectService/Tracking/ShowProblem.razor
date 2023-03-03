@@ -13,7 +13,7 @@
             <div class="col-sm-3" style="width: 61px">负责:</div>
             <div class="col-sm-9" >
                 <span>@responder.UserName</span>
-                <span>( @Problem.Deadline!.Value.ToString("yyyy/MM/dd") )</span>
+                @*<span>( @Problem.Deadline!.Value.ToString("yyyy/MM/dd") )</span>*@
             </div>
         </div>
     }
@@ -39,6 +39,10 @@
         if (Problem.ResponseUserId != null && !Problem.ResponseUserId.Equals(Guid.Empty))
         {
             responder = await Http.GetFromJsonAsync<UserDto>($"api/UserAdmin/{Problem.ResponseUserId}");
+        }
+        else
+        {
+            responder = null;
         }
     }
 }

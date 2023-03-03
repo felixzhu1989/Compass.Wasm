@@ -2,7 +2,7 @@
 /// <summary>
 /// 事业部
 /// </summary>
-public enum Sbu
+public enum Sbu_e
 {
     FS, MA, SBA
 }

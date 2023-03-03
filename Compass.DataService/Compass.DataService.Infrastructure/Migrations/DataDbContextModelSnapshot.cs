@@ -22,12 +22,20 @@ namespace Compass.DataService.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Entities.ModuleData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.DataService.ModuleData", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
@@ -37,6 +45,14 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.Property<double>("Height")
                         .HasColumnType("float")
                         .HasColumnName("Height");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
 
                     b.Property<double>("Length")
                         .HasColumnType("float")
@@ -57,9 +73,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Entities.KvfData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.KvfData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Entities.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
 
                     b.Property<bool>("Ansul")
                         .ValueGeneratedOnUpdateSometimes()
@@ -71,10 +87,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetector");
 
-                    b.Property<int>("AnsulDrop")
+                    b.Property<int>("AnsulDropNumber")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
-                        .HasColumnName("AnsulDrop");
+                        .HasColumnName("AnsulDropNumber");
 
                     b.Property<int>("AnsulSide")
                         .ValueGeneratedOnUpdateSometimes()
@@ -174,9 +190,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KvfData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Entities.KviData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.KviData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Entities.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
 
                     b.Property<bool>("Ansul")
                         .ValueGeneratedOnUpdateSometimes()
@@ -188,10 +204,34 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetector");
 
-                    b.Property<int>("AnsulDrop")
+                    b.Property<double>("AnsulDropDis1")
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis1");
+
+                    b.Property<double>("AnsulDropDis2")
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis2");
+
+                    b.Property<double>("AnsulDropDis3")
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis3");
+
+                    b.Property<double>("AnsulDropDis4")
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis4");
+
+                    b.Property<double>("AnsulDropDis5")
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis5");
+
+                    b.Property<int>("AnsulDropNumber")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
-                        .HasColumnName("AnsulDrop");
+                        .HasColumnName("AnsulDropNumber");
+
+                    b.Property<double>("AnsulDropToFront")
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropToFront");
 
                     b.Property<int>("AnsulSide")
                         .ValueGeneratedOnUpdateSometimes()
@@ -281,9 +321,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KviData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Entities.UvfData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UvfData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Entities.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
 
                     b.Property<bool>("Ansul")
                         .ValueGeneratedOnUpdateSometimes()
@@ -295,10 +335,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetector");
 
-                    b.Property<int>("AnsulDrop")
+                    b.Property<int>("AnsulDropNumber")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
-                        .HasColumnName("AnsulDrop");
+                        .HasColumnName("AnsulDropNumber");
 
                     b.Property<int>("AnsulSide")
                         .ValueGeneratedOnUpdateSometimes()
@@ -408,9 +448,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("UvfData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Entities.UvfHuaweiData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UvfHuaweiData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Entities.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
 
                     b.Property<bool>("Ansul")
                         .ValueGeneratedOnUpdateSometimes()
@@ -422,10 +462,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetector");
 
-                    b.Property<int>("AnsulDrop")
+                    b.Property<int>("AnsulDropNumber")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
-                        .HasColumnName("AnsulDrop");
+                        .HasColumnName("AnsulDropNumber");
 
                     b.Property<int>("AnsulSide")
                         .ValueGeneratedOnUpdateSometimes()
@@ -535,9 +575,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("UvfHuaweiData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Entities.UviData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UviData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Entities.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
 
                     b.Property<bool>("Ansul")
                         .ValueGeneratedOnUpdateSometimes()
@@ -549,10 +589,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetector");
 
-                    b.Property<int>("AnsulDrop")
+                    b.Property<int>("AnsulDropNumber")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
-                        .HasColumnName("AnsulDrop");
+                        .HasColumnName("AnsulDropNumber");
 
                     b.Property<int>("AnsulSide")
                         .ValueGeneratedOnUpdateSometimes()
@@ -652,9 +692,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("UviData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Entities.UviHuaweiData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UviHuaweiData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Entities.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
 
                     b.Property<bool>("Ansul")
                         .ValueGeneratedOnUpdateSometimes()
@@ -666,10 +706,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetector");
 
-                    b.Property<int>("AnsulDrop")
+                    b.Property<int>("AnsulDropNumber")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
-                        .HasColumnName("AnsulDrop");
+                        .HasColumnName("AnsulDropNumber");
 
                     b.Property<int>("AnsulSide")
                         .ValueGeneratedOnUpdateSometimes()

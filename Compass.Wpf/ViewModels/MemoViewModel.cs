@@ -32,6 +32,12 @@ public class MemoViewModel : NavigationViewModel
         get => isRightDrawerOpen;
         set { isRightDrawerOpen = value; RaisePropertyChanged(); }
     }
+    private string rightDrawerTitle;
+    public string RightDrawerTitle
+    {
+        get => rightDrawerTitle;
+        set { rightDrawerTitle = value; RaisePropertyChanged(); }
+    }
 
     private ObservableCollection<MemoDto> memoDtos;
     public ObservableCollection<MemoDto> MemoDtos
@@ -87,6 +93,7 @@ public class MemoViewModel : NavigationViewModel
     {
         CurrentDto = new MemoDto();
         IsRightDrawerOpen=true;
+        RightDrawerTitle = "添加备忘";
     }
 
     /// <summary>
@@ -103,6 +110,7 @@ public class MemoViewModel : NavigationViewModel
             {
                 CurrentDto = memoResult.Result;
                 IsRightDrawerOpen = true;//展开右边的窗口
+                RightDrawerTitle = "修改备忘";
             }
         }
         catch (Exception)

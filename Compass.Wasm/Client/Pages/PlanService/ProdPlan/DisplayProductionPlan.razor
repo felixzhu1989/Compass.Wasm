@@ -54,12 +54,12 @@
 @code {
     [Parameter]
     public ProductionPlanResponse ProductionPlan { get; set; }
-    private ProjectResponse? project = new();
+    private ProjectDto? project = new();
     protected override async Task OnParametersSetAsync()
     {
         if (ProductionPlan.ProjectId != null)
         {
-            project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProductionPlan.ProjectId}");
+            project = await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{ProductionPlan.ProjectId}");
         }
     }
 

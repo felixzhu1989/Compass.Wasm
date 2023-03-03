@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-sm-3" style="width: 95px">项目状态:</div>
             <div class="col-sm-9">
-                <span class="badge @(Issue.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": Issue.ProjectStatus==ProjectStatus.制图?"bg-primary": Issue.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": Issue.ProjectStatus==ProjectStatus.入库?"bg-success": "bg-secondary")">@Issue.ProjectStatus</span>
+                <span class="badge @(Issue.ProjectStatus==ProjectStatus_e.计划?"bg-info text-dark": Issue.ProjectStatus==ProjectStatus_e.制图?"bg-primary": Issue.ProjectStatus==ProjectStatus_e.生产?"bg-warning text-dark": Issue.ProjectStatus==ProjectStatus_e.入库?"bg-success": "bg-secondary")">@Issue.ProjectStatus</span>
                 <span>(登记时)</span>
             </div>
         </div>

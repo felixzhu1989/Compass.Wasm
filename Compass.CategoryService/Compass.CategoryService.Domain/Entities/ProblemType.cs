@@ -6,10 +6,10 @@ namespace Compass.CategoryService.Domain.Entities;
 public record ProblemType : AggregateRootEntity, IAggregateRoot, IHasCreationTime, ISoftDelete
 {
     public string Name { get;private set; }
-    public Stakeholder Stakeholder { get; private set; }
+    public Stakeholder_e Stakeholder { get; private set; }
 
     private ProblemType() { }
-    public ProblemType(Guid id, string name, Stakeholder stakeholder)
+    public ProblemType(Guid id, string name, Stakeholder_e stakeholder)
     {
         Id=id;
         Name=name;
@@ -20,7 +20,7 @@ public record ProblemType : AggregateRootEntity, IAggregateRoot, IHasCreationTim
         Name=name;
         return this;
     }
-    public ProblemType ChangeStakeholder(Stakeholder stakeholder)
+    public ProblemType ChangeStakeholder(Stakeholder_e stakeholder)
     {
         Stakeholder=stakeholder;
         return this;

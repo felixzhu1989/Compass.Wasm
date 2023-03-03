@@ -21,7 +21,7 @@
     <div class="col input-group mb-2 mt-2" style="max-width: 180px">
         <span class="input-group-text">分类</span>
         <select class="form-select" value="@PlanType" @onchange="OnPlanTypeChange">
-            @foreach (var type in Enum.GetNames(typeof(ProductionPlanType)))
+            @foreach (var type in Enum.GetNames(typeof(ProductionPlanType_e)))
             {
                 <option>@type</option>
             }
@@ -101,7 +101,7 @@
     {
         Year= _selectedMonth.Year;
         Month= _selectedMonth.Month;
-        PlanType??=ProductionPlanType.No.ToString();
+        PlanType??=ProductionPlanType_e.No.ToString();
         await RefreshData();
     }
 

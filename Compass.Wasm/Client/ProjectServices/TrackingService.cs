@@ -23,8 +23,8 @@ public class TrackingService : ITrackingService
     {
         List<TrackingResponse> trackingResponses = new();
         var result =
-            await _http.GetFromJsonAsync<PaginationResult<List<TrackingResponse>>>($"api/Tracking/All/{page}");
-        if (result is { Data: { } }) trackingResponses = result.Data;
+            await _http.GetFromJsonAsync<ApiPaginationResponse<List<TrackingResponse>>>($"api/Tracking/All/{page}");
+        if (result is { Result: { } }) trackingResponses = result.Result;
         CurrentPage = result.CurrentPage;
         PageCount = result.Pages;
         if (trackingResponses.Count == 0) Message = "No trackings found.";
@@ -35,10 +35,10 @@ public class TrackingService : ITrackingService
     {
         LastSearchText = searchText;//查询字符串赋值
         List<TrackingResponse> trackingResponses = new();
-        var result = await _http.GetFromJsonAsync<PaginationResult<List<TrackingResponse>>>($"api/Tracking/search/{searchText}/{page}");
-        if (result is { Data: { } })
+        var result = await _http.GetFromJsonAsync<ApiPaginationResponse<List<TrackingResponse>>>($"api/Tracking/search/{searchText}/{page}");
+        if (result is { Result: { } })
         {
-            trackingResponses = result.Data;
+            trackingResponses = result.Result;
             CurrentPage=result.CurrentPage;//当前页码
             PageCount = result.Pages;//总页数
         }
@@ -52,11 +52,12 @@ public class TrackingService : ITrackingService
         //构建Index页面Tracking模型
         foreach (var response in trackingResponses)
         {
-            var project = await _http.GetFromJsonAsync<ProjectResponse>($"api/Project/{response.Id}");
+            var result = await _http.GetFromJsonAsync<ApiResponse<ProjectDto>>($"api/Project/{response.Id}");
+            var project = result.Result;
             var trackingModel = new TrackingModel
             {
                 Id = response.Id,
-                ProjectStatus = response.ProjectStatus,
+                
                 SortDate = response.SortDate,
                 WarehousingTime = response.WarehousingTime,
                 ShippingStartTime = response.ShippingStartTime,
@@ -65,6 +66,7 @@ public class TrackingService : ITrackingService
                 #region Project
                 OdpNumber = project.OdpNumber,
                 ProjectName = project.Name,
+                ProjectStatus = project.ProjectStatus,
                 #endregion
             };
             var prodPlanResult = await _http.GetAsync($"api/ProductionPlan/ProjectId/{response.Id}");

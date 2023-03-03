@@ -9,10 +9,12 @@
       "Compass.Wpf/1.0.0": {
         "dependencies": {
           "Compass.Wasm.Shared": "1.0.0",
+          "DocumentFormat.OpenXml": "2.16.0",
           "MaterialDesignThemes": "4.7.1",
           "Newtonsoft.Json": "13.0.2",
           "Prism.DryIoc": "8.1.97",
-          "RestSharp": "108.0.3"
+          "RestSharp": "108.0.3",
+          "Visiativ.SOLIDWORKS.Interop": "31.1.0"
         },
         "runtime": {
           "Compass.Wpf.dll": {}
@@ -91,6 +93,17 @@
           "lib/netstandard2.0/Azure.Identity.dll": {
             "assemblyVersion": "1.6.0.0",
             "fileVersion": "1.600.22.20503"
+          }
+        }
+      },
+      "DocumentFormat.OpenXml/2.16.0": {
+        "dependencies": {
+          "System.IO.Packaging": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
+            "assemblyVersion": "2.16.0.0",
+            "fileVersion": "2.16.0.0"
           }
         }
       },
@@ -584,6 +597,7 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
+      "System.IO.Packaging/4.7.0": {},
       "System.Memory/4.5.4": {},
       "System.Memory.Data/1.0.2": {
         "dependencies": {
@@ -725,6 +739,26 @@
           "System.Drawing.Common": "5.0.0"
         }
       },
+      "Visiativ.SOLIDWORKS.Interop/31.1.0": {
+        "runtime": {
+          "lib/net6.0/SolidWorks.Interop.sldworks.dll": {
+            "assemblyVersion": "31.1.0.106",
+            "fileVersion": "31.1.0.106"
+          },
+          "lib/net6.0/SolidWorks.Interop.swcommands.dll": {
+            "assemblyVersion": "31.1.0.106",
+            "fileVersion": "31.1.0.106"
+          },
+          "lib/net6.0/SolidWorks.Interop.swconst.dll": {
+            "assemblyVersion": "31.1.0.106",
+            "fileVersion": "31.1.0.106"
+          },
+          "lib/net6.0/SolidWorks.Interop.swpublished.dll": {
+            "assemblyVersion": "31.1.0.106",
+            "fileVersion": "31.1.0.106"
+          }
+        }
+      },
       "Zack.Commons/1.1.11": {
         "dependencies": {
           "AsmResolver.DotNet": "4.11.2",
@@ -810,6 +844,13 @@
       "sha512": "sha512-EycyMsb6rD2PK9P0SyibFfEhvWWttdrYhyPF4f41uzdB/44yQlV+2Wehxyg489Rj6gbPvSPgbKq0xsHJBhipZA==",
       "path": "azure.identity/1.6.0",
       "hashPath": "azure.identity.1.6.0.nupkg.sha512"
+    },
+    "DocumentFormat.OpenXml/2.16.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RhpnDgyyx1KjZm98T3w3bSXFHG/7ZNUaVmz4NAUA+jmV3PcVNZeW87Y04CpBNLdDHEMSspirfo0B5kLRaoE97w==",
+      "path": "documentformat.openxml/2.16.0",
+      "hashPath": "documentformat.openxml.2.16.0.nupkg.sha512"
     },
     "DryIoc.dll/4.7.7": {
       "type": "package",
@@ -1168,6 +1209,13 @@
       "path": "system.io/4.3.0",
       "hashPath": "system.io.4.3.0.nupkg.sha512"
     },
+    "System.IO.Packaging/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9VV4KAbgRQZ79iEoG40KIeZy38O30oWwewScAST879+oki8g/Wa2HXZQgrhDDxQM4GkP1PnRJll05NMiVPbYAw==",
+      "path": "system.io.packaging/4.7.0",
+      "hashPath": "system.io.packaging.4.7.0.nupkg.sha512"
+    },
     "System.Memory/4.5.4": {
       "type": "package",
       "serviceable": true,
@@ -1328,6 +1376,13 @@
       "sha512": "sha512-c1ho9WU9ZxMZawML+ssPKZfdnrg/OjR3pe0m9v8230z3acqphwvPJqzAkH54xRYm5ntZHGG1EPP3sux9H3qSPg==",
       "path": "system.windows.extensions/5.0.0",
       "hashPath": "system.windows.extensions.5.0.0.nupkg.sha512"
+    },
+    "Visiativ.SOLIDWORKS.Interop/31.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-YJcUsYj0E9vNDLoGidbI4mLpoXlvC09fIQLjKK3SAalQzzht3TnGv6KfIsSzkWC1ZJ9tBBVj6I/uSuNIC+pndg==",
+      "path": "visiativ.solidworks.interop/31.1.0",
+      "hashPath": "visiativ.solidworks.interop.31.1.0.nupkg.sha512"
     },
     "Zack.Commons/1.1.11": {
       "type": "package",

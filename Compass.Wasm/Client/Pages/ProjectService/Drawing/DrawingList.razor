@@ -19,14 +19,14 @@
                 <a href="/updatedrawingplan/@project.Id">
                     <span class="badge ms-2 bg-primary">制图计划</span>
                 </a>
-                <a href="/projectlist/1">
+                <a href="/projectlist">
                     <span class="badge ms-2 bg-light text-black">@project.ProjectType</span>
                 </a>
-                <a href="/projectlist/1">
-                    <span class="badge ms-2 @(project.RiskLevel==RiskLevel.高风险 ? "bg-danger" : project.RiskLevel==RiskLevel.中风险 ? "bg-warning text-dark":"bg-light text-dark")">@project.RiskLevel</span>
+                <a href="/projectlist">
+                    <span class="badge ms-2 @(project.RiskLevel==RiskLevel_e.高风险 ? "bg-danger" : project.RiskLevel==RiskLevel_e.中风险 ? "bg-warning text-dark":project.RiskLevel==RiskLevel_e.低风险 ? "bg-info text-dark":"bg-light text-dark")">@project.RiskLevel</span>
                 </a>
                 <a href="/1">
-                    <span class="badge ms-2 @(tracking.ProjectStatus==ProjectStatus.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus.入库?"bg-success": tracking.ProjectStatus==ProjectStatus.发货?"bg-secondary":"bg-dark")">@tracking.ProjectStatus</span>
+                    <span class="badge ms-2 @(project.ProjectStatus==ProjectStatus_e.计划?"bg-info text-dark": project.ProjectStatus==ProjectStatus_e.制图?"bg-primary": project.ProjectStatus==ProjectStatus_e.生产?"bg-warning text-dark": project.ProjectStatus==ProjectStatus_e.入库?"bg-success": project.ProjectStatus==ProjectStatus_e.发货?"bg-secondary":"bg-dark")">@project.ProjectStatus</span>
                 </a>
                 <a href="/reportproblem/@ProjectId">
                     @if (tracking.ProblemNotResolved)
@@ -48,10 +48,6 @@
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">项目名称:</div>
                 <div class="col-sm-9">@project.Name</div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3" style="width: 95px">交货日期:</div>
-                <div class="col-sm-9" style="color: red">@project.DeliveryDate.ToString("MM/dd") （合同周期：@(project.DeliveryDate.Subtract(project.ReceiveDate).Days)天）</div>
             </div>
 
             @*todo:控制权限*@
@@ -203,7 +199,7 @@
 
 @if (isAddDrop)
 {
-    <AddDrawing Drawing="addDrawingRequest" SaveDrawing="SaveDrawing" />
+    <AddDrawing Drawing="currentDrawingDto" SaveDrawing="SaveDrawing" />
 }
 
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
@@ -230,7 +226,7 @@
         {
             <p>图纸列表加载中...</p>
         }
-        else if (drawings.Length == 0)
+        else if (drawings.Count == 0)
         {
             <p>没有要显示的图纸，请点击右上角添加图纸</p>
         }
@@ -249,12 +245,12 @@
     [Parameter]
     public string ProjectId { get; set; }
 
-    private DrawingResponse[]? drawings;
-    private AddDrawingRequest addDrawingRequest;
+    private List<DrawingDto> drawings=new ();
+    private DrawingDto currentDrawingDto;
 
 
     private bool isAddDrop = false;
-    private ProjectResponse? project = new();
+    private ProjectDto? project = new();
     private bool isModuleRelease;
 
     private TrackingResponse? tracking;
@@ -262,27 +258,31 @@
 
     protected override async Task OnInitializedAsync()
     {
-        drawings = await RefreshData();
+        await RefreshData();
 
-        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+        var projectResponse = await Http.GetFromJsonAsync<ApiResponse<ProjectDto>>($"api/Project/{ProjectId}");
+        if (projectResponse.Status) project = projectResponse.Result;
+
         tracking = await Http.GetFromJsonAsync<TrackingResponse>($"api/Tracking/{ProjectId}");
 
-        isModuleRelease = tracking.ProjectStatus >ProjectStatus.制图;
+        isModuleRelease = project.ProjectStatus >ProjectStatus_e.制图;
         problems = await Http.GetFromJsonAsync<ProblemResponse[]>($"api/Problem/NotResolved/{ProjectId}");
     }
-    Task<DrawingResponse[]?> RefreshData()
+    private async Task RefreshData()
     {
-        return Http.GetFromJsonAsync<DrawingResponse[]>($"api/Drawing/All/{ProjectId}");
+        var drawingResponse = await Http.GetFromJsonAsync<ApiResponse<List<DrawingDto>>>($"api/Drawing/Project/{ProjectId}");
+        if (drawingResponse.Status) drawings= drawingResponse.Result;
     }
+
     private void ShowAddDrawing()
     {
-        if (!isAddDrop) addDrawingRequest = new AddDrawingRequest();
-        addDrawingRequest.ProjectId = Guid.Parse(ProjectId);
+        if (!isAddDrop) currentDrawingDto = new DrawingDto();
+        currentDrawingDto.ProjectId = Guid.Parse(ProjectId);
         isAddDrop = !isAddDrop;
     }
 
 
-    private async Task SaveDrawing(AddDrawingRequest request)
+    private async Task SaveDrawing(DrawingDto request)
     {
         if (string.IsNullOrWhiteSpace(request.ItemNumber))
         {
@@ -290,8 +290,8 @@
             return;
         }
         isAddDrop = false; //收起添加
-        var result = await Http.PostAsJsonAsync("api/Drawing/Add", addDrawingRequest);
-        if (result.IsSuccessStatusCode) drawings = await RefreshData();
+        var result = await Http.PostAsJsonAsync("api/Drawing/Add", currentDrawingDto);
+        if (result.IsSuccessStatusCode) await RefreshData();
     }
 
 
@@ -299,12 +299,12 @@
     {
         if (!isModuleRelease)
         {
-            if (drawings == null || drawings.Length == 0)
+            if (drawings == null || drawings.Count == 0)
             {
                 await JsRuntime.InvokeVoidAsync("alert", "该项目下还没有添加图纸！");
                 return;
             }
-            if (tracking.ProjectStatus!=ProjectStatus.制图)
+            if (project.ProjectStatus!=ProjectStatus_e.制图)
             {
                 await JsRuntime.InvokeVoidAsync("alert", "项目状态不是制图！\n请项目经理添加制图计划。");
                 return;

@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Windows;
+using Compass.Wpf.BatchWorks;
+using Compass.Wpf.BatchWorks.Hoods;
 using Compass.Wpf.Common;
 using Compass.Wpf.Extensions;
 using Compass.Wpf.Service;
+using Compass.Wpf.Service.Hoods;
 using Compass.Wpf.ViewModels;
 using Compass.Wpf.ViewModels.Dialogs;
+using Compass.Wpf.ViewModels.Hoods;
 using Compass.Wpf.Views;
 using Compass.Wpf.Views.Dialogs;
+using Compass.Wpf.Views.Hoods;
 using DryIoc;
 using Prism.DryIoc;
 using Prism.Ioc;
@@ -73,6 +78,18 @@ namespace Compass.Wpf
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
             containerRegistry.RegisterForNavigation<TodoView, TodoViewModel>();
             containerRegistry.RegisterForNavigation<MemoView, MemoViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectView, ProjectViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectInfoView, ProjectInfoViewModel>();
+            containerRegistry.RegisterForNavigation<DetailView, DetailViewModel>();
+            containerRegistry.RegisterForNavigation<BatchWorksView, BatchWorksViewModel>();
+
+            #region 注册Hoods页面
+            containerRegistry.RegisterForNavigation<KviDataView,KviDataViewModel>();
+            
+
+
+            #endregion
+
             containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
 
             //设置界面
@@ -87,8 +104,23 @@ namespace Compass.Wpf
             containerRegistry.GetContainer().RegisterInstance(@"http://localhost/", serviceKey: "apiUrl");
 
             //注册服务
+            containerRegistry.Register<ISldWorksService, SldWorksService>();
             containerRegistry.Register<ITodoService, TodoService>();
             containerRegistry.Register<IMemoService, MemoService>();
+            containerRegistry.Register<IProjectService, ProjectService>();
+            containerRegistry.Register<IModuleService,ModuleService>();
+            containerRegistry.Register<IModuleDataService,ModuleDataService>();
+            containerRegistry.Register<IBatchWorksService,BatchWorksService>();
+
+            #region HoodService
+            containerRegistry.Register<IKviDataService, KviDataService>();
+            containerRegistry.Register<IKviAutoDrawing,KviAutoDrawing>();
+
+
+            #endregion
+
+
+
             containerRegistry.Register<ILoginService, LoginService>();
 
             //注册对话主机服务

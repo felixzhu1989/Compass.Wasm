@@ -4,7 +4,7 @@
     <div class="col input-group mb-2" style="width: 100px">
         <span class="input-group-text">①事业部</span>
         <select class="form-select" value="@_category.Sbu" @onchange="OnSbuChange">
-            @foreach (var sbu in Enum.GetNames(typeof(Sbu)))
+            @foreach (var sbu in Enum.GetNames(typeof(Sbu_e)))
             {
                 <option>@sbu</option>
             }
@@ -58,9 +58,9 @@
     [Parameter]
     public EventCallback<string> ModelTypeIdChanged { get; set; }
 
-    private List<ProductResponse>? _products;
-    private List<ModelResponse>? _models;
-    private List<ModelTypeResponse>? _modelTypes;
+    private List<ProductDto>? _products;
+    private List<ModelDto>? _models;
+    private List<ModelTypeDto>? _modelTypes;
     private CategoryResponse? _category=new();
 
     protected override async Task OnInitializedAsync()
@@ -77,7 +77,7 @@
         }
         else
         {
-            await GetProducts(Sbu.FS);
+            await GetProducts(Sbu_e.FS);
             await GetModels(_products!.First().Id.ToString());
             await GetModelTypes(_models!.First().Id.ToString());
             await InitModelType();
@@ -99,22 +99,22 @@
             await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
         }
     }
-    async Task GetProducts(Sbu sbu)
+    async Task GetProducts(Sbu_e sbu)
     {
-        _products=await Http.GetFromJsonAsync<List<ProductResponse>>($"api/Product/All/{sbu}");
+        _products=await Http.GetFromJsonAsync<List<ProductDto>>($"api/Product/All/{sbu}");
     }
     async Task GetModels(string productId)
     {
-        _models = await Http.GetFromJsonAsync<List<ModelResponse>>($"api/Model/All/{productId}");
+        _models = await Http.GetFromJsonAsync<List<ModelDto>>($"api/Model/All/{productId}");
     }
     async Task GetModelTypes(string modelId)
     {
-        _modelTypes = await Http.GetFromJsonAsync<List<ModelTypeResponse>>($"api/ModelType/All/{modelId}");
+        _modelTypes = await Http.GetFromJsonAsync<List<ModelTypeDto>>($"api/ModelType/All/{modelId}");
     }
 
     async Task OnSbuChange(ChangeEventArgs e)
     {
-        _products=await Http.GetFromJsonAsync<List<ProductResponse>>($"api/Product/All/{e.Value:int}");
+        _products=await Http.GetFromJsonAsync<List<ProductDto>>($"api/Product/All/{e.Value:int}");
 
         if (_products != null && _products.Count != 0)
         {

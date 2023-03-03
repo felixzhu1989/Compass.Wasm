@@ -13,19 +13,19 @@ public class PlanRepository : IPlanRepository
     {
         _context = context;
     }
-    public Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year,int month, ProductionPlanType productionPlanType)
+    public Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year,int month, ProductionPlanType_e productionPlanType)
     {
         //只值比较年和月，判断类型，如果为No，则返回全部
-        var result = productionPlanType.Equals(ProductionPlanType.No) ?
+        var result = productionPlanType.Equals(ProductionPlanType_e.No) ?
             _context.ProductionPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MonthOfInvoice.Month.Equals(month))
             : _context.ProductionPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MonthOfInvoice.Month.Equals(month)&&x.ProductionPlanType.Equals(productionPlanType));
         return Task.FromResult(result.OrderBy(x=>x.OdpReleaseTime).AsQueryable());
     }
 
-    public Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year, ProductionPlanType productionPlanType)
+    public Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year, ProductionPlanType_e productionPlanType)
     {
         //只值比较年和月，判断类型，如果为No，则返回全部
-        var result = productionPlanType.Equals(ProductionPlanType.No) ?
+        var result = productionPlanType.Equals(ProductionPlanType_e.No) ?
             _context.ProductionPlans.Where(x => x.MonthOfInvoice.Year.Equals(year))
             : _context.ProductionPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.ProductionPlanType.Equals(productionPlanType));
         return Task.FromResult(result.OrderBy(x => x.OdpReleaseTime).AsQueryable());
@@ -56,7 +56,7 @@ public class PlanRepository : IPlanRepository
         var result = _context.ProductionPlans
             .Where(x => x.MonthOfInvoice.Year.Equals(year)
                         && x.MonthOfInvoice.Month.Equals(month)
-                        && !x.ProductionPlanType.Equals(ProductionPlanType.KFC));
+                        && !x.ProductionPlanType.Equals(ProductionPlanType_e.KFC));
         return Task.FromResult(GetCycleTime(result));
     }
 
@@ -64,7 +64,7 @@ public class PlanRepository : IPlanRepository
     {
         var result = _context.ProductionPlans
             .Where(x => x.MonthOfInvoice.Year.Equals(year)
-                        && !x.ProductionPlanType.Equals(ProductionPlanType.KFC));
+                        && !x.ProductionPlanType.Equals(ProductionPlanType_e.KFC));
         return Task.FromResult(GetCycleTime(result));
     }
 

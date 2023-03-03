@@ -30,12 +30,12 @@
 @code {
     [Parameter]
     public string Id { get; set; }
-    private ProjectResponse? _project = new();
+    private ProjectDto? _project = new();
     private string _selectedProdId = string.Empty;
     private List<ProductionPlanResponse>? _prodPlans = new();
     protected override async Task OnInitializedAsync()
     {        
-        _project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{Id}");
+        _project = await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{Id}");
         _prodPlans = await Http.GetFromJsonAsync<List<ProductionPlanResponse>>("api/ProductionPlan/Unbind");
     }
     public async Task Save()

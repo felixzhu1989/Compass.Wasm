@@ -33,12 +33,12 @@ public class ProductionPlanController : ControllerBase
         _pmRepository = pmRepository;
     }
     [HttpGet("{year}/{month}/{planType}")]
-    public async Task<List<ProductionPlanResponse>> FindByMonthAndClass(int year, int month, ProductionPlanType planType)
+    public async Task<List<ProductionPlanResponse>> FindByMonthAndClass(int year, int month, ProductionPlanType_e planType)
     {
         return await _mapper.ProjectTo<ProductionPlanResponse>(await _repository.GetProductionPlansAsync(year, month, planType)).ToListAsync();
     }
     [HttpGet("{year}/{planType}")]
-    public async Task<List<ProductionPlanResponse>> FindByYearAndClass(int year, ProductionPlanType planType)
+    public async Task<List<ProductionPlanResponse>> FindByYearAndClass(int year, ProductionPlanType_e planType)
     {
         return await _mapper.ProjectTo<ProductionPlanResponse>(await _repository.GetProductionPlansAsync(year, planType)).ToListAsync();
     }
@@ -48,11 +48,11 @@ public class ProductionPlanController : ControllerBase
         return await _mapper.ProjectTo<ProductionPlanResponse>(await _repository.GetUnbindProductionPlansAsync()).ToListAsync();
     }
     [HttpGet("UnbindProjects")]
-    public async Task<List<ProjectResponse>> FindUnbindProjects()
+    public async Task<List<ProjectDto>> FindUnbindProjects()
     {
         var projectIds = await _repository.GetBoundProductionPlansAsync();
         var unbindProjects = await _pmRepository.GetUnbindProjectsAsync(projectIds);
-        return await _mapper.ProjectTo<ProjectResponse>(unbindProjects).ToListAsync();
+        return await _mapper.ProjectTo<ProjectDto>(unbindProjects).ToListAsync();
     }
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductionPlanResponse?>> FindById([RequiredGuid] Guid id)

@@ -14,8 +14,8 @@ public class ShippingStartEventHandler: JsonIntegrationEventHandler<ShippingStar
     }
     public override async Task HandleJson(string eventName, ShippingStartEvent? eventData)
     {
-        var tracking = await _dbContext.Trackings.SingleAsync(x => x.Id.Equals(eventData!.ProjectId));
-        tracking.ChangeProjectStatus(ProjectStatus.发货);
+        var project = await _dbContext.Projects.SingleAsync(x => x.Id.Equals(eventData!.ProjectId));
+        project.ChangeProjectStatus(ProjectStatus_e.发货);
         await _dbContext.SaveChangesAsync();
     }
 }

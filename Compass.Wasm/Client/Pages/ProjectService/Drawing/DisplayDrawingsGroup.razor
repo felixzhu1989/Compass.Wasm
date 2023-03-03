@@ -31,16 +31,16 @@
     [Parameter]
     public Guid ProjectId { get; set; }
     [Parameter]
-    public List<DrawingResponse> DrawingResponses { get; set; }
-    private ProjectResponse? project;
+    public List<DrawingDto> DrawingResponses { get; set; }
+    private ProjectDto? project;
     private DrawingPlanResponse? drawingPlan;
     protected override async Task OnParametersSetAsync()
     {
-        project =await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+        project =await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{ProjectId}");
         drawingPlan = await Http.GetFromJsonAsync<DrawingPlanResponse>($"api/DrawingPlan/{ProjectId}");
     }
 
-    private async Task Delete(DrawingResponse drawingResponse)
+    private async Task Delete(DrawingDto drawingResponse)
     {
         var result = await Http.PutAsync($"api/Drawing/RemoveUser/{drawingResponse.Id}", null);
         if (result.IsSuccessStatusCode) DrawingResponses.Remove(drawingResponse);

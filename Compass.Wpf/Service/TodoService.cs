@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameter;
 using Compass.Wasm.Shared.TodoService;
-using Zack.DomainCommons.Models;
 
 namespace Compass.Wpf.Service;
 

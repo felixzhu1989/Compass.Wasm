@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.DataService.Entities;
+﻿using Compass.Wasm.Shared.DataService;
 
 namespace Compass.DataService.Domain;
 

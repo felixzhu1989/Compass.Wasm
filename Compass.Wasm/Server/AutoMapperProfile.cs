@@ -18,10 +18,12 @@ public class AutoMapperProfile : Profile
         CreateMap<User,UserDto>().ReverseMap();
 
         #region ProjectService
-        CreateMap<Project, ProjectResponse>().ReverseMap();
-        //.ForMember(dest => dest.OdpNumber, opt => opt.MapFrom(src => $"{src.OdpNumber}"))
-        CreateMap<Drawing, DrawingResponse>().ReverseMap();
-        CreateMap<Compass.ProjectService.Domain.Entities.Module, ModuleResponse>().ReverseMap();
+        CreateMap<Project, ProjectDto>().ReverseMap();
+        CreateMap<Drawing, DrawingDto>().ReverseMap();
+        CreateMap<Compass.ProjectService.Domain.Entities.Module, ModuleDto>().ReverseMap();
+
+
+
         CreateMap<DrawingPlan, DrawingPlanResponse>().ReverseMap();
         CreateMap<Tracking, TrackingResponse>().ReverseMap();
         CreateMap<Problem, ProblemResponse>().ReverseMap();
@@ -29,9 +31,9 @@ public class AutoMapperProfile : Profile
         #endregion
 
         #region CategoryService
-        CreateMap<Product, ProductResponse>().ReverseMap();
-        CreateMap<Model, ModelResponse>().ReverseMap();
-        CreateMap<ModelType, ModelTypeResponse>().ReverseMap();
+        CreateMap<Product, ProductDto>().ReverseMap();
+        CreateMap<Model, ModelDto>().ReverseMap();
+        CreateMap<ModelType, ModelTypeDto>().ReverseMap();
         CreateMap<ProblemType, ProblemTypeResponse>().ReverseMap();
         #endregion
 

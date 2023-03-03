@@ -57,7 +57,7 @@
     <div class="input-group mb-2">
         <span class="input-group-text">项目类型</span>
         <select class="form-select" @bind="@prodPlan.ProductionPlanType">
-            @foreach (var type in Enum.GetNames(typeof(ProductionPlanType)))
+            @foreach (var type in Enum.GetNames(typeof(ProductionPlanType_e)))
             {
                 <option>@type</option>
             }

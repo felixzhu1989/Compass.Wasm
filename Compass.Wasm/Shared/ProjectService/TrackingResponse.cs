@@ -3,8 +3,6 @@
 public record TrackingResponse
 {
     public Guid Id { get; set; }
-    public ProjectStatus ProjectStatus { get; set; }//计划,制图,生产,入库,结束
-
     public bool ProblemNotResolved { get; set; }//有没有待解决得问题，如果有则另起一行显示异常详细信息
 
     //对象初始化时-> 项目进入计划状态（产生该跟踪记录时必填）

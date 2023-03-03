@@ -7,7 +7,7 @@ namespace Compass.Wasm.Client.ProjectServices;
 public class TrackingModel
 {
     public Guid Id { get; set; }
-    public ProjectStatus ProjectStatus { get; set; }
+    public ProjectStatus_e ProjectStatus { get; set; }
     public DateTime SortDate { get; init; }
 
     #region Project

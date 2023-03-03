@@ -5,5 +5,5 @@ namespace Compass.Wasm.Shared.CategoryService;
 public class AddProblemTypeRequest
 {
     public string Name { get; set; }
-    public Stakeholder Stakeholder { get; set; }
+    public Stakeholder_e Stakeholder { get; set; }
 }

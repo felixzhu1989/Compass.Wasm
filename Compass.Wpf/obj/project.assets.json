@@ -108,6 +108,22 @@
           }
         }
       },
+      "DocumentFormat.OpenXml/2.16.0": {
+        "type": "package",
+        "dependencies": {
+          "System.IO.Packaging": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/DocumentFormat.OpenXml.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "DryIoc.dll/4.7.7": {
         "type": "package",
         "dependencies": {
@@ -958,6 +974,19 @@
           }
         }
       },
+      "System.IO.Packaging/4.7.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/System.IO.Packaging.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.IO.Packaging.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.Memory/4.5.4": {
         "type": "package",
         "compile": {
@@ -1347,6 +1376,21 @@
           }
         }
       },
+      "Visiativ.SOLIDWORKS.Interop/31.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/SolidWorks.Interop.sldworks.dll": {},
+          "lib/net6.0/SolidWorks.Interop.swcommands.dll": {},
+          "lib/net6.0/SolidWorks.Interop.swconst.dll": {},
+          "lib/net6.0/SolidWorks.Interop.swpublished.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/SolidWorks.Interop.sldworks.dll": {},
+          "lib/net6.0/SolidWorks.Interop.swcommands.dll": {},
+          "lib/net6.0/SolidWorks.Interop.swconst.dll": {},
+          "lib/net6.0/SolidWorks.Interop.swpublished.dll": {}
+        }
+      },
       "Zack.Commons/1.1.11": {
         "type": "package",
         "dependencies": {
@@ -1497,6 +1541,28 @@
         "azureicon.png",
         "lib/netstandard2.0/Azure.Identity.dll",
         "lib/netstandard2.0/Azure.Identity.xml"
+      ]
+    },
+    "DocumentFormat.OpenXml/2.16.0": {
+      "sha512": "RhpnDgyyx1KjZm98T3w3bSXFHG/7ZNUaVmz4NAUA+jmV3PcVNZeW87Y04CpBNLdDHEMSspirfo0B5kLRaoE97w==",
+      "type": "package",
+      "path": "documentformat.openxml/2.16.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "documentformat.openxml.2.16.0.nupkg.sha512",
+        "documentformat.openxml.nuspec",
+        "icon.png",
+        "lib/net35/DocumentFormat.OpenXml.dll",
+        "lib/net35/DocumentFormat.OpenXml.xml",
+        "lib/net40/DocumentFormat.OpenXml.dll",
+        "lib/net40/DocumentFormat.OpenXml.xml",
+        "lib/net46/DocumentFormat.OpenXml.dll",
+        "lib/net46/DocumentFormat.OpenXml.xml",
+        "lib/netstandard1.3/DocumentFormat.OpenXml.dll",
+        "lib/netstandard1.3/DocumentFormat.OpenXml.xml",
+        "lib/netstandard2.0/DocumentFormat.OpenXml.dll",
+        "lib/netstandard2.0/DocumentFormat.OpenXml.xml"
       ]
     },
     "DryIoc.dll/4.7.7": {
@@ -2945,6 +3011,33 @@
         "system.io.nuspec"
       ]
     },
+    "System.IO.Packaging/4.7.0": {
+      "sha512": "9VV4KAbgRQZ79iEoG40KIeZy38O30oWwewScAST879+oki8g/Wa2HXZQgrhDDxQM4GkP1PnRJll05NMiVPbYAw==",
+      "type": "package",
+      "path": "system.io.packaging/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net46/System.IO.Packaging.dll",
+        "lib/net46/System.IO.Packaging.xml",
+        "lib/netstandard1.3/System.IO.Packaging.dll",
+        "lib/netstandard1.3/System.IO.Packaging.xml",
+        "lib/netstandard2.0/System.IO.Packaging.dll",
+        "lib/netstandard2.0/System.IO.Packaging.xml",
+        "ref/net46/System.IO.Packaging.dll",
+        "ref/net46/System.IO.Packaging.xml",
+        "ref/netstandard1.3/System.IO.Packaging.dll",
+        "ref/netstandard1.3/System.IO.Packaging.xml",
+        "ref/netstandard2.0/System.IO.Packaging.dll",
+        "ref/netstandard2.0/System.IO.Packaging.xml",
+        "system.io.packaging.4.7.0.nupkg.sha512",
+        "system.io.packaging.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
     "System.Memory/4.5.4": {
       "sha512": "1MbJTHS1lZ4bS4FmsJjnuGJOu88ZzTT2rLvrhW7Ygic+pC0NWA+3hgAen0HRdsocuQXCkUTdFn9yHJJhsijDXw==",
       "type": "package",
@@ -4050,6 +4143,48 @@
         "version.txt"
       ]
     },
+    "Visiativ.SOLIDWORKS.Interop/31.1.0": {
+      "sha512": "YJcUsYj0E9vNDLoGidbI4mLpoXlvC09fIQLjKK3SAalQzzht3TnGv6KfIsSzkWC1ZJ9tBBVj6I/uSuNIC+pndg==",
+      "type": "package",
+      "path": "visiativ.solidworks.interop/31.1.0",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "images/Logo.jpg",
+        "lib/net20/SolidWorks.Interop.sldworks.dll",
+        "lib/net20/SolidWorks.Interop.swcommands.dll",
+        "lib/net20/SolidWorks.Interop.swconst.dll",
+        "lib/net20/SolidWorks.Interop.swpublished.dll",
+        "lib/net35/SolidWorks.Interop.sldworks.dll",
+        "lib/net35/SolidWorks.Interop.swcommands.dll",
+        "lib/net35/SolidWorks.Interop.swconst.dll",
+        "lib/net35/SolidWorks.Interop.swpublished.dll",
+        "lib/net40/SolidWorks.Interop.sldworks.dll",
+        "lib/net40/SolidWorks.Interop.swcommands.dll",
+        "lib/net40/SolidWorks.Interop.swconst.dll",
+        "lib/net40/SolidWorks.Interop.swpublished.dll",
+        "lib/net45/SolidWorks.Interop.sldworks.dll",
+        "lib/net45/SolidWorks.Interop.swcommands.dll",
+        "lib/net45/SolidWorks.Interop.swconst.dll",
+        "lib/net45/SolidWorks.Interop.swpublished.dll",
+        "lib/net48/SolidWorks.Interop.sldworks.dll",
+        "lib/net48/SolidWorks.Interop.swcommands.dll",
+        "lib/net48/SolidWorks.Interop.swconst.dll",
+        "lib/net48/SolidWorks.Interop.swpublished.dll",
+        "lib/net5.0/SolidWorks.Interop.sldworks.dll",
+        "lib/net5.0/SolidWorks.Interop.swcommands.dll",
+        "lib/net5.0/SolidWorks.Interop.swconst.dll",
+        "lib/net5.0/SolidWorks.Interop.swpublished.dll",
+        "lib/net6.0/SolidWorks.Interop.sldworks.dll",
+        "lib/net6.0/SolidWorks.Interop.swcommands.dll",
+        "lib/net6.0/SolidWorks.Interop.swconst.dll",
+        "lib/net6.0/SolidWorks.Interop.swpublished.dll",
+        "tools/install.ps1",
+        "visiativ.solidworks.interop.31.1.0.nupkg.sha512",
+        "visiativ.solidworks.interop.nuspec"
+      ]
+    },
     "Zack.Commons/1.1.11": {
       "sha512": "xgvQjvuokfuxlVgB4i+7VegK9uG5wtkDbRv285lMlyHAKaQPdj9sXfNAEc8nAgk58xOsTnJ1vV55GcYLOnKIRw==",
       "type": "package",
@@ -4083,10 +4218,12 @@
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "Compass.Wasm.Shared >= 1.0.0",
+      "DocumentFormat.OpenXml >= 2.16.0",
       "MaterialDesignThemes >= 4.7.1",
       "Newtonsoft.Json >= 13.0.2",
       "Prism.DryIoc >= 8.1.97",
-      "RestSharp >= 108.0.3"
+      "RestSharp >= 108.0.3",
+      "Visiativ.SOLIDWORKS.Interop >= 31.1.0"
     ]
   },
   "packageFolders": {
@@ -4131,6 +4268,10 @@
       "net6.0-windows7.0": {
         "targetAlias": "net6.0-windows",
         "dependencies": {
+          "DocumentFormat.OpenXml": {
+            "target": "Package",
+            "version": "[2.16.0, )"
+          },
           "MaterialDesignThemes": {
             "target": "Package",
             "version": "[4.7.1, )"
@@ -4146,6 +4287,10 @@
           "RestSharp": {
             "target": "Package",
             "version": "[108.0.3, )"
+          },
+          "Visiativ.SOLIDWORKS.Interop": {
+            "target": "Package",
+            "version": "[31.1.0, )"
           }
         },
         "imports": [
@@ -4167,7 +4312,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

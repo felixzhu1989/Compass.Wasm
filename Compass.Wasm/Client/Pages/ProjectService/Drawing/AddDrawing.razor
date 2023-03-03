@@ -10,9 +10,9 @@
 </EditForm>
 @code {
     [Parameter]
-    public AddDrawingRequest? Drawing { get; set; }
+    public DrawingDto? Drawing { get; set; }
     [Parameter]
-    public EventCallback<AddDrawingRequest> SaveDrawing { get; set; }
+    public EventCallback<DrawingDto> SaveDrawing { get; set; }
     public Task Save()
     {
         return SaveDrawing.InvokeAsync(Drawing);

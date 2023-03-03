@@ -76,13 +76,13 @@
     private bool isAddDrop;
     private AddProblemRequest? addProblemRequest=new();
 
-    private ProjectResponse? project=new();
+    private ProjectDto? project=new();
 
     private List<ProblemResponse>? problems=new();
 
     protected override async Task OnParametersSetAsync()
     {
-        project = await Http.GetFromJsonAsync<ProjectResponse>($"api/Project/{ProjectId}");
+        project = await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{ProjectId}");
         problems = await Http.GetFromJsonAsync<List<ProblemResponse>>($"api/Problem/All/{ProjectId}");
 
     }

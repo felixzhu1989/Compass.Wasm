@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
 using AutoMapper;
 using Compass.TodoService.Domain;
 using Compass.TodoService.Domain.Entities;
@@ -7,12 +6,11 @@ using Compass.TodoService.Infrastructure;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameter;
 using Compass.Wasm.Shared.TodoService;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Compass.Wasm.Server.TodoService;
 
 
-public class TodoService:ITodoService
+public class TodoService : ITodoService
 {
     private readonly TodoDomainService _domainService;
     private readonly TodoDbContext _dbContext;
@@ -21,7 +19,7 @@ public class TodoService:ITodoService
     private readonly IEventBus _eventBus;
     private readonly IMemoService _memoService;
 
-    public TodoService(TodoDomainService domainService, TodoDbContext dbContext, ITodoRepository repository, IMapper mapper, IEventBus eventBus,IMemoService memoService)
+    public TodoService(TodoDomainService domainService, TodoDbContext dbContext, ITodoRepository repository, IMapper mapper, IEventBus eventBus, IMemoService memoService)
     {
         _domainService = domainService;
         _dbContext = dbContext;
@@ -68,7 +66,7 @@ public class TodoService:ITodoService
     {
         try
         {
-            var model = new Todo(Guid.NewGuid(), dto.Title, dto.Content, dto.Status,dto.UserId);
+            var model = new Todo(Guid.NewGuid(), dto.Title, dto.Content, dto.Status, dto.UserId);
             await _dbContext.Todos.AddAsync(model);
             dto.Id= model.Id;
             return new ApiResponse<TodoDto> { Status = true, Result = dto };
@@ -79,7 +77,7 @@ public class TodoService:ITodoService
         }
     }
 
-    public async Task<ApiResponse<TodoDto>> UpdateAsync(Guid id,TodoDto dto)
+    public async Task<ApiResponse<TodoDto>> UpdateAsync(Guid id, TodoDto dto)
     {
         try
         {
@@ -116,20 +114,24 @@ public class TodoService:ITodoService
     }
     #endregion
 
-    
+
     #region 增加了特定用户的基本增查
     public async Task<ApiResponse<List<TodoDto>>> GetUserAllAsync(Guid userId)
     {
-        var result = await GetAllAsync();
-        if (result.Status)
+        try
         {
-            var dtos = result.Result.Where(x => x.UserId.Equals(userId)).ToList();
+            var models = await _repository.GetTodosAsync();
+            var userModels = models.Where(x => x.UserId.Equals(userId));
+            var dtos = await _mapper.ProjectTo<TodoDto>(userModels).ToListAsync();
             return new ApiResponse<List<TodoDto>> { Status = true, Result = dtos };
         }
-        return result;
+        catch (Exception e)
+        {
+            return new ApiResponse<List<TodoDto>> { Status = false, Message = e.Message };
+        }
     }
 
-    public async Task<ApiResponse<TodoDto>> UserAddAsync(TodoDto dto,Guid userId)
+    public async Task<ApiResponse<TodoDto>> UserAddAsync(TodoDto dto, Guid userId)
     {
         try
         {
@@ -152,12 +154,12 @@ public class TodoService:ITodoService
     {
         try
         {
-            var dtos = (await GetUserAllAsync(userId)).Result;
+            var models = await _repository.GetTodosAsync();
             //筛选结果，按照创建时间排序
-            var filterdtos = dtos.Where(x =>
-                (string.IsNullOrWhiteSpace(parameter.Search) || x.Title.Contains(parameter.Search) || x.Content.Contains(parameter.Search)) &&
-                (parameter.Status == null || x.Status == parameter.Status)).OrderBy(x=>x.CreationTime).ToList();
-            return new ApiResponse<List<TodoDto>> { Status = true, Result = filterdtos };
+            var filterModels = models.Where(x =>
+                (string.IsNullOrWhiteSpace(parameter.Search) || x.Title.Contains(parameter.Search) || x.Content.Contains(parameter.Search)) && (parameter.Status == null || x.Status == parameter.Status) && x.UserId.Equals(userId)).OrderBy(x => x.CreationTime);
+            var dtos = await _mapper.ProjectTo<TodoDto>(filterModels).ToListAsync();
+            return new ApiResponse<List<TodoDto>> { Status = true, Result = dtos };
         }
         catch (Exception e)
         {
@@ -182,9 +184,9 @@ public class TodoService:ITodoService
             summary.CompletedCount = todos.Count(x => x.Status == 1);//统计完成待办事项数量
             summary.CompletedRatio = (summary.CompletedCount / (double)summary.Sum).ToString("0%");//完成率
             summary.MemoCount=memos.Count;//汇总备忘录数量
-            summary.TodoDtos = new ObservableCollection<TodoDto>(todos.Where(x=>x.Status==0));//只需要未完成的项目
+            summary.TodoDtos = new ObservableCollection<TodoDto>(todos.Where(x => x.Status==0));//只需要未完成的项目
             summary.MemoDtos = new ObservableCollection<MemoDto>(memos);
-            return new ApiResponse<TodoSummaryDto>{Status = true,Result = summary};
+            return new ApiResponse<TodoSummaryDto> { Status = true, Result = summary };
         }
         catch (Exception e)
         {

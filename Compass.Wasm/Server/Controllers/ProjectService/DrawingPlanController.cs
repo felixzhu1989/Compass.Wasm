@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Shared.ProjectService;
 using System.ComponentModel.DataAnnotations;
-using Compass.Wasm.Server.ProjectService.TrackingEvent;
 using Compass.Wasm.Shared;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
@@ -29,12 +27,12 @@ public class DrawingPlanController : ControllerBase
     }
 
     [HttpGet("All/{page}")]
-    public async Task<PaginationResult<List<DrawingPlanResponse>>> FindAll(int page)
+    public async Task<ApiPaginationResponse<List<DrawingPlanResponse>>> FindAll(int page)
     {
         var result = await _repository.GetDrawingPlansAsync(page);
-        return new PaginationResult<List<DrawingPlanResponse>>
+        return new ApiPaginationResponse<List<DrawingPlanResponse>>
         {
-            Data = await _mapper.ProjectTo<DrawingPlanResponse>(result.Data).ToListAsync(),
+            Result = await _mapper.ProjectTo<DrawingPlanResponse>(result.Result).ToListAsync(),
             CurrentPage = result.CurrentPage,
             Pages = result.Pages
         };
@@ -50,34 +48,34 @@ public class DrawingPlanController : ControllerBase
         
 
     [HttpGet("ProjectsNotPlanned")]
-    public async Task<ProjectResponse[]> FindProjectsNotPlanned()
+    public async Task<ProjectDto[]> FindProjectsNotPlanned()
     {
         //使用AutoMapper将Project转换成ProjectResponse（Dto）
         var projects = await _repository.GetProjectsNotDrawingPlannedAsync();
-        var response = new List<ProjectResponse>();
+        var response = new List<ProjectDto>();
         foreach (var project in projects)
         {
-            response.Add(new ProjectResponse{Id = project.Id,OdpNumber = project.OdpNumber,Name = project.Name,DeliveryDate = project.DeliveryDate});
+            response.Add(new ProjectDto{Id = project.Id,OdpNumber = project.OdpNumber,Name = project.Name});
         }
         return response.ToArray();
 
         //return await _mapper.ProjectTo<ProjectResponse>(projects.AsQueryable()).ToArrayAsync();
     }
 
-    [HttpGet("IsDrawingsNotAssigned/{projectId}")]
-    public Task<bool> IsDrawingsNotAssigned([RequiredGuid] Guid projectId)
-    {
-        return _repository.IsDrawingsNotAssignedByProjectIdAsync(projectId);
-    }
+    //[HttpGet("IsDrawingsNotAssigned/{projectId}")]
+    //public Task<bool> IsDrawingsNotAssigned([RequiredGuid] Guid projectId)
+    //{
+    //    return _repository.IsDrawingsNotAssignedByProjectIdAsync(projectId);
+    //}
 
     [HttpGet("DrawingsNotAssigned/{projectId}")]
-    public async Task<List<DrawingResponse>> FindDrawingsNotAssigned([RequiredGuid] Guid projectId)
+    public async Task<List<DrawingDto>> FindDrawingsNotAssigned([RequiredGuid] Guid projectId)
     {
         var drawings = await _repository.GetDrawingsNotAssignedByProjectIdAsync(projectId);
-        var response = new List<DrawingResponse>();
+        var response = new List<DrawingDto>();
         foreach (var drawing in drawings)
         {
-            response.Add(new DrawingResponse{Id = drawing.Id,ItemNumber = drawing.ItemNumber,DrawingUrl = drawing.DrawingUrl});
+            response.Add(new DrawingDto{Id = drawing.Id,ItemNumber = drawing.ItemNumber,DrawingUrl = drawing.DrawingUrl});
         }
         return response;
 
@@ -85,14 +83,14 @@ public class DrawingPlanController : ControllerBase
     }
 
     [HttpGet("DrawingsAssigned/{projectId}")]
-    public async  Task<Dictionary<Guid, DrawingResponse[]>> FindDrawingsAssigned([RequiredGuid] Guid projectId)
+    public async  Task<Dictionary<Guid, DrawingDto[]>> FindDrawingsAssigned([RequiredGuid] Guid projectId)
     {
         var dic = await _repository.GetDrawingsAssignedByProjectIdAsync(projectId);
-        var responses = new Dictionary<Guid, DrawingResponse[]>();
+        var responses = new Dictionary<Guid, DrawingDto[]>();
         foreach (var d in dic)
         {
             //将Drawing类型使用AutoMapper转换成DrawingResponse
-            responses.Add(d.Key,await _mapper.ProjectTo<DrawingResponse>(d.Value).ToArrayAsync());
+            responses.Add(d.Key,await _mapper.ProjectTo<DrawingDto>(d.Value).ToArrayAsync());
         }
         return responses;
     }
@@ -100,7 +98,7 @@ public class DrawingPlanController : ControllerBase
     [HttpPost("Add")]
     public async Task<ActionResult<Guid>> Add(AddDrawingPlanRequest request)
     {
-        var drawingPlan = new DrawingPlan( request.ProjectId, request.ReleaseTime);
+        var drawingPlan = new DrawingPlan( request.ProjectId);
         await _dbContext.DrawingsPlan.AddAsync(drawingPlan);
         return drawingPlan.Id;
     }
@@ -110,7 +108,6 @@ public class DrawingPlanController : ControllerBase
     {
         var drawingPlan = await _repository.GetDrawingPlanByIdAsync(id);
         if (drawingPlan == null) return NotFound($"没有Id={id}的DrawingPlan");
-        drawingPlan.ChangeReleaseTime(request.ReleaseTime);
         return Ok();
     }
 

@@ -19,10 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.16.0" />
     <PackageReference Include="MaterialDesignThemes" Version="4.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="RestSharp" Version="108.0.3" />
+    <PackageReference Include="Visiativ.SOLIDWORKS.Interop" Version="31.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,6 +68,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Ceilings\" />
   </ItemGroup>
 
 </Project>

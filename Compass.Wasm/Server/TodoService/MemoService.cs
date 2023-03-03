@@ -112,13 +112,18 @@ public class MemoService:IMemoService
     #region 增加了特定用户的基本增查
     public async Task<ApiResponse<List<MemoDto>>> GetUserAllAsync(Guid userId)
     {
-        var result = await GetAllAsync();
-        if (result.Status)
+
+        try
         {
-            var dtos = result.Result.Where(x => x.UserId.Equals(userId)).ToList();
+            var models = await _repository.GetMemosAsync();
+            var userModels = models.Where(x => x.UserId.Equals(userId));
+            var dtos = await _mapper.ProjectTo<MemoDto>(userModels).ToListAsync();
             return new ApiResponse<List<MemoDto>> { Status = true, Result = dtos };
         }
-        return result;
+        catch (Exception e)
+        {
+            return new ApiResponse<List<MemoDto>> { Status = false, Message = e.Message };
+        }
     }
 
     public async Task<ApiResponse<MemoDto>> UserAddAsync(MemoDto dto, Guid userId)
@@ -144,11 +149,12 @@ public class MemoService:IMemoService
     {
         try
         {
-            var dtos = (await GetUserAllAsync(userId)).Result;
+            var models = await _repository.GetMemosAsync();
             //筛选结果，按照创建时间排序
-            var filterdtos = dtos.Where(x =>
-                string.IsNullOrWhiteSpace(parameter.Search) || x.Title.Contains(parameter.Search) || x.Content.Contains(parameter.Search)).OrderBy(x => x.CreationTime).ToList();
-            return new ApiResponse<List<MemoDto>> { Status = true, Result = filterdtos };
+            var filterModels = models.Where(x =>(
+                string.IsNullOrWhiteSpace(parameter.Search) || x.Title.Contains(parameter.Search) || x.Content.Contains(parameter.Search))&&x.UserId.Equals(userId)).OrderBy(x => x.CreationTime);
+            var dtos = await _mapper.ProjectTo<MemoDto>(filterModels).ToListAsync();
+            return new ApiResponse<List<MemoDto>> { Status = true, Result = dtos };
         }
         catch (Exception e)
         {

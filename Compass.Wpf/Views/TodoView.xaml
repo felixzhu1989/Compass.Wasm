@@ -19,7 +19,7 @@
                 <DockPanel Width="300"
                            LastChildFill="False"
                            Margin="15,5">
-                    <TextBlock Text="添加待办"
+                    <TextBlock Text="{Binding RightDrawerTitle}"
                                FontSize="20"
                                FontWeight="Bold"
                                DockPanel.Dock="Top" />
@@ -47,6 +47,9 @@
                             CommandParameter="Save" />
                 </DockPanel>
             </materialDesign:DrawerHost.RightDrawerContent>
+            
+            
+            
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -55,7 +58,8 @@
                 <StackPanel Grid.Row="0"
                             Orientation="Horizontal"
                             Margin="15,5">
-                    <TextBox Text="{Binding Search,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding Search,
+                        Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Width="250"
                              materialDesign:HintAssist.Hint="查找待办事项"
                              materialDesign:TextFieldAssist.HasClearButton="True"

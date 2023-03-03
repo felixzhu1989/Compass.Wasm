@@ -4,8 +4,8 @@ using Compass.Wasm.Shared.PlanService;
 namespace Compass.PlanService.Domain;
 public interface IPlanRepository
 {
-    Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year,int month, ProductionPlanType productionPlanType);
-    Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year, ProductionPlanType productionPlanType);
+    Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year,int month, ProductionPlanType_e productionPlanType);
+    Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year, ProductionPlanType_e productionPlanType);
     Task<IQueryable<ProductionPlan>> GetUnbindProductionPlansAsync();
     Task<List<Guid?>> GetBoundProductionPlansAsync();
 

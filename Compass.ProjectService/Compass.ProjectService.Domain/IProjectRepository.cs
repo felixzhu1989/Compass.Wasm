@@ -8,35 +8,47 @@ namespace Compass.ProjectService.Domain;
 public interface IProjectRepository
 {
     //Project
-    Task<PaginationResult<IQueryable<Project>>> GetProjectsAsync(int page);
+    Task<IQueryable<Project>> GetProjectsAsync();
     Task<Project?> GetProjectByIdAsync(Guid id);
+    //扩展Project查询
+
+
     Task<Project?> GetProjectByOdpAsync(string odpNumber);
     Task<string> GetOdpNumberByIdAsync(Guid id);
-    Task<DateTime> GetDeliveryDateByIdAsync(Guid id);
     Task<IQueryable<Project>> GetUnbindProjectsAsync(List<Guid?> ids);
+
     //Drawing
-    Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId);
-    Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId);
+    Task<IQueryable<Drawing>> GetDrawingsAsync();
     Task<Drawing?> GetDrawingByIdAsync(Guid id);
+    //扩展Drawing查询
+    Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId);
+
+
+
+    Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId);
     Task<bool> DrawingExistsInProjectAsync(Guid projectId);
     Task<int> GetTotalDrawingsCountInProjectAsync(Guid projectId);
     Task<int> GetNotAssignedDrawingsCountInProjectAsync(Guid projectId);
 
 
     //Module
-    Task<IQueryable<Module>> GetModulesByDrawingIdAsync(Guid drawingId);
+    Task<IQueryable<Module>> GetModulesAsync();
     Task<Module?> GetModuleByIdAsync(Guid id);
+    //扩展Module查询
+    Task<IQueryable<Module>> GetModulesByDrawingIdAsync(Guid drawingId);
+
+
     Task<bool> ModuleExistsInDrawing(Guid drawingId);
     Task<string?> GetDrawingUrlByModuleIdAsync(Guid id);
 
     //DrawingPlan
-    Task<PaginationResult<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page);
+    Task<ApiPaginationResponse<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page);
     Task<DrawingPlan?> GetDrawingPlanByIdAsync(Guid id);
 
     //编制计划时查找那些项目还没有编制计划
     Task<IEnumerable<Project>> GetProjectsNotDrawingPlannedAsync();
     //判断项目中是否有图纸没有分配人员
-    Task<bool> IsDrawingsNotAssignedByProjectIdAsync(Guid projectId);
+    //Task<bool> IsDrawingsNotAssignedByProjectIdAsync(Guid projectId);
     //编制计划时查找项目中那些图纸没有分配人员
     Task<IEnumerable<Drawing>> GetDrawingsNotAssignedByProjectIdAsync(Guid projectId);
     //编制计划时查找项目中那些图纸已经分配人员，并按照人员分组
@@ -49,10 +61,10 @@ public interface IProjectRepository
 
 
     //Tracking
-    Task<PaginationResult<IQueryable<Tracking>>> GetTrackingsAsync(int page);
+    Task<ApiPaginationResponse<IQueryable<Tracking>>> GetTrackingsAsync(int page);
     Task<Tracking?> GetTrackingByIdAsync(Guid id);
     //搜索针对Tracking
-    Task<PaginationResult<IQueryable<Tracking>>> SearchTrackingsAsync(string searchText,int page);
+    Task<ApiPaginationResponse<IQueryable<Tracking>>> SearchTrackingsAsync(string searchText,int page);
     Task<List<string>> GetProjectSearchSuggestions(string searchText);
 
     //Problem

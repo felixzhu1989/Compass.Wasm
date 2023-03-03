@@ -13,4 +13,8 @@ public class PrismManager
     /// 设置页区域
     /// </summary>
     public static readonly string SettingsViewRegionName = "SettingsViewRegion";
+    /// <summary>
+    /// 详细页面导航
+    /// </summary>
+    public static readonly string DetailViewRegionName = "DetailViewRegion";
 }

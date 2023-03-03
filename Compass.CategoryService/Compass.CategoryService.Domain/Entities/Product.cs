@@ -7,10 +7,10 @@ public record Product:AggregateRootEntity,IAggregateRoot,IHasCreationTime,ISoftD
 {
     public int SequenceNumber { get; private set; }
     public string Name { get; private set; }
-    public Sbu Sbu { get; private set; }
+    public Sbu_e Sbu { get; private set; }
 
     private Product(){ }
-    public Product(Guid id,int sequenceNumber,string name,Sbu sbu)
+    public Product(Guid id,int sequenceNumber,string name,Sbu_e sbu)
     {
         Id=id;
         SequenceNumber=sequenceNumber;
@@ -28,7 +28,7 @@ public record Product:AggregateRootEntity,IAggregateRoot,IHasCreationTime,ISoftD
         Name=name;
         return this;
     }
-    public Product ChangeSbu(Sbu sbu)
+    public Product ChangeSbu(Sbu_e sbu)
     {
         Sbu=sbu;
         return this;

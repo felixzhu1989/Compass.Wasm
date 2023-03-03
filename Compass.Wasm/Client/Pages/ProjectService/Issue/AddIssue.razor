@@ -4,7 +4,7 @@
     <div class="input-group mb-2" style="width: 200px">
         <span class="input-group-text">①相关方</span>
         <select class="form-select" @bind="Issue.Stakeholder">
-            @foreach (var stakeholder in Enum.GetNames(typeof(Stakeholder)))
+            @foreach (var stakeholder in Enum.GetNames(typeof(Stakeholder_e)))
             {
                 <option>@stakeholder</option>
             }

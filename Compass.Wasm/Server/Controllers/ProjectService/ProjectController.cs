@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using AutoMapper;
-using Compass.Wasm.Server.ExportExcel;
+using Compass.Wasm.Server.ProjectService;
 using Compass.Wasm.Shared.ProjectService;
 using Compass.Wasm.Shared;
+using Compass.Wasm.Shared.Parameter;
+using Compass.PlanService.Infrastructure;
 
 namespace Compass.Wasm.Server.Controllers.ProjectService;
 
@@ -12,87 +13,86 @@ namespace Compass.Wasm.Server.Controllers.ProjectService;
 //[Authorize(Roles = "admin,pm,designer")]
 public class ProjectController : ControllerBase
 {
-    private readonly ProjectDomainService _domainService;
-    private readonly ProjectDbContext _dbContext;
-    private readonly IProjectRepository _repository;
-    private readonly IMapper _mapper;
-    private readonly IEventBus _eventBus;
-    private readonly ExportExcelService _export;
+    private readonly IProjectService _service;
 
-    public ProjectController(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IMapper mapper, IEventBus eventBus, ExportExcelService export)
+    public ProjectController(IProjectService service)
     {
-        _domainService = domainService;
-        _dbContext = dbContext;
-        _repository = repository;
-        _mapper = mapper;
-        _eventBus = eventBus;
-        _export = export;
+        _service = service;
     }
-    [HttpGet("All/{page}")]
-    public async Task<PaginationResult<List<ProjectResponse>>> FindAll(int page)
-    {
-        var result = await _repository.GetProjectsAsync(page);
-        return new PaginationResult<List<ProjectResponse>>
-        {
-            Data = await _mapper.ProjectTo<ProjectResponse>(result.Data).ToListAsync(),
-            CurrentPage = result.CurrentPage,
-            Pages = result.Pages
-        };
-    }
+
+    #region 标准增删改查
+    [HttpGet("All")]
+    public async Task<ApiResponse<List<ProjectDto>>> GetAll() => await _service.GetAllAsync();
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProjectResponse?>> FindById([RequiredGuid] Guid id)
-    {
-        //返回ValueTask的需要await的一下
-        var project = await _repository.GetProjectByIdAsync(id);
-        if (project == null) return NotFound($"没有Id={id}的Project");
-        return _mapper.Map<ProjectResponse>(project);
-    }
-
-    [HttpGet("Odp/{odpNumber}")]
-    public async Task<ActionResult<ProjectResponse?>> FindByOdp(string odpNumber)
-    {
-        var project = await _repository.GetProjectByOdpAsync(odpNumber.ToUpper());
-        if (project == null) return NotFound($"没有Id={odpNumber.ToUpper()}的Project");
-        return _mapper.Map<ProjectResponse>(project);
-    }
+    public async Task<ApiResponse<ProjectDto>> GetSingle([RequiredGuid] Guid id) => await _service.GetSingleAsync(id);
 
     [HttpPost("Add")]
-    public async Task<ActionResult<Guid>> Add(AddProjectRequest request)
-    {
-        var project = new Project(Guid.NewGuid(), request.OdpNumber.ToUpper(), request.Name, request.ReceiveDate, request.DeliveryDate, request.ProjectType, request.RiskLevel, request.SpecialNotes);
-        //包括合同地址
-        project.ChangeContractUrl(request.ContractUrl!);
-        await _dbContext.Projects.AddAsync(project);
-
-        return project.Id;
-    }
+    public async Task<ApiResponse<ProjectDto>> Add(ProjectDto dto) => await _service.AddAsync(dto);
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update([RequiredGuid] Guid id, ProjectResponse request)
-    {
-        var project = await _repository.GetProjectByIdAsync(id);
-        if (project == null) return NotFound($"没有Id={id}的Project");
-        //包括合同地址和Bom地址
-        project.ChangeOdpNumber(request.OdpNumber!.ToUpper()).ChangeName(request.Name!)
-            .ChangeReceiveDate(request.ReceiveDate).ChangeDeliveryDate(request.DeliveryDate)
-            .ChangeProjectType(request.ProjectType).ChangeRiskLevel(request.RiskLevel)
-            .ChangeContractUrl(request.ContractUrl!).ChangeBomUrl(request.BomUrl!)
-            .ChangeFinalInspectionUrl(request.FinalInspectionUrl!)
-            .ChangeAttachmentsUrl(request.AttachmentsUrl!)
-            .ChangeSpecialNotes(request.SpecialNotes!);
-        return Ok();
-    }
+    public async Task<ApiResponse<ProjectDto>> Update([RequiredGuid] Guid id, ProjectDto dto) => await _service.UpdateAsync(id, dto);
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete([RequiredGuid] Guid id)
-    {
-        var project = await _repository.GetProjectByIdAsync(id);
-        //这样做仍然是幂等的，因为“调用N次，确保服务器处于与第一次调用相同的状态。”与响应无关
-        if (project == null) return NotFound($"没有Id={id}的Project");
-        project.SoftDelete();//软删除
-        return Ok();
-    }
+    public async Task<ApiResponse<ProjectDto>> Delete([RequiredGuid] Guid id) => await _service.DeleteAsync(id);
+    #endregion
+
+    #region 扩展的查询功能,WPF
+    /// <summary>
+    /// 根据查询条件筛选结果
+    /// </summary>
+    [HttpGet("Filter")]
+    public async Task<ApiResponse<List<ProjectDto>>> GetAllFilter(ProjectParameter parameter) => await _service.GetAllFilterAsync(parameter);
+
+    /// <summary>
+    /// 查询项目汇总结果
+    /// </summary>
+    [HttpGet("Summary")]
+    public async Task<ApiResponse<ProjectSummaryDto>> GetUserSummary() => await _service.GetSummaryAsync();
+
+    /// <summary>
+    /// 查询单个项目的图纸和分段的树结构
+    /// </summary>
+    [HttpGet("ModuleTree")]
+    public async Task<ApiResponse<List<DrawingDto>>> GetModuleTree(ProjectParameter parameter) => await _service.GetModuleTreeAsync(parameter);
+
+    /// <summary>
+    /// 查询单个项目的所有分段，用于自动作图和JobCard
+    /// </summary>
+    [HttpGet("ModuleList")]
+    public async Task<ApiResponse<List<ModuleDto>>> GetModuleList(ProjectParameter parameter) => await _service.GetModuleListAsync(parameter);
+
+    #endregion
+
+
+    #region 扩展的查询功能,Blazor
+    [HttpGet("Search/{searchText}")]
+    public async Task<ApiResponse<List<ProjectDto>>> GetAllFilter(string? searchText) => await _service.GetAllFilterAsync(searchText);
+
+    #endregion
+
+
+    //{
+    //    var result = await _repository.GetProjectsAsync(page);
+    //    return new PaginationResult<List<ProjectDto>>
+    //    {
+    //        Data = await _mapper.ProjectTo<ProjectDto>(result.Data).ToListAsync(),
+    //        CurrentPage = result.CurrentPage,
+    //        Pages = result.Pages
+    //    };
+    //}
+
+
+
+    //[HttpGet("Odp/{odpNumber}")]
+    //public async Task<ActionResult<ProjectDto?>> FindByOdp(string odpNumber)
+    //{
+    //    var project = await _repository.GetProjectByOdpAsync(odpNumber.ToUpper());
+    //    if (project == null) return NotFound($"没有Id={odpNumber.ToUpper()}的Project");
+    //    return _mapper.Map<ProjectDto>(project);
+    //}
+
+
     #region 测试导出excel表格
     //https://www.puresourcecode.com/dotnet/blazor/how-to-export-data-to-excel-in-blazor/
     //Install-Package ClosedXML
@@ -100,15 +100,19 @@ public class ProjectController : ControllerBase
      * because it allows you to create very nice report with Excel based on an Excel template.
      *  
      */
-    [HttpGet("ExportExcel")]
-    public async Task<IActionResult> DownloadProjectExport()
-    {
-        string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-        string fileName = "projects.xlsx";
-        var result = await _repository.GetProjectsAsync(1);
-        var projects = await _mapper.ProjectTo<ProjectResponse>(result.Data).ToListAsync();
-        return File(_export.CreateProjectExport(projects), contentType, fileName);
-    }
+    //[HttpGet("ExportExcel")]
+    //public async Task<IActionResult> DownloadProjectExport()
+    //{
+    //    string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    //    string fileName = "projects.xlsx";
+    //    var result = await _repository.GetProjectsAsync(1);
+    //    var projects = await _mapper.ProjectTo<ProjectDto>(result.Data).ToListAsync();
+    //    return File(_export.CreateProjectExport(projects), contentType, fileName);
+    //}
 
     #endregion
+
+
+
+
 }

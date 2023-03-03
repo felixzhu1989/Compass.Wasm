@@ -1,5 +1,5 @@
 ﻿@page "/update/uvi-huawei/{Id}"
-@using Compass.Wasm.Shared.DataService.Entities
+@using Compass.Wasm.Shared.DataService.Hoods
 @inject HttpClient Http
 @if (_uviHuaweiData != null)
 {
@@ -22,8 +22,8 @@
         if (_uviHuaweiData!=null) _uviHuaweiData.ChangeId(Guid.Parse(Id));
     }
 
-    async Task Save()
+    Task Save()
     {
-
+        return Task.CompletedTask;
     }
 }
