@@ -72,8 +72,9 @@
                   IsReadOnly="True"
                   CanUserSortColumns="True"
                   ScrollViewer.VerticalScrollBarVisibility="Visible">
-            <!--选择框-->
+            
             <DataGrid.Columns>
+				<!--选择框-->
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         IsReadOnly="False"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
