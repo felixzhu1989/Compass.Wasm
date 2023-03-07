@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "tYVoc0tlEfpzHBvvPyeDMj+jlxuJOzisFI+ipLZg+7s=",
+  "Hash": "GZrVYKRye3Q0jd217FSbd8GWPB4HBAl5LkwdrGJJGBo=",
   "Source": "Compass.Wasm.Client",
   "BasePath": "/",
   "Mode": "Root",
@@ -34,12 +34,12 @@
       "OriginalItemSpec": "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\6.0.10\\build\\net6.0\\blazor.webassembly.js"
     },
     {
-      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.10.km7e80ppcz.js",
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.14.uqek4le46j.js",
       "SourceId": "Compass.Wasm.Client",
       "SourceType": "Computed",
       "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
       "BasePath": "/",
-      "RelativePath": "_framework/dotnet.6.0.10.km7e80ppcz.js",
+      "RelativePath": "_framework/dotnet.6.0.14.uqek4le46j.js",
       "AssetKind": "Publish",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -48,7 +48,7 @@
       "AssetTraitValue": "native",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.10.km7e80ppcz.js"
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.14.uqek4le46j.js"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.timezones.blat",
@@ -204,21 +204,38 @@
       "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\E3giafvD.gz"
     },
     {
-      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\MjEbqSpC.gz",
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\hzUxkOtv.gz",
       "SourceId": "Compass.Wasm.Client",
       "SourceType": "Computed",
       "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
       "BasePath": "/",
-      "RelativePath": "_framework/dotnet.6.0.10.km7e80ppcz.js.gz",
+      "RelativePath": "_framework/dotnet.wasm.gz",
       "AssetKind": "Publish",
       "AssetMode": "All",
       "AssetRole": "Alternative",
-      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.10.km7e80ppcz.js",
+      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.wasm",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\MjEbqSpC.gz"
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\hzUxkOtv.gz"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\JqEPE4gd.gz",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/dotnet.6.0.14.uqek4le46j.js.gz",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.14.uqek4le46j.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\JqEPE4gd.gz"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\UjVVn8tQ.gz",
@@ -236,23 +253,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\UjVVn8tQ.gz"
-    },
-    {
-      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\vR9KBJCu.gz",
-      "SourceId": "Compass.Wasm.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/dotnet.wasm.gz",
-      "AssetKind": "Publish",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.wasm",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "gzip",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\build-gz\\vR9KBJCu.gz"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\+3z1TUIT.br",
@@ -763,6 +763,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\Microsoft.Data.SqlClient.dll"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\3qN6trAS.br",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Xml.Linq.dll.br",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.Xml.Linq.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.Xml.Linq.dll"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\3qN6trAS.gz",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Xml.Linq.dll.gz",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.Xml.Linq.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.Xml.Linq.dll"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\46lmIKJz.br",
@@ -1751,6 +1785,23 @@
       "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\Compass.Wasm.Shared.dll"
     },
     {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\EQ+duP+8.br",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/dotnet.6.0.14.uqek4le46j.js.br",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.14.uqek4le46j.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.14.uqek4le46j.js"
+    },
+    {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\F+f++QGe.br",
       "SourceId": "Compass.Wasm.Client",
       "SourceType": "Computed",
@@ -1987,23 +2038,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.Security.Principal.dll"
-    },
-    {
-      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\FtIvGgc4.br",
-      "SourceId": "Compass.Wasm.Client",
-      "SourceType": "Computed",
-      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
-      "BasePath": "/",
-      "RelativePath": "_framework/dotnet.6.0.10.km7e80ppcz.js.br",
-      "AssetKind": "Publish",
-      "AssetMode": "All",
-      "AssetRole": "Alternative",
-      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.10.km7e80ppcz.js",
-      "AssetTraitName": "Content-Encoding",
-      "AssetTraitValue": "br",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\wwwroot\\_framework\\dotnet.6.0.10.km7e80ppcz.js"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\fTwfKlbD.br",
@@ -7427,6 +7461,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "obj\\Release\\net6.0\\linked\\System.Windows.Extensions.dll"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.Xml.Linq.dll",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Computed",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/System.Xml.Linq.dll",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "obj\\Release\\net6.0\\linked\\System.Xml.Linq.dll"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.Xml.ReaderWriter.dll",

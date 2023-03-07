@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml
-12-1771149177
+16-175013556
 1-1067898385
-561428387655
-241733029318
-Views\AboutView.xaml;Views\Dialogs\AddMemoView.xaml;Views\Dialogs\AddTodoView.xaml;Views\Dialogs\LoginView.xaml;Views\IndexView.xaml;Views\MainView.xaml;Views\MemoView.xaml;Views\MsgView.xaml;Views\ProcessView.xaml;Views\ProjectView.xaml;Views\SettingsView.xaml;Views\TodoView.xaml;
+88-1051694945
+246-181450444
+Views\AboutView.xaml;Views\BatchWorksView.xaml;Views\DetailView.xaml;Views\Dialogs\AddMemoView.xaml;Views\Dialogs\AddTodoView.xaml;Views\Dialogs\LoginView.xaml;Views\Hoods\KviDataView.xaml;Views\IndexView.xaml;Views\MainView.xaml;Views\MemoView.xaml;Views\MsgView.xaml;Views\ProcessView.xaml;Views\ProjectInfoView.xaml;Views\ProjectView.xaml;Views\SettingsView.xaml;Views\TodoView.xaml;
 
 True
 
