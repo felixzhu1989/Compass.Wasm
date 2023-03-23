@@ -117,6 +117,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("DrainType");
 
+                    b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotDis");
+
                     b.Property<double>("ExhaustSpigotHeight")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
@@ -248,6 +253,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("BackToBack");
 
+                    b.Property<double>("CjSpigotToRight")
+                        .HasColumnType("float")
+                        .HasColumnName("CjSpigotToRight");
+
                     b.Property<bool>("CoverBoard")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit")
@@ -257,6 +266,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("DrainType");
+
+                    b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotDis");
 
                     b.Property<double>("ExhaustSpigotHeight")
                         .ValueGeneratedOnUpdateSometimes()
@@ -369,6 +383,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("DrainType");
+
+                    b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotDis");
 
                     b.Property<double>("ExhaustSpigotHeight")
                         .ValueGeneratedOnUpdateSometimes()
@@ -497,6 +516,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("DrainType");
 
+                    b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotDis");
+
                     b.Property<double>("ExhaustSpigotHeight")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
@@ -624,6 +648,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("DrainType");
 
+                    b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotDis");
+
                     b.Property<double>("ExhaustSpigotHeight")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
@@ -740,6 +769,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("DrainType");
+
+                    b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotDis");
 
                     b.Property<double>("ExhaustSpigotHeight")
                         .ValueGeneratedOnUpdateSometimes()

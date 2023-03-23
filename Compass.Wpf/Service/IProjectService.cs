@@ -1,6 +1,5 @@
 ﻿using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.ProjectService;
-using Compass.Wasm.Shared.TodoService;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Compass.Wasm.Shared.CategoryService;

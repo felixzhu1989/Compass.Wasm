@@ -128,7 +128,7 @@ public class ProductService:IProductService
                     var modelTypes = await _repository.GetModelTypesByModelIdAsync(modelDto.Id.Value);
                     modelDto.ModelTypeDtos = await _mapper.ProjectTo<ModelTypeDto>(modelTypes).ToListAsync();
                     //将子模型名称装入子模型中
-                    modelDto.ModelTypeDtos.ForEach(x=>x.ModelName=$"{modelDto.Name}-{x.Name}");
+                    modelDto.ModelTypeDtos.ForEach(x=>x.ModelName=$"{modelDto.Name}_{x.Name}"); //改成下划线
                 }
             }
             return new ApiResponse<List<ProductDto>> { Status = true, Result = productDtos };

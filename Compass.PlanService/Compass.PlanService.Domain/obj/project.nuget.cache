@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qnIjJpzS1Mxrj8VamvZyOi5sO86eec1jgScbsBWYiFPfH74DD0H/kLJ4AQZ2LESID1Atxv7xtA38/UuSacwh7A==",
+  "dgSpecHash": "CDOd72aZAnT0alNBT4saj+dupZ43Eydgn1BYtPe0aptQaOrlFl3SR/Rf4ntBsPYK9/gLL9HSeOxP7zZ9vopztQ==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj",
   "expectedPackageFiles": [

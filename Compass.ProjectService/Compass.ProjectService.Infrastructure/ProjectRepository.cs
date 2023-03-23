@@ -121,7 +121,31 @@ public class ProjectRepository : IProjectRepository
         return drawing.DrawingUrl;
     }
 
+
+
     #endregion
+
+    #region CutList
+    public Task<IQueryable<CutList>> GetCutListsAsync()
+    {
+        return Task.FromResult(_context.CutLists.AsQueryable());
+    }
+
+    public Task<CutList?> GetCutListByIdAsync(Guid id)
+    {
+        return _context.CutLists.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+    public Task<IQueryable<CutList>> GetCutListsByModuleIdAsync(Guid moduleId)
+    {
+        //先按照零件排序，然后按照材料倒序排序，最后按照厚度倒序排序
+        return Task.FromResult(_context.CutLists.Where(x => x.ModuleId.Equals(moduleId)).OrderBy(x => x.PartNo).ThenByDescending(x=>x.Material).ThenByDescending(x=>x.Thickness).AsQueryable());
+    }
+
+    #endregion
+
+
+
 
     #region DrawingPlan
 

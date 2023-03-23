@@ -54,7 +54,6 @@
         <tr>
             <th >分段明细</th>
             <th >尺寸</th>
-            <th >发图状态</th>
             <th style="width: 60%">详细参数</th>
         </tr>
     </thead>
@@ -72,7 +71,7 @@
             @foreach (var module in _modules)
             {
                 <tr>
-                    <DisplayModule Module="module" ShowModuleRelease="_isModuleRelease" />
+                    <DisplayModule Module="module"/>
                     <td>
                         @if (module.IsModuleDataOk)
                         {
@@ -99,8 +98,6 @@
 
     private DrawingDto? _drawing;
     private ProjectDto? _project;
-    private bool _isModuleRelease;
-
     protected override async Task OnInitializedAsync()
     {
         await RefreshData();
@@ -109,7 +106,7 @@
         
         var projectResponse = await Http.GetFromJsonAsync<ApiResponse<ProjectDto>>($"api/Project/{_drawing.ProjectId}");
         if (projectResponse.Status) _project = projectResponse.Result;
-        _isModuleRelease = _project.ProjectStatus >ProjectStatus_e.制图;
+        
     }
     private async Task RefreshData()
     {

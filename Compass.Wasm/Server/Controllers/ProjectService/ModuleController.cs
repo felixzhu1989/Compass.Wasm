@@ -40,7 +40,7 @@ public class ModuleController : ControllerBase
 
     #region 扩展的查询功能,Blazor
     [HttpGet("Drawing/{drawingId}")]
-    public async Task<ApiResponse<List<ModuleDto>>> GetAllByProjectId([RequiredGuid] Guid drawingId) => await _service.GetAllByDrawingIdAsync(drawingId);
+    public async Task<ApiResponse<List<ModuleDto>>> GetAllByDrawingId([RequiredGuid] Guid drawingId) => await _service.GetAllByDrawingIdAsync(drawingId);
 
 
 

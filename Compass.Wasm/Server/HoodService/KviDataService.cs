@@ -32,6 +32,7 @@ public class KviDataService:BaseDataGetService<KviData>,IKviDataService
                 data.ExhaustSpigotWidth=dto.ExhaustSpigotWidth;
                 data.ExhaustSpigotHeight=dto.ExhaustSpigotHeight;
                 data.ExhaustSpigotNumber=dto.ExhaustSpigotNumber;
+                data.ExhaustSpigotDis=dto.ExhaustSpigotDis;
                 #endregion
 
                 #region 灯具类型
@@ -46,6 +47,7 @@ public class KviDataService:BaseDataGetService<KviData>,IKviDataService
                 data.LedLogo=dto.LedLogo;
                 data.BackToBack=dto.BackToBack;
                 data.BackCj=dto.BackCj;
+                data.CjSpigotToRight=dto.CjSpigotToRight;
                 data.CoverBoard=dto.CoverBoard;
                 data.Marvel=dto.Marvel;
                 #endregion

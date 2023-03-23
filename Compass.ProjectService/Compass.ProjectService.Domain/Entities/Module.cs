@@ -11,12 +11,8 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public string Name { get; private set; }
     public string ModelName { get; private set; }
     public string? SpecialNotes { get;private set; }
-
-    //public bool IsReleased { get; private set; }//图纸是否已经下发
-    //public bool IsModuleDataOk { get;private set; }//是否添加了图纸参数
-    //报检？
-
-    //检验？
+    public bool IsModuleDataOk { get;private set; }//用于标记图纸得参数是否已经得到修改
+    public bool IsCutListOk { get; private set; }
 
 
     private Module() { }
@@ -39,8 +35,14 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
 
     public void Update(ModuleDto dto)
     {
-        ChangeModelTypeId(dto.ModelTypeId.Value).ChangeName(dto.Name.ToUpper()).ChangeModelName(dto.ModelName).ChangeSpecialNotes(dto.SpecialNotes);
+        ChangeModelTypeId(dto.ModelTypeId.Value)
+            .ChangeName(dto.Name.ToUpper())
+            .ChangeModelName(dto.ModelName)
+            .ChangeSpecialNotes(dto.SpecialNotes)
+            .ChangeIsModuleDataOk(dto.IsModuleDataOk)
+            .ChangeIsCutListOk(dto.IsCutListOk);
         NotifyModified();
+
         //todo:改成领域事件
         #region 修改Module的ModuleData参数
         var model = dto.ModelName.Split('-')[0];
@@ -70,17 +72,16 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         return this;
     }
 
-    //public Module ChangeIsReleased(bool isReleased)
-    //{
-    //    IsReleased = isReleased;
-    //    return this;
-    //}
-    //public Module ChangeIsModuleDataOk(bool isModuleDataOk)
-    //{
-    //    IsModuleDataOk = isModuleDataOk;
-    //    return this;
-    //}
-
+    public Module ChangeIsModuleDataOk(bool isModuleDataOk)
+    {
+        IsModuleDataOk = isModuleDataOk;
+        return this;
+    }
+    public Module ChangeIsCutListOk(bool isCutListOk)
+    {
+        IsCutListOk = isCutListOk;
+        return this;
+    }
     public override void SoftDelete()
     {
         //发出领域事件，删除当前的参数

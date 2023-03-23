@@ -220,11 +220,12 @@ public class ProjectService : IProjectService
                 //再查询图纸下的所有分段Module
                 var modules = await _repository.GetModulesByDrawingIdAsync(drawingDto.Id.Value);
                 var moduleDtos = _mapper.ProjectTo<ModuleDto>(modules).ToList();
-                //查询时添加图纸的item号
+                //查询时添加图纸的item号，项目ODP号和项目名称
                 moduleDtos.ForEach(x =>
                 {
                     x.ItemNumber = drawingDto.ItemNumber;
                     x.OdpNumber = project.OdpNumber;
+                    x.ProjectName = project.Name;
                 });
                 dtos.AddRange(moduleDtos);
             }

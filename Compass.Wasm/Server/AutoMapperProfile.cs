@@ -21,7 +21,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Project, ProjectDto>().ReverseMap();
         CreateMap<Drawing, DrawingDto>().ReverseMap();
         CreateMap<Compass.ProjectService.Domain.Entities.Module, ModuleDto>().ReverseMap();
-
+        CreateMap<CutList, CutListDto>().ReverseMap();
 
 
         CreateMap<DrawingPlan, DrawingPlanResponse>().ReverseMap();

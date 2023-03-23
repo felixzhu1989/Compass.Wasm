@@ -55,6 +55,25 @@ public class ModuleDto : BaseDto
         }
     }
 
+    private bool isModuleDataOk;
+    public bool IsModuleDataOk
+    {
+        get => isModuleDataOk;
+        set { isModuleDataOk = value; OnPropertyChanged(); }
+    }
+    private bool isCutListOk;
+    public bool IsCutListOk
+    {
+        get => isCutListOk;
+        set { isCutListOk = value; OnPropertyChanged(); }
+    }
+
+
+
+
+    #region 额外属性
+
+
     #region 长宽高
     private double length;
     public double Length
@@ -79,23 +98,11 @@ public class ModuleDto : BaseDto
             height = value;
             OnPropertyChanged();
         }
-    } 
+    }
     #endregion
 
 
-    private bool isReleased;
-    public bool IsReleased { get=> isReleased;
-        set { isReleased = value;OnPropertyChanged(); }
-    }
 
-    private bool isModuleDataOk;
-    public bool IsModuleDataOk { get=>isModuleDataOk;
-        set { isModuleDataOk = value;OnPropertyChanged(); }
-    }
-
-
-
-    #region 额外属性
     private bool isSelected;
     public bool IsSelected
     {
@@ -116,6 +123,17 @@ public class ModuleDto : BaseDto
             OnPropertyChanged();
         }
     }
+    private string projectName;
+    public string ProjectName
+    {
+        get => projectName;
+        set
+        {
+            projectName = value;
+            OnPropertyChanged();
+        }
+    }
+
     private string itemNumber;
     public string ItemNumber
     {

@@ -6,5 +6,6 @@ public class ModuleService: BaseService<ModuleDto>, IModuleService
 {
     public ModuleService(HttpRestClient client) : base(client, "Module")
     {
+
     }
 }

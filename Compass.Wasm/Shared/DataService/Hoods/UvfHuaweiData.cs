@@ -9,6 +9,12 @@ public class UvfHuaweiData : ModuleData
     public double ExhaustSpigotWidth { get; private set; }
     public double ExhaustSpigotHeight { get; private set; }
     public int ExhaustSpigotNumber { get; private set; }//前端界面input设置为number，min=1,max=2
+    private double exhaustSpigotDis;
+    public double ExhaustSpigotDis
+    {
+        get => exhaustSpigotDis;
+        set { exhaustSpigotDis = value; OnPropertyChanged(); }
+    }
     //新风口参数
     public double SupplySpigotNumber { get; private set; }//前端界面input设置为number，min=1,max=2
     public double SupplySpigotDistance { get; private set; }

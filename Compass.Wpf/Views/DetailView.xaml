@@ -139,6 +139,13 @@ materialDesign:TextFieldAssist.HasClearButton="True"
                                  VerticalAlignment="Center"
                                  materialDesign:TextFieldAssist.PrefixText="高度: "
                                  materialDesign:TextFieldAssist.SuffixText="(为默认值时可不填写)"/>
+                        <CheckBox IsChecked="{Binding CurrentModuleDto.IsModuleDataOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                  Content="分段数据已经OK"
+                                  Margin="0,10" />
+                        <CheckBox IsChecked="{Binding CurrentModuleDto.IsCutListOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                  Content="CutList已经OK"
+                                  Margin="0,10" />
+
                         <Button Content="保存分段"
                                 Command="{Binding ExecuteCommand}"
                                 CommandParameter="Save"
@@ -270,9 +277,11 @@ materialDesign:TextFieldAssist.HasClearButton="True"
                             </TreeView.Resources>
 
                         </TreeView>
-                        <Button Grid.Row="3"
-                                Content="制图/dxf/JobCard"
-                                Command="{Binding BatchWorksCommand}"
+                        <Button Grid.Row="2"
+                                Content="分段列表 - 批量操作"
+                                FontWeight="Bold"
+                                Foreground="AliceBlue"
+                                Command="{Binding ModulesCommand}"
                                 Margin="10"
                                 Width="180"
                                 HorizontalAlignment="Left"/>

@@ -1,4 +1,5 @@
-﻿using Zack.DomainCommons.Models;
+﻿using Compass.Wasm.Shared.ProjectService;
+using Zack.DomainCommons.Models;
 namespace Compass.ProjectService.Domain.Entities;
 
 public record Drawing : AggregateRootEntity, IAggregateRoot, IHasCreationTime, ISoftDelete
@@ -18,6 +19,13 @@ public record Drawing : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         ItemNumber = itemNumber;
         DrawingUrl = drawingUrl;
     }
+
+    public void Update(DrawingDto dto)
+    {
+        ChangeItemNumber(dto.ItemNumber).ChangeDrawingUrl(dto.DrawingUrl);
+    }
+
+
     public Drawing ChangeItemNumber(string itemNumber)
     {
         ItemNumber= itemNumber;

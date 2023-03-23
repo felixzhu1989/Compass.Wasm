@@ -9,5 +9,6 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/compass_64px.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templatedoc/cutlist.xlsx")]
 
 

@@ -79,7 +79,7 @@
                                          Panel.ZIndex="1" />
                 <!--给导航条命名为 x:Name="ColorZone"-->
                 <materialDesign:ColorZone x:Name="ColorZone"
-                                          Padding="6"
+                                          Padding="7"
                                           materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                           Mode="PrimaryMid"
                                           DockPanel.Dock="Top"

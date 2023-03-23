@@ -10,7 +10,13 @@
     <Compile Update="Views\AboutView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\BatchWorksView.xaml.cs">
+    <Compile Update="Views\Dialogs\BatchWorksView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\CutListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ModulesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\DetailView.xaml.cs">
@@ -28,13 +34,13 @@
     <Compile Update="Views\MemoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\MsgView.xaml.cs">
+    <Compile Update="Views\Dialogs\MsgView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\ProjectInfoView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ProjectView.xaml.cs">
+    <Compile Update="Views\ProjectsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SettingsView.xaml.cs">
@@ -49,11 +55,18 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Update="Views\AboutView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\BatchWorksView.xaml">
+    <Page Update="Views\Dialogs\BatchWorksView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\CutListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ModulesView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DetailView.xaml">
@@ -80,7 +93,7 @@
     <Page Update="Views\MemoView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\MsgView.xaml">
+    <Page Update="Views\Dialogs\MsgView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProcessView.xaml">
@@ -89,7 +102,7 @@
     <Page Update="Views\ProjectInfoView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ProjectView.xaml">
+    <Page Update="Views\ProjectsView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingsView.xaml">

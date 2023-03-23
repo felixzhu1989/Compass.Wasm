@@ -10,6 +10,7 @@ public class ProjectDbContext:BaseDbContext
     public DbSet<Project> Projects { get; set; }
     public DbSet<Drawing> Drawings { get; set; }
     public DbSet<Module> Modules { get; set; }
+    public DbSet<CutList> CutLists { get; set; }
     public DbSet<DrawingPlan> DrawingsPlan { get; set; }
     public DbSet<Tracking> Trackings { get; set; }
     public DbSet<Problem> Problems { get; set; }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MkIh7+ShBk0hhkI3WbVkXl939spGIhHJsSoFSSOoA2Sk9fNMjJdhEa4UCT5P9UdEsI8H2hECwgA+Ij3c0btfJQ==",
+  "dgSpecHash": "nOrq0G1o2gt7tNhg3mEqRDRtgk5NfcAS0JWfGqEJapbIVwOwCNelt+oTm/OLoT8W00/9Fb8wEBnjDjxeU0lsxQ==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj",
   "expectedPackageFiles": [

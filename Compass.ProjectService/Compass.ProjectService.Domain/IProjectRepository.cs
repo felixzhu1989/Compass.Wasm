@@ -41,6 +41,19 @@ public interface IProjectRepository
     Task<bool> ModuleExistsInDrawing(Guid drawingId);
     Task<string?> GetDrawingUrlByModuleIdAsync(Guid id);
 
+    //CutList
+    Task<IQueryable<CutList>> GetCutListsAsync();
+    Task<CutList?> GetCutListByIdAsync(Guid id);
+    //扩展CutList查询
+    Task<IQueryable<CutList>> GetCutListsByModuleIdAsync(Guid moduleId);
+
+
+
+
+
+
+
+
     //DrawingPlan
     Task<ApiPaginationResponse<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page);
     Task<DrawingPlan?> GetDrawingPlanByIdAsync(Guid id);

@@ -1,0 +1,152 @@
+﻿<UserControl x:Class="Compass.Wpf.Views.ModulesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Compass.Wpf.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters"
+             xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
+    <UserControl.Resources>
+        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
+    <StackPanel>
+        <FrameworkElement x:Name="DataContextProxy"
+                          DataContext="{Binding}" />
+        <!--标题栏，项目号，项目名称-->
+        <DockPanel LastChildFill="False"
+                   IsEnabled="{Binding CanBatchWorks}">
+            <TextBlock DockPanel.Dock="Left"
+                       Text="分段列表 - 批量操作:"
+                       FontSize="20"
+                       Margin="10" />
+            <Button DockPanel.Dock="Left"
+                    Content="自动作图"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="AutoDrawing"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="GreenYellow"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="导出Dxf图"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="ExportDxf"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="Chartreuse"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="打印CutList"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintCutList"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="Lime"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="打印JobCard"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintJobCard"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="LimeGreen"
+                    BorderThickness="0" />
+        </DockPanel>
+        <!--分段数据-->
+        <DataGrid ItemsSource="{Binding ModuleDtos}"
+                  CanUserAddRows="False"
+                  AutoGenerateColumns="False"
+                  HeadersVisibility="All"
+                  IsReadOnly="True"
+                  CanUserSortColumns="True"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <DataGrid.Columns>
+                <!--选择框-->
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        IsReadOnly="False"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
+                    <DataGridCheckBoxColumn.Header>
+                        <Border Background="Transparent">
+                            <CheckBox IsChecked="{Binding DataContext.IsAllModuleDtosSelected, Source={x:Reference DataContextProxy}}" />
+                        </Border>
+                    </DataGridCheckBoxColumn.Header>
+                    <DataGridCheckBoxColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}"
+                               BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Center" />
+                        </Style>
+                    </DataGridCheckBoxColumn.HeaderStyle>
+                </DataGridCheckBoxColumn>
+                <DataGridTemplateColumn Header="制图参数">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!--绑定当前对象使用{Binding}，RelativeSource查找父对象的ViewModel-->
+                            <TextBlock Text="OK"
+                                       Visibility="{Binding IsModuleDataOk,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding OdpNumber}"
+                                    Header="项目编号"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="110" />
+                <DataGridTextColumn Binding="{Binding ItemNumber}"
+                                    Header="Item编号"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding Name}"
+                                    Header="分段"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding ModelName}"
+                                    Header="模型"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding Length}"
+                                    Header="长"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="65" />
+                <DataGridTextColumn Binding="{Binding Width}"
+                                    Header="宽"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="65" />
+                <DataGridTextColumn Binding="{Binding Height}"
+                                    Header="高"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Width="65" />
+                <DataGridTemplateColumn Width="100"
+                                        Header="CutList">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!--绑定当前对象使用{Binding}，RelativeSource查找父对象的ViewModel-->
+                            <TextBlock Text="OK"
+                                       TextDecorations="UnderLine"
+                                       Foreground="Blue"
+                                       Visibility="{Binding IsCutListOk,Converter={StaticResource BoolToVisibilityConverter}}">
+    <behavior:Interaction.Triggers>
+        <behavior:EventTrigger EventName="MouseLeftButtonDown">
+            <behavior:InvokeCommandAction Command="{Binding DataContext.ShowCutListCommand,Source={x:Reference DataContextProxy}}" 
+                                          CommandParameter="{Binding}"/>
+        </behavior:EventTrigger>
+    </behavior:Interaction.Triggers></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding SpecialNotes}"
+                                    Header="特殊要求"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </StackPanel>
+</UserControl>

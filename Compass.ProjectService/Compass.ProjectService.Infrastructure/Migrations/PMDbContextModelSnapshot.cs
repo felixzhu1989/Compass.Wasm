@@ -22,6 +22,56 @@ namespace Compass.ProjectService.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Compass.ProjectService.Domain.Entities.CutList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Length")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Material")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ModuleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PartDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PartNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Thickness")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CutLists");
+                });
+
             modelBuilder.Entity("Compass.ProjectService.Domain.Entities.Drawing", b =>
                 {
                     b.Property<Guid>("Id")
@@ -156,13 +206,13 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<Guid>("DrawingId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsCutListOk")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsModuleDataOk")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsReleased")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")

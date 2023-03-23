@@ -4,4 +4,5 @@ namespace Compass.Wpf.Service;
 
 public interface IModuleService:IBaseService<ModuleDto>
 {
+
 }

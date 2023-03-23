@@ -109,12 +109,12 @@ public class IndexViewModel : NavigationViewModel
         TodoTaskBars.Add(new TaskBar { Icon = "ChartLine", Title = "待办完成率", Color = "#FF02C6DC", Target = "TodoView" });
         TodoTaskBars.Add(new TaskBar { Icon = "PlaylistStar", Title = "备忘录汇总", Color = "#FFFFA000", Target = "MemoView" });
 
-        ProjectTaskBars.Add(new TaskBar{Icon = "WrenchClock", Title = ProjectStatus_e.计划.ToString(), Target = "ProjectView"});
-        ProjectTaskBars.Add(new TaskBar{Icon = "DesktopClassic", Title = ProjectStatus_e.制图.ToString(),Target = "ProjectView"});
-        ProjectTaskBars.Add(new TaskBar{Icon = "Cogs", Title = ProjectStatus_e.生产.ToString(), Target = "ProjectView"});
-        ProjectTaskBars.Add(new TaskBar{Icon = "PackageVariant", Title = ProjectStatus_e.入库.ToString(), Target = "ProjectView"});
-        ProjectTaskBars.Add(new TaskBar{Icon = "TruckCargoContainer", Title = ProjectStatus_e.发货.ToString(),Target = "ProjectView"});
-        ProjectTaskBars.Add(new TaskBar{Icon = "TextBoxCheckOutline", Title = ProjectStatus_e.结束.ToString(),Target = "ProjectView"});
+        ProjectTaskBars.Add(new TaskBar{Icon = "WrenchClock", Title = ProjectStatus_e.计划.ToString(), Target = "ProjectsView"});
+        ProjectTaskBars.Add(new TaskBar{Icon = "DesktopClassic", Title = ProjectStatus_e.制图.ToString(),Target = "ProjectsView"});
+        ProjectTaskBars.Add(new TaskBar{Icon = "Cogs", Title = ProjectStatus_e.生产.ToString(), Target = "ProjectsView"});
+        ProjectTaskBars.Add(new TaskBar{Icon = "PackageVariant", Title = ProjectStatus_e.入库.ToString(), Target = "ProjectsView"});
+        ProjectTaskBars.Add(new TaskBar{Icon = "TruckCargoContainer", Title = ProjectStatus_e.发货.ToString(),Target = "ProjectsView"});
+        ProjectTaskBars.Add(new TaskBar{Icon = "TextBoxCheckOutline", Title = ProjectStatus_e.结束.ToString(),Target = "ProjectsView"});
 
     }
     private void Navigate(TaskBar obj)

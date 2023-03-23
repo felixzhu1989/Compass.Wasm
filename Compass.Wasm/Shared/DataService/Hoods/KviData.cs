@@ -17,20 +17,20 @@ public class KviData : ModuleData
         get => middleToRight;
         set { middleToRight = value; OnPropertyChanged(); }
     }
-    private double exhaustSpigotLength;
+    private double exhaustSpigotLength = 400d;
     public double ExhaustSpigotLength
     {
         get => exhaustSpigotLength;
         set { exhaustSpigotLength = value; OnPropertyChanged(); }
     }
 
-    private double exhaustSpigotWidth;
+    private double exhaustSpigotWidth = 300d;
     public double ExhaustSpigotWidth
     {
         get => exhaustSpigotWidth;
         set { exhaustSpigotWidth = value; OnPropertyChanged(); }
     }
-    private double exhaustSpigotHeight;
+    private double exhaustSpigotHeight = 100d;
     public double ExhaustSpigotHeight
     {
         get => exhaustSpigotHeight;
@@ -43,6 +43,15 @@ public class KviData : ModuleData
         get => exhaustSpigotNumber;
         set { exhaustSpigotNumber = value; OnPropertyChanged(); }
     } //前端界面input设置为number，min=1,max=2 
+    
+    private double exhaustSpigotDis=200d;
+    public double ExhaustSpigotDis
+    {
+        get => exhaustSpigotDis;
+        set { exhaustSpigotDis = value; OnPropertyChanged(); }
+    }
+
+
     #endregion
 
     #region 灯具类型
@@ -53,7 +62,7 @@ public class KviData : ModuleData
         set { lightType = value; OnPropertyChanged(); }
     }//长灯, 短灯, 筒灯60, 筒灯140
 
-    private int spotLightNumber;
+    private int spotLightNumber=2;
     public int SpotLightNumber
     {
         get => spotLightNumber;
@@ -101,6 +110,13 @@ public class KviData : ModuleData
         get => backCj;
         set { backCj = value; OnPropertyChanged(); }
     }
+    private double cjSpigotToRight= 400d;
+    public double CjSpigotToRight
+    {
+        get => cjSpigotToRight;
+        set { cjSpigotToRight = value; OnPropertyChanged(); }
+    }
+
     private bool coverBoard;
     public bool CoverBoard
     {
@@ -186,11 +202,9 @@ public class KviData : ModuleData
     {
         get => ansulDropDis5;
         set { ansulDropDis5 = value; OnPropertyChanged(); }
-    } 
+    }
     #endregion
-
-
-
+    
     public override bool Accept(string model)
     {
         return model.ToLower().Equals("kvi");

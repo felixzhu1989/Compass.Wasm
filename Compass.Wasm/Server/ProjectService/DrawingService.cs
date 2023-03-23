@@ -78,7 +78,7 @@ public class DrawingService : IDrawingService
             var model = await _repository.GetDrawingByIdAsync(id);
             if (model != null)
             {
-                model.ChangeItemNumber(dto.ItemNumber).ChangeDrawingUrl(dto.DrawingUrl);
+                model.Update(dto);
                 return new ApiResponse<DrawingDto> { Status = true, Result = dto };
             }
             return new ApiResponse<DrawingDto> { Status = false, Message = "更新数据失败" };

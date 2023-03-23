@@ -3,6 +3,7 @@ using System.Windows;
 using Compass.Wpf.BatchWorks;
 using Compass.Wpf.BatchWorks.Hoods;
 using Compass.Wpf.Common;
+using Compass.Wpf.DrawingServices;
 using Compass.Wpf.Extensions;
 using Compass.Wpf.Service;
 using Compass.Wpf.Service.Hoods;
@@ -78,10 +79,10 @@ namespace Compass.Wpf
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
             containerRegistry.RegisterForNavigation<TodoView, TodoViewModel>();
             containerRegistry.RegisterForNavigation<MemoView, MemoViewModel>();
-            containerRegistry.RegisterForNavigation<ProjectView, ProjectViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectsView, ProjectsViewModel>();
             containerRegistry.RegisterForNavigation<ProjectInfoView, ProjectInfoViewModel>();
             containerRegistry.RegisterForNavigation<DetailView, DetailViewModel>();
-            containerRegistry.RegisterForNavigation<BatchWorksView, BatchWorksViewModel>();
+            containerRegistry.RegisterForNavigation<ModulesView, ModulesViewModel>();
 
             #region 注册Hoods页面
             containerRegistry.RegisterForNavigation<KviDataView,KviDataViewModel>();
@@ -110,7 +111,12 @@ namespace Compass.Wpf
             containerRegistry.Register<IProjectService, ProjectService>();
             containerRegistry.Register<IModuleService,ModuleService>();
             containerRegistry.Register<IModuleDataService,ModuleDataService>();
+            containerRegistry.Register<ICutListService, CutListService>();
+
             containerRegistry.Register<IBatchWorksService,BatchWorksService>();
+            containerRegistry.Register<IExportDxfService,ExportDxfService>();
+            containerRegistry.Register<IPrintsService, PrintsService>();
+
 
             #region HoodService
             containerRegistry.Register<IKviDataService, KviDataService>();
@@ -119,7 +125,17 @@ namespace Compass.Wpf
 
             #endregion
 
+            #region 制图代码库服务
+            containerRegistry.Register<IExhaustService, ExhaustService>();
+            containerRegistry.Register<ISidePanelService,SidePanelService>();
+            containerRegistry.Register<IMidRoofService,MidRoofService>();
+            containerRegistry.Register<ISupplyService,SupplyService>();
 
+            containerRegistry.Register<ISharePartService, SharePartService>();
+
+
+
+            #endregion
 
             containerRegistry.Register<ILoginService, LoginService>();
 
@@ -129,6 +145,8 @@ namespace Compass.Wpf
             //注册弹窗
             containerRegistry.RegisterForNavigation<AddTodoView, AddTodoViewModel>();
             containerRegistry.RegisterForNavigation<AddMemoView, AddMemoViewModel>();
+            containerRegistry.RegisterForNavigation<BatchWorksView,BatchWorksViewModel>();
+            containerRegistry.RegisterForNavigation<CutListView,CutListViewModel>();
 
             //注册自定义询问窗口
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();

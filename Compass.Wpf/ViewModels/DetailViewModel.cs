@@ -162,7 +162,7 @@ public class DetailViewModel : NavigationViewModel
     public DelegateCommand<object> SelectedItemChangedCommand { get; }//选择图纸和分段更改
     public DelegateCommand<object> UpdateModuleDataCommand { get; }//编辑ModuleData
     public DelegateCommand<object> SelectedModelChangedCommand { get; }//选择模型更改
-    public DelegateCommand BatchWorksCommand { get; }//跳转到制图界面
+    public DelegateCommand ModulesCommand { get; }//跳转到制图界面
 
     private NavigationParameters ProjectParams { get; set; }=new ();
     public DetailViewModel(IEventAggregator aggregator, IContainerProvider containerProvider, IProjectService service, IModuleService moduleService, IRegionManager regionManager) : base(containerProvider)
@@ -182,10 +182,10 @@ public class DetailViewModel : NavigationViewModel
         SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
         UpdateModuleDataCommand = new DelegateCommand<object>(UpdateModuleDataNavigate);
         SelectedModelChangedCommand = new DelegateCommand<object>(SelectedModelChanged);
-        BatchWorksCommand = new DelegateCommand(() =>
+        ModulesCommand = new DelegateCommand(() =>
         {
             //将Project传递给要导航的页面
-            _regionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("BatchWorksView", ProjectParams);
+            _regionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ModulesView", ProjectParams);
         });
     }
 
@@ -222,7 +222,7 @@ public class DetailViewModel : NavigationViewModel
         if (SelectedItem is ModuleDto moduleDto)
         {
             if (obj==null||moduleDto.Id.Equals(Guid.Empty)) return;
-            var modelName = moduleDto.ModelName.Split('-')[0];
+            var modelName = moduleDto.ModelName.Split('_')[0];
             var target = $"{CultureInfo.CurrentCulture.TextInfo.ToTitleCase(modelName.ToLower())}DataView";
             //将dto传递给要导航的页面
             NavigationParameters param = new NavigationParameters { { "Value", moduleDto } };
