@@ -1,5 +1,6 @@
 ﻿namespace Compass.Wasm.Shared.ProjectService;
 
+//todo:废弃这个类
 public record TrackingResponse
 {
     public Guid Id { get; set; }

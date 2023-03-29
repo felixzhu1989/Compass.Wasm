@@ -36,6 +36,13 @@ public record Problem : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         DescriptionUrl = descriptionUrl;
     }
 
+    public void Update()
+    {
+
+        NotifyModified();
+    }
+
+
     public Problem ChangeProblemTypeId(Guid problemTypeId)
     {
         ProblemTypeId = problemTypeId;

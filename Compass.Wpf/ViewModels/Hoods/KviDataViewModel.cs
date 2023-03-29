@@ -77,7 +77,6 @@ public class KviDataViewModel : NavigationViewModel
     #endregion
 
     #region Command
-    public DelegateCommand LengthChanged { get; }
     public DelegateCommand SaveDataCommand { get; }
     #endregion
 
@@ -85,11 +84,6 @@ public class KviDataViewModel : NavigationViewModel
     {
         _aggregator = aggregator;
         _service = service;
-        LengthChanged = new DelegateCommand(() =>
-        {
-            //烟罩长度变化，引发中心距右变化
-            DataDto.MiddleToRight = DataDto.Length / 2;
-        });
         SaveDataCommand = new DelegateCommand( async () =>
         {
            var result=  await _service.UpdateAsync(DataDto.Id.Value, DataDto);

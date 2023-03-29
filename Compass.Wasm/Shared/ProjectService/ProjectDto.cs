@@ -14,5 +14,6 @@ public class ProjectDto:BaseDto
     public string? BomUrl { get; set; }
     public string? AttachmentsUrl { get;set; }
     public string? FinalInspectionUrl { get; set; }
-    
+
+    //public bool ProblemNotResolved { get; set; }//有没有待解决得问题，如果有则另起一行显示异常详细信息
 }

@@ -48,7 +48,8 @@ public class KviAutoDrawing : IKviAutoDrawing
             #region 计算中间值与顶层操作
             //计算烟罩净长度，计算烟罩净深度
             var netLength = data.SidePanel==SidePanel_e.左||data.SidePanel==SidePanel_e.右 ? data.Length-50d : data.SidePanel==SidePanel_e.双 ? data.Length-100 : data.Length;
-            var netMiddleToRight = data.MiddleToRight.Equals(data.Length/2d) ? netLength/2d : data.MiddleToRight;
+            //赋值为0时为均分一般，否则需要赋值
+            var netMiddleToRight = data.MiddleToRight.Equals(0) ? netLength/2d : data.MiddleToRight;
             var netWidth = data.BackCj ? data.Width - 90 : data.Width;
 
             //烟罩宽度，考虑是否右BackCj
