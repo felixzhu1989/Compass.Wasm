@@ -1,32 +1,32 @@
-﻿using System;
-using Compass.Wasm.Shared.DataService;
-using Compass.Wpf.BatchWorks;
+﻿using Compass.Wasm.Shared.DataService;
 using Compass.Wpf.Extensions;
+using Prism.Ioc;
 using SolidWorks.Interop.sldworks;
+using System;
 
 namespace Compass.Wpf.DrawingServices;
 
-public class MidRoofService:IMidRoofService
+public class MidRoofService : BaseDrawingService, IMidRoofService
 {
-    private readonly ISldWorks _swApp;
-    public MidRoofService(ISldWorksService sldWorksService)
+
+    public MidRoofService(IContainerProvider provider) : base(provider)
     {
-        _swApp = sldWorksService.SwApp;
+
     }
 
 
     public void MidRoofFs(AssemblyDoc swAssyTop, string suffix, double length, double width, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
     {
-        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "MidRoof_Fs-1");
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "MidRoof_Fs-1", Aggregator);
         //计算净宽度，总宽度减去排风，减去新风再减1
         var netWidth = width - 535d - 360d;
 
-        FNHM0001(swAssyLevel1,suffix, "FNHM0001-1",length, netWidth, exhaustType,uvLightType,bluetooth,middleToRight,lightType,spotLightNumber,spotLightDistance,marvel,ansul,ansulDropNumber,ansulDropToFront,ansulDropDis1,ansulDropDis2,ansulDropDis3,ansulDropDis4,ansulDropDis5,ansulDetectorNumber,ansulDetectorEnd,ansulDetectorDis1,ansulDetectorDis2,ansulDetectorDis3,ansulDetectorDis4,ansulDetectorDis5);
+        FNHM0001(swAssyLevel1, suffix, "FNHM0001-1", length, netWidth, exhaustType, uvLightType, bluetooth, middleToRight, lightType, spotLightNumber, spotLightDistance, marvel, ansul, ansulDropNumber, ansulDropToFront, ansulDropDis1, ansulDropDis2, ansulDropDis3, ansulDropDis4, ansulDropDis5, ansulDetectorNumber, ansulDetectorEnd, ansulDetectorDis1, ansulDetectorDis2, ansulDetectorDis3, ansulDetectorDis4, ansulDetectorDis5);
 
         //需要加强筋的条件
         if (width > 1649 && (length > 2000||(lightType == LightType_e.短灯 && length > 1600)))
         {
-            swAssyLevel1.UnSuppress(suffix, "FNHM0006-2");
+            swAssyLevel1.UnSuppress(suffix, "FNHM0006-2", Aggregator);
             FNHM0006(swAssyLevel1, suffix, "FNHM0006-1", netWidth);
         }
         else
@@ -36,18 +36,18 @@ public class MidRoofService:IMidRoofService
         }
 
         //槽钢长度
-        swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, "2900100001-1");
-        swModelLevel2.ChangeDim("Length@Base-Flange",width-100d);
+        swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, "2900100001-1", Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", width-100d);
 
         //IR安装支架
-        if (marvel) swAssyLevel1.UnSuppress(suffix, "IR_LHC_2-1");
+        if (marvel) swAssyLevel1.UnSuppress(suffix, "IR_LHC_2-1", Aggregator);
         else swAssyLevel1.Suppress(suffix, "IR_LHC_2-1");
     }
 
-    public void FNHM0001(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double netWidth, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight,LightType_e lightType, int spotLightNumber, double spotLightDistance, bool marvel,bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5,int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
+    public void FNHM0001(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double netWidth, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
     {
-        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName);
-        
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+
         swModelLevel2.ChangeDim("Length@SketchBase", length - 4d);
         swModelLevel2.ChangeDim("Width@SketchBase", netWidth + 226d);
         swModelLevel2.ChangeDim("Width@SketchWidth", netWidth - 1d);
@@ -57,10 +57,10 @@ public class MidRoofService:IMidRoofService
         swModelLevel2.ChangeDim("Dis@SketchTopHole", midRoofTopHoleDis);
         //侧向连接孔
         swModelLevel2.ChangeDim("Dis@SketchSideHole", netWidth / 3d);
-        
+
         #region MidRoof铆螺母孔
         //2023/3/10 修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
-        var midRoofNutNumber =Math.Ceiling((length - 300d) / 450d);
+        var midRoofNutNumber = Math.Ceiling((length - 300d) / 450d);
         midRoofNutNumber = midRoofNutNumber < 3 ? 3 : midRoofNutNumber;
         var midRoofNutDis = (length - 300d)/(midRoofNutNumber-1);
         swModelLevel2.ChangeDim("Dis@LPatternMidRoofNut", midRoofNutDis);
@@ -143,7 +143,7 @@ public class MidRoofService:IMidRoofService
         else if (lightType == LightType_e.长灯)
         {
             swCompLevel2.UnSuppress("FsLong");
-            
+
         }
         else if (lightType == LightType_e.短灯)
         {
@@ -266,7 +266,7 @@ public class MidRoofService:IMidRoofService
 
     public void FNHM0006(AssemblyDoc swAssyLevel1, string suffix, string partName, double netWidth)
     {
-        swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName);
+        swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", netWidth-4d);
     }
 }

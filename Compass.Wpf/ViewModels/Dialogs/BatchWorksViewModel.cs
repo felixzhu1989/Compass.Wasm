@@ -8,17 +8,35 @@ using Compass.Wpf.BatchWorks;
 using Compass.Wasm.Shared.ProjectService;
 using System;
 using System.Threading.Tasks;
+using Compass.Wpf.Extensions;
+using Prism.Events;
+using Prism.Ioc;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 
 public class BatchWorksViewModel : BindableBase, IDialogHostAware
 {
+    #region ctor
     private readonly IBatchWorksService _batchWorksService;
+    private readonly IEventAggregator _aggregator;
     public string DialogHostName { get; set; }
     public DelegateCommand SaveCommand { get; set; }
     public DelegateCommand CancelCommand { get; set; }
+    public BatchWorksViewModel(IContainerProvider provider)
+    {
+        _batchWorksService = provider.Resolve<IBatchWorksService>();
+        _aggregator= provider.Resolve<IEventAggregator>();
+        //注册接收消息
+        _aggregator.RegisterMessage(arg =>
+        {
+            Message+=$"{arg.Message}\n";
+        }, Filter_e.Batch);
+        SaveCommand =new DelegateCommand(Execute);
+        CancelCommand=new DelegateCommand(Cancel);
+    }
+    #endregion
 
-    #region 数据
+    #region 数据属性
     private List<ModuleDto> moduleDtos;
     public List<ModuleDto> ModuleDtos
     {
@@ -31,10 +49,10 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
     {
         get => actionName;
         set { actionName = value; RaisePropertyChanged(); }
-    } 
+    }
     #endregion
 
-    #region Progress
+    #region Progress属性
     private bool showProgressBar;
     public bool ShowProgressBar
     {
@@ -45,17 +63,6 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
             RaisePropertyChanged();
         }
     }
-    private string progressTips;
-    public string ProgressTips
-    {
-        get => progressTips;
-        set
-        {
-            progressTips = value;
-            RaisePropertyChanged();
-        }
-    }
-
     private bool canBatchWorks = true;
     public bool CanBatchWorks
     {
@@ -69,20 +76,27 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
 
     #endregion
 
-    public BatchWorksViewModel(IBatchWorksService batchWorksService)
+    #region Message
+    private string message;
+    public string Message
     {
-        _batchWorksService = batchWorksService;
-        SaveCommand=new DelegateCommand(Execute);
-        CancelCommand=new DelegateCommand(Cancel);
+        get => message;
+        set
+        {
+            message = value;
+            RaisePropertyChanged();
+        }
     }
+    #endregion
+
+    
 
     private async void Execute()
     {
         ShowProgressBar =true;
         CanBatchWorks = false;
-        
-        ProgressTips = $"正在{ActionName}...请稍候，暂时不要执行其他操作...";
-        DateTime startTime = DateTime.Now;//计时开始
+        _aggregator.SendMessage($"正在{ActionName}...请稍候，暂时不要执行其他操作...", Filter_e.Batch);
+        var startTime = DateTime.Now;//计时开始
         await Task.Delay(100);
         //开启新线程作图，防止卡死界面，todo:观察后续，如果会中途丢失sw连接，则需要切换回来卡界面
         await Task.Run(async () =>
@@ -107,12 +121,12 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
             }
             catch (Exception ex)
             {
-                ProgressTips = $"{ActionName}发生异常!\n{ex.Message}";
-                await Task.Delay(5000);
+                _aggregator.SendMessage($"{ActionName}发生异常!\n{ex.Message}", Filter_e.Batch);
+                await Task.Delay(6000);
             }
-            TimeSpan timeSpan = DateTime.Now - startTime;
-            progressTips = $"{progressTips}\n耗时：{timeSpan.TotalSeconds:F2}s";
-            ProgressTips = $"{ActionName}完成!";
+            var timeSpan = DateTime.Now - startTime;
+            _aggregator.SendMessage($"耗时：{timeSpan.TotalSeconds:F2}s", Filter_e.Batch);
+            _aggregator.SendMessage($"{ActionName}完成!", Filter_e.Batch);
             await Task.Delay(3000);
             CanBatchWorks = true;
             ShowProgressBar = false;
@@ -133,8 +147,7 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
     {
         ModuleDtos = parameters.ContainsKey("Value") ? parameters.GetValue<List<ModuleDto>>("Value") : new List<ModuleDto>();
         ActionName= parameters.ContainsKey("ActionName") ? parameters.GetValue<BatchWorksAction_e>("ActionName") : BatchWorksAction_e.自动作图;
-
-        ProgressTips = $"请确认开始{ActionName}";
+        _aggregator.SendMessage($"请确认开始{ActionName}...", Filter_e.Batch);
     }
 
 }

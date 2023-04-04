@@ -50,17 +50,14 @@ public static class DialogExtensions
     /// <summary>
     /// 注册提示消息
     /// </summary>    
-    public static void RegisterMessage(this IEventAggregator aggregator,Action<MessageModel> action,string filterName="Main")
+    public static void RegisterMessage(this IEventAggregator aggregator,Action<MessageModel> action,Filter_e filterName= Filter_e.Main)
     {        
-        aggregator.GetEvent<MessageEvent>().Subscribe(action, ThreadOption.PublisherThread, true, (m) =>
-        {
-            return m.Filter.Equals(filterName);
-        });
+        aggregator.GetEvent<MessageEvent>().Subscribe(action, ThreadOption.PublisherThread, true, (m) => m.Filter.Equals(filterName));
     }
     /// <summary>
     /// 发送提示消息
     /// </summary>   
-    public static void SendMessage(this IEventAggregator aggregator,string message, string filterName = "Main")
+    public static void SendMessage(this IEventAggregator aggregator,string message, Filter_e filterName = Filter_e.Main)
     {
         aggregator.GetEvent<MessageEvent>().Publish(new MessageModel()
         {

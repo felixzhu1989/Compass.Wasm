@@ -1,4 +1,5 @@
-﻿using Compass.Wpf.Extensions;
+﻿using Compass.Wpf.Common;
+using Compass.Wpf.Extensions;
 using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -6,16 +7,22 @@ using Prism.Regions;
 
 namespace Compass.Wpf.ViewModels;
 
+/// <summary>
+/// 可导航页面的基类
+/// </summary>
 public class NavigationViewModel : BindableBase, INavigationAware
 {
-    private readonly IContainerProvider _containerProvider;
-    //事件聚合器
-    private readonly IEventAggregator _aggregator;
-
-    public NavigationViewModel(IContainerProvider containerProvider)
+    public IRegionNavigationJournal Journal;
+    public readonly IContainerProvider Provider;
+    public readonly IEventAggregator Aggregator;//事件聚合器
+    public readonly IRegionManager RegionManager;
+    public readonly IDialogHostService DialogHost;
+    public NavigationViewModel(IContainerProvider provider)
     {
-        _containerProvider = containerProvider;
-        _aggregator = containerProvider.Resolve<IEventAggregator>();
+        Provider = provider;
+        RegionManager = provider.Resolve<IRegionManager>();
+        DialogHost = provider.Resolve<IDialogHostService>();//给弹窗使用的服务
+        Aggregator = provider.Resolve<IEventAggregator>();
     }
     public virtual bool IsNavigationTarget(NavigationContext navigationContext)
     {
@@ -30,6 +37,6 @@ public class NavigationViewModel : BindableBase, INavigationAware
     //发送消息，展开窗口
     public void UpdateLoading(bool IsOpen)
     {
-        _aggregator.UpdateLoading(new Common.Events.UpdateModel { IsOpen = IsOpen });
+        Aggregator.UpdateLoading(new Common.Events.UpdateModel { IsOpen = IsOpen });
     }
 }

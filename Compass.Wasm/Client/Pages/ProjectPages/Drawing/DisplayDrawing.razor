@@ -1,0 +1,61 @@
+﻿@inject HttpClient Http
+<tr>
+    <td>
+        <h5>
+            <AuthorizeView Roles="admin,pm,designer">
+                <Authorized>
+                    <a href="./updatedrawing/@Drawing.Id"><i class="bi bi-gear" /></a>
+                </Authorized>
+            </AuthorizeView>
+
+            <a href="./modulelist/@Drawing.Id">
+                <span style="font-weight: bold">@Drawing.ItemNumber</span>
+            </a>
+        </h5>
+        <div class="row">
+            <div class="col-sm-3" style="width: 65px">图纸:</div>
+            <div class="col-sm-9">
+                @if (!string.IsNullOrWhiteSpace(Drawing.DrawingUrl))
+                {
+                    foreach (var fileUrl in Drawing.DrawingUrl.Split('\n'))
+                    {
+                        <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                        <br />
+                    }
+                }
+            </div>
+        </div>
+    </td>
+    <td>
+        <table class="table table-hover " style="table-layout: fixed; word-break: break-all;">
+            <tbody>
+
+                @if (_modules != null && _modules.Count != 0)
+                {
+
+                    foreach (var module in _modules)
+                    {
+                        <tr>
+                            <DisplayModule Module="module" ShowModuleRelease="ShowModuleRelease" />
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </td>
+</tr>
+
+@code {
+    [Parameter]
+    public DrawingDto Drawing { get; set; }
+    [Parameter]
+    public bool ShowModuleRelease { get; set; }
+
+    private List<ModuleDto> _modules=new();
+    protected override async Task OnParametersSetAsync()
+    {
+        var moduleResponse = await Http.GetFromJsonAsync<ApiResponse<List<ModuleDto>>>($"api/Module/Drawing/{Drawing.Id}");
+       if(moduleResponse.Status) _modules=moduleResponse.Result;
+    }
+
+}

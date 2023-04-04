@@ -1,0 +1,80 @@
+﻿@page "/drawing/update/{Id}"
+
+@using Compass.Wasm.Client.Services
+@inject IDrawingService DrawingService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>更新图纸</PageTitle>
+
+<div class="row">
+    <div class="col">
+        <p>
+            <span class="fs-5">更新图纸信息</span>
+        </p>
+    </div>
+    @*todo:控制权限*@
+    <AuthorizeView Roles="admin,pm">
+        <Authorized>
+            <div class="col" style="text-align: right">
+                <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+    
+</div>
+
+@if (_drawing != null)
+{
+    <EditForm Model="_drawing" OnSubmit="Save">
+        <div class="input-group mb-2">
+            <span class="input-group-text">Item编号</span>
+            <input class="form-control" placeholder="Item" @bind-value="@_drawing.ItemNumber" />
+        </div>
+        <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@_drawing.DrawingUrl" />
+        
+        <AuthorizeView Roles="admin">
+            <Authorized Context="auth">
+                <FileUpload Title="截图(测试用)" @bind-FileUrl="@_drawing.ImageUrl" />
+            </Authorized>
+        </AuthorizeView>
+
+        <button class="btn btn-success" type="submit">保存</button>
+        <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"drawings/{_drawing.ProjectId}"))">取消</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private DrawingDto? _drawing=new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await DrawingService.GetFirstOrDefault(Guid.Parse(Id));
+        if (!result.Status) NavigationManager.NavigateTo("projects");
+        _drawing = result.Result;
+    }
+
+    private async Task Delete()
+    {
+        //todo:检查图纸下有没有分段Module
+        //if (await Http.GetFromJsonAsync<bool>($"api/Module/Exists/{drawing.Id}"))
+        //{
+        //    await JsRuntime.InvokeVoidAsync("alert", "该图纸下包含分段，不能删除！\n请先删除分段。");
+        //    return;
+        //}
+
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除Item图纸【{_drawing.ItemNumber}】吗？");
+        if (confirmResult)
+        {
+            var result = await DrawingService.DeleteAsync(Guid.Parse(Id));
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{_drawing.ProjectId}");
+        }
+    }
+    private async Task Save()
+    {
+        var result = await DrawingService.UpdateAsync(Guid.Parse(Id), _drawing);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{_drawing.ProjectId}");
+    }
+}

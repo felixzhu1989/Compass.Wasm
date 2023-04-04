@@ -1,36 +1,45 @@
-﻿using Compass.Wasm.Shared.ProjectService;
+﻿using Compass.Wasm.Shared.DataService;
+using Compass.Wasm.Shared.DataService.Hoods;
+using Compass.Wasm.Shared.ProjectService;
 using Compass.Wpf.Extensions;
-using Compass.Wpf.Service.Hoods;
-using Prism.Events;
+using Prism.Commands;
 using Prism.Ioc;
 using Prism.Regions;
 using System;
-using Compass.Wasm.Shared.DataService;
-using Prism.Commands;
-using Compass.Wasm.Shared.DataService.Hoods;
+using Compass.Wpf.ApiService.Hoods;
 
 namespace Compass.Wpf.ViewModels.Hoods;
 
 public class KviDataViewModel : NavigationViewModel
 {
-    private readonly IEventAggregator _aggregator;
+    #region ctor-KVI参数页面
     private readonly IKviDataService _service;
+    public KviDataViewModel(IContainerProvider provider) : base(provider)
+    {
+        _service = provider.Resolve<IKviDataService>();
+        SaveDataCommand = new DelegateCommand(async () =>
+        {
+            var result = await _service.UpdateAsync(DataDto.Id.Value, DataDto);
+            Aggregator.SendMessage(result.Status ? $"{Title} 参数保存成功！" : $"{Title}参数保存失败，{result.Message}");
+        });
+    }
+    #endregion
 
-    #region Module和ModuleData
-    private ModuleDto currentModule;
+    #region Module和ModuleData属性
+    private ModuleDto currentModule = null!;
     public ModuleDto CurrentModule
     {
         get => currentModule;
         set { currentModule = value; RaisePropertyChanged(); }
     }
     //抬头
-    private string title;
+    private string title = null!;
     public string Title
     {
         get => title;
         set { title = value; RaisePropertyChanged(); }
     }
-    private KviData dataDto;
+    private KviData dataDto = null!;
     public KviData DataDto
     {
         get => dataDto;
@@ -38,35 +47,34 @@ public class KviDataViewModel : NavigationViewModel
     }
     #endregion
 
-    #region 详细参数相关枚举值
-
-    private string[] sidePanels;
+    #region 详细参数相关枚举值属性
+    private string[] sidePanels = null!;
     public string[] SidePanels
     {
         get => sidePanels;
-        set { sidePanels = value;RaisePropertyChanged(); }
+        set { sidePanels = value; RaisePropertyChanged(); }
     }
     public string[] ExhaustSpigotNumbers { get; set; } = { "1", "2" };
 
-    private string[] lightTypes;
+    private string[] lightTypes = null!;
     public string[] LightTypes
     {
         get => lightTypes;
         set { lightTypes = value; RaisePropertyChanged(); }
     }
-    private string[] drainTypes;
+    private string[] drainTypes = null!;
     public string[] DrainTypes
     {
         get => drainTypes;
         set { drainTypes = value; RaisePropertyChanged(); }
     }
-    private string[] ansulSides;
+    private string[] ansulSides = null!;
     public string[] AnsulSides
     {
         get => ansulSides;
         set { ansulSides = value; RaisePropertyChanged(); }
     }
-    private string[] ansulDetectors;
+    private string[] ansulDetectors = null!;
     public string[] AnsulDetectors
     {
         get => ansulDetectors;
@@ -78,19 +86,8 @@ public class KviDataViewModel : NavigationViewModel
 
     #region Command
     public DelegateCommand SaveDataCommand { get; }
-    #endregion
 
-    public KviDataViewModel(IEventAggregator aggregator, IContainerProvider containerProvider,IKviDataService service) : base(containerProvider)
-    {
-        _aggregator = aggregator;
-        _service = service;
-        SaveDataCommand = new DelegateCommand( async () =>
-        {
-           var result=  await _service.UpdateAsync(DataDto.Id.Value, DataDto);
-           if(result.Status) _aggregator.SendMessage($"{Title} 参数保存成功！");
-           else _aggregator.SendMessage($"{Title}参数保存失败，{result.Message}");
-        });
-    }
+    #endregion
 
     #region 导航初始化
     private void GetEnumNames()
@@ -114,7 +111,7 @@ public class KviDataViewModel : NavigationViewModel
         {
             DataDto = new KviData();
             //提示用户，查询失败了
-            _aggregator.SendMessage(dataResult.Message??"查询失败了");
+            Aggregator.SendMessage(dataResult.Message??"查询失败了");
         }
     }
     public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -128,8 +125,6 @@ public class KviDataViewModel : NavigationViewModel
         Title = $"{CurrentModule.Name} {CurrentModule.ModelName}{specialNotes}";
         GetEnumNames();
         GetDataAsync();
-    } 
+    }
     #endregion
-
-
 }

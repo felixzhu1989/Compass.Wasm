@@ -1,12 +1,9 @@
 ﻿using Compass.Wasm.Shared.CategoryService;
 using Compass.Wasm.Shared.Parameter;
 using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.Common;
 using Compass.Wpf.Extensions;
-using Compass.Wpf.Service;
 using Compass.Wpf.ViewModels;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Ioc;
 using Prism.Regions;
 using Prism.Services.Dialogs;
@@ -14,27 +11,48 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using Compass.Wpf.ApiService;
 
 namespace Compass.Wpf.Views;
 
 public class DetailViewModel : NavigationViewModel
 {
-    private readonly IEventAggregator _aggregator;
-    private readonly IProjectService _service;
+    #region ctor-项目详细操作页面
+    private readonly IProjectService _projectService;
     private readonly IModuleService _moduleService;
-    private readonly IRegionManager _regionManager;
-    private readonly IDialogHostService _dialogHost;
 
-    #region 项目内容
+    public DetailViewModel(IContainerProvider provider) : base(provider)
+    {
+        _projectService = provider.Resolve<IProjectService>();
+        _moduleService = provider.Resolve<IModuleService>();
+
+        DrawingDtos = new ObservableCollection<DrawingDto>();
+        ProductDtos=new ObservableCollection<ProductDto>();
+        FilterModelDtos=new ObservableCollection<ModelDto>();
+
+        ProjectInfoCommand = new DelegateCommand(ProjectInfoNavigate);
+        ExecuteCommand = new DelegateCommand<string>(Execute);
+        SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
+        UpdateModuleDataCommand = new DelegateCommand<object>(UpdateModuleDataNavigate);
+        SelectedModelChangedCommand = new DelegateCommand<object>(SelectedModelChanged);
+        ModulesCommand = new DelegateCommand(() =>
+        {
+            //将Project传递给要导航的页面
+            RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ModulesView", back => { Journal = back.Context.NavigationService.Journal; }, ProjectParams);
+        });
+    }
+    #endregion
+
+    #region 项目内容属性
     //抬头
-    private string title;
+    private string title = null!;
     public string Title
     {
         get => title;
         set { title = value; RaisePropertyChanged(); }
     }
     //当前页面显示得项目
-    private ProjectDto project;
+    private ProjectDto project = null!;
     public ProjectDto Project
     {
         get => project;
@@ -42,9 +60,9 @@ public class DetailViewModel : NavigationViewModel
     }
     #endregion
 
-    #region 图纸-分段树
+    #region 图纸-分段树属性
     //当前树内容，图纸-分段
-    private ObservableCollection<DrawingDto> drawingDtos;
+    private ObservableCollection<DrawingDto> drawingDtos = null!;
     public ObservableCollection<DrawingDto> DrawingDtos
     {
         get => drawingDtos;
@@ -59,7 +77,7 @@ public class DetailViewModel : NavigationViewModel
     }
 
     //当前分段
-    private ModuleDto currentModuleDto;
+    private ModuleDto currentModuleDto = null!;
     public ModuleDto CurrentModuleDto
     {
         get => currentModuleDto;
@@ -67,7 +85,7 @@ public class DetailViewModel : NavigationViewModel
     }
     #endregion
 
-    #region 右侧展开栏
+    #region 右侧展开栏属性
     private bool isRightDrawerOpen;
     /// <summary>
     /// 右侧窗口是否展开
@@ -77,7 +95,7 @@ public class DetailViewModel : NavigationViewModel
         get => isRightDrawerOpen;
         set { isRightDrawerOpen = value; RaisePropertyChanged(); }
     }
-    private string rightDrawerTitle;
+    private string rightDrawerTitle = null!;
     public string RightDrawerTitle
     {
         get => rightDrawerTitle;
@@ -85,15 +103,15 @@ public class DetailViewModel : NavigationViewModel
     }
     #endregion
 
-    #region 模型分类列表
-    private ObservableCollection<ProductDto> productDtos;
+    #region 模型分类列表属性
+    private ObservableCollection<ProductDto> productDtos = null!;
     public ObservableCollection<ProductDto> ProductDtos
     {
         get => productDtos;
         set { productDtos = value; RaisePropertyChanged(); }
     }
 
-    private ObservableCollection<ModelDto> filterModelDtos;
+    private ObservableCollection<ModelDto> filterModelDtos = null!;
     public ObservableCollection<ModelDto> FilterModelDtos
     {
         get => filterModelDtos;
@@ -108,7 +126,7 @@ public class DetailViewModel : NavigationViewModel
         set => SetProperty(ref selectedModel, value);
     }
     //提示显示当前选择的模型
-    private string showSelectedModel;
+    private string showSelectedModel = null!;
     public string ShowSelectedModel
     {
         get => showSelectedModel;
@@ -127,7 +145,7 @@ public class DetailViewModel : NavigationViewModel
     }
 
 
-    private string modelTypeSearch;
+    private string modelTypeSearch = null!;
     /// <summary>
     /// 搜索条件属性
     /// </summary>
@@ -146,7 +164,7 @@ public class DetailViewModel : NavigationViewModel
         get => selectedSbuIndex;
         set { selectedSbuIndex = value; RaisePropertyChanged(); }
     }
-    private string[] sbu;
+    private string[] sbu = null!;
     public string[] Sbu
     {
         get => sbu;
@@ -156,50 +174,22 @@ public class DetailViewModel : NavigationViewModel
 
     #endregion
 
-    #region Command
+    #region Commands
     public DelegateCommand ProjectInfoCommand { get; }//跳转到项目概况界面
     public DelegateCommand<string> ExecuteCommand { get; }//根据提供的不同参数执行不同的逻辑
     public DelegateCommand<object> SelectedItemChangedCommand { get; }//选择图纸和分段更改
     public DelegateCommand<object> UpdateModuleDataCommand { get; }//编辑ModuleData
     public DelegateCommand<object> SelectedModelChangedCommand { get; }//选择模型更改
     public DelegateCommand ModulesCommand { get; }//跳转到制图界面
-
-    private NavigationParameters ProjectParams { get; set; }=new ();
-    public DetailViewModel(IEventAggregator aggregator, IContainerProvider containerProvider, IProjectService service, IModuleService moduleService, IRegionManager regionManager) : base(containerProvider)
-    {
-        _aggregator = aggregator;
-        _service = service;
-        _moduleService = moduleService;
-        _regionManager = regionManager;
-        //给弹窗使用的服务
-        _dialogHost = containerProvider.Resolve<IDialogHostService>();
-        DrawingDtos = new ObservableCollection<DrawingDto>();
-        ProductDtos=new ObservableCollection<ProductDto>();
-        FilterModelDtos=new ObservableCollection<ModelDto>();
-
-        ProjectInfoCommand = new DelegateCommand(ProjectInfoNavigate);
-        ExecuteCommand = new DelegateCommand<string>(Execute);
-        SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
-        UpdateModuleDataCommand = new DelegateCommand<object>(UpdateModuleDataNavigate);
-        SelectedModelChangedCommand = new DelegateCommand<object>(SelectedModelChanged);
-        ModulesCommand = new DelegateCommand(() =>
-        {
-            //将Project传递给要导航的页面
-            _regionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ModulesView", ProjectParams);
-        });
-    }
-
-
+    private NavigationParameters ProjectParams { get; } = new();
     #endregion
 
     #region 点击项目文字，导航到项目概况
-
     private void ProjectInfoNavigate()
     {
-        _regionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ProjectInfoView", ProjectParams);
+        RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ProjectInfoView", back => { Journal = back.Context.NavigationService.Journal; }, ProjectParams);
     }
     #endregion
-
 
     #region 选择图纸树节点的动作
     /// <summary>
@@ -215,7 +205,7 @@ public class DetailViewModel : NavigationViewModel
     }
     #endregion
 
-    #region 双击图纸树节点的动作
+    #region 双击图纸树节点的动作 1，修改模型参数 2，修改图纸截图
     private void UpdateModuleDataNavigate(object obj)
     {
         SelectedItem = obj;
@@ -226,10 +216,21 @@ public class DetailViewModel : NavigationViewModel
             var target = $"{CultureInfo.CurrentCulture.TextInfo.ToTitleCase(modelName.ToLower())}DataView";
             //将dto传递给要导航的页面
             NavigationParameters param = new NavigationParameters { { "Value", moduleDto } };
-            _regionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate(target, param);
+            RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate(target, back =>
+            {
+                Journal = back.Context.NavigationService.Journal;
+            }, param);
         }
-
-
+        else if (SelectedItem is DrawingDto drawingDto)
+        {
+            if (obj==null||drawingDto.Id.Equals(Guid.Empty)) return;
+            //将dto传递给要导航的页面
+            NavigationParameters param = new NavigationParameters { { "Value", drawingDto } };
+            RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("DrawingView", back =>
+            {
+                Journal = back.Context.NavigationService.Journal;
+            }, param);
+        }
     }
     #endregion
 
@@ -248,7 +249,7 @@ public class DetailViewModel : NavigationViewModel
     }
     #endregion
 
-    #region 增删改查
+    #region 增删改查分段模型树
     private void Execute(string obj)
     {
         switch (obj)
@@ -278,7 +279,7 @@ public class DetailViewModel : NavigationViewModel
         else
         {
             //发送全局通知，显示在Snackbar上,告诉用户需要选择节点
-            _aggregator.SendMessage("请先选择Item再添加分段！");
+            Aggregator.SendMessage("请先选择Item再添加分段！");
             return;
         }
         //弹出右侧栏，填写数据
@@ -299,7 +300,7 @@ public class DetailViewModel : NavigationViewModel
         else
         {
             //发送全局通知，显示在Snackbar上,告诉用户需要选择节点
-            _aggregator.SendMessage("请选择分段再修改！");
+            Aggregator.SendMessage("请选择分段再修改！");
             return;
         }
         //弹出右侧栏，填写数据
@@ -316,7 +317,7 @@ public class DetailViewModel : NavigationViewModel
             CurrentModuleDto.ModelTypeId.Equals(Guid.Empty))
         {
             //发送提示
-            _aggregator.SendMessage("没有择模型，或者分段名称不能为空");
+            Aggregator.SendMessage("没有择模型，或者分段名称不能为空");
             return;
         }
         try
@@ -339,7 +340,7 @@ public class DetailViewModel : NavigationViewModel
                 }
                 IsRightDrawerOpen = false;//关闭弹窗
                 ShowSelectedModel = string.Empty;//清空模型选择提示信息
-                _aggregator.SendMessage($"分段{CurrentModuleDto.Name} {CurrentModuleDto.ModelName}修改成功！");
+                Aggregator.SendMessage($"分段{CurrentModuleDto.Name} {CurrentModuleDto.ModelName}修改成功！");
             }
             else//新增ModuleDto
             {
@@ -355,7 +356,7 @@ public class DetailViewModel : NavigationViewModel
                         drawingDto.ModuleDtos.Add(addResult.Result);
                     }
                     //不关闭侧边框，初始化CurrentModuleDto，并重新绑定数据，发送提示
-                    _aggregator.SendMessage($"分段{CurrentModuleDto.Name} {CurrentModuleDto.ModelName}添加成功！");
+                    Aggregator.SendMessage($"分段{CurrentModuleDto.Name} {CurrentModuleDto.ModelName}添加成功！");
                     CurrentModuleDto.Id=null;//置空id，继续添加下一个分段
                 }
             }
@@ -363,7 +364,7 @@ public class DetailViewModel : NavigationViewModel
         catch (Exception e)
         {
             //发送错误报告
-            _aggregator.SendMessage(e.Message);
+            Aggregator.SendMessage(e.Message);
         }
     }
     private async void Delete()
@@ -373,7 +374,7 @@ public class DetailViewModel : NavigationViewModel
         {
             //弹窗提示用户确定需要删除吗？
             //删除询问
-            var dialogResult = await _dialogHost.Question("删除确认", $"确认删除分段：{moduleDto.Name} {moduleDto.ModelName} 吗?");
+            var dialogResult = await DialogHost.Question("删除确认", $"确认删除分段：{moduleDto.Name} {moduleDto.ModelName} 吗?");
             if (dialogResult.Result != ButtonResult.OK) return;
             var deleteResult = await _moduleService.DeleteAsync(moduleDto.Id.Value);
             if (deleteResult.Status)
@@ -393,20 +394,18 @@ public class DetailViewModel : NavigationViewModel
     #region 初始化
     private async void GetModuleTreeDataAsync()
     {
-        UpdateLoading(true);//打开等待窗口
         ProjectParameter parameter = new() { ProjectId = Project.Id };
-        var moduleTreeResult = await _service.GetModuleTreeAsync(parameter);
+        var moduleTreeResult = await _projectService.GetModuleTreeAsync(parameter);
         if (moduleTreeResult.Status)
         {
             DrawingDtos.Clear();
             DrawingDtos.AddRange(moduleTreeResult.Result);
         }
-        UpdateLoading(false);//数据加载完毕后关闭等待窗口
     }
 
     private async void GetModelTreeDataAsync()
     {
-        var modelTypeTreeResult = await _service.GetModelTypeTreeAsync();
+        var modelTypeTreeResult = await _projectService.GetModelTypeTreeAsync();
         if (modelTypeTreeResult.Status)
         {
             ProductDtos.Clear();
@@ -432,10 +431,10 @@ public class DetailViewModel : NavigationViewModel
 
     #region 筛选模型
     /* 产品模型选择方案
- * Product-Model-ModelType
- * 首先使用api查询到一个总的List<ProductDto> ProductDtos,按照sbu默认为fs分配给List<ProductDto> FilterProductDtos
- * 使用搜索框和sub分类，对FilterProductDtos进行筛选，本地linq查询，不通过api
- */
+     * Product-Model-ModelType
+     * 首先使用api查询到一个总的List<ProductDto> ProductDtos,按照sbu默认为fs分配给List<ProductDto> FilterProductDtos
+     * 使用搜索框和sub分类，对FilterProductDtos进行筛选，本地linq查询，不通过api
+     */
     private void FilterModelTypeTree()
     {
         FilterModelDtos.Clear();

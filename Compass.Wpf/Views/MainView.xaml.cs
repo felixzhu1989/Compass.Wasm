@@ -21,7 +21,7 @@ namespace Compass.Wpf.Views
             aggregator.RegisterMessage(arg =>
             {
                 Snackbar.MessageQueue!.Enqueue(arg.Message);//往消息队列中添加消息
-            }, "Main");
+            });
 
             //注册等待消息窗口
             //aggregator.Register(arg =>

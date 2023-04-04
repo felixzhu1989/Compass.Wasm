@@ -1,6 +1,5 @@
 ﻿using System;
 using Prism.Commands;
-using Compass.Wpf.Service;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using Compass.Wasm.Shared.IdentityService;
@@ -8,15 +7,30 @@ using Compass.Wpf.Common;
 using Prism.Events;
 using Compass.Wpf.Extensions;
 using System.Configuration;
+using Compass.Wpf.ApiService;
+using Prism.Ioc;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 
 public class LoginViewModel : BindableBase, IDialogAware
 {
+    #region ctor
     private readonly ILoginService _loginService;//事件聚合器，消息提示
     private readonly IEventAggregator _aggregator;
+    public LoginViewModel(IContainerProvider provider)
+    {
+        _loginService = provider.Resolve<ILoginService>();
+        _aggregator = provider.Resolve<IEventAggregator>();
+        SaveUser=true;
+        //使用记住的用户名和密码
+        UserName = string.IsNullOrEmpty(GetSettingString("UserName")) ? Environment.UserName : GetSettingString("UserName");//如果是空的那么使用当前计算机登录用户
+        Password = string.IsNullOrEmpty(GetSettingString("Password")) ? "123" : GetSettingString("Password");//如果是空的那么使用默认密码123
+        ExecuteCommand =new DelegateCommand<string>(Execute);
+    }
+    #endregion
+
+    #region 属性
     public string Title { get; } = "Compass";
-    public event Action<IDialogResult>? RequestClose;
     private string userName;
     public string UserName
     {
@@ -35,19 +49,12 @@ public class LoginViewModel : BindableBase, IDialogAware
     {
         get => saveUser;
         set { saveUser = value; RaisePropertyChanged(); }
-    }
+    } 
+    #endregion
 
+    public event Action<IDialogResult>? RequestClose;
     public DelegateCommand<string> ExecuteCommand { get; }
-    public LoginViewModel(ILoginService loginService, IEventAggregator aggregator)
-    {
-        _loginService = loginService;
-        _aggregator = aggregator;
-        SaveUser=true;
-        //使用记住的用户名和密码
-        UserName = string.IsNullOrEmpty(GetSettingString("UserName")) ? Environment.UserName:GetSettingString("UserName");//如果是空的那么使用当前计算机登录用户
-        Password = string.IsNullOrEmpty(GetSettingString("Password"))?"123": GetSettingString("Password");//如果是空的那么使用默认密码123
-        ExecuteCommand =new DelegateCommand<string>(Execute);
-    }
+    
     private void Execute(string obj)
     {
         switch (obj)
@@ -56,6 +63,7 @@ public class LoginViewModel : BindableBase, IDialogAware
             case "Logout": Logout(); break;
         }
     }
+
     /// <summary>
     /// 登录操作
     /// </summary>
@@ -89,8 +97,9 @@ public class LoginViewModel : BindableBase, IDialogAware
             return;
         }
         //登录失败提示...
-        _aggregator.SendMessage(loginResult.Message, "Login");
+        _aggregator.SendMessage(loginResult.Message, Filter_e.Login);
     }
+
     /// <summary>
     /// 退出操作
     /// </summary>
@@ -131,7 +140,6 @@ public class LoginViewModel : BindableBase, IDialogAware
     } 
     #endregion
     
-
     public bool CanCloseDialog()
     {
         return true;

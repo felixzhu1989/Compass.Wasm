@@ -295,18 +295,18 @@ Link: https://github.com/felixzhu1989/Compass.Wasm
 2022/10/28 10:07:52.282  http server Running on http://10.9.18.31
 */
 Console.ForegroundColor= ConsoleColor.Magenta;
-Console.WriteLine("   _____ ____  __  __ _____         _____ _____");
-Console.WriteLine("  / ____/ __ \\|  \\/  |  __ \\ /\\    / ____/ ____|");
-Console.WriteLine(" | |   | |  | | \\  / | |__) /  \\  | (___| (___");
-Console.WriteLine(" | |   | |  | | |\\/| |  ___/ /\\ \\  \\___ \\\\___ \\");
-Console.WriteLine(" | |___| |__| | |  | | |  / ____ \\ ____) |___) |");
-Console.WriteLine("  \\_____\\____/|_|  |_|_| /_/    \\_\\_____/_____/");
+Console.WriteLine(@"   _____ ____  __  __ _____         _____ _____");
+Console.WriteLine(@"  / ____/ __ \|  \/  |  __ \ /\    / ____/ ____|");
+Console.WriteLine(@" | |   | |  | | \  / | |__) /  \  | (___| (___");
+Console.WriteLine(@" | |   | |  | | |\/| |  ___/ /\ \  \___ \\___ \");
+Console.WriteLine(@" | |___| |__| | |  | | |  / ____ \ ____) |___) |");
+Console.WriteLine(@"  \_____\____/|_|  |_|_| /_/    \_\_____/_____/");
 Console.ForegroundColor = ConsoleColor.White;
-Console.WriteLine("");
-Console.WriteLine("Author: felix");
-Console.WriteLine("Version: v3.0.1");
-Console.WriteLine("Link: https://github.com/felixzhu1989/Compass.Wasm");
-Console.WriteLine($"{DateTime.Now} http server Running on http://10.9.18.31");
+Console.WriteLine(@"");
+Console.WriteLine(@"Author: felix");
+Console.WriteLine(@"Version: v3.0.1");
+Console.WriteLine(@"Link: https://github.com/felixzhu1989/Compass.Wasm");
+Console.WriteLine($@"{DateTime.Now} http server Running on http://10.9.18.31");
 
 #endregion
 

@@ -8,6 +8,12 @@ using Prism.Services.Dialogs;
 namespace Compass.Wpf.ViewModels.Dialogs;
 public class AddMemoViewModel : BindableBase, IDialogHostAware
 {
+    public AddMemoViewModel()
+    {
+        SaveCommand=new DelegateCommand(Save);
+        CancelCommand=new DelegateCommand(Cancel);
+    }
+
     public string DialogHostName { get; set; }
     public DelegateCommand SaveCommand { get; set; }
     public DelegateCommand CancelCommand { get; set; }
@@ -17,11 +23,7 @@ public class AddMemoViewModel : BindableBase, IDialogHostAware
         get => model;
         set { model = value; RaisePropertyChanged(); }
     }
-    public AddMemoViewModel()
-    {
-        SaveCommand=new DelegateCommand(Save);
-        CancelCommand=new DelegateCommand(Cancel);
-    }
+    
     private void Cancel()
     {
         if (DialogHost.IsDialogOpen(DialogHostName))

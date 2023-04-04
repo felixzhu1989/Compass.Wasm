@@ -1,16 +1,14 @@
 ﻿using Compass.Wasm.Shared.DataService;
-using Compass.Wpf.BatchWorks;
 using Compass.Wpf.Extensions;
+using Prism.Ioc;
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.DrawingServices;
 
-public class SidePanelService : ISidePanelService
+public class SidePanelService : BaseDrawingService, ISidePanelService
 {
-    private readonly ISldWorks _swApp;
-    public SidePanelService(ISldWorksService sldWorksService)
+    public SidePanelService(IContainerProvider provider) : base(provider)
     {
-        _swApp = sldWorksService.SwApp;
     }
     public void SidePanelFs(AssemblyDoc swAssyTop, string suffix, SidePanel_e sidePanel, double length, double width, double height, bool backCj, ExhaustType_e exhaustType)
     {
@@ -20,8 +18,8 @@ public class SidePanelService : ISidePanelService
         int sideCjNo = (int)((netWidth -(exhaustType == ExhaustType_e.KW || exhaustType == ExhaustType_e.UW ? 380d : 305d)) / 32d)+1;
 
         //todo:是否需要合并M型烟罩
-        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "SidePanel_Fs-1");
-        
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "SidePanel_Fs-1", Aggregator);
+
 
         if (sidePanel == SidePanel_e.双)
         {
@@ -59,7 +57,7 @@ public class SidePanelService : ISidePanelService
 
     private void FNHS0001(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, bool backCj, int sideCjNo)
     {
-        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName);
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", width);
         swModelLevel2.ChangeDim("Height@SketchBase", height);
         swModelLevel2.ChangeDim("CjSide@CjSide", sideCjNo);
@@ -68,7 +66,7 @@ public class SidePanelService : ISidePanelService
     }
     private void FNHS0002(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, bool backCj)
     {
-        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName);
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", width);
         swModelLevel2.ChangeDim("Height@SketchBase", height);
         swCompLevel2.Suppress("FI555");

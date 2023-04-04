@@ -60,7 +60,7 @@ public class DrawingService : IDrawingService
     {
         try
         {
-            var model = new Drawing(Guid.NewGuid(), dto.ProjectId, dto.ItemNumber, dto.DrawingUrl);
+            var model = new Drawing(Guid.NewGuid(), dto.ProjectId, dto.ItemNumber, dto.DrawingUrl,dto.ImageUrl);
             await _dbContext.Drawings.AddAsync(model);
             dto.Id= model.Id;
             return new ApiResponse<DrawingDto> { Status = true, Result = dto };

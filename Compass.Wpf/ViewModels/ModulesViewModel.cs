@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Compass.Wpf.Service;
 using Compass.Wasm.Shared.Parameter;
+using Compass.Wpf.ApiService;
 using Compass.Wpf.Extensions;
 using Prism.Commands;
 using Prism.Events;
@@ -17,11 +17,18 @@ namespace Compass.Wpf.ViewModels;
 
 public class ModulesViewModel : NavigationViewModel
 {
-    private readonly IEventAggregator _aggregator;
-    private readonly IProjectService _service;
-    private readonly IDialogHostService _dialogHost;
-
-    #region 项目内容
+    #region ctor-分段列表页面
+    private readonly IProjectService _projectService;
+    public ModulesViewModel(IContainerProvider provider) : base(provider)
+    {
+        _projectService = provider.Resolve<IProjectService>();
+        ModuleDtos =new ObservableCollection<ModuleDto>();
+        ExecuteCommand = new DelegateCommand<string>(Execute);
+        ShowCutListCommand = new DelegateCommand<ModuleDto>(ShowCutList);
+    } 
+    #endregion
+    
+    #region 项目内容属性
     //当前页面显示得项目
     private ProjectDto project;
     public ProjectDto Project
@@ -31,7 +38,7 @@ public class ModulesViewModel : NavigationViewModel
     }
     #endregion
 
-    #region DataGrid数据
+    #region DataGrid数据属性
     private ObservableCollection<ModuleDto> moduleDtos;
     public ObservableCollection<ModuleDto> ModuleDtos
     {
@@ -65,7 +72,7 @@ public class ModulesViewModel : NavigationViewModel
 
     #endregion
 
-    #region 执行操作
+    #region 执行操作属性
     private bool canBatchWorks = true;
     public bool CanBatchWorks
     {
@@ -76,30 +83,23 @@ public class ModulesViewModel : NavigationViewModel
             RaisePropertyChanged();
         }
     }
-    public DelegateCommand<string> ExecuteCommand { get; } 
-    public DelegateCommand<ModuleDto> ShowCutListCommand { get; }
+
     #endregion
 
-    public ModulesViewModel(IEventAggregator aggregator,IContainerProvider containerProvider,IProjectService service) : base(containerProvider)
-    {
-        _aggregator = aggregator;
-        _service = service;
-        //给弹窗使用的服务
-        _dialogHost = containerProvider.Resolve<IDialogHostService>();
+    #region Commands
+    public DelegateCommand<string> ExecuteCommand { get; }
+    public DelegateCommand<ModuleDto> ShowCutListCommand { get; } 
+    #endregion
 
-        ModuleDtos =new ObservableCollection<ModuleDto>();
-        ExecuteCommand = new DelegateCommand<string>(Execute);
-        ShowCutListCommand = new DelegateCommand<ModuleDto>(ShowCutList);
-    }
-    #region 显示CutList
+    #region 显示CutList弹窗
     private async void ShowCutList(ModuleDto obj)
     {
         DialogParameters param = new DialogParameters { { "Value", obj } };
-        await _dialogHost.ShowDialog("CutListView", param);
+        await DialogHost.ShowDialog("CutListView", param);
     }
     #endregion
 
-    #region 执行批量操作
+    #region 执行批量操作动作，弹出批量操作弹窗
     private void Execute(string obj)
     {
         switch (obj)
@@ -141,7 +141,7 @@ public class ModulesViewModel : NavigationViewModel
         //判断是否勾选分段
         if (!selectedModuleDto.Any())
         {
-            _aggregator.SendMessage($"请勾选分段再开始{actionName}");
+            Aggregator.SendMessage($"请勾选分段再开始{actionName}");
             CanBatchWorks = true;
             return;
         }
@@ -151,17 +151,16 @@ public class ModulesViewModel : NavigationViewModel
             { "Value", selectedModuleDto },
             { "ActionName", actionName }
         };
-        await _dialogHost.ShowDialog("BatchWorksView", param);
+        await DialogHost.ShowDialog("BatchWorksView", param);
         CanBatchWorks = true;
     }
     #endregion
-
 
     #region 初始化
     private async void GetModuleDtosDataAsync()
     {
         ProjectParameter parameter = new() { ProjectId = Project.Id };
-        var moduleDtosResult = await _service.GetModuleListAsync(parameter);
+        var moduleDtosResult = await _projectService.GetModuleListAsync(parameter);
         if (moduleDtosResult.Status)
         {
             ModuleDtos.Clear();

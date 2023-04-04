@@ -1,31 +1,42 @@
-﻿using System;
+﻿using Compass.Wasm.Shared.Parameter;
+using Compass.Wasm.Shared.ProjectService;
+using Compass.Wpf.Extensions;
+using Microsoft.Office.Interop.Excel;
+using Prism.Events;
+using Prism.Ioc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Compass.Wasm.Shared.ProjectService;
-using Microsoft.Office.Interop.Excel;
-using Worksheet= Microsoft.Office.Interop.Excel.Worksheet;
-using Range=Microsoft.Office.Interop.Excel.Range;
-using Prism.Ioc;
-using Compass.Wasm.Shared.Parameter;
-using Compass.Wpf.Service;
+using Compass.Wpf.ApiService;
+using Range = Microsoft.Office.Interop.Excel.Range;
+using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
 
 namespace Compass.Wpf.BatchWorks;
 
-public class PrintsService:IPrintsService
+public class PrintsService : IPrintsService
 {
-    private readonly IContainerProvider _containerProvider;
-    public PrintsService(IContainerProvider containerProvider)
+    #region ctor
+    private readonly IContainerProvider _provider;
+    private readonly IEventAggregator _aggregator;
+    public PrintsService(IContainerProvider provider)
     {
-        _containerProvider = containerProvider;
+        _provider = provider;
+        _aggregator= provider.Resolve<IEventAggregator>();
     }
+    #endregion
+
+    #region 公共方法实现
+    /// <summary>
+    /// 批量打印CutList
+    /// </summary>
+    /// <param name="moduleDtos"></param>
+    /// <returns></returns>
     public async Task BatchPrintCutListAsync(List<ModuleDto> moduleDtos)
     {
-        var cutListService = _containerProvider.Resolve<ICutListService>();
+        var cutListService = _provider.Resolve<ICutListService>();
         var template = Path.Combine(Environment.CurrentDirectory, "TemplateDoc", "CutList.xlsx");
 
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
@@ -37,6 +48,7 @@ public class PrintsService:IPrintsService
 
         foreach (var moduleDto in moduleDtos)
         {
+            _aggregator.SendMessage($"正在打印:\t{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}", Filter_e.Batch);
             await GetCutListAndPrint(worksheet, moduleDto, cutListService);
         }
 
@@ -44,11 +56,17 @@ public class PrintsService:IPrintsService
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
     }
+
+    /// <summary>
+    /// 单独打印CutList
+    /// </summary>
+    /// <param name="moduleDto"></param>
+    /// <returns></returns>
     public async Task PrintOneCutListAsync(ModuleDto moduleDto)
     {
-        var cutListService = _containerProvider.Resolve<ICutListService>();
+        var cutListService = _provider.Resolve<ICutListService>();
         var template = Path.Combine(Environment.CurrentDirectory, "TemplateDoc", "CutList.xlsx");
-        
+
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
         excelApp.Workbooks.Add(template);
@@ -61,28 +79,13 @@ public class PrintsService:IPrintsService
         KillProcess(excelApp);
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
-    }
+    } 
+    #endregion
 
-    
-
-
-    private void UsePrintDialog(Visual visual)
+    #region Excel打印内部实现
+    private async Task GetCutListAndPrint(Worksheet worksheet, ModuleDto moduleDto, ICutListService cutListService)
     {
-        //效果不理想
-        PrintDialog printDialog = new PrintDialog();
-        printDialog.PageRangeSelection = PageRangeSelection.AllPages;
-        printDialog.UserPageRangeEnabled = true;
-        var result = printDialog.ShowDialog();
-        if (result.Value)
-        {
-            printDialog.PrintVisual(visual, "CutList");
-        }
-    }
-
-
-    private async Task GetCutListAndPrint(Worksheet worksheet,ModuleDto moduleDto,ICutListService cutListService)
-    {
-        CutListParameter param = new CutListParameter
+        var param = new CutListParameter
         {
             ModuleId = moduleDto.Id.Value
         };
@@ -95,20 +98,25 @@ public class PrintsService:IPrintsService
 
     private void UseExcelPrint(Worksheet worksheet, ModuleDto moduleDto, List<CutListDto> cutListDtos)
     {
+
         FillTitle(worksheet, moduleDto);
 
         FillData(worksheet, cutListDtos);
-
         //调试时预览
         //worksheet.PrintPreview(true);
         //打印
         worksheet.PrintOutEx();
         //清空打印内容,11行到末尾
-        var rows=worksheet.Rows[$"11:{cutListDtos.Count + 10}",Missing.Value];
+        var rows = worksheet.Rows[$"11:{cutListDtos.Count + 10}", Missing.Value];
         rows.Delete(XlDirection.xlDown);
     }
 
-    private void FillTitle(Worksheet worksheet,ModuleDto moduleDto)
+    /// <summary>
+    /// 填写项目信息
+    /// </summary>
+    /// <param name="worksheet"></param>
+    /// <param name="moduleDto"></param>
+    private void FillTitle(Worksheet worksheet, ModuleDto moduleDto)
     {
         worksheet.Cells[1, 2] = moduleDto.ProjectName;
         worksheet.Cells[2, 2] = moduleDto.OdpNumber;
@@ -121,6 +129,11 @@ public class PrintsService:IPrintsService
         worksheet.Cells[8, 2] = Environment.UserName;
     }
 
+    /// <summary>
+    /// 填写Cutlist信息
+    /// </summary>
+    /// <param name="worksheet"></param>
+    /// <param name="cutListDtos"></param>
     private void FillData(Worksheet worksheet, List<CutListDto> cutListDtos)
     {
         for (int i = 0; i < cutListDtos.Count; i++)
@@ -152,16 +165,21 @@ public class PrintsService:IPrintsService
         worksheet.Cells[1, 11].ColumnWidth = 5;
     }
 
+    /// <summary>
+    /// 计算KSA、MESH小侧板长度
+    /// </summary>
+    /// <param name="dto"></param>
+    /// <returns></returns>
     private string GetSidePanelLength(CutListDto dto)
     {
-        if(dto.PartNo.Length<8) return "";
-        
+        if (dto.PartNo.Length<8) return "";
+
         if (dto.PartNo.Contains("FNHE0003") || dto.PartNo.Contains("FNHE0004") || dto.PartNo.Contains("FNHE0026") || dto.PartNo.Contains("FNHE0027"))
         {
             //普通KSA小侧边
-            return dto.Length.Equals(310.67d) ? $"{dto.Width-50}": $"{dto.Length-50}";
+            return dto.Length.Equals(310.67d) ? $"{dto.Width-50}" : $"{dto.Length-50}";
         }
-        if(dto.PartNo.Contains("FNHE0005") || dto.PartNo.Contains("FNHE0028") || dto.PartNo.Contains("FNHE0170")) 
+        if (dto.PartNo.Contains("FNHE0005") || dto.PartNo.Contains("FNHE0028") || dto.PartNo.Contains("FNHE0170"))
         {
             //KSA小侧边特殊
             return dto.Length.Equals(300d) ? $"{dto.Width-29}" : $"{dto.Length-29}";
@@ -177,13 +195,14 @@ public class PrintsService:IPrintsService
             return dto.Length.Equals(310.87d) ? $"{dto.Width-50}" : $"{dto.Length-50}";
         }
         return "";
-    }
+    } 
+    #endregion
 
-
-/// <summary>
-/// 引用Windows句柄，获取程序PID
-/// </summary>
-[DllImport("User32.dll")]
+    #region Excel进程关闭
+    /// <summary>
+    /// 引用Windows句柄，获取程序PID
+    /// </summary>
+    [DllImport("User32.dll")]
     private static extern int GetWindowThreadProcessId(IntPtr hwnd, out int pid);
     /// <summary>
     /// 杀掉生成的进程
@@ -207,4 +226,5 @@ public class PrintsService:IPrintsService
             System.Diagnostics.Debug.WriteLine("进程关闭失败！异常信息：" + ex);
         }
     }
+    #endregion
 }

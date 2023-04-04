@@ -8,8 +8,9 @@ using System.IO;
 using Compass.Wpf.Extensions;
 using System.Diagnostics;
 using System.Linq;
-using Compass.Wpf.Common;
-using Compass.Wpf.Service;
+using Compass.Wpf.ApiService;
+using Prism.Events;
+using Prism.Ioc;
 using SolidWorks.Interop.swconst;
 
 
@@ -20,13 +21,14 @@ public class ExportDxfService : IExportDxfService
     private readonly ICutListService _cutListService;
     private readonly IModuleService _moduleService;
     private readonly ISldWorks _swApp;
-    public ExportDxfService(ISldWorksService sldWorksService, ICutListService cutListService,IModuleService moduleService)
+    private readonly IEventAggregator _aggregator;
+    public ExportDxfService(IContainerProvider provider)
     {
-        _cutListService = cutListService;
-        _moduleService = moduleService;
-        _swApp = sldWorksService.SwApp;
+        _cutListService = provider.Resolve<ICutListService>();
+        _moduleService = provider.Resolve<IModuleService>();
+        _swApp = provider.Resolve<ISldWorksService>().SwApp;
+        _aggregator= provider.Resolve<IEventAggregator>();
     }
-
 
     public async Task ExportHoodDxfAsync(ModuleDto moduleDto)
     {
@@ -43,7 +45,7 @@ public class ExportDxfService : IExportDxfService
             throw new FileNotFoundException("PackAndGo后的文件未找到，请检查该分段是否已经完成作图", packPath);
         }
         //打开装配体
-        var swAssy = _swApp.OpenAssemblyDoc(out ModelDoc2 swModel, packPath);
+        var swAssy = _swApp.OpenAssemblyDoc(out ModelDoc2 swModel, packPath,_aggregator);
         List<CutListDto> dtos = new List<CutListDto>();
         var comps = swAssy.GetComponents(false);
         foreach (var comp in (IEnumerable)comps)
@@ -168,7 +170,7 @@ public class ExportDxfService : IExportDxfService
         //如果不存在则创建该文件夹
         if (!Directory.Exists(dxfDir)) Directory.CreateDirectory(dxfDir);
         var outPath = Path.Combine(dxfDir, $"{partName}.dxf");
-        Console.WriteLine($@"导出Dxf:{outPath}");
+        _aggregator.SendMessage($"导出Dxf:\t{outPath}",Filter_e.Batch);
         swCompModel.Visible = true;
         //获取拉丝方向
         var dataAlignment = GetAlignment(swCompModel);
@@ -180,7 +182,6 @@ public class ExportDxfService : IExportDxfService
         swCompModel.Visible = false;
         return result;
     }
-
     private double[] GetAlignment(ModelDoc2 swCompModel)
     {
         double[] dataAlignment = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Compass.Wasm.Shared.Parameter;
 using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.Service;
+using Compass.Wpf.ApiService;
 using Prism.Ioc;
 using Prism.Regions;
 using Prism.Commands;
@@ -10,14 +9,23 @@ using Compass.Wpf.Extensions;
 
 namespace Compass.Wpf.ViewModels;
 
-public class ProjectsViewModel:NavigationViewModel
+public class ProjectsViewModel : NavigationViewModel
 {
-    private readonly IProjectService _service;
-    private readonly IRegionManager _regionManager;
+    #region ctor-项目列表页面
+    private readonly IProjectService _projectService;
+    public ProjectsViewModel(IContainerProvider provider) : base(provider)
+    {
+        _projectService = provider.Resolve<IProjectService>();
 
+        ProjectDtos = new ObservableCollection<ProjectDto>();
+        ExecuteCommand = new DelegateCommand<string>(Execute);
+        DetailCommand = new DelegateCommand<ProjectDto>(Navigate);
+    }
     public DelegateCommand<string> ExecuteCommand { get; }
     public DelegateCommand<ProjectDto> DetailCommand { get; }
+    #endregion
 
+    #region 属性
     private ObservableCollection<ProjectDto> projectDtos;
     public ObservableCollection<ProjectDto> ProjectDtos
     {
@@ -42,27 +50,24 @@ public class ProjectsViewModel:NavigationViewModel
         get => selectedProjectStatus;
         set { selectedProjectStatus = value; RaisePropertyChanged(); }
     }
+    #endregion
 
-
-    public ProjectsViewModel(IContainerProvider containerProvider,IProjectService service) : base(containerProvider)
-    {
-        _service = service;
-        _regionManager =containerProvider.Resolve<IRegionManager>();
-
-        ProjectDtos = new ObservableCollection<ProjectDto>();
-        ExecuteCommand = new DelegateCommand<string>(Execute);
-        DetailCommand = new DelegateCommand<ProjectDto>(Detail);
-    }
+    #region 导航到详细页面
     /// <summary>
     /// 跳转到项目详细页面，传递dto
     /// </summary>
-    private void Detail(ProjectDto obj)
+    private void Navigate(ProjectDto obj)
     {
         //将dto传递给要导航的页面
         NavigationParameters param = new NavigationParameters { { "Value", obj } };
-        _regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("DetailView", param);
+        RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("DetailView", back =>
+        {
+            Journal = back.Context.NavigationService.Journal;
+        }, param);
     }
+    #endregion
 
+    #region 增删改查
     /// <summary>
     /// 各种执行方法
     /// </summary>
@@ -70,27 +75,25 @@ public class ProjectsViewModel:NavigationViewModel
     {
         switch (obj)
         {
-            
+
             case "Query": GetDataAsync(); break;
-            //case "Add": Add(); break;
-            //case "Save": Save(); break;
+                //case "Add": Add(); break;
+                //case "Save": Save(); break;
         }
-    }
+    } 
+    #endregion
 
-
-
+    #region 导航初始化
     private async void GetDataAsync()
     {
-        UpdateLoading(true);//打开等待窗口
         int? status = SelectedProjectStatus == 0 ? null : SelectedProjectStatus-1;
-        ProjectParameter parameter = new() { Search = this.Search,ProjectStatus =status==null?null:(ProjectStatus_e)status };
-        var result = await _service.GetAllFilterAsync(parameter);
+        ProjectParameter parameter = new() { Search = this.Search, ProjectStatus =status==null ? null : (ProjectStatus_e)status };
+        var result = await _projectService.GetAllFilterAsync(parameter);
         if (result.Status)
         {
             ProjectDtos.Clear();
             ProjectDtos.AddRange(result.Result);
         }
-        UpdateLoading(false);//数据加载完毕后关闭等待窗口
     }
     public override void OnNavigatedTo(NavigationContext navigationContext)
     {
@@ -99,7 +102,6 @@ public class ProjectsViewModel:NavigationViewModel
             ? navigationContext.Parameters.GetValue<int>("Value")
             : 0;
         GetDataAsync();
-    }
-
-
+    } 
+    #endregion
 }

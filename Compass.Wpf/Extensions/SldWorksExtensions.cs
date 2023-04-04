@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Compass.Wasm.Shared.ProjectService;
+using Prism.Events;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 
@@ -9,14 +10,13 @@ namespace Compass.Wpf.Extensions;
 public static class SldWorksExtensions
 {
     #region ISldWorks扩展
-
     /// <summary>
     /// 获取pack后的装配体地址
     /// </summary>
     public static string GetPackPath(this ModuleDto moduleDto, out string suffix,out string packDir)
     {
         //packandgo文件夹位置
-        packDir = Path.Combine(@"D:\MyProjects", moduleDto.OdpNumber, $"{moduleDto.ItemNumber}_{moduleDto.Name}_{moduleDto.ModelName}");
+        packDir = Path.Combine(@"D:\MyProjects", moduleDto.OdpNumber,moduleDto.ItemNumber, $"{moduleDto.Name}_{moduleDto.ModelName}");
 
         //判断打包目标文件夹是否存在，不存在则创建
         if (!Directory.Exists(packDir)) Directory.CreateDirectory(packDir);
@@ -40,7 +40,7 @@ public static class SldWorksExtensions
     /// <summary>
     /// 打开装配体（通常用于最顶层装配体），抛出swModel
     /// </summary>
-    public static AssemblyDoc OpenAssemblyDoc(this ISldWorks swApp, out ModelDoc2 swModel, string fileName)
+    public static AssemblyDoc OpenAssemblyDoc(this ISldWorks swApp, out ModelDoc2 swModel, string fileName,IEventAggregator aggregator)
     {
         int errors = 0;
         int warnings = 0;
@@ -48,7 +48,8 @@ public static class SldWorksExtensions
             (int)swDocumentTypes_e.swDocASSEMBLY,
             (int)swOpenDocOptions_e.swOpenDocOptions_Silent,
             "", ref errors, ref warnings);
-        Console.WriteLine($@"打开:{swModel.GetPathName()}");
+        //todo:变更发送消息方式
+        aggregator.SendMessage($"打开:\t{swModel.GetPathName()}",Filter_e.Batch);
         //打开装配体后必须重建，使Pack后的零件名都更新到带后缀的状态，否则程序出错
         swModel.ForceRebuild3(true); //TopOnly参数设置成true，只重建顶层，不重建零件内部
         return (swModel as AssemblyDoc)!;
@@ -73,18 +74,18 @@ public static class SldWorksExtensions
     /// <summary>
     /// 获取子装配
     /// </summary>
-    public static AssemblyDoc GetSubAssemblyDoc(this AssemblyDoc swAssy, string suffix, string assyName)
+    public static AssemblyDoc GetSubAssemblyDoc(this AssemblyDoc swAssy, string suffix, string assyName, IEventAggregator aggregator)
     {
-        swAssy.UnSuppress(out ModelDoc2 swModelLevel1, suffix, assyName);
-        Console.WriteLine($"子装配:{swModelLevel1.GetPathName()}");
+        swAssy.UnSuppress(out ModelDoc2 swModelLevel1, suffix, assyName, aggregator);
+        aggregator.SendMessage($"子装配:\t{swModelLevel1.GetPathName()}",Filter_e.Batch);
         return (swModelLevel1 as AssemblyDoc)!;
     }
     /// <summary>
     /// 获取子装配并抛出ModelDoc2
     /// </summary>
-    public static AssemblyDoc GetSubAssemblyDoc(this AssemblyDoc swAssy, out ModelDoc2 swModelLevel1, string suffix, string assyName)
+    public static AssemblyDoc GetSubAssemblyDoc(this AssemblyDoc swAssy, out ModelDoc2 swModelLevel1, string suffix, string assyName, IEventAggregator aggregator)
     {
-        swAssy.UnSuppress(out swModelLevel1, suffix, assyName);
+        swAssy.UnSuppress(out swModelLevel1, suffix, assyName, aggregator);
         return (swModelLevel1 as AssemblyDoc)!;
     }
     
@@ -138,11 +139,11 @@ public static class SldWorksExtensions
     /// <summary>
     /// 装配体解压部件，解压零部件根方法，解压后对装配体进行重建
     /// </summary>
-    public static Component2 UnSuppress(this AssemblyDoc swAssy, string suffix, string compName)
+    public static Component2 UnSuppress(this AssemblyDoc swAssy, string suffix, string compName, IEventAggregator aggregator)
     {
         var swComp = swAssy.GetComponentByName(compName.AddSuffix(suffix));
         swComp.SetSuppression2(2);
-        Console.WriteLine($@"处理:{swComp.GetPathName()}");
+        aggregator.SendMessage($"处理:\t{swComp.GetPathName()}",Filter_e.Batch);
         //如果二级装配中的零件被压缩，那么或获取不到零件，因此建议先解压零件,重建装配体，再操作
         swAssy.ForceRebuild2(true);
         return swComp;
@@ -151,9 +152,9 @@ public static class SldWorksExtensions
     /// <summary>
     /// 装配体解压部件，抛出ModelDoc2
     /// </summary>
-    public static Component2 UnSuppress(this AssemblyDoc swAssy, out ModelDoc2 swModel, string suffix, string compName)
+    public static Component2 UnSuppress(this AssemblyDoc swAssy, out ModelDoc2 swModel, string suffix, string compName, IEventAggregator aggregator)
     {
-        var swComp = swAssy.UnSuppress(suffix, compName);
+        var swComp = swAssy.UnSuppress(suffix, compName,aggregator);
         swModel=swComp.GetModelDoc2() as ModelDoc2;
         return swComp;
     }

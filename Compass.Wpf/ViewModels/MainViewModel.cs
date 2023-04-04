@@ -8,12 +8,32 @@ using Prism.Mvvm;
 using Prism.Regions;
 
 namespace Compass.Wpf.ViewModels;
-public class MainViewModel : BindableBase, IConfigureService
+public class MainViewModel : NavigationViewModel, IConfigureService
 {
-    private readonly IRegionManager _regionManager;//导航容器
-    private readonly IContainerProvider _container;
-    private IRegionNavigationJournal _journal;
-    private ObservableCollection<MenuBar> menuBars;
+    #region ctor-主界面
+    public MainViewModel(IContainerProvider provider):base(provider)
+    {
+        MenuBars = new ObservableCollection<MenuBar>();
+        //从菜单中添加导航
+        NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
+        GoBackCommand = new DelegateCommand(() =>
+        {
+            if (Journal is { CanGoBack: true }) Journal.GoBack();
+        });
+        GoForwardCommand = new DelegateCommand(() =>
+        {
+            if (Journal is { CanGoForward: true }) Journal.GoForward();
+        });
+        HomeCommand = new DelegateCommand(() =>
+        {
+            RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView", back => { Journal = back.Context.NavigationService.Journal; });
+        });
+        LogoutCommand=new DelegateCommand(() => { App.Logout(provider, RegionManager); });//注销登录
+    }
+    #endregion
+
+    #region 属性
+    private ObservableCollection<MenuBar> menuBars = null!;
     /// <summary>
     /// 菜单集合
     /// </summary>
@@ -23,47 +43,34 @@ public class MainViewModel : BindableBase, IConfigureService
         set { menuBars = value; RaisePropertyChanged(); }
     }
     //用于绑定菜单栏显示用户名
-    private string userName;
+    private string userName = null!;
     public string UserName
     {
         get => userName;
         set { userName = value; RaisePropertyChanged(); }
     }
-    public DelegateCommand<MenuBar> NavigateCommand { get;}
+    #endregion
+
+    #region Commands
+    public DelegateCommand<MenuBar> NavigateCommand { get; }
     public DelegateCommand GoBackCommand { get; }
     public DelegateCommand GoForwardCommand { get; }
     public DelegateCommand HomeCommand { get; }
     //退出登录
     public DelegateCommand LogoutCommand { get; }
+    #endregion
 
-    public MainViewModel(IRegionManager regionManager, IContainerProvider container)
-    {
-        _regionManager = regionManager;
-        _container=container;        
-        MenuBars = new ObservableCollection<MenuBar>();
-        NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
-        GoBackCommand = new DelegateCommand(() =>
-        {
-            if (_journal is { CanGoBack: true }) _journal.GoBack();
-        });
-        GoForwardCommand = new DelegateCommand(() =>
-        {
-            if (_journal is { CanGoForward: true }) _journal.GoForward();
-        });
-        HomeCommand = new DelegateCommand(() =>
-        {
-            _regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
-        });
-        LogoutCommand=new DelegateCommand(() => { App.Logout(_container, _regionManager); });//注销登录
-    }
-
+    /// <summary>
+    /// 导航上下页面
+    /// </summary>
+    /// <param name="obj"></param>
     private void Navigate(MenuBar? obj)
     {
         UserName=AppSession.UserName;
         if (obj==null||string.IsNullOrWhiteSpace(obj.NameSpace)) return;
-        _regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.NameSpace, back =>
+        RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.NameSpace, back =>
         {
-            _journal = back.Context.NavigationService.Journal;
+            Journal = back.Context.NavigationService.Journal;
         });
     }
 
@@ -77,6 +84,7 @@ public class MainViewModel : BindableBase, IConfigureService
         MenuBars.Add(new MenuBar { Icon = "NotebookPlus", Title = "备忘录", NameSpace = "MemoView" });
         MenuBars.Add(new MenuBar { Icon = "Cog", Title = "设置", NameSpace = "SettingsView" });
     }
+
     /// <summary>
     /// 初始化配置默认首页
     /// </summary>
@@ -84,6 +92,6 @@ public class MainViewModel : BindableBase, IConfigureService
     {
         CreateMenuBar(); //模拟生成菜单数据，初始化菜单集合
         UserName=AppSession.UserName;//初始化用户名
-        _regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView");
+        RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView", back => { Journal = back.Context.NavigationService.Journal; });
     }
 }

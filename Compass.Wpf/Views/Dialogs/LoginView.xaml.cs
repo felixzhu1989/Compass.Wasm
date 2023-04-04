@@ -18,7 +18,7 @@ namespace Compass.Wpf.Views.Dialogs
             aggregator.RegisterMessage(arg =>
             {
                 LoginSnackBar.MessageQueue.Enqueue(arg.Message);
-            }, "Login");
+            }, Filter_e.Login);
         }
     }
 }

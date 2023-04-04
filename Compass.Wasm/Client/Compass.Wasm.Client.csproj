@@ -13,15 +13,12 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.10" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.10" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.10" PrivateAssets="all" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Zack.Commons" Version="1.1.11" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Shared\Compass.Wasm.Shared.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="PlanServices\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,0 +1,43 @@
+﻿@page "/drawing/add/{ProjectId}"
+@using Compass.Wasm.Client.Services
+
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject IDrawingService DrawingService
+
+<PageTitle>新增图纸</PageTitle>
+
+<EditForm Model="Drawing" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">Item编号</span>
+        <input class="form-control" placeholder="Item" @bind-value="@Drawing.ItemNumber" />
+    </div>
+
+    <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@Drawing.DrawingUrl" />
+
+    <AuthorizeView Roles="admin">
+        <Authorized Context="auth">
+            <FileUpload Title="截图(测试用)" @bind-FileUrl="@Drawing.ImageUrl" />
+        </Authorized>
+    </AuthorizeView>
+
+    <button class="btn btn-success" type="submit">新增图纸(Item)</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("projects"))">取消</button>
+</EditForm>
+@code {
+    [Parameter]
+    public string ProjectId { get; set; }
+    public DrawingDto? Drawing = new();
+    private async Task Save()
+    {
+        if (string.IsNullOrWhiteSpace(Drawing.ItemNumber))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        Drawing.ProjectId = Guid.Parse(ProjectId);
+        var result = await DrawingService.AddAsync(Drawing);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{ProjectId}"); 
+    }
+    //todo:如何上传图片？直接在WPF中截图，然后缓存本地，然后在自动上传到后台，再查询显示在界面上
+}

@@ -6,25 +6,36 @@ namespace Compass.ProjectService.Domain.Entities;
 
 public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, ISoftDelete
 {
-    //BasicInfo
+    #region 基本属性
     public string OdpNumber { get; private set; }
     public string Name { get; private set; }
-    public DateTime DeliveryDate { get; private set; }//交货时间，重要，根据它来排序
-    //状态表示当前，根据EventBus接收到事件，自动修改
-    public ProjectStatus_e ProjectStatus { get; private set; }//计划,制图,生产,入库,结束
-    //其他参数
+    public DateTime DeliveryDate { get; private set; }//交货时间，根据它来排序
     public ProjectType_e ProjectType { get; private set; }
     public RiskLevel_e RiskLevel { get; private set; }
     public string? SpecialNotes { get; private set; }
+    #endregion
+
+
+    #region 文件属性（单独上传），上传即保存，无需再确认
     public string? ContractUrl { get; private set; }
     public string? BomUrl { get; private set; }
-    public string? AttachmentsUrl { get; private set; }//上传得附件，多文件
-    public string? FinalInspectionUrl { get; private set; }//上传最终检验单，多文件
+    public string? AttachmentsUrl { get; private set; }//上传附件，多文件
+    public string? FinalInspectionUrl { get; private set; }//上传最终检验单，多文件 
+    #endregion
 
 
-
+    #region 状态属性（单独修改）
+    //状态表示当前，根据EventBus接收到事件，自动修改
+    public ProjectStatus_e ProjectStatus { get; private set; }//计划,制图,生产,入库,结束
+    //有没有待解决得问题，如果有则另起一行显示异常详细信息
+    public bool IsProblemNotResolved { get; private set; }
+    //是否绑定了生产主计划
+    public bool IsBoundMainPlan { get; private set; }
+    #endregion
+    
+    #region ctor
     private Project() { }
-    public Project(Guid id, string odpNumber, string name, DateTime deliveryDate, ProjectType_e projectType, RiskLevel_e riskLevel, string? specialNotes, string? contractUrl)
+    public Project(Guid id, string odpNumber, string name, DateTime deliveryDate, ProjectType_e projectType, RiskLevel_e riskLevel, string? specialNotes)
     {
         Id = id;
         OdpNumber= odpNumber;
@@ -33,39 +44,25 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         ProjectType= projectType;
         RiskLevel= riskLevel;
         SpecialNotes= specialNotes;
-        ContractUrl= contractUrl;
         ProjectStatus = ProjectStatus_e.计划;//初始状态是计划状态
         //发布领域事件
         AddDomainEvent(new ProjectCreatedNotification(id, name));
 
     }
+    #endregion
 
+    #region Update
     public void Update(ProjectDto dto)
     {
         ChangeOdpNumber(dto.OdpNumber!.ToUpper()).ChangeName(dto.Name!)
             .ChangeDeliveryDate(dto.DeliveryDate)
             .ChangeProjectType(dto.ProjectType).ChangeRiskLevel(dto.RiskLevel)
-            .ChangeContractUrl(dto.ContractUrl!).ChangeBomUrl(dto.BomUrl!)
-            .ChangeFinalInspectionUrl(dto.FinalInspectionUrl!)
-            .ChangeAttachmentsUrl(dto.AttachmentsUrl!)
             .ChangeSpecialNotes(dto.SpecialNotes!);
-        
         NotifyModified();
         //todo:发布领域事件
         //测试发布领域事件
         //AddDomainEvent(new TestNotification(odpNumber));
-
     }
-
-
-    #region ChangeProperty
-    public Project ChangeProjectStatus(ProjectStatus_e projectStatus)
-    {
-        ProjectStatus = projectStatus;
-        return this;
-    }
-
-
     public Project ChangeOdpNumber(string odpNumber)
     {
         OdpNumber= odpNumber;
@@ -98,6 +95,10 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         SpecialNotes= specialNotes;
         return this;
     }
+    #endregion
+    
+    #region 更新文件属性
+    
     public Project ChangeContractUrl(string contractUrl)
     {
         ContractUrl= contractUrl;
@@ -120,12 +121,31 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     }
 
     #endregion
+    
+    #region 更新状态属性
+    public Project ChangeProjectStatus(ProjectStatus_e projectStatus)
+    {
+        ProjectStatus = projectStatus;
+        return this;
+    }
+    public Project ChangeProblemNotResolved(bool isProblemNotResolved)
+    {
+        IsProblemNotResolved = isProblemNotResolved;
+        return this;
+    }
+    public Project ChangeBoundMainPlan(bool isBoundMainPlan)
+    {
+        IsBoundMainPlan = isBoundMainPlan;
+        return this;
+    }
+    #endregion
 
+    #region 删除
     public override void SoftDelete()
     {
         base.SoftDelete();
         //发布删除项目领域事件
         AddDomainEvent(new ProjectDeletedNotification(Id));
-    }
-
+    } 
+    #endregion
 }

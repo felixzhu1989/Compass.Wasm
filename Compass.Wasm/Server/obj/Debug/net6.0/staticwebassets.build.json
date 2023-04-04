@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JdAOnBz4HtIi+M9RFSjpORSRM1ecw48BwV0tlE5jLN0=",
+  "Hash": "Xz40TI7fZUo5ggI0PE5KwW302Ewab4yIHzwiwHScowg=",
   "Source": "Compass.Wasm.Server",
   "BasePath": "_content/Compass.Wasm.Server",
   "Mode": "Default",
@@ -1241,6 +1241,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\6.0.14\\runtimes\\browser-wasm\\lib\\net6.0\\netstandard.dll"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Newtonsoft.Json.dll",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Project",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Administrator\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net6.0\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.AppContext.dll",
@@ -7191,6 +7208,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\System.IO.MemoryMappedFiles.dll"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Debug\\net6.0\\build-gz\\qWR7uUpc.gz",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Project",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Debug\\net6.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Newtonsoft.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Debug\\net6.0\\wwwroot\\_framework\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Debug\\net6.0\\build-gz\\qZWq7gvR.gz",

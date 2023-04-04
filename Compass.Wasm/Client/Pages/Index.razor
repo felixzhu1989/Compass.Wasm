@@ -1,14 +1,9 @@
 ﻿@page "/"
 @page "/{Page:int}"
 @page "/search/{SearchText}/{Page:int}"
-@using System.Timers
-@using Compass.Wasm.Client.ProjectServices
-@using Compass.Wasm.Client.Pages.ProjectService.Tracking
+@using Compass.Wasm.Client.Services
 
-@inject HttpClient Http
-@inject IJSRuntime JsRuntime
-@inject NavigationManager NavigationManager
-@inject ITrackingService TrackingService
+@inject IIndexService IndexService
 @*@implements IDisposable*@
 
 <PageTitle>Project Tracking</PageTitle>
@@ -34,13 +29,13 @@
         </tr>
     </thead>
     <tbody>
-        @if (TrackingService.Trackings == null||TrackingService.Trackings.Count==0)
+        @if (IndexService.Trackings == null||IndexService.Trackings.Count==0)
         {
             <p>加载中...</p>
         }
         else
         {
-            @foreach (var tracking in TrackingService.Trackings)
+            @foreach (var tracking in IndexService.Trackings)
             {
                 @*<DisplayTracking Id="tracking.Id" />*@
                 <tr class="@(tracking.ProblemNotResolved?"table-danger":"")">
@@ -137,18 +132,18 @@
 
 @if (SearchText!=null)
 {
-    @for (int i = 1; i <= TrackingService.PageCount; i++)
+    @for (int i = 1; i <= IndexService.PageCount; i++)
     {
-        <a class="btn @(i==TrackingService.CurrentPage?"btn-info":"btn-outline-info")"
+        <a class="btn @(i==IndexService.CurrentPage?"btn-info":"btn-outline-info")"
    style="margin-right: 15px;margin-bottom: 30px;"
-   href="search/@TrackingService.LastSearchText/@i">@i</a>
+   href="search/@IndexService.LastSearchText/@i">@i</a>
     }
 }
 else
 {
-    @for (int i = 1; i <= TrackingService.PageCount; i++)
+    @for (int i = 1; i <= IndexService.PageCount; i++)
     {
-        <a class="btn @(i==TrackingService.CurrentPage?"btn-info":"btn-outline-info")"
+        <a class="btn @(i==IndexService.CurrentPage?"btn-info":"btn-outline-info")"
    style="margin-right: 15px;margin-bottom: 30px;"
    href="@i">@i</a>
     }
@@ -167,11 +162,11 @@ else
         if (Page == 0) Page = 1;
         if (SearchText != null)
         {
-            await TrackingService.SearchTrackings(SearchText, Page);
+            await IndexService.SearchTrackings(SearchText, Page);
         }
         else
         {
-            await TrackingService.GetTrackingsAsync(Page);
+            await IndexService.GetTrackingsAsync(Page);
         }
     }
 
@@ -187,12 +182,12 @@ else
     //private void OnTimeElapsed(object? sender, ElapsedEventArgs e)
     //{
     //    //直接跳转页面
-    //    if (TrackingService.PageCount > 1)
+    //    if (IndexService.PageCount > 1)
     //    {
     //        _pageFlag++;
-    //        if (_pageFlag > TrackingService.PageCount) _pageFlag = 1;
+    //        if (_pageFlag > IndexService.PageCount) _pageFlag = 1;
     //    }
-    //    NavigationManager.NavigateTo(SearchText==null ? $"{_pageFlag}" : $"search/{TrackingService.LastSearchText}/{_pageFlag}");
+    //    NavigationManager.NavigateTo(SearchText==null ? $"{_pageFlag}" : $"search/{IndexService.LastSearchText}/{_pageFlag}");
     //}
     //public void Dispose()
     //{

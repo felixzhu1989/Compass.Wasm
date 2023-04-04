@@ -1,17 +1,12 @@
-﻿using Compass.Wpf.BatchWorks;
-using SolidWorks.Interop.sldworks;
+﻿using Prism.Ioc;
 
 namespace Compass.Wpf.DrawingServices;
 
-public class SharePartService : ISharePartService
+public class SharePartService : BaseDrawingService, ISharePartService
 {
-    private readonly ISldWorks _swApp;
-    public SharePartService(ISldWorksService sldWorksService)
+    public SharePartService(IContainerProvider provider) : base(provider)
     {
-        _swApp = sldWorksService.SwApp;
     }
-
-
 
 
 }

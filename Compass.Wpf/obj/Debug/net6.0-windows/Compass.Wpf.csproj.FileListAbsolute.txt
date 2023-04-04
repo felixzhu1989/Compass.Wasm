@@ -124,3 +124,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Dialogs\
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\TemplateDoc\CutList.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Interop.Microsoft.Office.Interop.Excel.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Compass.Wpf.csproj.ResolveComReference.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\DrawingView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\DrawingView.baml

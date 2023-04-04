@@ -1,25 +1,22 @@
 ﻿using Compass.Wasm.Shared.DataService;
-using Compass.Wpf.BatchWorks;
 using Compass.Wpf.Extensions;
+using Prism.Ioc;
 using SolidWorks.Interop.sldworks;
 using System;
 
 namespace Compass.Wpf.DrawingServices;
 
-public class ExhaustService: IExhaustService
+public class ExhaustService : BaseDrawingService, IExhaustService
 {
-    private readonly ISldWorks _swApp;
-    public ExhaustService(ISldWorksService sldWorksService)
+    public ExhaustService(IContainerProvider provider) : base(provider)
     {
-        _swApp = sldWorksService.SwApp;
     }
-
 
     public void Kv555(AssemblyDoc swAssyTop, string suffix, double length, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector)
     {
-        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_KV_555-1");
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_KV_555-1", Aggregator);
         //排风主体
-        FNHE0001(swAssyLevel1, suffix, "FNHE0001-1", length,sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, ansulDetector);
+        FNHE0001(swAssyLevel1, suffix, "FNHE0001-1", length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, ansulDetector);
         //排风腔前面板
         FNHE0002(swAssyLevel1, suffix, "FNHE0002-1", length, UvLightType_e.No, middleToRight);
         //KSA侧边
@@ -27,9 +24,9 @@ public class ExhaustService: IExhaustService
         //排风三角板
         ExhaustSide(swAssyLevel1, suffix, ansul, sidePanel, "5201030401-1", "5201030401-2");
         //排风滑门导轨
-        ExhaustRail(swAssyLevel1, suffix,marvel,length,exhaustSpigotNumber,exhaustSpigotLength,exhaustSpigotWidth,exhaustSpigotDis, "FNCE0018-1", "FNCE0018-2");
+        ExhaustRail(swAssyLevel1, suffix, marvel, length, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, "FNCE0018-1", "FNCE0018-2");
         //Ksa阵列
-        Ksa(swAssyLevel1,suffix,length);
+        Ksa(swAssyLevel1, suffix, length);
     }
 
     public void ExhaustSpigotFs(AssemblyDoc swAssyTop, string suffix, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, bool marvel, bool ansul)
@@ -42,35 +39,35 @@ public class ExhaustService: IExhaustService
             swAssyTop.Suppress("LocalLPatternExhaustSpigot");
             return;
         }
-        var swAssyLevel1= swAssyTop.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1");
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1", Aggregator);
         //进入ExhaustSpigot_Fs，子装配
         //todo:有待细化逻辑
         //前
-        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, "FNHE0006-1");
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, "FNHE0006-1", Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", exhaustSpigotLength + 50d);
         swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
         if (ansul) swCompLevel2.UnSuppress("Ansul");
         else swCompLevel2.Suppress("Ansul");
-            
+
         //后
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0007-1");
+        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0007-1", Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", exhaustSpigotLength + 50d);
         swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
         //左，todo:有待细化Ansul探测器逻辑
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0008-1");
+        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0008-1", Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", exhaustSpigotWidth);
         swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
 
         //右,
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0009-1");
+        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0009-1", Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", exhaustSpigotWidth);
         swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
 
         //滑门
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNCE0013-1");
+        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNCE0013-1", Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", exhaustSpigotLength / 2d + 10d);
         swModelLevel2.ChangeDim("Width@SketchBase", exhaustSpigotWidth + 20d);
-            
+
         //两个排风口的情况
         if (exhaustSpigotNumber == 2)
         {
@@ -86,9 +83,9 @@ public class ExhaustService: IExhaustService
     }
 
 
-    private void FNHE0001(AssemblyDoc swAssyLevel1, string suffix, string partName,double length, SidePanel_e sidePanel, UvLightType_e uvLightType , double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection,  bool backToBack, bool marvel,bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector)
+    private void FNHE0001(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector)
     {
-        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName);
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", length);
 
         #region MidRoof铆螺母孔
@@ -154,7 +151,7 @@ public class ExhaustService: IExhaustService
         #endregion
 
         #region 油塞
-        
+
         if (drainType== DrainType_e.左油塞)
         {
             swCompLevel2.UnSuppress("DrainTapLeft");
@@ -209,7 +206,7 @@ public class ExhaustService: IExhaustService
                 swCompLevel2.UnSuppress("ChannelRight");
                 swCompLevel2.UnSuppress("AnsulSideRight");
             }
-            
+
 
             //探测器
             if (ansulDetector == AnsulDetector_e.右探测器口|| ansulDetector == AnsulDetector_e.双侧探测器口)
@@ -222,13 +219,13 @@ public class ExhaustService: IExhaustService
             }
         }
         #endregion
-        
+
     }
 
     private void FNHE0002(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, UvLightType_e uvLightType,
         double middleToRight)
     {
-        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName);
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", length);
         #region UVHood
         if (uvLightType==UvLightType_e.UVR4L||uvLightType==UvLightType_e.UVR6L||uvLightType==UvLightType_e.UVR8L)
@@ -270,7 +267,7 @@ public class ExhaustService: IExhaustService
         //KSA数量，KSA侧板长度(以全长计算)
         int ksaNo = (int)((length + 0.5d) / 498d);
         double ksaSideLength = (length - ksaNo * 498d) / 2d;
-        
+
         ModelDoc2 swModelLevel2;
         if (ksaSideLength <= 2)
         {
@@ -282,21 +279,21 @@ public class ExhaustService: IExhaustService
         {
             swAssyLevel1.Suppress(suffix, leftPart);
             swAssyLevel1.Suppress(suffix, rightPart);
-            swAssyLevel1.UnSuppress(out swModelLevel2,suffix, specialPart);
+            swAssyLevel1.UnSuppress(out swModelLevel2, suffix, specialPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2d);
         }
         else if (ksaSideLength < 25d && ksaSideLength >= 12d)
         {
-            swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart);
+            swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2);
             swAssyLevel1.Suppress(suffix, rightPart);
             swAssyLevel1.Suppress(suffix, specialPart);
         }
         else
         {
-            swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart);
+            swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
-            swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart);
+            swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
             swAssyLevel1.Suppress(suffix, specialPart);
         }
@@ -307,20 +304,20 @@ public class ExhaustService: IExhaustService
         Component2 swCompLevel2;
         if (ansul && sidePanel == SidePanel_e.中)
         {
-            swAssyLevel1.UnSuppress(suffix, leftPart);
-            swCompLevel2 = swAssyLevel1.UnSuppress(suffix, rightPart);
+            swAssyLevel1.UnSuppress(suffix, leftPart, Aggregator);
+            swCompLevel2 = swAssyLevel1.UnSuppress(suffix, rightPart, Aggregator);
             swCompLevel2.UnSuppress("AnsulDetector");
         }
         else if (ansul && sidePanel==SidePanel_e.左)
         {
             swAssyLevel1.Suppress(suffix, leftPart);
-            swCompLevel2 = swAssyLevel1.UnSuppress(suffix, rightPart);
+            swCompLevel2 = swAssyLevel1.UnSuppress(suffix, rightPart, Aggregator);
             swCompLevel2.UnSuppress("AnsulDetector");
         }
         else if (ansul&& sidePanel == SidePanel_e.右)
         {
             swAssyLevel1.Suppress(suffix, rightPart);
-            swCompLevel2 = swAssyLevel1.UnSuppress(suffix, leftPart);
+            swCompLevel2 = swAssyLevel1.UnSuppress(suffix, leftPart, Aggregator);
             swCompLevel2.FeatureByName("AnsulDetector");
         }
         else
@@ -330,7 +327,7 @@ public class ExhaustService: IExhaustService
         }
     }
 
-    private void ExhaustRail(AssemblyDoc swAssyLevel1, string suffix, bool marvel,double length, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis,string railPart1, string railPart2)
+    private void ExhaustRail(AssemblyDoc swAssyLevel1, string suffix, bool marvel, double length, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, string railPart1, string railPart2)
     {
         if (marvel)
         {
@@ -340,8 +337,8 @@ public class ExhaustService: IExhaustService
         }
         else
         {
-            swAssyLevel1.UnSuppress(suffix, railPart2);
-            swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2,suffix, railPart1);
+            swAssyLevel1.UnSuppress(suffix, railPart2, Aggregator);
+            swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, railPart1, Aggregator);
             swAssyLevel1.ChangeDim("Width@DistanceSpigot", exhaustSpigotWidth+25d);
             //根据脖颈数量计算导轨长度
             var railLength = exhaustSpigotNumber == 1
@@ -358,7 +355,7 @@ public class ExhaustService: IExhaustService
         int ksaNo = (int)((length + 1d) / 498d);
         double ksaSideLength = (length - ksaNo * 498d) / 2d;
         //KSA距离左边缘
-        swAssyLevel1.ChangeDim("Ksa@DistanceKsa", ksaSideLength < 12d ? 0.5d:ksaSideLength);
+        swAssyLevel1.ChangeDim("Ksa@DistanceKsa", ksaSideLength < 12d ? 0.5d : ksaSideLength);
         //判断KSA数量，KSA侧板长度，如果太小，则使用特殊小侧板侧边
         if (ksaNo == 1)
         {

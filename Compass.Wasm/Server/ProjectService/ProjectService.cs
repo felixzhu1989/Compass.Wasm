@@ -5,7 +5,6 @@ using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameter;
 using Compass.Wasm.Shared.ProjectService;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Module = System.Reflection.Module;
 
 namespace Compass.Wasm.Server.ProjectService;
 
@@ -68,7 +67,7 @@ public class ProjectService : IProjectService
     {
         try
         {
-            var model = new Project(Guid.NewGuid(), dto.OdpNumber.ToUpper(), dto.Name, dto.DeliveryDate, dto.ProjectType, dto.RiskLevel, dto.SpecialNotes, dto.ContractUrl);
+            var model = new Project(Guid.NewGuid(), dto.OdpNumber.ToUpper(), dto.Name, dto.DeliveryDate, dto.ProjectType, dto.RiskLevel, dto.SpecialNotes);
             await _dbContext.Projects.AddAsync(model);
             dto.Id= model.Id;
             //todo:修改跟踪对象，改成其他的对象

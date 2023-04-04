@@ -76,6 +76,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\M
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Microsoft.SqlServer.Server.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\MimeKit.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Pipelines.Sockets.Unofficial.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\BouncyCastle.Crypto.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\RabbitMQ.Client.dll

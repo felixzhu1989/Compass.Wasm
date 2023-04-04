@@ -12,19 +12,18 @@ namespace Compass.Wpf.Common;
 /// </summary>
 public class DialogHostService : DialogService, IDialogHostService
 {
-    private readonly IContainerExtension containerExtension;
+    private readonly IContainerExtension _containerExtension;
     public DialogHostService(IContainerExtension containerExtension) : base(containerExtension)
     {
-        this.containerExtension=containerExtension;
+        _containerExtension=containerExtension;
     }
+
     //这里指定的DialogHost为MainView中的RootDialog。
     public async Task<IDialogResult> ShowDialog(string name, IDialogParameters? parameters, string dialogHostName = "RootDialog")
     {
-
-        if (parameters == null)
-            parameters = new DialogParameters();
+        parameters ??= new DialogParameters();
         //从容器当中取出弹出窗口的实例
-        var content = containerExtension.Resolve<object>(name);
+        var content = _containerExtension.Resolve<object>(name);
         //验证实例的有效性
         if (!(content is FrameworkElement dialogContent))
             throw new NullReferenceException("A dialog's content must be a FrameworkElement");
@@ -44,7 +43,7 @@ public class DialogHostService : DialogService, IDialogHostService
             eventArgs.Session.UpdateContent(content);
         };
         var dialogResult = await DialogHost.Show(dialogContent, viewModel.DialogHostName, eventHandler);
-        return dialogResult as IDialogResult;
+        return (dialogResult as IDialogResult)!;
        // return (IDialogResult)await DialogHost.Show(dialogContent, viewModel.DialogHostName, eventHandler);
     }
 }

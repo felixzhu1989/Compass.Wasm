@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TBqDNyd3u86nkv4wyAPZDjjcti8+jAB+a5dnoszkBFc=",
+  "Hash": "rPtyFxA13H59uVoH1mIRuBjdew5KzRlJAIb2OidsHeU=",
   "Source": "Compass.Wasm.Server",
   "BasePath": "_content/Compass.Wasm.Server",
   "Mode": "Default",
@@ -2261,6 +2261,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.IO.FileSystem.dll"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\i8402xTQ.br",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Project",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll.br",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\Newtonsoft.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\Newtonsoft.Json.dll"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\i8402xTQ.gz",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Project",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll.gz",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\Newtonsoft.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\compress\\idaNqwsz.br",
@@ -6086,6 +6120,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "obj\\Release\\net6.0\\linked\\netstandard.dll"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\Newtonsoft.Json.dll",
+      "SourceId": "Compass.Wasm.Client",
+      "SourceType": "Project",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\bin\\Release\\net6.0\\publish\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll",
+      "AssetKind": "Publish",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "obj\\Release\\net6.0\\linked\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\obj\\Release\\net6.0\\linked\\System.Collections.Concurrent.dll",
@@ -39627,6 +39678,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\2022\\12\\e957b6f440c19e26db579d8a682e090fa7a8cabf9fee5a0f8d449a62ffc021fe\\FSO220474装箱清单.xlsm"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2023\\4\\691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1\\temp.png",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2023/4/691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1/temp.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2023\\4\\691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1\\temp.png"
     }
   ]
 }

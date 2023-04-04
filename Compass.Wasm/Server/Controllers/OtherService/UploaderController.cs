@@ -1,5 +1,9 @@
-﻿using Compass.Wasm.Shared.FileService;
+﻿using System.Diagnostics;
+using Compass.Wasm.Shared.FileService;
 using Compass.Wasm.Server.FileService;
+using Microsoft.Net.Http.Headers;
+using System.IO;
+using Zack.Commons;
 
 namespace Compass.Wasm.Server.Controllers.OtherService
 {
@@ -55,5 +59,15 @@ namespace Compass.Wasm.Server.Controllers.OtherService
             if (!upItem.IsOldFile) _dbContext.Add(upItem);
             return new UploadResponse(upItem.RemoteUrl);
         }
+        
+        #region 转发RestSharp上传的文件
+        [HttpPost("RestSharp"), DisableRequestSizeLimit]
+        public Task<ActionResult<UploadResponse>> UploadFile()
+        {
+            var files = Request.Form.Files;
+            return Upload(files);
+        } 
+        #endregion
+        
     }
 }

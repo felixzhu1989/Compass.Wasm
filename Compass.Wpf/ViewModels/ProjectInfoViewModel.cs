@@ -1,14 +1,17 @@
-﻿using Compass.Wasm.Shared.CategoryService;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.Extensions;
+﻿using Compass.Wasm.Shared.ProjectService;
 using Prism.Ioc;
 using Prism.Regions;
-using System;
 
 namespace Compass.Wpf.ViewModels;
 
-public class ProjectInfoViewModel:NavigationViewModel
+public class ProjectInfoViewModel : NavigationViewModel
 {
+    #region ctor-项目信息页面
+    //todo：做成kickoff邮件，拷贝信息
+    public ProjectInfoViewModel(IContainerProvider provider) : base(provider)
+    {
+    } 
+    #endregion
 
     #region 项目内容
     //抬头
@@ -27,12 +30,7 @@ public class ProjectInfoViewModel:NavigationViewModel
     }
     #endregion
 
-
-
-    public ProjectInfoViewModel(IContainerProvider containerProvider) : base(containerProvider)
-    {
-    }
-
+    #region 导航与初始化
     public override void OnNavigatedTo(NavigationContext navigationContext)
     {
         base.OnNavigatedTo(navigationContext);
@@ -41,5 +39,6 @@ public class ProjectInfoViewModel:NavigationViewModel
             ? navigationContext.Parameters.GetValue<ProjectDto>("Value")
             : new ProjectDto();
         Title = $"{Project.OdpNumber} 项目概况";
-    }
+    } 
+    #endregion
 }

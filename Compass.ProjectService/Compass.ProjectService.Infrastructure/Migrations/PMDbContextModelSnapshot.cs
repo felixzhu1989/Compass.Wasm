@@ -87,6 +87,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<string>("DrawingUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -332,7 +335,13 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<string>("FinalInspectionUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsBoundMainPlan")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsProblemNotResolved")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")

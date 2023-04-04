@@ -6,6 +6,6 @@ public class TestNotificationHandler : NotificationHandler<TestNotification>
 {
     protected override void Handle(TestNotification notification)
     {
-        Console.WriteLine($"测试{notification.Name}");
+        Console.WriteLine($@"测试{notification.Name}");
     }
 }

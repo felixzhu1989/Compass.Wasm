@@ -1,25 +1,35 @@
-﻿using Compass.Wasm.Shared.TodoService;
+﻿using Compass.Wasm.Shared.Parameter;
+using Compass.Wasm.Shared.TodoService;
+using Compass.Wpf.Extensions;
 using Prism.Commands;
-using System.Collections.ObjectModel;
-using Compass.Wpf.Service;
 using Prism.Ioc;
 using Prism.Regions;
-using Compass.Wpf.Common;
-using System;
-using System.Linq;
-using Compass.Wasm.Shared.Parameter;
-using Compass.Wpf.Extensions;
 using Prism.Services.Dialogs;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Compass.Wpf.ApiService;
 
 namespace Compass.Wpf.ViewModels;
 
 public class TodoViewModel : NavigationViewModel
 {
-    private readonly IDialogHostService _dialogHost;
-    private readonly ITodoService _service;
+    #region ctor-待办事项页面
+    private readonly ITodoService _todoService;
+    public TodoViewModel(ITodoService service, IContainerProvider provider) : base(provider)
+    {
+        _todoService = provider.Resolve<ITodoService>();
+        TodoDtos =new ObservableCollection<TodoDto>();
+        ExecuteCommand = new DelegateCommand<string>(Execute);
+        SelectedCommand = new DelegateCommand<TodoDto>(Selected);
+        DeleteCommand = new DelegateCommand<TodoDto>(Delete);
+    }
     public DelegateCommand<string> ExecuteCommand { get; }//根据提供的不同参数执行不同的逻辑
     public DelegateCommand<TodoDto> SelectedCommand { get; }
     public DelegateCommand<TodoDto> DeleteCommand { get; }
+    #endregion
+
+    #region 属性
     private bool isRightDrawerOpen;
     /// <summary>
     /// 右侧窗口是否展开
@@ -70,17 +80,9 @@ public class TodoViewModel : NavigationViewModel
         get => selectedIndex;
         set { selectedIndex = value; RaisePropertyChanged(); }
     }
-    public TodoViewModel(ITodoService service, IContainerProvider containerProvider) : base(containerProvider)
-    {
-        _service = service;
-        //给弹窗使用的服务
-        _dialogHost = containerProvider.Resolve<IDialogHostService>();
+    #endregion
 
-        TodoDtos =new ObservableCollection<TodoDto>();
-        ExecuteCommand = new DelegateCommand<string>(Execute);
-        SelectedCommand = new DelegateCommand<TodoDto>(Selected);
-        DeleteCommand = new DelegateCommand<TodoDto>(Delete);
-    }
+    #region 增删改
     /// <summary>
     /// 各种执行方法
     /// </summary>
@@ -112,7 +114,7 @@ public class TodoViewModel : NavigationViewModel
         try
         {
             UpdateLoading(true);//等待进度条
-            var todoResult = await _service.GetFirstOrDefault(obj.Id.Value);
+            var todoResult = await _todoService.GetFirstOrDefault(obj.Id.Value);
             if (todoResult.Status)
             {
                 CurrentDto = todoResult.Result;
@@ -140,7 +142,7 @@ public class TodoViewModel : NavigationViewModel
             UpdateLoading(true);
             if (CurrentDto.Id!=null&&currentDto.Id.Value!=Guid.Empty)//编辑ToDo
             {
-                var updateResult = await _service.UpdateAsync(CurrentDto.Id.Value, CurrentDto);
+                var updateResult = await _todoService.UpdateAsync(CurrentDto.Id.Value, CurrentDto);
                 if (updateResult.Status)
                 {
                     var dto = TodoDtos.FirstOrDefault(t => t.Id == CurrentDto.Id);
@@ -155,7 +157,7 @@ public class TodoViewModel : NavigationViewModel
             }
             else//新增ToDo
             {
-                var addResult = await _service.UserAddAsync(CurrentDto);
+                var addResult = await _todoService.UserAddAsync(CurrentDto);
                 if (addResult.Status)
                 {
                     //更新界面显示
@@ -182,11 +184,11 @@ public class TodoViewModel : NavigationViewModel
         try
         {
             //删除询问
-            var dialogResult = await _dialogHost.Question("温馨提示", $"确认删除待办事项：{obj.Title}?");
+            var dialogResult = await DialogHost.Question("温馨提示", $"确认删除待办事项：{obj.Title}?");
             if (dialogResult.Result != ButtonResult.OK) return;
 
             UpdateLoading(true);
-            var deleteResult = await _service.DeleteAsync(obj.Id.Value);
+            var deleteResult = await _todoService.DeleteAsync(obj.Id.Value);
             if (deleteResult.Status)
             {
                 var model = TodoDtos.FirstOrDefault(T => T.Id.Equals(obj.Id));
@@ -198,7 +200,9 @@ public class TodoViewModel : NavigationViewModel
             UpdateLoading(false);
         }
     }
+    #endregion
 
+    #region 初始化
     /// <summary>
     /// 获取数据
     /// </summary>
@@ -211,7 +215,7 @@ public class TodoViewModel : NavigationViewModel
             Search = this.Search,
             Status = status
         };
-        var result = await _service.GetAllFilterAsync(parameter);
+        var result = await _todoService.GetAllFilterAsync(parameter);
         if (result.Status)
         {
             TodoDtos.Clear();
@@ -225,4 +229,5 @@ public class TodoViewModel : NavigationViewModel
         SelectedIndex = navigationContext.Parameters.ContainsKey("Value") ? navigationContext.Parameters.GetValue<int>("Value") : 0;
         GetDataAsync();
     }
+    #endregion
 }

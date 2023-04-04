@@ -12,7 +12,7 @@ public class DrawingDto:BaseDto,IComparable<DrawingDto>
     }
 
     public string? DrawingUrl { get; set; }
-
+    public string? ImageUrl { get; set; }
 
     private ObservableCollection<ModuleDto> moduleDtos=new();
     public ObservableCollection<ModuleDto> ModuleDtos
@@ -21,10 +21,6 @@ public class DrawingDto:BaseDto,IComparable<DrawingDto>
         set { moduleDtos = value; OnPropertyChanged();}
     }
 
-
-
-    
-    
     public int CompareTo(DrawingDto? other)
     {
         if (other!=null)

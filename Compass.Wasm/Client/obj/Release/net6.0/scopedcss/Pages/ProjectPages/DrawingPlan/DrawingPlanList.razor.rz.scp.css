@@ -1,0 +1,18 @@
+/*竖直时间线样式*/
+.time-line[b-v6e4wv3y7e] {
+    position: relative;
+}
+
+.time-line[b-v6e4wv3y7e]:before {
+    background-color: #e7e7e7;
+    position: absolute;
+    content: "";
+    display: block;
+    width: 2px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    z-index: -1;
+}

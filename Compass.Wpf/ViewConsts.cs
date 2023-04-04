@@ -7,3 +7,10 @@ public enum BatchWorksAction_e
     打印CutList,
     打印JobCard
 }
+
+public enum Filter_e
+{
+    Main,
+    Login,
+    Batch
+}

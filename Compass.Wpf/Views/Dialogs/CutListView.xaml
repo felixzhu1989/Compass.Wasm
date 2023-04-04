@@ -76,9 +76,8 @@
                     Command="{Binding CancelCommand}"
                     Style="{StaticResource MaterialDesignOutlinedButton}"
                     Margin="0,0,10,0" />
-            <!--CommandParameter="{Binding ElementName=Data}"-->
             <Button Content="打印CutList"
-                    Command="{Binding ExecuteCommand}" />
+                    Command="{Binding SaveCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>
