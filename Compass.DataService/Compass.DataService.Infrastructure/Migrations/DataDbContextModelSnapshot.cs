@@ -87,10 +87,40 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetector");
 
+                    b.Property<double>("AnsulDropDis1")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis1");
+
+                    b.Property<double>("AnsulDropDis2")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis2");
+
+                    b.Property<double>("AnsulDropDis3")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis3");
+
+                    b.Property<double>("AnsulDropDis4")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis4");
+
+                    b.Property<double>("AnsulDropDis5")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis5");
+
                     b.Property<int>("AnsulDropNumber")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("AnsulDropNumber");
+
+                    b.Property<double>("AnsulDropToFront")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropToFront");
 
                     b.Property<int>("AnsulSide")
                         .ValueGeneratedOnUpdateSometimes()
@@ -106,6 +136,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit")
                         .HasColumnName("BackToBack");
+
+                    b.Property<double>("CjSpigotToRight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("CjSpigotToRight");
 
                     b.Property<bool>("CoverBoard")
                         .ValueGeneratedOnUpdateSometimes()
@@ -177,14 +212,14 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("SpotLightNumber");
 
-                    b.Property<double>("SupplySpigotDistance")
+                    b.Property<double>("SupplySpigotDis")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
-                        .HasColumnName("SupplySpigotDistance");
+                        .HasColumnName("SupplySpigotDis");
 
-                    b.Property<double>("SupplySpigotNumber")
+                    b.Property<int>("SupplySpigotNumber")
                         .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
+                        .HasColumnType("int")
                         .HasColumnName("SupplySpigotNumber");
 
                     b.Property<bool>("WaterCollection")
@@ -210,22 +245,27 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("AnsulDetector");
 
                     b.Property<double>("AnsulDropDis1")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis1");
 
                     b.Property<double>("AnsulDropDis2")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis2");
 
                     b.Property<double>("AnsulDropDis3")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis3");
 
                     b.Property<double>("AnsulDropDis4")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis4");
 
                     b.Property<double>("AnsulDropDis5")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis5");
 
@@ -235,6 +275,7 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("AnsulDropNumber");
 
                     b.Property<double>("AnsulDropToFront")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropToFront");
 
@@ -254,6 +295,7 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("BackToBack");
 
                     b.Property<double>("CjSpigotToRight")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("CjSpigotToRight");
 
@@ -444,14 +486,14 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("SpotLightNumber");
 
-                    b.Property<double>("SupplySpigotDistance")
+                    b.Property<double>("SupplySpigotDis")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
-                        .HasColumnName("SupplySpigotDistance");
+                        .HasColumnName("SupplySpigotDis");
 
-                    b.Property<double>("SupplySpigotNumber")
+                    b.Property<int>("SupplySpigotNumber")
                         .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
+                        .HasColumnType("int")
                         .HasColumnName("SupplySpigotNumber");
 
                     b.Property<int>("UvLightType")
@@ -576,14 +618,14 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("SpotLightNumber");
 
-                    b.Property<double>("SupplySpigotDistance")
+                    b.Property<double>("SupplySpigotDis")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
-                        .HasColumnName("SupplySpigotDistance");
+                        .HasColumnName("SupplySpigotDis");
 
-                    b.Property<double>("SupplySpigotNumber")
+                    b.Property<int>("SupplySpigotNumber")
                         .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
+                        .HasColumnType("int")
                         .HasColumnName("SupplySpigotNumber");
 
                     b.Property<int>("UvLightType")

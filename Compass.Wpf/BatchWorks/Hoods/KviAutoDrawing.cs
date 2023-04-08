@@ -1,16 +1,13 @@
-﻿using System.Threading.Tasks;
-using Compass.Wasm.Shared.DataService;
+﻿using Compass.Wasm.Shared.DataService;
 using Compass.Wasm.Shared.ProjectService;
 using Compass.Wpf.ApiService.Hoods;
-using Compass.Wpf.DrawingServices;
 using Compass.Wpf.Extensions;
-using Prism.Events;
 using Prism.Ioc;
-using SolidWorks.Interop.sldworks;
+using System.Threading.Tasks;
 
 namespace Compass.Wpf.BatchWorks.Hoods;
 
-public class KviAutoDrawing :BaseAutoDrawing,IKviAutoDrawing
+public class KviAutoDrawing : BaseAutoDrawing, IKviAutoDrawing
 {
     #region ctor
     private readonly IKviDataService _service;
@@ -18,7 +15,7 @@ public class KviAutoDrawing :BaseAutoDrawing,IKviAutoDrawing
     {
         _service = provider.Resolve<IKviDataService>();
 
-    } 
+    }
     #endregion
 
     public async Task AutoDrawingAsync(ModuleDto moduleDto)
@@ -65,17 +62,17 @@ public class KviAutoDrawing :BaseAutoDrawing,IKviAutoDrawing
             #endregion
 
             #region Supply_I_555,I555新风装配
-            SupplyService.I555(swAssyTop, suffix, netLength, netWidth,data.Height, ExhaustType_e.KV,data.SidePanel, UvLightType_e.No, false, data.Marvel, data.LedLogo, data.WaterCollection);
+            SupplyService.I555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, UvLightType_e.No, false, data.Marvel, data.LedLogo, data.WaterCollection);
             #endregion
 
             #region BackCj_Fs,BackCj装配
-            SupplyService.BackCj(swAssyTop,suffix,data.BackCj,netLength,data.Height,data.CjSpigotToRight);
+            SupplyService.BackCj(swAssyTop, suffix, data.BackCj, netLength, data.Height, data.CjSpigotToRight);
             #endregion
 
 
             #region 保存操作
             //设置成true，直接更新顶层，速度很快，设置成false，每个零件都会更新，很慢
-            swModelTop.ForceRebuild3(true); 
+            swModelTop.ForceRebuild3(true);
             swModelTop.Save(); //保存，很耗时间
             SwApp.CloseDoc(packPath); //关闭，很快
             #endregion

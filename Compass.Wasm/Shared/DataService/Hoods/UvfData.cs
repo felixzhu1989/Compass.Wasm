@@ -15,9 +15,20 @@ public class UvfData : ModuleData
         get => exhaustSpigotDis;
         set { exhaustSpigotDis = value; OnPropertyChanged(); }
     }
-    //新风口参数
-    public double SupplySpigotNumber { get; private set; }//前端界面input设置为number，min=1,max=2
-    public double SupplySpigotDistance { get; private set; }
+    #region 新风口参数
+    private int supplySpigotNumber = 2;
+    public int SupplySpigotNumber
+    {
+        get => supplySpigotNumber;
+        set { supplySpigotNumber = value; OnPropertyChanged(); }
+    }//前端界面input设置为number，min=1,max=2
+    private double supplySpigotDis = 800d;
+    public double SupplySpigotDis
+    {
+        get => supplySpigotDis;
+        set { supplySpigotDis = value; OnPropertyChanged(); }
+    }
+    #endregion
 
     //灯具类型
     public LightType_e LightType { get; private set; }//长灯, 短灯, 筒灯60, 筒灯140

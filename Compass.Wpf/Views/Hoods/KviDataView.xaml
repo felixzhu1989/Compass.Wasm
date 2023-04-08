@@ -49,6 +49,9 @@
                         Margin="10">
                 <!--烟罩基本参数-->
                 <StackPanel>
+                    <TextBlock Text="烟罩基本参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
                     <!--TextBox输入框值一改变就改变绑定值,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged-->
                     <!--<TextBox.InputBindings>
                             <KeyBinding Key="Enter"
@@ -70,6 +73,9 @@
                 </StackPanel>
                 <!--排风口参数-->
                 <StackPanel>
+                    <TextBlock Text="排风口参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
                     <TextBox Text="{Binding DataDto.MiddleToRight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="中心距离右端："
@@ -96,8 +102,11 @@
             </StackPanel>
             <StackPanel Grid.Column="1"
                         Margin="10">
-                <!--灯具类型-->
+                <!--灯具参数-->
                 <StackPanel>
+                    <TextBlock Text="灯具参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding LightTypes}"
                               SelectedItem="{Binding DataDto.LightType,Converter={StaticResource LightTypeConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -111,8 +120,11 @@
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="筒灯间距：" />
                 </StackPanel>
-                <!--通用配置-->
+                <!--通用配置参数-->
                 <StackPanel>
+                    <TextBlock Text="通用配置参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding DrainTypes}"
                               SelectedItem="{Binding DataDto.DrainType,Converter={StaticResource DrainTypeConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -144,8 +156,11 @@
             </StackPanel>
             <StackPanel Grid.Column="2"
                         Margin="10">
-                <!--Ansul基本配置-->
+                <!--Ansul通用参数-->
                 <StackPanel>
+                    <TextBlock Text="Ansul通用参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
                     <CheckBox IsChecked="{Binding DataDto.Ansul,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               Content="Ansul"
                               Margin="0,10" />
@@ -160,8 +175,11 @@
                               Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
                               materialDesign:TextFieldAssist.PrefixText="探测器口:   " />
                 </StackPanel>
-                <!--Ansul下喷-->
+                <!--Ansul下喷参数-->
                 <StackPanel>
+                    <TextBlock Text="Ansul下喷参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
                     <TextBox Text="{Binding DataDto.AnsulDropNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
                              Margin="0,5"

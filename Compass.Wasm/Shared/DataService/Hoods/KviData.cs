@@ -9,6 +9,7 @@ public class KviData : ModuleData
         get => sidePanel;
         set { sidePanel = value; OnPropertyChanged(); }
     }
+
     #region 排风口参数
     //中心距离右端
     private double middleToRight;
@@ -50,8 +51,6 @@ public class KviData : ModuleData
         get => exhaustSpigotDis;
         set { exhaustSpigotDis = value; OnPropertyChanged(); }
     }
-
-
     #endregion
 
     #region 灯具类型
@@ -75,7 +74,6 @@ public class KviData : ModuleData
         set { spotLightDistance = value; OnPropertyChanged(); }
     } //默认为400 
     #endregion
-
 
     #region 其他配置
     private DrainType_e drainType;
@@ -132,7 +130,6 @@ public class KviData : ModuleData
     }
     #endregion
 
-
     #region Ansul基本参数
     private bool ansul;
     public bool Ansul
@@ -155,8 +152,7 @@ public class KviData : ModuleData
         set { ansulDetector = value; OnPropertyChanged(); }
     }
     #endregion
-
-
+    
     #region Ansul下喷
     private int ansulDropNumber;
     public int AnsulDropNumber

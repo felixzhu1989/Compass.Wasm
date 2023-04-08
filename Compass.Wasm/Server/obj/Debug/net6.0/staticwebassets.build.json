@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Xz40TI7fZUo5ggI0PE5KwW302Ewab4yIHzwiwHScowg=",
+  "Hash": "XIqirXVtaAh28MaKvB+ZTtz4okYITa+okhlWX/bFEE8=",
   "Source": "Compass.Wasm.Server",
   "BasePath": "_content/Compass.Wasm.Server",
   "Mode": "Default",
@@ -40307,6 +40307,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\2022\\12\\e957b6f440c19e26db579d8a682e090fa7a8cabf9fee5a0f8d449a62ffc021fe\\FSO220474装箱清单.xlsm"
+    },
+    {
+      "Identity": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2023\\4\\691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1\\temp.png",
+      "SourceId": "Compass.Wasm.Server",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\",
+      "BasePath": "_content/Compass.Wasm.Server",
+      "RelativePath": "2023/4/691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1/temp.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\2023\\4\\691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1\\temp.png"
     }
   ]
 }

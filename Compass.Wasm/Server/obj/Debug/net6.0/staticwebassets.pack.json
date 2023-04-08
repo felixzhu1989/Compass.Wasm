@@ -189,6 +189,10 @@
       "PackagePath": "staticwebassets\\2022\\12\\e957b6f440c19e26db579d8a682e090fa7a8cabf9fee5a0f8d449a62ffc021fe\\FSO220474装箱清单.xlsm"
     },
     {
+      "Id": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\wwwroot\\2023\\4\\691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1\\temp.png",
+      "PackagePath": "staticwebassets\\2023\\4\\691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1\\temp.png"
+    },
+    {
       "Id": "obj\\Debug\\net6.0\\staticwebassets\\msbuild.Compass.Wasm.Server.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

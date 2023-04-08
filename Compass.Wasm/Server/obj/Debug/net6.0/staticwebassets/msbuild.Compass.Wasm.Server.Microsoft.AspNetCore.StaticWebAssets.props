@@ -752,5 +752,21 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2022\12\e957b6f440c19e26db579d8a682e090fa7a8cabf9fee5a0f8d449a62ffc021fe\FSO220474装箱清单.xlsm))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\4\691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1\temp.png))">
+      <SourceType>Package</SourceType>
+      <SourceId>Compass.Wasm.Server</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Compass.Wasm.Server</BasePath>
+      <RelativePath>2023/4/691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1/temp.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\4\691bac1347f1d338ea8b50691f8d46ae2feaced2e975b96318aeed2e4eeeaec1\temp.png))</OriginalItemSpec>
+    </StaticWebAsset>
   </ItemGroup>
 </Project>

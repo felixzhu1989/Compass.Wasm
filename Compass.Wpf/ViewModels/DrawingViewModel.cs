@@ -75,7 +75,7 @@ public class DrawingViewModel : NavigationViewModel
     /// </summary>
     private void Clear()
     {
-        ImageSource=null;
+        ImageSource=null;//清空图片
     }
 
     /// <summary>
@@ -100,6 +100,7 @@ public class DrawingViewModel : NavigationViewModel
         if (response.Status)
         {
             Aggregator.SendMessage($"分段{CurrentDrawing.ItemNumber}修改成功！");
+            Clear();//清空图片
         }
     }
     #endregion

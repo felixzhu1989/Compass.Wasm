@@ -64,6 +64,17 @@ public class SupplyService : BaseDrawingService, ISupplyService
         }
     }
 
+    public void F555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType,
+        SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection,
+        int supplySpigotNumber, double supplySpigotDis)
+    {
+        
+
+
+
+    }
+
+
     public void BackCj(AssemblyDoc swAssyTop, string suffix, bool backCj, double length, double height, double cjSpigotToRight)
     {
         if (!backCj)
@@ -87,6 +98,8 @@ public class SupplyService : BaseDrawingService, ISupplyService
         swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0102-1", Aggregator);
         swModelLevel2.ChangeDim("Height@SketchBase", height-1d);
     }
+
+
 
 
 

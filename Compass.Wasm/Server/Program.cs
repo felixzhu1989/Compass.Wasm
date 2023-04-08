@@ -215,6 +215,7 @@ builder.Services.AddScoped<IModuleDataService, ModuleDataService>();
 #region HoodService
 
 builder.Services.AddScoped<IKviDataService,KviDataService>();
+builder.Services.AddScoped<IKvfDataService,KvfDataService>();
 
 #endregion
 

@@ -10,10 +10,16 @@ public static class ModelPathExtensions
     {
         List<string> modelPathList=new List<string>
         {
+            //todo:给总目录，自动搜索？
             //Hoods
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVF_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVI_555.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_555.SLDASM",
             //Ceilings
+
+
+
 
         };
         var modelPath = modelPathList.FirstOrDefault(x => x.Contains(modelName, StringComparison.OrdinalIgnoreCase));

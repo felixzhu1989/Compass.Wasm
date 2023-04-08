@@ -85,9 +85,9 @@ namespace Compass.Wpf
             containerRegistry.GetContainer()
                 .Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey: "apiUrl"));
             //生产环境API
-            containerRegistry.GetContainer().RegisterInstance(@"http://10.9.18.31/", serviceKey: "apiUrl");
+            //containerRegistry.GetContainer().RegisterInstance(@"http://10.9.18.31/", serviceKey: "apiUrl");
             //测试环境API
-            //containerRegistry.GetContainer().RegisterInstance(@"http://localhost/", serviceKey: "apiUrl"); 
+            containerRegistry.GetContainer().RegisterInstance(@"http://localhost/", serviceKey: "apiUrl"); 
             #endregion
 
             #region 注册页面服务,View,ViewModel
@@ -126,6 +126,7 @@ namespace Compass.Wpf
 
             #region 注册HoodsData模型参数页面服务
             containerRegistry.RegisterForNavigation<KviDataView, KviDataViewModel>();
+            containerRegistry.RegisterForNavigation<KvfDataView, KvfDataViewModel>();
 
 
 
@@ -134,7 +135,8 @@ namespace Compass.Wpf
             #region 模型参数与模型制图数据服务，HoodService
             containerRegistry.Register<IKviDataService, KviDataService>();
             containerRegistry.Register<IKviAutoDrawing, KviAutoDrawing>();
-
+            containerRegistry.Register<IKvfDataService, KvfDataService>();
+            containerRegistry.Register<IKvfAutoDrawing, KvfAutoDrawing>();
 
             #endregion
 

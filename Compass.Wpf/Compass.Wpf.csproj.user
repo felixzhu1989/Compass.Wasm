@@ -19,6 +19,9 @@
     <Compile Update="Views\DrawingView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Hoods\KvfDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ModulesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +73,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DrawingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Hoods\KvfDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ModulesView.xaml">
