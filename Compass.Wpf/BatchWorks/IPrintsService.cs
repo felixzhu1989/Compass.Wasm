@@ -9,6 +9,8 @@ public interface IPrintsService
     Task BatchPrintCutListAsync(List<ModuleDto> moduleDtos);
     Task PrintOneCutListAsync(ModuleDto moduleDto);
 
+    Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos);
+    Task PrintOneJobCardAsync(ModuleDto moduleDto);
 
 
 }

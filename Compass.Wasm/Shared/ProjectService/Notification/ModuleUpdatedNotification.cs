@@ -1,5 +1,6 @@
-﻿using MediatR;
+﻿using Compass.Wasm.Shared.DataService;
+using MediatR;
 
 namespace Compass.Wasm.Shared.ProjectService.Notification;
 
-public record ModuleUpdatedNotification(Guid Id, string ModelName, Guid ModelTypeId,double Length, double Width, double Height):INotification;
+public record ModuleUpdatedNotification(Guid Id, string ModelName, Guid ModelTypeId,double Length, double Width, double Height,SidePanel_e SidePanel):INotification;

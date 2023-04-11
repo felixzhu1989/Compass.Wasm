@@ -12,7 +12,8 @@
              xmlns:extensions="clr-namespace:Compass.Wpf.Extensions"
              xmlns:domainproject="clr-namespace:Compass.Wasm.Shared.ProjectService;assembly=Compass.Wasm.Shared"
              xmlns:domaincategory="clr-namespace:Compass.Wasm.Shared.CategoryService;assembly=Compass.Wasm.Shared"
-             xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
+             xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,7 +21,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <converter:SidePanelConverter x:Key="SidePanelConverter" />
         </ResourceDictionary>
+        
     </UserControl.Resources>
     <materialDesign:DialogHost>
         <materialDesign:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
@@ -139,6 +142,11 @@ materialDesign:TextFieldAssist.HasClearButton="True"
                                  VerticalAlignment="Center"
                                  materialDesign:TextFieldAssist.PrefixText="高度: "
                                  materialDesign:TextFieldAssist.SuffixText="(为默认值时可不填写)"/>
+                        <ComboBox ItemsSource="{Binding SidePanels}"
+                                  Margin="0,5"
+                                  SelectedItem="{Binding CurrentModuleDto.SidePanel,Converter={StaticResource SidePanelConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                  materialDesign:TextFieldAssist.PrefixText="侧板:   " />
+                        
                         <CheckBox IsChecked="{Binding CurrentModuleDto.IsModuleDataOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                   Content="分段数据已经OK"
                                   Margin="0,10" />

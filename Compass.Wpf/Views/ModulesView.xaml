@@ -88,15 +88,31 @@
                         <DataTemplate>
                             <!--绑定当前对象使用{Binding}，RelativeSource查找父对象的ViewModel-->
                             <TextBlock Text="OK"
-                                       Visibility="{Binding IsModuleDataOk,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                       Visibility="{Binding IsModuleDataOk,Converter={StaticResource BoolToVisibilityConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="文件">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!--绑定当前对象使用{Binding}，RelativeSource查找父对象的ViewModel-->
+                            <TextBlock Text="Open"
+                                       TextDecorations="UnderLine"
+                                       Foreground="Blue"
+                                       Visibility="{Binding IsFilesOk,Converter={StaticResource BoolToVisibilityConverter}}">
+                                <behavior:Interaction.Triggers>
+                                    <behavior:EventTrigger EventName="MouseLeftButtonDown">
+                                        <behavior:InvokeCommandAction Command="{Binding DataContext.ShowFilesCommand,Source={x:Reference DataContextProxy}}"
+                                                                      CommandParameter="{Binding}" />
+                                    </behavior:EventTrigger>
+                                </behavior:Interaction.Triggers></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Binding="{Binding OdpNumber}"
                                     Header="项目编号"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="110" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding ItemNumber}"
                                     Header="Item编号"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -112,33 +128,48 @@
                 <DataGridTextColumn Binding="{Binding Length}"
                                     Header="长"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="65" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding Width}"
                                     Header="宽"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="65" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding Height}"
                                     Header="高"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="65" />
-                <DataGridTemplateColumn Width="100"
-                                        Header="CutList">
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                <DataGridTemplateColumn Header="CutList">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <!--绑定当前对象使用{Binding}，RelativeSource查找父对象的ViewModel-->
-                            <TextBlock Text="OK"
+                            <TextBlock Text="Print"
                                        TextDecorations="UnderLine"
                                        Foreground="Blue"
                                        Visibility="{Binding IsCutListOk,Converter={StaticResource BoolToVisibilityConverter}}">
     <behavior:Interaction.Triggers>
         <behavior:EventTrigger EventName="MouseLeftButtonDown">
-            <behavior:InvokeCommandAction Command="{Binding DataContext.ShowCutListCommand,Source={x:Reference DataContextProxy}}" 
-                                          CommandParameter="{Binding}"/>
+            <behavior:InvokeCommandAction Command="{Binding DataContext.ShowCutListCommand,Source={x:Reference DataContextProxy}}"
+                                          CommandParameter="{Binding}" />
         </behavior:EventTrigger>
     </behavior:Interaction.Triggers></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="JobCard">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Print"
+                                       TextDecorations="UnderLine"
+                                       Foreground="Blue"
+                                       Visibility="{Binding IsJobCardOk,Converter={StaticResource BoolToVisibilityConverter}}">
+                                <behavior:Interaction.Triggers>
+                                    <behavior:EventTrigger EventName="MouseLeftButtonDown">
+                                        <behavior:InvokeCommandAction Command="{Binding DataContext.ShowJobCardCommand,Source={x:Reference DataContextProxy}}"
+                                                                      CommandParameter="{Binding}" />
+                                    </behavior:EventTrigger>
+                                </behavior:Interaction.Triggers>
+
+
+                            </TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -45,7 +45,7 @@ public class KvfAutoDrawing : BaseAutoDrawing, IKvfAutoDrawing
             #endregion
 
             #region  Exhaust_KV_555，KV555排风装配
-            ExhaustService.Kv555(swAssyTop, suffix, netLength, data.SidePanel, UvLightType_e.No, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
+            ExhaustService.Kv555(swAssyTop, suffix, netLength, data.SidePanel, UvLightType_e.NA, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
             #endregion
 
             #region ExhaustSpigot_Fs，排风脖颈装配
@@ -57,11 +57,11 @@ public class KvfAutoDrawing : BaseAutoDrawing, IKvfAutoDrawing
             #endregion
 
             #region MidRoof_Fs,MidRoof装配
-            MidRoofService.MidRoofFs(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.KV, UvLightType_e.No, false, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
+            MidRoofService.MidRoofFs(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.KV, UvLightType_e.NA, false, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
             #endregion
             
             #region Supply_F_555,F555新风装配
-            SupplyService.F555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, UvLightType_e.No, false, data.Marvel, data.LedLogo, data.WaterCollection,data.SupplySpigotNumber,data.SupplySpigotDis);
+            SupplyService.F555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, UvLightType_e.NA, false, data.Marvel, data.LedLogo, data.WaterCollection,data.SupplySpigotNumber,data.SupplySpigotDis);
             #endregion
 
             #region BackCj_Fs,BackCj装配

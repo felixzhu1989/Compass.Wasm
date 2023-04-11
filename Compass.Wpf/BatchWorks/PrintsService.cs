@@ -7,10 +7,14 @@ using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using Compass.Wpf.ApiService;
+using Microsoft.Office.Core;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
 
@@ -32,8 +36,6 @@ public class PrintsService : IPrintsService
     /// <summary>
     /// 批量打印CutList
     /// </summary>
-    /// <param name="moduleDtos"></param>
-    /// <returns></returns>
     public async Task BatchPrintCutListAsync(List<ModuleDto> moduleDtos)
     {
         var cutListService = _provider.Resolve<ICutListService>();
@@ -60,8 +62,6 @@ public class PrintsService : IPrintsService
     /// <summary>
     /// 单独打印CutList
     /// </summary>
-    /// <param name="moduleDto"></param>
-    /// <returns></returns>
     public async Task PrintOneCutListAsync(ModuleDto moduleDto)
     {
         var cutListService = _provider.Resolve<ICutListService>();
@@ -79,10 +79,41 @@ public class PrintsService : IPrintsService
         KillProcess(excelApp);
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
-    } 
+    }
+
+    /// <summary>
+    /// 批量打印JobCard
+    /// </summary>
+    public Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// 单独打印
+    /// </summary>
+    public async Task PrintOneJobCardAsync(ModuleDto moduleDto)
+    {
+        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDoc", "JobCard.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+        //调试时预览
+        //excelApp.Visible = true;
+
+        await UseExcelPrintJobCard(worksheet, moduleDto);
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
     #endregion
 
     #region Excel打印内部实现
+
+    #region CutList
     private async Task GetCutListAndPrint(Worksheet worksheet, ModuleDto moduleDto, ICutListService cutListService)
     {
         var param = new CutListParameter
@@ -92,32 +123,33 @@ public class PrintsService : IPrintsService
         var result = await cutListService.GetAllByModuleIdAsync(param);
         if (result.Status)
         {
-            UseExcelPrint(worksheet, moduleDto, result.Result);
+            UseExcelPrintCutList(worksheet, moduleDto, result.Result);
         }
     }
 
-    private void UseExcelPrint(Worksheet worksheet, ModuleDto moduleDto, List<CutListDto> cutListDtos)
+    private void UseExcelPrintCutList(Worksheet worksheet, ModuleDto moduleDto, List<CutListDto> cutListDtos)
     {
 
-        FillTitle(worksheet, moduleDto);
+        FillCutListTitle(worksheet, moduleDto);
 
-        FillData(worksheet, cutListDtos);
+        FillCutListData(worksheet, cutListDtos);
         //调试时预览
         //worksheet.PrintPreview(true);
         //打印
         worksheet.PrintOutEx();
         //清空打印内容,11行到末尾
-        var rows = worksheet.Rows[$"11:{cutListDtos.Count + 10}", Missing.Value];
+        var rows = (Range)worksheet.Rows[$"11:{cutListDtos.Count + 10}", Missing.Value];
         rows.Delete(XlDirection.xlDown);
     }
 
     /// <summary>
-    /// 填写项目信息
+    /// 填写CutList项目信息
     /// </summary>
     /// <param name="worksheet"></param>
     /// <param name="moduleDto"></param>
-    private void FillTitle(Worksheet worksheet, ModuleDto moduleDto)
+    private void FillCutListTitle(Worksheet worksheet, ModuleDto moduleDto)
     {
+        //worksheet.Cells[行,列]
         worksheet.Cells[1, 2] = moduleDto.ProjectName;
         worksheet.Cells[2, 2] = moduleDto.OdpNumber;
         worksheet.Cells[3, 2] = moduleDto.ItemNumber;
@@ -134,7 +166,7 @@ public class PrintsService : IPrintsService
     /// </summary>
     /// <param name="worksheet"></param>
     /// <param name="cutListDtos"></param>
-    private void FillData(Worksheet worksheet, List<CutListDto> cutListDtos)
+    private void FillCutListData(Worksheet worksheet, List<CutListDto> cutListDtos)
     {
         for (int i = 0; i < cutListDtos.Count; i++)
         {
@@ -152,17 +184,17 @@ public class PrintsService : IPrintsService
         Range range = worksheet.Range["A11", $"K{cutListDtos.Count + 10}"];
         range.Borders.Value = 1;
         //设置列宽
-        worksheet.Cells[1, 1].ColumnWidth = 30;
-        worksheet.Cells[1, 2].ColumnWidth = 10;
-        worksheet.Cells[1, 3].ColumnWidth = 10;
-        worksheet.Cells[1, 4].ColumnWidth = 5;
-        worksheet.Cells[1, 5].ColumnWidth = 5;
-        worksheet.Cells[1, 6].ColumnWidth = 28;
-        worksheet.Cells[1, 7].ColumnWidth = 30;
-        worksheet.Cells[1, 8].ColumnWidth = 8;
-        worksheet.Cells[1, 9].ColumnWidth = 8;
-        worksheet.Cells[1, 10].ColumnWidth = 8;
-        worksheet.Cells[1, 11].ColumnWidth = 5;
+        ((Range)worksheet.Cells[1, 1]).ColumnWidth = 30;
+        ((Range)worksheet.Cells[1, 2]).ColumnWidth = 10;
+        ((Range)worksheet.Cells[1, 3]).ColumnWidth = 10;
+        ((Range)worksheet.Cells[1, 4]).ColumnWidth = 5;
+        ((Range)worksheet.Cells[1, 5]).ColumnWidth = 5;
+        ((Range)worksheet.Cells[1, 6]).ColumnWidth = 28;
+        ((Range)worksheet.Cells[1, 7]).ColumnWidth = 30;
+        ((Range)worksheet.Cells[1, 8]).ColumnWidth = 8;
+        ((Range)worksheet.Cells[1, 9]).ColumnWidth = 8;
+        ((Range)worksheet.Cells[1, 10]).ColumnWidth = 8;
+        ((Range)worksheet.Cells[1, 11]).ColumnWidth = 5;
     }
 
     /// <summary>
@@ -195,7 +227,64 @@ public class PrintsService : IPrintsService
             return dto.Length.Equals(310.87d) ? $"{dto.Width-50}" : $"{dto.Length-50}";
         }
         return "";
-    } 
+    }
+    #endregion
+
+    #region JobCard
+
+    private async Task UseExcelPrintJobCard(Worksheet worksheet, ModuleDto moduleDto)
+    {
+        //worksheet.Cells[行,列]
+        worksheet.Cells[3, 3] = moduleDto.OdpNumber;
+        worksheet.Cells[4, 3] = moduleDto.ProjectName;
+        worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";
+        worksheet.Cells[6, 3] = moduleDto.ModelName.Split('_')[0];
+        worksheet.Cells[7, 3] = moduleDto.ProjectType.ToString();
+
+        worksheet.Cells[11, 7] = moduleDto.DeliveryDate.ToShortDateString();//发货时间
+
+        worksheet.Cells[18, 4] = moduleDto.Name;
+        worksheet.Cells[18, 5] = moduleDto.Length;
+        worksheet.Cells[18, 6] = moduleDto.Width;
+        worksheet.Cells[18, 7] = moduleDto.Height;
+        worksheet.Cells[18, 8] = moduleDto.SidePanel.ToString();
+
+        worksheet.Cells[21, 2] = moduleDto.SpecialNotes;
+        worksheet.Cells[23, 2] = moduleDto.ProjectSpecialNotes;
+
+
+        //插入Item图片
+        if (!string.IsNullOrEmpty(moduleDto.ImageUrl))
+        {
+            //保存图片到系统目录中
+            await DownloadImage(moduleDto.ImageUrl);
+
+            var imagePath = Path.Combine(Environment.CurrentDirectory, "label.png");
+            //将图片插入excel
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 3893, 610, 260);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4310, 610, 260);//左，上，宽度，高度
+        }
+        
+        //调试时预览
+        //worksheet.PrintPreview(true);
+        //打印
+        worksheet.PrintOutEx();
+    }
+
+    /// <summary>
+    /// 从网络下载图片保存在系统目录
+    /// </summary>
+    private async Task DownloadImage(string imageUrl)
+    {
+        var client = new HttpClient();
+        var imageByte = await client.GetByteArrayAsync(imageUrl);
+        await using var stream = new FileStream("label.png", FileMode.Create);
+        await stream.WriteAsync(imageByte, 0, imageByte.Length);
+        stream.Close();
+    }
+    #endregion
+
+
     #endregion
 
     #region Excel进程关闭

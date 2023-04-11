@@ -1,8 +1,8 @@
 ﻿<UserControl x:Class="Compass.Wpf.Views.Dialogs.LoginView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Compass.Wpf.Views.Dialogs"
              mc:Ignorable="d"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -10,16 +10,14 @@
              xmlns:pwdExt="clr-namespace:Compass.Wpf.Extensions"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
              Width="600"
-             Height="350">
-    <UserControl.Resources>
-        
-    </UserControl.Resources>
+             Height="420">
+    <UserControl.Resources></UserControl.Resources>
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="Width"
                     Value="600" />
             <Setter Property="Height"
-                    Value="350" />
+                    Value="420" />
             <Setter Property="SizeToContent"
                     Value="WidthAndHeight" />
             <Setter Property="ResizeMode"
@@ -28,55 +26,35 @@
                     Value="CenterScreen" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-        <!--左边的图片-->
-        <Image Source="/Images/login.png"/>
+    <StackPanel Margin="30">
+        <Image Source="/Images/Halton_Logo_RGB.jpg" Margin="0,10"/>
         <materialDesign:Snackbar x:Name="LoginSnackBar"
                                  MessageQueue="{materialDesign:MessageQueue }"
-                                 Panel.ZIndex="1"
-                                 Grid.ColumnSpan="2" />
-        <!--右边的输入框-->
-        <DockPanel Grid.Column="1"
-                   VerticalAlignment="Center"
-                   Margin="10,0,80,0">
-            <TextBlock Text="欢迎使用Compass"
-                       FontSize="22"
-                       FontWeight="Bold"
-                       Margin="0,10"
-                       DockPanel.Dock="Top" />
-            <TextBox materialDesign:HintAssist.Hint="请输入账号，如felix.zhu"
-                     Text="{Binding UserName}"
-                     Margin="0,10"
-                     DockPanel.Dock="Top" />
-            <!--<ComboBox x:Name="UserName"
-                      materialDesign:HintAssist.Hint="请输入账号，如felix.zhu"
-                      Text="{Binding UserName}"
-                      Margin="0,10"
-                      DockPanel.Dock="Top"
-                      IsEditable="True"
-                      ItemsSource="{Binding Source={StaticResource XmlDataProvider}, XPath=SavedLoginNames/LoginName}"
-                      SelectedIndex="0" />-->
-            <PasswordBox materialDesign:HintAssist.Hint="请输入密码，默认密码123"
-                         pwdExt:PasswordExtensions.Password="{Binding Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-Margin="0,10"
-                         DockPanel.Dock="Top" >
-                <behavior:Interaction.Behaviors>
-                    <pwdExt:PasswordBehavior />
-                </behavior:Interaction.Behaviors>
-            </PasswordBox>
-            <CheckBox x:Name="CkSaveUser"
-                      IsChecked="{Binding SaveUser}"
-                      Margin="0,10"
-                      DockPanel.Dock="Top">记住账号密码</CheckBox>
-            <Button Content="登录系统"
-                    Command="{Binding ExecuteCommand}"
-                    CommandParameter="Login"
-                    Margin="0,10"
-                    DockPanel.Dock="Top" />
-        </DockPanel>
-    </Grid>
+                                 Panel.ZIndex="1" />
+        <TextBlock Text="欢迎使用 Compass"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   Foreground="#2499D5"
+                   Margin="0,10" />
+        <TextBox materialDesign:HintAssist.Hint="请输入账号，如felix.zhu"
+                 Text="{Binding UserName}"
+                 Margin="0,10" />
+        <PasswordBox materialDesign:HintAssist.Hint="请输入密码，默认密码123"
+                     pwdExt:PasswordExtensions.Password="{Binding Password,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,10">
+            <behavior:Interaction.Behaviors>
+                <pwdExt:PasswordBehavior />
+            </behavior:Interaction.Behaviors>
+        </PasswordBox>
+        <CheckBox x:Name="CkSaveUser"
+                  IsChecked="{Binding SaveUser}"
+                  Margin="0,10">记住账号密码</CheckBox>
+        <Button Content="登 录 系 统"
+                FontWeight="Bold"
+                Foreground="WhiteSmoke"
+                FontSize="18"
+                Command="{Binding ExecuteCommand}"
+                CommandParameter="Login"
+                Margin="0,10" />
+    </StackPanel>
 </UserControl>

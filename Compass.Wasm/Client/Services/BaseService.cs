@@ -20,7 +20,6 @@ public class BaseService<T> : IBaseService<T> where T : class
     public  Task<HttpResponseMessage> UpdateAsync(Guid id, T entity)
     {
         return _http.PutAsJsonAsync($"api/{_serviceName}/{id}", entity);
-        
     }
     public Task<HttpResponseMessage> DeleteAsync(Guid id)
     {

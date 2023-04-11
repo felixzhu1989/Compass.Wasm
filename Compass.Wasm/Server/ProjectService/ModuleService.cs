@@ -66,7 +66,7 @@ public class ModuleService : IModuleService
     {
         try
         {
-            var model = new Compass.ProjectService.Domain.Entities.Module(Guid.NewGuid(), dto.DrawingId, dto.ModelTypeId.Value, dto.Name.ToUpper(), dto.ModelName, dto.SpecialNotes, dto.Length, dto.Width, dto.Height);
+            var model = new Compass.ProjectService.Domain.Entities.Module(Guid.NewGuid(), dto.DrawingId, dto.ModelTypeId.Value, dto.Name.ToUpper(), dto.ModelName, dto.SpecialNotes, dto.Length, dto.Width, dto.Height,dto.SidePanel);
             await _dbContext.Modules.AddAsync(model);
             dto.Id= model.Id;
             return new ApiResponse<ModuleDto> { Status = true, Result = dto };

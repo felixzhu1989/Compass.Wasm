@@ -23,9 +23,12 @@ public class CutListViewModel : BindableBase, IDialogHostAware
     {
         _provider = provider;
         _cutListService = provider.Resolve<ICutListService>();
-        SaveCommand = new DelegateCommand(Execute);//使用Save当作执行操作
+        SaveCommand = new DelegateCommand(Execute);//使用Save当作执行打印操作
         CancelCommand=new DelegateCommand(Cancel);
-    } 
+    }
+    public string DialogHostName { get; set; } = "RootDialog";
+    public DelegateCommand SaveCommand { get; set; }
+    public DelegateCommand CancelCommand { get; set; }
     #endregion
 
     #region 数据属性
@@ -48,11 +51,7 @@ public class CutListViewModel : BindableBase, IDialogHostAware
         set { cutListDtos = value; RaisePropertyChanged(); }
     }
     #endregion
-
-    public string DialogHostName { get; set; } = "RootDialog";
-    public DelegateCommand SaveCommand { get; set; }
-    public DelegateCommand CancelCommand { get; set; }
-
+    
     //todo:是否需要手工修改Cutlist条目
     /// <summary>
     /// 执行打印CutList
@@ -71,6 +70,7 @@ public class CutListViewModel : BindableBase, IDialogHostAware
             //取消时只返回No，告知操作结束
             DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.No));
     }
+
     public async void OnDialogOpen(IDialogParameters parameters)
     {
         ModuleDto = parameters.ContainsKey("Value") ? parameters.GetValue<ModuleDto>("Value") : null;

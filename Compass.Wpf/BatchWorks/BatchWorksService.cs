@@ -64,6 +64,8 @@ public class BatchWorksService : IBatchWorksService
 
     public Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos)
     {
-        throw new NotImplementedException();
+        var printService = _provider.Resolve<IPrintsService>();
+
+        return Task.CompletedTask;
     }
 }

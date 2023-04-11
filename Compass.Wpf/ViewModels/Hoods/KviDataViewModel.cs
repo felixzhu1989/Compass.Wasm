@@ -98,7 +98,6 @@ public class KviDataViewModel : NavigationViewModel
         DrainTypes = Enum.GetNames(typeof(DrainType_e));
         AnsulSides= Enum.GetNames(typeof(AnsulSide_e));
         AnsulDetectors = Enum.GetNames(typeof(AnsulDetector_e));
-
     }
     private async void GetDataAsync()
     {

@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml
-19461918452
+20-1817519668
 2-33542680
-1191020034308
+127-91042774
 247-643199975
-Views\AboutView.xaml;Views\DetailView.xaml;Views\Dialogs\AddMemoView.xaml;Views\Dialogs\AddTodoView.xaml;Views\Dialogs\BatchWorksView.xaml;Views\Dialogs\CutListView.xaml;Views\Dialogs\LoginView.xaml;Views\Dialogs\MsgView.xaml;Views\DrawingView.xaml;Views\Hoods\KviDataView.xaml;Views\IndexView.xaml;Views\MainView.xaml;Views\MemoView.xaml;Views\ModulesView.xaml;Views\ProcessView.xaml;Views\ProjectInfoView.xaml;Views\ProjectsView.xaml;Views\SettingsView.xaml;Views\TodoView.xaml;
+Views\AboutView.xaml;Views\DetailView.xaml;Views\Dialogs\AddMemoView.xaml;Views\Dialogs\AddTodoView.xaml;Views\Dialogs\BatchWorksView.xaml;Views\Dialogs\CutListView.xaml;Views\Dialogs\LoginView.xaml;Views\Dialogs\MsgView.xaml;Views\DrawingView.xaml;Views\Hoods\KvfDataView.xaml;Views\Hoods\KviDataView.xaml;Views\IndexView.xaml;Views\MainView.xaml;Views\MemoView.xaml;Views\ModulesView.xaml;Views\ProcessView.xaml;Views\ProjectInfoView.xaml;Views\ProjectsView.xaml;Views\SettingsView.xaml;Views\TodoView.xaml;
 
 True
 

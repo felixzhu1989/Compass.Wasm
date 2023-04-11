@@ -1,4 +1,6 @@
-﻿namespace Compass.Wasm.Shared.ProjectService;
+﻿using Compass.Wasm.Shared.DataService;
+
+namespace Compass.Wasm.Shared.ProjectService;
 
 public class ModuleDto : BaseDto
 {
@@ -99,10 +101,17 @@ public class ModuleDto : BaseDto
             OnPropertyChanged();
         }
     }
+    private SidePanel_e sidePanel;
+    public SidePanel_e SidePanel    
+    {
+        get => sidePanel;
+        set { sidePanel = value;OnPropertyChanged(); }
+    }
+
     #endregion
 
 
-
+    //是否被选中
     private bool isSelected;
     public bool IsSelected
     {
@@ -113,6 +122,44 @@ public class ModuleDto : BaseDto
             OnPropertyChanged();
         }
     }
+
+    //截图是否ok->用于打印JobCard
+    private bool isJobCardOk;
+    public bool IsJobCardOk
+    {
+        get => isJobCardOk;
+        set { isJobCardOk = value; OnPropertyChanged();}
+    }
+    private string imageUrl;
+    public string ImageUrl
+    {
+        get => imageUrl;
+        set { imageUrl = value; OnPropertyChanged();}
+    }
+
+
+
+    //本地文件存在吗->用于作图和导出CutList
+    private bool isFilesOk;
+    public bool IsFilesOk
+    {
+        get => isFilesOk;
+        set
+        {
+            isFilesOk = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string packDir;
+    public string PackDir
+    {
+        get => packDir;
+        set { packDir = value; OnPropertyChanged(); }
+    }
+
+
+    //用于CutList和JobCard
     private string odpNumber;
     public string OdpNumber
     {
@@ -144,5 +191,30 @@ public class ModuleDto : BaseDto
             OnPropertyChanged();
         }
     }
+    //项目类型
+    private ProjectType_e projectType;
+    public ProjectType_e ProjectType
+    {
+        get => projectType;
+        set { projectType = value; OnPropertyChanged();}
+    }
+    //发货时间
+    private DateTime deliveryDate;
+    public DateTime DeliveryDate
+    {
+        get => deliveryDate;
+        set { deliveryDate = value; OnPropertyChanged();}
+    }
+    private string? projectSpecialNotes;
+    public string? ProjectSpecialNotes
+    {
+        get => projectSpecialNotes;
+        set
+        {
+            projectSpecialNotes = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 }

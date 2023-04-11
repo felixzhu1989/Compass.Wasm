@@ -3,15 +3,15 @@ using Prism.Ioc;
 using Prism.Regions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Compass.Wasm.Shared.Parameter;
 using Compass.Wpf.ApiService;
 using Compass.Wpf.Extensions;
 using Prism.Commands;
-using Prism.Events;
 using Prism.Services.Dialogs;
-using Compass.Wpf.Common;
+using System.Diagnostics;
 
 namespace Compass.Wpf.ViewModels;
 
@@ -25,9 +25,16 @@ public class ModulesViewModel : NavigationViewModel
         ModuleDtos =new ObservableCollection<ModuleDto>();
         ExecuteCommand = new DelegateCommand<string>(Execute);
         ShowCutListCommand = new DelegateCommand<ModuleDto>(ShowCutList);
-    } 
+        ShowFilesCommand=new DelegateCommand<ModuleDto>(ShowFiles);
+        ShowJobCardCommand = new DelegateCommand<ModuleDto>(ShowJobCard);
+    }
+    public DelegateCommand<string> ExecuteCommand { get; }
+    public DelegateCommand<ModuleDto> ShowCutListCommand { get; }
+    public DelegateCommand<ModuleDto> ShowFilesCommand { get; }
+    public DelegateCommand<ModuleDto> ShowJobCardCommand { get; }
+
     #endregion
-    
+
     #region 项目内容属性
     //当前页面显示得项目
     private ProjectDto project;
@@ -86,16 +93,31 @@ public class ModulesViewModel : NavigationViewModel
 
     #endregion
 
-    #region Commands
-    public DelegateCommand<string> ExecuteCommand { get; }
-    public DelegateCommand<ModuleDto> ShowCutListCommand { get; } 
-    #endregion
-
     #region 显示CutList弹窗
     private async void ShowCutList(ModuleDto obj)
     {
         DialogParameters param = new DialogParameters { { "Value", obj } };
         await DialogHost.ShowDialog("CutListView", param);
+    }
+    #endregion
+
+    #region 显示JobCard弹窗
+    private async void ShowJobCard(ModuleDto obj)
+    {
+        DialogParameters param = new DialogParameters { { "Value", obj } };
+        await DialogHost.ShowDialog("JobCardView", param);
+    }
+    #endregion
+
+    #region 显示分段模型所在文件夹
+    private void ShowFiles(ModuleDto obj)
+    {
+        if(!Directory.Exists(obj.PackDir))return;
+        var psi = new ProcessStartInfo("Explorer.exe")
+        {
+            Arguments =obj.PackDir
+        };
+        Process.Start(psi);
     }
     #endregion
 
@@ -174,6 +196,11 @@ public class ModulesViewModel : NavigationViewModel
                 if (args.PropertyName == nameof(ModuleDto.IsSelected))
                     RaisePropertyChanged(nameof(IsAllModuleDtosSelected));
             };
+            //给IsFilesOk和PackDir赋值
+            var packPath = model.GetPackPath(out _,out var packDir);
+            if (!File.Exists(packPath)) continue;
+            model.IsFilesOk=true;
+            model.PackDir=packDir;
         }
         IsAllModuleDtosSelected = false;
     }

@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using Compass.Wpf.ApiService;
+using Compass.Wasm.Shared.DataService;
 
 namespace Compass.Wpf.Views;
 
@@ -37,10 +38,19 @@ public class DetailViewModel : NavigationViewModel
         SelectedModelChangedCommand = new DelegateCommand<object>(SelectedModelChanged);
         ModulesCommand = new DelegateCommand(() =>
         {
+            var param = new NavigationParameters { { "Value", Project } };
             //将Project传递给要导航的页面
-            RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ModulesView", back => { Journal = back.Context.NavigationService.Journal; }, ProjectParams);
+            RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ModulesView", back => { Journal = back.Context.NavigationService.Journal; }, param);
         });
     }
+    //Commands
+    public DelegateCommand ProjectInfoCommand { get; }//跳转到项目概况界面
+    public DelegateCommand<string> ExecuteCommand { get; }//根据提供的不同参数执行不同的逻辑
+    public DelegateCommand<object> SelectedItemChangedCommand { get; }//选择图纸和分段更改
+    public DelegateCommand<object> UpdateModuleDataCommand { get; }//编辑ModuleData
+    public DelegateCommand<object> SelectedModelChangedCommand { get; }//选择模型更改
+    public DelegateCommand ModulesCommand { get; }//跳转到制图界面
+    
     #endregion
 
     #region 项目内容属性
@@ -173,21 +183,12 @@ public class DetailViewModel : NavigationViewModel
     //
 
     #endregion
-
-    #region Commands
-    public DelegateCommand ProjectInfoCommand { get; }//跳转到项目概况界面
-    public DelegateCommand<string> ExecuteCommand { get; }//根据提供的不同参数执行不同的逻辑
-    public DelegateCommand<object> SelectedItemChangedCommand { get; }//选择图纸和分段更改
-    public DelegateCommand<object> UpdateModuleDataCommand { get; }//编辑ModuleData
-    public DelegateCommand<object> SelectedModelChangedCommand { get; }//选择模型更改
-    public DelegateCommand ModulesCommand { get; }//跳转到制图界面
-    private NavigationParameters ProjectParams { get; } = new();
-    #endregion
-
+    
     #region 点击项目文字，导航到项目概况
     private void ProjectInfoNavigate()
     {
-        RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ProjectInfoView", back => { Journal = back.Context.NavigationService.Journal; }, ProjectParams);
+        var param = new NavigationParameters { { "Value", Project } };
+        RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ProjectInfoView", back => { Journal = back.Context.NavigationService.Journal; }, param);
     }
     #endregion
 
@@ -215,7 +216,7 @@ public class DetailViewModel : NavigationViewModel
             var modelName = moduleDto.ModelName.Split('_')[0];
             var target = $"{CultureInfo.CurrentCulture.TextInfo.ToTitleCase(modelName.ToLower())}DataView";
             //将dto传递给要导航的页面
-            NavigationParameters param = new NavigationParameters { { "Value", moduleDto } };
+            var param = new NavigationParameters { { "Value", moduleDto } };
             RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate(target, back =>
             {
                 Journal = back.Context.NavigationService.Journal;
@@ -225,7 +226,7 @@ public class DetailViewModel : NavigationViewModel
         {
             if (obj==null||drawingDto.Id.Equals(Guid.Empty)) return;
             //将dto传递给要导航的页面
-            NavigationParameters param = new NavigationParameters { { "Value", drawingDto } };
+            var param = new NavigationParameters { { "Value", drawingDto } };
             RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("DrawingView", back =>
             {
                 Journal = back.Context.NavigationService.Journal;
@@ -325,6 +326,7 @@ public class DetailViewModel : NavigationViewModel
             if (CurrentModuleDto.Id!=null&&CurrentModuleDto.Id.Value!=Guid.Empty)//编辑ModuleDto
             {
                 var updateResult = await _moduleService.UpdateAsync(CurrentModuleDto.Id.Value, currentModuleDto);
+                //更新界面
                 if (updateResult.Status)
                 {
                     var drawingDto =
@@ -336,6 +338,10 @@ public class DetailViewModel : NavigationViewModel
                         dto.ModelTypeId = CurrentModuleDto.ModelTypeId;
                         dto.ModelName=CurrentModuleDto.ModelName;
                         dto.SpecialNotes=CurrentModuleDto.SpecialNotes;
+                        dto.Length = CurrentModuleDto.Length;
+                        dto.Width = CurrentModuleDto.Width;
+                        dto.Height = CurrentModuleDto.Height;
+                        dto.SidePanel=CurrentModuleDto.SidePanel;
                     }
                 }
                 IsRightDrawerOpen = false;//关闭弹窗
@@ -392,25 +398,27 @@ public class DetailViewModel : NavigationViewModel
     #endregion
 
     #region 初始化
+    private string[] sidePanels = null!;
+    public string[] SidePanels
+    {
+        get => sidePanels;
+        set { sidePanels = value; RaisePropertyChanged(); }
+    }
     private async void GetModuleTreeDataAsync()
     {
         ProjectParameter parameter = new() { ProjectId = Project.Id };
         var moduleTreeResult = await _projectService.GetModuleTreeAsync(parameter);
-        if (moduleTreeResult.Status)
-        {
-            DrawingDtos.Clear();
-            DrawingDtos.AddRange(moduleTreeResult.Result);
-        }
+        if (!moduleTreeResult.Status) return;
+        DrawingDtos.Clear();
+        DrawingDtos.AddRange(moduleTreeResult.Result);
     }
 
     private async void GetModelTreeDataAsync()
     {
         var modelTypeTreeResult = await _projectService.GetModelTypeTreeAsync();
-        if (modelTypeTreeResult.Status)
-        {
-            ProductDtos.Clear();
-            ProductDtos.AddRange(modelTypeTreeResult.Result);
-        }
+        if (!modelTypeTreeResult.Status) return;
+        ProductDtos.Clear();
+        ProductDtos.AddRange(modelTypeTreeResult.Result);
     }
 
     public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -420,12 +428,12 @@ public class DetailViewModel : NavigationViewModel
         Project = navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<ProjectDto>("Value")
             : new ProjectDto();
-        ProjectParams.Add("Value", Project);//将导航数据填好，以便后续使用
         ProjectInfoNavigate();
         Title = $"{Project.OdpNumber} - {Project.Name}";
         Sbu = Enum.GetNames(typeof(Sbu_e));
         GetModuleTreeDataAsync();
         GetModelTreeDataAsync();
+        SidePanels=Enum.GetNames(typeof(SidePanel_e));
     }
     #endregion
 

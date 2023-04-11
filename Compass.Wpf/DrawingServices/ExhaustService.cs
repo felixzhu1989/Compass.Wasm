@@ -18,7 +18,7 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         //排风主体
         FNHE0001(swAssyLevel1, suffix, "FNHE0001-1", length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, ansulDetector);
         //排风腔前面板
-        FNHE0002(swAssyLevel1, suffix, "FNHE0002-1", length, UvLightType_e.No, middleToRight);
+        FNHE0002(swAssyLevel1, suffix, "FNHE0002-1", length, UvLightType_e.NA, middleToRight);
         //KSA侧边
         KsaFilter(swAssyLevel1, suffix, length, "FNHE0003-1", "FNHE0004-1", "FNHE0005-1");
         //排风三角板

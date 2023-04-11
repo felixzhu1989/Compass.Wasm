@@ -31,8 +31,8 @@ public class DataDbContext : BaseDbContext
     #endregion
 
     #region 华为烟罩
-    public DbSet<UvfHuaweiData> UvfHuaweiData { get; set; }
-    public DbSet<UviHuaweiData> UviHuaweiData { get; set; }
+    public DbSet<UvfHwData> UvfHwData { get; set; }
+    public DbSet<UviHwData> UviHwData { get; set; }
 
     #endregion
 

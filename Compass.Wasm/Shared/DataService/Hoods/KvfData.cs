@@ -2,14 +2,6 @@
 
 public class KvfData : ModuleData
 {
-    //大侧板：左, 右, 双,中
-    private SidePanel_e sidePanel;
-    public SidePanel_e SidePanel
-    {
-        get => sidePanel;
-        set { sidePanel = value; OnPropertyChanged(); }
-    }
-    
     #region 排风口参数
     //中心距离右端
     private double middleToRight;
@@ -53,21 +45,6 @@ public class KvfData : ModuleData
     }
     #endregion
 
-    #region 新风口参数
-    private int supplySpigotNumber = 2;
-    public int SupplySpigotNumber 
-    {
-        get => supplySpigotNumber;
-        set { supplySpigotNumber = value;OnPropertyChanged(); }
-    }//前端界面input设置为number，min=1,max=2
-    private double supplySpigotDis = 800d;
-    public double SupplySpigotDis
-    {
-        get => supplySpigotDis;
-        set { supplySpigotDis = value;OnPropertyChanged(); }
-    }
-    #endregion
-    
     #region 灯具类型
     private LightType_e lightType;
     public LightType_e LightType
@@ -213,6 +190,21 @@ public class KvfData : ModuleData
     {
         get => ansulDropDis5;
         set { ansulDropDis5 = value; OnPropertyChanged(); }
+    }
+    #endregion
+
+    #region 新风口参数
+    private int supplySpigotNumber = 2;
+    public int SupplySpigotNumber
+    {
+        get => supplySpigotNumber;
+        set { supplySpigotNumber = value; OnPropertyChanged(); }
+    }//前端界面input设置为number，min=1,max=2
+    private double supplySpigotDis = 800d;
+    public double SupplySpigotDis
+    {
+        get => supplySpigotDis;
+        set { supplySpigotDis = value; OnPropertyChanged(); }
     }
     #endregion
 

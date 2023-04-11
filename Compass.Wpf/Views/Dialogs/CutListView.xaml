@@ -72,12 +72,12 @@
                     Grid.Row="2"
                     HorizontalAlignment="Right"
                     Margin="20,10">
+            <Button Content="打印CutList"
+                    Command="{Binding SaveCommand}"
+                    Margin="0,0,10,0" />
             <Button Content="返回"
                     Command="{Binding CancelCommand}"
-                    Style="{StaticResource MaterialDesignOutlinedButton}"
-                    Margin="0,0,10,0" />
-            <Button Content="打印CutList"
-                    Command="{Binding SaveCommand}" />
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
         </StackPanel>
     </Grid>
 </UserControl>

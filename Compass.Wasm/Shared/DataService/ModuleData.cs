@@ -24,6 +24,14 @@ public class ModuleData : BaseDataEntity
         set { height = value; OnPropertyChanged(); }
     }
 
+    //大侧板：左, 右, 双,中
+    private SidePanel_e sidePanel;
+    public SidePanel_e SidePanel
+    {
+        get => sidePanel;
+        set { sidePanel = value; OnPropertyChanged(); }
+    }
+
     public virtual bool Accept(string model)
     {
         return false;

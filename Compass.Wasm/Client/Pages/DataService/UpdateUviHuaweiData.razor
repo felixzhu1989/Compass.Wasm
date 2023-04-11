@@ -1,11 +1,11 @@
-﻿@page "/update/uvi-huawei/{Id}"
+﻿@page "/update/uvihw/{Id}"
 @using Compass.Wasm.Shared.DataService.Hoods
 @inject HttpClient Http
-@if (_uviHuaweiData != null)
+@if (_uviHwData != null)
 {
     <ShowPdfDrawings Id="@Id"/>
-    <p>@_uviHuaweiData.ToString()</p>
-    <EditForm Model="_uviHuaweiData" OnSubmit="Save">
+    <p>@_uviHwData.ToString()</p>
+    <EditForm Model="_uviHwData" OnSubmit="Save">
         
         
 
@@ -15,11 +15,11 @@
 @code {
     [Parameter]
     public string Id { get; set; }
-    private UviHuaweiData? _uviHuaweiData;
+    private UviHwData? _uviHwData;
     protected override async Task OnParametersSetAsync()
     {
-        _uviHuaweiData = await Http.GetFromJsonAsync<UviHuaweiData>($"api/Data/{Id}");
-        if (_uviHuaweiData!=null) _uviHuaweiData.ChangeId(Guid.Parse(Id));
+        _uviHwData = await Http.GetFromJsonAsync<UviHwData>($"api/Data/{Id}");
+        if (_uviHwData!=null) _uviHwData.ChangeId(Guid.Parse(Id));
     }
 
     Task Save()

@@ -1,4 +1,5 @@
-﻿using Compass.Wasm.Shared.ProjectService;
+﻿using Compass.Wasm.Shared.DataService;
+using Compass.Wasm.Shared.ProjectService;
 using Compass.Wasm.Shared.ProjectService.Notification;
 using Zack.DomainCommons.Models;
 
@@ -16,7 +17,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
 
 
     private Module() { }
-    public Module(Guid id,Guid drawingId,Guid modelTypeId, string name,string modelName, string? specialNotes,double length,double width,double height)
+    public Module(Guid id,Guid drawingId,Guid modelTypeId, string name,string modelName, string? specialNotes,double length,double width,double height,SidePanel_e sidePanel)
     {
         Id = id;
         DrawingId = drawingId;
@@ -28,7 +29,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         //todo:改成Domain事件,写在Module实体类中
         #region 创建Module的ModuleData参数
         var model = modelName.Split('_')[0];
-        AddDomainEvent(new ModuleCreatedNotification(id, model, modelTypeId, length, width, height));
+        AddDomainEvent(new ModuleCreatedNotification(id, model, modelTypeId, length, width, height, sidePanel));
         #endregion
 
     }
@@ -46,7 +47,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         //todo:改成领域事件
         #region 修改Module的ModuleData参数
         var model = dto.ModelName.Split('_')[0];
-        AddDomainEvent(new ModuleUpdatedNotification(dto.Id.Value, model, dto.ModelTypeId.Value,dto.Length, dto.Width, dto.Height));
+        AddDomainEvent(new ModuleUpdatedNotification(dto.Id.Value, model, dto.ModelTypeId.Value,dto.Length, dto.Width, dto.Height,dto.SidePanel));
         #endregion
     }
 

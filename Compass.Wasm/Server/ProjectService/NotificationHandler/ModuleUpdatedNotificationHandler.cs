@@ -35,6 +35,7 @@ public class ModuleUpdatedNotificationHandler : INotificationHandler<ModuleUpdat
         moduleData.Length = notification.Length == 0 ? modelType.Length : notification.Length;
         moduleData.Width = notification.Width == 0 ? modelType.Width : notification.Width;
         moduleData.Height = notification.Height == 0 ? modelType.Height : notification.Height;
+        moduleData.SidePanel=notification.SidePanel;
     }
 
     public async Task Handle(ModuleUpdatedNotification notification, CancellationToken cancellationToken)

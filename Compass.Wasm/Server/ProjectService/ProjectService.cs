@@ -195,6 +195,7 @@ public class ProjectService : IProjectService
                     moduleDto.Length = moduleData.Length;
                     moduleDto.Width = moduleData.Width;
                     moduleDto.Height = moduleData.Height;
+                    moduleDto.SidePanel = moduleData.SidePanel;
                 }
             }
             return new ApiResponse<List<DrawingDto>> { Status = true, Result = dtos };
@@ -205,6 +206,9 @@ public class ProjectService : IProjectService
         }
     }
 
+    /// <summary>
+    /// 查询单个项目中所有的图纸
+    /// </summary>
     public async Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter)
     {
         try
@@ -219,12 +223,18 @@ public class ProjectService : IProjectService
                 //再查询图纸下的所有分段Module
                 var modules = await _repository.GetModulesByDrawingIdAsync(drawingDto.Id.Value);
                 var moduleDtos = _mapper.ProjectTo<ModuleDto>(modules).ToList();
-                //查询时添加图纸的item号，项目ODP号和项目名称
+                //查询时添加图纸的item号，项目ODP号和项目名称，判断截图是否存在
+                
                 moduleDtos.ForEach(x =>
                 {
                     x.ItemNumber = drawingDto.ItemNumber;
                     x.OdpNumber = project.OdpNumber;
                     x.ProjectName = project.Name;
+                    x.IsJobCardOk = x.IsModuleDataOk  && (!string.IsNullOrEmpty(drawingDto.ImageUrl));
+                    x.ImageUrl = drawingDto.ImageUrl;
+                    x.ProjectType = project.ProjectType;
+                    x.DeliveryDate = project.DeliveryDate;
+                    x.ProjectSpecialNotes = project.SpecialNotes;
                 });
                 dtos.AddRange(moduleDtos);
             }
@@ -236,6 +246,7 @@ public class ProjectService : IProjectService
                 moduleDto.Length = moduleData.Length;
                 moduleDto.Width = moduleData.Width;
                 moduleDto.Height = moduleData.Height;
+                moduleDto.SidePanel = moduleData.SidePanel;
             }
             return new ApiResponse<List<ModuleDto>> { Status = true, Result = dtos };
         }
@@ -265,6 +276,25 @@ public class ProjectService : IProjectService
             return new ApiResponse<List<ProjectDto>> { Status = false, Message = e.Message };
         }
     }
+
+    public async Task<ApiResponse<ProjectDto>> UploadFilesAsync(Guid id, ProjectDto dto)
+    {
+        try
+        {
+            var model = await _repository.GetProjectByIdAsync(id);
+            if (model != null)
+            {
+                model.UploadFiles(dto);
+                return new ApiResponse<ProjectDto> { Status = true, Result = dto };
+            }
+            return new ApiResponse<ProjectDto> { Status = false, Message = "更新数据失败" };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<ProjectDto> { Status = false, Message = e.Message };
+        }
+    }
+
     #endregion
 
 

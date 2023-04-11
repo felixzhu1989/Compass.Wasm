@@ -165,6 +165,7 @@ namespace Compass.Wpf
             containerRegistry.RegisterForNavigation<AddTodoView, AddTodoViewModel>();
             containerRegistry.RegisterForNavigation<AddMemoView, AddMemoViewModel>();
             containerRegistry.RegisterForNavigation<CutListView, CutListViewModel>();
+            containerRegistry.RegisterForNavigation<JobCardView, JobCardViewModel>();
             containerRegistry.RegisterForNavigation<BatchWorksView, BatchWorksViewModel>();
             
 

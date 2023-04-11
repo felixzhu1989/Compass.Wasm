@@ -122,12 +122,12 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
             catch (Exception ex)
             {
                 _aggregator.SendMessage($"{ActionName}发生异常!\n{ex.Message}", Filter_e.Batch);
-                await Task.Delay(6000);
+                await Task.Delay(10000);
             }
             var timeSpan = DateTime.Now - startTime;
             _aggregator.SendMessage($"耗时：{timeSpan.TotalSeconds:F2}s", Filter_e.Batch);
             _aggregator.SendMessage($"{ActionName}完成!", Filter_e.Batch);
-            await Task.Delay(3000);
+            await Task.Delay(5000);
             CanBatchWorks = true;
             ShowProgressBar = false;
         });

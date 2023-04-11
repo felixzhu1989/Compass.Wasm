@@ -213,12 +213,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("SpotLightNumber");
 
                     b.Property<double>("SupplySpigotDis")
-                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("SupplySpigotDis");
 
                     b.Property<int>("SupplySpigotNumber")
-                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("SupplySpigotNumber");
 
@@ -379,508 +377,58 @@ namespace Compass.DataService.Infrastructure.Migrations
 
             modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UvfData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.KvfData");
 
-                    b.Property<bool>("Ansul")
+                    b.Property<bool>("Bluetooth")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit")
-                        .HasColumnName("Ansul");
-
-                    b.Property<int>("AnsulDetector")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulDetector");
-
-                    b.Property<int>("AnsulDropNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulDropNumber");
-
-                    b.Property<int>("AnsulSide")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulSide");
-
-                    b.Property<bool>("BackCj")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BackCj");
-
-                    b.Property<bool>("BackToBack")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BackToBack");
-
-                    b.Property<bool>("BlueTooth")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BlueTooth");
-
-                    b.Property<bool>("CoverBoard")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("CoverBoard");
-
-                    b.Property<int>("DrainType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("DrainType");
-
-                    b.Property<double>("ExhaustSpigotDis")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotDis");
-
-                    b.Property<double>("ExhaustSpigotHeight")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotHeight");
-
-                    b.Property<double>("ExhaustSpigotLength")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotLength");
-
-                    b.Property<int>("ExhaustSpigotNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("ExhaustSpigotNumber");
-
-                    b.Property<double>("ExhaustSpigotWidth")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotWidth");
-
-                    b.Property<bool>("LedLogo")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("LedLogo");
-
-                    b.Property<int>("LightType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("LightType");
-
-                    b.Property<bool>("Marvel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Marvel");
-
-                    b.Property<double>("MiddleToRight")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("MiddleToRight");
-
-                    b.Property<int>("SidePanel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SidePanel");
-
-                    b.Property<double>("SpotLightDistance")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("SpotLightDistance");
-
-                    b.Property<int>("SpotLightNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SpotLightNumber");
-
-                    b.Property<double>("SupplySpigotDis")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("SupplySpigotDis");
-
-                    b.Property<int>("SupplySpigotNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SupplySpigotNumber");
+                        .HasColumnName("Bluetooth");
 
                     b.Property<int>("UvLightType")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("UvLightType");
-
-                    b.Property<bool>("WaterCollection")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("WaterCollection");
 
                     b.HasDiscriminator().HasValue("UvfData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UvfHuaweiData", b =>
-                {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
-
-                    b.Property<bool>("Ansul")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Ansul");
-
-                    b.Property<int>("AnsulDetector")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulDetector");
-
-                    b.Property<int>("AnsulDropNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulDropNumber");
-
-                    b.Property<int>("AnsulSide")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulSide");
-
-                    b.Property<bool>("BackCj")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BackCj");
-
-                    b.Property<bool>("BackToBack")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BackToBack");
-
-                    b.Property<bool>("BlueTooth")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BlueTooth");
-
-                    b.Property<bool>("CoverBoard")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("CoverBoard");
-
-                    b.Property<int>("DrainType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("DrainType");
-
-                    b.Property<double>("ExhaustSpigotDis")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotDis");
-
-                    b.Property<double>("ExhaustSpigotHeight")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotHeight");
-
-                    b.Property<double>("ExhaustSpigotLength")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotLength");
-
-                    b.Property<int>("ExhaustSpigotNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("ExhaustSpigotNumber");
-
-                    b.Property<double>("ExhaustSpigotWidth")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotWidth");
-
-                    b.Property<bool>("LedLogo")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("LedLogo");
-
-                    b.Property<int>("LightType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("LightType");
-
-                    b.Property<bool>("Marvel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Marvel");
-
-                    b.Property<double>("MiddleToRight")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("MiddleToRight");
-
-                    b.Property<int>("SidePanel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SidePanel");
-
-                    b.Property<double>("SpotLightDistance")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("SpotLightDistance");
-
-                    b.Property<int>("SpotLightNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SpotLightNumber");
-
-                    b.Property<double>("SupplySpigotDis")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("SupplySpigotDis");
-
-                    b.Property<int>("SupplySpigotNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SupplySpigotNumber");
-
-                    b.Property<int>("UvLightType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("UvLightType");
-
-                    b.Property<bool>("WaterCollection")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("WaterCollection");
-
-                    b.HasDiscriminator().HasValue("UvfHuaweiData");
-                });
-
             modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UviData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.KviData");
 
-                    b.Property<bool>("Ansul")
+                    b.Property<bool>("Bluetooth")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit")
-                        .HasColumnName("Ansul");
-
-                    b.Property<int>("AnsulDetector")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulDetector");
-
-                    b.Property<int>("AnsulDropNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulDropNumber");
-
-                    b.Property<int>("AnsulSide")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulSide");
-
-                    b.Property<bool>("BackCj")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BackCj");
-
-                    b.Property<bool>("BackToBack")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BackToBack");
-
-                    b.Property<bool>("BlueTooth")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BlueTooth");
-
-                    b.Property<bool>("CoverBoard")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("CoverBoard");
-
-                    b.Property<int>("DrainType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("DrainType");
-
-                    b.Property<double>("ExhaustSpigotDis")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotDis");
-
-                    b.Property<double>("ExhaustSpigotHeight")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotHeight");
-
-                    b.Property<double>("ExhaustSpigotLength")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotLength");
-
-                    b.Property<int>("ExhaustSpigotNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("ExhaustSpigotNumber");
-
-                    b.Property<double>("ExhaustSpigotWidth")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotWidth");
-
-                    b.Property<bool>("LedLogo")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("LedLogo");
-
-                    b.Property<int>("LightType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("LightType");
-
-                    b.Property<bool>("Marvel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Marvel");
-
-                    b.Property<double>("MiddleToRight")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("MiddleToRight");
-
-                    b.Property<int>("SidePanel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SidePanel");
-
-                    b.Property<double>("SpotLightDistance")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("SpotLightDistance");
-
-                    b.Property<int>("SpotLightNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SpotLightNumber");
+                        .HasColumnName("Bluetooth");
 
                     b.Property<int>("UvLightType")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("UvLightType");
-
-                    b.Property<bool>("WaterCollection")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("WaterCollection");
 
                     b.HasDiscriminator().HasValue("UviData");
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UvfHuaweiData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.UvfData");
+
+                    b.Property<double>("LightToFront")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("LightToFront");
+
+                    b.HasDiscriminator().HasValue("UvfHuaweiData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UviHuaweiData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.UviData");
 
-                    b.Property<bool>("Ansul")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Ansul");
-
-                    b.Property<int>("AnsulDetector")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulDetector");
-
-                    b.Property<int>("AnsulDropNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulDropNumber");
-
-                    b.Property<int>("AnsulSide")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("AnsulSide");
-
-                    b.Property<bool>("BackCj")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BackCj");
-
-                    b.Property<bool>("BackToBack")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BackToBack");
-
-                    b.Property<bool>("BlueTooth")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("BlueTooth");
-
-                    b.Property<bool>("CoverBoard")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("CoverBoard");
-
-                    b.Property<int>("DrainType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("DrainType");
-
-                    b.Property<double>("ExhaustSpigotDis")
+                    b.Property<double>("LightToFront")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotDis");
-
-                    b.Property<double>("ExhaustSpigotHeight")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotHeight");
-
-                    b.Property<double>("ExhaustSpigotLength")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotLength");
-
-                    b.Property<int>("ExhaustSpigotNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("ExhaustSpigotNumber");
-
-                    b.Property<double>("ExhaustSpigotWidth")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("ExhaustSpigotWidth");
-
-                    b.Property<bool>("LedLogo")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("LedLogo");
-
-                    b.Property<int>("LightType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("LightType");
-
-                    b.Property<bool>("Marvel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Marvel");
-
-                    b.Property<double>("MiddleToRight")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("MiddleToRight");
-
-                    b.Property<int>("SidePanel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SidePanel");
-
-                    b.Property<double>("SpotLightDistance")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("SpotLightDistance");
-
-                    b.Property<int>("SpotLightNumber")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SpotLightNumber");
-
-                    b.Property<int>("UvLightType")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("UvLightType");
-
-                    b.Property<bool>("WaterCollection")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("WaterCollection");
+                        .HasColumnName("LightToFront");
 
                     b.HasDiscriminator().HasValue("UviHuaweiData");
                 });

@@ -2,13 +2,7 @@
 
 public class KviData : ModuleData
 {
-    //大侧板：左, 右, 双,中
-    private SidePanel_e sidePanel;
-    public SidePanel_e SidePanel
-    {
-        get => sidePanel;
-        set { sidePanel = value; OnPropertyChanged(); }
-    }
+    
 
     #region 排风口参数
     //中心距离右端

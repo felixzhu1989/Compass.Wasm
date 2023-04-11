@@ -97,11 +97,9 @@ public class DrawingViewModel : NavigationViewModel
         CurrentDrawing.ImageUrl = result.RemoteUrl.ToString();
 
         var response = await _drawingService.UpdateAsync(CurrentDrawing.Id.Value, CurrentDrawing);
-        if (response.Status)
-        {
-            Aggregator.SendMessage($"分段{CurrentDrawing.ItemNumber}修改成功！");
-            Clear();//清空图片
-        }
+        if (!response.Status) return;
+        Aggregator.SendMessage($"分段{CurrentDrawing.ItemNumber}修改成功！");
+        Clear();//清空图片
     }
     #endregion
 
@@ -112,10 +110,7 @@ public class DrawingViewModel : NavigationViewModel
         CurrentDrawing=navigationContext.Parameters.ContainsKey("Value") ?
             navigationContext.Parameters.GetValue<DrawingDto>("Value")
             : new DrawingDto();
-        if (!string.IsNullOrEmpty(CurrentDrawing.ImageUrl))
-        {
-            OldImage = new BitmapImage(new Uri(CurrentDrawing.ImageUrl));
-        }
+        OldImage = !string.IsNullOrEmpty(CurrentDrawing.ImageUrl) ? new BitmapImage(new Uri(CurrentDrawing.ImageUrl)) : null;
     }
     #endregion
 }

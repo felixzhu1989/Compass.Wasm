@@ -64,23 +64,10 @@
                 <span class="input-group-text">特殊要求</span>
                 <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@project.SpecialNotes"></textarea>
             </div>
-
-            <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@project.ContractUrl" />
         </Authorized>
     </AuthorizeView>
 
-    <AuthorizeView Roles="admin,pm,designer">
-        <Authorized Context="auth">
-            <FileUpload Title="物料清单" FileType="application/pdf" @bind-FileUrl="@project.BomUrl" />
-            <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl"></MultiFileUpload>
-        </Authorized>
-    </AuthorizeView>
-
-    <AuthorizeView Roles="admin,inspector">
-        <Authorized Context="auth">
-            <MultiFileUpload Title="最终检验" @bind-MultiFileUrl="@project.FinalInspectionUrl"></MultiFileUpload>
-        </Authorized>
-    </AuthorizeView>
+    
 
     <button class="btn btn-success" type="submit">保存</button>
     <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("/projects"))">取消</button>

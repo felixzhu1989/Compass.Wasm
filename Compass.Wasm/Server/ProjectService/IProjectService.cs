@@ -14,6 +14,7 @@ public interface IProjectService : IBaseService<ProjectDto>
 
     //扩展查询功能，Blazor
     Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(string? search);
-
+    //UploadFiles
+    Task<ApiResponse<ProjectDto>> UploadFilesAsync(Guid id, ProjectDto dto);
 
 }

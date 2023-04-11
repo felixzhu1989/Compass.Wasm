@@ -51,18 +51,15 @@
 
             
             <div class="row">
+
                 <div class="col-sm-3" style="width: 95px">系统合同:</div>
-                <div class="col-sm-9"><a href="@_project.ContractUrl" target="_blank">@(Path.GetFileName(_project.ContractUrl))</a></div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3" style="width: 95px">物料清单:</div>
-                @if (!string.IsNullOrWhiteSpace(_project.BomUrl))
+                @if (!string.IsNullOrWhiteSpace(_project.ContractUrl))
                 {
                     <div class="col-sm-9">
-                        <a href="@_project.BomUrl" target="_blank">@(Path.GetFileName(_project.BomUrl))</a>
+                        <a href="@_project.ContractUrl" target="_blank">@(Path.GetFileName(_project.ContractUrl))</a>
                         <AuthorizeView Roles="admin,pm,designer">
                             <Authorized>
-                                <a class="ms-3" href="/project/update/@ProjectId">
+                                <a class="ms-3" href="/project/uploadfiles/@ProjectId">
                                     <span class="badge ms-2 bg-info text-black rounded-pill">修改</span>
                                 </a>
                             </Authorized>
@@ -74,7 +71,43 @@
                     <AuthorizeView Roles="admin,pm,designer">
                         <Authorized>
                             <div class="col-sm-9">
-                                <a href="/project/update/@ProjectId">
+                                <a href="/project/uploadfiles/@ProjectId">
+                                    <span class="badge ms-2 bg-info text-black rounded-pill">添加</span>
+                                </a>
+                            </div>
+                        </Authorized>
+                    </AuthorizeView>
+                }
+                
+
+            </div>
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">物料清单:</div>
+                @if (!string.IsNullOrWhiteSpace(_project.BomUrl))
+                {
+                    <div class="col-sm-9">
+
+                        @foreach (var fileUrl in _project.BomUrl.Split('\n'))
+                        {
+                            <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                            <br />
+                        }
+
+                        <AuthorizeView Roles="admin,pm,designer">
+                            <Authorized>
+                                <a class="ms-3" href="/project/uploadfiles/@ProjectId">
+                                    <span class="badge ms-2 bg-info text-black rounded-pill">修改</span>
+                                </a>
+                            </Authorized>
+                        </AuthorizeView>
+                    </div>
+                }
+                else
+                {
+                    <AuthorizeView Roles="admin,pm,designer">
+                        <Authorized>
+                            <div class="col-sm-9">
+                                <a href="/project/uploadfiles/@ProjectId">
                                     <span class="badge ms-2 bg-info text-black rounded-pill">添加</span>
                                 </a>
                             </div>
@@ -95,7 +128,7 @@
                         }
                         <AuthorizeView Roles="admin,pm,designer">
                             <Authorized>
-                                <a class="ms-3" href="/project/update/@ProjectId">
+                                <a class="ms-3" href="/project/uploadfiles/@ProjectId">
                                     <span class="badge ms-2 bg-info text-black rounded-pill">修改</span>
                                 </a>
                             </Authorized>
@@ -107,7 +140,7 @@
                     <AuthorizeView Roles="admin,pm,designer">
                         <Authorized>
                             <div class="col-sm-9">
-                                <a href="/project/update/@ProjectId">
+                                <a href="/project/uploadfiles/@ProjectId">
                                     <span class="badge ms-2 bg-info text-black rounded-pill">添加</span>
                                 </a>
                             </div>
@@ -128,7 +161,7 @@
                         }
                         <AuthorizeView Roles="admin,inspector">
                             <Authorized>
-                                <a class="ms-3" href="/project/update/@ProjectId">
+                                <a class="ms-3" href="/project/uploadfiles/@ProjectId">
                                     <span class="badge ms-2 bg-info text-black rounded-pill">修改</span>
                                 </a>
                             </Authorized>
@@ -140,7 +173,7 @@
                     <AuthorizeView Roles="admin,inspector">
                         <Authorized>
                             <div class="col-sm-9">
-                                <a href="/project/update/@ProjectId">
+                                <a href="/project/uploadfiles/@ProjectId">
                                     <span class="badge ms-2 bg-info text-black rounded-pill">添加</span>
                                 </a>
                             </div>

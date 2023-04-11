@@ -63,6 +63,7 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         //测试发布领域事件
         //AddDomainEvent(new TestNotification(odpNumber));
     }
+
     public Project ChangeOdpNumber(string odpNumber)
     {
         OdpNumber= odpNumber;
@@ -96,9 +97,18 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         return this;
     }
     #endregion
-    
+
     #region 更新文件属性
-    
+
+    public void UploadFiles(ProjectDto dto)
+    {
+        ChangeContractUrl(dto.ContractUrl)
+            .ChangeBomUrl(dto.BomUrl)
+            .ChangeAttachmentsUrl(dto.AttachmentsUrl)
+            .ChangeFinalInspectionUrl(dto.FinalInspectionUrl);
+
+        NotifyModified();
+    }
     public Project ChangeContractUrl(string contractUrl)
     {
         ContractUrl= contractUrl;

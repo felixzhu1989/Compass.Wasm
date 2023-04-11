@@ -90,7 +90,7 @@ public class MidRoofService : BaseDrawingService, IMidRoofService
         //UvDoorCable，UV门感应线
         //BluetoothCable，蓝牙线出口（Logo走风机线，不需要）
         //CutFrontRight，风机线，都需要
-        if (uvLightType!=UvLightType_e.No)
+        if (uvLightType!=UvLightType_e.NA)
         {
             //UV
             swCompLevel2.UnSuppress("KsaTabCable");

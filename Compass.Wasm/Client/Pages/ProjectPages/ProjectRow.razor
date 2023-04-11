@@ -20,11 +20,22 @@
         {
             <a href="@Project.ContractUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
         }
+        else
+        {
+            <a href="project/uploadfiles/@Project.Id">上传</a>
+        }
     </td>
     <td style="text-align: center">
         @if (!string.IsNullOrWhiteSpace(Project.BomUrl))
         {
-            <a href="@Project.BomUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
+            @foreach (var fileUrl in Project.BomUrl.Split('\n'))
+            {
+                <a href="@fileUrl" target="_blank"><i class="bi bi-file-earmark-pdf me-3" /></a>
+            }
+        }
+        else
+        {
+            <a href="project/uploadfiles/@Project.Id">上传</a>
         }
     </td>
     <td style="text-align: center">
