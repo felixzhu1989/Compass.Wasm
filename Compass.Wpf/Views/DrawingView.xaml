@@ -7,7 +7,11 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
              d:DesignHeight="450"
-             d:DesignWidth="800">
+             d:DesignWidth="800"
+             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
+    <UserControl.Resources>
+        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -37,6 +41,14 @@
                     Background="Pink"
                     BorderThickness="0"
                     materialDesign:ButtonAssist.CornerRadius="15" />
+            <Button Command="{Binding OpenHttpLinkCommand}"
+                    Content="点击浏览图纸"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource HyperlinkStyledButton}"
+                    ToolTip="查看PDF图纸"
+                    DockPanel.Dock="Left"
+                    Margin="20,0"
+                    Visibility="{Binding CurrentDrawing.IsDrawingOk,Converter={StaticResource BoolToVisibilityConverter}}" />
             <Button DockPanel.Dock="Right"
                     Content="保存参数"
                     Command="{Binding ExecuteCommand}"

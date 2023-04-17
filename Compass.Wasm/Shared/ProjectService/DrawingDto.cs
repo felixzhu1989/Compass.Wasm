@@ -11,14 +11,37 @@ public class DrawingDto:BaseDto,IComparable<DrawingDto>
         set { itemNumber = value;OnPropertyChanged(); }
     }
 
-    public string? DrawingUrl { get; set; }
-    public string? ImageUrl { get; set; }
+    private string? drawingUrl;
+    public string? DrawingUrl
+    {
+        get => drawingUrl;
+        set { drawingUrl = value; OnPropertyChanged(); }
+    }
 
-    private ObservableCollection<ModuleDto> moduleDtos=new();
+    private string? imageUrl;
+    public string? ImageUrl
+    {
+        get => imageUrl;
+        set { imageUrl = value; OnPropertyChanged(); }
+    }
+
+
+
+
+    #region 附加属性和方法
+
+    private bool isDrawingOk;
+    public bool IsDrawingOk
+    {
+        get => isDrawingOk;
+        set { isDrawingOk = value; OnPropertyChanged(); }
+    }
+
+    private ObservableCollection<ModuleDto> moduleDtos = new();
     public ObservableCollection<ModuleDto> ModuleDtos
     {
         get => moduleDtos;
-        set { moduleDtos = value; OnPropertyChanged();}
+        set { moduleDtos = value; OnPropertyChanged(); }
     }
 
     public int CompareTo(DrawingDto? other)
@@ -28,5 +51,6 @@ public class DrawingDto:BaseDto,IComparable<DrawingDto>
             return ItemNumber.CompareTo(other.ItemNumber); //升序
         }
         return 1;//空值比较大，返回1
-    }
+    } 
+    #endregion
 }

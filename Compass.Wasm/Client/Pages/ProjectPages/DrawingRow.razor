@@ -12,7 +12,10 @@
     <td>
         @if (!string.IsNullOrWhiteSpace(Drawing.DrawingUrl))
         {
-            <a href="@Drawing.DrawingUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
+            @foreach (var fileUrl in Drawing.DrawingUrl.Split('\n'))
+            {
+                <a href="@fileUrl" target="_blank"><i class="bi bi-file-earmark-pdf me-3" /></a>
+            }
         }
     </td>
     <td>

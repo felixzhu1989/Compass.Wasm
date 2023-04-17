@@ -4,40 +4,82 @@
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 @inject IDrawingService DrawingService
+@inject IProjectService ProjectService
 
 <PageTitle>新增图纸</PageTitle>
+@if (_project != null)
+{
+    <h3>@_project.OdpNumber-@_project.Name</h3>
+}
 
-<EditForm Model="Drawing" OnSubmit="Save">
-    <div class="input-group mb-2">
-        <span class="input-group-text">Item编号</span>
-        <input class="form-control" placeholder="Item" @bind-value="@Drawing.ItemNumber" />
-    </div>
+<EditForm Model="_drawingDtos" OnSubmit="Save">
+    <button class="btn btn-primary mb-2" type="button" @onclick="Add">新增一条</button><br />
+    @foreach (var dto in _drawingDtos)
+    {
+        <div class="row">
+            <div class="col">
+                <span>Item编号 ：</span><br />
+                <div class="input-group mb-2">
+                    <span class="input-group-text">Item编号</span>
+                    <input class="form-control" placeholder="Item" @bind-value="@dto.ItemNumber" />
+                </div>
+            </div>
+            <div class="col">
+                <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@dto.DrawingUrl" />
+            </div>
 
-    <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@Drawing.DrawingUrl" />
+            <AuthorizeView Roles="admin">
+                <Authorized Context="auth">
+                    <div class="col">
+                        <FileUpload Title="截图(测试用)" @bind-FileUrl="@dto.ImageUrl" />
+                    </div>
+                </Authorized>
+            </AuthorizeView>
 
-    <AuthorizeView Roles="admin">
-        <Authorized Context="auth">
-            <FileUpload Title="截图(测试用)" @bind-FileUrl="@Drawing.ImageUrl" />
-        </Authorized>
-    </AuthorizeView>
-
-    <button class="btn btn-success" type="submit">新增图纸(Item)</button>
+            <div class="col">
+                <span>删除 ：</span><br />
+                <button class="btn" type="button" @onclick="@(() => _drawingDtos.Remove(dto))"><i class="bi bi-trash3 text-danger"/></button>
+            </div>
+        </div>
+    }
+    <button class="btn btn-success" type="submit">保存</button>
     <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("projects"))">取消</button>
 </EditForm>
 @code {
     [Parameter]
     public string ProjectId { get; set; }
-    public DrawingDto? Drawing = new();
+    private ProjectDto _project;
+    private List<DrawingDto> _drawingDtos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ProjectService.GetFirstOrDefault(Guid.Parse(ProjectId));
+        if (!response.Status) NavigationManager.NavigateTo("projects");
+        _project = response.Result;
+        Add();
+    }
+    private void Add()
+    {
+        _drawingDtos.Add(new DrawingDto { ProjectId = Guid.Parse(ProjectId) });
+    }
     private async Task Save()
     {
-        if (string.IsNullOrWhiteSpace(Drawing.ItemNumber))
+        var isEmpty = _drawingDtos.Aggregate(false, (current, dto) => current || string.IsNullOrEmpty(dto.ItemNumber));
+        if (isEmpty)
         {
             await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
             return;
         }
-        Drawing.ProjectId = Guid.Parse(ProjectId);
-        var result = await DrawingService.AddAsync(Drawing);
-        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{ProjectId}"); 
+
+        var result = true;
+        foreach (var dto in _drawingDtos)
+        {
+            result = result&&(await DrawingService.AddAsync(dto)).IsSuccessStatusCode;
+        }
+        if (result) NavigationManager.NavigateTo($"drawings/{ProjectId}");
     }
-    //todo:如何上传图片？直接在WPF中截图，然后缓存本地，然后在自动上传到后台，再查询显示在界面上
+
+
+
+
 }

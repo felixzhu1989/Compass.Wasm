@@ -39,4 +39,5 @@ public class NavigationViewModel : BindableBase, INavigationAware
     {
         Aggregator.UpdateLoading(new Common.Events.UpdateModel { IsOpen = IsOpen });
     }
+
 }

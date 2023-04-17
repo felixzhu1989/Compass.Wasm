@@ -4,6 +4,7 @@ namespace Compass.Wasm.Shared.ProjectService;
 
 public class ModuleDto : BaseDto
 {
+    #region 本身的属性
     private Guid drawingId;
     public Guid DrawingId
     {
@@ -63,20 +64,18 @@ public class ModuleDto : BaseDto
         get => isModuleDataOk;
         set { isModuleDataOk = value; OnPropertyChanged(); }
     }
+
     private bool isCutListOk;
     public bool IsCutListOk
     {
         get => isCutListOk;
         set { isCutListOk = value; OnPropertyChanged(); }
-    }
-
-
-
-
+    } 
+    #endregion
+    
     #region 额外属性
-
-
-    #region 长宽高
+    
+    #region 长宽高侧板
     private double length;
     public double Length
     {
@@ -109,8 +108,7 @@ public class ModuleDto : BaseDto
     }
 
     #endregion
-
-
+    
     //是否被选中
     private bool isSelected;
     public bool IsSelected
@@ -123,22 +121,22 @@ public class ModuleDto : BaseDto
         }
     }
 
-    //截图是否ok->用于打印JobCard
-    private bool isJobCardOk;
-    public bool IsJobCardOk
+    #region 查看工程图
+    private bool isDrawingOk;
+    public bool IsDrawingOk
     {
-        get => isJobCardOk;
-        set { isJobCardOk = value; OnPropertyChanged();}
+        get => isDrawingOk;
+        set { isDrawingOk = value; OnPropertyChanged(); }
     }
-    private string imageUrl;
-    public string ImageUrl
+    private string? drawingUrl;
+    public string? DrawingUrl
     {
-        get => imageUrl;
-        set { imageUrl = value; OnPropertyChanged();}
+        get => drawingUrl;
+        set { drawingUrl = value; OnPropertyChanged(); }
     }
+    #endregion
 
-
-
+    #region 作图和导出CutList
     //本地文件存在吗->用于作图和导出CutList
     private bool isFilesOk;
     public bool IsFilesOk
@@ -157,9 +155,24 @@ public class ModuleDto : BaseDto
         get => packDir;
         set { packDir = value; OnPropertyChanged(); }
     }
+    #endregion
 
-
-    //用于CutList和JobCard
+    #region 用于CutList和JobCard
+    //JobCard是否ok，与制图参数和截图一起判断，与->用于打印JobCard
+    private bool isJobCardOk;
+    public bool IsJobCardOk
+    {
+        get => isJobCardOk;
+        set { isJobCardOk = value; OnPropertyChanged(); }
+    }
+    //图片Url
+    private string? imageUrl;
+    public string? ImageUrl
+    {
+        get => imageUrl;
+        set { imageUrl = value; OnPropertyChanged(); }
+    }
+    //ODP号
     private string odpNumber;
     public string OdpNumber
     {
@@ -170,6 +183,7 @@ public class ModuleDto : BaseDto
             OnPropertyChanged();
         }
     }
+    //项目名称
     private string projectName;
     public string ProjectName
     {
@@ -180,7 +194,7 @@ public class ModuleDto : BaseDto
             OnPropertyChanged();
         }
     }
-
+    //图纸Item编号
     private string itemNumber;
     public string ItemNumber
     {
@@ -196,15 +210,16 @@ public class ModuleDto : BaseDto
     public ProjectType_e ProjectType
     {
         get => projectType;
-        set { projectType = value; OnPropertyChanged();}
+        set { projectType = value; OnPropertyChanged(); }
     }
     //发货时间
     private DateTime deliveryDate;
     public DateTime DeliveryDate
     {
         get => deliveryDate;
-        set { deliveryDate = value; OnPropertyChanged();}
+        set { deliveryDate = value; OnPropertyChanged(); }
     }
+    //项目特殊要求
     private string? projectSpecialNotes;
     public string? ProjectSpecialNotes
     {
@@ -214,7 +229,9 @@ public class ModuleDto : BaseDto
             projectSpecialNotes = value;
             OnPropertyChanged();
         }
-    }
+    } 
+    #endregion
 
     #endregion
+
 }

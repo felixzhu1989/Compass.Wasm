@@ -184,6 +184,7 @@ public class ProjectService : IProjectService
             var dtos = await _mapper.ProjectTo<DrawingDto>(models).ToListAsync();
             foreach (var dto in dtos)
             {
+                dto.IsDrawingOk = !string.IsNullOrEmpty(dto.DrawingUrl);
                 //再查询图纸下的所有分段Module
                 var modules = await _repository.GetModulesByDrawingIdAsync(dto.Id.Value);
                 dto.ModuleDtos = new ObservableCollectionListSource<ModuleDto>(await _mapper.ProjectTo<ModuleDto>(modules).ToListAsync());
@@ -196,6 +197,9 @@ public class ProjectService : IProjectService
                     moduleDto.Width = moduleData.Width;
                     moduleDto.Height = moduleData.Height;
                     moduleDto.SidePanel = moduleData.SidePanel;
+
+                    moduleDto.IsDrawingOk = dto.IsDrawingOk;
+                    moduleDto.DrawingUrl = dto.DrawingUrl;
                 }
             }
             return new ApiResponse<List<DrawingDto>> { Status = true, Result = dtos };
@@ -217,9 +221,11 @@ public class ProjectService : IProjectService
             //先查询项目下的所有图纸Item
             var drawings = await _repository.GetDrawingsByProjectIdAsync(parameter.ProjectId.Value);
             var drawingDtos = await _mapper.ProjectTo<DrawingDto>(drawings).ToListAsync();
+            
             var dtos=new List<ModuleDto>();
             foreach (var drawingDto in drawingDtos)
             {
+                drawingDto.IsDrawingOk = !string.IsNullOrEmpty(drawingDto.DrawingUrl);
                 //再查询图纸下的所有分段Module
                 var modules = await _repository.GetModulesByDrawingIdAsync(drawingDto.Id.Value);
                 var moduleDtos = _mapper.ProjectTo<ModuleDto>(modules).ToList();
@@ -231,6 +237,8 @@ public class ProjectService : IProjectService
                     x.OdpNumber = project.OdpNumber;
                     x.ProjectName = project.Name;
                     x.IsJobCardOk = x.IsModuleDataOk  && (!string.IsNullOrEmpty(drawingDto.ImageUrl));
+                    x.IsDrawingOk = drawingDto.IsDrawingOk;
+                    x.DrawingUrl = drawingDto.DrawingUrl;
                     x.ImageUrl = drawingDto.ImageUrl;
                     x.ProjectType = project.ProjectType;
                     x.DeliveryDate = project.DeliveryDate;

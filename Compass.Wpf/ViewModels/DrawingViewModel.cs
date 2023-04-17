@@ -4,10 +4,12 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Regions;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Compass.Wpf.ApiService;
+using System.Windows.Input;
 
 namespace Compass.Wpf.ViewModels;
 
@@ -21,7 +23,10 @@ public class DrawingViewModel : NavigationViewModel
         _drawingService = containerProvider.Resolve<IDrawingService>();
         _fileUploadService = containerProvider.Resolve<IFileUploadService>();
         ExecuteCommand = new DelegateCommand<string>(Execute);
+        OpenHttpLinkCommand = new DelegateCommand(OpenHttpLink);
     }
+    public DelegateCommand<string> ExecuteCommand { get; }
+    public DelegateCommand OpenHttpLinkCommand { get; }
     #endregion
 
     #region 属性
@@ -45,7 +50,17 @@ public class DrawingViewModel : NavigationViewModel
     }
     #endregion
 
-    public DelegateCommand<string> ExecuteCommand { get; }
+    #region 打开网页链接
+    private void OpenHttpLink()
+    {
+        foreach (var drwUrl in CurrentDrawing.DrawingUrl.Split('\n'))
+        {
+            var startInfo = new ProcessStartInfo(drwUrl)
+            { UseShellExecute =true };
+            Process.Start(startInfo);
+        }
+    } 
+    #endregion
 
     #region 截图操作
     private void Execute(string obj)
@@ -57,7 +72,6 @@ public class DrawingViewModel : NavigationViewModel
             case "Save": Save(); break;
         }
     }
-
     #region 从剪切板粘贴图片
     private async void Paste()
     {

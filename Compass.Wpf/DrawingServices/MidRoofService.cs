@@ -19,12 +19,14 @@ public class MidRoofService : BaseDrawingService, IMidRoofService
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "MidRoof_Fs-1", Aggregator);
         //计算净宽度，总宽度减去排风，减去新风再减1
-        var netWidth = width - 535d - 360d;
+        const double exWidth = 535d;//排风宽度
+        const double suWidth = 360d;//新风宽度
+        var netWidth = width - exWidth - suWidth;
 
         FNHM0001(swAssyLevel1, suffix, "FNHM0001-1", length, netWidth, exhaustType, uvLightType, bluetooth, middleToRight, lightType, spotLightNumber, spotLightDistance, marvel, ansul, ansulDropNumber, ansulDropToFront, ansulDropDis1, ansulDropDis2, ansulDropDis3, ansulDropDis4, ansulDropDis5, ansulDetectorNumber, ansulDetectorEnd, ansulDetectorDis1, ansulDetectorDis2, ansulDetectorDis3, ansulDetectorDis4, ansulDetectorDis5);
 
         //需要加强筋的条件
-        if (width > 1649 && (length > 2000||(lightType == LightType_e.短灯 && length > 1600)))
+        if (width > 1649d && (length > 2000d||(lightType == LightType_e.短灯 && length > 1600d)))
         {
             swAssyLevel1.UnSuppress(suffix, "FNHM0006-2", Aggregator);
             FNHM0006(swAssyLevel1, suffix, "FNHM0006-1", netWidth);
@@ -53,35 +55,47 @@ public class MidRoofService : BaseDrawingService, IMidRoofService
         swModelLevel2.ChangeDim("Width@SketchWidth", netWidth - 1d);
 
         //因为后方一点距离前端固定90，这里计算前端一点移动的距离
-        var midRoofTopHoleDis = netWidth - 90d - (int)((netWidth- 90d - 100d) / 50d) * 50d;
+        const double holeDis = 50d;//两孔间距，槽钢开孔50
+        const double fixDis = 90d;
+
+        var midRoofTopHoleDis = netWidth - fixDis - (int)((netWidth- fixDis - 2* holeDis) / holeDis) * holeDis;
+
         swModelLevel2.ChangeDim("Dis@SketchTopHole", midRoofTopHoleDis);
         //侧向连接孔
         swModelLevel2.ChangeDim("Dis@SketchSideHole", netWidth / 3d);
 
         #region MidRoof铆螺母孔
         //2023/3/10 修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
-        var midRoofNutNumber = Math.Ceiling((length - 300d) / 450d);
+        const double sideDis = 150d;
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
         midRoofNutNumber = midRoofNutNumber < 3 ? 3 : midRoofNutNumber;
-        var midRoofNutDis = (length - 300d)/(midRoofNutNumber-1);
+        var midRoofNutDis = (length - 2*sideDis)/(midRoofNutNumber-1);
+
         swModelLevel2.ChangeDim("Dis@LPatternMidRoofNut", midRoofNutDis);
         #endregion
 
         #region UVHood
-        if (uvLightType == UvLightType_e.UVR4L||uvLightType == UvLightType_e.UVR6L||uvLightType == UvLightType_e.UVR8L)
+        switch (uvLightType)
         {
-            swCompLevel2.UnSuppress("UvCable");
-            swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
-            swModelLevel2.ChangeDim("UvCable@SketchUvCable", 1500d);
-        }
-        else if (uvLightType == UvLightType_e.UVR4S||uvLightType == UvLightType_e.UVR6S||uvLightType == UvLightType_e.UVR8S)
-        {
-            swCompLevel2.UnSuppress("UvCable");
-            swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
-            swModelLevel2.ChangeDim("UvCable@SketchUvCable", 790);
-        }
-        else
-        {
-            swCompLevel2.Suppress("UvCable");
+            case UvLightType_e.UVR4L:
+            case UvLightType_e.UVR6L:
+            case UvLightType_e.UVR8L:
+                swCompLevel2.UnSuppress("UvCable");
+                swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
+                swModelLevel2.ChangeDim("UvCable@SketchUvCable", 1500d);
+                break;
+            case UvLightType_e.UVR4S:
+            case UvLightType_e.UVR6S:
+            case UvLightType_e.UVR8S:
+                swCompLevel2.UnSuppress("UvCable");
+                swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
+                swModelLevel2.ChangeDim("UvCable@SketchUvCable", 790);
+                break;
+            case UvLightType_e.NA:
+            default:
+                swCompLevel2.Suppress("UvCable");
+                break;
         }
         #endregion
 
@@ -116,38 +130,43 @@ public class MidRoofService : BaseDrawingService, IMidRoofService
         swCompLevel2.Suppress("FsLong");
         swCompLevel2.Suppress("FsShort");
         var toMiddle = spotLightDistance * (spotLightNumber / 2d - 1d) + spotLightDistance / 2d;
-        if (lightType ==LightType_e.筒灯60)
+        switch (lightType)
         {
-            swCompLevel2.UnSuppress("Led60");
-            if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed60", 0d);
-            else
+            case LightType_e.筒灯60:
             {
-                swModelLevel2.ChangeDim("ToMiddle@SketchLed60", toMiddle);
-                swCompLevel2.UnSuppress("LPatternLed60");
-                swModelLevel2.ChangeDim("Number@LPatternLed60", spotLightNumber);
-                swModelLevel2.ChangeDim("Dis@LPatternLed60", spotLightDistance);
+                swCompLevel2.UnSuppress("Led60");
+                if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed60", 0d);
+                else
+                {
+                    swModelLevel2.ChangeDim("ToMiddle@SketchLed60", toMiddle);
+                    swCompLevel2.UnSuppress("LPatternLed60");
+                    swModelLevel2.ChangeDim("Number@LPatternLed60", spotLightNumber);
+                    swModelLevel2.ChangeDim("Dis@LPatternLed60", spotLightDistance);
+                }
+                break;
             }
-        }
-        else if (lightType ==LightType_e.筒灯140)
-        {
-            swCompLevel2.UnSuppress("Led140");
-            if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed140", 0d);
-            else
+            case LightType_e.筒灯140:
             {
-                swModelLevel2.ChangeDim("ToMiddle@SketchLed140", toMiddle);
-                swCompLevel2.UnSuppress("LPatternLed140");
-                swModelLevel2.ChangeDim("Number@LPatternLed140", spotLightNumber);
-                swModelLevel2.ChangeDim("Dis@LPatternLed140", spotLightDistance);
+                swCompLevel2.UnSuppress("Led140");
+                if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed140", 0d);
+                else
+                {
+                    swModelLevel2.ChangeDim("ToMiddle@SketchLed140", toMiddle);
+                    swCompLevel2.UnSuppress("LPatternLed140");
+                    swModelLevel2.ChangeDim("Number@LPatternLed140", spotLightNumber);
+                    swModelLevel2.ChangeDim("Dis@LPatternLed140", spotLightDistance);
+                }
+                break;
             }
-        }
-        else if (lightType == LightType_e.长灯)
-        {
-            swCompLevel2.UnSuppress("FsLong");
-
-        }
-        else if (lightType == LightType_e.短灯)
-        {
-            swCompLevel2.UnSuppress("FsShort");
+            case LightType_e.长灯:
+                swCompLevel2.UnSuppress("FsLong");
+                break;
+            case LightType_e.短灯:
+                swCompLevel2.UnSuppress("FsShort");
+                break;
+            case LightType_e.NA:
+            default:
+                break;
         }
         #endregion
 
@@ -196,7 +215,7 @@ public class MidRoofService : BaseDrawingService, IMidRoofService
             #endregion
 
             #region Ansul探测器，水洗烟罩需要探测器安装在MidRoof上
-            if (exhaustType==ExhaustType_e.KW || exhaustType==ExhaustType_e.UW || exhaustType==ExhaustType_e.CMOD)
+            if (exhaustType is ExhaustType_e.KW or ExhaustType_e.UW or ExhaustType_e.CMOD)
             {
                 //探测器
                 swCompLevel2.UnSuppress("AnsulDetectorAcross");

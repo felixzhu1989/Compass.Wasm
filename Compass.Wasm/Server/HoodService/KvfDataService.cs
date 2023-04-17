@@ -34,16 +34,12 @@ public class KvfDataService : BaseDataGetService<KvfData>, IKvfDataService
             data.ExhaustSpigotNumber=dto.ExhaustSpigotNumber;
             data.ExhaustSpigotDis=dto.ExhaustSpigotDis;
             #endregion
-
-            #region 新风口参数
-            data.SupplySpigotNumber= dto.SupplySpigotNumber;
-            data.SupplySpigotDis=dto.SupplySpigotDis;
-            #endregion
-
+            
             #region 灯具类型
             data.LightType = dto.LightType;
             data.SpotLightNumber=dto.SpotLightNumber;
             data.SpotLightDistance=dto.SpotLightDistance;
+            data.LightToFront = dto.LightToFront;
             #endregion
 
             #region 其他配置
@@ -71,6 +67,11 @@ public class KvfDataService : BaseDataGetService<KvfData>, IKvfDataService
             data.AnsulDropDis3=dto.AnsulDropDis3;
             data.AnsulDropDis4=dto.AnsulDropDis4;
             data.AnsulDropDis5=dto.AnsulDropDis5;
+            #endregion
+
+            #region 新风口参数
+            data.SupplySpigotNumber= dto.SupplySpigotNumber;
+            data.SupplySpigotDis=dto.SupplySpigotDis;
             #endregion
 
             data.NotifyModified();//通知更新时间

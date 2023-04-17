@@ -58,6 +58,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("float")
                         .HasColumnName("Length");
 
+                    b.Property<int>("SidePanel")
+                        .HasColumnType("int")
+                        .HasColumnName("SidePanel");
+
                     b.Property<double>("Width")
                         .HasColumnType("float")
                         .HasColumnName("Width");
@@ -182,6 +186,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("LedLogo");
 
+                    b.Property<double>("LightToFront")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("LightToFront");
+
                     b.Property<int>("LightType")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
@@ -196,11 +205,6 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("MiddleToRight");
-
-                    b.Property<int>("SidePanel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SidePanel");
 
                     b.Property<double>("SpotLightDistance")
                         .ValueGeneratedOnUpdateSometimes()
@@ -337,6 +341,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("LedLogo");
 
+                    b.Property<double>("LightToFront")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("LightToFront");
+
                     b.Property<int>("LightType")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
@@ -351,11 +360,6 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("MiddleToRight");
-
-                    b.Property<int>("SidePanel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("int")
-                        .HasColumnName("SidePanel");
 
                     b.Property<double>("SpotLightDistance")
                         .ValueGeneratedOnUpdateSometimes()
@@ -407,30 +411,6 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("UvLightType");
 
                     b.HasDiscriminator().HasValue("UviData");
-                });
-
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UvfHuaweiData", b =>
-                {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.UvfData");
-
-                    b.Property<double>("LightToFront")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("LightToFront");
-
-                    b.HasDiscriminator().HasValue("UvfHuaweiData");
-                });
-
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UviHuaweiData", b =>
-                {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.UviData");
-
-                    b.Property<double>("LightToFront")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("float")
-                        .HasColumnName("LightToFront");
-
-                    b.HasDiscriminator().HasValue("UviHuaweiData");
                 });
 #pragma warning restore 612, 618
         }

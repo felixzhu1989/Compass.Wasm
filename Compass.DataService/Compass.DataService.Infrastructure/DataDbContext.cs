@@ -28,11 +28,6 @@ public class DataDbContext : BaseDbContext
     public DbSet<KviData> KviData { get; set; }
     public DbSet<UvfData> UvfData { get; set; }
     public DbSet<UviData> UviData { get; set; }
-    #endregion
-
-    #region 华为烟罩
-    public DbSet<UvfHwData> UvfHwData { get; set; }
-    public DbSet<UviHwData> UviHwData { get; set; }
 
     #endregion
 

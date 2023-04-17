@@ -21,8 +21,6 @@ namespace Compass.Wpf.Views
             { UseShellExecute =true };
             Process.Start(startInfo);
             e.Handled = true;
-
-
         }
     }
 }

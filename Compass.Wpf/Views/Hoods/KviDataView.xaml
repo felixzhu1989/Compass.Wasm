@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Compass.Wpf.Views.Hoods"
              mc:Ignorable="d"
-             d:DesignHeight="450"
+             d:DesignHeight="550"
              d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters"
@@ -32,6 +32,14 @@
             <TextBlock Text="{Binding Title}"
                        FontSize="20"
                        DockPanel.Dock="Left" />
+            <Button Command="{Binding OpenHttpLinkCommand}"
+                    Content="点击浏览图纸"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource HyperlinkStyledButton}"
+                    ToolTip="查看PDF图纸"
+                    DockPanel.Dock="Left"
+                    Margin="20,0"
+                    Visibility="{Binding CurrentModule.IsDrawingOk,Converter={StaticResource BoolToVisibilityConverter}}" />
             <Button DockPanel.Dock="Right"
                     Content="保存参数"
                     Command="{Binding SaveDataCommand}"
@@ -135,6 +143,12 @@
                     <CheckBox IsChecked="{Binding DataDto.LedLogo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               Content="LedLogo"
                               Margin="0,10" />
+                    <CheckBox IsChecked="{Binding DataDto.Marvel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Content="Marvel"
+                              Margin="0,10" />
+                    <CheckBox IsChecked="{Binding DataDto.CoverBoard,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Content="顶部封板"
+                              Margin="0,10" />
                     <CheckBox IsChecked="{Binding DataDto.BackToBack,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               Content="背靠背"
                               Margin="0,10" />
@@ -146,12 +160,7 @@
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="CJ脖颈距右："
                              materialDesign:TextFieldAssist.SuffixText="(当有背部CJ时填)" />
-                    <CheckBox IsChecked="{Binding DataDto.CoverBoard,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              Content="顶部封板"
-                              Margin="0,10" />
-                    <CheckBox IsChecked="{Binding DataDto.Marvel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              Content="Marvel"
-                              Margin="0,10" />
+                    
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="2"

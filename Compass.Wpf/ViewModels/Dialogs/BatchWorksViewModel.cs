@@ -90,7 +90,7 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
     #endregion
 
     
-
+    //执行批量操作框架
     private async void Execute()
     {
         ShowProgressBar =true;
@@ -122,12 +122,12 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
             catch (Exception ex)
             {
                 _aggregator.SendMessage($"{ActionName}发生异常!\n{ex.Message}", Filter_e.Batch);
-                await Task.Delay(10000);
+                await Task.Delay(8000);
             }
             var timeSpan = DateTime.Now - startTime;
             _aggregator.SendMessage($"耗时：{timeSpan.TotalSeconds:F2}s", Filter_e.Batch);
             _aggregator.SendMessage($"{ActionName}完成!", Filter_e.Batch);
-            await Task.Delay(5000);
+            await Task.Delay(3000);
             CanBatchWorks = true;
             ShowProgressBar = false;
         });
@@ -136,6 +136,7 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
         Cancel();
     }
 
+    //取消关闭弹窗
     private void Cancel()
     {
         if (DialogHost.IsDialogOpen(DialogHostName))
@@ -149,5 +150,4 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
         ActionName= parameters.ContainsKey("ActionName") ? parameters.GetValue<BatchWorksAction_e>("ActionName") : BatchWorksAction_e.自动作图;
         _aggregator.SendMessage($"请确认开始{ActionName}...", Filter_e.Batch);
     }
-
 }

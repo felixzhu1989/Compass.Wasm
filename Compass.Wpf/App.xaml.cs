@@ -127,7 +127,8 @@ namespace Compass.Wpf
             #region 注册HoodsData模型参数页面服务
             containerRegistry.RegisterForNavigation<KviDataView, KviDataViewModel>();
             containerRegistry.RegisterForNavigation<KvfDataView, KvfDataViewModel>();
-
+            containerRegistry.RegisterForNavigation<UviDataView, UviDataViewModel>();
+            containerRegistry.RegisterForNavigation<UvfDataView, UvfDataViewModel>();
 
 
             #endregion
@@ -137,6 +138,10 @@ namespace Compass.Wpf
             containerRegistry.Register<IKviAutoDrawing, KviAutoDrawing>();
             containerRegistry.Register<IKvfDataService, KvfDataService>();
             containerRegistry.Register<IKvfAutoDrawing, KvfAutoDrawing>();
+            containerRegistry.Register<IUviDataService, UviDataService>();
+            containerRegistry.Register<IUviAutoDrawing, UviAutoDrawing>();
+            containerRegistry.Register<IUvfDataService, UvfDataService>();
+            containerRegistry.Register<IUvfAutoDrawing, UvfAutoDrawing>();
 
             #endregion
 

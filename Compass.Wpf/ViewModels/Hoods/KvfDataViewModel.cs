@@ -6,13 +6,14 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Regions;
 using System;
+using System.Diagnostics;
 using Compass.Wpf.ApiService.Hoods;
 
 namespace Compass.Wpf.ViewModels.Hoods;
 
 public class KvfDataViewModel : NavigationViewModel
 {
-    #region ctor-KVI参数页面
+    #region ctor-Kvf参数页面
     private readonly IKvfDataService _service;
     public KvfDataViewModel(IContainerProvider provider) : base(provider)
     {
@@ -22,7 +23,10 @@ public class KvfDataViewModel : NavigationViewModel
             var result = await _service.UpdateAsync(DataDto.Id.Value, DataDto);
             Aggregator.SendMessage(result.Status ? $"{Title} 参数保存成功！" : $"{Title}参数保存失败，{result.Message}");
         });
+        OpenHttpLinkCommand = new DelegateCommand(OpenHttpLink);
     }
+    public DelegateCommand SaveDataCommand { get; }
+    public DelegateCommand OpenHttpLinkCommand { get; }
     #endregion
 
     #region Module和ModuleData属性
@@ -85,9 +89,16 @@ public class KvfDataViewModel : NavigationViewModel
 
     #endregion
 
-    #region Command
-    public DelegateCommand SaveDataCommand { get; }
-
+    #region 打开网页链接
+    private void OpenHttpLink()
+    {
+        foreach (var drwUrl in CurrentModule.DrawingUrl.Split('\n'))
+        {
+            var startInfo = new ProcessStartInfo(drwUrl)
+                { UseShellExecute =true };
+            Process.Start(startInfo);
+        }
+    }
     #endregion
 
     #region 导航初始化

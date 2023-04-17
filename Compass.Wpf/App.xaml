@@ -60,6 +60,20 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <!--超级链接按钮样式-->
+            <Style TargetType="Button"
+                   x:Key="HyperlinkStyledButton">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <TextBlock Foreground="DarkBlue"
+                                       Text="{TemplateBinding Content}"
+                                       TextDecorations="Underline"
+                                       Cursor="Hand" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
 
     </prism:PrismApplication.Resources>

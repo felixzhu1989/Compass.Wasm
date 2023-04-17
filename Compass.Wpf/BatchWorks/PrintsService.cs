@@ -45,11 +45,14 @@ public class PrintsService : IPrintsService
         var excelApp = new Application();
         excelApp.Workbooks.Add(template);
         var worksheet = (Worksheet)excelApp.Worksheets[1];
-        //调试时预览
-        //excelApp.Visible = true;
-
+        
         foreach (var moduleDto in moduleDtos)
         {
+            if(!moduleDto.IsCutListOk)
+            {
+                _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******CutList不OK，跳过打印******",Filter_e.Batch);
+                continue;
+            }
             _aggregator.SendMessage($"正在打印:\t{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}", Filter_e.Batch);
             await GetCutListAndPrint(worksheet, moduleDto, cutListService);
         }
@@ -84,9 +87,28 @@ public class PrintsService : IPrintsService
     /// <summary>
     /// 批量打印JobCard
     /// </summary>
-    public Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos)
+    public async Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos)
     {
-        throw new NotImplementedException();
+        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDoc", "JobCard.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+
+        foreach (var moduleDto in moduleDtos)
+        {
+            if (!moduleDto.IsJobCardOk)
+            {
+                _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******JobCard不OK，跳过打印******", Filter_e.Batch);
+                continue;
+            }
+            _aggregator.SendMessage($"正在打印:\t{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}", Filter_e.Batch);
+            await UseExcelPrintJobCard(worksheet, moduleDto);
+        }
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
     }
 
     /// <summary>
@@ -231,7 +253,6 @@ public class PrintsService : IPrintsService
     #endregion
 
     #region JobCard
-
     private async Task UseExcelPrintJobCard(Worksheet worksheet, ModuleDto moduleDto)
     {
         //worksheet.Cells[行,列]
@@ -261,8 +282,8 @@ public class PrintsService : IPrintsService
 
             var imagePath = Path.Combine(Environment.CurrentDirectory, "label.png");
             //将图片插入excel
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 3893, 610, 260);//左，上，宽度，高度
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4310, 610, 260);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4258, 610, 295);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4710, 610, 295);//左，上，宽度，高度
         }
         
         //调试时预览
@@ -283,8 +304,7 @@ public class PrintsService : IPrintsService
         stream.Close();
     }
     #endregion
-
-
+    
     #endregion
 
     #region Excel进程关闭

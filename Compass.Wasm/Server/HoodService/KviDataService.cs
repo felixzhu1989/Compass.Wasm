@@ -39,6 +39,7 @@ public class KviDataService:BaseDataGetService<KviData>,IKviDataService
             data.LightType = dto.LightType;
             data.SpotLightNumber=dto.SpotLightNumber;
             data.SpotLightDistance=dto.SpotLightDistance;
+            data.LightToFront = dto.LightToFront;
             #endregion
 
             #region 其他配置

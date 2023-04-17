@@ -48,16 +48,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVNlcnZpY2VcVXBkYXRlVXZmRGF0YS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/DataService/UpdateUvfHuaweiData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVNlcnZpY2VcVXBkYXRlVXZmSHVhd2VpRGF0YS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/DataService/UpdateUviData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVNlcnZpY2VcVXBkYXRlVXZpRGF0YS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/DataService/UpdateUviHuaweiData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGF0YVNlcnZpY2VcVXBkYXRlVXZpSHVhd2VpRGF0YS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/FileService/FileLinkWithDelete.razor]

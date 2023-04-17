@@ -65,6 +65,12 @@ public class KvfData : ModuleData
         get => spotLightDistance;
         set { spotLightDistance = value; OnPropertyChanged(); }
     } //默认为400 
+    private double lightToFront;
+    public double LightToFront
+    {
+        get => lightToFront;
+        set { lightToFront = value; OnPropertyChanged(); }
+    }//灯具距离前端距离
     #endregion
 
     #region 其他配置

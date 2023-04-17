@@ -53,7 +53,7 @@ public class JobCardViewModel : BindableBase, IDialogHostAware
     /// </summary>
     private void PrintFinal()
     {
-        //todo:
+        //todo:待完善
 
 
         Cancel();//打印完成后关闭dialog
@@ -63,7 +63,7 @@ public class JobCardViewModel : BindableBase, IDialogHostAware
     /// </summary>
     private void PrintLabel()
     {
-        //todo:
+        //todo:待完善
 
 
         Cancel();//打印完成后关闭dialog
