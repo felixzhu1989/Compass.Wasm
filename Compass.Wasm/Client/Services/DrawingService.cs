@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Json;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Client.Services;
 

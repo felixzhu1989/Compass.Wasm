@@ -1,0 +1,38 @@
+﻿@page "/updatesolution/{Id}"
+@using Compass.Wasm.Shared.Projects
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Update Solution</PageTitle>
+<span class="fs-5">更新解决方案</span>
+@if (problem != null)
+{
+    <EditForm Model="problem" OnSubmit="Save">
+        <div class="input-group mb-2">
+            <span class="input-group-text">解决方案</span>
+            <textarea class="form-control" placeholder="请详细描述解决方案，可输入多行" style="height: 120px" @bind="@problem.Solution"></textarea>
+        </div>
+        <MultiFileUpload Title="方案附件（可上传多个附件）" FileType="image/*" @bind-MultiFileUrl="@problem.SolutionUrl" />
+
+        <button class="btn btn-success" type="submit">保存</button>
+        <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"./reportproblem/{problem.ProjectId}"))">取消</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private ProblemResponse? problem=new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        problem = await Http.GetFromJsonAsync<ProblemResponse>($"api/Problem/{Id}");
+    }    
+    private async Task Save()
+    {        
+        var result = await Http.PutAsJsonAsync($"api/Problem/Solution/{Id}", problem);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"./reportproblem/{problem.ProjectId}");
+    }
+}

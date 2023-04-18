@@ -1,0 +1,68 @@
+﻿@using Compass.Wasm.Shared.Projects
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+<tr>
+    <td>
+        <AuthorizeView Roles="admin,pm">
+            <Authorized>
+                <a href="project/update/@Project.Id"><i class="bi bi-gear" /></a>
+            </Authorized>
+        </AuthorizeView>
+        <a href="/drawings/@Project.Id">@Project.OdpNumber</a>
+    </td>
+    <td>@Project.Name</td>
+    <td style="text-align: center">@Project.ProjectType</td>
+    @*根据风险值更改颜色*@
+    <td style="text-align: center">
+        <span class="badge @(Project.RiskLevel==RiskLevel_e.高风险 ? "bg-danger" : Project.RiskLevel==RiskLevel_e.中风险 ? "bg-warning text-dark":Project.RiskLevel==RiskLevel_e.低风险 ? "bg-info text-dark":"bg-light text-dark")">@Project.RiskLevel</span>
+    </td>
+    <td style="text-align: center">
+        @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
+        {
+            <a href="@Project.ContractUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
+        }
+        else
+        {
+            <a href="project/uploadfiles/@Project.Id">上传</a>
+        }
+    </td>
+    <td style="text-align: center">
+        @if (!string.IsNullOrWhiteSpace(Project.BomUrl))
+        {
+            @foreach (var fileUrl in Project.BomUrl.Split('\n'))
+            {
+                <a href="@fileUrl" target="_blank"><i class="bi bi-file-earmark-pdf me-3" /></a>
+            }
+        }
+        else
+        {
+            <a href="project/uploadfiles/@Project.Id">上传</a>
+        }
+    </td>
+    <td style="text-align: center">
+        <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(Project.SpecialNotes))">@(showSpecialNotes ? "▲" : "▼")</span>
+    </td>
+</tr>
+@if (showSpecialNotes)
+{
+    <tr>
+        <td colspan="7" style="color: red">
+            @foreach (var note in Project.SpecialNotes.Split('\n'))
+            {
+                <span>@note</span>
+                <br />
+            }
+        </td>
+    </tr>
+}
+
+@code {
+    [Parameter]
+    public ProjectDto Project { get; set; }
+
+    private bool showSpecialNotes = false;
+    private void Show()
+    {
+        showSpecialNotes = !showSpecialNotes;
+    }
+}

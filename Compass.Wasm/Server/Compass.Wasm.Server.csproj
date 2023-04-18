@@ -24,20 +24,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Compass.CategoryService\Compass.CategoryService.Infrastructure\Compass.CategoryService.Infrastructure.csproj" />
-		<ProjectReference Include="..\..\Compass.DataService\Compass.DataService.Infrastructure\Compass.DataService.Infrastructure.csproj" />
-		<ProjectReference Include="..\..\Compass.FileService\Compass.FileService.Infrastructure\Compass.FileService.Infrastructure.csproj" />
-		<ProjectReference Include="..\..\Compass.IdentityService\Compass.IdentityService.Infrastructure\Compass.IdentityService.Infrastructure.csproj" />
-		<ProjectReference Include="..\..\Compass.PlanService\Compass.PlanService.Infrastructure\Compass.PlanService.Infrastructure.csproj" />
-		<ProjectReference Include="..\..\Compass.ProjectService\Compass.ProjectService.Infrastructure\Compass.ProjectService.Infrastructure.csproj" />
-		<ProjectReference Include="..\..\Compass.QualityService\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj" />
-		<ProjectReference Include="..\..\Compass.TodoService\Compass.TodoService.Infrastructure\Compass.TodoService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.Services\Compass.CategoryService.Infrastructure\Compass.CategoryService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.Services\Compass.DataService.Infrastructure\Compass.DataService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.Services\Compass.FileService.Infrastructure\Compass.FileService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.Services\Compass.IdentityService.Infrastructure\Compass.IdentityService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.Services\Compass.PlanService.Infrastructure\Compass.PlanService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.Services\Compass.ProjectService.Infrastructure\Compass.ProjectService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.Services\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\Compass.Services\Compass.TodoService.Infrastructure\Compass.TodoService.Infrastructure.csproj" />
 		<ProjectReference Include="..\Client\Compass.Wasm.Client.csproj" />
 		<ProjectReference Include="..\Shared\Compass.Wasm.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Hubs\" />
+	  <Folder Include="Controllers\Data\Ceilings\" />
+	  <Folder Include="Services\Plans\" />
 	</ItemGroup>
 
 

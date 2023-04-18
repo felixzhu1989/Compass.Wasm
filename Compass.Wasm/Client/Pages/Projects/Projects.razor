@@ -1,0 +1,58 @@
+﻿@page "/projects"
+@using Compass.Wasm.Client.Services
+@using Compass.Wasm.Shared.Projects
+@inject NavigationManager NavigationManager
+@inject IProjectService ProjectService
+<PageTitle>项目列表</PageTitle>
+
+<div class="row position-relative" style="border: 1px solid lightgray;border-radius: 10px">
+    <div class="col my-3">
+        @if (_projects != null)
+        {
+            <span>总项目数:@_projects.Count</span>
+        }
+    </div>
+    @*todo:控制权限*@
+    <AuthorizeView Roles="admin,pm">
+        <Authorized>
+            <div class="col position-absolute bottom-0 end-0" style="text-align: right;width: 10%">
+                <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo("project/add"))">添加</button>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+</div>
+<table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
+    <thead>
+        <tr>
+            <th style="width: 10%">项目编号</th>
+            <th style="width: 35%">项目名称</th>
+            <th style="text-align: center">项目分类</th>
+            <th style="text-align: center">风险等级</th>
+            <th style="text-align: center">合同</th>
+            <th style="text-align: center">领料单</th>
+            <th style="text-align: center">特殊要求</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (_projects.Count == 0)
+        {
+            <p>加载中...</p>
+        }
+        else
+        {
+            @foreach (var project in _projects)
+            {
+                <ProjectRow Project="project"/>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<ProjectDto>? _projects = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        var result = await ProjectService.GetAllAsync();
+        _projects = result.Result;
+    }
+}

@@ -2,17 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Compass.Wasm.Shared.ProjectService;
 using SolidWorks.Interop.sldworks;
 using System.IO;
 using Compass.Wpf.Extensions;
 using System.Diagnostics;
 using System.Linq;
-using Compass.Wpf.ApiService;
+using Compass.Wasm.Shared.Projects;
 using Prism.Events;
 using Prism.Ioc;
 using SolidWorks.Interop.swconst;
-
+using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.BatchWorks;
 

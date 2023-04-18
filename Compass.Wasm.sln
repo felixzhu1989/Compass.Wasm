@@ -9,57 +9,43 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Wasm.Client", "Comp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Wasm.Shared", "Compass.Wasm\Shared\Compass.Wasm.Shared.csproj", "{AB274267-9D6E-42C6-ABED-F47EBD45224E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.FileService", "Compass.FileService", "{8305DE19-3138-4DBB-8FE0-2602BA8700B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.FileService.Domain", "Compass.Services\Compass.FileService.Domain\Compass.FileService.Domain.csproj", "{C336FB5C-85CA-432A-9BCA-7B3F4383244C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.FileService.Domain", "Compass.FileService\Compass.FileService.Domain\Compass.FileService.Domain.csproj", "{C336FB5C-85CA-432A-9BCA-7B3F4383244C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.FileService.Infrastructure", "Compass.Services\Compass.FileService.Infrastructure\Compass.FileService.Infrastructure.csproj", "{716952A7-4D43-4A02-8303-C1C91E67C023}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.FileService.Infrastructure", "Compass.FileService\Compass.FileService.Infrastructure\Compass.FileService.Infrastructure.csproj", "{716952A7-4D43-4A02-8303-C1C91E67C023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.ProjectService.Domain", "Compass.Services\Compass.ProjectService.Domain\Compass.ProjectService.Domain.csproj", "{B5B194D2-B77A-4472-9F12-0BF31C9CA7C5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.ProjectService", "Compass.ProjectService", "{F2C2D5BE-2938-4959-BF01-2F0504F652D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.ProjectService.Infrastructure", "Compass.Services\Compass.ProjectService.Infrastructure\Compass.ProjectService.Infrastructure.csproj", "{59A974D7-BDC8-4859-A6C6-39768DF6BEA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.ProjectService.Domain", "Compass.ProjectService\Compass.ProjectService.Domain\Compass.ProjectService.Domain.csproj", "{B5B194D2-B77A-4472-9F12-0BF31C9CA7C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.IdentityService.Domain", "Compass.Services\Compass.IdentityService.Domain\Compass.IdentityService.Domain.csproj", "{6528CEED-7F44-4728-8E3B-2C3A4FEE8596}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.ProjectService.Infrastructure", "Compass.ProjectService\Compass.ProjectService.Infrastructure\Compass.ProjectService.Infrastructure.csproj", "{59A974D7-BDC8-4859-A6C6-39768DF6BEA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.IdentityService.Infrastructure", "Compass.Services\Compass.IdentityService.Infrastructure\Compass.IdentityService.Infrastructure.csproj", "{799D604D-98B1-4820-9BC0-F2E3D47A9D67}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.IdentityService", "Compass.IdentityService", "{51609212-31AA-4D03-8019-560E850F22A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.CategoryService.Domain", "Compass.Services\Compass.CategoryService.Domain\Compass.CategoryService.Domain.csproj", "{B678C7D7-FAF3-4B7A-AFC1-C2D108032401}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.IdentityService.Domain", "Compass.IdentityService\Compass.IdentityService.Domain\Compass.IdentityService.Domain.csproj", "{6528CEED-7F44-4728-8E3B-2C3A4FEE8596}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.CategoryService.Infrastructure", "Compass.Services\Compass.CategoryService.Infrastructure\Compass.CategoryService.Infrastructure.csproj", "{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.IdentityService.Infrastructure", "Compass.IdentityService\Compass.IdentityService.Infrastructure\Compass.IdentityService.Infrastructure.csproj", "{799D604D-98B1-4820-9BC0-F2E3D47A9D67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.PlanService.Domain", "Compass.Services\Compass.PlanService.Domain\Compass.PlanService.Domain.csproj", "{94A4332D-8630-4883-9090-1874190535E3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.CategoryService", "Compass.CategoryService", "{6A2E6C89-BC18-493E-8A3B-E4BEE0E83A5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.PlanService.Infrastructure", "Compass.Services\Compass.PlanService.Infrastructure\Compass.PlanService.Infrastructure.csproj", "{2F643117-0771-4D1F-9608-C8F093BA898C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.CategoryService.Domain", "Compass.CategoryService\Compass.CategoryService.Domain\Compass.CategoryService.Domain.csproj", "{B678C7D7-FAF3-4B7A-AFC1-C2D108032401}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Domain", "Compass.Services\Compass.DataService.Domain\Compass.DataService.Domain.csproj", "{A8D799EA-768B-4AE1-BA67-7BE1B9AE4890}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.CategoryService.Infrastructure", "Compass.CategoryService\Compass.CategoryService.Infrastructure\Compass.CategoryService.Infrastructure.csproj", "{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.PlanService", "Compass.PlanService", "{5FF8DC3C-B7C1-4AAC-A03D-95979FD7566C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.PlanService.Domain", "Compass.PlanService\Compass.PlanService.Domain\Compass.PlanService.Domain.csproj", "{94A4332D-8630-4883-9090-1874190535E3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.PlanService.Infrastructure", "Compass.PlanService\Compass.PlanService.Infrastructure\Compass.PlanService.Infrastructure.csproj", "{2F643117-0771-4D1F-9608-C8F093BA898C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.DataService", "Compass.DataService", "{72CBB3AF-5C03-4A8A-A234-C19539C3E6D6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Domain", "Compass.DataService\Compass.DataService.Domain\Compass.DataService.Domain.csproj", "{A8D799EA-768B-4AE1-BA67-7BE1B9AE4890}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Infrastructure", "Compass.DataService\Compass.DataService.Infrastructure\Compass.DataService.Infrastructure.csproj", "{12933E07-C646-451D-B37E-5C5FBD33FFE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Infrastructure", "Compass.Services\Compass.DataService.Infrastructure\Compass.DataService.Infrastructure.csproj", "{12933E07-C646-451D-B37E-5C5FBD33FFE0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Test", "Compass.Test\Compass.Test.csproj", "{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.QualityService", "Compass.QualityService", "{31627F27-DE7F-4A77-B4CF-58D493B22BA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.QualityService.Domain", "Compass.Services\Compass.QualityService.Domain\Compass.QualityService.Domain.csproj", "{EA69AB69-061A-4906-9A45-6ADC7F4155FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.QualityService.Domain", "Compass.QualityService\Compass.QualityService.Domain\Compass.QualityService.Domain.csproj", "{EA69AB69-061A-4906-9A45-6ADC7F4155FE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.QualityService.Infrastructure", "Compass.QualityService\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj", "{094675AD-D856-47E3-8FC3-486F93D017C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.QualityService.Infrastructure", "Compass.Services\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj", "{094675AD-D856-47E3-8FC3-486F93D017C3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Wpf", "Compass.Wpf\Compass.Wpf.csproj", "{ED3F208C-4E70-403E-B218-A2A01E531EE8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.TodoService", "Compass.TodoService", "{274452C6-38B7-4D8C-AE9B-ADC98DE69731}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.TodoService.Domain", "Compass.Services\Compass.TodoService.Domain\Compass.TodoService.Domain.csproj", "{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.TodoService.Domain", "Compass.TodoService\Compass.TodoService.Domain\Compass.TodoService.Domain.csproj", "{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.TodoService.Infrastructure", "Compass.Services\Compass.TodoService.Infrastructure\Compass.TodoService.Infrastructure.csproj", "{2DCC59AC-4186-42C3-A8FB-00D43E713AED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.TodoService.Infrastructure", "Compass.TodoService\Compass.TodoService.Infrastructure\Compass.TodoService.Infrastructure.csproj", "{2DCC59AC-4186-42C3-A8FB-00D43E713AED}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.Services", "Compass.Services", "{A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -156,22 +142,22 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C336FB5C-85CA-432A-9BCA-7B3F4383244C} = {8305DE19-3138-4DBB-8FE0-2602BA8700B4}
-		{716952A7-4D43-4A02-8303-C1C91E67C023} = {8305DE19-3138-4DBB-8FE0-2602BA8700B4}
-		{B5B194D2-B77A-4472-9F12-0BF31C9CA7C5} = {F2C2D5BE-2938-4959-BF01-2F0504F652D9}
-		{59A974D7-BDC8-4859-A6C6-39768DF6BEA5} = {F2C2D5BE-2938-4959-BF01-2F0504F652D9}
-		{6528CEED-7F44-4728-8E3B-2C3A4FEE8596} = {51609212-31AA-4D03-8019-560E850F22A8}
-		{799D604D-98B1-4820-9BC0-F2E3D47A9D67} = {51609212-31AA-4D03-8019-560E850F22A8}
-		{B678C7D7-FAF3-4B7A-AFC1-C2D108032401} = {6A2E6C89-BC18-493E-8A3B-E4BEE0E83A5B}
-		{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2} = {6A2E6C89-BC18-493E-8A3B-E4BEE0E83A5B}
-		{94A4332D-8630-4883-9090-1874190535E3} = {5FF8DC3C-B7C1-4AAC-A03D-95979FD7566C}
-		{2F643117-0771-4D1F-9608-C8F093BA898C} = {5FF8DC3C-B7C1-4AAC-A03D-95979FD7566C}
-		{A8D799EA-768B-4AE1-BA67-7BE1B9AE4890} = {72CBB3AF-5C03-4A8A-A234-C19539C3E6D6}
-		{12933E07-C646-451D-B37E-5C5FBD33FFE0} = {72CBB3AF-5C03-4A8A-A234-C19539C3E6D6}
-		{EA69AB69-061A-4906-9A45-6ADC7F4155FE} = {31627F27-DE7F-4A77-B4CF-58D493B22BA0}
-		{094675AD-D856-47E3-8FC3-486F93D017C3} = {31627F27-DE7F-4A77-B4CF-58D493B22BA0}
-		{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B} = {274452C6-38B7-4D8C-AE9B-ADC98DE69731}
-		{2DCC59AC-4186-42C3-A8FB-00D43E713AED} = {274452C6-38B7-4D8C-AE9B-ADC98DE69731}
+		{C336FB5C-85CA-432A-9BCA-7B3F4383244C} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{716952A7-4D43-4A02-8303-C1C91E67C023} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{B5B194D2-B77A-4472-9F12-0BF31C9CA7C5} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{59A974D7-BDC8-4859-A6C6-39768DF6BEA5} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{6528CEED-7F44-4728-8E3B-2C3A4FEE8596} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{799D604D-98B1-4820-9BC0-F2E3D47A9D67} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{B678C7D7-FAF3-4B7A-AFC1-C2D108032401} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{58BD4DE8-8DEC-4FC2-B985-C2637E1FEED2} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{94A4332D-8630-4883-9090-1874190535E3} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{2F643117-0771-4D1F-9608-C8F093BA898C} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{A8D799EA-768B-4AE1-BA67-7BE1B9AE4890} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{12933E07-C646-451D-B37E-5C5FBD33FFE0} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{EA69AB69-061A-4906-9A45-6ADC7F4155FE} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{094675AD-D856-47E3-8FC3-486F93D017C3} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{A1CCB288-1FCA-4775-BAD3-2DCBDFFC568B} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
+		{2DCC59AC-4186-42C3-A8FB-00D43E713AED} = {A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAB52DFF-F022-4E34-9511-0ED3DCEB1CBD}

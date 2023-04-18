@@ -1,11 +1,15 @@
-﻿using Compass.Wasm.Shared.DataService;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.ApiService.Hoods;
-using Compass.Wpf.Extensions;
+﻿using Compass.Wpf.Extensions;
 using Prism.Ioc;
 using System.Threading.Tasks;
+using Compass.Wasm.Shared.Data;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.ApiServices.Data.Hoods;
 
 namespace Compass.Wpf.BatchWorks.Hoods;
+
+public interface IKviAutoDrawing : IAutoDrawing
+{
+}
 
 public class KviAutoDrawing : BaseAutoDrawing, IKviAutoDrawing
 {
@@ -37,7 +41,7 @@ public class KviAutoDrawing : BaseAutoDrawing, IKviAutoDrawing
             #region 计算中间值与顶层操作
             //计算烟罩净长度，计算烟罩净深度
             var netLength = data.SidePanel==SidePanel_e.左||data.SidePanel==SidePanel_e.右 ? data.Length-50d : data.SidePanel==SidePanel_e.双 ? data.Length-100 : data.Length;
-            //赋值为0时为均分一般，否则需要赋值
+            //赋值为0时为均分一半，否则需要赋值
             var netMiddleToRight = data.MiddleToRight.Equals(0) ? netLength/2d : data.MiddleToRight;
             var netWidth = data.BackCj ? data.Width - 90 : data.Width;
 

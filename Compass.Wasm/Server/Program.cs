@@ -6,12 +6,12 @@ using Compass.QualityService.Domain;
 using Compass.QualityService.Infrastructure;
 using Compass.TodoService.Domain;
 using Compass.TodoService.Infrastructure;
-using Compass.Wasm.Server.CategoryService;
-using Compass.Wasm.Server.DataService;
 using Compass.Wasm.Server.ExportExcel;
-using Compass.Wasm.Server.HoodService;
-using Compass.Wasm.Server.ProjectService;
-using Compass.Wasm.Server.TodoService;
+using Compass.Wasm.Server.Services.Categories;
+using Compass.Wasm.Server.Services.Data;
+using Compass.Wasm.Server.Services.Data.Hoods;
+using Compass.Wasm.Server.Services.Projects;
+using Compass.Wasm.Server.Services.Todos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -218,7 +218,10 @@ builder.Services.AddScoped<IKvfDataService,KvfDataService>();
 builder.Services.AddScoped<IUviDataService,UviDataService>();
 builder.Services.AddScoped<IUvfDataService,UvfDataService>();
 
-
+builder.Services.AddScoped<IKwiDataService, KwiDataService>();
+builder.Services.AddScoped<IKwfDataService, KwfDataService>();
+builder.Services.AddScoped<IUwiDataService, UwiDataService>();
+builder.Services.AddScoped<IUwfDataService, UwfDataService>();
 
 
 #endregion

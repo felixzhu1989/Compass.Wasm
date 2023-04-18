@@ -9,9 +9,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Compass.Wasm.Shared.Categories;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.Common.Converters;
+using Compass.Wpf.Extensions;
+using Compass.Wpf.Views;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes.Wpf.Converters;
 using MaterialDesignThemes.Wpf.Transitions;
+using Microsoft.Xaml.Behaviors;
+using Microsoft.Xaml.Behaviors.Core;
+using Microsoft.Xaml.Behaviors.Input;
+using Microsoft.Xaml.Behaviors.Layout;
+using Microsoft.Xaml.Behaviors.Media;
+using Prism.DryIoc;
+using Prism.Interactivity;
+using Prism.Ioc;
+using Prism.Mvvm;
+using Prism.Regions;
+using Prism.Regions.Behaviors;
+using Prism.Services.Dialogs;
 using System;
 using System.Diagnostics;
 using System.Windows;

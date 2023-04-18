@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using Compass.Wpf.Extensions;
+﻿using Compass.Wpf.Extensions;
 using Prism.Events;
 using System.Windows.Controls;
 

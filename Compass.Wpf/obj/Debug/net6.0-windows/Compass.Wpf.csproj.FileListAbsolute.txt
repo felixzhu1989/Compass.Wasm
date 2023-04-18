@@ -1,6 +1,6 @@
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.exe
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\TemplateDoc\JobCard.xlsx
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\TemplateDoc\CutList.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\TemplateDocs\JobCard.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\TemplateDocs\CutList.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.deps.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.dll
@@ -85,6 +85,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Dialogs\
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\DrawingView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KvfDataView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KviDataView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UvfDataView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UviDataView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\IndexView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MainView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MemoView.g.cs
@@ -110,6 +112,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Dialogs\
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\DrawingView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KvfDataView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KviDataView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UvfDataView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UviDataView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\IndexView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MainView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MemoView.baml
@@ -131,7 +135,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\refint\Compass
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Compass.Wpf.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Compass.Wpf.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\ref\Compass.Wpf.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UvfDataView.g.cs
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UviDataView.g.cs
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UviDataView.baml
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UvfDataView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KwiDataView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KwiDataView.baml

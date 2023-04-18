@@ -1,11 +1,11 @@
 ﻿using System.Collections.ObjectModel;
-using Compass.Wasm.Shared.Parameter;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.ApiService;
+using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Projects;
 using Prism.Ioc;
 using Prism.Regions;
 using Prism.Commands;
 using Compass.Wpf.Extensions;
+using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ViewModels;
 

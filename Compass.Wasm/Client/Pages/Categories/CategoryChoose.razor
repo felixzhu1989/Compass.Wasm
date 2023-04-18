@@ -1,0 +1,154 @@
+﻿@using Compass.Wasm.Shared.Categories
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<div class="row">
+    <div class="col input-group mb-2" style="width: 100px">
+        <span class="input-group-text">①事业部</span>
+        <select class="form-select" value="@_category.Sbu" @onchange="OnSbuChange">
+            @foreach (var sbu in Enum.GetNames(typeof(Sbu_e)))
+            {
+                <option>@sbu</option>
+            }
+        </select>
+    </div>
+    <div class="col input-group mb-2">
+        <span class="input-group-text">②产品</span>
+        <select class="form-select" value="@_category.ProductId" @onchange="OnProductChange">
+            @if (_products !=null)
+            {
+                foreach (var product in _products)
+                {
+                    <option value="@product.Id">@product.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col input-group mb-2">
+        <span class="input-group-text">③模型</span>
+        <select class="form-select" value="@_category.ModelId" @onchange="OnModelChange">
+            @if (_models !=null)
+            {
+                foreach (var model in _models)
+                {
+                    <option value="@model.Id">@model.Name</option>
+                }
+            }
+        </select>
+    </div>
+    
+    <div class="col input-group mb-2">
+        <span class="input-group-text">④子类型</span>
+        @*https://www.itbaoku.cn/post/2252439.html*@
+        <select class="form-select" value="@ModelTypeId" @onchange="OnModelTypeChange">
+            @if (_modelTypes !=null)
+            {
+                foreach (var modelType in _modelTypes)
+                {
+                    <option value="@modelType.Id">@modelType.Name</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col"><span class="input-group-text">@_category.Description (@_category.Length,@_category.Width,@_category.Height)</span></div>
+</div>
+
+@code {
+    [Parameter]
+    public string? ModelTypeId { get; set; }
+    [Parameter]
+    public EventCallback<string> ModelTypeIdChanged { get; set; }
+
+    private List<ProductDto>? _products;
+    private List<ModelDto>? _models;
+    private List<ModelTypeDto>? _modelTypes;
+    private CategoryResponse? _category=new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ModelTypeId!=null)
+        {
+            _category = await Http.GetFromJsonAsync<CategoryResponse>($"api/ModelType/Category/{ModelTypeId}");
+            //todo:此时product变更了，没有引起ModelType列表更新（一连串的变更），解决办法，先查询列表再赋值更新
+            await GetProducts(_category!.Sbu);
+            await GetModels(_category.ProductId.ToString());
+            await GetModelTypes(_category.ModelId.ToString());
+
+            await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
+        }
+        else
+        {
+            await GetProducts(Sbu_e.FS);
+            await GetModels(_products!.First().Id.ToString());
+            await GetModelTypes(_models!.First().Id.ToString());
+            await InitModelType();
+        }
+    }
+
+    async Task InitModelType()
+    {
+        if (_products != null && _products.Count != 0 
+            && _models != null && _models.Count != 0
+            && _modelTypes != null && _modelTypes.Count != 0)
+        {
+            ModelTypeId =_modelTypes.First().Id.ToString();
+            var modelType = _modelTypes.First();
+            _category!.Description = modelType.Description;
+            _category!.Length = modelType.Length;
+            _category!.Width = modelType.Width;
+            _category!.Height = modelType.Height;
+            await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
+        }
+    }
+    async Task GetProducts(Sbu_e sbu)
+    {
+        _products=await Http.GetFromJsonAsync<List<ProductDto>>($"api/Product/All/{sbu}");
+    }
+    async Task GetModels(string productId)
+    {
+        _models = await Http.GetFromJsonAsync<List<ModelDto>>($"api/Model/All/{productId}");
+    }
+    async Task GetModelTypes(string modelId)
+    {
+        _modelTypes = await Http.GetFromJsonAsync<List<ModelTypeDto>>($"api/ModelType/All/{modelId}");
+    }
+
+    async Task OnSbuChange(ChangeEventArgs e)
+    {
+        _products=await Http.GetFromJsonAsync<List<ProductDto>>($"api/Product/All/{e.Value:int}");
+
+        if (_products != null && _products.Count != 0)
+        {
+            await GetModels(_products!.First().Id.ToString());            
+            if (_models != null && _models.Count != 0)
+            {
+                await GetModelTypes(_models!.First().Id.ToString());
+            }
+        }
+        await InitModelType();
+    }
+    async Task OnProductChange(ChangeEventArgs e)
+    {
+        await GetModels(e.Value!.ToString()!);
+        if (_models != null && _models.Count != 0)
+        {
+            await GetModelTypes(_models!.First().Id.ToString());
+        }
+        await InitModelType();
+    }
+    async Task OnModelChange(ChangeEventArgs e)
+    {
+        await GetModelTypes(e.Value!.ToString()!);
+        await InitModelType();
+    }
+    async Task OnModelTypeChange(ChangeEventArgs e)
+    {
+        ModelTypeId =e.Value!.ToString()!;
+        var modelType = _modelTypes!.Find(x => x.Id.Equals(Guid.Parse(e.Value.ToString()!)));
+        _category!.Description = modelType!.Description;
+        _category!.Length = modelType.Length;
+        _category!.Width = modelType.Width;
+        _category!.Height = modelType.Height;
+        await ModelTypeIdChanged.InvokeAsync(ModelTypeId);
+    }
+}

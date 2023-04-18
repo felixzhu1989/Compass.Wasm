@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows;
 using Compass.Wpf.ApiService;
-using Compass.Wpf.ApiService.Hoods;
+using Compass.Wpf.ApiServices.Data.Hoods;
+using Compass.Wpf.ApiServices.Projects;
+using Compass.Wpf.ApiServices.Todos;
 using Compass.Wpf.BatchWorks;
 using Compass.Wpf.BatchWorks.Hoods;
 using Compass.Wpf.Common;
@@ -106,7 +108,7 @@ namespace Compass.Wpf
 
             #endregion
 
-            #region 注册页面数据服务
+            #region 注册页面Api数据服务
             containerRegistry.Register<ILoginService, LoginService>();
             containerRegistry.Register<IFileUploadService, FileUploadService>();
             containerRegistry.Register<ITodoService, TodoService>();
@@ -123,25 +125,48 @@ namespace Compass.Wpf
 
             #endregion
 
-
-            #region 注册HoodsData模型参数页面服务
+            #region 注册HoodsData View/ViewModel模型参数页面服务
             containerRegistry.RegisterForNavigation<KviDataView, KviDataViewModel>();
             containerRegistry.RegisterForNavigation<KvfDataView, KvfDataViewModel>();
             containerRegistry.RegisterForNavigation<UviDataView, UviDataViewModel>();
             containerRegistry.RegisterForNavigation<UvfDataView, UvfDataViewModel>();
 
+            containerRegistry.RegisterForNavigation<KwiDataView, KwiDataViewModel>();
+            //containerRegistry.RegisterForNavigation<KwfDataView, KwfDataViewModel>();
+            //containerRegistry.RegisterForNavigation<UwiDataView, UwiDataViewModel>();
+            //containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
 
             #endregion
 
-            #region 模型参数与模型制图数据服务，HoodService
+            #region 模型参数Api数据服务
             containerRegistry.Register<IKviDataService, KviDataService>();
-            containerRegistry.Register<IKviAutoDrawing, KviAutoDrawing>();
             containerRegistry.Register<IKvfDataService, KvfDataService>();
-            containerRegistry.Register<IKvfAutoDrawing, KvfAutoDrawing>();
             containerRegistry.Register<IUviDataService, UviDataService>();
-            containerRegistry.Register<IUviAutoDrawing, UviAutoDrawing>();
             containerRegistry.Register<IUvfDataService, UvfDataService>();
+
+            containerRegistry.Register<IKwiDataService, KwiDataService>();
+            containerRegistry.Register<IKwfDataService, KwfDataService>();
+            containerRegistry.Register<IUwiDataService, UwiDataService>();
+            containerRegistry.Register<IUwfDataService, UwfDataService>();
+
+
+
+
+
+            #endregion
+
+            #region 模型制图服务
+            containerRegistry.Register<IKviAutoDrawing, KviAutoDrawing>();
+            containerRegistry.Register<IKvfAutoDrawing, KvfAutoDrawing>();
+            containerRegistry.Register<IUviAutoDrawing, UviAutoDrawing>();
             containerRegistry.Register<IUvfAutoDrawing, UvfAutoDrawing>();
+
+            containerRegistry.Register<IKwiAutoDrawing, KwiAutoDrawing>();
+            //containerRegistry.Register<IKwfAutoDrawing, KwfAutoDrawing>();
+            //containerRegistry.Register<IUwiAutoDrawing, UwiAutoDrawing>();
+            //containerRegistry.Register<IUwfAutoDrawing, UwfAutoDrawing>();
+
+
 
             #endregion
 

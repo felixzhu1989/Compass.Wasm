@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.DataService;
+﻿using Compass.Wasm.Shared.Data;
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.DrawingServices;

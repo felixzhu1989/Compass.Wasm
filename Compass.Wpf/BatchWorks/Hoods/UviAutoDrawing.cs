@@ -1,11 +1,16 @@
 ﻿using System.Threading.Tasks;
-using Compass.Wasm.Shared.DataService;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.ApiService.Hoods;
+using Compass.Wasm.Shared.Data;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.ApiServices.Data.Hoods;
 using Compass.Wpf.Extensions;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using Prism.Ioc;
 
 namespace Compass.Wpf.BatchWorks.Hoods;
+
+public interface IUviAutoDrawing : IAutoDrawing
+{
+}
 
 public class UviAutoDrawing : BaseAutoDrawing, IUviAutoDrawing
 {
@@ -36,7 +41,7 @@ public class UviAutoDrawing : BaseAutoDrawing, IUviAutoDrawing
             #region 计算中间值与顶层操作
             //计算烟罩净长度，计算烟罩净深度
             var netLength = data.SidePanel==SidePanel_e.左||data.SidePanel==SidePanel_e.右 ? data.Length-50d : data.SidePanel==SidePanel_e.双 ? data.Length-100 : data.Length;
-            //赋值为0时为均分一般，否则需要赋值
+            //赋值为0时为均分一半，否则需要赋值
             var netMiddleToRight = data.MiddleToRight.Equals(0) ? netLength/2d : data.MiddleToRight;
             var netWidth = data.BackCj ? data.Width - 90 : data.Width;
 
@@ -53,15 +58,15 @@ public class UviAutoDrawing : BaseAutoDrawing, IUviAutoDrawing
             #endregion
 
             #region SidePanel_Fs,大侧板装配
-            SidePanelService.SidePanelFs(swAssyTop, suffix, data.SidePanel, netLength, data.Width, data.Height, data.BackCj, ExhaustType_e.KV);
+            SidePanelService.SidePanelFs(swAssyTop, suffix, data.SidePanel, netLength, data.Width, data.Height, data.BackCj, ExhaustType_e.UV);
             #endregion
 
             #region MidRoof_Fs,MidRoof装配
-            MidRoofService.MidRoofFs(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.KV, UvLightType_e.NA, false, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
+            MidRoofService.MidRoofFs(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.UV, data.UvLightType, data.Bluetooth, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
             #endregion
 
             #region Supply_I_555,I555新风装配
-            SupplyService.I555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, UvLightType_e.NA, false, data.Marvel, data.LedLogo, data.WaterCollection);
+            SupplyService.I555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection);
             #endregion
 
             #region BackCj_Fs,BackCj装配

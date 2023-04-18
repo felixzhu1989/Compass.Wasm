@@ -1,0 +1,51 @@
+﻿@using Compass.Wasm.Shared.Projects
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+@if (project != null)
+{
+    <tr>
+        <td>
+            <a href="/drawinglist/@ProjectId">
+                <span>@project.OdpNumber</span>
+            </a>
+        </td>
+        <td>
+            <span class="badge rounded-pill @(drawingPlan.ReleaseTime < DateTime.Today ? "bg-success" : "bg-warning text-dark")  ">
+                @drawingPlan.ReleaseTime.ToString("yyyy-MM-dd")
+            </span>
+        </td>
+        <td>
+            @if (DrawingResponses != null && DrawingResponses.Count != 0)
+            {
+                foreach (var drawingResponse in DrawingResponses)
+                {
+                    <DeleteDrawingUser DrawingResponse="drawingResponse" DeleteUser="Delete"/> 
+                }
+            }
+        </td>
+    </tr>
+}
+
+
+
+@code {
+    [Parameter]
+    public Guid ProjectId { get; set; }
+    [Parameter]
+    public List<DrawingDto> DrawingResponses { get; set; }
+    private ProjectDto? project;
+    private DrawingPlanResponse? drawingPlan;
+    protected override async Task OnParametersSetAsync()
+    {
+        project =await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{ProjectId}");
+        drawingPlan = await Http.GetFromJsonAsync<DrawingPlanResponse>($"api/DrawingPlan/{ProjectId}");
+    }
+
+    private async Task Delete(DrawingDto drawingResponse)
+    {
+        var result = await Http.PutAsync($"api/Drawing/RemoveUser/{drawingResponse.Id}", null);
+        if (result.IsSuccessStatusCode) DrawingResponses.Remove(drawingResponse);
+        StateHasChanged();
+    }
+
+}

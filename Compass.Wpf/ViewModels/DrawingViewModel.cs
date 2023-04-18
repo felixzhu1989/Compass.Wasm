@@ -1,5 +1,4 @@
-﻿using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.Extensions;
+﻿using Compass.Wpf.Extensions;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Regions;
@@ -9,7 +8,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Compass.Wpf.ApiService;
-using System.Windows.Input;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ViewModels;
 

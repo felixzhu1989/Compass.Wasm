@@ -987,5 +987,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_fra
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\Newtonsoft.Json.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\build-gz\qWR7uUpc.gz
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\scopedcss\Pages\ProjectPages\DrawingPlan\DrawingPlanList.razor.rz.scp.css
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\scopedcss\Pages\ProjectPages\Tracking\SearchTrackings.razor.rz.scp.css
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Release\net6.0\scopedcss\Pages\Projects\Trackings\SearchTrackings.razor.rz.scp.css

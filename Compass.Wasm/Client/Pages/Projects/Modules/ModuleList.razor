@@ -1,0 +1,117 @@
+﻿@page "/modulelist/{DrawingId}"
+@using Compass.Wasm.Shared.Projects
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Module List</PageTitle>
+<div class="row position-relative">
+    <div class="col">
+        @if (_drawing != null)
+        {
+            @if (_project != null)
+            {
+                <h5><a href="./drawinglist/@_project.Id">@_project.OdpNumber</a></h5>
+                <div class="row">
+                    <div class="col-sm-3" style="width: 95px">项目名称:</div>
+                    <div class="col-sm-9">@_project.Name</div>
+                </div>
+            }
+
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">Item编号:</div>
+                <div class="col-sm-9">@_drawing.ItemNumber</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">图纸链接:</div>
+                <div class="col-sm-9">
+                    @if (!string.IsNullOrWhiteSpace(_drawing.DrawingUrl))
+                    {
+                        foreach (var fileUrl in _drawing.DrawingUrl.Split('\n'))
+                        {
+                            <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+
+                            <br />
+                        }
+                    }
+                </div>
+            </div>
+        }
+        @if (_modules != null && _modules.Count!=0)
+        {
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">分段数量:</div>
+                <div class="col-sm-9">@_modules.Count</div>
+            </div>
+        }
+        else
+        {
+            <span style="color: red">请添加分段！</span>
+        }
+    </div>
+</div>
+
+<table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
+    <thead>
+        <tr>
+            <th >分段明细</th>
+            <th >尺寸</th>
+            <th style="width: 60%">详细参数</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (_modules == null)
+        {
+            <p>图纸列表加载中...</p>
+        }
+        else if (_modules.Count == 0)
+        {
+            <p>没有要显示的图纸，请点击右上角添加图纸</p>
+        }
+        else
+        {
+            @foreach (var module in _modules)
+            {
+                <tr>
+                    <DisplayModule Module="module"/>
+                    <td>
+                        @if (module.IsModuleDataOk)
+                        {
+                            <DisplayModuleData Id="@module.Id.Value"/>
+                        }
+                        else
+                        {
+                            <span>...</span>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@code {
+    [Parameter]
+    public string DrawingId { get; set; }
+
+    private List<ModuleDto> _modules=new();
+    private ModuleDto? _currentModuleDto;
+
+    private DrawingDto? _drawing;
+    private ProjectDto? _project;
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshData();
+        var drawingResponse = await Http.GetFromJsonAsync<ApiResponse<DrawingDto>>($"api/Drawing/{DrawingId}");
+        if (drawingResponse.Status) _drawing = drawingResponse.Result;
+        
+        var projectResponse = await Http.GetFromJsonAsync<ApiResponse<ProjectDto>>($"api/Project/{_drawing.ProjectId}");
+        if (projectResponse.Status) _project = projectResponse.Result;
+        
+    }
+    private async Task RefreshData()
+    {
+        var moduleResponse = await Http.GetFromJsonAsync<ApiResponse<List<ModuleDto>>>($"api/Module/Drawing/{DrawingId}");
+        if (moduleResponse.Status) _modules = moduleResponse.Result;
+    }
+}

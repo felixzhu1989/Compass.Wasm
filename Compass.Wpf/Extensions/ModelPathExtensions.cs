@@ -16,6 +16,10 @@ public static class ModelPathExtensions
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVI_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_555.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KWF_555.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KWI_555.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWF_555.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWI_555.SLDASM",
             //Ceilings
 
 

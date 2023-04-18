@@ -1,6 +1,4 @@
-﻿using Compass.Wasm.Shared.Parameter;
-using Compass.Wasm.Shared.TodoService;
-using Compass.Wpf.Extensions;
+﻿using Compass.Wpf.Extensions;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Regions;
@@ -8,7 +6,9 @@ using Prism.Services.Dialogs;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Compass.Wpf.ApiService;
+using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Todos;
+using Compass.Wpf.ApiServices.Todos;
 
 namespace Compass.Wpf.ViewModels;
 

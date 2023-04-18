@@ -2,12 +2,12 @@
 using Compass.PlanService.Domain.Entities;
 using Compass.QualityService.Domain.Entities;
 using Compass.TodoService.Domain.Entities;
-using Compass.Wasm.Shared.CategoryService;
-using Compass.Wasm.Shared.IdentityService;
-using Compass.Wasm.Shared.PlanService;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wasm.Shared.QualityService;
-using Compass.Wasm.Shared.TodoService;
+using Compass.Wasm.Shared.Categories;
+using Compass.Wasm.Shared.Identities;
+using Compass.Wasm.Shared.Plans;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wasm.Shared.Quality;
+using Compass.Wasm.Shared.Todos;
 
 namespace Compass.Wasm.Server;
 

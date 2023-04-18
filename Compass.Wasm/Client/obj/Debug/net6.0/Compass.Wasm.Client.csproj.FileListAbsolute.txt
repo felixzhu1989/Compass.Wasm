@@ -978,8 +978,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\staticwebasset
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\staticwebassets.pack.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\staticwebassets.build.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\staticwebassets.development.json
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Pages\ProjectPages\DrawingPlan\DrawingPlanList.razor.rz.scp.css
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Pages\ProjectPages\Tracking\SearchTrackings.razor.rz.scp.css
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Pages\Projects\Trackings\SearchTrackings.razor.rz.scp.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\scopedcss\bundle\Compass.Wasm.Client.styles.css

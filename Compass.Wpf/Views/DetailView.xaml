@@ -10,10 +10,10 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:regions="http://prismlibrary.com/"
              xmlns:extensions="clr-namespace:Compass.Wpf.Extensions"
-             xmlns:domainproject="clr-namespace:Compass.Wasm.Shared.ProjectService;assembly=Compass.Wasm.Shared"
-             xmlns:domaincategory="clr-namespace:Compass.Wasm.Shared.CategoryService;assembly=Compass.Wasm.Shared"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
+             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters"
+             xmlns:domaincategory="clr-namespace:Compass.Wasm.Shared.Categories;assembly=Compass.Wasm.Shared"
+             xmlns:domainproject="clr-namespace:Compass.Wasm.Shared.Projects;assembly=Compass.Wasm.Shared">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

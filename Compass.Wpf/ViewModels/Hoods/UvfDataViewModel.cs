@@ -1,13 +1,13 @@
-﻿using Compass.Wasm.Shared.DataService.Hoods;
-using Compass.Wasm.Shared.DataService;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.Extensions;
+﻿using Compass.Wpf.Extensions;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Regions;
 using System;
 using System.Diagnostics;
-using Compass.Wpf.ApiService.Hoods;
+using Compass.Wasm.Shared.Data;
+using Compass.Wasm.Shared.Data.Hoods;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.ApiServices.Data.Hoods;
 
 namespace Compass.Wpf.ViewModels.Hoods;
 

@@ -1,0 +1,50 @@
+﻿@page "/project/uploadfiles/{Id}"
+@using Compass.Wasm.Client.Services
+@using Compass.Wasm.Shared.Projects
+
+@inject IProjectService ProjectService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>上传项目文件</PageTitle>
+
+<EditForm Model="project" OnSubmit="Save">
+
+    <AuthorizeView Roles="admin,pm,designer">
+        <Authorized Context="auth">
+            <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@project.ContractUrl" />
+
+            <MultiFileUpload Title="物料清单" FileType="application/pdf" @bind-MultiFileUrl="@project.BomUrl" />
+
+            <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl"/>
+        </Authorized>
+    </AuthorizeView>
+
+    <AuthorizeView Roles="admin,inspector">
+        <Authorized Context="auth">
+            <MultiFileUpload Title="最终检验" @bind-MultiFileUrl="@project.FinalInspectionUrl"/>
+        </Authorized>
+    </AuthorizeView>
+
+    <button class="btn btn-success" type="submit">保存</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"drawings/{Id}"))">取消</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private ProjectDto? project = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ProjectService.GetFirstOrDefault(Guid.Parse(Id));
+        if (!response.Status) NavigationManager.NavigateTo("projects");
+        project = response.Result;
+    }
+    
+    private async Task Save()
+    {
+        var result = await ProjectService.UploadFilesAsync(Guid.Parse(Id), project);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{Id}");
+    }
+}

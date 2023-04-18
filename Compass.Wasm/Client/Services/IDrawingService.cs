@@ -1,5 +1,5 @@
 ﻿using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Client.Services;
 

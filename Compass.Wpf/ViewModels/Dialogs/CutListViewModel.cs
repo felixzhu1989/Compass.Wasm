@@ -1,6 +1,4 @@
-﻿using Compass.Wasm.Shared.Parameter;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.BatchWorks;
+﻿using Compass.Wpf.BatchWorks;
 using Compass.Wpf.Common;
 using MaterialDesignThemes.Wpf;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -10,7 +8,9 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Compass.Wpf.ApiService;
+using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 

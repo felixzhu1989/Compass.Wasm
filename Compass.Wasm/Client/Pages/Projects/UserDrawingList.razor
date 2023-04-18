@@ -1,0 +1,43 @@
+﻿@page "/userdrawinglist/{UserName}"
+@using Compass.Wasm.Shared.Projects
+@inject HttpClient Http
+
+<PageTitle>My Drawings</PageTitle>
+<table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
+    <thead>
+        <tr>
+            <th style="width: 10%">项目</th>
+            <th style="width: 10%">截止发图</th>
+            <th>Item编号</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (drawingsGroup != null && drawingsGroup.Count != 0)
+        {
+            foreach (var group in drawingsGroup)
+            {
+                //todo:排序group.Value.Sort(),实现IComparable接口
+                group.Value.Sort();
+                //lambda表达式实现更简单：
+                //group.Value.Sort((x, y) => x.ItemNumber.CompareTo(y.ItemNumber));
+                //OrderBy方法:
+                //var list = group.Value.OrderBy(x => x.ItemNumber).ToList();//升序
+                
+                <DisplayDrawingsGroup ProjectId="group.Key" DrawingResponses="@group.Value" />
+            }
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    [Parameter]
+    public string UserName { get; set; }
+    Dictionary<Guid, List<DrawingDto>>? drawingsGroup;
+
+    protected override async Task OnInitializedAsync()
+    {
+        drawingsGroup = await Http.GetFromJsonAsync<Dictionary<Guid, List<DrawingDto>>>($"api/Drawing/User/{UserName}");
+    }
+}

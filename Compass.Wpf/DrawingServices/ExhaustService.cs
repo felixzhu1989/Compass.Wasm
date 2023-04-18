@@ -1,9 +1,9 @@
-﻿using Compass.Wasm.Shared.DataService;
-using Compass.Wpf.Extensions;
-using DocumentFormat.OpenXml.Wordprocessing;
+﻿using Compass.Wpf.Extensions;
 using Prism.Ioc;
 using SolidWorks.Interop.sldworks;
 using System;
+using Compass.Wasm.Shared.Data;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Compass.Wpf.DrawingServices;
 
@@ -24,6 +24,13 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_UV_555-1", Aggregator);
         Exhaust555(swAssyLevel1, suffix, length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, ansulDetector);
         UvExhaust555(swAssyLevel1, suffix, length, uvLightType, middleToRight, ansul, ansulSide, ansulDetector);
+    }
+
+
+    public void Kw555(AssemblyDoc swAssyTop, string suffix, double length, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_KW_555-1", Aggregator);
+        KwExhaust555(swAssyLevel1, suffix, length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, waterInlet);
     }
 
 
@@ -444,7 +451,6 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         else
         {
             swAssyLevel1.UnSuppress("LocalLPatternKsa");
-            swAssyLevel1.ChangeDim("KsaNumber@LocalLPatternKsa", ksaNo);
         }
     }
     #endregion
@@ -641,6 +647,375 @@ public class ExhaustService : BaseDrawingService, IExhaustService
     }
     #endregion
 
+    #region Kw555
+    private void KwExhaust555(AssemblyDoc swAssyLevel1, string suffix, double length, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet)
+    {
+        //排风主体(背板)
+        FNHE0031(swAssyLevel1, suffix, "FNHE0031-1", length, sidePanel, drainType, waterCollection, backToBack);
 
+        //排风主体(顶板)
+        FNHE0032(swAssyLevel1, suffix, "FNHE0032-1", length, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, marvel, ansul, ansulSide, waterInlet);
+
+        //排风腔前面板
+        FNHE0033(swAssyLevel1, suffix, "FNHE0033-1", length, uvLightType, middleToRight, waterInlet);
+
+        //三角板
+        FNHE0034(swAssyLevel1, suffix, "FNHE0034-1", sidePanel, drainType, uvLightType);
+        FNHE0035(swAssyLevel1, suffix, "FNHE0035-1", sidePanel, drainType);
+
+        //水洗挡板
+        FNHE0036(swAssyLevel1, suffix, "FNHE0036-1", length, uvLightType);
+
+        //KSA下轨道支架
+        FNHE0037(swAssyLevel1, suffix, "FNHE0037-1", length);
+
+        //KSA侧板，水洗烟罩在三角板内侧，因此长度减去3，三角板的厚度
+        KsaFilter(swAssyLevel1,suffix,length-3d, "FNHE0003-1", "FNHE0004-1", "FNHE0005-1");
+
+
+        //排风滑门导轨
+        ExhaustRail(swAssyLevel1, suffix, marvel, length, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, "FNCE0018-1", "FNCE0018-2");
+
+        //Ksa阵列，水洗烟罩在三角板内侧，因此长度减去3，三角板的厚度
+        Ksa(swAssyLevel1, length-3d);
+    }
+
+
+    private void FNHE0031(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, SidePanel_e sidePanel, DrainType_e drainType, bool waterCollection, bool backToBack)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+
+        #region 集水翻边
+        if (waterCollection)
+        {
+            switch (sidePanel)
+            {
+                case SidePanel_e.左:
+                    swCompLevel2.Suppress("DrainChannelRight");
+                    swCompLevel2.UnSuppress("DrainChannelLeft");
+                    break;
+                case SidePanel_e.右:
+                    swCompLevel2.UnSuppress("DrainChannelRight");
+                    swCompLevel2.Suppress("DrainChannelLeft");
+                    break;
+                case SidePanel_e.双:
+                    swCompLevel2.UnSuppress("DrainChannelRight");
+                    swCompLevel2.UnSuppress("DrainChannelLeft");
+                    break;
+                case SidePanel_e.NA:
+                case SidePanel_e.中:
+                default:
+                    swCompLevel2.Suppress("DrainChannelRight");
+                    swCompLevel2.Suppress("DrainChannelLeft");
+                    break;
+            }
+        }
+        else
+        {
+            swCompLevel2.Suppress("DrainChannelRight");
+            swCompLevel2.Suppress("DrainChannelLeft");
+        }
+        #endregion
+
+        #region 排水管
+        switch (drainType)
+        {
+
+            case DrainType_e.右排水管:
+                swCompLevel2.Suppress("DrainPipeLeft");
+                swCompLevel2.UnSuppress("DrainPipeRight");
+                break;
+            case DrainType_e.左排水管:
+                swCompLevel2.UnSuppress("DrainPipeLeft");
+                swCompLevel2.Suppress("DrainPipeRight");
+                break;
+            case DrainType_e.左油塞:
+            case DrainType_e.右油塞:
+            case DrainType_e.上排水:
+            case DrainType_e.集油槽:
+            case DrainType_e.NA:
+            default:
+                swCompLevel2.Suppress("DrainPipeLeft");
+                swCompLevel2.Suppress("DrainPipeRight");
+                break;
+        }
+        #endregion
+
+        #region 背靠背
+        if (backToBack) swCompLevel2.UnSuppress("BackToBack");
+        else swCompLevel2.Suppress("BackToBack");
+        #endregion
+    }
+
+    private void FNHE0032(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool marvel, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+
+        #region MidRoof铆螺母孔
+        //2023/3/10 修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
+        const double sideDis = 150d;
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        midRoofNutNumber = midRoofNutNumber < 3 ? 3 : midRoofNutNumber;
+        var midRoofNutDis = (length - 2*sideDis)/(midRoofNutNumber-1);
+
+        swModelLevel2.ChangeDim("Dis@LPatternMidRoofNut", midRoofNutDis);
+        #endregion
+
+        #region UVHood，水洗烟罩
+        //解压检修门，水洗烟罩，且带UV，短灯>=1600,长灯>=2400
+        switch (uvLightType)
+        {
+            case UvLightType_e.UVR4L:
+            case UvLightType_e.UVR6L:
+            case UvLightType_e.UVR8L:
+                swCompLevel2.UnSuppress("UvRack");
+                swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
+                swModelLevel2.ChangeDim("UvRack@SketchUvRack", 1640d);
+                swCompLevel2.UnSuppress("UvCable");
+                swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
+                swModelLevel2.ChangeDim("UvCable@SketchUvCable", 1500d);
+                WaterPipeInDoor(length >= 2400 ? waterInlet : WaterInlet_e.NA);
+                break;
+            case UvLightType_e.UVR4S:
+            case UvLightType_e.UVR6S:
+            case UvLightType_e.UVR8S:
+                swCompLevel2.UnSuppress("UvRack");
+                swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
+                swModelLevel2.ChangeDim("UvRack@SketchUvRack", 930d);
+                swCompLevel2.UnSuppress("UvCable");
+                swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
+                swModelLevel2.ChangeDim("UvCable@SketchUvCable", 790d);
+                WaterPipeInDoor(length >= 1600 ? waterInlet : WaterInlet_e.NA);
+                break;
+            case UvLightType_e.NA:
+            default:
+                swCompLevel2.Suppress("UvRack");
+                swCompLevel2.Suppress("UvCable");
+                WaterPipeInDoor(WaterInlet_e.NA);
+                break;
+        }
+        //内部方法，用于入水口检修门
+        void WaterPipeInDoor(WaterInlet_e door)
+        {
+            switch (door)
+            {
+                case WaterInlet_e.右入水:
+                    swCompLevel2.Suppress("WaterPipeInDoorLeft");
+                    swCompLevel2.UnSuppress("WaterPipeInDoorRight");
+                    break;
+                case WaterInlet_e.左入水:
+                    swCompLevel2.UnSuppress("WaterPipeInDoorLeft");
+                    swCompLevel2.Suppress("WaterPipeInDoorRight");
+                    break;
+                case WaterInlet_e.NA:
+                default:
+                    swCompLevel2.Suppress("WaterPipeInDoorLeft");
+                    swCompLevel2.Suppress("WaterPipeInDoorRight");
+                    break;
+            }
+        }
+
+        #endregion
+
+        #region 入水口
+        switch (waterInlet)
+        {
+            case WaterInlet_e.右入水:
+                swCompLevel2.Suppress("WaterPipeInLeft");
+                swCompLevel2.UnSuppress("WaterPipeInRight");
+                break;
+            case WaterInlet_e.左入水:
+                swCompLevel2.UnSuppress("WaterPipeInLeft");
+                swCompLevel2.Suppress("WaterPipeInRight");
+                break;
+            case WaterInlet_e.NA:
+            default:
+                swCompLevel2.Suppress("WaterPipeInLeft");
+                swCompLevel2.Suppress("WaterPipeInRight");
+                break;
+        }
+        #endregion
+
+        #region 排风口
+        if (exhaustSpigotNumber == 1)
+        {
+            swCompLevel2.UnSuppress("OneSpigot");
+            swCompLevel2.Suppress("TwoSpigots");
+            swModelLevel2.ChangeDim("ToRight@SketchOneSpigot", middleToRight);
+            swModelLevel2.ChangeDim("Length@SketchOneSpigot", exhaustSpigotLength);
+            swModelLevel2.ChangeDim("Width@SketchOneSpigot", exhaustSpigotWidth);
+        }
+        else
+        {
+            swCompLevel2.Suppress("OneSpigot");
+            swCompLevel2.UnSuppress("TwoSpigots");
+            swModelLevel2.ChangeDim("ToRight@SketchTwoSpigots", middleToRight);
+            swModelLevel2.ChangeDim("Dis@SketchTwoSpigots", exhaustSpigotDis);
+            swModelLevel2.ChangeDim("Length@SketchTwoSpigots", exhaustSpigotLength);
+            swModelLevel2.ChangeDim("Width@SketchTwoSpigots", exhaustSpigotWidth);
+        }
+
+        #endregion
+
+        #region MARVEL
+        if (marvel)
+        {
+            swCompLevel2.UnSuppress("MarvelNtc");
+            if (exhaustSpigotNumber == 1) swModelLevel2.ChangeDim("ToRight@SketchMarvelNtc", middleToRight + exhaustSpigotLength / 2d + 50d);
+            else swModelLevel2.ChangeDim("ToRight@SketchMarvelNtc", middleToRight + exhaustSpigotDis / 2d + exhaustSpigotLength + 50d);
+        }
+        else swCompLevel2.Suppress("MarvelNtc");
+        #endregion
+
+        #region ANSUL
+        switch (ansulSide)
+        {
+            //侧喷
+            case AnsulSide_e.左侧喷:
+                swCompLevel2.UnSuppress("ChannelLeft");
+                swCompLevel2.UnSuppress("AnsulSideLeft");
+                break;
+            case AnsulSide_e.右侧喷:
+                swCompLevel2.UnSuppress("ChannelRight");
+                swCompLevel2.UnSuppress("AnsulSideRight");
+                break;
+            case AnsulSide_e.NA:
+            case AnsulSide_e.无侧喷:
+            default:
+                swCompLevel2.Suppress("ChannelRight");
+                swCompLevel2.Suppress("AnsulSideRight");
+                swCompLevel2.Suppress("ChannelLeft");
+                swCompLevel2.Suppress("AnsulSideLeft");
+                break;
+        }
+        #endregion
+    }
+
+    private void FNHE0033(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, UvLightType_e uvLightType, double middleToRight, WaterInlet_e waterInlet)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+        #region UVHood
+        switch (uvLightType)
+        {
+            case UvLightType_e.UVR4L:
+            case UvLightType_e.UVR6L:
+            case UvLightType_e.UVR8L:
+                swCompLevel2.UnSuppress("TabUp");
+                swCompLevel2.UnSuppress("SensorCable");
+                swCompLevel2.UnSuppress("BaffleCable");
+                swCompLevel2.Suppress("UvDoorShort");
+                swCompLevel2.UnSuppress("UvDoorLong");
+                swModelLevel2.ChangeDim("ToRight@SketchUvDoorLong", middleToRight);
+                swCompLevel2.UnSuppress("UvCable");
+                swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
+                swModelLevel2.ChangeDim("UvCable@SketchUvCable", 1500d);
+                break;
+            case UvLightType_e.UVR4S:
+            case UvLightType_e.UVR6S:
+            case UvLightType_e.UVR8S:
+                swCompLevel2.UnSuppress("TabUp");
+                swCompLevel2.UnSuppress("SensorCable");
+                swCompLevel2.UnSuppress("BaffleCable");
+                swCompLevel2.UnSuppress("UvDoorShort");
+                swCompLevel2.Suppress("UvDoorLong");
+                swModelLevel2.ChangeDim("ToRight@SketchUvDoorShort", middleToRight);
+                swCompLevel2.UnSuppress("UvCable");
+                swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
+                swModelLevel2.ChangeDim("UvCable@SketchUvCable", 790d);
+                break;
+            case UvLightType_e.NA:
+            default:
+                swCompLevel2.Suppress("TabUp");
+                swCompLevel2.Suppress("SensorCable");
+                swCompLevel2.Suppress("BaffleCable");
+                swCompLevel2.Suppress("UvDoorShort");
+                swCompLevel2.Suppress("UvDoorLong");
+                swCompLevel2.Suppress("UvCable");
+                break;
+        }
+        #endregion
+
+        #region 入水口
+        switch (waterInlet)
+        {
+            case WaterInlet_e.右入水:
+                swCompLevel2.Suppress("WaterPipeInLeft");
+                swCompLevel2.UnSuppress("WaterPipeInRight");
+                break;
+            case WaterInlet_e.左入水:
+                swCompLevel2.UnSuppress("WaterPipeInLeft");
+                swCompLevel2.Suppress("WaterPipeInRight");
+                break;
+            case WaterInlet_e.NA:
+            default:
+                swCompLevel2.Suppress("WaterPipeInLeft");
+                swCompLevel2.Suppress("WaterPipeInRight");
+                break;
+        }
+        #endregion
+    }
+
+    private void FNHE0034(AssemblyDoc swAssyLevel1, string suffix, string partName, SidePanel_e sidePanel, DrainType_e drainType, UvLightType_e uvLightType)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        if (drainType == DrainType_e.上排水&&(sidePanel==SidePanel_e.中||sidePanel==SidePanel_e.右))
+        {
+            swCompLevel2.UnSuppress("NoDrainPipe");
+        }
+        else
+        {
+            swCompLevel2.Suppress("NoDrainPipe");
+        }
+
+        if (uvLightType == UvLightType_e.NA)
+        {
+            swCompLevel2.Suppress("BaffleCable");
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("BaffleCable");
+        }
+    }
+    private void FNHE0035(AssemblyDoc swAssyLevel1, string suffix, string partName, SidePanel_e sidePanel, DrainType_e drainType)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        if (drainType == DrainType_e.上排水&&(sidePanel==SidePanel_e.中||sidePanel==SidePanel_e.左))
+        {
+            swCompLevel2.UnSuppress("NoDrainPipe");
+        }
+        else
+        {
+            swCompLevel2.Suppress("NoDrainPipe");
+        }
+    }
+
+    private void FNHE0036(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, UvLightType_e uvLightType)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        const double sideLength = 50d+2.5d;//因为水洗挡板向外折弯，因此再扣除2.5
+        //2021.06.08 july更改模型，磁铁拉铆钉避让1.5dm
+        swModelLevel2.ChangeDim("Length@SketchBase", length -sideLength*2d - 1.5d);
+        if (uvLightType == UvLightType_e.NA)
+        {
+            swCompLevel2.Suppress("BaffleCable");
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("BaffleCable");
+        }
+    }
+
+    private void FNHE0037(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length -5d);
+        
+    }
+
+    #endregion
 
 }

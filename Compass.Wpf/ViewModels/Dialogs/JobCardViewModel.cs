@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Shared.Projects;
 using Compass.Wpf.BatchWorks;
 using Compass.Wpf.Common;
 using MaterialDesignThemes.Wpf;

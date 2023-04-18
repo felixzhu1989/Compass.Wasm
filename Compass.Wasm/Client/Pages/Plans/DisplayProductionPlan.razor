@@ -1,0 +1,78 @@
+﻿@using Compass.Wasm.Shared.Plans
+@using Compass.Wasm.Shared.Projects
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+<tr>
+    <td>
+        <AuthorizeView Roles="admin,pmc">
+            <Authorized>
+                <a href="updateproductionplan/@ProductionPlan.Id"><i class="bi bi-gear" /></a>
+            </Authorized>
+        </AuthorizeView>
+        @ProductionPlan.OdpReleaseTime.ToString("MM/dd")
+    </td>
+    <td>@ProductionPlan.SqNumber</td>
+    <td>
+        @if (ProductionPlan.ProjectId!=null)
+        {
+            <a href="./drawinglist/@project.Id">@project.OdpNumber</a>
+            <AuthorizeView Roles="admin,pmc">
+                <Authorized>
+                    <i class="bi bi-trash3 text-danger ms-2" @onclick="UnbindProject" />
+                </Authorized>
+            </AuthorizeView>
+        }
+        else
+        {
+            <a href="bindproject/@ProductionPlan.Id">绑定项目</a>
+        }
+    </td>
+    <td>@ProductionPlan.Name</td>
+    <td>@ProductionPlan.Quantity</td>
+    <td>@ProductionPlan.ModelSummary</td>
+    <td style="text-align: center">@ProductionPlan.ProductionFinishTime.ToString("MM/dd")</td>
+    <td style="text-align: center">@ProductionPlan.DrawingReleaseTarget.ToString("MM/dd")</td>
+    <td style="text-align: center">
+        <AuthorizeView Roles="admin,pmc">
+            <Authorized>
+                <a href="updatedrawingreleaseactual/@ProductionPlan.Id"><i class="bi bi-gear" /></a>
+            </Authorized>
+        </AuthorizeView>
+        @(ProductionPlan.DrawingReleaseActual != null ? ProductionPlan.DrawingReleaseActual.Value.ToString("MM/dd") : "")
+    </td>
+    <td style="text-align: center">@ProductionPlan.ProductionPlanType</td>
+</tr>
+
+@if (!string.IsNullOrWhiteSpace(ProductionPlan.Remarks))
+{
+    <tr>
+        <td colspan="10">
+            <span style="color: red">备注：@ProductionPlan.Remarks</span>
+        </td>
+    </tr>
+}
+
+
+@code {
+    [Parameter]
+    public ProductionPlanResponse ProductionPlan { get; set; }
+    private ProjectDto? project = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ProductionPlan.ProjectId != null)
+        {
+            project = await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{ProductionPlan.ProjectId}");
+        }
+    }
+
+    private async Task UnbindProject()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要解除绑定项目【{project.OdpNumber}】吗？");
+        if (confirmResult)
+        {
+            ProductionPlan.ProjectId = null;
+            await Http.PutAsJsonAsync("api/ProductionPlan/BindProject", ProductionPlan);
+            StateHasChanged();
+        }
+    }
+}

@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.ProjectService;
+﻿using Compass.Wasm.Shared.Projects;
 using Prism.Ioc;
 using Prism.Regions;
 

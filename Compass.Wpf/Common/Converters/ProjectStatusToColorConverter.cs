@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
-using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wpf.Common.Converters;
 

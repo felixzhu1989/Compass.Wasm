@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Compass.Wasm.Shared.ProjectService;
+using Compass.Wasm.Shared.Projects;
 using Prism.Events;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;

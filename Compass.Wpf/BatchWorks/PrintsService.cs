@@ -1,22 +1,20 @@
-﻿using Compass.Wasm.Shared.Parameter;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.Extensions;
+﻿using Compass.Wpf.Extensions;
 using Microsoft.Office.Interop.Excel;
 using Prism.Events;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using Compass.Wpf.ApiService;
+using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Projects;
 using Microsoft.Office.Core;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
+using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -39,7 +37,7 @@ public class PrintsService : IPrintsService
     public async Task BatchPrintCutListAsync(List<ModuleDto> moduleDtos)
     {
         var cutListService = _provider.Resolve<ICutListService>();
-        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDoc", "CutList.xlsx");
+        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDocs", "CutList.xlsx");
 
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
@@ -68,7 +66,7 @@ public class PrintsService : IPrintsService
     public async Task PrintOneCutListAsync(ModuleDto moduleDto)
     {
         var cutListService = _provider.Resolve<ICutListService>();
-        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDoc", "CutList.xlsx");
+        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDocs", "CutList.xlsx");
 
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
@@ -89,7 +87,7 @@ public class PrintsService : IPrintsService
     /// </summary>
     public async Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos)
     {
-        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDoc", "JobCard.xlsx");
+        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDocs", "JobCard.xlsx");
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
         excelApp.Workbooks.Add(template);
@@ -116,7 +114,7 @@ public class PrintsService : IPrintsService
     /// </summary>
     public async Task PrintOneJobCardAsync(ModuleDto moduleDto)
     {
-        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDoc", "JobCard.xlsx");
+        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDocs", "JobCard.xlsx");
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
         excelApp.Workbooks.Add(template);

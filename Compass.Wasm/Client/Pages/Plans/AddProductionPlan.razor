@@ -1,0 +1,62 @@
+﻿@using Compass.Wasm.Shared.Plans
+<EditForm Model="ProductionPlan" OnSubmit="Save">
+    <div class="row">
+        <div class="col input-group mb-2">
+            <span class="input-group-text" >创建时间</span>
+            <input type="date" class="form-control" @bind-value="@ProductionPlan.OdpReleaseTime" />
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">完工时间</span>
+            <input type="date" class="form-control" @bind-value="@ProductionPlan.ProductionFinishTime" />
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">计划发图</span>
+            <input type="date" class="form-control" @bind-value="@ProductionPlan.DrawingReleaseTarget" />
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">项目月份</span>
+            <input type="month" class="form-control" @bind-value="@ProductionPlan.MonthOfInvoice" />
+        </div>
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">SQFS号</span>
+        <input class="form-control" placeholder="SQFS号" @bind-value="@ProductionPlan.SqNumber" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目名称</span>
+        <input class="form-control" placeholder="项目名称" @bind-value="@ProductionPlan.Name" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">烟罩数量</span>
+        <input class="form-control" type="number" @bind-value="@ProductionPlan.Quantity" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">烟罩型号</span>
+        <input class="form-control" placeholder="型号" @bind-value="@ProductionPlan.ModelSummary" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目类型</span>
+        <select class="form-select" @bind="@ProductionPlan.ProductionPlanType">
+            @foreach (var type in Enum.GetNames(typeof(ProductionPlanType_e)))
+            {
+                <option>@type</option>
+            }
+        </select>
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目备注</span>
+        <textarea class="form-control" placeholder="备注，可输入多行" style="height: 120px" @bind="@ProductionPlan.Remarks"></textarea>
+    </div>
+    
+    <button class="btn btn-success" type="submit">新增计划</button>
+</EditForm>
+@code {
+    [Parameter]
+    public AddProductionPlanRequest? ProductionPlan { get; set; }
+    [Parameter]
+    public EventCallback<AddProductionPlanRequest> SaveProductionPlan { get; set; }
+    Task Save()
+    {
+        return SaveProductionPlan.InvokeAsync(ProductionPlan);
+    }
+}

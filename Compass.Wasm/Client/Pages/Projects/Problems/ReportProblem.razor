@@ -1,0 +1,110 @@
+﻿@page "/reportproblem/{ProjectId}"
+@using Compass.Wasm.Shared.Projects
+
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+
+<PageTitle>Report Problem</PageTitle>
+
+<div class="row position-relative">
+    <div class="col">
+        @if (project != null)
+        {
+            <h5><a href="./drawinglist/@project.Id">@project.OdpNumber</a></h5>
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">项目名称:</div>
+                <div class="col-sm-9">@project.Name</div>
+            </div>
+        }
+    </div>
+    <AuthorizeView>
+        <NotAuthorized>
+            <span style="color: red">报告项目异常，请先登录！</span>
+        </NotAuthorized>
+        <Authorized>
+            <span style="color: green">报告项目异常，请点击右侧展开！添加异常时，请先选择相关方和异常类型！</span>
+            <div class="col position-absolute bottom-0 end-0" style="text-align: right;width: 10%">
+                <span class="btn btn-outline-danger mb-2" @onclick="ShowAddProblem">@(isAddDrop ? "收起" : "展开")</span>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+</div>
+
+@if (isAddDrop)
+{
+    <AuthorizeView>
+        <Authorized>
+            <AddProblem Problem="addProblemRequest" SaveProblem="SaveProblem" ReportUserName="@context.User.Identity.Name" />
+        </Authorized>
+    </AuthorizeView>
+}
+
+<table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
+    <thead>
+        <tr>
+            <th>异常情况</th>
+            <th>解决方案</th>
+            <th style="width: 15%;text-align: center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (problems == null)
+        {
+            <p>异常列表加载中...</p>
+        }
+        else if (problems.Count == 0)
+        {
+            <p>项目没有异常！</p>
+        }
+        else
+        {
+            @foreach (var problem in problems)
+            {
+                <DisplayProblem Problem="@problem" />
+            }
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+    [Parameter]
+    public string ProjectId { get; set; }
+
+    public string ProblemTypeId { get; set; }
+
+    private bool isAddDrop;
+    private AddProblemRequest? addProblemRequest=new();
+
+    private ProjectDto? project=new();
+
+    private List<ProblemResponse>? problems=new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        project = await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{ProjectId}");
+        problems = await Http.GetFromJsonAsync<List<ProblemResponse>>($"api/Problem/All/{ProjectId}");
+
+    }
+
+    private void ShowAddProblem()
+    {
+        if (!isAddDrop) addProblemRequest = new AddProblemRequest();
+        addProblemRequest.ProjectId = Guid.Parse(ProjectId);
+        isAddDrop = !isAddDrop;
+    }
+
+    private async Task SaveProblem(AddProblemRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(request.Description))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        isAddDrop = false; //收起添加
+        var result = await Http.PostAsJsonAsync("api/Problem/Add", addProblemRequest);
+        if (result.IsSuccessStatusCode) problems = await Http.GetFromJsonAsync<List<ProblemResponse>>($"api/Problem/All/{ProjectId}");
+        StateHasChanged();
+    }
+}

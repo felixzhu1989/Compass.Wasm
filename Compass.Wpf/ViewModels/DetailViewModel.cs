@@ -1,7 +1,4 @@
-﻿using Compass.Wasm.Shared.CategoryService;
-using Compass.Wasm.Shared.Parameter;
-using Compass.Wasm.Shared.ProjectService;
-using Compass.Wpf.Extensions;
+﻿using Compass.Wpf.Extensions;
 using Compass.Wpf.ViewModels;
 using Prism.Commands;
 using Prism.Ioc;
@@ -11,8 +8,11 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using Compass.Wpf.ApiService;
-using Compass.Wasm.Shared.DataService;
+using Compass.Wasm.Shared.Categories;
+using Compass.Wasm.Shared.Data;
+using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.Views;
 

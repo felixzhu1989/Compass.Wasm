@@ -4,7 +4,6 @@ using Compass.Wpf.Common.Models;
 using Compass.Wpf.Extensions;
 using Prism.Commands;
 using Prism.Ioc;
-using Prism.Mvvm;
 using Prism.Regions;
 
 namespace Compass.Wpf.ViewModels;

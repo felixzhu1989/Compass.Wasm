@@ -1,0 +1,76 @@
+﻿@using Compass.Wasm.Shared.Files
+@inject HttpClient Http
+
+
+@if (string.IsNullOrEmpty(result))
+{
+    <span>@Title ：</span><br />
+    if (fileUrls.Count!=0)
+    {
+        @foreach (var fileUrl in fileUrls)
+        {
+            <FileLinkWithDelete FileUrl="@fileUrl" DeleteFile="DeleteFile"></FileLinkWithDelete>
+        }
+    }
+}
+else
+{
+    <span>@result</span>
+}
+<InputFile class="form-control mb-2" OnChange="OnInputFileChange" accept="@FileType" />
+@code {
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public string FileType { get; set; }
+
+    [Parameter]
+    public string MultiFileUrl { get; set; }
+    [Parameter]
+    public EventCallback<string> MultiFileUrlChanged { get; set; }
+    //自定义组件实现双向绑定，https://blog.csdn.net/playermaker57/article/details/105443467
+
+    public string result = string.Empty;
+    List<string> fileUrls = new();
+
+    Task DeleteFile(string fileUrl)
+    {
+        fileUrls.Remove(fileUrl);
+        return RefreshMultiFileUrl();
+    }
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrWhiteSpace(MultiFileUrl)) fileUrls = MultiFileUrl.Split('\n').ToList();
+    }
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;//一个文件
+        using var content = new MultipartFormDataContent();
+        content.Add(content: new StreamContent(file.OpenReadStream(1024 * 1024*100)),
+            name: "\"files\"", fileName: file.Name);
+        try
+        {
+            var response = await Http.PostAsync("api/Uploader", content);
+            var uploadResponse = await response.Content
+                .ReadFromJsonAsync<UploadResponse>();
+            //如果重复就不要继续添加了
+            if (!fileUrls.Contains(uploadResponse.RemoteUrl.ToString()))
+            {
+                fileUrls.Add(uploadResponse.RemoteUrl.ToString());
+                await RefreshMultiFileUrl();
+            }
+        }
+        catch (Exception ex)
+        {
+            result =$"上传文件异常：{ex}";
+        }
+    }
+    //更新MultiFileUrl，以实现双向绑定
+    Task RefreshMultiFileUrl()
+    {
+        MultiFileUrl = string.Join('\n', fileUrls);
+        //双向绑定
+        return MultiFileUrlChanged.InvokeAsync(MultiFileUrl);
+    }
+}

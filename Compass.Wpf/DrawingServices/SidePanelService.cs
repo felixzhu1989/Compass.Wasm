@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.DataService;
+﻿using Compass.Wasm.Shared.Data;
 using Compass.Wpf.Extensions;
 using Prism.Ioc;
 using SolidWorks.Interop.sldworks;

@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/compass_64px.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templatedoc/jobcard.xlsx")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templatedoc/cutlist.xlsx")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templatedocs/jobcard.xlsx")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templatedocs/cutlist.xlsx")]
 
 

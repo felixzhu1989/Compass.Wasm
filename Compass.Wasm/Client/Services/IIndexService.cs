@@ -1,6 +1,4 @@
-﻿using Compass.Wasm.Shared.ProjectService;
-
-namespace Compass.Wasm.Client.Services;
+﻿namespace Compass.Wasm.Client.Services;
 
 public interface IIndexService
 {

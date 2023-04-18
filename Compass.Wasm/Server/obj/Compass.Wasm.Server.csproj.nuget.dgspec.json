@@ -4,14 +4,14 @@
     "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\Compass.Wasm.Server.csproj": {}
   },
   "projects": {
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj",
         "projectName": "Compass.CategoryService.Domain",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Domain\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -66,14 +66,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj",
         "projectName": "Compass.CategoryService.Infrastructure",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -93,8 +93,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Domain\\Compass.CategoryService.Domain.csproj"
               }
             }
           }
@@ -144,14 +144,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj",
         "projectName": "Compass.DataService.Domain",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Domain\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -206,14 +206,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj",
         "projectName": "Compass.DataService.Infrastructure",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Infrastructure\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -233,8 +233,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj"
               }
             }
           }
@@ -284,14 +284,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj",
         "projectName": "Compass.FileService.Domain",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Domain\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -346,14 +346,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj",
         "projectName": "Compass.FileService.Infrastructure",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -373,8 +373,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Domain\\Compass.FileService.Domain.csproj"
               },
               "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj": {
                 "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Shared\\Compass.Wasm.Shared.csproj"
@@ -430,14 +430,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj",
         "projectName": "Compass.IdentityService.Domain",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Domain\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -498,14 +498,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj",
         "projectName": "Compass.IdentityService.Infrastructure",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Infrastructure\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -525,8 +525,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Domain\\Compass.IdentityService.Domain.csproj"
               }
             }
           }
@@ -584,14 +584,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj",
         "projectName": "Compass.PlanService.Domain",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -646,14 +646,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj",
         "projectName": "Compass.PlanService.Infrastructure",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Infrastructure\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -673,8 +673,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj"
               }
             }
           }
@@ -724,14 +724,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj",
         "projectName": "Compass.ProjectService.Domain",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Domain\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -786,14 +786,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj",
         "projectName": "Compass.ProjectService.Infrastructure",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Infrastructure\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -813,8 +813,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Domain\\Compass.ProjectService.Domain.csproj"
               }
             }
           }
@@ -864,14 +864,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj",
         "projectName": "Compass.QualityService.Domain",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Domain\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -926,14 +926,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj",
         "projectName": "Compass.QualityService.Infrastructure",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Infrastructure\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -953,8 +953,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj"
               }
             }
           }
@@ -1004,14 +1004,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj",
         "projectName": "Compass.TodoService.Domain",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Domain\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1066,14 +1066,14 @@
         }
       }
     },
-    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj": {
+    "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj",
+        "projectUniqueName": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj",
         "projectName": "Compass.TodoService.Infrastructure",
-        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj",
+        "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\obj\\",
+        "outputPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1093,8 +1093,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Domain\\Compass.TodoService.Domain.csproj"
               }
             }
           }
@@ -1271,29 +1271,29 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj"
               },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj"
               },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj"
               },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj"
               },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj"
               },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj"
               },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj"
               },
-              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj": {
-                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj"
+              "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj": {
+                "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj"
               },
               "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\Compass.Wasm.Client.csproj": {
                 "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\Compass.Wasm.Client.csproj"

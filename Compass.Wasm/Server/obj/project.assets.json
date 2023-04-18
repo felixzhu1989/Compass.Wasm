@@ -11060,83 +11060,83 @@
     },
     "Compass.CategoryService.Domain/1.0.0": {
       "type": "project",
-      "path": "../../Compass.CategoryService/Compass.CategoryService.Domain/Compass.CategoryService.Domain.csproj",
-      "msbuildProject": "../../Compass.CategoryService/Compass.CategoryService.Domain/Compass.CategoryService.Domain.csproj"
+      "path": "../../Compass.Services/Compass.CategoryService.Domain/Compass.CategoryService.Domain.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.CategoryService.Domain/Compass.CategoryService.Domain.csproj"
     },
     "Compass.CategoryService.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../Compass.CategoryService/Compass.CategoryService.Infrastructure/Compass.CategoryService.Infrastructure.csproj",
-      "msbuildProject": "../../Compass.CategoryService/Compass.CategoryService.Infrastructure/Compass.CategoryService.Infrastructure.csproj"
+      "path": "../../Compass.Services/Compass.CategoryService.Infrastructure/Compass.CategoryService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.CategoryService.Infrastructure/Compass.CategoryService.Infrastructure.csproj"
     },
     "Compass.DataService.Domain/1.0.0": {
       "type": "project",
-      "path": "../../Compass.DataService/Compass.DataService.Domain/Compass.DataService.Domain.csproj",
-      "msbuildProject": "../../Compass.DataService/Compass.DataService.Domain/Compass.DataService.Domain.csproj"
+      "path": "../../Compass.Services/Compass.DataService.Domain/Compass.DataService.Domain.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.DataService.Domain/Compass.DataService.Domain.csproj"
     },
     "Compass.DataService.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../Compass.DataService/Compass.DataService.Infrastructure/Compass.DataService.Infrastructure.csproj",
-      "msbuildProject": "../../Compass.DataService/Compass.DataService.Infrastructure/Compass.DataService.Infrastructure.csproj"
+      "path": "../../Compass.Services/Compass.DataService.Infrastructure/Compass.DataService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.DataService.Infrastructure/Compass.DataService.Infrastructure.csproj"
     },
     "Compass.FileService.Domain/1.0.0": {
       "type": "project",
-      "path": "../../Compass.FileService/Compass.FileService.Domain/Compass.FileService.Domain.csproj",
-      "msbuildProject": "../../Compass.FileService/Compass.FileService.Domain/Compass.FileService.Domain.csproj"
+      "path": "../../Compass.Services/Compass.FileService.Domain/Compass.FileService.Domain.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.FileService.Domain/Compass.FileService.Domain.csproj"
     },
     "Compass.FileService.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../Compass.FileService/Compass.FileService.Infrastructure/Compass.FileService.Infrastructure.csproj",
-      "msbuildProject": "../../Compass.FileService/Compass.FileService.Infrastructure/Compass.FileService.Infrastructure.csproj"
+      "path": "../../Compass.Services/Compass.FileService.Infrastructure/Compass.FileService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.FileService.Infrastructure/Compass.FileService.Infrastructure.csproj"
     },
     "Compass.IdentityService.Domain/1.0.0": {
       "type": "project",
-      "path": "../../Compass.IdentityService/Compass.IdentityService.Domain/Compass.IdentityService.Domain.csproj",
-      "msbuildProject": "../../Compass.IdentityService/Compass.IdentityService.Domain/Compass.IdentityService.Domain.csproj"
+      "path": "../../Compass.Services/Compass.IdentityService.Domain/Compass.IdentityService.Domain.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.IdentityService.Domain/Compass.IdentityService.Domain.csproj"
     },
     "Compass.IdentityService.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../Compass.IdentityService/Compass.IdentityService.Infrastructure/Compass.IdentityService.Infrastructure.csproj",
-      "msbuildProject": "../../Compass.IdentityService/Compass.IdentityService.Infrastructure/Compass.IdentityService.Infrastructure.csproj"
+      "path": "../../Compass.Services/Compass.IdentityService.Infrastructure/Compass.IdentityService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.IdentityService.Infrastructure/Compass.IdentityService.Infrastructure.csproj"
     },
     "Compass.PlanService.Domain/1.0.0": {
       "type": "project",
-      "path": "../../Compass.PlanService/Compass.PlanService.Domain/Compass.PlanService.Domain.csproj",
-      "msbuildProject": "../../Compass.PlanService/Compass.PlanService.Domain/Compass.PlanService.Domain.csproj"
+      "path": "../../Compass.Services/Compass.PlanService.Domain/Compass.PlanService.Domain.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.PlanService.Domain/Compass.PlanService.Domain.csproj"
     },
     "Compass.PlanService.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../Compass.PlanService/Compass.PlanService.Infrastructure/Compass.PlanService.Infrastructure.csproj",
-      "msbuildProject": "../../Compass.PlanService/Compass.PlanService.Infrastructure/Compass.PlanService.Infrastructure.csproj"
+      "path": "../../Compass.Services/Compass.PlanService.Infrastructure/Compass.PlanService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.PlanService.Infrastructure/Compass.PlanService.Infrastructure.csproj"
     },
     "Compass.ProjectService.Domain/1.0.0": {
       "type": "project",
-      "path": "../../Compass.ProjectService/Compass.ProjectService.Domain/Compass.ProjectService.Domain.csproj",
-      "msbuildProject": "../../Compass.ProjectService/Compass.ProjectService.Domain/Compass.ProjectService.Domain.csproj"
+      "path": "../../Compass.Services/Compass.ProjectService.Domain/Compass.ProjectService.Domain.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.ProjectService.Domain/Compass.ProjectService.Domain.csproj"
     },
     "Compass.ProjectService.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../Compass.ProjectService/Compass.ProjectService.Infrastructure/Compass.ProjectService.Infrastructure.csproj",
-      "msbuildProject": "../../Compass.ProjectService/Compass.ProjectService.Infrastructure/Compass.ProjectService.Infrastructure.csproj"
+      "path": "../../Compass.Services/Compass.ProjectService.Infrastructure/Compass.ProjectService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.ProjectService.Infrastructure/Compass.ProjectService.Infrastructure.csproj"
     },
     "Compass.QualityService.Domain/1.0.0": {
       "type": "project",
-      "path": "../../Compass.QualityService/Compass.QualityService.Domain/Compass.QualityService.Domain.csproj",
-      "msbuildProject": "../../Compass.QualityService/Compass.QualityService.Domain/Compass.QualityService.Domain.csproj"
+      "path": "../../Compass.Services/Compass.QualityService.Domain/Compass.QualityService.Domain.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.QualityService.Domain/Compass.QualityService.Domain.csproj"
     },
     "Compass.QualityService.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../Compass.QualityService/Compass.QualityService.Infrastructure/Compass.QualityService.Infrastructure.csproj",
-      "msbuildProject": "../../Compass.QualityService/Compass.QualityService.Infrastructure/Compass.QualityService.Infrastructure.csproj"
+      "path": "../../Compass.Services/Compass.QualityService.Infrastructure/Compass.QualityService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.QualityService.Infrastructure/Compass.QualityService.Infrastructure.csproj"
     },
     "Compass.TodoService.Domain/1.0.0": {
       "type": "project",
-      "path": "../../Compass.TodoService/Compass.TodoService.Domain/Compass.TodoService.Domain.csproj",
-      "msbuildProject": "../../Compass.TodoService/Compass.TodoService.Domain/Compass.TodoService.Domain.csproj"
+      "path": "../../Compass.Services/Compass.TodoService.Domain/Compass.TodoService.Domain.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.TodoService.Domain/Compass.TodoService.Domain.csproj"
     },
     "Compass.TodoService.Infrastructure/1.0.0": {
       "type": "project",
-      "path": "../../Compass.TodoService/Compass.TodoService.Infrastructure/Compass.TodoService.Infrastructure.csproj",
-      "msbuildProject": "../../Compass.TodoService/Compass.TodoService.Infrastructure/Compass.TodoService.Infrastructure.csproj"
+      "path": "../../Compass.Services/Compass.TodoService.Infrastructure/Compass.TodoService.Infrastructure.csproj",
+      "msbuildProject": "../../Compass.Services/Compass.TodoService.Infrastructure/Compass.TodoService.Infrastructure.csproj"
     },
     "Compass.Wasm.Client/1.0.0": {
       "type": "project",
@@ -11205,29 +11205,29 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.CategoryService\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj"
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.CategoryService.Infrastructure\\Compass.CategoryService.Infrastructure.csproj"
             },
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.DataService\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj"
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj"
             },
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.FileService\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj"
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.FileService.Infrastructure\\Compass.FileService.Infrastructure.csproj"
             },
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.IdentityService\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj"
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj"
             },
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.PlanService\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj"
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Infrastructure\\Compass.PlanService.Infrastructure.csproj"
             },
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.ProjectService\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj"
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.ProjectService.Infrastructure\\Compass.ProjectService.Infrastructure.csproj"
             },
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.QualityService\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj"
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Infrastructure\\Compass.QualityService.Infrastructure.csproj"
             },
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.TodoService\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj"
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.TodoService.Infrastructure\\Compass.TodoService.Infrastructure.csproj"
             },
             "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\Compass.Wasm.Client.csproj": {
               "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Client\\Compass.Wasm.Client.csproj"

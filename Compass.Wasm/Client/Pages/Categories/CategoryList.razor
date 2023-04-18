@@ -1,0 +1,22 @@
+﻿@page "/categorylist"
+@using Compass.Wasm.Shared.Categories
+@inject HttpClient Http
+@inject IJSRuntime JsRuntime
+
+<CategoryChoose @bind-ModelTypeId="ModelTypeId"/>
+<p>现在选中子类型Id：@ModelTypeId</p>
+
+
+@foreach (var sbu in Enum.GetNames(typeof(Sbu_e)))
+{
+    <p class="fs-3" style="font-weight: bold">@sbu</p>
+    @*row-cols-md-5,5控制列数，g-2,控制间隙*@
+    <div class="row row-cols-1 row-cols-md-1 g-2">
+        <ProductCards Sbu="@sbu"/>
+    </div>
+    <hr />
+}
+
+@code {
+    public string ModelTypeId { get; set; }
+}

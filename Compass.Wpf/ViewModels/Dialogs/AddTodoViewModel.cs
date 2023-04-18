@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.TodoService;
+﻿using Compass.Wasm.Shared.Todos;
 using Compass.Wpf.Common;
 using MaterialDesignThemes.Wpf;
 using Prism.Commands;
