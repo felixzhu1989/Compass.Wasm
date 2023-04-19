@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml
-24-919141417
+25-994538321
 31152453371
-135-2048758525
+138677405606
 2481800476230
-Views\AboutView.xaml;Views\DetailView.xaml;Views\Dialogs\AddMemoView.xaml;Views\Dialogs\AddTodoView.xaml;Views\Dialogs\BatchWorksView.xaml;Views\Dialogs\CutListView.xaml;Views\Dialogs\JobCardView.xaml;Views\Dialogs\LoginView.xaml;Views\Dialogs\MsgView.xaml;Views\DrawingView.xaml;Views\Hoods\KvfDataView.xaml;Views\Hoods\KviDataView.xaml;Views\Hoods\KwiDataView.xaml;Views\Hoods\UvfDataView.xaml;Views\Hoods\UviDataView.xaml;Views\IndexView.xaml;Views\MainView.xaml;Views\MemoView.xaml;Views\ModulesView.xaml;Views\ProcessView.xaml;Views\ProjectInfoView.xaml;Views\ProjectsView.xaml;Views\SettingsView.xaml;Views\TodoView.xaml;
+Views\AboutView.xaml;Views\DetailView.xaml;Views\Dialogs\AddMemoView.xaml;Views\Dialogs\AddTodoView.xaml;Views\Dialogs\BatchWorksView.xaml;Views\Dialogs\CutListView.xaml;Views\Dialogs\JobCardView.xaml;Views\Dialogs\LoginView.xaml;Views\Dialogs\MsgView.xaml;Views\DrawingView.xaml;Views\Hoods\KvfDataView.xaml;Views\Hoods\KviDataView.xaml;Views\Hoods\KwfDataView.xaml;Views\Hoods\KwiDataView.xaml;Views\Hoods\UvfDataView.xaml;Views\Hoods\UviDataView.xaml;Views\IndexView.xaml;Views\MainView.xaml;Views\MemoView.xaml;Views\ModulesView.xaml;Views\ProcessView.xaml;Views\ProjectInfoView.xaml;Views\ProjectsView.xaml;Views\SettingsView.xaml;Views\TodoView.xaml;
 
-False
+True
 

@@ -34,7 +34,7 @@ public class ExhaustService : BaseDrawingService, IExhaustService
     }
 
 
-    public void ExhaustSpigotFs(AssemblyDoc swAssyTop, string suffix, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, bool marvel, bool ansul)
+    public void ExhaustSpigotFs(AssemblyDoc swAssyTop, string suffix, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, bool marvel, bool ansul,ExhaustType_e exhaustType)
     {
         //当有marvel或者脖颈高度100，且没有ansul时，脖颈宽度为300,无需脖颈
         if ((marvel|| exhaustSpigotHeight.Equals(100d))&& !ansul&&exhaustSpigotWidth.Equals(300d))
@@ -58,21 +58,45 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0007-1", Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", exhaustSpigotLength + 50d);
         swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
-        //左，todo:有待细化Ansul探测器逻辑
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0008-1", Aggregator);
+
+        //左，todo:有待细化Ansul探测器逻辑，水洗烟罩需要AnsulDetector
+        swCompLevel2=swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0008-1", Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", exhaustSpigotWidth);
         swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
+        if (ansul && (exhaustType is ExhaustType_e.KW or ExhaustType_e.UW or ExhaustType_e.CMOD))
+        {
+            swCompLevel2.UnSuppress("AnsulDetector");
+        }
+        else
+        {
+            swCompLevel2.Suppress("AnsulDetector");
+        }
 
         //右,
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0009-1", Aggregator);
+        swCompLevel2=swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0009-1", Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", exhaustSpigotWidth);
         swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
+        if (ansul && (exhaustType is ExhaustType_e.KW or ExhaustType_e.UW or ExhaustType_e.CMOD))
+        {
+            swCompLevel2.UnSuppress("AnsulDetector");
+        }
+        else
+        {
+            swCompLevel2.Suppress("AnsulDetector");
+        }
 
-        //滑门
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNCE0013-1", Aggregator);
-        swModelLevel2.ChangeDim("Length@SketchBase", exhaustSpigotLength / 2d + 10d);
-        swModelLevel2.ChangeDim("Width@SketchBase", exhaustSpigotWidth + 20d);
-
+        //如果是标准宽度，则压缩滑门
+        if (exhaustSpigotWidth.Equals(300d))
+        {
+            swAssyLevel1.Suppress(suffix, "FNCE0013-1");
+            swAssyLevel1.Suppress(suffix, "FNCE0013-2");
+        }
+        else
+        {
+            swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNCE0013-1", Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", exhaustSpigotLength / 2d + 10d);
+            swModelLevel2.ChangeDim("Width@SketchBase", exhaustSpigotWidth + 20d);
+        }
         //两个排风口的情况
         if (exhaustSpigotNumber == 2)
         {
@@ -425,11 +449,9 @@ public class ExhaustService : BaseDrawingService, IExhaustService
             swAssyLevel1.UnSuppress(suffix, railPart2, Aggregator);
             swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, railPart1, Aggregator);
             swAssyLevel1.ChangeDim("Width@DistanceSpigot", exhaustSpigotWidth+25d);
-            //根据脖颈数量计算导轨长度
+            //根据脖颈数量计算导轨长度，两个排风口时只能总长减去100
             var railLength = exhaustSpigotNumber == 1
-                ? exhaustSpigotLength * 2d + 100d
-                : exhaustSpigotLength * 3d + exhaustSpigotDis + 100d;
-            //导轨太长，那么只能总长减去100
+                ? exhaustSpigotLength * 2d + 100d : length - 100d;
             swModelLevel2.ChangeDim("Length@Base-Flange", railLength > length - 100d ? length - 100d : railLength);
         }
     }

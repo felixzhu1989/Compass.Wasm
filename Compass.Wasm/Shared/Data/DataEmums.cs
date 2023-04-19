@@ -47,6 +47,12 @@ public enum ExhaustType_e
     NA,KV,UV,KW,UW,CMOD,M
 }
 
+public enum ExhaustHeight_e
+{
+    E555,E400,E300
+}
+
+
 public enum SupplyType_e
 {
     NA,I,F,Rectangle,Round

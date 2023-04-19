@@ -3,7 +3,7 @@ using Prism.Ioc;
 using System.Threading.Tasks;
 using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Projects;
-using Compass.Wpf.ApiServices.Data.Hoods;
+using Compass.Wpf.ApiServices.Hoods;
 
 namespace Compass.Wpf.BatchWorks.Hoods;
 
@@ -48,12 +48,12 @@ public class KwiAutoDrawing : BaseAutoDrawing, IKwiAutoDrawing
             swModelTop.ChangeDim("Width@DistanceWidth", netWidth);
             #endregion
 
-            #region  Exhaust_KV_555，KV555排风装配
+            #region  Exhaust_KW_555，KW555排风装配
             ExhaustService.Kw555(swAssyTop, suffix, netLength, data.SidePanel, UvLightType_e.NA, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.WaterInlet);
             #endregion
 
             #region ExhaustSpigot_Fs，排风脖颈装配
-            ExhaustService.ExhaustSpigotFs(swAssyTop, suffix, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, data.Ansul);
+            ExhaustService.ExhaustSpigotFs(swAssyTop, suffix, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, data.Ansul, ExhaustType_e.KW);
             #endregion
 
             #region SidePanel_Fs,大侧板装配
@@ -65,7 +65,7 @@ public class KwiAutoDrawing : BaseAutoDrawing, IKwiAutoDrawing
             #endregion
 
             #region Supply_I_555,I555新风装配
-            SupplyService.I555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, UvLightType_e.NA, false, data.Marvel, data.LedLogo, data.WaterCollection);
+            SupplyService.I555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KW, data.SidePanel, UvLightType_e.NA, false, data.Marvel, data.LedLogo, data.WaterCollection);
             #endregion
 
             #region BackCj_Fs,BackCj装配

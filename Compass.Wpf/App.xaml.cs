@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows;
 using Compass.Wpf.ApiService;
-using Compass.Wpf.ApiServices.Data.Hoods;
+using Compass.Wpf.ApiServices;
+using Compass.Wpf.ApiServices.Hoods;
 using Compass.Wpf.ApiServices.Projects;
 using Compass.Wpf.ApiServices.Todos;
 using Compass.Wpf.BatchWorks;
@@ -132,7 +133,7 @@ namespace Compass.Wpf
             containerRegistry.RegisterForNavigation<UvfDataView, UvfDataViewModel>();
 
             containerRegistry.RegisterForNavigation<KwiDataView, KwiDataViewModel>();
-            //containerRegistry.RegisterForNavigation<KwfDataView, KwfDataViewModel>();
+            containerRegistry.RegisterForNavigation<KwfDataView, KwfDataViewModel>();
             //containerRegistry.RegisterForNavigation<UwiDataView, UwiDataViewModel>();
             //containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
 
@@ -162,7 +163,7 @@ namespace Compass.Wpf
             containerRegistry.Register<IUvfAutoDrawing, UvfAutoDrawing>();
 
             containerRegistry.Register<IKwiAutoDrawing, KwiAutoDrawing>();
-            //containerRegistry.Register<IKwfAutoDrawing, KwfAutoDrawing>();
+            containerRegistry.Register<IKwfAutoDrawing, KwfAutoDrawing>();
             //containerRegistry.Register<IUwiAutoDrawing, UwiAutoDrawing>();
             //containerRegistry.Register<IUwfAutoDrawing, UwfAutoDrawing>();
 

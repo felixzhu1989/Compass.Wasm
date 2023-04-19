@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Projects;
-using Compass.Wpf.ApiServices.Data.Hoods;
+using Compass.Wpf.ApiServices.Hoods;
 using Compass.Wpf.Extensions;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Prism.Ioc;
@@ -54,7 +54,7 @@ public class UviAutoDrawing : BaseAutoDrawing, IUviAutoDrawing
             #endregion
 
             #region ExhaustSpigot_Fs，排风脖颈装配
-            ExhaustService.ExhaustSpigotFs(swAssyTop, suffix, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, data.Ansul);
+            ExhaustService.ExhaustSpigotFs(swAssyTop, suffix, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, data.Ansul, ExhaustType_e.UV);
             #endregion
 
             #region SidePanel_Fs,大侧板装配

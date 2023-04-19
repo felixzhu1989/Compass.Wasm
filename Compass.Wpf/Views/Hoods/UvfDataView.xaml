@@ -87,7 +87,7 @@
                     <TextBox Text="{Binding DataDto.MiddleToRight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="中心距离右端："
-                             materialDesign:TextFieldAssist.SuffixText="(居中时为0，不修改)" />
+                             materialDesign:TextFieldAssist.SuffixText="(居中为0，不修改)" />
                     <TextBox Text="{Binding DataDto.ExhaustSpigotLength,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="脖颈长度：" />
@@ -134,6 +134,10 @@
                               ItemsSource="{Binding LightTypes}"
                               SelectedItem="{Binding DataDto.LightType,Converter={StaticResource LightTypeConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="灯具类型:   " />
+                    <TextBox Text="{Binding DataDto.LightToFront,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="中心距离前端："
+                             materialDesign:TextFieldAssist.SuffixText="(居中为0，不修改)" />
                     <TextBox Text="{Binding DataDto.SpotLightNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Visibility="{Binding DataDto.LightType,Converter={StaticResource ShowSpotLightConverter}}"
                              Margin="0,5"

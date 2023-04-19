@@ -79,6 +79,7 @@ public class KwiDataService : BaseDataGetService<KwiData>, IKwiDataService
 
             #region Ansul探测器
             data.AnsulDetectorEnd = dto.AnsulDetectorEnd;
+            data.AnsulDetectorNumber=dto.AnsulDetectorNumber;
             data.AnsulDetectorDis1 = dto.AnsulDetectorDis1;
             data.AnsulDetectorDis2 = dto.AnsulDetectorDis2;
             data.AnsulDetectorDis3 = dto.AnsulDetectorDis3;

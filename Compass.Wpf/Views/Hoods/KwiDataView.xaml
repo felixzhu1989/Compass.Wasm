@@ -107,7 +107,7 @@
                              Visibility="{Binding DataDto.ExhaustSpigotNumber,Converter={StaticResource OneToVisibilityConverter}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="脖颈间距："
-                             materialDesign:TextFieldAssist.SuffixText="(脖颈数为2时填)" />
+                             materialDesign:TextFieldAssist.SuffixText="(脖颈数>1时填)" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1"
