@@ -1,4 +1,4 @@
-﻿
+﻿E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\AboutView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\DetailView.xaml;;
@@ -10,6 +10,7 @@ FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Dialogs\MsgView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\DrawingView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Hoods\KvfDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Hoods\KviDataView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Hoods\KwfDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Hoods\KwiDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Hoods\UvfDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Hoods\UviDataView.xaml;;
@@ -21,5 +22,4 @@ FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\ProjectInfoView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\ProjectsView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\SettingsView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\TodoView.xaml;;
-FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Hoods\KwfDataView.xaml;;
 
