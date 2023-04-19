@@ -134,8 +134,8 @@ namespace Compass.Wpf
 
             containerRegistry.RegisterForNavigation<KwiDataView, KwiDataViewModel>();
             containerRegistry.RegisterForNavigation<KwfDataView, KwfDataViewModel>();
-            //containerRegistry.RegisterForNavigation<UwiDataView, UwiDataViewModel>();
-            //containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
+            containerRegistry.RegisterForNavigation<UwiDataView, UwiDataViewModel>();
+            containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
 
             #endregion
 
@@ -164,8 +164,8 @@ namespace Compass.Wpf
 
             containerRegistry.Register<IKwiAutoDrawing, KwiAutoDrawing>();
             containerRegistry.Register<IKwfAutoDrawing, KwfAutoDrawing>();
-            //containerRegistry.Register<IUwiAutoDrawing, UwiAutoDrawing>();
-            //containerRegistry.Register<IUwfAutoDrawing, UwfAutoDrawing>();
+            containerRegistry.Register<IUwiAutoDrawing, UwiAutoDrawing>();
+            containerRegistry.Register<IUwfAutoDrawing, UwfAutoDrawing>();
 
 
 

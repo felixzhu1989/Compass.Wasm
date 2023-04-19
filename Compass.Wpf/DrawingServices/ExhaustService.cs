@@ -32,7 +32,12 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_KW_555-1", Aggregator);
         KwExhaust555(swAssyLevel1, suffix, length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, waterInlet);
     }
-
+    public void Uw555(AssemblyDoc swAssyTop, string suffix, double length, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_KW_555-1", Aggregator);
+        KwExhaust555(swAssyLevel1, suffix, length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, waterInlet);
+        //UwExhaust555
+    }
 
     public void ExhaustSpigotFs(AssemblyDoc swAssyTop, string suffix, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, bool marvel, bool ansul,ExhaustType_e exhaustType)
     {

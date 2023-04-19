@@ -139,3 +139,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\Kw
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KwiDataView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KwfDataView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\KwfDataView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UwfDataView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UwiDataView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UwiDataView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\UwfDataView.baml

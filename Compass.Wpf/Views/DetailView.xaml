@@ -23,7 +23,6 @@
             </ResourceDictionary.MergedDictionaries>
             <converter:SidePanelConverter x:Key="SidePanelConverter" />
         </ResourceDictionary>
-        
     </UserControl.Resources>
     <materialDesign:DialogHost>
         <materialDesign:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
@@ -32,7 +31,8 @@
                 <Grid MinWidth="300"
                       Margin="10,5">
                     <Grid.RowDefinitions>
-                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
@@ -40,93 +40,95 @@
                                    FontSize="20"
                                    FontWeight="Bold" />
                         <!--筛选模型-->
-                        <StackPanel IsEnabled="{Binding CanSelectModelType}">
-                            <StackPanel Orientation="Horizontal">
-                                <!---->
-                                <TextBox Text="{Binding ModelTypeSearch,
+                        <StackPanel Orientation="Horizontal"
+                                    IsEnabled="{Binding CanSelectModelType}">
+                            <!---->
+                            <TextBox Text="{Binding ModelTypeSearch,
                             Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                         VerticalAlignment="Center"
-                                         materialDesign:HintAssist.Hint="查找模型"
-                                         materialDesign:TextFieldAssist.HasClearButton="True"
-                                         Margin="0,0,5,0"
-                                         Width="250">
-                                    <TextBox.InputBindings>
-                                        <KeyBinding Key="Enter"
-                                                    Command="{Binding ExecuteCommand}"
-                                                    CommandParameter="FilterModelTypeTree" />
-                                    </TextBox.InputBindings>
-                                </TextBox>
-                                <ComboBox ItemsSource="{Binding Sbu}"
-                                          SelectedIndex="{Binding SelectedSbuIndex}"
-                                          materialDesign:TextFieldAssist.PrefixText="SBU: "
-                                          VerticalAlignment="Center">
-                                    <!--筛选触发器-->
-                                    <behavior:Interaction.Triggers>
-                                        <behavior:EventTrigger EventName="SelectionChanged">
-                                            <behavior:InvokeCommandAction Command="{Binding ExecuteCommand}"
-                                                                          CommandParameter="FilterModelTypeTree" />
-                                        </behavior:EventTrigger>
-                                    </behavior:Interaction.Triggers>
-                                </ComboBox>
-                            </StackPanel>
-                            <!--产品模型选择树-->
-                            <TreeView Margin="0,5,0,0"
-                                  x:Name="ModelsTreeView"
-                                  ItemsSource="{Binding FilterModelDtos}"
-                                  materialDesign:ScrollViewerAssist.BubbleVerticalScroll="True">
-                            <behavior:Interaction.Triggers>
-                                <behavior:EventTrigger EventName="SelectedItemChanged">
-                                    <behavior:InvokeCommandAction Command="{Binding SelectedModelChangedCommand}"
-                                                                  CommandParameter="{Binding ElementName=ModelsTreeView, Path=SelectedItem}" />
-                                </behavior:EventTrigger>
-                            </behavior:Interaction.Triggers>
-                                <TreeView.ItemContainerStyle>
-                                    <Style TargetType="TreeViewItem"
-                                           BasedOn="{StaticResource MaterialDesignTreeViewItem}">
-                                        <Setter Property="Foreground"
-                                                Value="DarkSlateGray" />
-                                    </Style>
-                                </TreeView.ItemContainerStyle>
-                                <TreeView.Resources>
-                                <HierarchicalDataTemplate DataType="{x:Type domaincategory:ModelDto}"
-                                                          ItemsSource="{Binding ModelTypeDtos}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="FolderOpen"
-                                                                 VerticalAlignment="Center"
-                                                                 Foreground="DarkBlue" />
-                                        <TextBlock Text="{Binding Name}"
-                                                   Margin="6,0"
-                                                   FontWeight="Bold"
-                                                   Foreground="DarkBlue" />
-                                    </StackPanel>
-                                </HierarchicalDataTemplate>
-                                <DataTemplate DataType="{x:Type domaincategory:ModelTypeDto}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon Kind="File"
-                                                                 VerticalAlignment="Center" />
-                                        <TextBlock Text="{Binding Name}"
-                                                   Margin="5 ,0"
-                                                   ToolTip="{Binding Description}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </TreeView.Resources>
-                        </TreeView>
+                                     VerticalAlignment="Center"
+                                     materialDesign:HintAssist.Hint="查找模型"
+                                     materialDesign:TextFieldAssist.HasClearButton="True"
+                                     Margin="0,0,5,0"
+                                     Width="250">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter"
+                                                Command="{Binding ExecuteCommand}"
+                                                CommandParameter="FilterModelTypeTree" />
+                                </TextBox.InputBindings>
+                            </TextBox>
+                            <ComboBox ItemsSource="{Binding Sbu}"
+                                      SelectedIndex="{Binding SelectedSbuIndex}"
+                                      materialDesign:TextFieldAssist.PrefixText="SBU: "
+                                      VerticalAlignment="Center">
+                                <!--筛选触发器-->
+                                <behavior:Interaction.Triggers>
+                                    <behavior:EventTrigger EventName="SelectionChanged">
+                                        <behavior:InvokeCommandAction Command="{Binding ExecuteCommand}"
+                                                                      CommandParameter="FilterModelTypeTree" />
+                                    </behavior:EventTrigger>
+                                </behavior:Interaction.Triggers>
+                            </ComboBox>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Grid.Row="1">
+                    <!--产品模型选择树-->
+                    <TreeView Grid.Row="1"
+                              IsEnabled="{Binding CanSelectModelType}"
+                              Margin="0,5,0,0"
+                              x:Name="ModelsTreeView"
+                              ItemsSource="{Binding FilterModelDtos}"
+                              materialDesign:ScrollViewerAssist.BubbleVerticalScroll="True">
+                        <behavior:Interaction.Triggers>
+                            <behavior:EventTrigger EventName="SelectedItemChanged">
+                                <behavior:InvokeCommandAction Command="{Binding SelectedModelChangedCommand}"
+                                                              CommandParameter="{Binding ElementName=ModelsTreeView, Path=SelectedItem}" />
+                            </behavior:EventTrigger>
+                        </behavior:Interaction.Triggers>
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="TreeViewItem"
+                                   BasedOn="{StaticResource MaterialDesignTreeViewItem}">
+                                <Setter Property="Foreground"
+                                        Value="DarkSlateGray" />
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <TreeView.Resources>
+                            <HierarchicalDataTemplate DataType="{x:Type domaincategory:ModelDto}"
+                                                      ItemsSource="{Binding ModelTypeDtos}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="FolderOpen"
+                                                             VerticalAlignment="Center"
+                                                             Foreground="DarkBlue" />
+                                    <TextBlock Text="{Binding Name}"
+                                               Margin="6,0"
+                                               FontWeight="Bold"
+                                               Foreground="DarkBlue" />
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                            <DataTemplate DataType="{x:Type domaincategory:ModelTypeDto}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="File"
+                                                             VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding Name}"
+                                               Margin="5 ,0"
+                                               ToolTip="{Binding Description}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </TreeView.Resources>
+                    </TreeView>
+                    <StackPanel Grid.Row="2">
                         <TextBlock Text="{Binding ShowSelectedModel}"
-                                   Foreground="Red" />
+                                   Foreground="Red" 
+                                   Margin="0,5,0,0"/>
                         <TextBox Text="{Binding CurrentModuleDto.Name}"
                                  materialDesign:HintAssist.Hint="烟罩M1、M2...天花B01、CJ01、SSP01..."
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                 materialDesign:TextFieldAssist.HasClearButton="True"/>
+                                 materialDesign:TextFieldAssist.HasClearButton="True" />
                         <TextBox Text="{Binding CurrentModuleDto.SpecialNotes}"
                                  materialDesign:HintAssist.Hint="请输入分段的特殊要求"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-materialDesign:TextFieldAssist.HasClearButton="True"
+                                 materialDesign:TextFieldAssist.HasClearButton="True"
                                  MinHeight="70"
                                  TextWrapping="Wrap"
-                                 AcceptsReturn="True"/>
+                                 AcceptsReturn="True" />
                         <TextBox Text="{Binding CurrentModuleDto.Length}"
                                  Margin="0,5"
                                  VerticalAlignment="Center"
@@ -141,19 +143,17 @@ materialDesign:TextFieldAssist.HasClearButton="True"
                                  Margin="0,5"
                                  VerticalAlignment="Center"
                                  materialDesign:TextFieldAssist.PrefixText="高度: "
-                                 materialDesign:TextFieldAssist.SuffixText="(为默认值时可不填写)"/>
+                                 materialDesign:TextFieldAssist.SuffixText="(为默认值时可不填写)" />
                         <ComboBox ItemsSource="{Binding SidePanels}"
                                   Margin="0,5"
                                   SelectedItem="{Binding CurrentModuleDto.SidePanel,Converter={StaticResource SidePanelConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                   materialDesign:TextFieldAssist.PrefixText="侧板:   " />
-                        
                         <CheckBox IsChecked="{Binding CurrentModuleDto.IsModuleDataOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                   Content="分段数据已经OK"
                                   Margin="0,10" />
                         <CheckBox IsChecked="{Binding CurrentModuleDto.IsCutListOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                   Content="CutList已经OK"
                                   Margin="0,10" />
-
                         <Button Content="保存分段"
                                 Command="{Binding ExecuteCommand}"
                                 CommandParameter="Save"
@@ -171,12 +171,11 @@ materialDesign:TextFieldAssist.HasClearButton="True"
                 <TextBlock Grid.Row="0"
                            Text="{Binding Title}"
                            FontSize="26"
-                           Margin="15,10" >
+                           Margin="15,10">
                     <TextBlock.InputBindings>
                         <MouseBinding MouseAction="LeftClick"
-                                      Command="{Binding ProjectInfoCommand}"/>
-                    </TextBlock.InputBindings>
-                </TextBlock>
+                                      Command="{Binding ProjectInfoCommand}" />
+                    </TextBlock.InputBindings></TextBlock>
                 <!--分割线-->
                 <Border Grid.Row="0"
                         BorderBrush="#DDDDDD"
@@ -247,13 +246,13 @@ materialDesign:TextFieldAssist.HasClearButton="True"
                                 <behavior:EventTrigger EventName="MouseDoubleClick">
                                     <behavior:InvokeCommandAction Command="{Binding UpdateModuleDataCommand}"
                                                                   CommandParameter="{Binding ElementName=DrawingsTreeView, Path=SelectedItem}" />
-                                    </behavior:EventTrigger>
+                                </behavior:EventTrigger>
                             </behavior:Interaction.Triggers>
                             <TreeView.ItemContainerStyle>
                                 <Style TargetType="TreeViewItem"
                                        BasedOn="{StaticResource MaterialDesignTreeViewItem}">
                                     <Setter Property="Foreground"
-                                            Value="DarkSlateGray"/>
+                                            Value="DarkSlateGray" />
                                     <Setter Property="IsExpanded"
                                             Value="True" />
                                 </Style>
@@ -283,7 +282,6 @@ materialDesign:TextFieldAssist.HasClearButton="True"
                                     </StackPanel>
                                 </DataTemplate>
                             </TreeView.Resources>
-
                         </TreeView>
                         <Button Grid.Row="2"
                                 Content="分段列表 - 批量操作"
@@ -292,7 +290,7 @@ materialDesign:TextFieldAssist.HasClearButton="True"
                                 Command="{Binding ModulesCommand}"
                                 Margin="10"
                                 Width="180"
-                                HorizontalAlignment="Left"/>
+                                HorizontalAlignment="Left" />
                     </Grid>
                     <!--导航页面容器-->
                     <ContentControl Grid.Column="1"
