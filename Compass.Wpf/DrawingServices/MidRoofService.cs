@@ -76,6 +76,7 @@ public class MidRoofService : BaseDrawingService, IMidRoofService
         #endregion
 
         #region UVHood
+
         switch (uvLightType)
         {
             case UvLightType_e.UVR4L:
@@ -90,7 +91,7 @@ public class MidRoofService : BaseDrawingService, IMidRoofService
             case UvLightType_e.UVR8S:
                 swCompLevel2.UnSuppress("UvCable");
                 swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
-                swModelLevel2.ChangeDim("UvCable@SketchUvCable", 790);
+                swModelLevel2.ChangeDim("UvCable@SketchUvCable", 790d);
                 break;
             case UvLightType_e.NA:
             default:

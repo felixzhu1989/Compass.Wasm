@@ -32,14 +32,16 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_KW_555-1", Aggregator);
         KwExhaust555(swAssyLevel1, suffix, length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, waterInlet);
     }
+
     public void Uw555(AssemblyDoc swAssyTop, string suffix, double length, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet)
     {
-        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_KW_555-1", Aggregator);
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_UW_555-1", Aggregator);
         KwExhaust555(swAssyLevel1, suffix, length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, waterInlet);
         //UwExhaust555
+        UwExhaust555(swAssyLevel1, suffix, length,  uvLightType, middleToRight, ansul, ansulSide, waterInlet);
     }
 
-    public void ExhaustSpigotFs(AssemblyDoc swAssyTop, string suffix, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, bool marvel, bool ansul,ExhaustType_e exhaustType)
+    public void ExhaustSpigotFs(AssemblyDoc swAssyTop, string suffix, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, bool marvel, bool ansul, ExhaustType_e exhaustType)
     {
         //当有marvel或者脖颈高度100，且没有ansul时，脖颈宽度为300,无需脖颈
         if ((marvel|| exhaustSpigotHeight.Equals(100d))&& !ansul&&exhaustSpigotWidth.Equals(300d))
@@ -115,6 +117,7 @@ public class ExhaustService : BaseDrawingService, IExhaustService
             swAssyTop.Suppress("LocalLPatternExhaustSpigot");
         }
     }
+
 
 
 
@@ -496,6 +499,18 @@ public class ExhaustService : BaseDrawingService, IExhaustService
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", length-8d);
+
+        #region 借用逻辑-MidRoof铆螺母孔
+        //2023/3/10 修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
+        const double sideDis = 150d;
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        midRoofNutNumber = midRoofNutNumber < 3 ? 3 : midRoofNutNumber;
+        var midRoofNutDis = (length - 2*sideDis)/(midRoofNutNumber-1);
+
+        swModelLevel2.ChangeDim("Dis@LPatternMidRoofNut", midRoofNutDis);
+        #endregion
+
         if (ansul)
         {
             switch (ansulDetector)
@@ -573,8 +588,7 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         const double offsetDis = 20d;//Mesh与KSA偏差的距离
 
         double meshSideLength = (length - 3d - meshLength*(int)((length - 2d) / meshLength)) / 2d;
-        Component2 swCompLevel2;
-        ModelDoc2 swModelLevel2;
+
         if (ansul)
         {
             if (meshSideLength * 2d < minMeshSideLengthAnsul) meshSideLength += meshLength/2d;
@@ -583,33 +597,15 @@ public class ExhaustService : BaseDrawingService, IExhaustService
                 switch (ansulSide)
                 {
                     case AnsulSide_e.左侧喷:
-                        swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength + offsetDis);
-                        swCompLevel2.UnSuppress("AnsulSideLeft");
-
-                        swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength - offsetDis);
-                        swCompLevel2.Suppress("AnsulDetectorRight");
+                        FNHE0012(meshSideLength + offsetDis);
+                        FNHE0013(meshSideLength - offsetDis);
                         break;
                     case AnsulSide_e.右侧喷:
-                        swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength - offsetDis);
-                        swCompLevel2.Suppress("AnsulSideLeft");
-
-                        swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength + offsetDis);
-                        swCompLevel2.UnSuppress("AnsulDetectorRight");
-                        break;
-                    case AnsulSide_e.NA:
                     case AnsulSide_e.无侧喷:
+                    case AnsulSide_e.NA:
                     default:
-                        swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength - offsetDis);
-                        swCompLevel2.Suppress("AnsulSideLeft");
-
-                        swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength + offsetDis);
-                        swCompLevel2.Suppress("AnsulDetectorRight");
+                        FNHE0012(meshSideLength - offsetDis);
+                        FNHE0013(meshSideLength + offsetDis);
                         break;
                 }
             }
@@ -618,27 +614,15 @@ public class ExhaustService : BaseDrawingService, IExhaustService
                 switch (ansulSide)
                 {
                     case AnsulSide_e.左侧喷:
-                        swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength *2);
-                        swCompLevel2.UnSuppress("AnsulSideLeft");
-
+                        FNHE0012(meshSideLength *2d);
                         swAssyLevel1.Suppress(suffix, rightPart);
                         break;
                     case AnsulSide_e.右侧喷:
-                        swAssyLevel1.Suppress(suffix, leftPart);
-
-                        swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength *2);
-                        swCompLevel2.UnSuppress("AnsulDetectorRight");
-                        break;
-                    case AnsulSide_e.NA:
                     case AnsulSide_e.无侧喷:
+                    case AnsulSide_e.NA:
                     default:
                         swAssyLevel1.Suppress(suffix, leftPart);
-
-                        swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                        swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength *2);
-                        swCompLevel2.Suppress("AnsulDetectorRight");
+                        FNHE0013(meshSideLength *2d);
                         break;
                 }
             }
@@ -651,25 +635,31 @@ public class ExhaustService : BaseDrawingService, IExhaustService
             {
                 case <= minMeshSideLength*2d when meshSideLength*2d > ngMeshSideLength:
                     swAssyLevel1.Suppress(suffix, leftPart);
-
-                    swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                    swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength * 2d);
-                    swCompLevel2.Suppress("AnsulDetectorRight");
+                    FNHE0013(meshSideLength *2d);
                     break;
                 case > minMeshSideLength*2d:
-                    swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                    swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength - offsetDis);
-                    swCompLevel2.Suppress("AnsulSideLeft");
-
-                    swCompLevel2 = swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                    swModelLevel2.ChangeDim("Length@SketchBase", meshSideLength + offsetDis);
-                    swCompLevel2.Suppress("AnsulDetectorRight");
+                    FNHE0013(meshSideLength -offsetDis);
+                    FNHE0013(meshSideLength +offsetDis);
                     break;
                 default:
                     swAssyLevel1.Suppress(suffix, leftPart);
                     swAssyLevel1.Suppress(suffix, rightPart);
                     break;
             }
+        }
+        void FNHE0012(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, leftPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            if (ansulSide==AnsulSide_e.左侧喷) swCompLevel2.UnSuppress("AnsulSideLeft");
+            else swCompLevel2.Suppress("AnsulSideLeft");
+        }
+        void FNHE0013(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, rightPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            if (ansulSide==AnsulSide_e.右侧喷) swCompLevel2.UnSuppress("AnsulSideRight");
+            else swCompLevel2.Suppress("AnsulSideRight");
         }
     }
     #endregion
@@ -697,8 +687,7 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         FNHE0037(swAssyLevel1, suffix, "FNHE0037-1", length);
 
         //KSA侧板，水洗烟罩在三角板内侧，因此长度减去3，三角板的厚度
-        KsaFilter(swAssyLevel1,suffix,length-3d, "FNHE0003-1", "FNHE0004-1", "FNHE0005-1");
-
+        KsaFilter(swAssyLevel1, suffix, length-3d, "FNHE0003-1", "FNHE0004-1", "FNHE0005-1");
 
         //排风滑门导轨
         ExhaustRail(swAssyLevel1, suffix, marvel, length, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, "FNCE0018-1", "FNCE0018-2");
@@ -1040,9 +1029,140 @@ public class ExhaustService : BaseDrawingService, IExhaustService
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", length -5d);
-        
+
     }
 
     #endregion
 
+    #region Uw555
+    private void UwExhaust555(AssemblyDoc swAssyLevel1, string suffix, double length, UvLightType_e uvLightType, double middleToRight,  bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet)
+    {
+
+        FNHE0040(swAssyLevel1, suffix, "FNHE0040-1", length);
+        FNHE0015(swAssyLevel1, suffix, "FNHE0015-1", length);
+        FNHE0041(swAssyLevel1, suffix, "FNHE0041-1", length, uvLightType, middleToRight);
+        UwMeshFilter(swAssyLevel1, suffix, length, ansul, ansulSide, waterInlet, "FNHE0038-1", "FNHE0039-1");
+    }
+
+    private void FNHE0040(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length-8d);
+
+        #region 借用逻辑-MidRoof铆螺母孔
+        //2023/3/10 修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
+        const double sideDis = 150d;
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        midRoofNutNumber = midRoofNutNumber < 3 ? 3 : midRoofNutNumber;
+        var midRoofNutDis = (length - 2*sideDis)/(midRoofNutNumber-1);
+
+        swModelLevel2.ChangeDim("Dis@LPatternMidRoofNut", midRoofNutDis);
+        #endregion
+    }
+
+    private void FNHE0041(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, UvLightType_e uvLightType, double middleToRight)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length-5d);
+        #region UVHood
+        switch (uvLightType)
+        {
+            case UvLightType_e.UVR4L:
+            case UvLightType_e.UVR6L:
+            case UvLightType_e.UVR8L:
+                swCompLevel2.Suppress("UvDoorShort");
+                swCompLevel2.UnSuppress("UvDoorLong");
+                swModelLevel2.ChangeDim("ToRight@SketchUvDoorLong", middleToRight-2.5d);
+                break;
+            case UvLightType_e.UVR4S:
+            case UvLightType_e.UVR6S:
+            case UvLightType_e.UVR8S:
+                swCompLevel2.UnSuppress("UvDoorShort");
+                swCompLevel2.Suppress("UvDoorLong");
+                swModelLevel2.ChangeDim("ToRight@SketchUvDoorShort", middleToRight-2.5d);
+                break;
+            case UvLightType_e.NA:
+            default:
+                swCompLevel2.Suppress("UvDoorShort");
+                swCompLevel2.Suppress("UvDoorLong");
+                break;
+        }
+        #endregion
+    }
+
+    private void UwMeshFilter(AssemblyDoc swAssyLevel1, string suffix, double length, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet, string leftPart, string rightPart)
+    {
+        //MESH侧板长度(除去排风三角板3dm计算)1500
+        const double meshLength = 498d;
+        const double minMeshSideLengthAnsul = 55d;
+        const double offsetDis = 20d;//Mesh与KSA偏差的距离
+        //MESH侧板长度(除去排风三角板3dm计算,20220812-增加了考虑水管孔避让，最小55，再加上20错开KSA)
+        double meshSideLength = (length - 3d - meshLength*(int)((length - 2d-minMeshSideLengthAnsul+offsetDis) / meshLength)) / 2d;
+
+        //有Ansul时，Ansul和进水管不同一侧
+        if (ansul&&((waterInlet == WaterInlet_e.左入水 && ansulSide == AnsulSide_e.右侧喷) ||
+            (waterInlet == WaterInlet_e.右入水 && ansulSide == AnsulSide_e.左侧喷)))
+        {
+            //再减少一个MESH(498/2)
+            if ((meshSideLength - offsetDis) < minMeshSideLengthAnsul) meshSideLength += meshLength / 2d;
+            FNHE0038(meshSideLength - offsetDis);
+            FNHE0039(meshSideLength + offsetDis);
+        }
+        //Ansul和进水管同一侧，或者没有ansul时
+        else
+        {
+            //如果只有一个MESH侧板，再减少一个MESH(498/2)
+            if (meshSideLength * 2d < minMeshSideLengthAnsul) meshSideLength += meshLength / 2d;
+            //最大侧板>55，才能穿水管
+            if ((meshSideLength + offsetDis) > minMeshSideLengthAnsul)
+            {
+                if (waterInlet == WaterInlet_e.左入水)
+                {
+                    FNHE0038(meshSideLength + offsetDis);
+                    FNHE0039(meshSideLength - offsetDis);
+                }
+                else
+                {
+                    FNHE0038(meshSideLength - offsetDis);
+                    FNHE0039(meshSideLength + offsetDis);
+                }
+            }
+            else
+            {
+                if (waterInlet == WaterInlet_e.左入水)
+                {
+                    FNHE0038(meshSideLength *2d);
+                    swAssyLevel1.Suppress(suffix, rightPart);
+                }
+                else
+                {
+                    swAssyLevel1.Suppress(suffix, leftPart);
+                    FNHE0039(meshSideLength *2d);
+                }
+            }
+        }
+
+        void FNHE0038(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, leftPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            if (waterInlet == WaterInlet_e.左入水) swCompLevel2.UnSuppress("WaterPipeLeft");
+            else swCompLevel2.Suppress("WaterPipeLeft");
+            if (ansulSide==AnsulSide_e.左侧喷) swCompLevel2.UnSuppress("AnsulSideLeft");
+            else swCompLevel2.Suppress("AnsulSideLeft");
+        }
+        void FNHE0039(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, rightPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            if (waterInlet == WaterInlet_e.右入水) swCompLevel2.UnSuppress("WaterPipeRight");
+            else swCompLevel2.Suppress("WaterPipeRight");
+            if (ansulSide==AnsulSide_e.右侧喷) swCompLevel2.UnSuppress("AnsulSideRight");
+            else swCompLevel2.Suppress("AnsulSideRight");
+        }
+    }
+
+
+    #endregion
 }
