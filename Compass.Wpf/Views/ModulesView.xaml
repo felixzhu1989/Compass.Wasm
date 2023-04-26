@@ -205,7 +205,7 @@
                     Background="LightSkyBlue"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
-                    Content="天花装箱清单"
+                    Content="天花发货清单"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="CeilingPackingList"
                     Margin="10,0"

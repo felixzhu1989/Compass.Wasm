@@ -43,7 +43,7 @@ public class PrintsService : IPrintsService
     public async Task BatchPrintCutListAsync(List<ModuleDto> moduleDtos)
     {
         var cutListService = _provider.Resolve<ICutListService>();
-        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDocs", "CutList.xlsx");
+        var template = Path.Combine(Environment.CurrentDirectory, "CutList.xlsx");
 
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
@@ -72,7 +72,7 @@ public class PrintsService : IPrintsService
     public async Task PrintOneCutListAsync(ModuleDto moduleDto)
     {
         var cutListService = _provider.Resolve<ICutListService>();
-        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDocs", "CutList.xlsx");
+        var template = Path.Combine(Environment.CurrentDirectory, "CutList.xlsx");
 
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
@@ -93,7 +93,7 @@ public class PrintsService : IPrintsService
     /// </summary>
     public async Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos)
     {
-        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDocs", "JobCard.xlsx");
+        var template = Path.Combine(Environment.CurrentDirectory, "JobCard.xlsx");
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
         excelApp.Workbooks.Add(template);
@@ -120,7 +120,7 @@ public class PrintsService : IPrintsService
     /// </summary>
     public async Task PrintOneJobCardAsync(ModuleDto moduleDto)
     {
-        var template = Path.Combine(Environment.CurrentDirectory, "TemplateDocs", "JobCard.xlsx");
+        var template = Path.Combine(Environment.CurrentDirectory, "JobCard.xlsx");
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
         excelApp.Workbooks.Add(template);

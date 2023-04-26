@@ -1,4 +1,7 @@
 ﻿namespace Compass.Wasm.Shared.Projects;
+
+
+
 /// <summary>
 /// 项目分类
 /// </summary>
@@ -27,3 +30,4 @@ public enum Stakeholder_e
 {
     客户,销售,技术,采购,生产,物流
 }
+

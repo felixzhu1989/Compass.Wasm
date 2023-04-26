@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.TodoService.Infrast
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.Services", "Compass.Services", "{A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.Update", "Compass.Update\Compass.Update.csproj", "{532A0EF7-BDC7-4E69-BFC7-1DF17B1261CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Update", "Compass.Update\Compass.Update.csproj", "{532A0EF7-BDC7-4E69-BFC7-1DF17B1261CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
