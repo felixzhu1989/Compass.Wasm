@@ -9,19 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="HoodPackingList.xlsm" />
     <None Remove="Images\compass_64px.ico" />
     <None Remove="Images\halton_logo.png" />
     <None Remove="Images\Halton_Logo_RGB.jpg" />
     <None Remove="Images\halton_logo_small.png" />
     <None Remove="Images\login.png" />
     <None Remove="Images\wind.png" />
-    <None Remove="TemplateDocs\CutList.xlsx" />
-    <None Remove="TemplateDocs\JobCard.xlsx" />
+    <None Remove="UpdateList.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Images\compass_64px.ico" />
-    <Content Include="TemplateDocs\JobCard.xlsx">
+    <Content Include="HoodPackingList.xlsm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JobCard.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UpdateList.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -33,34 +38,36 @@
     <PackageReference Include="MicrosoftOfficeCore" Version="15.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+    <PackageReference Include="QRCoder" Version="1.4.3" />
     <PackageReference Include="RestSharp" Version="108.0.3" />
     <PackageReference Include="Visiativ.SOLIDWORKS.Interop" Version="31.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Compass.Update\Compass.Update.csproj" />
     <ProjectReference Include="..\Compass.Wasm\Shared\Compass.Wasm.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\compass_64px.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\halton_logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Halton_Logo_RGB.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\halton_logo_small.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\login.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\wind.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Content Include="TemplateDocs\CutList.xlsx">
+    <Content Include="CutList.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

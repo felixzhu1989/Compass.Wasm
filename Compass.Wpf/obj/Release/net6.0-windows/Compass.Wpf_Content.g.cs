@@ -8,8 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/compass_64px.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templatedocs/jobcard.xlsx")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("templatedocs/cutlist.xlsx")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("hoodpackinglist.xlsm")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("jobcard.xlsx")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("updatelist.xml")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cutlist.xlsx")]
 
 

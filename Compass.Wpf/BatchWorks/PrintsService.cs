@@ -1,4 +1,9 @@
-﻿using Compass.Wpf.Extensions;
+﻿using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.ApiService;
+using Compass.Wpf.ApiServices.Projects;
+using Compass.Wpf.Extensions;
+using Microsoft.Office.Core;
 using Microsoft.Office.Interop.Excel;
 using Prism.Events;
 using Prism.Ioc;
@@ -9,12 +14,9 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Compass.Wasm.Shared.Parameters;
-using Compass.Wasm.Shared.Projects;
-using Microsoft.Office.Core;
+using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
-using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -23,10 +25,14 @@ public class PrintsService : IPrintsService
     #region ctor
     private readonly IContainerProvider _provider;
     private readonly IEventAggregator _aggregator;
+    private readonly IModuleService _moduleService;
+    private readonly IFileUploadService _fileUploadService;
     public PrintsService(IContainerProvider provider)
     {
         _provider = provider;
         _aggregator= provider.Resolve<IEventAggregator>();
+        _moduleService = provider.Resolve<IModuleService>();
+        _fileUploadService = provider.Resolve<IFileUploadService>();
     }
     #endregion
 
@@ -43,12 +49,12 @@ public class PrintsService : IPrintsService
         var excelApp = new Application();
         excelApp.Workbooks.Add(template);
         var worksheet = (Worksheet)excelApp.Worksheets[1];
-        
+
         foreach (var moduleDto in moduleDtos)
         {
-            if(!moduleDto.IsCutListOk)
+            if (!moduleDto.IsCutListOk)
             {
-                _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******CutList不OK，跳过打印******",Filter_e.Batch);
+                _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******CutList不OK，跳过打印******", Filter_e.Batch);
                 continue;
             }
             _aggregator.SendMessage($"正在打印:\t{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}", Filter_e.Batch);
@@ -280,10 +286,38 @@ public class PrintsService : IPrintsService
 
             var imagePath = Path.Combine(Environment.CurrentDirectory, "label.png");
             //将图片插入excel
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4258, 610, 295);//左，上，宽度，高度
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4710, 610, 295);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4240, 610, 280);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4692, 610, 280);//左，上，宽度，高度
         }
-        
+
+        //生成二维码插入Excel并上传
+        var content = moduleDto.Id.ToString();
+        var bmp = content.GetQrCodeBitmap();//获取QrCode的扩展方法
+        var qrCodePath = Path.Combine(Environment.CurrentDirectory, "moduleidqrcode.png");
+        bmp.Save(qrCodePath);
+
+        //判断module的qrcode是否存在，不存在则上传，存在则不上传
+        if (string.IsNullOrEmpty(moduleDto.ImageUrl))
+        {
+            var result = await _fileUploadService.Upload(qrCodePath);
+            moduleDto.QrCodeUrl = result.RemoteUrl.ToString();
+            await _moduleService.UpdateAsync(moduleDto.Id.Value, moduleDto);
+        }
+
+        //wpf imageSource
+        //var bs = Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        //imageQRCode.Source = bs;
+
+        //将图片插入excel
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 35,63, 63);//左，上，宽度，高度
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 926, 63, 63);
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 1736, 63, 63);
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 2564, 63, 63);
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 3454, 63, 63);
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 4132, 63, 63);
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 4583, 63, 63);
+
+
         //调试时预览
         //worksheet.PrintPreview(true);
         //打印
@@ -302,7 +336,7 @@ public class PrintsService : IPrintsService
         stream.Close();
     }
     #endregion
-    
+
     #endregion
 
     #region Excel进程关闭

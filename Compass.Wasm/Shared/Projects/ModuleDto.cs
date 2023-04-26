@@ -58,6 +58,13 @@ public class ModuleDto : BaseDto
         }
     }
 
+    private string? qrCodeUrl;
+    public string? QrCodeUrl
+    {
+        get => qrCodeUrl;
+        set { qrCodeUrl = value; OnPropertyChanged(); }
+    }
+
     private bool isModuleDataOk;
     public bool IsModuleDataOk
     {

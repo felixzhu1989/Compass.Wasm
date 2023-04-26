@@ -12,6 +12,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public string Name { get; private set; }
     public string ModelName { get; private set; }
     public string? SpecialNotes { get;private set; }
+    public string? QrCodeUrl { get; set; }
     public bool IsModuleDataOk { get;private set; }//用于标记图纸得参数是否已经得到修改
     public bool IsCutListOk { get; private set; }
 
@@ -40,6 +41,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
             .ChangeName(dto.Name.ToUpper())
             .ChangeModelName(dto.ModelName)
             .ChangeSpecialNotes(dto.SpecialNotes)
+            .ChangeQrCodeUrl(dto.QrCodeUrl)
             .ChangeIsModuleDataOk(dto.IsModuleDataOk)
             .ChangeIsCutListOk(dto.IsCutListOk);
         NotifyModified();
@@ -72,7 +74,11 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         SpecialNotes = specialNotes;
         return this;
     }
-
+    public Module ChangeQrCodeUrl(string? qrCodeUrl)
+    {
+        QrCodeUrl = qrCodeUrl;
+        return this;
+    }
     public Module ChangeIsModuleDataOk(bool isModuleDataOk)
     {
         IsModuleDataOk = isModuleDataOk;

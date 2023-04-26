@@ -130,31 +130,42 @@ public class ModulesViewModel : NavigationViewModel
             case "ExportDxf": ExportDxf(); break;
             case "PrintCutList": PrintCutList(); break;
             case "PrintJobCard": PrintJobCard();break;
+            case "HoodPackingList": ExportPackingList();break;
         }
     }
     private async void AutoDrawing()
     {
-        var actionName = BatchWorksAction_e.自动作图;
+        const BatchWorksAction_e actionName = BatchWorksAction_e.自动作图;
         await BatchWorks(actionName);
     }
 
     private async void ExportDxf()
     {
-        var actionName = BatchWorksAction_e.导出DXF图;
+        const BatchWorksAction_e actionName = BatchWorksAction_e.导出DXF图;
         await BatchWorks(actionName);
     }
 
     private async void PrintCutList()
     {
-        var actionName = BatchWorksAction_e.打印CutList;
+        const BatchWorksAction_e actionName = BatchWorksAction_e.打印CutList;
         await BatchWorks(actionName);
     }
 
     private async void PrintJobCard()
     {
-        var actionName = BatchWorksAction_e.打印JobCard;
+        const BatchWorksAction_e actionName = BatchWorksAction_e.打印JobCard;
         await BatchWorks(actionName);
     }
+    //ExportPackingList
+    private async void ExportPackingList()
+    {
+        //var actionName = BatchWorksAction_e.导出装箱清单;
+        //await BatchWorks(actionName);
+        //todo:实现导出装箱清单
+
+
+    }
+
     private async Task BatchWorks(BatchWorksAction_e actionName)
     {
         CanBatchWorks = false;

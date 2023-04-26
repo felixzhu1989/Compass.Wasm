@@ -18,10 +18,10 @@ public class DrawingViewModel : NavigationViewModel
     #region ctor-图纸页面，修改截图
     private readonly IDrawingService _drawingService;
     private readonly IFileUploadService _fileUploadService;
-    public DrawingViewModel(IContainerProvider containerProvider) : base(containerProvider)
+    public DrawingViewModel(IContainerProvider provider) : base(provider)
     {
-        _drawingService = containerProvider.Resolve<IDrawingService>();
-        _fileUploadService = containerProvider.Resolve<IFileUploadService>();
+        _drawingService = provider.Resolve<IDrawingService>();
+        _fileUploadService = provider.Resolve<IFileUploadService>();
         ExecuteCommand = new DelegateCommand<string>(Execute);
         OpenHttpLinkCommand = new DelegateCommand(OpenHttpLink);
     }

@@ -33,8 +33,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.DataService.Infrastructure", "Compass.Services\Compass.DataService.Infrastructure\Compass.DataService.Infrastructure.csproj", "{12933E07-C646-451D-B37E-5C5FBD33FFE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Test", "Compass.Test\Compass.Test.csproj", "{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.QualityService.Domain", "Compass.Services\Compass.QualityService.Domain\Compass.QualityService.Domain.csproj", "{EA69AB69-061A-4906-9A45-6ADC7F4155FE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.QualityService.Infrastructure", "Compass.Services\Compass.QualityService.Infrastructure\Compass.QualityService.Infrastructure.csproj", "{094675AD-D856-47E3-8FC3-486F93D017C3}"
@@ -46,6 +44,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.TodoService.Infrastructure", "Compass.Services\Compass.TodoService.Infrastructure\Compass.TodoService.Infrastructure.csproj", "{2DCC59AC-4186-42C3-A8FB-00D43E713AED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compass.Services", "Compass.Services", "{A49BA812-CC7E-42B8-BDAF-E20D4B7066EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.Update", "Compass.Update\Compass.Update.csproj", "{532A0EF7-BDC7-4E69-BFC7-1DF17B1261CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,10 +113,6 @@ Global
 		{12933E07-C646-451D-B37E-5C5FBD33FFE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12933E07-C646-451D-B37E-5C5FBD33FFE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12933E07-C646-451D-B37E-5C5FBD33FFE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12E103E5-0E2A-4F33-9505-2CCD5AF9FDF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA69AB69-061A-4906-9A45-6ADC7F4155FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA69AB69-061A-4906-9A45-6ADC7F4155FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA69AB69-061A-4906-9A45-6ADC7F4155FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -137,6 +133,10 @@ Global
 		{2DCC59AC-4186-42C3-A8FB-00D43E713AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DCC59AC-4186-42C3-A8FB-00D43E713AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DCC59AC-4186-42C3-A8FB-00D43E713AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{532A0EF7-BDC7-4E69-BFC7-1DF17B1261CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{532A0EF7-BDC7-4E69-BFC7-1DF17B1261CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{532A0EF7-BDC7-4E69-BFC7-1DF17B1261CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{532A0EF7-BDC7-4E69-BFC7-1DF17B1261CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

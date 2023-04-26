@@ -27,8 +27,15 @@ public class MainViewModel : NavigationViewModel, IConfigureService
         {
             RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView", back => { Journal = back.Context.NavigationService.Journal; });
         });
-        LogoutCommand=new DelegateCommand(() => { App.Logout(provider, RegionManager); });//注销登录
+        LogoutCommand =new DelegateCommand(() => { App.Logout(provider, RegionManager); });//注销登录
     }
+    public DelegateCommand<MenuBar> NavigateCommand { get; }
+    public DelegateCommand GoBackCommand { get; }
+    public DelegateCommand GoForwardCommand { get; }
+    public DelegateCommand HomeCommand { get; }
+    //退出登录
+    public DelegateCommand LogoutCommand { get; }
+
     #endregion
 
     #region 属性
@@ -48,15 +55,6 @@ public class MainViewModel : NavigationViewModel, IConfigureService
         get => userName;
         set { userName = value; RaisePropertyChanged(); }
     }
-    #endregion
-
-    #region Commands
-    public DelegateCommand<MenuBar> NavigateCommand { get; }
-    public DelegateCommand GoBackCommand { get; }
-    public DelegateCommand GoForwardCommand { get; }
-    public DelegateCommand HomeCommand { get; }
-    //退出登录
-    public DelegateCommand LogoutCommand { get; }
     #endregion
 
     /// <summary>

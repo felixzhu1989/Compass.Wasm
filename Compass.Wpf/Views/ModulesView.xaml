@@ -5,19 +5,24 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Compass.Wpf.Views"
              mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
+             d:DesignHeight="550"
+             d:DesignWidth="900"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
     <UserControl.Resources>
         <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </UserControl.Resources>
-    <StackPanel>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <FrameworkElement x:Name="DataContextProxy"
                           DataContext="{Binding}" />
         <!--标题栏，项目号，项目名称-->
-        <DockPanel LastChildFill="False"
+        <DockPanel Grid.Row="0" LastChildFill="False"
                    IsEnabled="{Binding CanBatchWorks}">
             <TextBlock DockPanel.Dock="Left"
                        Text="分段列表 - 批量操作:"
@@ -55,9 +60,18 @@
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="LimeGreen"
                     BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="新增烟罩装箱清单"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="AddHoodPackingList"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="ForestGreen"
+                    BorderThickness="0" />
+            
         </DockPanel>
         <!--分段数据-->
-        <DataGrid ItemsSource="{Binding ModuleDtos}"
+        <DataGrid Grid.Row="1" ItemsSource="{Binding ModuleDtos}"
                   CanUserAddRows="False"
                   AutoGenerateColumns="False"
                   HeadersVisibility="All"
@@ -112,7 +126,7 @@
                 <DataGridTextColumn Binding="{Binding OdpNumber}"
                                     Header="项目编号"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 <DataGridTextColumn Binding="{Binding ItemNumber}"
                                     Header="Item编号"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -128,15 +142,15 @@
                 <DataGridTextColumn Binding="{Binding Length}"
                                     Header="长"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 <DataGridTextColumn Binding="{Binding Width}"
                                     Header="宽"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 <DataGridTextColumn Binding="{Binding Height}"
                                     Header="高"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 <DataGridTemplateColumn Header="CutList">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -166,10 +180,7 @@
                                         <behavior:InvokeCommandAction Command="{Binding DataContext.ShowJobCardCommand,Source={x:Reference DataContextProxy}}"
                                                                       CommandParameter="{Binding}" />
                                     </behavior:EventTrigger>
-                                </behavior:Interaction.Triggers>
-
-
-                            </TextBlock>
+                                </behavior:Interaction.Triggers></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -179,5 +190,28 @@
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+        <DockPanel Grid.Row="2" LastChildFill="False"
+                    IsEnabled="{Binding CanBatchWorks}">
+            <TextBlock DockPanel.Dock="Left"
+                       Text="清单"
+                       FontSize="20"
+                       Margin="10" />
+            <Button DockPanel.Dock="Left"
+                    Content="烟罩装箱清单"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="HoodPackingList"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="LightSkyBlue"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="天花装箱清单"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="CeilingPackingList"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="CornflowerBlue"
+                    BorderThickness="0" />
+        </DockPanel>
+    </Grid>
 </UserControl>

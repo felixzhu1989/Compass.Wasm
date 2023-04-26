@@ -115,9 +115,6 @@
                                 <TextBlock Text="{Binding UserName}"
                                            HorizontalAlignment="Center"
                                            Foreground="DodgerBlue"/>
-                                <!--<Button Content="个人中心"
-                                        Command="{Binding AppCenterCommand}" />-->
-
                                 <Button Content="注销登录"
                                         Command="{Binding LogoutCommand}"
                                         Foreground="Red"/>
