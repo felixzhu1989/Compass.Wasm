@@ -5,7 +5,9 @@
     <td>
         <AuthorizeView Roles="admin,pm">
             <Authorized>
-                <a href="drawing/update/@Drawing.Id"><i class="bi bi-gear" /></a>
+                <a href="drawing/update/@Drawing.Id">
+                    <span class="oi oi-cog"></span>
+                </a>
             </Authorized>
         </AuthorizeView>
         @Drawing.ItemNumber
@@ -15,7 +17,9 @@
         {
             @foreach (var fileUrl in Drawing.DrawingUrl.Split('\n'))
             {
-                <a href="@fileUrl" target="_blank"><i class="bi bi-file-earmark-pdf me-3" /></a>
+                <a href="@fileUrl" target="_blank">
+                    <span class="oi oi-paperclip me-2">PDF</span>
+                </a>
             }
         }
     </td>

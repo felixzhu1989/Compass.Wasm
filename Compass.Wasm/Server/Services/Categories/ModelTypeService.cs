@@ -17,6 +17,8 @@ public class ModelTypeService : IModelTypeService
         _repository = repository;
         _mapper = mapper;
     }
+
+    #region 基本增删改查
     public async Task<ApiResponse<List<ModelTypeDto>>> GetAllAsync()
     {
         try
@@ -69,13 +71,9 @@ public class ModelTypeService : IModelTypeService
         try
         {
             var model = await _repository.GetModelTypeByIdAsync(id);
-            if (model != null)
-            {
-                model.ChangeName(dto.Name).ChangeDescription(dto.Description)
-                    .ChangeLength(dto.Length).ChangeWidth(dto.Width).ChangeHeight(dto.Height);
-                return new ApiResponse<ModelTypeDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ModelTypeDto> { Status = false, Message = "更新数据失败" };
+            if (model == null) return new ApiResponse<ModelTypeDto> { Status = false, Message = "更新数据失败" };
+            model.Update(dto);
+            return new ApiResponse<ModelTypeDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -88,16 +86,14 @@ public class ModelTypeService : IModelTypeService
         try
         {
             var model = await _repository.GetModelTypeByIdAsync(id);
-            if (model != null)
-            {
-                model.SoftDelete();//软删除
-                return new ApiResponse<ModelTypeDto> { Status = true };
-            }
-            return new ApiResponse<ModelTypeDto> { Status = false, Message = "删除数据失败" };
+            if (model == null) return new ApiResponse<ModelTypeDto> { Status = false, Message = "删除数据失败" };
+            model.SoftDelete();//软删除
+            return new ApiResponse<ModelTypeDto> { Status = true };
         }
         catch (Exception e)
         {
             return new ApiResponse<ModelTypeDto> { Status = false, Message = e.Message };
         }
-    }
+    } 
+    #endregion
 }

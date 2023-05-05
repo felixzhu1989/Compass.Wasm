@@ -79,12 +79,12 @@
 
     private ProjectDto? project=new();
 
-    private List<ProblemResponse>? problems=new();
+    private List<ProblemDto>? problems=new();
 
     protected override async Task OnParametersSetAsync()
     {
         project = await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{ProjectId}");
-        problems = await Http.GetFromJsonAsync<List<ProblemResponse>>($"api/Problem/All/{ProjectId}");
+        problems = await Http.GetFromJsonAsync<List<ProblemDto>>($"api/Problem/All/{ProjectId}");
 
     }
 
@@ -104,7 +104,7 @@
         }
         isAddDrop = false; //收起添加
         var result = await Http.PostAsJsonAsync("api/Problem/Add", addProblemRequest);
-        if (result.IsSuccessStatusCode) problems = await Http.GetFromJsonAsync<List<ProblemResponse>>($"api/Problem/All/{ProjectId}");
+        if (result.IsSuccessStatusCode) problems = await Http.GetFromJsonAsync<List<ProblemDto>>($"api/Problem/All/{ProjectId}");
         StateHasChanged();
     }
 }

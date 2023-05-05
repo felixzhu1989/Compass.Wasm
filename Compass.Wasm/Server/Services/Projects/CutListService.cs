@@ -42,12 +42,9 @@ public class CutListService : ICutListService
         try
         {
             var model = await _repository.GetCutListByIdAsync(id);
-            if (model != null)
-            {
-                var dto = _mapper.Map<CutListDto>(model);
-                return new ApiResponse<CutListDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<CutListDto> { Status = false, Message = "查询数据失败" };
+            if (model == null) return new ApiResponse<CutListDto> { Status = false, Message = "查询数据失败" };
+            var dto = _mapper.Map<CutListDto>(model);
+            return new ApiResponse<CutListDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -81,12 +78,9 @@ public class CutListService : ICutListService
         try
         {
             var model = await _repository.GetCutListByIdAsync(id);
-            if (model != null)
-            {
-                model.Update(dto);
-                return new ApiResponse<CutListDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<CutListDto> { Status = false, Message = "更新数据失败" };
+            if (model == null) return new ApiResponse<CutListDto> { Status = false, Message = "更新数据失败" };
+            model.Update(dto);
+            return new ApiResponse<CutListDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -99,12 +93,9 @@ public class CutListService : ICutListService
         try
         {
             var model = await _repository.GetCutListByIdAsync(id);
-            if (model != null)
-            {
-                model.SoftDelete();//软删除
-                return new ApiResponse<CutListDto> { Status = true };
-            }
-            return new ApiResponse<CutListDto> { Status = false, Message = "删除数据失败" };
+            if (model == null) return new ApiResponse<CutListDto> { Status = false, Message = "删除数据失败" };
+            model.SoftDelete();//软删除
+            return new ApiResponse<CutListDto> { Status = true };
         }
         catch (Exception e)
         {
@@ -120,7 +111,7 @@ public class CutListService : ICutListService
         {
             var models = await _repository.GetCutListsByModuleIdAsync(parameter.ModuleId);
             var dtos = await _mapper.ProjectTo<CutListDto>(models).ToListAsync();
-            int i = 1;
+            var i = 1;
             dtos.ForEach(x => { x.Index = i++; });
             return new ApiResponse<List<CutListDto>> { Status = true, Result = dtos };
         }

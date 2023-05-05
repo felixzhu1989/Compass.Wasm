@@ -15,7 +15,6 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     public string? SpecialNotes { get; private set; }
     #endregion
 
-
     #region 文件属性（单独上传），上传即保存，无需再确认
     public string? ContractUrl { get; private set; }
     public string? BomUrl { get; private set; }
@@ -23,14 +22,12 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     public string? FinalInspectionUrl { get; private set; }//上传最终检验单，多文件 
     #endregion
 
-
     #region 状态属性（单独修改）
     //状态表示当前，根据EventBus接收到事件，自动修改
     public ProjectStatus_e ProjectStatus { get; private set; }//计划,制图,生产,入库,结束
     //有没有待解决得问题，如果有则另起一行显示异常详细信息
     public bool IsProblemNotResolved { get; private set; }
-    //是否绑定了生产主计划
-    public bool IsBoundMainPlan { get; private set; }
+    
     #endregion
     
     #region ctor
@@ -141,11 +138,6 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     public Project ChangeProblemNotResolved(bool isProblemNotResolved)
     {
         IsProblemNotResolved = isProblemNotResolved;
-        return this;
-    }
-    public Project ChangeBoundMainPlan(bool isBoundMainPlan)
-    {
-        IsBoundMainPlan = isBoundMainPlan;
         return this;
     }
     #endregion

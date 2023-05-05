@@ -30,29 +30,29 @@ public class ProblemController : ControllerBase
         _idRepository = idRepository;
     }
     [HttpGet("All")]
-    public async Task<List<ProblemResponse>> FindAll()
+    public async Task<List<ProblemDto>> FindAll()
     {
-        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetProblemsAsync()).ToListAsync();
+        return await _mapper.ProjectTo<ProblemDto>(await _repository.GetProblemsAsync()).ToListAsync();
     }
 
     [HttpGet("All/{projectId}")]
-    public async Task<List<ProblemResponse>> FindProblemsByProject([RequiredGuid] Guid projectId)
+    public async Task<List<ProblemDto>> FindProblemsByProject([RequiredGuid] Guid projectId)
     {
-        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetProblemsByProjectIdAsync(projectId)).ToListAsync();
+        return await _mapper.ProjectTo<ProblemDto>(await _repository.GetProblemsByProjectIdAsync(projectId)).ToListAsync();
     }
     //NotResolved
     [HttpGet("NotResolved/{projectId}")]
-    public async Task<List<ProblemResponse>> FindNotResolvedProblemsByProject([RequiredGuid] Guid projectId)
+    public async Task<List<ProblemDto>> FindNotResolvedProblemsByProject([RequiredGuid] Guid projectId)
     {
-        return await _mapper.ProjectTo<ProblemResponse>(await _repository.GetNotResolvedProblemsByProjectIdAsync(projectId)).ToListAsync();
+        return await _mapper.ProjectTo<ProblemDto>(await _repository.GetNotResolvedProblemsByProjectIdAsync(projectId)).ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProblemResponse?>> FindById([RequiredGuid] Guid id)
+    public async Task<ActionResult<ProblemDto?>> FindById([RequiredGuid] Guid id)
     {
         var problem = await _repository.GetProblemByIdAsync(id);
         if (problem == null) return NotFound($"没有Id={id}的Problem");
-        return _mapper.Map<ProblemResponse>(problem);
+        return _mapper.Map<ProblemDto>(problem);
     }
 
     [HttpPost("Add")]
@@ -75,7 +75,7 @@ public class ProblemController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update([RequiredGuid] Guid id, ProblemResponse request)
+    public async Task<ActionResult> Update([RequiredGuid] Guid id, ProblemDto request)
     {
         var problem = await _repository.GetProblemByIdAsync(id);
         if (problem == null) return NotFound($"没有Id={id}的Problem");
@@ -85,7 +85,7 @@ public class ProblemController : ControllerBase
     }
 
     [HttpPut("Responder/{id}")]
-    public async Task<ActionResult> AssignResponder([RequiredGuid] Guid id, ProblemResponse request)
+    public async Task<ActionResult> AssignResponder([RequiredGuid] Guid id, ProblemDto request)
     {
         var problem = await _repository.GetProblemByIdAsync(id);
         if (problem == null) return NotFound($"没有Id={id}的Problem");
@@ -100,7 +100,7 @@ public class ProblemController : ControllerBase
     }
 
     [HttpPut("Solution/{id}")]
-    public async Task<ActionResult> SolveProblem([RequiredGuid] Guid id, ProblemResponse request)
+    public async Task<ActionResult> SolveProblem([RequiredGuid] Guid id, ProblemDto request)
     {
         var problem = await _repository.GetProblemByIdAsync(id);
         if (problem == null) return NotFound($"没有Id={id}的Problem");
@@ -109,7 +109,7 @@ public class ProblemController : ControllerBase
     }
 
     [HttpPut("Close/{id}")]
-    public async Task<ActionResult> CloseProblem([RequiredGuid] Guid id, ProblemResponse request)
+    public async Task<ActionResult> CloseProblem([RequiredGuid] Guid id, ProblemDto request)
     {
         var problem = await _repository.GetProblemByIdAsync(id);
         if (problem == null) return NotFound($"没有Id={id}的Problem");

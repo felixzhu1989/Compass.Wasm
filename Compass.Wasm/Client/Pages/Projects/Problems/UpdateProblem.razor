@@ -16,7 +16,9 @@
     <AuthorizeView Roles="admin,manager,pm">
         <Authorized>
             <div class="col" style="text-align: right">
-                <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+                <button class="btn mb-2" type="button" @onclick="Delete">
+                    <span class="oi oi-trash text-danger" ></span>
+                </button>
             </div>
         </Authorized>
     </AuthorizeView>
@@ -43,11 +45,11 @@
     [Parameter]
     public string ProblemTypeId { get; set; }
 
-    private ProblemResponse? problem=new();
+    private ProblemDto? problem=new();
 
     protected override async Task OnParametersSetAsync()
     {
-        problem = await Http.GetFromJsonAsync<ProblemResponse>($"api/Problem/{Id}");
+        problem = await Http.GetFromJsonAsync<ProblemDto>($"api/Problem/{Id}");
         ProblemTypeId = problem.ProblemTypeId.ToString();
     }
     private async Task Delete()

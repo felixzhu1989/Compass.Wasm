@@ -18,6 +18,7 @@ public class ModelService : IModelService
         _mapper = mapper;
     }
 
+    #region 基本增删改查
     public async Task<ApiResponse<List<ModelDto>>> GetAllAsync()
     {
         try
@@ -70,12 +71,9 @@ public class ModelService : IModelService
         try
         {
             var model = await _repository.GetModelByIdAsync(id);
-            if (model != null)
-            {
-                model.ChangeName(dto.Name).ChangeWorkload(dto.Workload);
-                return new ApiResponse<ModelDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ModelDto> { Status = false, Message = "更新数据失败" };
+            if (model == null) return new ApiResponse<ModelDto> { Status = false, Message = "更新数据失败" };
+            model.Update(dto);
+            return new ApiResponse<ModelDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -88,16 +86,14 @@ public class ModelService : IModelService
         try
         {
             var model = await _repository.GetModelByIdAsync(id);
-            if (model != null)
-            {
-                model.SoftDelete();//软删除
-                return new ApiResponse<ModelDto> { Status = true };
-            }
-            return new ApiResponse<ModelDto> { Status = false, Message = "删除数据失败" };
+            if (model == null) return new ApiResponse<ModelDto> { Status = false, Message = "删除数据失败" };
+            model.SoftDelete();//软删除
+            return new ApiResponse<ModelDto> { Status = true };
         }
         catch (Exception e)
         {
             return new ApiResponse<ModelDto> { Status = false, Message = e.Message };
         }
-    }
+    } 
+    #endregion
 }

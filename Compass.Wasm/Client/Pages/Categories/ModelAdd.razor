@@ -1,0 +1,46 @@
+﻿@page "/model/add/{ProductId}"
+@using Compass.Wasm.Shared.Categories
+@using Compass.Wasm.Client.Services.Categories
+@inject IModelService ModelService
+@inject IProductService ProductService
+@inject NavigationManager NavigationManager
+<PageTitle>新增模型</PageTitle>
+<span class="fs-5">新增 @_productDto.Name 产品模型</span>
+
+<EditForm Model="_modelDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">模型名称</span>
+        <input class="form-control" placeholder="Name" @bind-value="@_modelDto.Name" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">工作量</span>
+        <input class="form-control" type="number" @bind-value="@_modelDto.Workload" />
+    </div>
+
+    <button class="btn btn-success" type="submit">保存</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("categories"))">取消</button>
+
+</EditForm>
+
+
+
+@code {
+    [Parameter]
+    public string ProductId { get; set; }
+
+    private ProductDto _productDto = new();
+    private ModelDto _modelDto = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ProductService.GetFirstOrDefault(Guid.Parse(ProductId));
+        if (!response.Status) NavigationManager.NavigateTo("categories");
+        _productDto = response.Result;
+        _modelDto.ProductId=_productDto.Id.Value;
+    }
+    private async Task Save()
+    {
+        var result = await ModelService.AddAsync(_modelDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("categories");
+    }
+}

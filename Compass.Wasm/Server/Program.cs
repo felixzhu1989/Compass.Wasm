@@ -10,6 +10,7 @@ using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Server.Services.Categories;
 using Compass.Wasm.Server.Services.Data;
 using Compass.Wasm.Server.Services.Data.Hoods;
+using Compass.Wasm.Server.Services.Plans;
 using Compass.Wasm.Server.Services.Projects;
 using Compass.Wasm.Server.Services.Todos;
 
@@ -240,6 +241,9 @@ builder.Services.AddDbContext<PlanDbContext>(options =>
 });
 builder.Services.AddScoped<PlanDomainService>();
 builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+
+builder.Services.AddScoped<IMainPlanService, MainPlanService>();
+
 #endregion
 
 #region QualityService

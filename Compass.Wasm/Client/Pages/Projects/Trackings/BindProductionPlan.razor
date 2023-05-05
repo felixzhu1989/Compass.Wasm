@@ -15,7 +15,7 @@
                     @foreach (var prodPlan in _prodPlans)
                     {
                         <option value="@prodPlan.Id">
-                            @prodPlan.SqNumber-@prodPlan.Name
+                            @prodPlan.Number-@prodPlan.Name
                         </option>
                     }
                 </select>
@@ -34,11 +34,11 @@
     public string Id { get; set; }
     private ProjectDto? _project = new();
     private string _selectedProdId = string.Empty;
-    private List<ProductionPlanResponse>? _prodPlans = new();
+    private List<MainPlanDto>? _prodPlans = new();
     protected override async Task OnInitializedAsync()
     {        
         _project = await Http.GetFromJsonAsync<ProjectDto>($"api/Project/{Id}");
-        _prodPlans = await Http.GetFromJsonAsync<List<ProductionPlanResponse>>("api/ProductionPlan/Unbind");
+        _prodPlans = await Http.GetFromJsonAsync<List<MainPlanDto>>("api/ProductionPlan/Unbind");
     }
     public async Task Save()
     {

@@ -4,13 +4,22 @@ using Compass.Wasm.Shared.Plans;
 namespace Compass.PlanService.Domain;
 public interface IPlanRepository
 {
-    Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year,int month, ProductionPlanType_e productionPlanType);
-    Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year, ProductionPlanType_e productionPlanType);
-    Task<IQueryable<ProductionPlan>> GetUnbindProductionPlansAsync();
-    Task<List<Guid?>> GetBoundProductionPlansAsync();
+    //MainPlan
+    Task<IQueryable<MainPlan>> GetMainPlansAsync();
+    Task<MainPlan?> GetMainPlanByIdAsync(Guid id);
 
-    Task<ProductionPlan?> GetProductionPlanByIdAsync(Guid id);
-    Task<ProductionPlan?> GetProductionPlanByProjectIdAsync(Guid projectId);
-    Task<CycleTimeResponse> GetCycleTimeByMonthAsync(int year,int month);
-    Task<CycleTimeResponse> GetCycleTimeByYearAsync(int year);
+
+    //扩展MainPlan查询
+    Task<IQueryable<MainPlan>> GetFilterMainPlansAsync(int year,int month, MainPlanType_e productionPlanType);
+
+
+
+    Task<IQueryable<MainPlan>> GetMainPlansAsync(int year, MainPlanType_e productionPlanType);
+    Task<IQueryable<MainPlan>> GetUnbindMainPlansAsync();
+    Task<List<Guid?>> GetBoundMainPlansAsync();
+
+    
+    Task<MainPlan?> GetMainPlanByProjectIdAsync(Guid projectId);
+    Task<CycleTimeDto> GetCycleTimeByMonthAsync(int year,int month);
+    Task<CycleTimeDto> GetCycleTimeByYearAsync(int year);
 }

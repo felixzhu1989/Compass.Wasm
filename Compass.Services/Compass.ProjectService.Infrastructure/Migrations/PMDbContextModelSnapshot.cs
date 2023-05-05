@@ -338,9 +338,6 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<string>("FinalInspectionUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsBoundMainPlan")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 

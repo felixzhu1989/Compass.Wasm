@@ -127,7 +127,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.File
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.FileService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.FileService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.FileService.Domain.pdb
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\libman.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Blazored.LocalStorage.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Microsoft.AspNetCore.Components.Authorization.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll

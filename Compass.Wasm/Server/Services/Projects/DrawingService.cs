@@ -43,12 +43,9 @@ public class DrawingService : IDrawingService
         try
         {
             var model = await _repository.GetDrawingByIdAsync(id);
-            if (model != null)
-            {
-                var dto = _mapper.Map<DrawingDto>(model);
-                return new ApiResponse<DrawingDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<DrawingDto> { Status = false, Message = "查询数据失败" };
+            if (model == null) return new ApiResponse<DrawingDto> { Status = false, Message = "查询数据失败" };
+            var dto = _mapper.Map<DrawingDto>(model);
+            return new ApiResponse<DrawingDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -76,12 +73,9 @@ public class DrawingService : IDrawingService
         try
         {
             var model = await _repository.GetDrawingByIdAsync(id);
-            if (model != null)
-            {
-                model.Update(dto);
-                return new ApiResponse<DrawingDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<DrawingDto> { Status = false, Message = "更新数据失败" };
+            if (model == null) return new ApiResponse<DrawingDto> { Status = false, Message = "更新数据失败" };
+            model.Update(dto);
+            return new ApiResponse<DrawingDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -94,12 +88,9 @@ public class DrawingService : IDrawingService
         try
         {
             var model = await _repository.GetDrawingByIdAsync(id);
-            if (model != null)
-            {
-                model.SoftDelete();//软删除
-                return new ApiResponse<DrawingDto> { Status = true };
-            }
-            return new ApiResponse<DrawingDto> { Status = false, Message = "删除数据失败" };
+            if (model == null) return new ApiResponse<DrawingDto> { Status = false, Message = "删除数据失败" };
+            model.SoftDelete();//软删除
+            return new ApiResponse<DrawingDto> { Status = true };
         }
         catch (Exception e)
         {

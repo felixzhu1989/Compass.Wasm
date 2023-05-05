@@ -26,7 +26,7 @@ public class AutoMapperProfile : Profile
 
         CreateMap<DrawingPlan, DrawingPlanResponse>().ReverseMap();
         CreateMap<Tracking, TrackingResponse>().ReverseMap();
-        CreateMap<Problem, ProblemResponse>().ReverseMap();
+        CreateMap<Problem, ProblemDto>().ReverseMap();
         CreateMap<Issue, IssueResponse>().ReverseMap();
         #endregion
 
@@ -38,7 +38,10 @@ public class AutoMapperProfile : Profile
         #endregion
 
         #region PlanService
-        CreateMap<ProductionPlan, ProductionPlanResponse>().ReverseMap();
+        CreateMap<MainPlan, MainPlanDto>().ReverseMap();
+
+
+
         #endregion
 
         #region QualityService

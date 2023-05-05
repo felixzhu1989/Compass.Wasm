@@ -5,7 +5,9 @@
     <td>
         <AuthorizeView Roles="admin,pm">
             <Authorized>
-                <a href="project/update/@Project.Id"><i class="bi bi-gear" /></a>
+                <a href="project/update/@Project.Id">
+                    <span class="oi oi-cog"></span>
+                </a>
             </Authorized>
         </AuthorizeView>
         <a href="/drawings/@Project.Id">@Project.OdpNumber</a>
@@ -19,11 +21,15 @@
     <td style="text-align: center">
         @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
         {
-            <a href="@Project.ContractUrl" target="_blank"><i class="bi bi-file-earmark-pdf" /></a>
+            <a href="@Project.ContractUrl" target="_blank">
+                <span class="oi oi-paperclip me-2">PDF</span>
+            </a>
         }
         else
         {
-            <a href="project/uploadfiles/@Project.Id">上传</a>
+            <a href="project/uploadfiles/@Project.Id">
+                <span class="oi oi-cloud-upload">上传</span>
+            </a>
         }
     </td>
     <td style="text-align: center">
@@ -31,22 +37,26 @@
         {
             @foreach (var fileUrl in Project.BomUrl.Split('\n'))
             {
-                <a href="@fileUrl" target="_blank"><i class="bi bi-file-earmark-pdf me-3" /></a>
+                <a href="@fileUrl" target="_blank">
+                    <span class="oi oi-paperclip me-2">PDF</span>
+                </a>
             }
         }
         else
         {
-            <a href="project/uploadfiles/@Project.Id">上传</a>
+            <a href="project/uploadfiles/@Project.Id">
+                <span class="oi oi-cloud-upload">上传</span>
+            </a>
         }
     </td>
     <td style="text-align: center">
-        <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(Project.SpecialNotes))">@(showSpecialNotes ? "▲" : "▼")</span>
+        <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(Project.SpecialNotes))">@(_showSpecialNotes ? "▲" : "▼")</span>
     </td>
 </tr>
-@if (showSpecialNotes)
+@if (_showSpecialNotes)
 {
     <tr>
-        <td colspan="7" style="color: red">
+        <td colspan="8" style="color: red">
             @foreach (var note in Project.SpecialNotes.Split('\n'))
             {
                 <span>@note</span>
@@ -59,10 +69,9 @@
 @code {
     [Parameter]
     public ProjectDto Project { get; set; }
-
-    private bool showSpecialNotes = false;
+    private bool _showSpecialNotes = false;
     private void Show()
     {
-        showSpecialNotes = !showSpecialNotes;
+        _showSpecialNotes = !_showSpecialNotes;
     }
 }

@@ -100,9 +100,10 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         }
         else
         {
+            //标准的滑门宽度加40，长度/2
             swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNCE0013-1", Aggregator);
-            swModelLevel2.ChangeDim("Length@SketchBase", exhaustSpigotLength / 2d + 10d);
-            swModelLevel2.ChangeDim("Width@SketchBase", exhaustSpigotWidth + 20d);
+            swModelLevel2.ChangeDim("Length@SketchBase", exhaustSpigotLength / 2d);
+            swModelLevel2.ChangeDim("Width@SketchBase", exhaustSpigotWidth + 40d);
         }
         //两个排风口的情况
         if (exhaustSpigotNumber == 2)
@@ -456,7 +457,7 @@ public class ExhaustService : BaseDrawingService, IExhaustService
         {
             swAssyLevel1.UnSuppress(suffix, railPart2, Aggregator);
             swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, railPart1, Aggregator);
-            swAssyLevel1.ChangeDim("Width@DistanceSpigot", exhaustSpigotWidth+25d);
+            swAssyLevel1.ChangeDim("Width@DistanceSpigot", exhaustSpigotWidth+45d);
             //根据脖颈数量计算导轨长度，两个排风口时只能总长减去100
             var railLength = exhaustSpigotNumber == 1
                 ? exhaustSpigotLength * 2d + 100d : length - 100d;

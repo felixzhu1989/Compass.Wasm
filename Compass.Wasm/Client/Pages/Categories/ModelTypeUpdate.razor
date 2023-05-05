@@ -1,0 +1,71 @@
+﻿@page "/modeltype/update/{Id}"
+@using Compass.Wasm.Shared.Categories
+@using Compass.Wasm.Client.Services.Categories
+@inject IModelTypeService ModelTypeService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>更新模型子类</PageTitle>
+<span class="fs-5">更新 @_modelTypeDto.Name 模型子类</span>
+
+<EditForm Model="_modelTypeDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">子类名称</span>
+        <input class="form-control" placeholder="Name" @bind-value="@_modelTypeDto.Name" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">子类描述</span>
+        <input class="form-control" placeholder="Name" @bind-value="@_modelTypeDto.Description" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">默认长</span>
+        <input class="form-control" type="number" @bind-value="@_modelTypeDto.Length" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">默认宽</span>
+        <input class="form-control" type="number" @bind-value="@_modelTypeDto.Width" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">默认高</span>
+        <input class="form-control" type="number" @bind-value="@_modelTypeDto.Height" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">排序号</span>
+        <input class="form-control" type="number" @bind-value="@_modelTypeDto.SequenceNumber" />
+    </div>
+
+    <button class="btn btn-success" type="submit">保存</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("categories"))">取消</button>
+
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private ModelTypeDto _modelTypeDto = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ModelTypeService.GetFirstOrDefault(Guid.Parse(Id));
+        if (!response.Status) NavigationManager.NavigateTo("categories");
+        _modelTypeDto = response.Result;
+    }
+
+    //暂时不删除
+    private async Task Delete()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{_modelTypeDto.ModelName}】吗？");
+        if (confirmResult)
+        {
+            var result = await ModelTypeService.DeleteAsync(Guid.Parse(Id));
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("categories");
+        }
+    }
+    private async Task Save()
+    {
+        var result = await ModelTypeService.UpdateAsync(Guid.Parse(Id), _modelTypeDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("categories");
+    }
+
+}

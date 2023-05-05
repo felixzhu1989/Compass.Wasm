@@ -18,6 +18,14 @@ public record Product:AggregateRootEntity,IAggregateRoot,IHasCreationTime,ISoftD
         Sbu=sbu;
     }
 
+    public void Update(ProductDto dto)
+    {
+        ChangeSequenceNumber(dto.SequenceNumber)
+            .ChangeName(dto.Name.ToUpper())
+            .ChangeSbu(dto.Sbu);
+        NotifyModified();
+    }
+
     public Product ChangeSequenceNumber(int sequenceNumber)
     {
         SequenceNumber=sequenceNumber;

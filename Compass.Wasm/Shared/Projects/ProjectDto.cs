@@ -23,8 +23,6 @@ public class ProjectDto:BaseDto
     public ProjectStatus_e ProjectStatus { get; set; }//计划,制图,生产,入库,结束
     //有没有待解决得问题，如果有则另起一行显示异常详细信息
     public bool IsProblemNotResolved { get; set; }
-    //是否绑定了生产主计划
-    public bool IsBoundMainPlan { get; set; } 
     #endregion
 
 }

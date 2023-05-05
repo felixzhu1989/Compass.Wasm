@@ -6,6 +6,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\HoodPackingLis
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\JobCard.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\UpdateList.xml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\CutList.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\CeilingPackingList.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.deps.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.dll

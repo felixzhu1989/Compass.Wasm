@@ -50,12 +50,9 @@ public class ProjectService : IProjectService
         try
         {
             var model = await _repository.GetProjectByIdAsync(id);
-            if (model != null)
-            {
-                var dto = _mapper.Map<ProjectDto>(model);
-                return new ApiResponse<ProjectDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ProjectDto> { Status = false, Message = "查询数据失败" };
+            if (model == null) return new ApiResponse<ProjectDto> { Status = false, Message = "查询数据失败" };
+            var dto = _mapper.Map<ProjectDto>(model);
+            return new ApiResponse<ProjectDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -72,12 +69,10 @@ public class ProjectService : IProjectService
             dto.Id = model.Id;
             //todo:修改跟踪对象，改成其他的对象
             #region 当项目创建时，同时创建跟踪对象,同一个dbContext的操作应当写在一起
-            if (!_dbContext.Trackings.Any(x => x.Id.Equals(dto.Id)))
-            {
-                var tracking = new Tracking(dto.Id.Value, DateTime.Now.AddDays(20));
-                _dbContext.Trackings.Add(tracking);
-            }
-
+            if (_dbContext.Trackings.Any(x => x.Id.Equals(dto.Id)))
+                return new ApiResponse<ProjectDto> { Status = true, Result = dto };
+            var tracking = new Tracking(dto.Id.Value, DateTime.Now.AddDays(20));
+            _dbContext.Trackings.Add(tracking);
             #endregion
             return new ApiResponse<ProjectDto> { Status = true, Result = dto };
         }
@@ -92,12 +87,9 @@ public class ProjectService : IProjectService
         try
         {
             var model = await _repository.GetProjectByIdAsync(id);
-            if (model != null)
-            {
-                model.Update(dto);
-                return new ApiResponse<ProjectDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ProjectDto> { Status = false, Message = "更新数据失败" };
+            if (model == null) return new ApiResponse<ProjectDto> { Status = false, Message = "更新数据失败" };
+            model.Update(dto);
+            return new ApiResponse<ProjectDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -110,12 +102,9 @@ public class ProjectService : IProjectService
         try
         {
             var model = await _repository.GetProjectByIdAsync(id);
-            if (model != null)
-            {
-                model.SoftDelete();//软删除
-                return new ApiResponse<ProjectDto> { Status = true };
-            }
-            return new ApiResponse<ProjectDto> { Status = false, Message = "删除数据失败" };
+            if (model == null) return new ApiResponse<ProjectDto> { Status = false, Message = "删除数据失败" };
+            model.SoftDelete();//软删除
+            return new ApiResponse<ProjectDto> { Status = true };
         }
         catch (Exception e)
         {
@@ -266,7 +255,6 @@ public class ProjectService : IProjectService
 
     #endregion
 
-
     #region 扩展查询功能，Blazor
     public async Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(string? search)
     {
@@ -290,12 +278,9 @@ public class ProjectService : IProjectService
         try
         {
             var model = await _repository.GetProjectByIdAsync(id);
-            if (model != null)
-            {
-                model.UploadFiles(dto);
-                return new ApiResponse<ProjectDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ProjectDto> { Status = false, Message = "更新数据失败" };
+            if (model == null) return new ApiResponse<ProjectDto> { Status = false, Message = "更新数据失败" };
+            model.UploadFiles(dto);
+            return new ApiResponse<ProjectDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -304,6 +289,5 @@ public class ProjectService : IProjectService
     }
 
     #endregion
-
 
 }

@@ -7,7 +7,7 @@ namespace Compass.PlanService.Infrastructure;
 
 public class PlanDbContext : BaseDbContext
 {
-    public DbSet<ProductionPlan> ProductionPlans { get; set; }
+    public DbSet<MainPlan> MainPlans { get; set; }
 
     public PlanDbContext(DbContextOptions<PlanDbContext> options, IMediator? mediator) : base(options, mediator)
     {

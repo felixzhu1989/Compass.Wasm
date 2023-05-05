@@ -1,4 +1,5 @@
-﻿using Zack.DomainCommons.Models;
+﻿using Compass.Wasm.Shared.Categories;
+using Zack.DomainCommons.Models;
 
 namespace Compass.CategoryService.Domain.Entities;
 
@@ -17,6 +18,14 @@ public record Model:AggregateRootEntity,IAggregateRoot,IHasCreationTime,ISoftDel
         SequenceNumber=sequenceNumber;
         Name=name;
         Workload=workload;
+    }
+
+    public void Update(ModelDto dto)
+    {
+        ChangeSequenceNumber(dto.SequenceNumber)
+            .ChangeName(dto.Name.ToUpper())
+            .ChangeWorkload(dto.Workload);
+        NotifyModified();
     }
 
     public Model ChangeSequenceNumber(int sequenceNumber)

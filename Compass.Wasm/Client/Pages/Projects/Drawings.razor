@@ -1,6 +1,7 @@
 ﻿@page "/drawings/{ProjectId}"
-@using Compass.Wasm.Client.Services
+@using Compass.Wasm.Client.Services.Projects
 @using Compass.Wasm.Shared.Projects
+
 
 @inject NavigationManager NavigationManager
 @inject IDrawingService DrawingService
@@ -15,7 +16,9 @@
             <h5>
                 <AuthorizeView Roles="admin,pm">
                     <Authorized>
-                        <a href="project/update/@ProjectId"><i class="bi bi-gear" /></a>
+                        <a href="project/update/@ProjectId">
+                            <span class="oi oi-cog"></span>
+                        </a>
                     </Authorized>
                 </AuthorizeView>
                 <span>@_project.OdpNumber</span>
@@ -24,9 +27,6 @@
                 </a>
                 <a href="projects">
                     <span class="badge ms-2 @(_project.RiskLevel==RiskLevel_e.高风险 ? "bg-danger" : _project.RiskLevel==RiskLevel_e.中风险 ? "bg-warning text-dark":_project.RiskLevel==RiskLevel_e.低风险 ? "bg-info text-dark":"bg-light text-dark")">@_project.RiskLevel</span>
-                </a>
-                <a href="">
-                    <span class="badge ms-2 @(_project.ProjectStatus==ProjectStatus_e.计划?"bg-info text-dark": _project.ProjectStatus==ProjectStatus_e.制图?"bg-primary": _project.ProjectStatus==ProjectStatus_e.生产?"bg-warning text-dark": _project.ProjectStatus==ProjectStatus_e.入库?"bg-success": _project.ProjectStatus==ProjectStatus_e.发货?"bg-secondary":"bg-dark")">@_project.ProjectStatus</span>
                 </a>
                 <a href="/reportproblem/@ProjectId">
                     @if (_project.IsProblemNotResolved)
@@ -57,11 +57,13 @@
                 @if (!string.IsNullOrWhiteSpace(_project.ContractUrl))
                 {
                     <div class="col-sm-9">
-                        <a href="@_project.ContractUrl" target="_blank">@(Path.GetFileName(_project.ContractUrl))</a>
+                        <a href="@_project.ContractUrl" target="_blank">
+                            <span class="oi oi-paperclip me-2">@(Path.GetFileName(_project.ContractUrl))</span>
+                        </a>
                         <AuthorizeView Roles="admin,pm,designer">
                             <Authorized>
-                                <a class="ms-3" href="/project/uploadfiles/@ProjectId">
-                                    <span class="badge ms-2 bg-info text-black rounded-pill">修改</span>
+                                <a href="/project/uploadfiles/@ProjectId">
+                                    <span class="oi oi-loop-circular">更新</span>
                                 </a>
                             </Authorized>
                         </AuthorizeView>
@@ -73,7 +75,7 @@
                         <Authorized>
                             <div class="col-sm-9">
                                 <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="badge ms-2 bg-info text-black rounded-pill">添加</span>
+                                    <span class="oi oi-cloud-upload">上传</span>
                                 </a>
                             </div>
                         </Authorized>
@@ -90,14 +92,16 @@
 
                         @foreach (var fileUrl in _project.BomUrl.Split('\n'))
                         {
-                            <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                            <a href="@fileUrl" target="_blank">
+                                <span class="oi oi-paperclip me-5">@(Path.GetFileName(fileUrl))</span>
+                            </a>
                             <br />
                         }
 
                         <AuthorizeView Roles="admin,pm,designer">
                             <Authorized>
-                                <a class="ms-3" href="/project/uploadfiles/@ProjectId">
-                                    <span class="badge ms-2 bg-info text-black rounded-pill">修改</span>
+                                <a href="/project/uploadfiles/@ProjectId">
+                                    <span class="oi oi-loop-circular">更新</span>
                                 </a>
                             </Authorized>
                         </AuthorizeView>
@@ -109,7 +113,7 @@
                         <Authorized>
                             <div class="col-sm-9">
                                 <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="badge ms-2 bg-info text-black rounded-pill">添加</span>
+                                    <span class="oi oi-cloud-upload">上传</span>
                                 </a>
                             </div>
                         </Authorized>
@@ -124,13 +128,15 @@
                     <div class="col-sm-9">
                         @foreach (var fileUrl in _project.AttachmentsUrl.Split('\n'))
                         {
-                            <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                            <a href="@fileUrl" target="_blank">
+                                <span class="oi oi-paperclip me-5">@(Path.GetFileName(fileUrl))</span>
+                            </a>
                             <br />
                         }
                         <AuthorizeView Roles="admin,pm,designer">
                             <Authorized>
-                                <a class="ms-3" href="/project/uploadfiles/@ProjectId">
-                                    <span class="badge ms-2 bg-info text-black rounded-pill">修改</span>
+                                <a href="/project/uploadfiles/@ProjectId">
+                                    <span class="oi oi-loop-circular">更新</span>
                                 </a>
                             </Authorized>
                         </AuthorizeView>
@@ -142,7 +148,7 @@
                         <Authorized>
                             <div class="col-sm-9">
                                 <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="badge ms-2 bg-info text-black rounded-pill">添加</span>
+                                    <span class="oi oi-cloud-upload">上传</span>
                                 </a>
                             </div>
                         </Authorized>
@@ -157,13 +163,15 @@
                     <div class="col-sm-9">
                         @foreach (var fileUrl in _project.FinalInspectionUrl.Split('\n'))
                         {
-                            <a href="@fileUrl" target="_blank">@(Path.GetFileName(fileUrl))</a>
+                            <a href="@fileUrl" target="_blank">
+                                <span class="oi oi-paperclip me-5">@(Path.GetFileName(fileUrl))</span>
+                            </a>
                             <br />
                         }
                         <AuthorizeView Roles="admin,inspector">
                             <Authorized>
-                                <a class="ms-3" href="/project/uploadfiles/@ProjectId">
-                                    <span class="badge ms-2 bg-info text-black rounded-pill">修改</span>
+                                <a href="/project/uploadfiles/@ProjectId">
+                                    <span class="oi oi-loop-circular">更新</span>
                                 </a>
                             </Authorized>
                         </AuthorizeView>
@@ -175,7 +183,7 @@
                         <Authorized>
                             <div class="col-sm-9">
                                 <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="badge ms-2 bg-info text-black rounded-pill">添加</span>
+                                    <span class="oi oi-cloud-upload">上传</span>
                                 </a>
                             </div>
                         </Authorized>
@@ -219,11 +227,13 @@
     <AuthorizeView Roles="admin,pm">
         <Authorized>
             <div class="col position-absolute bottom-0 end-0" style="text-align: right;width: 10%">
-                <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo($"drawing/add/{ProjectId}"))">添加</button>
+                <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo($"drawing/add/{ProjectId}"))">+ 添加</button>
             </div>
         </Authorized>
     </AuthorizeView>
 </div>
+<!--todo:table生产计划（根据ProjectId查询）-->
+
 
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
     <thead>
@@ -236,7 +246,7 @@
     <tbody>
         @if (_drawings.Count == 0)
         {
-            <p>没有要显示的图纸，请点击右上角添加图纸</p>
+            <p>没有图纸，请点击右上角添加</p>
         }
         else
         {
@@ -257,7 +267,7 @@
     private ProjectDto? _project = new();
 
     //private TrackingResponse? tracking;
-    private ProblemResponse[]? _problems;
+    private ProblemDto[]? _problems;
 
     protected override async Task OnInitializedAsync()
     {

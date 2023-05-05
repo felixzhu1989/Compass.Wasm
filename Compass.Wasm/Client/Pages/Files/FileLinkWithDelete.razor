@@ -1,5 +1,7 @@
 ﻿@inject IJSRuntime JsRuntime
-<button class="btn" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+<button class="btn" type="button" @onclick="Delete">
+    <span class="oi oi-trash text-danger"></span>
+</button>
 <a href="@FileUrl" target="_blank">@(Path.GetFileName(FileUrl))</a><br/>
 @code {
     [Parameter]

@@ -72,12 +72,9 @@ public class ProductService : IProductService
         try
         {
             var model = await _repository.GetProductByIdAsync(id);
-            if (model != null)
-            {
-                model.ChangeName(dto.Name).ChangeSbu(dto.Sbu);
-                return new ApiResponse<ProductDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ProductDto> { Status = false, Message = "更新数据失败" };
+            if (model == null) return new ApiResponse<ProductDto> { Status = false, Message = "更新数据失败" };
+            model.Update(dto);
+            return new ApiResponse<ProductDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -90,12 +87,9 @@ public class ProductService : IProductService
         try
         {
             var model = await _repository.GetProductByIdAsync(id);
-            if (model != null)
-            {
-                model.SoftDelete();//软删除
-                return new ApiResponse<ProductDto> { Status = true };
-            }
-            return new ApiResponse<ProductDto> { Status = false, Message = "删除数据失败" };
+            if (model == null) return new ApiResponse<ProductDto> { Status = false, Message = "删除数据失败" };
+            model.SoftDelete();//软删除
+            return new ApiResponse<ProductDto> { Status = true };
         }
         catch (Exception e)
         {
@@ -107,8 +101,7 @@ public class ProductService : IProductService
 
     #endregion
 
-
-    #region 扩展的查询功能,WPF
+    #region 扩展的查询功能,WPF，Blazor
     public async Task<ApiResponse<List<ProductDto>>> GetModelTypeTreeAsync()
     {
         try

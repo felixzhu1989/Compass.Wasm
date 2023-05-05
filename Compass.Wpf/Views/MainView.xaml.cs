@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using Compass.Update;
+using Compass.Wasm.Shared.Projects;
 using Compass.Wpf.Common;
 using Compass.Wpf.Extensions;
 using Prism.Events;
@@ -70,5 +71,14 @@ public partial class MainView : Window
             System.Diagnostics.Process.Start("Compass.Update.exe");
         };
 
+
+        BtnUpdate.Click += async (s, e) =>
+        {
+            var dialogResult = await dialogHost.Question("系统升级","确认要现在升级吗?");
+            if (dialogResult.Result != ButtonResult.OK) return;
+            Close();
+            //启动升级程序
+            System.Diagnostics.Process.Start("Compass.Update.exe");
+        };
     }
 }

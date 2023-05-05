@@ -1,0 +1,55 @@
+﻿@page "/modeltype/add/{ModelId}"
+@using Compass.Wasm.Shared.Categories
+@using Compass.Wasm.Client.Services.Categories
+@inject IModelTypeService ModelTypeService
+@inject IModelService ModelService
+@inject NavigationManager NavigationManager
+<PageTitle>新增模型子类</PageTitle>
+<span class="fs-5">新增 @_modelDto.Name 模型子类</span>
+
+<EditForm Model="_modelTypeDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">子类名称</span>
+        <input class="form-control" placeholder="Name" @bind-value="@_modelTypeDto.Name" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">子类描述</span>
+        <input class="form-control" placeholder="Name" @bind-value="@_modelTypeDto.Description" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">默认长</span>
+        <input class="form-control" type="number" @bind-value="@_modelTypeDto.Length" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">默认宽</span>
+        <input class="form-control" type="number" @bind-value="@_modelTypeDto.Width" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">默认高</span>
+        <input class="form-control" type="number" @bind-value="@_modelTypeDto.Height" />
+    </div>
+
+    <button class="btn btn-success" type="submit">保存</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("categories"))">取消</button>
+
+</EditForm>
+
+@code {
+    [Parameter]
+    public string ModelId { get; set; }
+
+    private ModelDto _modelDto = new();
+    private ModelTypeDto _modelTypeDto = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await ModelService.GetFirstOrDefault(Guid.Parse(ModelId));
+        if (!response.Status) NavigationManager.NavigateTo("categories");
+        _modelDto = response.Result;
+        _modelTypeDto.ModelId=_modelDto.Id.Value;
+    }
+    private async Task Save()
+    {
+        var result = await ModelTypeService.AddAsync(_modelTypeDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("categories");
+    }
+}

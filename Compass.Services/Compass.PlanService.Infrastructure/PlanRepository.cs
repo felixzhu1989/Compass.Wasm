@@ -12,64 +12,76 @@ public class PlanRepository : IPlanRepository
     {
         _context = context;
     }
-    public Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year,int month, ProductionPlanType_e productionPlanType)
+
+    #region MainPlan
+    //MainPlan
+    public Task<IQueryable<MainPlan>> GetMainPlansAsync()
+    {
+        return Task.FromResult(_context.MainPlans.AsQueryable());
+    }
+
+    public Task<MainPlan?> GetMainPlanByIdAsync(Guid id)
+    {
+        return _context.MainPlans.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+
+    //扩展MainPlan查询
+    public Task<IQueryable<MainPlan>> GetFilterMainPlansAsync(int year, int month, MainPlanType_e productionPlanType)
     {
         //只值比较年和月，判断类型，如果为No，则返回全部
-        var result = productionPlanType.Equals(ProductionPlanType_e.No) ?
-            _context.ProductionPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MonthOfInvoice.Month.Equals(month))
-            : _context.ProductionPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MonthOfInvoice.Month.Equals(month)&&x.ProductionPlanType.Equals(productionPlanType));
-        return Task.FromResult(result.OrderBy(x=>x.OdpReleaseTime).AsQueryable());
+        var result = productionPlanType.Equals(MainPlanType_e.NA) ?
+            _context.MainPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MonthOfInvoice.Month.Equals(month))
+            : _context.MainPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MonthOfInvoice.Month.Equals(month)&&x.MainPlanType.Equals(productionPlanType));
+        return Task.FromResult(result.OrderBy(x => x.CreateTime).AsQueryable());
     }
 
-    public Task<IQueryable<ProductionPlan>> GetProductionPlansAsync(int year, ProductionPlanType_e productionPlanType)
+    public Task<IQueryable<MainPlan>> GetMainPlansAsync(int year, MainPlanType_e productionPlanType)
     {
         //只值比较年和月，判断类型，如果为No，则返回全部
-        var result = productionPlanType.Equals(ProductionPlanType_e.No) ?
-            _context.ProductionPlans.Where(x => x.MonthOfInvoice.Year.Equals(year))
-            : _context.ProductionPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.ProductionPlanType.Equals(productionPlanType));
-        return Task.FromResult(result.OrderBy(x => x.OdpReleaseTime).AsQueryable());
+        var result = productionPlanType.Equals(MainPlanType_e.NA) ?
+            _context.MainPlans.Where(x => x.MonthOfInvoice.Year.Equals(year))
+            : _context.MainPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MainPlanType.Equals(productionPlanType));
+        return Task.FromResult(result.OrderBy(x => x.CreateTime).AsQueryable());
     }
 
-    public Task<IQueryable<ProductionPlan>> GetUnbindProductionPlansAsync()
+    public Task<IQueryable<MainPlan>> GetUnbindMainPlansAsync()
     {
-        return Task.FromResult(_context.ProductionPlans.Where(x => x.ProjectId == null).OrderBy(x=>x.SqNumber).AsQueryable());
+        return Task.FromResult(_context.MainPlans.Where(x => x.ProjectId == null).OrderBy(x => x.Number).AsQueryable());
     }
 
-    public Task<List<Guid?>> GetBoundProductionPlansAsync()
+    public Task<List<Guid?>> GetBoundMainPlansAsync()
     {
-       return _context.ProductionPlans.Where(x => x.ProjectId != null).Select(x => x.ProjectId).ToListAsync();
+        return _context.MainPlans.Where(x => x.ProjectId != null).Select(x => x.ProjectId).ToListAsync();
     }
 
-    public Task<ProductionPlan?> GetProductionPlanByIdAsync(Guid id)
+
+
+    public Task<MainPlan?> GetMainPlanByProjectIdAsync(Guid projectId)
     {
-        return _context.ProductionPlans.SingleOrDefaultAsync(x => x.Id.Equals(id));
+        return _context.MainPlans.SingleOrDefaultAsync(x => x.ProjectId.Equals(projectId));
     }
 
-    public Task<ProductionPlan?> GetProductionPlanByProjectIdAsync(Guid projectId)
+    public Task<CycleTimeDto> GetCycleTimeByMonthAsync(int year, int month)
     {
-        return _context.ProductionPlans.SingleOrDefaultAsync(x => x.ProjectId.Equals(projectId));
-    }
-
-    public Task<CycleTimeResponse> GetCycleTimeByMonthAsync(int year, int month)
-    {
-        var result = _context.ProductionPlans
+        var result = _context.MainPlans
             .Where(x => x.MonthOfInvoice.Year.Equals(year)
                         && x.MonthOfInvoice.Month.Equals(month)
-                        && !x.ProductionPlanType.Equals(ProductionPlanType_e.KFC));
+                        && !x.MainPlanType.Equals(MainPlanType_e.KFC));
         return Task.FromResult(GetCycleTime(result));
     }
 
-    public Task<CycleTimeResponse> GetCycleTimeByYearAsync(int year)
+    public Task<CycleTimeDto> GetCycleTimeByYearAsync(int year)
     {
-        var result = _context.ProductionPlans
+        var result = _context.MainPlans
             .Where(x => x.MonthOfInvoice.Year.Equals(year)
-                        && !x.ProductionPlanType.Equals(ProductionPlanType_e.KFC));
+                        && !x.MainPlanType.Equals(MainPlanType_e.KFC));
         return Task.FromResult(GetCycleTime(result));
     }
 
-    private CycleTimeResponse GetCycleTime(IQueryable<ProductionPlan> prodPlans)
+    private CycleTimeDto GetCycleTime(IQueryable<MainPlan> prodPlans)
     {
-        CycleTimeResponse response = new();
+        CycleTimeDto response = new();
         if (prodPlans.Any())
         {
             response.ProjectQuantity = prodPlans.Count();
@@ -77,10 +89,10 @@ public class PlanRepository : IPlanRepository
             List<int> productionCycle = new();
             foreach (var plan in prodPlans)
             {
-                factoryCycle.Add(plan.ProductionFinishTime.Subtract(plan.OdpReleaseTime).Days);
-                if (plan.DrawingReleaseActual != null)
+                factoryCycle.Add(plan.FinishTime.Subtract(plan.CreateTime).Days);
+                if (plan.DrwReleaseTime != null)
                 {
-                    productionCycle.Add(plan.ProductionFinishTime.Subtract(plan.DrawingReleaseActual.Value).Days);
+                    productionCycle.Add(plan.FinishTime.Subtract(plan.DrwReleaseTime.Value).Days);
                 }
             }
             response.FactoryCycleTime =Math.Ceiling(factoryCycle.Average());
@@ -94,5 +106,6 @@ public class PlanRepository : IPlanRepository
             response.ProductionCycleTime = 0;
         }
         return response;
-    }
+    } 
+    #endregion
 }

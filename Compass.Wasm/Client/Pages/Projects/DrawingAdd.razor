@@ -1,6 +1,7 @@
 ﻿@page "/drawing/add/{ProjectId}"
-@using Compass.Wasm.Client.Services
+@using Compass.Wasm.Client.Services.Projects
 @using Compass.Wasm.Shared.Projects
+@using Microsoft.AspNetCore.Components
 
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
@@ -39,7 +40,9 @@
 
             <div class="col">
                 <span>删除 ：</span><br />
-                <button class="btn" type="button" @onclick="@(() => _drawingDtos.Remove(dto))"><i class="bi bi-trash3 text-danger"/></button>
+                <button class="btn" type="button" @onclick="@(() => _drawingDtos.Remove(dto))">
+                    <span class="oi oi-trash text-danger"></span>
+                </button>
             </div>
         </div>
     }

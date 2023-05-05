@@ -21,7 +21,7 @@ public class ProjectCreatedNotificationHandler : NotificationHandler<ProjectCrea
     protected override void Handle(ProjectCreatedNotification notification)
     {
         //Todo:搜索未绑定的生产计划，匹配项目名称，相似度最高且大于0.5的关联起来
-        var prodPlans = _psDbContext.ProductionPlans.Where(x => x.ProjectId == null).ToArray();
+        var prodPlans = _psDbContext.MainPlans.Where(x => x.ProjectId == null).ToArray();
         List<float> results = new List<float>();
         foreach (var prodPlan in prodPlans)
         {
@@ -37,7 +37,7 @@ public class ProjectCreatedNotificationHandler : NotificationHandler<ProjectCrea
                 prodPlans[index].ChangeProjectId(notification.Id);
                 _psDbContext.SaveChangesAsync();
                 //todo:发出集成事件，修改Tracking的排序时间为ProductionFinishTime
-                var eData = new BindProjectEvent(notification.Id, prodPlans[index].ProductionFinishTime);
+                var eData = new BindProjectEvent(notification.Id, prodPlans[index].FinishTime);
                 _eventBus.Publish("PlanService.ProductionPlan.BindProject", eData);
             }
         }

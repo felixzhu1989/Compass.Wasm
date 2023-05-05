@@ -46,16 +46,16 @@
     [Parameter]
     public int Year { get; set; }
 
-    private List<CycleTimeResponse?>? _cycleTimes = new();
-    private CycleTimeResponse? _annualCycleTime = new();
+    private List<CycleTimeDto?>? _cycleTimes = new();
+    private CycleTimeDto? _annualCycleTime = new();
     protected override async Task OnParametersSetAsync()
     {
         for (int i = 0; i < 12; i++)
         {
-            var result = await Http.GetFromJsonAsync<CycleTimeResponse>($"api/ProductionPlan/CycleTime/{Year}/{i + 1}");
+            var result = await Http.GetFromJsonAsync<CycleTimeDto>($"api/ProductionPlan/CycleTime/{Year}/{i + 1}");
             result.Month = i + 1;
             _cycleTimes.Add(result);
         }
-        _annualCycleTime=await Http.GetFromJsonAsync<CycleTimeResponse>($"api/ProductionPlan/CycleTime/{Year}");
+        _annualCycleTime=await Http.GetFromJsonAsync<CycleTimeDto>($"api/ProductionPlan/CycleTime/{Year}");
     }
 }

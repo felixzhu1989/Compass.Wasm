@@ -23,7 +23,7 @@ public class ProjectDeletedNotificationHandler : NotificationHandler<ProjectDele
         if (drawingPlan != null) drawingPlan.SoftDelete();
 
         //同时删除计划绑定的项目
-        var prodPlan = _psDbContext.ProductionPlans.FirstOrDefault(x => x.ProjectId.Equals(notification.Id));
+        var prodPlan = _psDbContext.MainPlans.FirstOrDefault(x => x.ProjectId.Equals(notification.Id));
         if (prodPlan != null)
         {
             prodPlan.ChangeProjectId(null);

@@ -1,197 +1,199 @@
 ﻿@page "/"
-@page "/{Page:int}"
-@page "/search/{SearchText}/{Page:int}"
-@using Compass.Wasm.Client.Services
-@using Compass.Wasm.Shared.Projects
+@using Compass.Wasm.Client.Services.Plans
+@using Compass.Wasm.Shared.Plans
 
-@inject IIndexService IndexService
-@*@implements IDisposable*@
+@inject IMainPlanService MainPlanService
+<PageTitle>主页</PageTitle>
 
-<PageTitle>Project Tracking</PageTitle>
-<div class="row" style="border: 1px solid lightgray; border-radius: 10px">
-    <SearchTrackings />
+<!--sticky固定位置，top: 3.5rem-->
+<div style="position: sticky; top: 3.5rem; z-index: 1;background-color:White">
+    <div class="row">
+        <div class="col input-group mb-2">
+            <span class="input-group-text">搜索</span>
+            <input class="form-control" placeholder="Search" 
+                   @bind-value="@_search" @oninput="@Search" />
+        </div>
+        <div class="col input-group mb-2" style="max-width: 230px">
+            <span class="input-group-text">月份</span>
+            <input class="form-control" 
+                   type="month" 
+                   value="@(_selectedMonth.ToString("yyyy-MM"))" 
+                   format="" @onchange="OnMonthChange" />
+        </div>
+        <div class="col form-check ms-3 mt-2" style="max-width: 70px">
+            <input class="form-check-input" 
+                   type="checkbox" 
+                   value="@_annual" 
+                   @onchange="OnAnnualChange">
+            <label class="form-check-label">
+                全年
+            </label>
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
 </div>
-<table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
-    <thead>
-        <tr>
-            <th style="width: 60px; text-align: center;color:dodgerblue">状态</th>
-            <th style="width: 10%;color: dodgerblue">项目编号</th>
-            <th style="width: 30%;color: dodgerblue">项目名称</th>
-            <th style="text-align: center;color: purple">创建时间</th>
-            <th style="text-align: center;color: purple">计划发图</th>
-            <th style="text-align: center;color: purple">实际发图</th>
-            <th style="text-align: center;color: purple">计划完工</th>
-            <th style="text-align: center;color:blue">生产状态</th>
-            <th style="text-align: center;color: darkgreen">入库时间</th>
-            <th style="text-align: center;color: darkgreen">发货开始</th>
-            <th style="text-align: center;color: darkgreen">发货结束</th>
-            <th style="text-align: center;color: red">报告异常</th>
-            <th style="text-align: center;color: red">经验教训</th>
-        </tr>
+
+<table class="table table-hover" style="table-layout: fixed; word-break: break-all;">
+    <!--sticky固定位置，top: 6rem-->
+    <thead style="position: sticky; top: 6rem; z-index: 1; background-color: White">
+    <tr>
+            <th style="width: 60px; text-align: center; color: purple">状态</th>
+        <th style="width: 10%; color: dodgerblue">项目编号</th>
+        <th style="width: 30%; color: dodgerblue">项目名称</th>
+        <th style="color: purple">计划发图</th>
+        <th style="color: darkgreen">发图时间</th>
+        <th style="color: purple">计划完工</th>
+        <th style="color: darkgreen">入库时间</th>
+        <th style="color: darkgreen">发货时间</th>
+        <th style="color: red">报告异常</th>
+        <th style="color: red">经验教训</th>
+    </tr>
     </thead>
     <tbody>
-        @if (IndexService.Trackings == null||IndexService.Trackings.Count==0)
+    @if (_filterMainPlans.Count == 0)
+    {
+        <p>...</p>
+    }
+    else
+    {
+        @foreach (var plan in _filterMainPlans)
         {
-            <p>加载中...</p>
-        }
-        else
-        {
-            @foreach (var tracking in IndexService.Trackings)
-            {
                 @*<DisplayTracking Id="tracking.Id" />*@
-                <tr class="@(tracking.ProblemNotResolved?"table-danger":"")">
-                    <td style="text-align: center">
-                        <span class="badge @(tracking.ProjectStatus==ProjectStatus_e.计划?"bg-info text-dark": tracking.ProjectStatus==ProjectStatus_e.制图?"bg-primary": tracking.ProjectStatus==ProjectStatus_e.生产?"bg-warning text-dark": tracking.ProjectStatus==ProjectStatus_e.入库?"bg-success": tracking.ProjectStatus==ProjectStatus_e.发货?"bg-secondary":"bg-dark")">@tracking.ProjectStatus</span>
-                    </td>
+            <tr class="@(plan.ProblemNotResolved ? "table-danger" : "")">
+                <td style="text-align: center">
+                    <span class="badge
+                        @(plan.Status == MainPlanStatus_e.计划 ? "bg-info text-dark" : plan.Status == MainPlanStatus_e.制图 ? "bg-primary" : plan.Status == MainPlanStatus_e.生产 ? "bg-warning text-dark" : plan.Status == MainPlanStatus_e.入库 ? "bg-success" : plan.Status == MainPlanStatus_e.发货 ? "bg-secondary" : "bg-dark")">
+                        @plan.Status
+                    </span>
+                </td>
 
-                    <td>
-                        <a href="./drawings/@tracking.Id">@tracking.OdpNumber</a>
-                    </td>
-                    <td>@tracking.ProjectName</td>
-                    @if (tracking.ProductionPlanOk)
+                <td>
+                    @if (plan.ProjectId != null)
                     {
-                        <td style="text-align: center">@tracking.OdpReleaseTime.ToString("MM/dd")</td>
-                        <td style="text-align: center;font-weight: bold;
-                                @(tracking.DrawingReleaseTarget<DateTime.Today&&
-                                  tracking.DrawingReleaseActual==null? "color:red":
-                                    tracking.DrawingReleaseTarget<DateTime.Today ?
-                                        "color:green" : "")
-                               ">@tracking.DrawingReleaseTarget.ToString("MM/dd")</td>
-                        <td style="text-align: center">@(tracking.DrawingReleaseActual!=null ? tracking.DrawingReleaseActual.Value.ToString("MM/dd") : "")</td>
-                        <td style="text-align: center; font-weight: bold;
-                               @(tracking.ProductionFinishTime < DateTime.Today
-                                   && tracking.ProjectStatus < ProjectStatus_e.入库? "color:red" :
-                                   tracking.ProductionFinishTime < DateTime.Today ?
-                                       "color:green" : "")">
-                            @tracking.ProductionFinishTime.ToString("MM/dd")
-                        </td>
+                        <a href="./drawings/@plan.ProjectId">@plan.OdpNumber</a>
                     }
                     else
                     {
-                        <td style="text-align: center">
-                            <a href="bindproductionplan/@tracking.Id">生产计划</a>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <a href="mainplan/bind/@plan.Id">绑定项目</a>
                     }
-                    <td style="text-align: center">?</td>
-                    <td style="text-align: center">
-                        <AuthorizeView Roles="admin">
-                            <Authorized>
-                                <a href="updatedate/warehousing/@tracking.Id"><i class="bi bi-gear" /></a>
-                            </Authorized>
-                        </AuthorizeView>
-                        @(tracking.WarehousingTime != null ? tracking.WarehousingTime.Value.ToString("MM/dd") : "")
-                    </td>
-                    <td style="text-align: center">
-                        <AuthorizeView Roles="admin">
-                            <Authorized>
-                                <a href="updatedate/shippingstart/@tracking.Id"><i class="bi bi-gear" /></a>
-                            </Authorized>
-                        </AuthorizeView>
-                        @(tracking.ShippingStartTime != null ? tracking.ShippingStartTime.Value.ToString("MM/dd") : "")
-                    </td>
-                    <td style="text-align: center">
-                        <AuthorizeView Roles="admin">
-                            <Authorized>
-                                <a href="updatedate/shippingend/@tracking.Id"><i class="bi bi-gear" /></a>
-                            </Authorized>
-                        </AuthorizeView>
-                        @(tracking.ShippingEndTime != null ? tracking.ShippingEndTime.Value.ToString("MM/dd") : "")
-                    </td>
-                    <td style="text-align: center">
-                        <a href="./reportproblem/@tracking.Id">报告异常</a>
-                    </td>
-                    <td style="text-align: center">
-                        <a href="./reportissue/@tracking.Id">经验教训</a>
+                </td>
+                <td>@plan.ProjectName</td>
+
+                <td style="font-weight: bold; @(plan.DrwReleaseTarget < DateTime.Today && plan.DrwReleaseTime == null ? "color:red" : plan.DrwReleaseTarget < DateTime.Today ? "color:green" : "")">
+                    @plan.DrwReleaseTarget.ToString("MM/dd")
+                </td>
+                <td >
+                    <AuthorizeView Roles="admin">
+                        <Authorized>
+                            <!--todo:使用弹窗解决这个问题-->
+                            <a href="">
+                                <span class="oi oi-cog"></span>
+                            </a>
+                        </Authorized>
+                    </AuthorizeView>
+                    @(plan.DrwReleaseTime != null ?
+                        plan.DrwReleaseTime.Value.ToString("MM/dd") : "")
+                </td>
+                <td style="font-weight: bold; @(plan.FinishTime < DateTime.Today && plan.Status < MainPlanStatus_e.入库 ? "color:red" : plan.FinishTime < DateTime.Today ? "color:green" : "")">
+                    @plan.FinishTime.ToString("MM/dd")
+                </td>
+                <td >
+                    <AuthorizeView Roles="admin">
+                        <Authorized>
+                            <!--todo:使用弹窗解决这个问题-->
+                            <a href="">
+                                <span class="oi oi-cog"></span>
+                            </a>
+                        </Authorized>
+                    </AuthorizeView>
+                    @(plan.WarehousingTime != null ?
+                        plan.WarehousingTime.Value.ToString("MM/dd") : "")
+                </td>
+                <td >
+                    <AuthorizeView Roles="admin">
+                        <Authorized>
+                            <!--todo:使用弹窗解决这个问题-->
+                            <a href="">
+                                <span class="oi oi-cog"></span>
+                            </a>
+                        </Authorized>
+                    </AuthorizeView>
+                    @(plan.ShippingTime != null ?
+                        plan.ShippingTime.Value.ToString("MM/dd") : "")
+                </td>
+                <td >
+                    <a href="problem/report/@plan.ProjectId">报告异常</a>
+                </td>
+                <td >
+                    <a href="issue/report/@plan.ProjectId">经验教训</a>
+                </td>
+            </tr>
+            @if (plan.ProblemNotResolved)
+            {
+                <tr class="table-danger">
+                    <td colspan="13">
+                        <a href="problem/report/@plan.ProjectId">
+                            <span class="badge bg-danger ms-1 me-1">异常</span>
+                        </a>
+                        <img class="ms-1 me-2" src="andon_red.gif"/>
+                        <br/>
+                        @if (plan.ProblemDtos.Count != 0)
+                        {
+                            foreach (var problem in plan.ProblemDtos)
+                            {
+
+                            }
+                        }
                     </td>
                 </tr>
-                @if (tracking.ProblemNotResolved)
-                {
-                    <tr class="table-danger">
-                        <td colspan="13">
-                            <a href="./reportproblem/@tracking.Id">
-                                <span class="badge bg-danger ms-1 me-1">异常</span>
-                            </a>
-                            <img class="ms-1 me-2" src="andon_red.gif" />
-                            <br />
-                            @if (tracking.Problems != null && tracking.Problems.Count != 0)
-                            {
-                                foreach (var problem in tracking.Problems)
-                                {
-                                    <ShowProblem Problem="@problem" />
-                                }
-                            }
-                        </td>
-                    </tr>
-                }
             }
         }
+    }
     </tbody>
 </table>
-
-@if (SearchText!=null)
-{
-    @for (int i = 1; i <= IndexService.PageCount; i++)
-    {
-        <a class="btn @(i==IndexService.CurrentPage?"btn-info":"btn-outline-info")"
-   style="margin-right: 15px;margin-bottom: 30px;"
-   href="search/@IndexService.LastSearchText/@i">@i</a>
-    }
-}
-else
-{
-    @for (int i = 1; i <= IndexService.PageCount; i++)
-    {
-        <a class="btn @(i==IndexService.CurrentPage?"btn-info":"btn-outline-info")"
-   style="margin-right: 15px;margin-bottom: 30px;"
-   href="@i">@i</a>
-    }
-}
-
-
-
 @code {
-    [Parameter]
-    public string? SearchText { get; set; }
-    [Parameter]
-    public int Page { get; set; } = 1;
-    
+
+    private string _search = string.Empty;
+    private bool _annual = true;
+    private DateTime _selectedMonth = DateTime.Today;
+    private int _year;
+    private int _month;
+
+    private List<MainPlanDto>? _mainPlans = new();
+    private List<MainPlanDto>? _filterMainPlans = new();
     protected override async Task OnParametersSetAsync()
     {
-        if (Page == 0) Page = 1;
-        if (SearchText != null)
-        {
-            await IndexService.SearchTrackings(SearchText, Page);
-        }
-        else
-        {
-            await IndexService.GetTrackingsAsync(Page);
-        }
+        _year= _selectedMonth.Year;
+        _month= _selectedMonth.Month;
+        var result = await MainPlanService.GetIndexDataAsync();
+        _mainPlans = result.Result;
+        //过滤条件变化
+        Search(new ChangeEventArgs { Value = _search });
     }
-
-    //private int _pageFlag = 1;
-    //private Timer _timer;
-    //protected override void OnInitialized()
-    //{
-    //    _timer = new Timer();
-    //    _timer.Interval = 60000;
-    //    _timer.Elapsed += OnTimeElapsed;//每隔1分钟就会执行一次这个方法
-    //    _timer.Enabled = true;
-    //}
-    //private void OnTimeElapsed(object? sender, ElapsedEventArgs e)
-    //{
-    //    //直接跳转页面
-    //    if (IndexService.PageCount > 1)
-    //    {
-    //        _pageFlag++;
-    //        if (_pageFlag > IndexService.PageCount) _pageFlag = 1;
-    //    }
-    //    NavigationManager.NavigateTo(SearchText==null ? $"{_pageFlag}" : $"search/{IndexService.LastSearchText}/{_pageFlag}");
-    //}
-    //public void Dispose()
-    //{
-    //    _timer.Dispose();
-    //}
+    private void OnAnnualChange(ChangeEventArgs e)
+    {
+        _annual =Convert.ToBoolean(e.Value);
+        Search(new ChangeEventArgs { Value = _search });
+    }
+    private void OnMonthChange(ChangeEventArgs e)
+    {
+        _selectedMonth = Convert.ToDateTime(e.Value);
+        _year= _selectedMonth.Year;
+        _month= _selectedMonth.Month;
+        Search(new ChangeEventArgs { Value = _search });
+    }
+    private void Search(ChangeEventArgs e)
+    {
+        _search=e.Value!.ToString()!;
+        _filterMainPlans.Clear();
+        _filterMainPlans = _mainPlans.Where(
+            x => x.MonthOfInvoice.Year.Equals(_year)&&
+                 (_annual||x.MonthOfInvoice.Month.Equals(_month))&&
+                 (string.IsNullOrEmpty(_search)||
+                  string.IsNullOrEmpty(x.OdpNumber)||
+    x.OdpNumber.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                string.IsNullOrEmpty(x.ProjectName)||
+    x.ProjectName.Contains(_search, StringComparison.OrdinalIgnoreCase))).ToList();
+    }
 }

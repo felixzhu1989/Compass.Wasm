@@ -21,8 +21,4 @@
 		<ProjectReference Include="..\Shared\Compass.Wasm.Shared.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Include="wwwroot\js\scripts.js" />
-	</ItemGroup>
-
 </Project>

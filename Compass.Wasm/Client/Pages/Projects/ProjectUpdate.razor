@@ -1,6 +1,8 @@
 ﻿@page "/project/update/{Id}"
-@using Compass.Wasm.Client.Services
+@using Compass.Wasm.Client.Services.Projects
 @using Compass.Wasm.Shared.Projects
+@using Microsoft.AspNetCore.Components
+
 
 @inject IProjectService ProjectService
 @inject NavigationManager NavigationManager
@@ -18,31 +20,33 @@
     <AuthorizeView Roles="admin">
         <Authorized>
             <div class="col" style="text-align: right">
-                <button class="btn mb-2" type="button" @onclick="Delete"><i class="bi bi-trash3 text-danger" /></button>
+                <button class="btn mb-2" type="button" @onclick="Delete">
+                    <span class="oi oi-trash text-danger"></span>
+                </button>
             </div>
         </Authorized>
     </AuthorizeView>
 </div>
 
-<EditForm Model="project" OnSubmit="Save">
+<EditForm Model="_projectDto" OnSubmit="Save">
     <!--由项目经理修改的数据-->
     <AuthorizeView Roles="admin,pm">
         <Authorized Context="auth">
             <div class="input-group mb-2">
                 <span class="input-group-text">项目编号</span>
-                <input class="form-control" placeholder="ODP" @bind-value="@project.OdpNumber" />
+                <input class="form-control" placeholder="ODP" @bind-value="@_projectDto.OdpNumber" />
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text">项目名称</span>
-                <input class="form-control" placeholder="Name" @bind-value="@project.Name" />
+                <input class="form-control" placeholder="Name" @bind-value="@_projectDto.Name" />
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text" style="color: red">交货日期</span>
-                <input type="date" class="form-control" style="color: red" @bind-value="@project.DeliveryDate" />
+                <input type="date" class="form-control" style="color: red" @bind-value="@_projectDto.DeliveryDate" />
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text">项目类型</span>
-                <select class="form-select" @bind="@project.ProjectType">
+                <select class="form-select" @bind="@_projectDto.ProjectType">
                     @foreach (var type in Enum.GetNames(typeof(ProjectType_e)))
                     {
                         <option>@type</option>
@@ -51,7 +55,7 @@
             </div>
             <div class="input-group mb-2">
                 <span class="input-group-text">风险等级</span>
-                <select class="form-select" @bind="@project.RiskLevel">
+                <select class="form-select" @bind="@_projectDto.RiskLevel">
                     @foreach (var level in Enum.GetNames(typeof(RiskLevel_e)))
                     {
                         <option>@level</option>
@@ -63,7 +67,7 @@
 
             <div class="input-group mb-2">
                 <span class="input-group-text">特殊要求</span>
-                <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@project.SpecialNotes"></textarea>
+                <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@_projectDto.SpecialNotes"></textarea>
             </div>
         </Authorized>
     </AuthorizeView>
@@ -71,19 +75,19 @@
     
 
     <button class="btn btn-success" type="submit">保存</button>
-    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("/projects"))">取消</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("projects"))">取消</button>
 </EditForm>
 
 
 @code {
     [Parameter]
     public string Id { get; set; }
-    private ProjectDto? project = new();
+    private ProjectDto? _projectDto = new();
     protected override async Task OnInitializedAsync()
     {
         var response = await ProjectService.GetFirstOrDefault(Guid.Parse(Id));
         if (!response.Status) NavigationManager.NavigateTo("projects");
-        project = response.Result;
+        _projectDto = response.Result;
     }
 
     private async Task Delete()
@@ -95,7 +99,7 @@
         //    return;
         //}
 
-        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{_projectDto.OdpNumber}】吗？");
         if (confirmResult)
         {
             var result = await ProjectService.DeleteAsync(Guid.Parse(Id));
@@ -104,7 +108,7 @@
     }
     private async Task Save()
     {
-        var result = await ProjectService.UpdateAsync(Guid.Parse(Id), project);
+        var result = await ProjectService.UpdateAsync(Guid.Parse(Id), _projectDto);
         if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("projects");
     }
 }

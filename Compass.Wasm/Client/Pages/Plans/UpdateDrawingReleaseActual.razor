@@ -6,7 +6,7 @@
 <EditForm Model="prodPlan" OnSubmit="Save">
     <div class="input-group mb-2" style="max-width: 250px">
         <span class="input-group-text">创建时间</span>
-        <input type="date" class="form-control" @bind-value="@prodPlan.DrawingReleaseActual" />
+        <input type="date" class="form-control" @bind-value="@prodPlan.DrwReleaseTime" />
     </div>
     <button class="btn btn-success" type="submit">保存</button>
     <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("productionplanlist"))">取消</button>
@@ -14,11 +14,11 @@
 @code {
     [Parameter]
     public string Id { get; set; }
-    private ProductionPlanResponse? prodPlan = new();
+    private MainPlanDto? prodPlan = new();
     protected override async Task OnInitializedAsync()
     {
-        prodPlan = await Http.GetFromJsonAsync<ProductionPlanResponse>($"api/ProductionPlan/{Id}");
-        prodPlan.DrawingReleaseActual=DateTime.Today;
+        prodPlan = await Http.GetFromJsonAsync<MainPlanDto>($"api/ProductionPlan/{Id}");
+        prodPlan.DrwReleaseTime=DateTime.Today;
     }
     private async Task Save()
     {

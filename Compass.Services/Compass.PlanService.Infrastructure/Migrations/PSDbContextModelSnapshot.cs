@@ -17,16 +17,19 @@ namespace Compass.PlanService.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "7.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Compass.PlanService.Domain.Entities.ProductionPlan", b =>
+            modelBuilder.Entity("Compass.PlanService.Domain.Entities.MainPlan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -34,10 +37,13 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DrawingReleaseActual")
+                    b.Property<DateTime>("DrwReleaseTarget")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DrawingReleaseTarget")
+                    b.Property<DateTime?>("DrwReleaseTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FinishTime")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
@@ -45,6 +51,9 @@ namespace Compass.PlanService.Infrastructure.Migrations
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("MainPlanType")
+                        .HasColumnType("int");
 
                     b.Property<string>("ModelSummary")
                         .HasColumnType("nvarchar(max)");
@@ -56,14 +65,9 @@ namespace Compass.PlanService.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("OdpReleaseTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ProductionFinishTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductionPlanType")
-                        .HasColumnType("int");
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uniqueidentifier");
@@ -74,9 +78,14 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SqNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("ShippingTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("WarehousingTime")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -86,7 +95,7 @@ namespace Compass.PlanService.Infrastructure.Migrations
 
                     b.HasIndex("ProjectId", "IsDeleted");
 
-                    b.ToTable("ProductionPlans");
+                    b.ToTable("MainPlans");
                 });
 #pragma warning restore 612, 618
         }

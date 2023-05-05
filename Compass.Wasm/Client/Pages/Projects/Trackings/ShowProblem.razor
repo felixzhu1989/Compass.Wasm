@@ -33,7 +33,7 @@
 }
 @code {
     [Parameter]
-    public ProblemResponse Problem { get; set; }
+    public ProblemDto Problem { get; set; }
     private ProblemTypeResponse? type;
     private UserDto? responder;
     protected override async Task OnParametersSetAsync()

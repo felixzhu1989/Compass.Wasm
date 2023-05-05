@@ -3,6 +3,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Hood
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\JobCard.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\UpdateList.xml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\CutList.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\CeilingPackingList.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Compass.Wpf.exe
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Compass.Update.deps.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Compass.Update.runtimeconfig.json

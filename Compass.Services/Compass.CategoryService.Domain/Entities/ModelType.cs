@@ -1,4 +1,5 @@
-﻿using Zack.DomainCommons.Models;
+﻿using Compass.Wasm.Shared.Categories;
+using Zack.DomainCommons.Models;
 
 namespace Compass.CategoryService.Domain.Entities;
 
@@ -24,6 +25,19 @@ public record ModelType : AggregateRootEntity, IAggregateRoot, IHasCreationTime,
         Width=width;
         Height=height;
     }
+
+    public void Update(ModelTypeDto dto)
+    {
+        ChangeSequenceNumber(dto.SequenceNumber)
+            .ChangeName(dto.Name)
+            .ChangeDescription(dto.Description)
+            .ChangeLength(dto.Length)
+            .ChangeWidth(dto.Width)
+            .ChangeHeight(dto.Height);
+        NotifyModified();
+    }
+
+
     public ModelType ChangeSequenceNumber(int sequenceNumber)
     {
         SequenceNumber=sequenceNumber;

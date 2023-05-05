@@ -1,8 +1,8 @@
 ﻿using Compass.PlanService.Infrastructure;
 
 namespace Compass.Wasm.Server.Events.Plans;
-//处理ProductionPlanController发出的集成事件，创建新订单后，继续创建跟踪对象
-[EventName("PlanService.ProductionPlan.BindProject")]
+//处理集成事件
+[EventName("PlanService.MainPlan.BindProject")]
 public class BindProjectEventHandler : JsonIntegrationEventHandler<BindProjectEvent>
 {
 
@@ -22,7 +22,7 @@ public class BindProjectEventHandler : JsonIntegrationEventHandler<BindProjectEv
             var tracking = await _pmDbContext.Trackings.FirstOrDefaultAsync(x => x.Id.Equals(eventData.Id));
             if (tracking != null)
             {
-                tracking.ChangeSortDate(eventData.ProductionFinishTime);
+                tracking.ChangeSortDate(eventData.FinishTime);
                 await _pmDbContext.SaveChangesAsync();
             }
         }

@@ -7,7 +7,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.S
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.RazorAssemblyInfo.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.RazorAssemblyInfo.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.MvcApplicationPartsAssemblyInfo.cs
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\libman.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Wasm.Client.staticwebassets.runtime.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\appsettings.Development.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\appsettings.json

@@ -12,6 +12,8 @@ public record Tracking : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     //实际发生时间，进度相关参数
     //制定制图计划的时间->进入制图状态
     //第一台发出生产图纸的时间->进入生产状态
+
+
     public DateTime? WarehousingTime { get; private set; }//第一台生产完工入库的时间->进入库存状态
     public DateTime? ShippingStartTime { get; private set; }//项目第一台真实发货的时间->进入发货状态，用减去WarehousingTime，用户计算成品库存时间
     public DateTime? ShippingEndTime { get; private set; }//所有产品都发货了的时间->进入结束状态（是否需要售后状态？）

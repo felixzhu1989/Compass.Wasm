@@ -43,4 +43,32 @@ public class ModelTypeDto:BaseDto
     public double Height { get=>height;
         set { height = value;OnPropertyChanged(); }
     }
+
+
+    #region 附加属性
+    private string product;
+    public string Product
+    {
+        get => product;
+        set { product = value; OnPropertyChanged(); }
+    }
+    private Guid productId;
+    public Guid ProductId
+    {
+        get => productId;
+        set { productId = value; OnPropertyChanged(); }
+    }
+    private string model;
+    public string Model
+    {
+        get => model;
+        set { model = value; OnPropertyChanged(); }
+    }
+    private int modelSeqNumber;
+    public int ModelSeqNumber
+    {
+        get => modelSeqNumber;
+        set { modelSeqNumber = value; OnPropertyChanged(); }
+    }
+    #endregion
 }

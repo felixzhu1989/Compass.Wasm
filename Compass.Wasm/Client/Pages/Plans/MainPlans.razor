@@ -1,0 +1,135 @@
+﻿@page "/mainplans"
+@using Compass.Wasm.Shared.Plans
+@using Compass.Wasm.Client.Services.Plans
+
+@inject NavigationManager NavigationManager
+@inject IMainPlanService MainPlanService
+
+<PageTitle>主计划列表</PageTitle>
+<!--sticky固定位置，top: 3.5rem-->
+<div style="position: sticky; top: 3.5rem; z-index: 1;background-color:White">
+    <div class="row position-relative">
+        
+        <div class="col input-group mb-2" style="max-width: 230px">
+            <span class="input-group-text">月份</span>
+            <input class="form-control" type="month" value="@(_selectedMonth.ToString("yyyy-MM"))" format="" @onchange="OnMonthChange" />
+        </div>
+        <div class="col form-check ms-3 mt-2" style="max-width: 70px">
+            <input class="form-check-input" type="checkbox" value="@_annual" @onchange="OnAnnualChange">
+            <label class="form-check-label">
+                全年
+            </label>
+        </div>
+
+        <div class="col input-group mb-2" style="max-width: 180px">
+            <span class="input-group-text">分类</span>
+            <select class="form-select" value="@_planType" @onchange="OnPlanTypeChange">
+                @foreach (var type in Enum.GetNames(typeof(MainPlanType_e)))
+                {
+                    <option>@type</option>
+                }
+            </select>
+        </div>
+        <div class="col mt-2">
+            <a href="cycletime/@_year">Cycle Time</a>
+            @if (_mainPlans != null)
+            {
+                <span class="mx-3">Project Qty:@_mainPlans.Count</span>
+            }
+            <span class="mx-3">Factory:@_cycleTime.FactoryCycleTime</span>
+            <span class="mx-3">Production:@_cycleTime.ProductionCycleTime</span>
+        </div>
+        @*todo:控制权限*@
+        <AuthorizeView Roles="admin,pmc">
+            <Authorized>
+                <div class="col position-absolute bottom-0 end-0" style="text-align: right; width: 10%">
+                    <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo("mainplan/add"))">+ 添加</button>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+<table class="table table-hover" style="table-layout: fixed; word-break: break-all;">
+    <!--sticky固定位置，top: 6rem-->
+    <thead style="position: sticky; top: 6rem; z-index: 1; background-color: White">
+    <tr>
+        <th style="width: 7%">创建时间</th>
+        <th style="width: 10%">编号</th>
+        <th style="width: 10%">绑定项目</th>
+        <th >项目名称</th>
+        <th style="width: 7%">数量</th>
+        <th >型号</th>
+        <th style="width: 7%">完工时间</th>
+        <th style="width: 7%">计划发图</th>
+        <th style="width: 7%; text-align: center">类型</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (_filterMainPlans.Count == 0)
+    {
+        <p>...</p>
+    }
+    else
+    {
+        @foreach (var plan in _filterMainPlans)
+        {
+            <MainPlanRow MainPlanDto="plan"/>
+        }
+    }
+    </tbody>
+</table>
+
+@code {
+    //过滤参数
+    private bool _annual = false;
+    private DateTime _selectedMonth = DateTime.Today;
+    private int _year;
+    private int _month;
+    private string? _planType;
+
+    private CycleTimeDto? _cycleTime = new();
+    private List<MainPlanDto>? _mainPlans = new();
+    private List<MainPlanDto>? _filterMainPlans = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        _year= _selectedMonth.Year;
+        _month= _selectedMonth.Month;
+        _planType??=MainPlanType_e.NA.ToString();
+        var result = await MainPlanService.GetAllAsync();
+        _mainPlans = result.Result;
+        Filter();
+    }
+
+    //过滤条件变化
+    private void OnAnnualChange(ChangeEventArgs e)
+    {
+        _annual =Convert.ToBoolean(e.Value);
+        Filter();
+    }
+    private void OnMonthChange(ChangeEventArgs e)
+    {
+        _selectedMonth = Convert.ToDateTime(e.Value);
+        _year= _selectedMonth.Year;
+        _month= _selectedMonth.Month;
+        Filter();
+
+    }
+    private void OnPlanTypeChange(ChangeEventArgs e)
+    {
+        _planType = e.Value.ToString();
+        Filter();
+    }
+    //过滤逻辑
+    private void Filter()
+    {
+        _filterMainPlans.Clear();
+        var type = (MainPlanType_e)Enum.Parse(typeof(MainPlanType_e), _planType);
+
+        _filterMainPlans = _mainPlans.Where(
+            x => x.MonthOfInvoice.Year.Equals(_year)&& 
+                 (_annual||x.MonthOfInvoice.Month.Equals(_month))&&
+                 (type.Equals(MainPlanType_e.NA)||
+                  x.MainPlanType.Equals(type))).ToList();
+    }
+}

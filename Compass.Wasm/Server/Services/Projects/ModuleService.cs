@@ -49,12 +49,9 @@ public class ModuleService : IModuleService
         try
         {
             var model = await _repository.GetModuleByIdAsync(id);
-            if (model != null)
-            {
-                var dto = _mapper.Map<ModuleDto>(model);
-                return new ApiResponse<ModuleDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ModuleDto> { Status = false, Message = "查询数据失败" };
+            if (model == null) return new ApiResponse<ModuleDto> { Status = false, Message = "查询数据失败" };
+            var dto = _mapper.Map<ModuleDto>(model);
+            return new ApiResponse<ModuleDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -82,12 +79,9 @@ public class ModuleService : IModuleService
         try
         {
             var model = await _repository.GetModuleByIdAsync(id);
-            if (model != null)
-            {
-                model.Update(dto);//这里面发出领域事件
-                return new ApiResponse<ModuleDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ModuleDto> { Status = false, Message = "更新数据失败" };
+            if (model == null) return new ApiResponse<ModuleDto> { Status = false, Message = "更新数据失败" };
+            model.Update(dto);//这里面发出领域事件
+            return new ApiResponse<ModuleDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {
@@ -100,12 +94,9 @@ public class ModuleService : IModuleService
         try
         {
             var model = await _repository.GetModuleByIdAsync(id);
-            if (model != null)
-            {
-                model.SoftDelete();//软删除
-                return new ApiResponse<ModuleDto> { Status = true };
-            }
-            return new ApiResponse<ModuleDto> { Status = false, Message = "删除数据失败" };
+            if (model == null) return new ApiResponse<ModuleDto> { Status = false, Message = "删除数据失败" };
+            model.SoftDelete();//软删除
+            return new ApiResponse<ModuleDto> { Status = true };
         }
         catch (Exception e)
         {

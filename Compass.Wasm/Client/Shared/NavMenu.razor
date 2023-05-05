@@ -1,7 +1,7 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/1">
-            <i class="bi bi-browser-safari me-2" />Compass
+        <a class="navbar-brand" href="">
+            <span class="oi oi-compass"></span>Compass
         </a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
@@ -12,31 +12,31 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/1" Match="NavLinkMatch.All">
-                <i class="bi bi-house me-2" /> 项目跟踪
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home"></span>主页
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="productionplanlist">
-                <i class="bi bi-calendar4-range me-2" /> 生产计划
+            <NavLink class="nav-link" href="mainplans">
+                <span class="oi oi-calendar"></span>主计划
             </NavLink>
         </div>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="projects">
-                <i class="bi bi-journal-text me-2" /> 项目列表
+                <span class="oi oi-list"></span>项目列表
             </NavLink>
         </div>
         
         <AuthorizeView Roles="admin">
             <Authorized>
                 <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="categorylist">
-                        <i class="bi bi-diagram-3 me-2" aria-hidden="true" /> 模型管理
+                    <NavLink class="nav-link" href="categories">
+                        <span class="oi oi-fork"></span>模型管理
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="functiontest">
-                        <i class="bi bi-alarm me-2" aria-hidden="true" /> 功能测试
+                        <span class="oi oi-bolt"></span>功能测试
                     </NavLink>
                 </div>
             </Authorized>

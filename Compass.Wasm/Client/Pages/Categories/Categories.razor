@@ -1,0 +1,131 @@
+﻿@page "/categories"
+@using Compass.Wasm.Shared.Categories
+@using Compass.Wasm.Client.Services.Categories
+@inject IProductService ProductService
+<!--sticky固定位置，top: 3.5rem-->
+<div style="position: sticky; top: 3.5rem; z-index: 1;background-color:White">
+    <div class="row">
+        <div class="col input-group mb-2">
+            <span class="input-group-text">搜索模型</span>
+            <input class="form-control" placeholder="Search" @bind-value="@_search" @oninput="@Search" />
+        </div>
+        <div class="col input-group mb-2" style="width: 100px">
+            <span class="input-group-text">事业部</span>
+            <select class="form-select" value="@_sbu" @onchange="SbuChange">
+                @foreach (var sbu in Enum.GetNames(typeof(Sbu_e)))
+                {
+                    <option>@sbu</option>
+                }
+            </select>
+        </div>
+        <div class="col mt-1">
+            <span class="oi oi-plus">表示添加子分类</span>
+        </div>
+        <div class="col mt-1">
+            <span class="oi oi-cog">表示修改当前分类</span>
+        </div>
+    </div>
+</div>
+<table class="table table-hover" style="table-layout: fixed;word-break:break-all;">
+    <!--sticky固定位置，top: 6rem-->
+    <thead style="position: sticky; top: 6rem; z-index: 1; background-color:White">
+        <tr>
+            <th>产品</th>
+            <th>(排序)模型</th>
+            <th>(排序)子类</th>
+            <th>组合名称</th>
+            <th>子类描述</th>
+            <th style="width: 8%">默认长</th>
+            <th style="width: 8%">默认宽</th>
+            <th style="width: 8%">默认高</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (_modelTypeDtos.Count == 0)
+        {
+            <p>...</p>
+        }
+        else
+        {
+            @foreach (var modelTypeDto in _modelTypeDtos)
+            {
+                <!--子类第一个背景为绿色，区分不同的模型-->
+                <tr class="bg- @(modelTypeDto.SequenceNumber==1? "bg-success bg-opacity-10":"")">
+                    <td>
+                        <span>@modelTypeDto.Product</span>
+                        <a href="model/add/@modelTypeDto.ProductId">
+                            <span class="oi oi-plus"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="model/update/@modelTypeDto.ModelId">
+                            <span class="oi oi-cog"></span>
+                        </a>
+
+                        <span>( @modelTypeDto.ModelSeqNumber ) @modelTypeDto.Model</span>
+
+                        <a href="modeltype/add/@modelTypeDto.ModelId">
+                            <span class="oi oi-plus"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="modeltype/update/@modelTypeDto.Id">
+                            <span class="oi oi-cog"></span>
+                        </a>
+                        <span>( @modelTypeDto.SequenceNumber ) @modelTypeDto.Name</span>
+                    </td>
+                    <td>@modelTypeDto.ModelName</td>
+                    <td>@modelTypeDto.Description</td>
+                    <td>@modelTypeDto.Length</td>
+                    <td>@modelTypeDto.Width</td>
+                    <td>@modelTypeDto.Height</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@code {
+    private List<ProductDto> _productDtos = new();
+    private Sbu_e _sbu;
+    private string _search = string.Empty;
+    private List<ProductDto> _sbuProductDtos = new();
+    private List<ModelTypeDto> _modelTypeDtos = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        var result = await ProductService.GetModelTypeTreeAsync();
+        _productDtos = result.Result;
+        SbuChange(new ChangeEventArgs { Value = Sbu_e.FS });
+        Search(new ChangeEventArgs { Value = "" });
+    }
+    private void SbuChange(ChangeEventArgs e)
+    {
+        _sbu = (Sbu_e)Enum.Parse(typeof(Sbu_e), e.Value!.ToString()!);
+        //先筛选SBU
+        _sbuProductDtos.Clear();
+        _sbuProductDtos = _productDtos.Where(x => x.Sbu.Equals(_sbu)).ToList();
+        Search(new ChangeEventArgs { Value = "" });
+    }
+    private void Search(ChangeEventArgs e)
+    {
+        _search = e.Value!.ToString()!;
+        _modelTypeDtos.Clear();
+        _sbuProductDtos.ForEach(x =>
+        {
+            var modelDtos = x.ModelDtos.Where(y =>
+                string.IsNullOrWhiteSpace(_search) || y.Name.Contains(_search.ToUpper())).ToList();
+            modelDtos.ForEach(y =>
+            {
+                y.ModelTypeDtos.ForEach(z =>
+                {
+                    z.Product = x.Name;
+                    z.ProductId = x.Id.Value;
+                    z.Model = y.Name;
+                    z.ModelSeqNumber = y.SequenceNumber;
+                });
+                _modelTypeDtos.AddRange(y.ModelTypeDtos);
+            });
+        });
+    }
+}

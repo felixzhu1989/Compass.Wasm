@@ -697,7 +697,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_fra
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_framework\Microsoft.EntityFrameworkCore.SqlServer.dll.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_framework\Microsoft.EntityFrameworkCore.Abstractions.dll.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\wwwroot\_framework\AsmResolver.PE.dll.gz
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\libman.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\AsmResolver.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\AsmResolver.DotNet.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Release\net6.0\AsmResolver.PE.dll

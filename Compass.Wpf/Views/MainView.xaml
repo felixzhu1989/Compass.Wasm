@@ -113,8 +113,14 @@
                             </materialDesign:PopupBox.ToggleContent>
                             <StackPanel>
                                 <TextBlock Text="{Binding UserName}"
+                                           FontWeight="Bold"
+                                           FontSize="20"
+                                           Margin="0,0,0,8"
                                            HorizontalAlignment="Center"
                                            Foreground="DodgerBlue"/>
+                                <Button  x:Name="BtnUpdate"
+                                         Content="更新系统"
+                                         Foreground="ForestGreen" />
                                 <Button Content="注销登录"
                                         Command="{Binding LogoutCommand}"
                                         Foreground="Red"/>

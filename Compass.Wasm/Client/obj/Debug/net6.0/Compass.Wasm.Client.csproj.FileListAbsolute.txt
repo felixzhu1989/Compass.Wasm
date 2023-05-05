@@ -487,7 +487,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_frame
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.CompilerServices.VisualC.dll.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\System.Threading.Tasks.dll.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\Microsoft.Extensions.Caching.Memory.dll.gz
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\libman.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\Compass.Wasm.Client.staticwebassets.runtime.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\Compass.Wasm.Client.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\Compass.Wasm.Client.pdb

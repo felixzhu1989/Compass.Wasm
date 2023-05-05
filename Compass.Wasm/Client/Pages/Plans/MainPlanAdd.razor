@@ -1,0 +1,78 @@
+﻿@page "/mainplan/add"
+@using Compass.Wasm.Shared.Plans
+@using Compass.Wasm.Client.Services.Plans
+
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject IMainPlanService MainPlanService
+
+<PageTitle>新增主计划</PageTitle>
+
+<EditForm Model="_mainPlan" OnSubmit="Save">
+    <div class="row">
+        <div class="col input-group mb-2">
+            <span class="input-group-text" >创建时间</span>
+            <input type="date" class="form-control" @bind-value="@_mainPlan.CreateTime" />
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">完工时间</span>
+            <input type="date" class="form-control" @bind-value="@_mainPlan.FinishTime" />
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">计划发图</span>
+            <input type="date" class="form-control" @bind-value="@_mainPlan.DrwReleaseTarget" />
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">项目月份</span>
+            <input type="month" class="form-control" @bind-value="@_mainPlan.MonthOfInvoice" />
+        </div>
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">编号</span>
+        <input class="form-control" placeholder="SQFS号" @bind-value="@_mainPlan.Number" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目名称</span>
+        <input class="form-control" placeholder="项目名称" @bind-value="@_mainPlan.Name" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">烟罩数量</span>
+        <input class="form-control" type="number" @bind-value="@_mainPlan.Quantity" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">烟罩型号</span>
+        <input class="form-control" placeholder="型号" @bind-value="@_mainPlan.ModelSummary" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目类型</span>
+        <select class="form-select" @bind="@_mainPlan.MainPlanType">
+            @foreach (var type in Enum.GetNames(typeof(MainPlanType_e)))
+            {
+                <option>@type</option>
+            }
+        </select>
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目备注</span>
+        <textarea class="form-control" placeholder="备注，可输入多行" style="height: 120px" @bind="@_mainPlan.Remarks"></textarea>
+    </div>
+    
+    <button class="btn btn-success" type="submit">保存</button>
+    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("mainplans"))">取消</button>
+</EditForm>
+@code {
+
+    private MainPlanDto _mainPlan = new() { CreateTime =DateTime.Now, FinishTime = DateTime.Now.AddDays(14), DrwReleaseTarget=DateTime.Now.AddDays(7), MonthOfInvoice=DateTime.Now };
+    
+    private async Task Save()
+    {
+        if (string.IsNullOrWhiteSpace(_mainPlan.Name))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        var result = await MainPlanService.AddAsync(_mainPlan);
+        //跳转回主页
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("mainplans");
+    }
+}

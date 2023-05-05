@@ -38,7 +38,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Controllers\Data\Ceilings\" />
-	  <Folder Include="Services\Plans\" />
 	</ItemGroup>
 
 

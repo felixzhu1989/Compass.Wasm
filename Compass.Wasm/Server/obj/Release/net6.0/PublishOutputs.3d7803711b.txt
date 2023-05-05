@@ -1,5 +1,4 @@
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.Wasm.Server.exe
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\libman.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\appsettings.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\BlazorDebugProxy\BrowserDebugHost.dll

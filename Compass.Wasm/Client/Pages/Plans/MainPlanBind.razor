@@ -1,0 +1,88 @@
+﻿@page "/mainplan/bind/{Id}"
+@using Compass.Wasm.Shared.Plans
+@using Compass.Wasm.Shared.Projects
+@using Compass.Wasm.Client.Services.Plans
+@using Compass.Wasm.Client.Services.Projects
+@inject IMainPlanService MainPlanService
+@inject IProjectService ProjectService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
+<PageTitle>主计划绑定项目</PageTitle>
+
+<span>@_mainPlanDto.Number-@_mainPlanDto.Name</span>
+
+<EditForm class="mt-3" Model="_mainPlanDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">搜索</span>
+        <input class="form-control" placeholder="Search" @bind-value="@_search" @oninput="@Search" />
+    </div>
+    @if (_filterProject.Count!=0)
+    {
+        <fieldset>
+            <legend>请选择需要绑定的项目:</legend>
+            @foreach (var project in _filterProject)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="projects" @bind-value="@project.Id" @oninput="Checked">
+                    <label class="form-check-label" >
+                        @project.OdpNumber - @project.Name
+                    </label>
+                </div>
+            }
+        </fieldset>
+    }
+    else
+    {
+        <span>...</span>
+    }
+
+    <div class="mt-3">
+        <button class="btn btn-success me-2" type="submit">保存</button>
+        <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("mainplans"))">取消</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private MainPlanDto? _mainPlanDto = new();
+
+    private string _search = string.Empty;
+    private List<ProjectDto>? _projects = new();
+    private List<ProjectDto> _filterProject = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await MainPlanService.GetFirstOrDefault(Guid.Parse(Id));
+        _mainPlanDto = result.Result;
+
+        var projResult = await ProjectService.GetAllAsync();
+        _projects = projResult.Result;
+        Search(new ChangeEventArgs { Value = "" });
+    }
+
+
+    public async Task Save()
+    {
+        if (_mainPlanDto!.ProjectId==null||_mainPlanDto!.ProjectId==Guid.Empty)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "请选择项目");
+            return;
+        }
+        _mainPlanDto.Status = MainPlanStatus_e.制图;
+        var result = await MainPlanService.UpdateStatusesAsync(Guid.Parse(Id), _mainPlanDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("mainplans");
+    }
+    private void Search(ChangeEventArgs e)
+    {
+        _search=e.Value!.ToString()!;
+        _filterProject.Clear();
+        _filterProject = _projects!.Where(x => string.IsNullOrEmpty(_search)||x.OdpNumber!.Contains(_search, StringComparison.OrdinalIgnoreCase)|| x.Name!.Contains(_search, StringComparison.OrdinalIgnoreCase)||(x.SpecialNotes!=null &&x.SpecialNotes.Contains(_search, StringComparison.OrdinalIgnoreCase))).ToList();
+    }
+
+    private void Checked(ChangeEventArgs e)
+    {
+        var id = Guid.Parse(e.Value!.ToString()!);
+        _mainPlanDto!.ProjectId = id;
+    }
+}

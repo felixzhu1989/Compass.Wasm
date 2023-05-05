@@ -15,6 +15,13 @@ public record ProblemType : AggregateRootEntity, IAggregateRoot, IHasCreationTim
         Name=name;
         Stakeholder=stakeholder;
     }
+
+    //public void Update(ProblemTypeDto dto)
+    //{
+    //    ChangeName(dto.Name).ChangeStakeholder(dto.Stakeholder);
+    //    NotifyModified();
+    //}
+
     public ProblemType ChangeName(string name)
     {
         Name=name;

@@ -42,6 +42,4 @@ public class ProductController : ControllerBase
     public async Task<ApiResponse<List<ProductDto>>> GetModelTypeTree() => await _service.GetModelTypeTreeAsync();
 
     #endregion
-
-
 }

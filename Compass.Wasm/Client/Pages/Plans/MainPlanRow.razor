@@ -1,0 +1,79 @@
+﻿@using Compass.Wasm.Shared.Plans
+@using Compass.Wasm.Shared.Projects
+@using Compass.Wasm.Client.Services.Projects
+@using Compass.Wasm.Client.Services.Plans
+
+@inject IProjectService ProjectService
+@inject IMainPlanService MainPlanService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+<tr>
+    <td>
+        <AuthorizeView Roles="admin,pmc">
+            <Authorized>
+                <a href="mainplan/update/@MainPlanDto.Id">
+                    <span class="oi oi-cog"></span>
+                </a>
+            </Authorized>
+        </AuthorizeView>
+        @MainPlanDto.CreateTime.ToString("MM/dd")
+    </td>
+    <td>@MainPlanDto.Number</td>
+    <td>
+        @if (MainPlanDto.ProjectId!=null)
+        {
+            <a href="./drawings/@_project.Id">@_project.OdpNumber</a>
+            <AuthorizeView Roles="admin,pmc">
+                <Authorized>
+                    <span class="oi oi-trash text-danger" @onclick="UnbindProject"></span>
+                </Authorized>
+            </AuthorizeView>
+        }
+        else
+        {
+            <a href="mainplan/bind/@MainPlanDto.Id">绑定项目</a>
+        }
+    </td>
+    <td>@MainPlanDto.Name</td>
+    <td>@MainPlanDto.Quantity</td>
+    <td>@MainPlanDto.ModelSummary</td>
+    <td >@MainPlanDto.FinishTime.ToString("MM/dd")</td>
+    <td >@MainPlanDto.DrwReleaseTarget.ToString("MM/dd")</td>
+    <td style="text-align: center">@MainPlanDto.MainPlanType</td>
+</tr>
+
+@if (!string.IsNullOrWhiteSpace(MainPlanDto.Remarks))
+{
+    <tr>
+        <td colspan="9">
+            <span style="color: red">备注：@MainPlanDto.Remarks</span>
+        </td>
+    </tr>
+}
+
+
+@code {
+    [Parameter]
+    public MainPlanDto MainPlanDto { get; set; }
+    private ProjectDto? _project = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        if (MainPlanDto.ProjectId != null)
+        {
+            var response = await ProjectService.GetFirstOrDefault(MainPlanDto.ProjectId.Value);
+            _project = response.Result;
+        }
+    }
+
+    private async Task UnbindProject()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要解除绑定项目【{_project.OdpNumber}】吗？");
+        if (confirmResult)
+        {
+            MainPlanDto.ProjectId = null;
+            MainPlanDto.Status = MainPlanStatus_e.计划;
+            //todo:解除绑定
+            await MainPlanService.UpdateStatusesAsync(MainPlanDto.Id, MainPlanDto);
+        }
+    }
+}
