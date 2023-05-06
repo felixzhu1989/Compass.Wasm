@@ -29,25 +29,25 @@
             <div class="col">
                 <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@dto.DrawingUrl" />
             </div>
-
-            <AuthorizeView Roles="admin">
-                <Authorized Context="auth">
-                    <div class="col">
-                        <FileUpload Title="截图(测试用)" @bind-FileUrl="@dto.ImageUrl" />
+            
+                <AuthorizeView Roles="admin">
+                    <Authorized Context="auth">
+                        <div class="col">
+                        <FileUpload Title="截图(测试用)" @bind-FileUrl="@dto.ImageUrl"/>
                     </div>
-                </Authorized>
-            </AuthorizeView>
-
+                    </Authorized>
+                </AuthorizeView>
+            
             <div class="col">
-                <span>删除 ：</span><br />
+                <span>移除此条 ：</span><br />
                 <button class="btn" type="button" @onclick="@(() => _drawingDtos.Remove(dto))">
                     <span class="oi oi-trash text-danger"></span>
                 </button>
             </div>
         </div>
     }
-    <button class="btn btn-success" type="submit">保存</button>
-    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("projects"))">取消</button>
+
+    <CompSaveCancelButtons CancelUrl="projects" />
 </EditForm>
 @code {
     [Parameter]

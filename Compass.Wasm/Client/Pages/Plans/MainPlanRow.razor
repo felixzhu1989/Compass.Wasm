@@ -9,14 +9,8 @@
 @inject IJSRuntime JsRuntime
 <tr>
     <td>
-        <AuthorizeView Roles="admin,pmc">
-            <Authorized>
-                <a href="mainplan/update/@MainPlanDto.Id">
-                    <span class="oi oi-cog"></span>
-                </a>
-            </Authorized>
-        </AuthorizeView>
-        @MainPlanDto.CreateTime.ToString("MM/dd")
+        <CompUpdateIcon Roles="admin,pmc" Url="@($"mainplan/update/{MainPlanDto.Id}")"/>
+        <CompBatch Batch="MainPlanDto.Batch" />
     </td>
     <td>@MainPlanDto.Number</td>
     <td>
@@ -37,6 +31,7 @@
     <td>@MainPlanDto.Name</td>
     <td>@MainPlanDto.Quantity</td>
     <td>@MainPlanDto.ModelSummary</td>
+    <td>@MainPlanDto.CreateTime.ToString("MM/dd")</td>
     <td >@MainPlanDto.FinishTime.ToString("MM/dd")</td>
     <td >@MainPlanDto.DrwReleaseTarget.ToString("MM/dd")</td>
     <td style="text-align: center">@MainPlanDto.MainPlanType</td>
@@ -45,12 +40,11 @@
 @if (!string.IsNullOrWhiteSpace(MainPlanDto.Remarks))
 {
     <tr>
-        <td colspan="9">
-            <span style="color: red">备注：@MainPlanDto.Remarks</span>
+        <td colspan="10">
+            <span style="color: red;font-size:xx-small ">备注：@MainPlanDto.Remarks</span>
         </td>
     </tr>
 }
-
 
 @code {
     [Parameter]

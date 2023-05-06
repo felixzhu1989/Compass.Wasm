@@ -10,6 +10,8 @@ public interface IMainPlanService : IBaseService<MainPlanDto>
     Task<HttpResponseMessage> UpdateStatusesAsync(Guid id, MainPlanDto dto);
     //显示主页查询
     Task<ApiResponse<List<MainPlanDto>>> GetIndexDataAsync();
+    Task<ApiResponse<List<MainPlanDto>>> GetAllByProjectIdAsync(Guid projectId);
+
 }
 public class MainPlanService : BaseService<MainPlanDto>, IMainPlanService
 {
@@ -26,5 +28,10 @@ public class MainPlanService : BaseService<MainPlanDto>, IMainPlanService
     public Task<ApiResponse<List<MainPlanDto>>> GetIndexDataAsync()
     {
         return _http.GetFromJsonAsync<ApiResponse<List<MainPlanDto>>>("api/MainPlan/IndexData")!;
+    }
+
+    public Task<ApiResponse<List<MainPlanDto>>> GetAllByProjectIdAsync(Guid projectId)
+    {
+        return _http.GetFromJsonAsync<ApiResponse<List<MainPlanDto>>>($"api/MainPlan/Project/{projectId}")!;
     }
 }

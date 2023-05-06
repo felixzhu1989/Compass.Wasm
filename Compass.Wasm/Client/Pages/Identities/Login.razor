@@ -39,7 +39,7 @@
             var token= resultContent.Result;
             await LocalStorage.SetItemAsync("token", token);
             await AuthStateProvider.GetAuthenticationStateAsync();
-            NavigationManager.NavigateTo("1");
+            NavigationManager.NavigateTo("");
         }
     }
 }

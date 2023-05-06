@@ -9,4 +9,5 @@ public interface IMainPlanService : IBaseService<MainPlanDto>
     Task<ApiResponse<MainPlanDto>> UpdateStatusesAsync(Guid id, MainPlanDto dto);
     //GetIndexDataAsync
     Task<ApiResponse<List<MainPlanDto>>> GetIndexDataAsync();
+    Task<ApiResponse<List<MainPlanDto>>> GetAllByProjectIdAsync(Guid projectId);
 }

@@ -3,25 +3,11 @@
 @inject IJSRuntime JsRuntime
 <tr>
     <td>
-        <AuthorizeView Roles="admin,pm">
-            <Authorized>
-                <a href="drawing/update/@Drawing.Id">
-                    <span class="oi oi-cog"></span>
-                </a>
-            </Authorized>
-        </AuthorizeView>
+        <CompUpdateIcon Roles="admin,pm" Url="@($"drawing/update/{Drawing.Id}")"/>
         @Drawing.ItemNumber
     </td>
     <td>
-        @if (!string.IsNullOrWhiteSpace(Drawing.DrawingUrl))
-        {
-            @foreach (var fileUrl in Drawing.DrawingUrl.Split('\n'))
-            {
-                <a href="@fileUrl" target="_blank">
-                    <span class="oi oi-paperclip me-2">PDF</span>
-                </a>
-            }
-        }
+        <CompPdfFiles PdfUrls="@Drawing.DrawingUrl" UploadUrl="@($"drawing/update/{Drawing.Id}")" />
     </td>
     <td>
         <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(Drawing.ImageUrl))">@(showImage ? "▲" : "▼")</span>

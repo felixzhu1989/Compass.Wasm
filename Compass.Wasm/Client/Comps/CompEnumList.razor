@@ -1,0 +1,9 @@
+﻿@foreach (var type in Enum.GetNames(Type))
+{
+    <option>@type</option>
+}
+
+@code {
+    [Parameter]
+    public Type Type { get; set; }
+}

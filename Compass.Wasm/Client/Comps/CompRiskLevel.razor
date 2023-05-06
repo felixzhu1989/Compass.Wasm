@@ -1,0 +1,13 @@
+﻿@using Compass.Wasm.Shared.Projects
+<span class="badge @( 
+    Risk == RiskLevel_e.高风险 ? "bg-danger" : 
+        Risk == RiskLevel_e.中风险 ? "bg-warning text-dark" : 
+            Risk == RiskLevel_e.低风险 ? "bg-info text-dark" : 
+                "bg-light text-dark")">
+    @Risk
+</span>
+
+@code {
+    [Parameter]
+    public RiskLevel_e Risk { get; set; }
+}

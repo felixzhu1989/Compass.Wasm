@@ -37,14 +37,23 @@ public class MainPlanController : ControllerBase
     #endregion
 
     #region Blazor扩展
-    //更新主计划状态
+    /// <summary>
+    /// 更新主计划状态
+    /// </summary>
     [HttpPut("UpdateStatuses/{id}")]
     public async Task<ApiResponse<MainPlanDto>> UpdateStatuses([RequiredGuid] Guid id, MainPlanDto dto) => await _service.UpdateStatusesAsync(id, dto);
 
-    //获取主页信息
+    /// <summary>
+    /// 获取主页信息
+    /// </summary>
     [HttpGet("IndexData")]
     public async Task<ApiResponse<List<MainPlanDto>>> GetIndexData() => await _service.GetIndexDataAsync();
 
+    /// <summary>
+    /// 根据项目Id查询项目的主计划
+    /// </summary>
+    [HttpGet("Project/{projectId}")]
+    public async Task<ApiResponse<List<MainPlanDto>>> GetAllByProjectId([RequiredGuid] Guid projectId) => await _service.GetAllByProjectIdAsync(projectId);
     #endregion
 
 }

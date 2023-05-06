@@ -2,73 +2,42 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
 <tr>
-    <td>
-        <AuthorizeView Roles="admin,pm">
-            <Authorized>
-                <a href="project/update/@Project.Id">
-                    <span class="oi oi-cog"></span>
-                </a>
-            </Authorized>
-        </AuthorizeView>
-        <a href="/drawings/@Project.Id">@Project.OdpNumber</a>
-    </td>
-    <td>@Project.Name</td>
-    <td style="text-align: center">@Project.ProjectType</td>
-    @*根据风险值更改颜色*@
-    <td style="text-align: center">
-        <span class="badge @(Project.RiskLevel==RiskLevel_e.高风险 ? "bg-danger" : Project.RiskLevel==RiskLevel_e.中风险 ? "bg-warning text-dark":Project.RiskLevel==RiskLevel_e.低风险 ? "bg-info text-dark":"bg-light text-dark")">@Project.RiskLevel</span>
-    </td>
-    <td style="text-align: center">
-        @if (!string.IsNullOrWhiteSpace(Project.ContractUrl))
-        {
-            <a href="@Project.ContractUrl" target="_blank">
-                <span class="oi oi-paperclip me-2">PDF</span>
-            </a>
-        }
-        else
-        {
-            <a href="project/uploadfiles/@Project.Id">
-                <span class="oi oi-cloud-upload">上传</span>
-            </a>
-        }
-    </td>
-    <td style="text-align: center">
-        @if (!string.IsNullOrWhiteSpace(Project.BomUrl))
-        {
-            @foreach (var fileUrl in Project.BomUrl.Split('\n'))
-            {
-                <a href="@fileUrl" target="_blank">
-                    <span class="oi oi-paperclip me-2">PDF</span>
-                </a>
-            }
-        }
-        else
-        {
-            <a href="project/uploadfiles/@Project.Id">
-                <span class="oi oi-cloud-upload">上传</span>
-            </a>
-        }
-    </td>
-    <td style="text-align: center">
-        <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(Project.SpecialNotes))">@(_showSpecialNotes ? "▲" : "▼")</span>
-    </td>
+    @if (ProjectDto is null){}
+    else
+    {
+        <td>
+            <CompUpdateIcon Roles="admin,pm" Url="@($"project/update/{ProjectDto.Id}")"/>
+            <a href="/drawings/@ProjectDto.Id">@ProjectDto.OdpNumber</a>
+        </td>
+        <td>@ProjectDto.Name</td>
+        <td style="text-align: center">@ProjectDto.ProjectType</td>
+        @*根据风险值更改颜色*@
+        <td style="text-align: center">
+            <CompRiskLevel Risk="@ProjectDto.RiskLevel"/>
+        </td>
+        <td style="text-align: center">
+            <CompPdfFile PdfUrl="@ProjectDto.ContractUrl" UploadUrl="@($"project/uploadfiles/{ProjectDto.Id}")" />
+        </td>
+        <td style="text-align: center">
+            <CompPdfFiles PdfUrls="@ProjectDto.BomUrl" UploadUrl="@($"project/uploadfiles/{ProjectDto.Id}")"/>
+        </td>
+        <td style="text-align: center">
+            <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(ProjectDto.SpecialNotes))">@(_showSpecialNotes ? "▲" : "▼")</span>
+        </td>
+    }
 </tr>
 @if (_showSpecialNotes)
 {
     <tr>
-        <td colspan="8" style="color: red">
-            @foreach (var note in Project.SpecialNotes.Split('\n'))
-            {
-                <span>@note</span>
-                <br />
-            }
+        <td colspan="7" style="color: red">
+            <CompMultiLineText Text="@ProjectDto.SpecialNotes"/>
         </td>
     </tr>
 }
 
 @code {
     [Parameter]
-    public ProjectDto Project { get; set; }
+    public ProjectDto? ProjectDto { get; set; }
     private bool _showSpecialNotes = false;
     private void Show()
     {

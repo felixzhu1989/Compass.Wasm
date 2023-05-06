@@ -1,0 +1,15 @@
+﻿<AuthorizeView Roles="@Roles">
+    <Authorized>
+        <div class="col" style="text-align: right">
+            <button class="btn mb-2" type="button" @onclick="Click">
+                <span class="oi oi-trash text-danger"></span>
+            </button>
+        </div>
+    </Authorized>
+</AuthorizeView>
+@code {
+    [Parameter]
+    public string Roles { get; set; }
+    [Parameter]
+    public EventCallback<MouseEventArgs> Click { get; set; }
+}

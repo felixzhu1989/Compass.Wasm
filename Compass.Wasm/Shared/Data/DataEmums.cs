@@ -10,7 +10,7 @@ public enum LightType_e
 }
 public enum UvLightType_e
 {
-    NA,UVR4S, UVR4L,UVR6S,UVR6L,UVR8S,UVR8L
+    NA,UVR4S,UVR4L,UVR6S,UVR6L,UVR8S,UVR8L,Double
 }
 public enum DrainType_e
 {
@@ -44,12 +44,12 @@ public enum AnsulDetectorEnd_e
 #region 烟罩结构
 public enum ExhaustType_e
 {
-    NA,KV,UV,KW,UW,CMOD,M
+    NA,KV,UV,KW,UW,CMOD,M,UVHW,UWHW
 }
 
 public enum ExhaustHeight_e
 {
-    E555,E400,E300
+    E555,E450,E400,E300
 }
 
 

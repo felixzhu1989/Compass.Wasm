@@ -12,70 +12,47 @@
 
 <div class="row">
     <div class="col">
-        <p>
-            <span class="fs-5">更新项目信息</span>
-        </p>
+        <p class="fs-5">更新项目信息</p>
     </div>
-    @*todo:控制权限*@
-    <AuthorizeView Roles="admin">
-        <Authorized>
-            <div class="col" style="text-align: right">
-                <button class="btn mb-2" type="button" @onclick="Delete">
-                    <span class="oi oi-trash text-danger"></span>
-                </button>
-            </div>
-        </Authorized>
-    </AuthorizeView>
+    <CompDeleteIcon Roles="admin" Click="Delete" />
 </div>
 
 <EditForm Model="_projectDto" OnSubmit="Save">
     <!--由项目经理修改的数据-->
-    <AuthorizeView Roles="admin,pm">
-        <Authorized Context="auth">
-            <div class="input-group mb-2">
-                <span class="input-group-text">项目编号</span>
-                <input class="form-control" placeholder="ODP" @bind-value="@_projectDto.OdpNumber" />
-            </div>
-            <div class="input-group mb-2">
-                <span class="input-group-text">项目名称</span>
-                <input class="form-control" placeholder="Name" @bind-value="@_projectDto.Name" />
-            </div>
-            <div class="input-group mb-2">
-                <span class="input-group-text" style="color: red">交货日期</span>
-                <input type="date" class="form-control" style="color: red" @bind-value="@_projectDto.DeliveryDate" />
-            </div>
-            <div class="input-group mb-2">
-                <span class="input-group-text">项目类型</span>
-                <select class="form-select" @bind="@_projectDto.ProjectType">
-                    @foreach (var type in Enum.GetNames(typeof(ProjectType_e)))
-                    {
-                        <option>@type</option>
-                    }
-                </select>
-            </div>
-            <div class="input-group mb-2">
-                <span class="input-group-text">风险等级</span>
-                <select class="form-select" @bind="@_projectDto.RiskLevel">
-                    @foreach (var level in Enum.GetNames(typeof(RiskLevel_e)))
-                    {
-                        <option>@level</option>
-                    }
-                </select>
-                @*Todo:风险值=概率*影响，概率影响矩阵*@
-                <button class="btn btn-warning" type="button">风险评级</button>
-            </div>
 
-            <div class="input-group mb-2">
-                <span class="input-group-text">特殊要求</span>
-                <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@_projectDto.SpecialNotes"></textarea>
-            </div>
-        </Authorized>
-    </AuthorizeView>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目编号</span>
+        <input class="form-control" placeholder="ODP" @bind-value="@_projectDto.OdpNumber" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目名称</span>
+        <input class="form-control" placeholder="Name" @bind-value="@_projectDto.Name" />
+    </div>
+    <div class="input-group mb-2" style="width: 230px">
+        <span class="input-group-text">交货日期</span>
+        <input type="date" class="form-control" @bind-value="@_projectDto.DeliveryDate" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">项目类型</span>
+        <select class="form-select" @bind="@_projectDto.ProjectType">
+            <CompEnumList Type="typeof(ProjectType_e)" />
+        </select>
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">风险等级</span>
+        <select class="form-select" @bind="@_projectDto.RiskLevel">
+            <CompEnumList Type="typeof(RiskLevel_e)" />
+        </select>
+        @*Todo:风险值=概率*影响，概率影响矩阵*@
+        <button class="btn btn-warning" type="button">风险评级</button>
+    </div>
 
-    
+    <div class="input-group mb-2">
+        <span class="input-group-text">特殊要求</span>
+        <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 120px" @bind="@_projectDto.SpecialNotes"></textarea>
+    </div>
 
-    <button class="btn btn-success" type="submit">保存</button>
-    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo("projects"))">取消</button>
+    <CompSaveCancelButtons CancelUrl="projects" />
 </EditForm>
 
 

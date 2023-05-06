@@ -458,10 +458,10 @@ public class ExhaustService : BaseDrawingService, IExhaustService
             swAssyLevel1.UnSuppress(suffix, railPart2, Aggregator);
             swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, railPart1, Aggregator);
             swAssyLevel1.ChangeDim("Width@DistanceSpigot", exhaustSpigotWidth+45d);
-            //根据脖颈数量计算导轨长度，两个排风口时只能总长减去100
+            //根据脖颈数量计算导轨长度，两个排风口时只能总长减去200
             var railLength = exhaustSpigotNumber == 1
-                ? exhaustSpigotLength * 2d + 100d : length - 100d;
-            swModelLevel2.ChangeDim("Length@Base-Flange", railLength > length - 100d ? length - 100d : railLength);
+                ? exhaustSpigotLength * 2d + 100d : length - 200d;
+            swModelLevel2.ChangeDim("Length@Base-Flange", railLength > length - 200d ? length - 200d : railLength);
         }
     }
 

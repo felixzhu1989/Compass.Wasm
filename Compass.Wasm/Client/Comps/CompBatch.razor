@@ -1,0 +1,18 @@
+﻿@using Compass.Wasm.Shared.Plans
+<span>
+    @(Batch==DeliveryBatch_e.一 ? "①" :
+        Batch==DeliveryBatch_e.二 ? "②" :
+        Batch==DeliveryBatch_e.三 ? "③" :
+        Batch==DeliveryBatch_e.四 ? "④" :
+        Batch==DeliveryBatch_e.五 ? "⑤" :
+        Batch==DeliveryBatch_e.六 ? "⑥" :
+        Batch==DeliveryBatch_e.七 ? "⑦" :
+        Batch==DeliveryBatch_e.八 ? "⑧" :
+        Batch==DeliveryBatch_e.九 ? "⑨" :
+        Batch==DeliveryBatch_e.十 ? "⑩" : ""
+        )
+</span>
+@code {
+    [Parameter]
+    public DeliveryBatch_e Batch { get; set; }
+}

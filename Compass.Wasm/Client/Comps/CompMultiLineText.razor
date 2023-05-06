@@ -1,0 +1,9 @@
+﻿@foreach (var note in Text.Split('\n'))
+{
+    <span>@note</span>
+    <br />
+}
+@code {
+    [Parameter]
+    public string Text { get; set; }
+}

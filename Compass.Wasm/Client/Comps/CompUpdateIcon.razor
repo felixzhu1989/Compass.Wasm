@@ -1,0 +1,13 @@
+﻿<AuthorizeView Roles="@Roles">
+    <Authorized>
+        <a href="@Url">
+            <span class="oi oi-cog"></span>
+        </a>
+    </Authorized>
+</AuthorizeView>
+@code {
+    [Parameter]
+    public string Roles { get; set; }
+    [Parameter]
+    public string Url { get; set; }
+}

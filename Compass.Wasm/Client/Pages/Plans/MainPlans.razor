@@ -20,14 +20,10 @@
                 全年
             </label>
         </div>
-
         <div class="col input-group mb-2" style="max-width: 180px">
             <span class="input-group-text">分类</span>
             <select class="form-select" value="@_planType" @onchange="OnPlanTypeChange">
-                @foreach (var type in Enum.GetNames(typeof(MainPlanType_e)))
-                {
-                    <option>@type</option>
-                }
+                <CompEnumList Type="typeof(MainPlanType_e)"></CompEnumList>
             </select>
         </div>
         <div class="col mt-2">
@@ -39,14 +35,7 @@
             <span class="mx-3">Factory:@_cycleTime.FactoryCycleTime</span>
             <span class="mx-3">Production:@_cycleTime.ProductionCycleTime</span>
         </div>
-        @*todo:控制权限*@
-        <AuthorizeView Roles="admin,pmc">
-            <Authorized>
-                <div class="col position-absolute bottom-0 end-0" style="text-align: right; width: 10%">
-                    <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo("mainplan/add"))">+ 添加</button>
-                </div>
-            </Authorized>
-        </AuthorizeView>
+        <CompAddButton Roles="admin,pmc" Url="mainplan/add" />
     </div>
 </div>
 
@@ -54,12 +43,14 @@
     <!--sticky固定位置，top: 6rem-->
     <thead style="position: sticky; top: 6rem; z-index: 1; background-color: White">
     <tr>
-        <th style="width: 7%">创建时间</th>
+        
+        <th style="width: 60px">分批</th>
         <th style="width: 10%">编号</th>
         <th style="width: 10%">绑定项目</th>
         <th >项目名称</th>
         <th style="width: 7%">数量</th>
         <th >型号</th>
+        <th style="width: 7%">创建时间</th>
         <th style="width: 7%">完工时间</th>
         <th style="width: 7%">计划发图</th>
         <th style="width: 7%; text-align: center">类型</th>
@@ -82,7 +73,7 @@
 
 @code {
     //过滤参数
-    private bool _annual = false;
+    private bool _annual;
     private DateTime _selectedMonth = DateTime.Today;
     private int _year;
     private int _month;

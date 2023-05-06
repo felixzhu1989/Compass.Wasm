@@ -24,7 +24,11 @@ public class PlanRepository : IPlanRepository
     {
         return _context.MainPlans.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
-
+    //扩展查询
+    public Task<IQueryable<MainPlan>> GetMainPlansByProjectIdAsync(Guid projectId)
+    {
+        return Task.FromResult(_context.MainPlans.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x => x.FinishTime).AsQueryable());
+    }
 
     //扩展MainPlan查询
     public Task<IQueryable<MainPlan>> GetFilterMainPlansAsync(int year, int month, MainPlanType_e productionPlanType)

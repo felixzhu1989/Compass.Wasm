@@ -17,8 +17,9 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     public DateTime MonthOfInvoice { get; private set; }//开票月份，input type=month
     public MainPlanType_e MainPlanType { get; private set; }//海工, ETO, KFC
     public string? Remarks { get; private set; }
+    public DeliveryBatch_e Batch { get; private set; }//分批
     #endregion
-    
+
     #region 状态属性
     public Guid? ProjectId { get; private set; }//关联项目,可以多个主计划关联到一个订单
     public MainPlanStatus_e Status { get; private set; }//计划,制图,生产,入库,结束
@@ -51,7 +52,7 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
 
     #region ctor
     private MainPlan() { }
-    public MainPlan(Guid id, DateTime createTime, string number, string name, int quantity, string? modelSummary, DateTime finishTime, DateTime drwReleaseTarget, DateTime monthOfInvoice, MainPlanType_e mainPlanType, string? remarks)
+    public MainPlan(Guid id, DateTime createTime, string number, string name, int quantity, string? modelSummary, DateTime finishTime, DateTime drwReleaseTarget, DateTime monthOfInvoice, MainPlanType_e mainPlanType, string? remarks,DeliveryBatch_e batch)
     {
         Id = id;
         CreateTime = createTime;
@@ -64,6 +65,7 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
         MonthOfInvoice = monthOfInvoice;
         MainPlanType = mainPlanType;
         Remarks = remarks;
+        Batch=batch;
         Status = MainPlanStatus_e.计划;
     }
     #endregion
@@ -80,7 +82,8 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
             .ChangeDrwReleaseTarget(dto.DrwReleaseTarget)
             .ChangeMonthOfInvoice(dto.MonthOfInvoice)
             .ChangeMainPlanType(dto.MainPlanType)
-            .ChangeRemarks(dto.Remarks);
+            .ChangeRemarks(dto.Remarks)
+            .ChangeBatch(dto.Batch);
         NotifyModified();
     } 
     
@@ -133,6 +136,11 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     public MainPlan ChangeRemarks(string? remarks)
     {
         Remarks = remarks;
+        return this;
+    }
+    public MainPlan ChangeBatch(DeliveryBatch_e batch)
+    {
+        Batch = batch;
         return this;
     }
     #endregion

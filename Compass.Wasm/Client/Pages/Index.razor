@@ -23,6 +23,7 @@
         <div class="col form-check ms-3 mt-2" style="max-width: 70px">
             <input class="form-check-input" 
                    type="checkbox" 
+                   checked="checked"
                    value="@_annual" 
                    @onchange="OnAnnualChange">
             <label class="form-check-label">
@@ -38,7 +39,8 @@
     <!--sticky固定位置，top: 6rem-->
     <thead style="position: sticky; top: 6rem; z-index: 1; background-color: White">
     <tr>
-            <th style="width: 60px; text-align: center; color: purple">状态</th>
+        <th style="width: 60px; text-align: center; color: dodgerblue">状态</th>
+        <th style="width: 50px; color: dodgerblue">分批</th>
         <th style="width: 10%; color: dodgerblue">项目编号</th>
         <th style="width: 30%; color: dodgerblue">项目名称</th>
         <th style="color: purple">计划发图</th>
@@ -59,26 +61,24 @@
     {
         @foreach (var plan in _filterMainPlans)
         {
-                @*<DisplayTracking Id="tracking.Id" />*@
             <tr class="@(plan.ProblemNotResolved ? "table-danger" : "")">
                 <td style="text-align: center">
-                    <span class="badge
-                        @(plan.Status == MainPlanStatus_e.计划 ? "bg-info text-dark" : plan.Status == MainPlanStatus_e.制图 ? "bg-primary" : plan.Status == MainPlanStatus_e.生产 ? "bg-warning text-dark" : plan.Status == MainPlanStatus_e.入库 ? "bg-success" : plan.Status == MainPlanStatus_e.发货 ? "bg-secondary" : "bg-dark")">
-                        @plan.Status
-                    </span>
+                    <CompMainPlanStatus Status="@plan.Status"></CompMainPlanStatus>
                 </td>
-
+                <td>
+                    <CompBatch Batch="plan.Batch"/>
+                </td>
                 <td>
                     @if (plan.ProjectId != null)
                     {
-                        <a href="./drawings/@plan.ProjectId">@plan.OdpNumber</a>
+                        <a href="./drawings/@plan.ProjectId">@plan.Number</a>
                     }
                     else
                     {
                         <a href="mainplan/bind/@plan.Id">绑定项目</a>
                     }
                 </td>
-                <td>@plan.ProjectName</td>
+                <td>@plan.Name</td>
 
                 <td style="font-weight: bold; @(plan.DrwReleaseTarget < DateTime.Today && plan.DrwReleaseTime == null ? "color:red" : plan.DrwReleaseTarget < DateTime.Today ? "color:green" : "")">
                     @plan.DrwReleaseTarget.ToString("MM/dd")
@@ -191,9 +191,9 @@
             x => x.MonthOfInvoice.Year.Equals(_year)&&
                  (_annual||x.MonthOfInvoice.Month.Equals(_month))&&
                  (string.IsNullOrEmpty(_search)||
-                  string.IsNullOrEmpty(x.OdpNumber)||
-    x.OdpNumber.Contains(_search, StringComparison.OrdinalIgnoreCase)||
-                string.IsNullOrEmpty(x.ProjectName)||
-    x.ProjectName.Contains(_search, StringComparison.OrdinalIgnoreCase))).ToList();
+                  string.IsNullOrEmpty(x.Number)||
+    x.Number.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                string.IsNullOrEmpty(x.Name)||
+    x.Name.Contains(_search, StringComparison.OrdinalIgnoreCase))).ToList();
     }
 }

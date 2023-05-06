@@ -1,35 +1,29 @@
 ﻿@page "/drawings/{ProjectId}"
 @using Compass.Wasm.Client.Services.Projects
+@using Compass.Wasm.Shared.Plans
 @using Compass.Wasm.Shared.Projects
-
-
+@using Compass.Wasm.Client.Services.Plans
 @inject NavigationManager NavigationManager
-@inject IDrawingService DrawingService
 @inject IProjectService ProjectService
-@inject IJSRuntime JsRuntime
+@inject IMainPlanService MainPlanService
+@inject IDrawingService DrawingService
 
 <PageTitle>图纸列表</PageTitle>
 <div class="row position-relative">
     <div class="col">
-        @if (_project != null)
+        @if (_projectDto != null)
         {
             <h5>
-                <AuthorizeView Roles="admin,pm">
-                    <Authorized>
-                        <a href="project/update/@ProjectId">
-                            <span class="oi oi-cog"></span>
-                        </a>
-                    </Authorized>
-                </AuthorizeView>
-                <span>@_project.OdpNumber</span>
+                <CompUpdateIcon Roles="admin,pm" Url="@($"project/update/{ProjectId}")" />
+                <span>@_projectDto.OdpNumber</span>
                 <a href="projects">
-                    <span class="badge ms-2 bg-light text-black">@_project.ProjectType</span>
+                    <span class="badge ms-2 bg-light text-black">@_projectDto.ProjectType</span>
                 </a>
                 <a href="projects">
-                    <span class="badge ms-2 @(_project.RiskLevel==RiskLevel_e.高风险 ? "bg-danger" : _project.RiskLevel==RiskLevel_e.中风险 ? "bg-warning text-dark":_project.RiskLevel==RiskLevel_e.低风险 ? "bg-info text-dark":"bg-light text-dark")">@_project.RiskLevel</span>
+                    <CompRiskLevel Risk="@_projectDto.RiskLevel" />
                 </a>
                 <a href="/reportproblem/@ProjectId">
-                    @if (_project.IsProblemNotResolved)
+                    @if (_projectDto.IsProblemNotResolved)
                     {
                         <span class="badge bg-danger ms-2 me-2">异常</span>
 
@@ -41,179 +35,137 @@
                     }
                 </a>
                 <a href="/reportissue/@ProjectId">
-                    <span class="badge bg-info text-black ms-2">经验教训</span>
+                    <span class="badge bg-info text-black ms-2 me-2">经验教训</span>
                 </a>
+                @_projectDto.Name
             </h5>
-
+            <!--todo:table生产计划（根据ProjectId查询）-->
             <div class="row">
-                <div class="col-sm-3" style="width: 95px">项目名称:</div>
-                <div class="col-sm-9">@_project.Name</div>
+                <div class="col">
+                    <table class="table table-hover" style="table-layout: fixed; word-break: break-all;">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px; color: dodgerblue">分批</th>
+                                <th style="width: 60px; text-align: center; color: dodgerblue">状态</th>
+                                <th style="color: purple">计划发图</th>
+                                <th style="color: darkgreen">发图时间</th>
+                                <th style="color: purple">计划完工</th>
+                                <th style="color: darkgreen">入库时间</th>
+                                <th style="color: darkgreen">发货时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (_mainPlanDtos.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="7">无计划...</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                foreach (var plan in _mainPlanDtos)
+                                {
+                                    <tr>
+                                        <td>
+                                            <CompBatch Batch="plan.Batch"></CompBatch>
+                                        </td>
+                                        <td style="text-align: center">
+                                            <CompMainPlanStatus Status="@plan.Status"></CompMainPlanStatus>
+                                        </td>
+                                        <td style="font-weight: bold; @(plan.DrwReleaseTarget < DateTime.Today && plan.DrwReleaseTime == null ? "color:red" : plan.DrwReleaseTarget < DateTime.Today ? "color:green" : "")">
+                                            @plan.DrwReleaseTarget.ToString("MM/dd")
+                                        </td>
+                                        <td>
+                                            <AuthorizeView Roles="admin">
+                                                <Authorized>
+                                                    <!--todo:使用弹窗解决这个问题-->
+                                                    <a href="">
+                                                        <span class="oi oi-cog"></span>
+                                                    </a>
+                                                </Authorized>
+                                            </AuthorizeView>
+                                            @(plan.DrwReleaseTime != null ?
+                                                plan.DrwReleaseTime.Value.ToString("MM/dd") : "")
+                                        </td>
+                                        <td style="font-weight: bold; @(plan.FinishTime < DateTime.Today && plan.Status < MainPlanStatus_e.入库 ? "color:red" : plan.FinishTime < DateTime.Today ? "color:green" : "")">
+                                            @plan.FinishTime.ToString("MM/dd")
+                                        </td>
+                                        <td>
+                                            <AuthorizeView Roles="admin">
+                                                <Authorized>
+                                                    <!--todo:使用弹窗解决这个问题-->
+                                                    <a href="">
+                                                        <span class="oi oi-cog"></span>
+                                                    </a>
+                                                </Authorized>
+                                            </AuthorizeView>
+                                            @(plan.WarehousingTime != null ?
+                                                plan.WarehousingTime.Value.ToString("MM/dd") : "")
+                                        </td>
+                                        <td>
+                                            <AuthorizeView Roles="admin">
+                                                <Authorized>
+                                                    <!--todo:使用弹窗解决这个问题-->
+                                                    <a href="">
+                                                        <span class="oi oi-cog"></span>
+                                                    </a>
+                                                </Authorized>
+                                            </AuthorizeView>
+                                            @(plan.ShippingTime != null ?
+                                                plan.ShippingTime.Value.ToString("MM/dd") : "")
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                </div>
             </div>
-
-            
             <div class="row">
-
                 <div class="col-sm-3" style="width: 95px">系统合同:</div>
-                @if (!string.IsNullOrWhiteSpace(_project.ContractUrl))
-                {
-                    <div class="col-sm-9">
-                        <a href="@_project.ContractUrl" target="_blank">
-                            <span class="oi oi-paperclip me-2">@(Path.GetFileName(_project.ContractUrl))</span>
-                        </a>
-                        <AuthorizeView Roles="admin,pm,designer">
-                            <Authorized>
-                                <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="oi oi-loop-circular">更新</span>
-                                </a>
-                            </Authorized>
-                        </AuthorizeView>
-                    </div>
-                }
-                else
-                {
-                    <AuthorizeView Roles="admin,pm,designer">
-                        <Authorized>
-                            <div class="col-sm-9">
-                                <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="oi oi-cloud-upload">上传</span>
-                                </a>
-                            </div>
-                        </Authorized>
-                    </AuthorizeView>
-                }
-                
-
+                <CompFile Roles="admin,pm,designer"
+                        FileUrl="@_projectDto.ContractUrl"
+                        UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
             </div>
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">物料清单:</div>
-                @if (!string.IsNullOrWhiteSpace(_project.BomUrl))
-                {
-                    <div class="col-sm-9">
-
-                        @foreach (var fileUrl in _project.BomUrl.Split('\n'))
-                        {
-                            <a href="@fileUrl" target="_blank">
-                                <span class="oi oi-paperclip me-5">@(Path.GetFileName(fileUrl))</span>
-                            </a>
-                            <br />
-                        }
-
-                        <AuthorizeView Roles="admin,pm,designer">
-                            <Authorized>
-                                <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="oi oi-loop-circular">更新</span>
-                                </a>
-                            </Authorized>
-                        </AuthorizeView>
-                    </div>
-                }
-                else
-                {
-                    <AuthorizeView Roles="admin,pm,designer">
-                        <Authorized>
-                            <div class="col-sm-9">
-                                <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="oi oi-cloud-upload">上传</span>
-                                </a>
-                            </div>
-                        </Authorized>
-                    </AuthorizeView>
-                }
+                <CompFiles Roles="admin,pm,designer"
+                       FileUrls="@_projectDto.BomUrl"
+                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
             </div>
-            
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">其他附件:</div>
-                @if (!string.IsNullOrWhiteSpace(_project.AttachmentsUrl))
-                {
-                    <div class="col-sm-9">
-                        @foreach (var fileUrl in _project.AttachmentsUrl.Split('\n'))
-                        {
-                            <a href="@fileUrl" target="_blank">
-                                <span class="oi oi-paperclip me-5">@(Path.GetFileName(fileUrl))</span>
-                            </a>
-                            <br />
-                        }
-                        <AuthorizeView Roles="admin,pm,designer">
-                            <Authorized>
-                                <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="oi oi-loop-circular">更新</span>
-                                </a>
-                            </Authorized>
-                        </AuthorizeView>
-                    </div>
-                }
-                else
-                {
-                    <AuthorizeView Roles="admin,pm,designer">
-                        <Authorized>
-                            <div class="col-sm-9">
-                                <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="oi oi-cloud-upload">上传</span>
-                                </a>
-                            </div>
-                        </Authorized>
-                    </AuthorizeView>
-                }
+                <CompFiles Roles="admin,pm,designer"
+                       FileUrls="@_projectDto.AttachmentsUrl"
+                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
             </div>
-
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">最终检验:</div>
-                @if (!string.IsNullOrWhiteSpace(_project.FinalInspectionUrl))
-                {
-                    <div class="col-sm-9">
-                        @foreach (var fileUrl in _project.FinalInspectionUrl.Split('\n'))
-                        {
-                            <a href="@fileUrl" target="_blank">
-                                <span class="oi oi-paperclip me-5">@(Path.GetFileName(fileUrl))</span>
-                            </a>
-                            <br />
-                        }
-                        <AuthorizeView Roles="admin,inspector">
-                            <Authorized>
-                                <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="oi oi-loop-circular">更新</span>
-                                </a>
-                            </Authorized>
-                        </AuthorizeView>
-                    </div>
-                }
-                else
-                {
-                    <AuthorizeView Roles="admin,inspector">
-                        <Authorized>
-                            <div class="col-sm-9">
-                                <a href="/project/uploadfiles/@ProjectId">
-                                    <span class="oi oi-cloud-upload">上传</span>
-                                </a>
-                            </div>
-                        </Authorized>
-                    </AuthorizeView>
-                }
+                <CompFiles Roles="admin,inspector"
+                       FileUrls="@_projectDto.FinalInspectionUrl"
+                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
+
             </div>
-
-
-            @if (!string.IsNullOrWhiteSpace(_project.SpecialNotes))
+            @if (!string.IsNullOrWhiteSpace(_projectDto.SpecialNotes))
             {
                 <div class="row">
                     <div class="col-sm-3" style="width: 95px">特殊要求:</div>
                     <div class="col-sm-9" style="color: red">
-                        @foreach (var note in _project.SpecialNotes.Split('\n'))
-                        {
-                            <span>@note</span>
-
-                            <br />
-                        }
+                        <CompMultiLineText Text="@_projectDto.SpecialNotes" />
                     </div>
                 </div>
             }
-            @if (_project.IsProblemNotResolved)
+            @if (_projectDto.IsProblemNotResolved)
             {
                 <div class="row">
                     <div class="col-sm-3" style="width: 95px">异常列表:</div>
                     <div class="col-sm-9" style="color: red">
-                        @if (_problems != null && _problems.Length != 0)
+                        @if (_problemDtos != null && _problemDtos.Length != 0)
                         {
-                            foreach (var problem in _problems)
+                            foreach (var problem in _problemDtos)
                             {
                                 <ShowProblem Problem="@problem" />
                             }
@@ -223,18 +175,8 @@
             }
         }
     </div>
-    @*todo:控制权限*@
-    <AuthorizeView Roles="admin,pm">
-        <Authorized>
-            <div class="col position-absolute bottom-0 end-0" style="text-align: right;width: 10%">
-                <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo($"drawing/add/{ProjectId}"))">+ 添加</button>
-            </div>
-        </Authorized>
-    </AuthorizeView>
+    <CompAddButton Roles="admin,pm" Url="@($"drawing/add/{ProjectId}")" />
 </div>
-<!--todo:table生产计划（根据ProjectId查询）-->
-
-
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
     <thead>
         <tr>
@@ -244,40 +186,37 @@
         </tr>
     </thead>
     <tbody>
-        @if (_drawings.Count == 0)
+        @if (_drawingDtos.Count == 0)
         {
             <p>没有图纸，请点击右上角添加</p>
         }
         else
         {
-            @foreach (var drawing in _drawings)
+            @foreach (var drawing in _drawingDtos)
             {
-                <DrawingRow Drawing="drawing"/>
+                <DrawingRow Drawing="drawing" />
             }
         }
     </tbody>
 </table>
 
-
 @code {
     [Parameter]
     public string ProjectId { get; set; }
-
-    private List<DrawingDto>? _drawings=new ();
-    private ProjectDto? _project = new();
-
-    //private TrackingResponse? tracking;
-    private ProblemDto[]? _problems;
-
+    private ProjectDto _projectDto = new();
+    private List<MainPlanDto> _mainPlanDtos = new();
+    private List<DrawingDto> _drawingDtos = new();
+    private ProblemDto[] _problemDtos;
     protected override async Task OnInitializedAsync()
     {
-        var dResult = await DrawingService.GetAllByProjectIdAsync(Guid.Parse(ProjectId));
-        if (dResult.Status) _drawings= dResult.Result;
-
-
         var pResult = await ProjectService.GetFirstOrDefault(Guid.Parse(ProjectId));
-        if (pResult.Status) _project = pResult.Result;
+        if (pResult.Status) _projectDto = pResult.Result;
 
+        var mResult = await MainPlanService.GetAllByProjectIdAsync(Guid.Parse(ProjectId));
+        if (mResult.Status) _mainPlanDtos = mResult.Result;
+
+        var dResult = await DrawingService.GetAllByProjectIdAsync(Guid.Parse(ProjectId));
+        if (dResult.Status) _drawingDtos= dResult.Result;
 
 
         //todo:完善其他的情况

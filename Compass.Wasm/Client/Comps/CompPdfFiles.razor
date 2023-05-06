@@ -1,0 +1,21 @@
+﻿@if (!string.IsNullOrWhiteSpace(PdfUrls))
+{
+    @foreach (var pdfUrl in PdfUrls.Split('\n'))
+    {
+        <a href="@pdfUrl" target="_blank">
+            <span class="oi oi-paperclip me-2">PDF</span>
+        </a>
+    }
+}
+else
+{
+    <a href="@UploadUrl">
+        <span class="oi oi-cloud-upload">上传</span>
+    </a>
+}
+@code {
+    [Parameter]
+    public string PdfUrls { get; set; }
+    [Parameter]
+    public string UploadUrl { get; set; }
+}

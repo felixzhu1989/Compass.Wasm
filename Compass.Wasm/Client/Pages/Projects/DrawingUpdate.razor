@@ -3,7 +3,6 @@
 @using Compass.Wasm.Shared.Projects
 @using Microsoft.AspNetCore.Components
 
-
 @inject IDrawingService DrawingService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
@@ -12,21 +11,9 @@
 
 <div class="row">
     <div class="col">
-        <p>
-            <span class="fs-5">更新图纸信息</span>
-        </p>
+        <p class="fs-5">更新图纸信息</p>
     </div>
-    @*todo:控制权限*@
-    <AuthorizeView Roles="admin,pm">
-        <Authorized>
-            <div class="col" style="text-align: right">
-                <button class="btn mb-2" type="button" @onclick="Delete">
-                    <span class="oi oi-trash text-danger"></span>
-                </button>
-            </div>
-        </Authorized>
-    </AuthorizeView>
-    
+    <CompDeleteIcon Roles="admin,pm" Click="Delete"/>
 </div>
 
 @if (_drawing != null)
@@ -44,8 +31,7 @@
             </Authorized>
         </AuthorizeView>
 
-        <button class="btn btn-success" type="submit">保存</button>
-        <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"drawings/{_drawing.ProjectId}"))">取消</button>
+        <CompSaveCancelButtons CancelUrl="@($"drawings/{_drawing.ProjectId}")" />
     </EditForm>
 }
 

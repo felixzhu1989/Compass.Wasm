@@ -34,8 +34,7 @@
         </div>
         <MultiFileUpload Title="描述附件（可上传多个附件）" FileType="image/*" @bind-MultiFileUrl="@problem.DescriptionUrl" />
 
-        <button class="btn btn-success" type="submit">保存</button>
-        <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"./reportproblem/{problem.ProjectId}"))">取消</button>
+        <CompSaveCancelButtons CancelUrl="@($"reportproblem/{problem.ProjectId}")" />
     </EditForm>
 }
 

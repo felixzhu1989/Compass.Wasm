@@ -20,6 +20,58 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompAddButton.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcEFkZEJ1dHRvbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompBatch.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcEJhdGNoLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompDeleteIcon.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcERlbGV0ZUljb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompEnumList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcEVudW1MaXN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompFile.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcEZpbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompFiles.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcEZpbGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompMainPlanStatus.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcE1haW5QbGFuU3RhdHVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompMultiLineText.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcE11bHRpTGluZVRleHQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompPdfFile.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcFBkZkZpbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompPdfFiles.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcFBkZkZpbGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompRiskLevel.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcFJpc2tMZXZlbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompSaveCancelButtons.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcFNhdmVDYW5jZWxCdXR0b25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompUpdateIcon.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcFVwZGF0ZUljb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Pages/Categories/Categories.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0ZWdvcmllc1xDYXRlZ29yaWVzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

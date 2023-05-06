@@ -1,0 +1,41 @@
+﻿@if (!string.IsNullOrWhiteSpace(FileUrls))
+{
+    <div class="col-sm-9">
+
+        @foreach (var fileUrl in FileUrls.Split('\n'))
+        {
+            <a href="@fileUrl" target="_blank">
+                <span class="oi oi-paperclip me-5">@(Path.GetFileName(fileUrl))</span>
+            </a>
+            <br />
+        }
+        <AuthorizeView Roles="@Roles">
+            <Authorized>
+                <a href="@UpLoadUrl">
+                    <span class="oi oi-loop-circular">更新</span>
+                </a>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+}
+else
+{
+    <AuthorizeView Roles="@Roles">
+        <Authorized>
+            <div class="col-sm-9">
+                <a href="@UpLoadUrl">
+                    <span class="oi oi-cloud-upload">上传</span>
+                </a>
+            </div>
+        </Authorized>
+    </AuthorizeView>
+}
+
+@code {
+    [Parameter]
+    public string Roles { get; set; }
+    [Parameter]
+    public string FileUrls { get; set; }
+    [Parameter]
+    public string UpLoadUrl { get; set; }
+}

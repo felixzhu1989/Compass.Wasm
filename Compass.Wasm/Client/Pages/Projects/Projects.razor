@@ -18,13 +18,7 @@
             }
         </div>
         @*todo:控制权限*@
-        <AuthorizeView Roles="admin,pm">
-            <Authorized>
-                <div class="col position-absolute bottom-0 end-0" style="text-align: right; width: 10%">
-                    <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo("project/add"))">+ 添加</button>
-                </div>
-            </Authorized>
-        </AuthorizeView>
+        <CompAddButton Roles="admin,pm" Url="project/add"/>
     </div>
 </div>
 
@@ -50,7 +44,7 @@
     {
         @foreach (var project in _filterProject)
         {
-            <ProjectRow Project="project"/>
+            <ProjectRow ProjectDto="project"/>
         }
     }
     </tbody>

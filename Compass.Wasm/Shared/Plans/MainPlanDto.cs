@@ -16,7 +16,8 @@ public class MainPlanDto
     public DateTime MonthOfInvoice { get; set; }//开票月份，input type=month
     public MainPlanType_e MainPlanType { get; set; }//海工, ETO, KFC
     public string? Remarks { get; set; }
-    
+    public DeliveryBatch_e Batch { get; set; }
+
     //状态属性
     public Guid? ProjectId { get; set; }//关联项目,可以多个主计划关联到一个订单
     public MainPlanStatus_e Status { get; set; }//计划,制图,生产,入库,结束
@@ -26,8 +27,6 @@ public class MainPlanDto
     public DateTime? ShippingTime { get; set; }//项目第一台真实发货的时间->进入发货状态，用减去WarehousingTime，用户计算成品库存时间
 
     //查询时附加Project的属性
-    public string? OdpNumber { get; set; }
-    public string? ProjectName { get; set; }
     public bool ProblemNotResolved { get; set; }
     public List<ProblemDto>? ProblemDtos { get; set; } = new();
 

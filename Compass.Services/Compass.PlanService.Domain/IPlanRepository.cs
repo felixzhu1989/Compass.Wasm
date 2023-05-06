@@ -7,9 +7,14 @@ public interface IPlanRepository
     //MainPlan
     Task<IQueryable<MainPlan>> GetMainPlansAsync();
     Task<MainPlan?> GetMainPlanByIdAsync(Guid id);
-
-
     //扩展MainPlan查询
+    Task<IQueryable<MainPlan>> GetMainPlansByProjectIdAsync(Guid projectId);
+
+
+
+
+
+
     Task<IQueryable<MainPlan>> GetFilterMainPlansAsync(int year,int month, MainPlanType_e productionPlanType);
 
 

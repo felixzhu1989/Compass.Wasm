@@ -18,18 +18,17 @@
 
             <MultiFileUpload Title="物料清单" FileType="application/pdf" @bind-MultiFileUrl="@project.BomUrl" />
 
-            <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl"/>
+            <MultiFileUpload Title="其他附件" @bind-MultiFileUrl="@project.AttachmentsUrl" />
         </Authorized>
     </AuthorizeView>
 
     <AuthorizeView Roles="admin,inspector">
         <Authorized Context="auth">
-            <MultiFileUpload Title="最终检验" @bind-MultiFileUrl="@project.FinalInspectionUrl"/>
+            <MultiFileUpload Title="最终检验" @bind-MultiFileUrl="@project.FinalInspectionUrl" />
         </Authorized>
     </AuthorizeView>
 
-    <button class="btn btn-success" type="submit">保存</button>
-    <button class="btn btn-secondary" type="button" @onclick="@(() => NavigationManager.NavigateTo($"drawings/{Id}"))">取消</button>
+    <CompSaveCancelButtons CancelUrl="@($"drawings/{Id}")" />
 </EditForm>
 
 @code {
@@ -43,7 +42,7 @@
         if (!response.Status) NavigationManager.NavigateTo("projects");
         project = response.Result;
     }
-    
+
     private async Task Save()
     {
         var result = await ProjectService.UploadFilesAsync(Guid.Parse(Id), project);

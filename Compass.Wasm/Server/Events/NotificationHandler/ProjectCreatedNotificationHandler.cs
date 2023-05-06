@@ -1,6 +1,7 @@
 ﻿using Compass.PlanService.Infrastructure;
 using Compass.Wasm.Server.Events.Plans;
 using Compass.Wasm.Shared.Extensions;
+using Compass.Wasm.Shared.Plans;
 using Compass.Wasm.Shared.Projects.Notifications;
 
 namespace Compass.Wasm.Server.Events.NotificationHandler;
@@ -21,11 +22,11 @@ public class ProjectCreatedNotificationHandler : NotificationHandler<ProjectCrea
     protected override void Handle(ProjectCreatedNotification notification)
     {
         //Todo:搜索未绑定的生产计划，匹配项目名称，相似度最高且大于0.5的关联起来
-        var prodPlans = _psDbContext.MainPlans.Where(x => x.ProjectId == null).ToArray();
+        var mainPlans = _psDbContext.MainPlans.Where(x => x.ProjectId == null).ToArray();
         List<float> results = new List<float>();
-        foreach (var prodPlan in prodPlans)
+        foreach (var mainPlan in mainPlans)
         {
-            results.Add(prodPlan.Name.SimilarityWith(notification.Name));
+            results.Add(mainPlan.Name.SimilarityWith(notification.Name));
         }
         if (results.Count > 0)
         {
@@ -34,11 +35,9 @@ public class ProjectCreatedNotificationHandler : NotificationHandler<ProjectCrea
             {
                 //获取最大值的位置
                 var index = results.FindIndex(x => x.Equals(maxResult));
-                prodPlans[index].ChangeProjectId(notification.Id);
+                mainPlans[index].ChangeProjectId(notification.Id);
+                mainPlans[index].ChangeStatus(MainPlanStatus_e.制图);
                 _psDbContext.SaveChangesAsync();
-                //todo:发出集成事件，修改Tracking的排序时间为ProductionFinishTime
-                var eData = new BindProjectEvent(notification.Id, prodPlans[index].FinishTime);
-                _eventBus.Publish("PlanService.ProductionPlan.BindProject", eData);
             }
         }
     }

@@ -63,7 +63,7 @@ public class MainPlanService : IMainPlanService
     {
         try
         {
-            var model = new MainPlan(Guid.NewGuid(), dto.CreateTime, dto.Number, dto.Name, dto.Quantity, dto.ModelSummary, dto.FinishTime, dto.DrwReleaseTarget, dto.MonthOfInvoice, dto.MainPlanType, dto.Remarks);
+            var model = new MainPlan(Guid.NewGuid(), dto.CreateTime, dto.Number, dto.Name, dto.Quantity, dto.ModelSummary, dto.FinishTime, dto.DrwReleaseTarget, dto.MonthOfInvoice, dto.MainPlanType, dto.Remarks,dto.Batch);
             await _dbContext.MainPlans.AddAsync(model);
             dto.Id = model.Id;
 
@@ -141,15 +141,26 @@ public class MainPlanService : IMainPlanService
             {
                 if (dto.ProjectId != null && dto.ProjectId != Guid.Empty)
                 {
-                    var project =await _projectRepository.GetProjectByIdAsync(dto.ProjectId.Value);
-                    dto.OdpNumber = project.OdpNumber;
-                    dto.ProjectName = project.Name;
                     var problems = await _projectRepository.GetNotResolvedProblemsByProjectIdAsync(dto.Id);
                     if (!problems.Any()) continue;
                     dto.ProblemNotResolved = true;
                     dto.ProblemDtos =await _mapper.ProjectTo<ProblemDto>(problems).ToListAsync();
                 }
             }
+            return new ApiResponse<List<MainPlanDto>> { Status = true, Result = dtos };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<List<MainPlanDto>> { Status = false, Message = e.Message };
+        }
+    }
+
+    public async Task<ApiResponse<List<MainPlanDto>>> GetAllByProjectIdAsync(Guid projectId)
+    {
+        try
+        {
+            var models = await _repository.GetMainPlansByProjectIdAsync(projectId);
+            var dtos = await _mapper.ProjectTo<MainPlanDto>(models).ToListAsync();
             return new ApiResponse<List<MainPlanDto>> { Status = true, Result = dtos };
         }
         catch (Exception e)

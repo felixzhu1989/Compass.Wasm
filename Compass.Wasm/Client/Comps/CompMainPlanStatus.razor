@@ -1,0 +1,13 @@
+﻿@using Compass.Wasm.Shared.Plans
+<span class="badge
+@(Status == MainPlanStatus_e.计划 ? "bg-info text-dark" : 
+    Status == MainPlanStatus_e.制图 ? "bg-primary" : 
+        Status == MainPlanStatus_e.生产 ? "bg-warning text-dark" : 
+            Status == MainPlanStatus_e.入库 ? "bg-success" : 
+                Status == MainPlanStatus_e.发货 ? "bg-secondary" : "bg-dark")">
+    @Status
+</span>
+@code {
+    [Parameter]
+    public MainPlanStatus_e Status { get; set; }
+}
