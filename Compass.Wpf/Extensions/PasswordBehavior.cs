@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using Microsoft.Xaml.Behaviors;
+﻿using Microsoft.Xaml.Behaviors;
 
 namespace Compass.Wpf.Extensions;
 /// <summary>

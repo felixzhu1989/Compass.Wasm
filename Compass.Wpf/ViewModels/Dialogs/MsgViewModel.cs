@@ -1,8 +1,5 @@
-﻿using Compass.Wpf.Common;
-using MaterialDesignThemes.Wpf;
-using Prism.Commands;
+﻿using MaterialDesignThemes.Wpf;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
 
 namespace Compass.Wpf.ViewModels;
 

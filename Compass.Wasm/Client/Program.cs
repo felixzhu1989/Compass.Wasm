@@ -1,6 +1,5 @@
 using Blazored.LocalStorage;
 using Compass.Wasm.Client;
-using Compass.Wasm.Client.Services;
 using Compass.Wasm.Client.Services.Categories;
 using Compass.Wasm.Client.Services.Plans;
 using Compass.Wasm.Client.Services.Projects;
@@ -33,14 +32,14 @@ builder.Services.AddScoped<IModelTypeService,ModelTypeService>();
 #region Projects
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IDrawingService, DrawingService>();
-
+builder.Services.AddScoped<ILessonService, LessonService>();
 
 
 #endregion
 
 #region Plans
 builder.Services.AddScoped<IMainPlanService, MainPlanService>();
-
+builder.Services.AddScoped<IIssueService, IssueService>();
 
 
 #endregion

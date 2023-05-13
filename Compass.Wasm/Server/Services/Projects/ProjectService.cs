@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Compass.DataService.Domain;
+using Compass.PlanService.Domain;
+using Compass.PlanService.Domain.Entities;
 using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameters;
@@ -8,26 +10,45 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Compass.Wasm.Server.Services.Projects;
 
+public interface IProjectService : IBaseService<ProjectDto>
+{
+    //扩展的查询功能,WPF
+    Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParameter parameter);
+    Task<ApiResponse<ProjectSummaryDto>> GetSummaryAsync();
+    Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter);//用于树结构
+    Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter);//用于自动作图
+
+    //扩展查询功能，Blazor
+    //带Issue信息
+    Task<ApiResponse<List<ProjectDto>>> GetAllWithIssuesAsync();
+    Task<ApiResponse<ProjectDto>> GetSingleWithIssuesAsync(Guid id);
+
+    //带MainPlan信息
+    Task<ApiResponse<List<ProjectDto>>> GetAllWithMainPlansAsync();
+    Task<ApiResponse<ProjectDto>> GetSingleWithMainPlansAsync(Guid id);
+
+
+    //UploadFiles
+    Task<ApiResponse<ProjectDto>> UploadFilesAsync(Guid id, ProjectDto dto);
+
+}
 public class ProjectService : IProjectService
 {
-    private readonly ProjectDomainService _domainService;
+    #region ctor
     private readonly ProjectDbContext _dbContext;
     private readonly IProjectRepository _repository;
+    private readonly IPlanRepository _planRepository;
     private readonly IMapper _mapper;
-    private readonly IEventBus _eventBus;
-    private readonly ExportExcelService _export;
     private readonly IDataRepository _dataRepository;
-
-    public ProjectService(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IMapper mapper, IEventBus eventBus, ExportExcelService export, IDataRepository dataRepository)
+    public ProjectService(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository,IPlanRepository planRepository, IMapper mapper, IEventBus eventBus, ExportExcelService export, IDataRepository dataRepository)
     {
-        _domainService = domainService;
         _dbContext = dbContext;
         _repository = repository;
+        _planRepository = planRepository;
         _mapper = mapper;
-        _eventBus = eventBus;
-        _export = export;
         _dataRepository = dataRepository;
-    }
+    } 
+    #endregion
 
     #region 基本增删改查
     public async Task<ApiResponse<List<ProjectDto>>> GetAllAsync()
@@ -67,13 +88,6 @@ public class ProjectService : IProjectService
             var model = new Project(Guid.NewGuid(), dto.OdpNumber.ToUpper(), dto.Name, dto.DeliveryDate, dto.ProjectType, dto.RiskLevel, dto.SpecialNotes);
             await _dbContext.Projects.AddAsync(model);
             dto.Id = model.Id;
-            //todo:修改跟踪对象，改成其他的对象
-            #region 当项目创建时，同时创建跟踪对象,同一个dbContext的操作应当写在一起
-            if (_dbContext.Trackings.Any(x => x.Id.Equals(dto.Id)))
-                return new ApiResponse<ProjectDto> { Status = true, Result = dto };
-            var tracking = new Tracking(dto.Id.Value, DateTime.Now.AddDays(20));
-            _dbContext.Trackings.Add(tracking);
-            #endregion
             return new ApiResponse<ProjectDto> { Status = true, Result = dto };
         }
         catch (Exception e)
@@ -253,25 +267,32 @@ public class ProjectService : IProjectService
         }
     }
 
+
+
     #endregion
 
     #region 扩展查询功能，Blazor
-    public async Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(string? search)
+
+    public Task<ApiResponse<List<ProjectDto>>> GetAllWithIssuesAsync()
     {
-        try
-        {
-            var models = await _repository.GetProjectsAsync();
-            //筛选结果，按照发货时间倒序排序
-            var filterModels = models.Where(x =>
-                string.IsNullOrWhiteSpace(search) || x.OdpNumber.Contains(search) || x.Name.Contains(search)).OrderByDescending(x => x.DeliveryDate);
-            var dtos = await _mapper.ProjectTo<ProjectDto>(filterModels).ToListAsync();
-            return new ApiResponse<List<ProjectDto>> { Status = true, Result = dtos };
-        }
-        catch (Exception e)
-        {
-            return new ApiResponse<List<ProjectDto>> { Status = false, Message = e.Message };
-        }
+        throw new NotImplementedException();
     }
+
+    public Task<ApiResponse<ProjectDto>> GetSingleWithIssuesAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ApiResponse<List<ProjectDto>>> GetAllWithMainPlansAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ApiResponse<ProjectDto>> GetSingleWithMainPlansAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
 
     public async Task<ApiResponse<ProjectDto>> UploadFilesAsync(Guid id, ProjectDto dto)
     {
@@ -287,7 +308,6 @@ public class ProjectService : IProjectService
             return new ApiResponse<ProjectDto> { Status = false, Message = e.Message };
         }
     }
-
     #endregion
 
 }

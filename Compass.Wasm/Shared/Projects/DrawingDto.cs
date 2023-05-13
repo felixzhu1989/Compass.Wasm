@@ -28,7 +28,7 @@ public class DrawingDto:BaseDto,IComparable<DrawingDto>
 
 
 
-    #region 附加属性和方法
+    #region 附加查询属性和方法
 
     private bool isDrawingOk;
     public bool IsDrawingOk

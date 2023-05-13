@@ -1,0 +1,67 @@
+﻿@page "/issue/add/{MainPlanId}"
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject IIssueService IssueService
+@inject IMainPlanService MainPlanService
+@inject AuthenticationStateProvider AuthProvider
+
+<PageTitle>新增经验教训总结</PageTitle>
+<h3>@_mainPlanDto.Number-@_mainPlanDto.Name</h3>
+
+<EditForm Model="_issueDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">异常类型</span>
+        <select class="form-select" @bind="@_issueDto.Title">
+            <CompEnumList Type="typeof(IssueTitle_e)" />
+        </select>
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">内容</span>
+        <textarea class="form-control" placeholder="请详细描述异常，可输入多行" style="height: 550px" @bind="@_issueDto.Content"></textarea>
+    </div>
+
+    <MultiFileUpload Title="附件(可添加多个)" FileType="application/pdf" @bind-MultiFileUrl="@_issueDto.ContentUrl" />
+
+    <CompSaveCancelButtons CancelUrl="@($"issues/mainplan/{MainPlanId}")" />
+</EditForm>
+@code {
+    [Parameter]
+    public string MainPlanId { get; set; }
+
+    private IssueDto _issueDto = new();
+    private MainPlanDto _mainPlanDto = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var mResult = await MainPlanService.GetFirstOrDefault(Guid.Parse(MainPlanId));
+        _mainPlanDto = mResult.Result;
+        _issueDto.MainPlanId=Guid.Parse(MainPlanId);
+        //获取当前登录的用户
+        var repoter = (await AuthProvider.GetAuthenticationStateAsync()).User;
+        var userId = repoter.FindFirst(x => x.Type.Contains("nameidentifier"))?.Value;
+        if (string.IsNullOrEmpty(userId))
+        {
+            NavigationManager.NavigateTo("login");
+        }
+        else
+        {
+            _issueDto.ReporterId = Guid.Parse(userId);
+        }
+    }
+
+    private async Task Save()
+    {
+        if (_issueDto.ReporterId.Equals(Guid.Empty))
+        {
+            NavigationManager.NavigateTo("login");
+            return;
+        }
+        if (string.IsNullOrEmpty(_issueDto.Content))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        var result = (await IssueService.AddAsync(_issueDto)).IsSuccessStatusCode;
+        if (result) NavigationManager.NavigateTo($"issues/mainplan/{MainPlanId}");
+    }
+}

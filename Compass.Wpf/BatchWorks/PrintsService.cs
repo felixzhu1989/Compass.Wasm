@@ -1,13 +1,8 @@
 ﻿using Compass.Wasm.Shared.Parameters;
-using Compass.Wasm.Shared.Projects;
 using Compass.Wpf.ApiService;
 using Compass.Wpf.ApiServices.Projects;
-using Compass.Wpf.Extensions;
 using Microsoft.Office.Core;
 using Microsoft.Office.Interop.Excel;
-using Prism.Events;
-using Prism.Ioc;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;

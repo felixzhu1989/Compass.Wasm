@@ -1,7 +1,4 @@
 ﻿@page "/drawing/update/{Id}"
-@using Compass.Wasm.Client.Services.Projects
-@using Compass.Wasm.Shared.Projects
-@using Microsoft.AspNetCore.Components
 
 @inject IDrawingService DrawingService
 @inject NavigationManager NavigationManager
@@ -13,38 +10,36 @@
     <div class="col">
         <p class="fs-5">更新图纸信息</p>
     </div>
-    <CompDeleteIcon Roles="admin,pm" Click="Delete"/>
+    <CompDeleteIcon Roles="admin,pm" Click="Delete" />
 </div>
 
-@if (_drawing != null)
-{
-    <EditForm Model="_drawing" OnSubmit="Save">
-        <div class="input-group mb-2">
-            <span class="input-group-text">Item编号</span>
-            <input class="form-control" placeholder="Item" @bind-value="@_drawing.ItemNumber" />
-        </div>
-        <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@_drawing.DrawingUrl" />
-        
-        <AuthorizeView Roles="admin">
-            <Authorized Context="auth">
-                <FileUpload Title="截图(测试用)" @bind-FileUrl="@_drawing.ImageUrl" />
-            </Authorized>
-        </AuthorizeView>
 
-        <CompSaveCancelButtons CancelUrl="@($"drawings/{_drawing.ProjectId}")" />
-    </EditForm>
-}
+<EditForm Model="_drawingDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">Item编号</span>
+        <input class="form-control" placeholder="Item" @bind-value="@_drawingDto.ItemNumber" />
+    </div>
+    <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@_drawingDto.DrawingUrl" />
+
+    <AuthorizeView Roles="admin">
+        <Authorized Context="auth">
+            <FileUpload Title="截图(测试用)" @bind-FileUrl="@_drawingDto.ImageUrl" />
+        </Authorized>
+    </AuthorizeView>
+
+    <CompSaveCancelButtons CancelUrl="@($"drawings/{_drawingDto.ProjectId}")" />
+</EditForm>
+
 
 @code {
     [Parameter]
     public string Id { get; set; }
-    private DrawingDto? _drawing=new();
+    private DrawingDto? _drawingDto = new();
 
     protected override async Task OnInitializedAsync()
     {
         var result = await DrawingService.GetFirstOrDefault(Guid.Parse(Id));
-        if (!result.Status) NavigationManager.NavigateTo("projects");
-        _drawing = result.Result;
+        _drawingDto = result.Result;
     }
 
     private async Task Delete()
@@ -56,16 +51,16 @@
         //    return;
         //}
 
-        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除Item图纸【{_drawing.ItemNumber}】吗？");
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除Item图纸【{_drawingDto.ItemNumber}】吗？");
         if (confirmResult)
         {
             var result = await DrawingService.DeleteAsync(Guid.Parse(Id));
-            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{_drawing.ProjectId}");
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{_drawingDto.ProjectId}");
         }
     }
     private async Task Save()
     {
-        var result = await DrawingService.UpdateAsync(Guid.Parse(Id), _drawing);
-        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{_drawing.ProjectId}");
+        var result = await DrawingService.UpdateAsync(Guid.Parse(Id), _drawingDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{_drawingDto.ProjectId}");
     }
 }

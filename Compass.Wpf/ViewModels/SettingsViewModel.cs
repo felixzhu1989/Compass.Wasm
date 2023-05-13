@@ -1,11 +1,4 @@
-﻿using Compass.Wpf.Common.Models;
-using Compass.Wpf.Extensions;
-using Prism.Commands;
-using Prism.Ioc;
-using Prism.Regions;
-using System.Collections.ObjectModel;
-
-namespace Compass.Wpf.ViewModels;
+﻿namespace Compass.Wpf.ViewModels;
 
 public class SettingsViewModel : NavigationViewModel
 {

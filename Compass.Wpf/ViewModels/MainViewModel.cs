@@ -1,12 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Compass.Wpf.Common;
-using Compass.Wpf.Common.Models;
-using Compass.Wpf.Extensions;
-using Prism.Commands;
-using Prism.Ioc;
-using Prism.Regions;
-
-namespace Compass.Wpf.ViewModels;
+﻿namespace Compass.Wpf.ViewModels;
 public class MainViewModel : NavigationViewModel, IConfigureService
 {
     #region ctor-主界面

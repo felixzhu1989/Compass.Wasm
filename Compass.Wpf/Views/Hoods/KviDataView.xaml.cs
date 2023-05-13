@@ -1,15 +1,12 @@
-﻿using System.Windows.Controls;
+﻿namespace Compass.Wpf.Views.Hoods;
 
-namespace Compass.Wpf.Views.Hoods
+/// <summary>
+/// KviDataView.xaml 的交互逻辑
+/// </summary>
+public partial class KviDataView : UserControl
 {
-    /// <summary>
-    /// KviDataView.xaml 的交互逻辑
-    /// </summary>
-    public partial class KviDataView : UserControl
+    public KviDataView()
     {
-        public KviDataView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

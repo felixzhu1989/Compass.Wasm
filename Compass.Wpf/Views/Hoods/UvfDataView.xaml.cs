@@ -1,15 +1,12 @@
-﻿using System.Windows.Controls;
+﻿namespace Compass.Wpf.Views.Hoods;
 
-namespace Compass.Wpf.Views.Hoods
+/// <summary>
+/// UvfDataView.xaml 的交互逻辑
+/// </summary>
+public partial class UvfDataView : UserControl
 {
-    /// <summary>
-    /// UvfDataView.xaml 的交互逻辑
-    /// </summary>
-    public partial class UvfDataView : UserControl
+    public UvfDataView()
     {
-        public UvfDataView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
-using Compass.Wpf.Common;
+﻿using System.Threading.Tasks;
 using Compass.Wpf.Common.Events;
-using Prism.Events;
-using Prism.Services.Dialogs;
 
 namespace Compass.Wpf.Extensions;
 public static class DialogExtensions

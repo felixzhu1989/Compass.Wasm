@@ -1,8 +1,4 @@
 ﻿@page "/drawings/{ProjectId}"
-@using Compass.Wasm.Client.Services.Projects
-@using Compass.Wasm.Shared.Plans
-@using Compass.Wasm.Shared.Projects
-@using Compass.Wasm.Client.Services.Plans
 @inject NavigationManager NavigationManager
 @inject IProjectService ProjectService
 @inject IMainPlanService MainPlanService
@@ -22,19 +18,18 @@
                 <a href="projects">
                     <CompRiskLevel Risk="@_projectDto.RiskLevel" />
                 </a>
-                <a href="/reportproblem/@ProjectId">
-                    @if (_projectDto.IsProblemNotResolved)
-                    {
-                        <span class="badge bg-danger ms-2 me-2">异常</span>
-
-                        <img class="ms-1 me-2" src="andon_red.gif" />
-                    }
-                    else
+                <a href="issues/project/@ProjectId">
+                    @if (_projectDto.AllIssueClosed)
                     {
                         <span class="badge bg-info text-black ms-2">报告异常</span>
                     }
+                    else
+                    {
+                        <span class="badge bg-danger ms-2 me-2">异常列表</span>
+                        <img class="ms-1 me-2" src="andon_red.gif" />
+                    }
                 </a>
-                <a href="/reportissue/@ProjectId">
+                <a href="lessons/project/@ProjectId">
                     <span class="badge bg-info text-black ms-2 me-2">经验教训</span>
                 </a>
                 @_projectDto.Name
@@ -56,7 +51,7 @@
                         </thead>
                         <tbody>
 
-                            @if (_mainPlanDtos.Count == 0)
+                            @if (_projectDto.MainPlanDtos.Count == 0)
                             {
                                 <tr>
                                     <td colspan="7">无计划...</td>
@@ -64,7 +59,7 @@
                             }
                             else
                             {
-                                foreach (var plan in _mainPlanDtos)
+                                foreach (var plan in _projectDto.MainPlanDtos)
                                 {
                                     <tr>
                                         <td>
@@ -158,18 +153,18 @@
                     </div>
                 </div>
             }
-            @if (_projectDto.IsProblemNotResolved)
+            @if (!_projectDto.AllIssueClosed)
             {
                 <div class="row">
                     <div class="col-sm-3" style="width: 95px">异常列表:</div>
                     <div class="col-sm-9" style="color: red">
-                        @if (_problemDtos != null && _problemDtos.Length != 0)
+                        @*@if (_problemDtos != null && _problemDtos.Length != 0)
                         {
                             foreach (var problem in _problemDtos)
                             {
                                 <ShowProblem Problem="@problem" />
                             }
-                        }
+                        }*@
                     </div>
                 </div>
             }
@@ -186,13 +181,13 @@
         </tr>
     </thead>
     <tbody>
-        @if (_drawingDtos.Count == 0)
+        @if (_projectDto.DrawingDtos.Count == 0)
         {
             <p>没有图纸，请点击右上角添加</p>
         }
         else
         {
-            @foreach (var drawing in _drawingDtos)
+            @foreach (var drawing in _projectDto.DrawingDtos)
             {
                 <DrawingRow Drawing="drawing" />
             }
@@ -204,19 +199,17 @@
     [Parameter]
     public string ProjectId { get; set; }
     private ProjectDto _projectDto = new();
-    private List<MainPlanDto> _mainPlanDtos = new();
-    private List<DrawingDto> _drawingDtos = new();
-    private ProblemDto[] _problemDtos;
+    
     protected override async Task OnInitializedAsync()
     {
         var pResult = await ProjectService.GetFirstOrDefault(Guid.Parse(ProjectId));
         if (pResult.Status) _projectDto = pResult.Result;
 
         var mResult = await MainPlanService.GetAllByProjectIdAsync(Guid.Parse(ProjectId));
-        if (mResult.Status) _mainPlanDtos = mResult.Result;
+        if (mResult.Status) _projectDto.MainPlanDtos = mResult.Result;
 
         var dResult = await DrawingService.GetAllByProjectIdAsync(Guid.Parse(ProjectId));
-        if (dResult.Status) _drawingDtos= dResult.Result;
+        if (dResult.Status) _projectDto.DrawingDtos= dResult.Result;
 
 
         //todo:完善其他的情况

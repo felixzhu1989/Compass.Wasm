@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wpf.BatchWorks;
 

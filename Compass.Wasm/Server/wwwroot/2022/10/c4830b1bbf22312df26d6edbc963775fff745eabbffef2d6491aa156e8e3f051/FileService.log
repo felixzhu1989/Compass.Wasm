@@ -1,6 +1,0 @@
-2022-10-20 12:46:04.269 +08:00 [INF] User profile is available. Using 'C:\Users\Administrator\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2022-10-20 12:46:04.380 +08:00 [INF] Unable to bind to http://localhost:5000 on the IPv4 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
-2022-10-20 12:46:04.382 +08:00 [INF] Unable to bind to http://localhost:5000 on the IPv6 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
-2022-10-20 12:46:11.628 +08:00 [INF] User profile is available. Using 'C:\Users\Administrator\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
-2022-10-20 12:46:11.688 +08:00 [INF] Unable to bind to http://localhost:5000 on the IPv4 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.
-2022-10-20 12:46:11.691 +08:00 [INF] Unable to bind to http://localhost:5000 on the IPv6 loopback interface: '以一种访问权限不允许的方式做了一个访问套接字的尝试。'.

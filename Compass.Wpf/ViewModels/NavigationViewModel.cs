@@ -1,9 +1,4 @@
-﻿using Compass.Wpf.Common;
-using Compass.Wpf.Extensions;
-using Prism.Events;
-using Prism.Ioc;
-using Prism.Mvvm;
-using Prism.Regions;
+﻿using Prism.Mvvm;
 
 namespace Compass.Wpf.ViewModels;
 

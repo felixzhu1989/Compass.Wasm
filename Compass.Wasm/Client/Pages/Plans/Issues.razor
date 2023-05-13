@@ -1,0 +1,107 @@
+﻿@page "/issues"
+@inject IIssueService IssueService
+@inject IProjectService ProjectService
+<PageTitle>异常列表</PageTitle>
+<!--sticky固定位置，top: 3.5rem-->
+<div style="position: sticky; top: 3.5rem; z-index: 1;background-color:White">
+    <div class="row">
+        <div class="col input-group mb-2">
+            <span class="input-group-text">搜索</span>
+            <input class="form-control" placeholder="Search"
+                   @bind-value="@_search" @oninput="@Search" />
+        </div>
+        <div class="col form-check ms-3 mt-2" style="max-width: 70px">
+            <input class="form-check-input"
+                   type="checkbox"
+                   value="@_annual"
+                   @onchange="OnAnnualChange">
+            <label class="form-check-label">
+                全年
+            </label>
+        </div>
+        <div class="col input-group mb-2" style="max-width: 230px">
+            <span class="input-group-text">月份</span>
+            <input class="form-control"
+                   type="month"
+                   value="@(_selectedMonth.ToString("yyyy-MM"))"
+                   format="" @onchange="OnMonthChange" />
+        </div>
+        <div class="col form-check ms-3 mt-2" style="max-width: 100px">
+            <input class="form-check-input" type="checkbox" value="@_fromMonth"
+                   checked="checked" @onchange="OnFromMonthChange">
+            <label class="form-check-label">
+                本月往后
+            </label>
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
+    </div>
+</div>
+@foreach (var projectDto in _filterProjectDtos)
+{
+    <hr style="color: red" />
+    <div class="row position-relative">
+        <div class="col">
+            <h5>项目异常列表</h5>
+        </div>
+        <CompAddButton Roles="admin,pm" Url="@($"issue/add/{projectDto.Id}")" />
+    </div>
+
+    <LessonRow ProjectDto="@projectDto" />
+}
+
+
+@code {
+    private string _search = string.Empty;
+    private bool _annual;
+    private bool _fromMonth = true;
+    private DateTime _selectedMonth = DateTime.Today;
+    private int _year;
+    private int _month;
+
+    private List<ProjectDto> _projectDtos = new();
+    private List<ProjectDto> _filterProjectDtos = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _year= _selectedMonth.Year;
+        _month= _selectedMonth.Month;
+        var result = await ProjectService.GetAllAsync();
+        _projectDtos = result.Result;
+        //过滤条件变化
+        Search(new ChangeEventArgs { Value = _search });
+    }
+    private void OnAnnualChange(ChangeEventArgs e)
+    {
+        _annual =Convert.ToBoolean(e.Value);
+        Search(new ChangeEventArgs { Value = _search });
+    }
+    private void OnFromMonthChange(ChangeEventArgs e)
+    {
+        _fromMonth =Convert.ToBoolean(e.Value);
+        Search(new ChangeEventArgs { Value = _search });
+    }
+    private void OnMonthChange(ChangeEventArgs e)
+    {
+        _selectedMonth = Convert.ToDateTime(e.Value);
+        _year= _selectedMonth.Year;
+        _month= _selectedMonth.Month;
+        Search(new ChangeEventArgs { Value = _search });
+    }
+    private void Search(ChangeEventArgs e)
+    {
+        _search=e.Value!.ToString()!;
+        _filterProjectDtos.Clear();
+        _filterProjectDtos = _projectDtos.Where(
+            x => x.DeliveryDate.Year.Equals(_year)&&
+                 (_annual||(_fromMonth&&
+                x.DeliveryDate.Month>=_month)||
+                  x.DeliveryDate.Month.Equals(_month))&&
+                 (string.IsNullOrEmpty(_search)||
+                  x.OdpNumber.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                  x.Name.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                  (x.SpecialNotes!=null &&
+                   x.SpecialNotes.Contains(_search, StringComparison.OrdinalIgnoreCase))))
+                     .ToList();
+    }
+}

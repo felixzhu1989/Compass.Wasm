@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Identities;
-using Compass.Wpf.Common;
 
 namespace Compass.Wpf.ApiService;
 

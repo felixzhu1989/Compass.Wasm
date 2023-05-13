@@ -1,10 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Compass.Wasm.Shared.Data;
-using Compass.Wasm.Shared.Projects;
 using Compass.Wpf.ApiServices.Hoods;
-using Compass.Wpf.Extensions;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using Prism.Ioc;
 
 namespace Compass.Wpf.BatchWorks.Hoods;
 
@@ -50,11 +46,7 @@ public class UviAutoDrawing : BaseAutoDrawing, IUviAutoDrawing
             #endregion
 
             #region  Exhaust_UV_555，KV555排风装配
-            ExhaustService.Uv555(swAssyTop, suffix, netLength, data.SidePanel, data.UvLightType, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
-            #endregion
-
-            #region ExhaustSpigot_Fs，排风脖颈装配
-            ExhaustService.ExhaustSpigotFs(swAssyTop, suffix, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, data.Ansul, ExhaustType_e.UV);
+            ExhaustService.Uv555(swAssyTop, suffix, netLength, data.SidePanel, data.UvLightType, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
             #endregion
 
             #region SidePanel_Fs,大侧板装配

@@ -784,5 +784,117 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\4\e16984a749818c5454068e7b5e741f6b75d2545ecf9d40837a89672be15aacbd\Event Aggregator事件聚合器.pdf))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\0837a7b968fd7d657fbe6ab297dc4798a039ff0694c2ccd69fdb24f90057f7f1\WPF入门基础教程-痕迹.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>Compass.Wasm.Server</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Compass.Wasm.Server</BasePath>
+      <RelativePath>2023/5/0837a7b968fd7d657fbe6ab297dc4798a039ff0694c2ccd69fdb24f90057f7f1/WPF入门基础教程-痕迹.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\0837a7b968fd7d657fbe6ab297dc4798a039ff0694c2ccd69fdb24f90057f7f1\WPF入门基础教程-痕迹.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\1b04b78e4740a46c75b2eae25cd71fbc0c2bce355e62517d13ce773829d170ee\EF_Core-关系.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>Compass.Wasm.Server</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Compass.Wasm.Server</BasePath>
+      <RelativePath>2023/5/1b04b78e4740a46c75b2eae25cd71fbc0c2bce355e62517d13ce773829d170ee/EF_Core-关系.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\1b04b78e4740a46c75b2eae25cd71fbc0c2bce355e62517d13ce773829d170ee\EF_Core-关系.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\284b6643808cb0769446583c9a6c10e39dec9e756583b2b277e3260ecc8a1d1b\DDD_贫血模型和充血模型.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>Compass.Wasm.Server</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Compass.Wasm.Server</BasePath>
+      <RelativePath>2023/5/284b6643808cb0769446583c9a6c10e39dec9e756583b2b277e3260ecc8a1d1b/DDD_贫血模型和充血模型.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\284b6643808cb0769446583c9a6c10e39dec9e756583b2b277e3260ecc8a1d1b\DDD_贫血模型和充血模型.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\44185542f47aab749ff6ef5379ddcd9017bd9dd4cd4961104a760df3c4aabe75\ASP.net_core_配置、分层.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>Compass.Wasm.Server</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Compass.Wasm.Server</BasePath>
+      <RelativePath>2023/5/44185542f47aab749ff6ef5379ddcd9017bd9dd4cd4961104a760df3c4aabe75/ASP.net_core_配置、分层.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\44185542f47aab749ff6ef5379ddcd9017bd9dd4cd4961104a760df3c4aabe75\ASP.net_core_配置、分层.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\677d8178e0c565acff3a240a89360d1979cef834bcd72d3048e2748acc98b6b8\DDD_集成事件、RabbitMQ.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>Compass.Wasm.Server</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Compass.Wasm.Server</BasePath>
+      <RelativePath>2023/5/677d8178e0c565acff3a240a89360d1979cef834bcd72d3048e2748acc98b6b8/DDD_集成事件、RabbitMQ.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\677d8178e0c565acff3a240a89360d1979cef834bcd72d3048e2748acc98b6b8\DDD_集成事件、RabbitMQ.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\b45991446794a784f82efc83c62a277080247db9c1268590715488fa3657bd80\批量修改多种模型-工厂模式.pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>Compass.Wasm.Server</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Compass.Wasm.Server</BasePath>
+      <RelativePath>2023/5/b45991446794a784f82efc83c62a277080247db9c1268590715488fa3657bd80/批量修改多种模型-工厂模式.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\b45991446794a784f82efc83c62a277080247db9c1268590715488fa3657bd80\批量修改多种模型-工厂模式.pdf))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\bb541be044efb3a4b01cef63cb56ce98f4f9d8f78e05713f99582048f67077ca\Beyond Manufacturing Resource Planning (MRP II) Advanced Models and Methods for Production Planning by Jan Olhager, Joakim Wikner (auth.), Prof. Dr. Andreas Drexl, Dr. Alf Kimms (eds.) (z-lib.org).pdf))">
+      <SourceType>Package</SourceType>
+      <SourceId>Compass.Wasm.Server</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Compass.Wasm.Server</BasePath>
+      <RelativePath>2023/5/bb541be044efb3a4b01cef63cb56ce98f4f9d8f78e05713f99582048f67077ca/Beyond Manufacturing Resource Planning (MRP II) Advanced Models and Methods for Production Planning by Jan Olhager, Joakim Wikner (auth.), Prof. Dr. Andreas Drexl, Dr. Alf Kimms (eds.) (z-lib.org).pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\2023\5\bb541be044efb3a4b01cef63cb56ce98f4f9d8f78e05713f99582048f67077ca\Beyond Manufacturing Resource Planning (MRP II) Advanced Models and Methods for Production Planning by Jan Olhager, Joakim Wikner (auth.), Prof. Dr. Andreas Drexl, Dr. Alf Kimms (eds.) (z-lib.org).pdf))</OriginalItemSpec>
+    </StaticWebAsset>
   </ItemGroup>
 </Project>

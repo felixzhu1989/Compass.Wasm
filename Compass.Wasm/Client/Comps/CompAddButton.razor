@@ -1,11 +1,20 @@
 ﻿@inject NavigationManager NavigationManager
-<AuthorizeView Roles="@Roles">
-    <Authorized>
-        <div class="col position-absolute bottom-0 end-0" style="text-align: right; width: 10%">
-            <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo(Url))">+ 添加</button>
-        </div>
-    </Authorized>
-</AuthorizeView>
+@if (string.IsNullOrEmpty(Roles))
+{
+    <div class="col position-absolute bottom-0 end-0" style="text-align: right; width: 10%">
+        <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo(Url))">+ 添加</button>
+    </div>
+}
+else
+{
+    <AuthorizeView Roles="@Roles">
+        <Authorized>
+            <div class="col position-absolute bottom-0 end-0" style="text-align: right; width: 10%">
+                <button class="btn btn-outline-danger mb-2" @onclick="@(() => NavigationManager.NavigateTo(Url))">+ 添加</button>
+            </div>
+        </Authorized>
+    </AuthorizeView> 
+}
 
 @code {
     [Parameter]

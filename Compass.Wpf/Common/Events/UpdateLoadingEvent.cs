@@ -1,6 +1,4 @@
-﻿using Prism.Events;
-
-namespace Compass.Wpf.Common.Events;
+﻿namespace Compass.Wpf.Common.Events;
 
 public class UpdateModel
 {

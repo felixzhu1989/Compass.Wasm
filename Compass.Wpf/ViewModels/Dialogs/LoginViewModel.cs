@@ -1,14 +1,7 @@
-﻿using System;
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Services.Dialogs;
-using Compass.Wpf.Common;
-using Prism.Events;
-using Compass.Wpf.Extensions;
+﻿using Prism.Mvvm;
 using System.Configuration;
 using Compass.Wasm.Shared.Identities;
 using Compass.Wpf.ApiService;
-using Prism.Ioc;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 

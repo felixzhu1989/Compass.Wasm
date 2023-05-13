@@ -2,6 +2,7 @@
 using Compass.PlanService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Compass.Wasm.Shared.Plans;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Compass.PlanService.Infrastructure;
 
@@ -31,41 +32,6 @@ public class PlanRepository : IPlanRepository
     }
 
     //扩展MainPlan查询
-    public Task<IQueryable<MainPlan>> GetFilterMainPlansAsync(int year, int month, MainPlanType_e productionPlanType)
-    {
-        //只值比较年和月，判断类型，如果为No，则返回全部
-        var result = productionPlanType.Equals(MainPlanType_e.NA) ?
-            _context.MainPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MonthOfInvoice.Month.Equals(month))
-            : _context.MainPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MonthOfInvoice.Month.Equals(month)&&x.MainPlanType.Equals(productionPlanType));
-        return Task.FromResult(result.OrderBy(x => x.CreateTime).AsQueryable());
-    }
-
-    public Task<IQueryable<MainPlan>> GetMainPlansAsync(int year, MainPlanType_e productionPlanType)
-    {
-        //只值比较年和月，判断类型，如果为No，则返回全部
-        var result = productionPlanType.Equals(MainPlanType_e.NA) ?
-            _context.MainPlans.Where(x => x.MonthOfInvoice.Year.Equals(year))
-            : _context.MainPlans.Where(x => x.MonthOfInvoice.Year.Equals(year)&&x.MainPlanType.Equals(productionPlanType));
-        return Task.FromResult(result.OrderBy(x => x.CreateTime).AsQueryable());
-    }
-
-    public Task<IQueryable<MainPlan>> GetUnbindMainPlansAsync()
-    {
-        return Task.FromResult(_context.MainPlans.Where(x => x.ProjectId == null).OrderBy(x => x.Number).AsQueryable());
-    }
-
-    public Task<List<Guid?>> GetBoundMainPlansAsync()
-    {
-        return _context.MainPlans.Where(x => x.ProjectId != null).Select(x => x.ProjectId).ToListAsync();
-    }
-
-
-
-    public Task<MainPlan?> GetMainPlanByProjectIdAsync(Guid projectId)
-    {
-        return _context.MainPlans.SingleOrDefaultAsync(x => x.ProjectId.Equals(projectId));
-    }
-
     public Task<CycleTimeDto> GetCycleTimeByMonthAsync(int year, int month)
     {
         var result = _context.MainPlans
@@ -82,7 +48,6 @@ public class PlanRepository : IPlanRepository
                         && !x.MainPlanType.Equals(MainPlanType_e.KFC));
         return Task.FromResult(GetCycleTime(result));
     }
-
     private CycleTimeDto GetCycleTime(IQueryable<MainPlan> prodPlans)
     {
         CycleTimeDto response = new();
@@ -110,6 +75,25 @@ public class PlanRepository : IPlanRepository
             response.ProductionCycleTime = 0;
         }
         return response;
-    } 
+    }
     #endregion
+
+
+    #region Issue
+    public Task<IQueryable<Issue>> GetIssuesAsync()
+    {
+        return Task.FromResult(_context.Issues.AsQueryable());
+    }
+
+    public Task<Issue?> GetIssueByIdAsync(Guid id)
+    {
+        return _context.Issues.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+    public Task<IQueryable<Issue>> GetIssuesByMainPlanIdAsync(Guid mainPlanId)
+    {
+        return Task.FromResult(_context.Issues.Where(x => x.MainPlanId.Equals(mainPlanId)).OrderBy(x => x.CreationTime).AsQueryable());
+    }
+    #endregion
+
 }

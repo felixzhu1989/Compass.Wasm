@@ -1,8 +1,4 @@
-﻿using Compass.Wasm.Shared.Projects;
-using Prism.Ioc;
-using Prism.Regions;
-
-namespace Compass.Wpf.ViewModels;
+﻿namespace Compass.Wpf.ViewModels;
 
 public class ProjectInfoViewModel : NavigationViewModel
 {

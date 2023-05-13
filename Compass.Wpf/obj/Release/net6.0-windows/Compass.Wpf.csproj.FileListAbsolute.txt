@@ -152,3 +152,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Compass.Wpf.
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Compass.Wpf.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\ref\Compass.Wpf.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\CeilingPackingList.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\MainPlan.csv
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\CsvHelper.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\MainPlansView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\MainPlansView.baml

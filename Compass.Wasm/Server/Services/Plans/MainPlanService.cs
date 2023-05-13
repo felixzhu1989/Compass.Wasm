@@ -5,10 +5,16 @@ using Compass.PlanService.Infrastructure;
 using Compass.Wasm.Server.Events.Plans;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Plans;
-using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Server.Services.Plans;
-
+public interface IMainPlanService : IBaseService<MainPlanDto>
+{
+    //扩展查询
+    Task<ApiResponse<MainPlanDto>> UpdateStatusesAsync(Guid id, MainPlanDto dto);
+    //GetIndexDataAsync
+    Task<ApiResponse<List<MainPlanDto>>> GetIndexDataAsync();
+    Task<ApiResponse<List<MainPlanDto>>> GetAllByProjectIdAsync(Guid projectId);
+}
 public class MainPlanService : IMainPlanService
 {
     private readonly PlanDomainService _domainService;
@@ -63,12 +69,12 @@ public class MainPlanService : IMainPlanService
     {
         try
         {
-            var model = new MainPlan(Guid.NewGuid(), dto.CreateTime, dto.Number, dto.Name, dto.Quantity, dto.ModelSummary, dto.FinishTime, dto.DrwReleaseTarget, dto.MonthOfInvoice, dto.MainPlanType, dto.Remarks,dto.Batch);
+            var model = new MainPlan(Guid.NewGuid(), dto.CreateTime, dto.Number, dto.Name, dto.Quantity, dto.ModelSummary, dto.FinishTime, dto.DrwReleaseTarget, dto.MonthOfInvoice, dto.MainPlanType, dto.Remarks,dto.Batch,dto.ItemLine,dto.Workload,dto.Value);
             await _dbContext.MainPlans.AddAsync(model);
             dto.Id = model.Id;
 
             //Todo:发出集成事件，绑定潜在的项目
-            var eventData = new MainPlanCreatedEvent(dto.Id, dto.Name);
+            var eventData = new MainPlanCreatedEvent(dto.Id.Value, dto.Name);
             //发布集成事件
             _eventBus.Publish("PlanService.MainPlan.Created", eventData);
 
@@ -141,10 +147,10 @@ public class MainPlanService : IMainPlanService
             {
                 if (dto.ProjectId != null && dto.ProjectId != Guid.Empty)
                 {
-                    var problems = await _projectRepository.GetNotResolvedProblemsByProjectIdAsync(dto.Id);
-                    if (!problems.Any()) continue;
-                    dto.ProblemNotResolved = true;
-                    dto.ProblemDtos =await _mapper.ProjectTo<ProblemDto>(problems).ToListAsync();
+                    //var problems = await _projectRepository.GetNotResolvedProblemsByProjectIdAsync(dto.Id);
+                    //if (!problems.Any()) continue;
+                    //dto.ProblemNotResolved = true;
+                    //dto.ProblemDtos =await _mapper.ProjectTo<ProblemDto>(problems).ToListAsync();
                 }
             }
             return new ApiResponse<List<MainPlanDto>> { Status = true, Result = dtos };

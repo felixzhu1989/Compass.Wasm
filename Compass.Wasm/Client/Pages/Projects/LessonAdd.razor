@@ -1,0 +1,79 @@
+﻿@page "/lesson/add/{ProjectId}"
+
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject ILessonService LessonService
+@inject IProjectService ProjectService
+@inject IMainPlanService MainPlanService
+
+<PageTitle>新增经验教训总结</PageTitle>
+<h3>@_projectDto.OdpNumber-@_projectDto.Name</h3>
+
+<EditForm Model="_lessonDtos" OnSubmit="Save">
+    <button class="btn btn-primary mb-2" type="button" @onclick="Add">新增一条</button><br />
+    @foreach (var lesson in _lessonDtos)
+    {
+        <div class="input-group mb-2">
+            <span class="input-group-text">内容</span>
+            <textarea class="form-control" placeholder="请记录项目经验教训，可输入多行" style="height: 550px" @bind="@lesson.Content"></textarea>
+        </div>
+
+        <MultiFileUpload Title="附件(可添加多个)" FileType="application/pdf" @bind-MultiFileUrl="@lesson.ContentUrl" />
+
+        <span class="text-danger">移除此条 ：</span>
+        <button class="btn" type="button" @onclick="@(() => _lessonDtos.Remove(lesson))">
+            <span class="oi oi-trash text-danger"></span>
+        </button>
+        <hr />
+    }
+    <CompSaveCancelButtons CancelUrl="@($"lessons/project/{ProjectId}")" />
+</EditForm>
+@code {
+    [Parameter]
+    public string ProjectId { get; set; }
+    
+    private List<LessonDto> _lessonDtos = new();
+    private ProjectDto _projectDto = new();
+    private List<MainPlanDto> _mainPlanDtos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var pResult = await ProjectService.GetFirstOrDefault(Guid.Parse(ProjectId));
+        _projectDto = pResult.Result;
+        var mResult = await MainPlanService.GetAllByProjectIdAsync(Guid.Parse(ProjectId));
+        _mainPlanDtos = mResult.Result;
+
+        Add();
+    }
+    private void Add()
+    {
+        _lessonDtos.Add(new LessonDto { ProjectId = Guid.Parse(ProjectId) });
+    }
+    private async Task Save()
+    {
+        var isEmpty = _lessonDtos.Aggregate(false, (current, dto) => current || string.IsNullOrEmpty(dto.Content));
+        if (isEmpty)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        //如果计划中有处于发货的计划，那么就改成结束
+        if (_mainPlanDtos.Count != 0)
+        {
+            foreach (var mainPlanDto in _mainPlanDtos.Where(mainPlanDto => mainPlanDto.Status == MainPlanStatus_e.发货))
+            {
+                mainPlanDto.Status = MainPlanStatus_e.结束;
+                await MainPlanService.UpdateStatusesAsync(mainPlanDto.Id.Value,mainPlanDto);
+            }
+        }
+
+        var result = true;
+        foreach (var dto in _lessonDtos)
+        {
+            result = result&&(await LessonService.AddAsync(dto)).IsSuccessStatusCode;
+        }
+        if (result) NavigationManager.NavigateTo($"lessons/project/{ProjectId}");
+    }
+
+
+}

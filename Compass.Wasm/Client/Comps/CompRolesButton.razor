@@ -1,0 +1,15 @@
+﻿@inject NavigationManager NavigationManager
+<AuthorizeView Roles="@Roles">
+    <Authorized>
+        <button class="btn btn-outline-danger" @onclick="@(() => NavigationManager.NavigateTo(Url))">@Text</button>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    [Parameter]
+    public string Roles { get; set; }
+    [Parameter]
+    public string Url { get; set; }
+    [Parameter]
+    public string Text { get; set; }
+}

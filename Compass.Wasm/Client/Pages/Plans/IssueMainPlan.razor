@@ -1,0 +1,28 @@
+﻿@page "/issues/mainplan/{MainPlanId}"
+@inject IMainPlanService MainPlanService
+<PageTitle>主计划异常列表</PageTitle>
+<div class="row position-relative">
+    <div class="col">
+        <h5>
+            <span>主计划异常列表</span>
+            <a href="issues">(All)</a>
+        </h5>
+    </div>
+    <CompAddButton Roles="" Url="@($"issue/add/{MainPlanId}")" />
+</div>
+@if (_mainPlanDto.Id != null)
+{
+    <IssueRow MainPlanDto="_mainPlanDto"/>
+}
+
+@code {
+    [Parameter]
+    public string MainPlanId { get; set; }
+    private MainPlanDto _mainPlanDto = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var mResult = await MainPlanService.GetFirstOrDefault(Guid.Parse(MainPlanId));
+        if (mResult.Status) _mainPlanDto = mResult.Result;
+    }
+}

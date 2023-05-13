@@ -13,6 +13,7 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     public ProjectType_e ProjectType { get; private set; }
     public RiskLevel_e RiskLevel { get; private set; }
     public string? SpecialNotes { get; private set; }
+    public Guid? Designer { get; private set; }//制图人，由项目经理指定
     #endregion
 
     #region 文件属性（单独上传），上传即保存，无需再确认
@@ -25,9 +26,7 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     #region 状态属性（单独修改）
     //状态表示当前，根据EventBus接收到事件，自动修改
     public ProjectStatus_e ProjectStatus { get; private set; }//计划,制图,生产,入库,结束
-    //有没有待解决得问题，如果有则另起一行显示异常详细信息
-    public bool IsProblemNotResolved { get; private set; }
-    
+
     #endregion
     
     #region ctor
@@ -54,7 +53,8 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         ChangeOdpNumber(dto.OdpNumber!.ToUpper()).ChangeName(dto.Name!)
             .ChangeDeliveryDate(dto.DeliveryDate)
             .ChangeProjectType(dto.ProjectType).ChangeRiskLevel(dto.RiskLevel)
-            .ChangeSpecialNotes(dto.SpecialNotes!);
+            .ChangeSpecialNotes(dto.SpecialNotes!)
+            .ChangeDesigner(dto.Designer);
         NotifyModified();
         //todo:发布领域事件
         //测试发布领域事件
@@ -91,6 +91,12 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     public Project ChangeSpecialNotes(string specialNotes)
     {
         SpecialNotes= specialNotes;
+        return this;
+    }
+
+    public Project ChangeDesigner(Guid? designer)
+    {
+        Designer=designer;
         return this;
     }
     #endregion
@@ -135,11 +141,8 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         ProjectStatus = projectStatus;
         return this;
     }
-    public Project ChangeProblemNotResolved(bool isProblemNotResolved)
-    {
-        IsProblemNotResolved = isProblemNotResolved;
-        return this;
-    }
+
+    
     #endregion
 
     #region 删除

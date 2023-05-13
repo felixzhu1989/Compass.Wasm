@@ -2,12 +2,12 @@
 {
     <div class="col-sm-9">
         <a href="@FileUrl" target="_blank">
-            <span class="oi oi-paperclip me-2">@(Path.GetFileName(FileUrl))</span>
+            <span class="oi oi-paperclip me-2">：@(Path.GetFileName(FileUrl))</span>
         </a>
         <AuthorizeView Roles="@Roles">
             <Authorized>
                 <a href="@UpLoadUrl">
-                    <span class="oi oi-loop-circular">更新</span>
+                    <span class="oi oi-loop-circular">：更新</span>
                 </a>
             </Authorized>
         </AuthorizeView>
@@ -19,7 +19,7 @@ else
         <Authorized>
             <div class="col-sm-9">
                 <a href="@UpLoadUrl">
-                    <span class="oi oi-cloud-upload">上传</span>
+                    <span class="oi oi-cloud-upload">：上传</span>
                 </a>
             </div>
         </Authorized>

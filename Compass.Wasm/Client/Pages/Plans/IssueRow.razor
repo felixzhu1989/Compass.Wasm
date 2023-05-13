@@ -1,0 +1,68 @@
+﻿@inject IIssueService IssueService
+
+<h5>
+    <span>@MainPlanDto.Number-</span>
+    <span class="ms-2">@MainPlanDto.Name</span>
+</h5>
+@foreach (var issue in MainPlanDto.IssueDtos)
+{
+    //虚线分割
+    <hr size="1" style="border-top:1px deeppink dashed;">
+    <CompUpdateIcon Roles="admin,pm,designer" Url="@($"issue/update/{issue.Id}")" />
+    <span style="font-weight: bold;color:deeppink ">@issue.Title</span>
+    @if (issue.IsClosed)
+    {
+        <span class="text-success">(已关闭)</span>
+    }
+    else
+    {
+        <span class="text-danger">(异常未关闭)</span>
+    }
+    <br />
+    <span>内容：</span>
+    <br />
+    <CompMultiLineText Text="@issue.Content" />
+    <span>附件：</span>
+    <br />
+    <CompFiles Roles="admin,pm,designer"
+           FileUrls="@issue.ContentUrl"
+           UpLoadUrl="@($"issue/update/{issue.Id}")" />
+    <hr size="1" style="border-top:1px green dashed;">
+
+    <CompUpdateIcon Roles="" Url="@($"issue/solution/{issue.Id}")" />
+    <span style="font-weight: bold;color: green">解决方案</span>
+    <br />
+    <span>
+        跟进：
+        @issue.ResponderId
+    </span>
+    <br />
+    <span >期限：
+        @issue.Deadline</span>
+    <br />
+    <span>措施：</span>
+    <br />
+    <CompMultiLineText Text="@issue.Solution" />
+    <span>附件：</span>
+    <br />
+    <CompFiles Roles="admin,pm,designer"
+           FileUrls="@issue.SolutionUrl"
+           UpLoadUrl="@($"issue/solution/{issue.Id}")" />
+
+
+
+
+}
+
+@code {
+    [Parameter]
+    public MainPlanDto? MainPlanDto { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        if (MainPlanDto.Id != null)
+        {
+            var iResult = await IssueService.GetAllByMainPlanIdAsync(MainPlanDto.Id.Value);
+            if (iResult.Status) MainPlanDto.IssueDtos = iResult.Result;
+        }
+    }
+}

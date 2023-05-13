@@ -22,6 +22,69 @@ namespace Compass.PlanService.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Compass.PlanService.Domain.Entities.Issue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CloseTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsClosed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("MainPlanId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ReporterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ResponderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Solution")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SolutionUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
+
+                    b.HasIndex("Id", "IsDeleted");
+
+                    b.HasIndex("MainPlanId", "IsDeleted");
+
+                    b.ToTable("Issues");
+                });
+
             modelBuilder.Entity("Compass.PlanService.Domain.Entities.MainPlan", b =>
                 {
                     b.Property<Guid>("Id")
@@ -52,11 +115,15 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("ItemLine")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MainPlanType")
-                        .HasColumnType("int");
+                    b.Property<string>("MainPlanType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModelSummary")
                         .HasColumnType("nvarchar(max)");
@@ -87,8 +154,14 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
                     b.Property<DateTime?>("WarehousingTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("Workload")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 

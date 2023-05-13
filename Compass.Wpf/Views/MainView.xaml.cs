@@ -1,11 +1,5 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Compass.Update;
-using Compass.Wasm.Shared.Projects;
-using Compass.Wpf.Common;
-using Compass.Wpf.Extensions;
-using Prism.Events;
-using Prism.Services.Dialogs;
 
 namespace Compass.Wpf.Views;
 

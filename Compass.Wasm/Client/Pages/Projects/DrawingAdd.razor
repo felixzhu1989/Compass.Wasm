@@ -1,7 +1,4 @@
 ﻿@page "/drawing/add/{ProjectId}"
-@using Compass.Wasm.Client.Services.Projects
-@using Compass.Wasm.Shared.Projects
-@using Microsoft.AspNetCore.Components
 
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
@@ -9,9 +6,9 @@
 @inject IProjectService ProjectService
 
 <PageTitle>新增图纸</PageTitle>
-@if (_project != null)
+@if (_projectDto != null)
 {
-    <h3>@_project.OdpNumber-@_project.Name</h3>
+    <h3>@_projectDto.OdpNumber-@_projectDto.Name</h3>
 }
 
 <EditForm Model="_drawingDtos" OnSubmit="Save">
@@ -39,7 +36,7 @@
                 </AuthorizeView>
             
             <div class="col">
-                <span>移除此条 ：</span><br />
+                <span class="text-danger">移除此条 ：</span><br />
                 <button class="btn" type="button" @onclick="@(() => _drawingDtos.Remove(dto))">
                     <span class="oi oi-trash text-danger"></span>
                 </button>
@@ -52,14 +49,14 @@
 @code {
     [Parameter]
     public string ProjectId { get; set; }
-    private ProjectDto _project;
+    private ProjectDto _projectDto;
     private List<DrawingDto> _drawingDtos = new();
 
     protected override async Task OnInitializedAsync()
     {
         var response = await ProjectService.GetFirstOrDefault(Guid.Parse(ProjectId));
         if (!response.Status) NavigationManager.NavigateTo("projects");
-        _project = response.Result;
+        _projectDto = response.Result;
         Add();
     }
     private void Add()

@@ -1,18 +1,6 @@
-﻿using Compass.Wpf.Common;
-using Compass.Wpf.Common.Models;
-using Compass.Wpf.Extensions;
-using Prism.Commands;
-using Prism.Ioc;
-using Prism.Regions;
-using Prism.Services.Dialogs;
-using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using Compass.Wasm.Shared.Projects;
-using Compass.Wasm.Shared.Todos;
-using Compass.Wpf.ApiServices.Todos;
+﻿using Compass.Wpf.ApiServices.Todos;
 using Compass.Wpf.ApiServices.Projects;
-
+ 
 namespace Compass.Wpf.ViewModels;
 
 public class IndexViewModel : NavigationViewModel
@@ -21,13 +9,14 @@ public class IndexViewModel : NavigationViewModel
     private readonly ITodoService _todoService;
     private readonly IMemoService _memoService;
     private readonly IProjectService _projectService;
+
     public IndexViewModel(IContainerProvider provider) : base(provider)
     {
         _todoService = provider.Resolve<ITodoService>();
         _memoService = provider.Resolve<IMemoService>();
         _projectService= provider.Resolve<IProjectService>();
 
-        ProjectTaskBars = new ObservableCollection<TaskBar>();
+        StatusTaskBars = new ObservableCollection<TaskBar>();
         TodoTaskBars = new ObservableCollection<TaskBar>();
 
         CreateTaskBars();
@@ -37,14 +26,20 @@ public class IndexViewModel : NavigationViewModel
         ToDoCompletedCommand=new DelegateCommand<TodoDto>(Completed);
         NavigateCommand=new DelegateCommand<TaskBar>(Navigate);
     }
+    public DelegateCommand<string> ExecuteCommand { get; }
+    public DelegateCommand<TodoDto> EditTodoCommand { get; }
+    public DelegateCommand<MemoDto> EditMemoCommand { get; }
+    public DelegateCommand<TodoDto> ToDoCompletedCommand { get; }
+    //首页的四个方块选项卡点击后做相应的跳转。
+    public DelegateCommand<TaskBar> NavigateCommand { get; }
     #endregion
 
     #region 属性
-    private ObservableCollection<TaskBar> projectTaskBars = null!;
-    public ObservableCollection<TaskBar> ProjectTaskBars
+    private ObservableCollection<TaskBar> statusTaskBars = null!;
+    public ObservableCollection<TaskBar> StatusTaskBars
     {
-        get => projectTaskBars;
-        set { projectTaskBars = value; RaisePropertyChanged(); }
+        get => statusTaskBars;
+        set { statusTaskBars = value; RaisePropertyChanged(); }
     }
 
     private ObservableCollection<TaskBar> todoTaskBars = null!;
@@ -76,32 +71,27 @@ public class IndexViewModel : NavigationViewModel
     }
     #endregion
 
-    #region Commands
-    public DelegateCommand<string> ExecuteCommand { get; }
-    public DelegateCommand<TodoDto> EditTodoCommand { get; }
-    public DelegateCommand<MemoDto> EditMemoCommand { get; }
-    public DelegateCommand<TodoDto> ToDoCompletedCommand { get; }
-    //首页的四个方块选项卡点击后做相应的跳转。
-    public DelegateCommand<TaskBar> NavigateCommand { get; }
-    #endregion
-
     #region 主页图标块
     /// <summary>
     /// 创建首页图标块
     /// </summary>
     void CreateTaskBars()
     {
-        TodoTaskBars.Add(new TaskBar { Icon = "ClockFast", Title = "待办事项汇总", Color = "#FF0CA0FF", Target = "TodoView" });
-        TodoTaskBars.Add(new TaskBar { Icon = "AlarmCheck", Title = "已完成待办汇总", Color = "#FF1ECA3A", Target = "TodoView" });
-        TodoTaskBars.Add(new TaskBar { Icon = "ChartLine", Title = "待办完成率", Color = "#FF02C6DC", Target = "TodoView" });
-        TodoTaskBars.Add(new TaskBar { Icon = "PlaylistStar", Title = "备忘录汇总", Color = "#FFFFA000", Target = "MemoView" });
+        //计划状态图标
+        StatusTaskBars.Add(new TaskBar { Icon = "WrenchClock", Title = MainPlanStatus_e.计划.ToString(), Target = "MainPlansView" });
+        StatusTaskBars.Add(new TaskBar { Icon = "DesktopClassic", Title = MainPlanStatus_e.制图.ToString(), Target = "ProjectsView" });
+        StatusTaskBars.Add(new TaskBar { Icon = "Cogs", Title = MainPlanStatus_e.生产.ToString(), Target = "ProjectsView" });
+        StatusTaskBars.Add(new TaskBar { Icon = "PackageVariant", Title = MainPlanStatus_e.入库.ToString(), Target = "ProjectsView" });
+        StatusTaskBars.Add(new TaskBar { Icon = "TruckCargoContainer", Title = MainPlanStatus_e.发货.ToString(), Target = "ProjectsView" });
+        StatusTaskBars.Add(new TaskBar { Icon = "TextBoxCheckOutline", Title = MainPlanStatus_e.结束.ToString(), Target = "ProjectsView" });
 
-        ProjectTaskBars.Add(new TaskBar { Icon = "WrenchClock", Title = ProjectStatus_e.计划.ToString(), Target = "ProjectsView" });
-        ProjectTaskBars.Add(new TaskBar { Icon = "DesktopClassic", Title = ProjectStatus_e.制图.ToString(), Target = "ProjectsView" });
-        ProjectTaskBars.Add(new TaskBar { Icon = "Cogs", Title = ProjectStatus_e.生产.ToString(), Target = "ProjectsView" });
-        ProjectTaskBars.Add(new TaskBar { Icon = "PackageVariant", Title = ProjectStatus_e.入库.ToString(), Target = "ProjectsView" });
-        ProjectTaskBars.Add(new TaskBar { Icon = "TruckCargoContainer", Title = ProjectStatus_e.发货.ToString(), Target = "ProjectsView" });
-        ProjectTaskBars.Add(new TaskBar { Icon = "TextBoxCheckOutline", Title = ProjectStatus_e.结束.ToString(), Target = "ProjectsView" });
+
+
+        //待办图标
+        TodoTaskBars.Add(new TaskBar { Icon = "ClockFast", Title = "待办事项汇总", Color = "DarkSeaGreen", Target = "TodoView" });
+        TodoTaskBars.Add(new TaskBar { Icon = "AlarmCheck", Title = "已完成待办汇总", Color = "DarkSeaGreen", Target = "TodoView" });
+        TodoTaskBars.Add(new TaskBar { Icon = "ChartLine", Title = "待办完成率", Color = "DarkSeaGreen", Target = "TodoView" });
+        TodoTaskBars.Add(new TaskBar { Icon = "PlaylistStar", Title = "备忘录汇总", Color = "DarkSeaGreen", Target = "MemoView" });
     }
 
     /// <summary>
@@ -326,12 +316,12 @@ public class IndexViewModel : NavigationViewModel
         if (projectSummaryResult.Status)
         {
             ProjectSummary = projectSummaryResult.Result;
-            ProjectTaskBars[0].Content=ProjectSummary.PlanCount.ToString();
-            ProjectTaskBars[1].Content=ProjectSummary.DrawingCount.ToString();
-            ProjectTaskBars[2].Content=ProjectSummary.ProductionCount.ToString();
-            ProjectTaskBars[3].Content=ProjectSummary.WarehousingCount.ToString();
-            ProjectTaskBars[4].Content=ProjectSummary.ShippingCount.ToString();
-            ProjectTaskBars[5].Content=$"{ProjectSummary.CompletedCount} / {ProjectSummary.Sum}";
+            StatusTaskBars[0].Content=ProjectSummary.PlanCount.ToString();
+            StatusTaskBars[1].Content=ProjectSummary.DrawingCount.ToString();
+            StatusTaskBars[2].Content=ProjectSummary.ProductionCount.ToString();
+            StatusTaskBars[3].Content=ProjectSummary.WarehousingCount.ToString();
+            StatusTaskBars[4].Content=ProjectSummary.ShippingCount.ToString();
+            StatusTaskBars[5].Content=$"{ProjectSummary.CompletedCount} / {ProjectSummary.Sum}";
         }
     }
 

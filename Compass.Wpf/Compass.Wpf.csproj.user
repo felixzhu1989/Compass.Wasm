@@ -45,6 +45,9 @@
     <Compile Update="Views\Hoods\UwiDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\MainPlansView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ModulesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -120,6 +123,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Hoods\UwiDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MainPlansView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ModulesView.xaml">

@@ -3,6 +3,7 @@ using Compass.Wasm.Shared.Projects.Notifications;
 
 namespace Compass.Wasm.Server.Events.NotificationHandler;
 
+//删除Module时同时删除ModuleData
 public class ModuleDeleteNotificationHandler : INotificationHandler<ModuleDeleteNotification>
 {
     private readonly DataDbContext _dataDbContext;

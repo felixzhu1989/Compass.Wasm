@@ -1,0 +1,30 @@
+﻿@page "/lessons/project/{ProjectId}"
+
+
+@inject IProjectService ProjectService
+<PageTitle>项目经验教训</PageTitle>
+<div class="row position-relative">
+    <div class="col">
+        <h5>
+            <span>项目经验教训</span>
+            <a href="lessons">(All)</a>
+        </h5>
+    </div>
+    <CompAddButton Roles="admin,pm" Url="@($"lesson/add/{ProjectId}")" />
+</div>
+@if (_projectDto.Id != null)
+{
+    <LessonRow ProjectDto="_projectDto"></LessonRow>
+}
+
+@code {
+    [Parameter]
+    public string ProjectId { get; set; }
+    private ProjectDto _projectDto = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var pResult = await ProjectService.GetFirstOrDefault(Guid.Parse(ProjectId));
+        if (pResult.Status) _projectDto = pResult.Result;
+    }
+}

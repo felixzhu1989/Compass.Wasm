@@ -1,8 +1,7 @@
 ﻿@page "/"
-@using Compass.Wasm.Client.Services.Plans
-@using Compass.Wasm.Shared.Plans
 
 @inject IMainPlanService MainPlanService
+@inject IIssueService IssueService
 <PageTitle>主页</PageTitle>
 
 <!--sticky固定位置，top: 3.5rem-->
@@ -10,24 +9,30 @@
     <div class="row">
         <div class="col input-group mb-2">
             <span class="input-group-text">搜索</span>
-            <input class="form-control" placeholder="Search" 
+            <input class="form-control" placeholder="Search"
                    @bind-value="@_search" @oninput="@Search" />
         </div>
-        <div class="col input-group mb-2" style="max-width: 230px">
-            <span class="input-group-text">月份</span>
-            <input class="form-control" 
-                   type="month" 
-                   value="@(_selectedMonth.ToString("yyyy-MM"))" 
-                   format="" @onchange="OnMonthChange" />
-        </div>
         <div class="col form-check ms-3 mt-2" style="max-width: 70px">
-            <input class="form-check-input" 
-                   type="checkbox" 
-                   checked="checked"
-                   value="@_annual" 
+            <input class="form-check-input"
+                   type="checkbox"
+                   value="@_annual"
                    @onchange="OnAnnualChange">
             <label class="form-check-label">
                 全年
+            </label>
+        </div>
+        <div class="col input-group mb-2" style="max-width: 230px">
+            <span class="input-group-text">月份</span>
+            <input class="form-control"
+                   type="month"
+                   value="@(_selectedMonth.ToString("yyyy-MM"))"
+                   format="" @onchange="OnMonthChange" />
+        </div>
+        <div class="col form-check ms-3 mt-2" style="max-width: 100px">
+            <input class="form-check-input" type="checkbox" value="@_fromMonth"
+                   checked="checked" @onchange="OnFromMonthChange">
+            <label class="form-check-label">
+                本月往后
             </label>
         </div>
         <div class="col"></div>
@@ -38,142 +43,178 @@
 <table class="table table-hover" style="table-layout: fixed; word-break: break-all;">
     <!--sticky固定位置，top: 6rem-->
     <thead style="position: sticky; top: 6rem; z-index: 1; background-color: White">
-    <tr>
-        <th style="width: 60px; text-align: center; color: dodgerblue">状态</th>
-        <th style="width: 50px; color: dodgerblue">分批</th>
-        <th style="width: 10%; color: dodgerblue">项目编号</th>
-        <th style="width: 30%; color: dodgerblue">项目名称</th>
-        <th style="color: purple">计划发图</th>
-        <th style="color: darkgreen">发图时间</th>
-        <th style="color: purple">计划完工</th>
-        <th style="color: darkgreen">入库时间</th>
-        <th style="color: darkgreen">发货时间</th>
-        <th style="color: red">报告异常</th>
-        <th style="color: red">经验教训</th>
-    </tr>
+        <tr>
+            <th style="width: 60px; text-align: center; color: dodgerblue">状态</th>
+            <th style="width: 50px; color: dodgerblue">分批</th>
+            <th style="width: 120px; color: dodgerblue">项目编号</th>
+            <th style="width: 30%; color: dodgerblue">项目名称</th>
+            <th style="color: purple">计划发图</th>
+            <th style="color: darkgreen">发图时间</th>
+            <th style="color: purple">计划完工</th>
+            <th style="color: darkgreen">入库时间</th>
+            <th style="color: darkgreen">发货时间</th>
+            <th style="width: 130px;">
+                <a href="issues">总结问题</a>
+            </th>
+            <th style="width: 90px;">
+                <a href="lessons">总结经验</a>
+            </th>
+        </tr>
     </thead>
     <tbody>
-    @if (_filterMainPlans.Count == 0)
-    {
-        <p>...</p>
-    }
-    else
-    {
-        @foreach (var plan in _filterMainPlans)
+        @if (_filterMainPlanDtos.Count == 0)
         {
-            <tr class="@(plan.ProblemNotResolved ? "table-danger" : "")">
-                <td style="text-align: center">
-                    <CompMainPlanStatus Status="@plan.Status"></CompMainPlanStatus>
-                </td>
-                <td>
-                    <CompBatch Batch="plan.Batch"/>
-                </td>
-                <td>
-                    @if (plan.ProjectId != null)
-                    {
-                        <a href="./drawings/@plan.ProjectId">@plan.Number</a>
-                    }
-                    else
-                    {
-                        <a href="mainplan/bind/@plan.Id">绑定项目</a>
-                    }
-                </td>
-                <td>@plan.Name</td>
-
-                <td style="font-weight: bold; @(plan.DrwReleaseTarget < DateTime.Today && plan.DrwReleaseTime == null ? "color:red" : plan.DrwReleaseTarget < DateTime.Today ? "color:green" : "")">
-                    @plan.DrwReleaseTarget.ToString("MM/dd")
-                </td>
-                <td >
-                    <AuthorizeView Roles="admin">
-                        <Authorized>
-                            <!--todo:使用弹窗解决这个问题-->
-                            <a href="">
-                                <span class="oi oi-cog"></span>
-                            </a>
-                        </Authorized>
-                    </AuthorizeView>
-                    @(plan.DrwReleaseTime != null ?
-                        plan.DrwReleaseTime.Value.ToString("MM/dd") : "")
-                </td>
-                <td style="font-weight: bold; @(plan.FinishTime < DateTime.Today && plan.Status < MainPlanStatus_e.入库 ? "color:red" : plan.FinishTime < DateTime.Today ? "color:green" : "")">
-                    @plan.FinishTime.ToString("MM/dd")
-                </td>
-                <td >
-                    <AuthorizeView Roles="admin">
-                        <Authorized>
-                            <!--todo:使用弹窗解决这个问题-->
-                            <a href="">
-                                <span class="oi oi-cog"></span>
-                            </a>
-                        </Authorized>
-                    </AuthorizeView>
-                    @(plan.WarehousingTime != null ?
-                        plan.WarehousingTime.Value.ToString("MM/dd") : "")
-                </td>
-                <td >
-                    <AuthorizeView Roles="admin">
-                        <Authorized>
-                            <!--todo:使用弹窗解决这个问题-->
-                            <a href="">
-                                <span class="oi oi-cog"></span>
-                            </a>
-                        </Authorized>
-                    </AuthorizeView>
-                    @(plan.ShippingTime != null ?
-                        plan.ShippingTime.Value.ToString("MM/dd") : "")
-                </td>
-                <td >
-                    <a href="problem/report/@plan.ProjectId">报告异常</a>
-                </td>
-                <td >
-                    <a href="issue/report/@plan.ProjectId">经验教训</a>
-                </td>
-            </tr>
-            @if (plan.ProblemNotResolved)
+            <p>...</p>
+        }
+        else
+        {
+            @foreach (var plan in _filterMainPlanDtos)
             {
-                <tr class="table-danger">
-                    <td colspan="13">
-                        <a href="problem/report/@plan.ProjectId">
-                            <span class="badge bg-danger ms-1 me-1">异常</span>
-                        </a>
-                        <img class="ms-1 me-2" src="andon_red.gif"/>
-                        <br/>
-                        @if (plan.ProblemDtos.Count != 0)
+                <tr class="@(plan.AllIssueClosed ? "" : "table-danger")">
+                    <td style="text-align: center">
+                        <CompMainPlanStatus Status="@plan.Status"></CompMainPlanStatus>
+                    </td>
+                    <td>
+                        <CompBatch Batch="plan.Batch" />
+                    </td>
+                    <td>
+                        @if (plan.ProjectId != null)
                         {
-                            foreach (var problem in plan.ProblemDtos)
-                            {
+                            <a href="./drawings/@plan.ProjectId">@plan.Number</a>
+                        }
+                        else
+                        {
+                            <a href="mainplan/bind/@plan.Id">绑定项目</a>
+                        }
+                    </td>
+                    <td>@plan.Name</td>
 
-                            }
+                    <td style="font-weight: bold; @(plan.DrwReleaseTarget < DateTime.Today && plan.DrwReleaseTime == null ? "color:red" : plan.DrwReleaseTarget < DateTime.Today ? "color:green" : "")">
+                        @plan.DrwReleaseTarget.ToString("MM/dd")
+                    </td>
+                    <td>
+                        <AuthorizeView Roles="admin">
+                            <Authorized>
+                                <!--todo:使用弹窗解决这个问题-->
+                                <a href="">
+                                    <span class="oi oi-cog"></span>
+                                </a>
+                            </Authorized>
+                        </AuthorizeView>
+                        @(plan.DrwReleaseTime != null ?
+                            plan.DrwReleaseTime.Value.ToString("MM/dd") : "")
+                    </td>
+                    <td style="font-weight: bold; @(plan.FinishTime < DateTime.Today && plan.Status < MainPlanStatus_e.入库 ? "color:red" : plan.FinishTime < DateTime.Today ? "color:green" : "")">
+                        @plan.FinishTime.ToString("MM/dd")
+                    </td>
+                    <td>
+                        <AuthorizeView Roles="admin">
+                            <Authorized>
+                                <!--todo:使用弹窗解决这个问题-->
+                                <a href="">
+                                    <span class="oi oi-cog"></span>
+                                </a>
+                            </Authorized>
+                        </AuthorizeView>
+                        @(plan.WarehousingTime != null ?
+                            plan.WarehousingTime.Value.ToString("MM/dd") : "")
+                    </td>
+                    <td>
+                        <AuthorizeView Roles="admin">
+                            <Authorized>
+                                <!--todo:使用弹窗解决这个问题-->
+                                <a href="">
+                                    <span class="oi oi-cog"></span>
+                                </a>
+                            </Authorized>
+                        </AuthorizeView>
+                        @(plan.ShippingTime != null ?
+                            plan.ShippingTime.Value.ToString("MM/dd") : "")
+                    </td>
+
+                    <td>
+                        @if (plan.AllIssueClosed)
+                        {
+                            <a href="issues/mainplan/@plan.Id">报告异常</a>
+                        }
+                        else
+                        {
+                            <a href="issues/mainplan/@plan.Id">
+                                <span>查看异常</span>
+                                <img class="ms-1 me-2" src="andon_red.gif"/>
+                            </a>
+                            
+                        }
+                    </td>
+                    <td>
+                        @if (plan.ProjectId != null)
+                        {
+                            <a href="lessons/project/@plan.ProjectId">经验教训</a>
                         }
                     </td>
                 </tr>
+
+                @*@if (!plan.AllIssueClosed)
+                {
+                    <tr class="table-danger">
+                        <td colspan="11">
+                            <a href="problem/report/@plan.ProjectId">
+                                <span class="badge bg-danger ms-1 me-1">异常</span>
+                            </a>
+                            <img class="ms-1 me-2" src="andon_red.gif" />
+                            <br />
+                            @if (plan.IssueDtos.Count != 0)
+                            {
+                                foreach (var issue in plan.IssueDtos)
+                                {
+
+                                }
+                            }
+                        </td>
+                    </tr>
+                }*@
             }
         }
-    }
     </tbody>
 </table>
 @code {
 
     private string _search = string.Empty;
-    private bool _annual = true;
+    private bool _annual;
+    private bool _fromMonth = true;
     private DateTime _selectedMonth = DateTime.Today;
     private int _year;
     private int _month;
 
-    private List<MainPlanDto>? _mainPlans = new();
-    private List<MainPlanDto>? _filterMainPlans = new();
+    private List<MainPlanDto> _mainPlanDtos = new();
+    private List<MainPlanDto> _filterMainPlanDtos = new();
     protected override async Task OnParametersSetAsync()
     {
         _year= _selectedMonth.Year;
         _month= _selectedMonth.Month;
         var result = await MainPlanService.GetIndexDataAsync();
-        _mainPlans = result.Result;
+        _mainPlanDtos = result.Result;
+        foreach (var mainPlanDto in _mainPlanDtos)
+        {
+            var iResult = await IssueService.GetAllByMainPlanIdAsync(mainPlanDto.Id.Value);
+            mainPlanDto.IssueDtos = iResult.Result;
+            mainPlanDto.AllIssueClosed = true;            
+            foreach (var issueDto in mainPlanDto.IssueDtos)
+            {
+                mainPlanDto.AllIssueClosed = mainPlanDto.AllIssueClosed && issueDto.IsClosed;
+            }
+        }
         //过滤条件变化
         Search(new ChangeEventArgs { Value = _search });
     }
     private void OnAnnualChange(ChangeEventArgs e)
     {
         _annual =Convert.ToBoolean(e.Value);
+        Search(new ChangeEventArgs { Value = _search });
+    }
+    private void OnFromMonthChange(ChangeEventArgs e)
+    {
+        _fromMonth =Convert.ToBoolean(e.Value);
         Search(new ChangeEventArgs { Value = _search });
     }
     private void OnMonthChange(ChangeEventArgs e)
@@ -186,10 +227,12 @@
     private void Search(ChangeEventArgs e)
     {
         _search=e.Value!.ToString()!;
-        _filterMainPlans.Clear();
-        _filterMainPlans = _mainPlans.Where(
+        _filterMainPlanDtos.Clear();
+        _filterMainPlanDtos = _mainPlanDtos.Where(
             x => x.MonthOfInvoice.Year.Equals(_year)&&
-                 (_annual||x.MonthOfInvoice.Month.Equals(_month))&&
+                 (_annual||(_fromMonth&&
+                            x.MonthOfInvoice.Month>=_month)||
+                  x.MonthOfInvoice.Month.Equals(_month))&&
                  (string.IsNullOrEmpty(_search)||
                   string.IsNullOrEmpty(x.Number)||
     x.Number.Contains(_search, StringComparison.OrdinalIgnoreCase)||

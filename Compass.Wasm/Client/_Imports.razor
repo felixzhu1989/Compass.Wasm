@@ -1,18 +1,22 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using Blazored.LocalStorage
+
+@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.AspNetCore.Components.WebAssembly.Http
+
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Authorization
+
 @using Microsoft.JSInterop
+
 @using Compass.Wasm.Client
 @using Compass.Wasm.Client.Shared
 @using Compass.Wasm.Client.Comps
-@using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Authorization
-@using Compass.Wasm.Shared
-@using Blazored.LocalStorage
 
 @using Compass.Wasm.Client.Pages.Categories
 @using Compass.Wasm.Client.Pages.Files
@@ -21,3 +25,16 @@
 @using Compass.Wasm.Client.Pages.Projects
 @using Compass.Wasm.Client.Pages.Plans
 @using Compass.Wasm.Client.Pages.Data
+
+@using Compass.Wasm.Client.Services.Projects
+@using Compass.Wasm.Client.Services.Plans
+
+
+
+
+
+@using Compass.Wasm.Shared
+@using Compass.Wasm.Shared.Projects
+@using Compass.Wasm.Shared.Plans
+@using Compass.Wasm.Shared.Categories
+@using Compass.Wasm.Shared.Identities

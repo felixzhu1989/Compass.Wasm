@@ -1,7 +1,4 @@
-﻿using Compass.Wpf.Extensions;
-using Prism.Ioc;
-using SolidWorks.Interop.sldworks;
-using System;
+﻿using SolidWorks.Interop.sldworks;
 using Compass.Wasm.Shared.Data;
 
 namespace Compass.Wpf.DrawingServices;

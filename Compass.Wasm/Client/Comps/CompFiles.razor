@@ -5,14 +5,14 @@
         @foreach (var fileUrl in FileUrls.Split('\n'))
         {
             <a href="@fileUrl" target="_blank">
-                <span class="oi oi-paperclip me-5">@(Path.GetFileName(fileUrl))</span>
+                <span class="oi oi-paperclip me-5">：@(Path.GetFileName(fileUrl))</span>
             </a>
             <br />
         }
         <AuthorizeView Roles="@Roles">
             <Authorized>
                 <a href="@UpLoadUrl">
-                    <span class="oi oi-loop-circular">更新</span>
+                    <span class="oi oi-loop-circular">：更新</span>
                 </a>
             </Authorized>
         </AuthorizeView>
@@ -24,7 +24,7 @@ else
         <Authorized>
             <div class="col-sm-9">
                 <a href="@UpLoadUrl">
-                    <span class="oi oi-cloud-upload">上传</span>
+                    <span class="oi oi-cloud-upload">：上传</span>
                 </a>
             </div>
         </Authorized>

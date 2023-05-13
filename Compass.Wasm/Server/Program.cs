@@ -199,7 +199,26 @@ builder.Services.AddScoped<IModuleService, ModuleService>();
 builder.Services.AddScoped<ICutListService, CutListService>();
 
 
+builder.Services.AddScoped<ILessonService, LessonService>();
+
 #endregion
+
+#region PlanService
+//数据库，DbContext
+builder.Services.AddDbContext<PlanDbContext>(options =>
+{
+    //指定连接的数据库
+    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
+    options.UseSqlServer(connStr);
+});
+builder.Services.AddScoped<PlanDomainService>();
+builder.Services.AddScoped<IPlanRepository, PlanRepository>();
+
+builder.Services.AddScoped<IMainPlanService, MainPlanService>();
+builder.Services.AddScoped<IIssueService, IssueService>();
+
+#endregion
+
 
 #region DataService
 //数据库，DbContext
@@ -231,20 +250,7 @@ builder.Services.AddScoped<IUwfDataService, UwfDataService>();
 
 #endregion
 
-#region PlanService
-//数据库，DbContext
-builder.Services.AddDbContext<PlanDbContext>(options =>
-{
-    //指定连接的数据库
-    var connStr = builder.Configuration.GetSection("DefaultDB:ConnStr").Value;
-    options.UseSqlServer(connStr);
-});
-builder.Services.AddScoped<PlanDomainService>();
-builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 
-builder.Services.AddScoped<IMainPlanService, MainPlanService>();
-
-#endregion
 
 #region QualityService
 //数据库，DbContext

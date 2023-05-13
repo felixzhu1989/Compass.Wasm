@@ -1,0 +1,66 @@
+﻿@page "/lesson/update/{Id}"
+
+@inject ILessonService LessonService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+@inject IProjectService ProjectService
+@inject IMainPlanService MainPlanService
+
+<PageTitle>更新经验教训</PageTitle>
+<div class="row">
+    <div class="col">
+        <h3>@_projectDto.OdpNumber-@_projectDto.Name</h3>
+    </div>
+    <CompDeleteIcon Roles="admin,pm" Click="Delete" />
+</div>
+<EditForm Model="_lessonDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">内容</span>
+        <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 550px" @bind="@_lessonDto.Content"></textarea>
+    </div>
+
+    <MultiFileUpload Title="附件(可添加多个)" FileType="application/pdf" @bind-MultiFileUrl="@_lessonDto.ContentUrl" />
+
+    <CompSaveCancelButtons CancelUrl="@($"lessons/project/{_lessonDto.ProjectId}")" />
+</EditForm>
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private LessonDto _lessonDto = new();
+    private ProjectDto _projectDto = new();
+    private List<MainPlanDto> _mainPlanDtos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await LessonService.GetFirstOrDefault(Guid.Parse(Id));
+        _lessonDto = result.Result;
+        var pResult = await ProjectService.GetFirstOrDefault(_lessonDto.ProjectId);
+        _projectDto = pResult.Result;
+        var mResult = await MainPlanService.GetAllByProjectIdAsync(_lessonDto.ProjectId);
+        _mainPlanDtos = mResult.Result;
+    }
+
+    private async Task Delete()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除当前经验教训吗？");
+        if (confirmResult)
+        {
+            var result = await LessonService.DeleteAsync(Guid.Parse(Id));
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"lessons/project/{_lessonDto.ProjectId}");
+        }
+    }
+    private async Task Save()
+    {
+        //如果计划中有处于发货的计划，那么就改成结束
+        if (_mainPlanDtos.Count != 0)
+        {
+            foreach (var mainPlanDto in _mainPlanDtos.Where(mainPlanDto => mainPlanDto.Status == MainPlanStatus_e.发货))
+            {
+                mainPlanDto.Status = MainPlanStatus_e.结束;
+                await MainPlanService.UpdateStatusesAsync(mainPlanDto.Id.Value,mainPlanDto);
+            }
+        }
+        var result = await LessonService.UpdateAsync(Guid.Parse(Id), _lessonDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"lessons/project/{_lessonDto.ProjectId}");
+    }
+}

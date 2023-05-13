@@ -67,7 +67,7 @@
             MainPlanDto.ProjectId = null;
             MainPlanDto.Status = MainPlanStatus_e.计划;
             //todo:解除绑定
-            await MainPlanService.UpdateStatusesAsync(MainPlanDto.Id, MainPlanDto);
+            await MainPlanService.UpdateStatusesAsync(MainPlanDto.Id.Value, MainPlanDto);
         }
     }
 }

@@ -13,5 +13,7 @@ public class ProjectConfig : IEntityTypeConfiguration<Project>
         builder.HasKey(x => x.Id).IsClustered(false);
         builder.HasIndex(x => new { x.Id, x.IsDeleted });//组合索引
         builder.HasIndex(x => new { x.OdpNumber, x.IsDeleted });//组合索引
+        builder.Property(x => x.ProjectType).HasConversion<string>();//将枚举值存储为字符串
+        builder.Property(x => x.RiskLevel).HasConversion<string>();//将枚举值存储为字符串
     }
 }

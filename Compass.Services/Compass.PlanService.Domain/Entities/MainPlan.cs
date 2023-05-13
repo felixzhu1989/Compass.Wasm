@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Compass.Wasm.Shared.Plans;
+﻿using Compass.Wasm.Shared.Plans;
 using Zack.DomainCommons.Models;
 
 namespace Compass.PlanService.Domain.Entities;
@@ -17,7 +16,13 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     public DateTime MonthOfInvoice { get; private set; }//开票月份，input type=month
     public MainPlanType_e MainPlanType { get; private set; }//海工, ETO, KFC
     public string? Remarks { get; private set; }
-    public DeliveryBatch_e Batch { get; private set; }//分批
+    public int Batch { get; private set; }//分批
+    #endregion
+
+    #region 记录，暂时不显示的属性
+    public int ItemLine { get; private set; }//订单行
+    public double Workload { get; private set; }//工作量
+    public double Value { get; private set; }//税后价格
     #endregion
 
     #region 状态属性
@@ -30,29 +35,9 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
 
     #endregion
 
-    //public double StdWorkload { get; private set; }
-    //public double VtaValue { get; private set; }//换算成人民币RMB
-    //public int ItemLine { get; private set; }
-    //public bool Lock { get;private set; }//锁定计划
-    //public ProductionPlanStatus ProductionPlanStatus { get; private set; }
-
-    //public DateTime NestingStart { get; private set; }
-    //public DateTime NestingEnd { get; private set; }
-    //public DateTime CuttingStart { get; private set; }
-    //public DateTime CuttingEnd { get; private set; }
-    //public DateTime BendingStart { get; private set; }
-    //public DateTime BendingEnd { get; private set; }
-    //public DateTime WeldingStart { get; private set; }
-    //public DateTime WeldingEnd { get; private set; }
-    //public DateTime AssemblyStart { get; private set; }
-    //public DateTime AssemblyEnd { get; private set; }
-    //public DateTime AnsulStart { get; private set; }
-    //public DateTime AnsulEnd { get; private set; }
-    //public DateTime PackingDate { get; private set; }
-
     #region ctor
     private MainPlan() { }
-    public MainPlan(Guid id, DateTime createTime, string number, string name, int quantity, string? modelSummary, DateTime finishTime, DateTime drwReleaseTarget, DateTime monthOfInvoice, MainPlanType_e mainPlanType, string? remarks,DeliveryBatch_e batch)
+    public MainPlan(Guid id, DateTime createTime, string number, string name, int quantity, string? modelSummary, DateTime finishTime, DateTime drwReleaseTarget, DateTime monthOfInvoice, MainPlanType_e mainPlanType, string? remarks, int batch, int itemLine, double workload, double value)
     {
         Id = id;
         CreateTime = createTime;
@@ -67,6 +52,9 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
         Remarks = remarks;
         Batch=batch;
         Status = MainPlanStatus_e.计划;
+        ItemLine = itemLine;
+        Workload=workload;
+        Value = value;
     }
     #endregion
 
@@ -83,10 +71,14 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
             .ChangeMonthOfInvoice(dto.MonthOfInvoice)
             .ChangeMainPlanType(dto.MainPlanType)
             .ChangeRemarks(dto.Remarks)
-            .ChangeBatch(dto.Batch);
+            .ChangeBatch(dto.Batch)
+            .ChangeItemLine(dto.ItemLine)
+            .ChangeWorkload(dto.Workload)
+            .ChangeValue(dto.Value);
         NotifyModified();
-    } 
-    
+    }
+
+    #region 基本属性
     public MainPlan ChangeCreateTime(DateTime createTime)
     {
         CreateTime = createTime;
@@ -127,7 +119,6 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
         MonthOfInvoice = monthOfInvoice;
         return this;
     }
-
     public MainPlan ChangeMainPlanType(MainPlanType_e mainPlanType)
     {
         MainPlanType = mainPlanType;
@@ -138,11 +129,31 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
         Remarks = remarks;
         return this;
     }
-    public MainPlan ChangeBatch(DeliveryBatch_e batch)
+    public MainPlan ChangeBatch(int batch)
     {
         Batch = batch;
         return this;
     }
+    #endregion
+
+    #region 记录，暂时不显示的属性
+    public MainPlan ChangeItemLine(int itemLine)
+    {
+        ItemLine = itemLine;
+        return this;
+    }
+    public MainPlan ChangeWorkload(double workload)
+    {
+        Workload=workload;
+        return this;
+    }
+    public MainPlan ChangeValue(double value)
+    {
+        Value = value;
+        return this;
+    }
+    #endregion
+
     #endregion
 
     #region 变更状态属性
@@ -153,7 +164,7 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
             .ChangeDrwReleaseTime(dto.DrwReleaseTime)//MainPlanStatus_e.生产
             .ChangeWarehousingTime(dto.WarehousingTime)//MainPlanStatus_e.入库
             .ChangeShippingTime(dto.ShippingTime);//MainPlanStatus_e.发货
-            //todo:月度总结的时候，将计划状态更改为结束
+                                                  //todo:月度总结的时候，将计划状态更改为结束
         NotifyModified();
     }
 
@@ -168,6 +179,7 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
         Status=status;
         return this;
     }
+
     public MainPlan ChangeDrwReleaseTime(DateTime? drwReleaseTime)
     {
         DrwReleaseTime = drwReleaseTime;

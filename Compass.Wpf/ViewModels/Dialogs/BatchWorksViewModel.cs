@@ -1,16 +1,8 @@
-﻿using Compass.Wpf.Common;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using System.Collections.Generic;
-using Prism.Commands;
-using Prism.Services.Dialogs;
 using MaterialDesignThemes.Wpf;
 using Compass.Wpf.BatchWorks;
-using System;
 using System.Threading.Tasks;
-using Compass.Wasm.Shared.Projects;
-using Compass.Wpf.Extensions;
-using Prism.Events;
-using Prism.Ioc;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 

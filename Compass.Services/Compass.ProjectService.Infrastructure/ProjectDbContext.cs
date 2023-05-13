@@ -12,9 +12,9 @@ public class ProjectDbContext:BaseDbContext
     public DbSet<Module> Modules { get; set; }
     public DbSet<CutList> CutLists { get; set; }
     public DbSet<DrawingPlan> DrawingsPlan { get; set; }
-    public DbSet<Tracking> Trackings { get; set; }
     public DbSet<Problem> Problems { get; set; }
-    public DbSet<Issue> Issues { get; set; }
+    
+    public DbSet<Lesson> Lessons { get; set; }
 
     public ProjectDbContext(DbContextOptions<ProjectDbContext> options, IMediator? mediator) : base(options, mediator)
     {

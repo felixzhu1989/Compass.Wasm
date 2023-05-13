@@ -1,0 +1,33 @@
+﻿@inject ILessonService LessonService
+<h5>
+    <a href="drawings/@ProjectDto.Id">@ProjectDto.OdpNumber</a>
+    <span class="ms-2">@ProjectDto.Name</span>
+</h5>
+@foreach (var lesson in ProjectDto.LessonDtos)
+{
+    //虚线分割
+    <hr size="1" style="border-top:1px dodgerblue dashed;">
+    <CompUpdateIcon Roles="admin,pm,designer" Url="@($"lesson/update/{lesson.Id}")" />
+    <span>内容：</span>
+    <br />
+    <CompMultiLineText Text="@lesson.Content" />
+    <span>附件：</span>
+    <br />
+    <CompFiles Roles="admin,pm,designer"
+           FileUrls="@lesson.ContentUrl"
+           UpLoadUrl="@($"lesson/update/{lesson.Id}")" />
+}
+
+@code {
+    [Parameter]
+    public ProjectDto? ProjectDto { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (ProjectDto.Id != null)
+        {
+            var lResult = await LessonService.GetAllByProjectIdAsync(ProjectDto.Id.Value);
+            if (lResult.Status) ProjectDto.LessonDtos = lResult.Result;
+        }
+    }
+}

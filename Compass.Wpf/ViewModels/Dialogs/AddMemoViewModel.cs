@@ -1,9 +1,5 @@
-﻿using Compass.Wasm.Shared.Todos;
-using Compass.Wpf.Common;
-using MaterialDesignThemes.Wpf;
-using Prism.Commands;
+﻿using MaterialDesignThemes.Wpf;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 public class AddMemoViewModel : BindableBase, IDialogHostAware

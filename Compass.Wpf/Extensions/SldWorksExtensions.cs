@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using Compass.Wasm.Shared.Projects;
-using Prism.Events;
+﻿using System.IO;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 

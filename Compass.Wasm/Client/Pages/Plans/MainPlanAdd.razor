@@ -1,6 +1,4 @@
 ﻿@page "/mainplan/add"
-@using Compass.Wasm.Shared.Plans
-@using Compass.Wasm.Client.Services.Plans
 
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
@@ -41,9 +39,7 @@
         </div>
         <div class="col input-group mb-2">
             <span class="input-group-text">分批</span>
-            <select class="form-select" @bind="@_mainPlanDto.Batch">
-                <CompEnumList Type="typeof(DeliveryBatch_e)"/>
-            </select>
+            <input class="form-control" type="number" @bind-value="@_mainPlanDto.Batch" />
         </div>
         <div class="col"></div>
         <div class="col"></div>
@@ -76,7 +72,7 @@
 </EditForm>
 @code {
 
-    private MainPlanDto _mainPlanDto = new() { CreateTime =DateTime.Now, FinishTime = DateTime.Now.AddDays(14), DrwReleaseTarget=DateTime.Now.AddDays(7), MonthOfInvoice=DateTime.Now ,MainPlanType = MainPlanType_e.ETO,Batch = DeliveryBatch_e.NA};
+    private MainPlanDto _mainPlanDto = new() { CreateTime =DateTime.Now, FinishTime = DateTime.Now.AddDays(14), DrwReleaseTarget=DateTime.Now.AddDays(7), MonthOfInvoice=DateTime.Now ,MainPlanType = MainPlanType_e.ETO,Batch = 0};
     
     private async Task Save()
     {

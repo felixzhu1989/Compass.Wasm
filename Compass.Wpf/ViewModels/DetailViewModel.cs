@@ -1,17 +1,8 @@
-﻿using Compass.Wpf.Extensions;
-using Compass.Wpf.ViewModels;
-using Prism.Commands;
-using Prism.Ioc;
-using Prism.Regions;
-using Prism.Services.Dialogs;
-using System;
-using System.Collections.ObjectModel;
+﻿using Compass.Wpf.ViewModels;
 using System.Globalization;
-using System.Linq;
 using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Parameters;
-using Compass.Wasm.Shared.Projects;
 using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.Views;

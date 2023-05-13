@@ -1,6 +1,4 @@
 ﻿using Compass.Wpf.BatchWorks;
-using Prism.Events;
-using Prism.Ioc;
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.DrawingServices;

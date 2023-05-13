@@ -1,6 +1,4 @@
 ﻿@page "/mainplan/update/{Id}"
-@using Compass.Wasm.Shared.Plans
-@using Compass.Wasm.Client.Services.Plans
 @inject IMainPlanService MainPlanService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
@@ -45,12 +43,7 @@
         </div>
         <div class="col input-group mb-2">
             <span class="input-group-text">分批</span>
-            <select class="form-select" @bind="@_mainPlanDto.Batch">
-                @foreach (var batch in Enum.GetNames(typeof(DeliveryBatch_e)))
-                {
-                    <option>@batch</option>
-                }
-            </select>
+            <input class="form-control" type="number" @bind-value="@_mainPlanDto.Batch" />
         </div>
         <div class="col"></div>
         <div class="col"></div>

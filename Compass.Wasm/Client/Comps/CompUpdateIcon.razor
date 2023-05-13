@@ -1,10 +1,19 @@
-﻿<AuthorizeView Roles="@Roles">
-    <Authorized>
-        <a href="@Url">
-            <span class="oi oi-cog"></span>
-        </a>
-    </Authorized>
-</AuthorizeView>
+﻿@if (string.IsNullOrEmpty(Roles))
+{
+    <a href="@Url">
+        <span class="oi oi-cog"></span>
+    </a>
+}
+else
+{
+    <AuthorizeView Roles="@Roles">
+        <Authorized>
+            <a href="@Url">
+                <span class="oi oi-cog"></span>
+            </a>
+        </Authorized>
+    </AuthorizeView>
+}
 @code {
     [Parameter]
     public string Roles { get; set; }

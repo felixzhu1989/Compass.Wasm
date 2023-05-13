@@ -5,7 +5,7 @@
 	<!--升级文件信息-->
 	<UpdateInfo>
 		<!--升级文件的更新日期-->
-		<UpdateTime Date="2023-04-28 15:00"/>
+		<UpdateTime Date="2023-05-10 15:00"/>
 	</UpdateInfo>
 	<!--升级文件列表-->
 	<UpdateFileList>
@@ -15,9 +15,13 @@
 		<UpdateFile FileName="Compass.Wasm.Shared.dll" />
 		<UpdateFile FileName="Compass.Wpf.dll" />
 
+
+		<UpdateFile FileName="CsvHelper.dll" />
+
+		<UpdateFile FileName="MainPlan.csv" />
 		<UpdateFile FileName="CutList.xlsx" />
 		<UpdateFile FileName="HoodPackingList.xlsm" />
-		<UpdateFile FileName="CeilingPackingList.xlsm" />
+		<UpdateFile FileName="CeilingPackingList.xlsx" />
 		<UpdateFile FileName="JobCard.xlsx" />
 	</UpdateFileList>
 </autoUpdater>

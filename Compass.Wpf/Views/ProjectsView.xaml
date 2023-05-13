@@ -10,21 +10,21 @@
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
     <UserControl.Resources>
-        <converter:ProjectStatusToColorConverter x:Key="StatusToColorConverter" />
+        <converter:StatusToColorConverter x:Key="StatusToColorConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <!--第一行,查找栏-->
+        <!--第1行,查找栏-->
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal"
                     Margin="15,5">
             <!--双向绑定搜索内容-->
             <TextBox Text="{Binding Search,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      Width="250"
-                     materialDesign:HintAssist.Hint="查找项目"
+                     materialDesign:HintAssist.Hint="查找项目,输入后按回车"
                      materialDesign:TextFieldAssist.HasClearButton="True"
                      VerticalAlignment="Center">
                 <!--TextBox的回车按键触发器-->
@@ -55,7 +55,7 @@
                 </behavior:Interaction.Triggers>
             </ComboBox>
         </StackPanel>
-        <!--第一行,数据-->
+        <!--第2行,数据-->
         <DataGrid Grid.Row="1" ItemsSource="{Binding ProjectDtos}"
                   CanUserAddRows="False"
                   AutoGenerateColumns="False"

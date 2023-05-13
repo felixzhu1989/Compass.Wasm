@@ -1,4 +1,6 @@
-﻿namespace Compass.Wasm.Shared.Projects;
+﻿using Compass.Wasm.Shared.Plans;
+
+namespace Compass.Wasm.Shared.Projects;
 
 public class ProjectDto:BaseDto
 {
@@ -9,6 +11,7 @@ public class ProjectDto:BaseDto
     public ProjectType_e ProjectType { get; set; }
     public RiskLevel_e RiskLevel { get; set; }
     public string? SpecialNotes { get; set; }
+    public Guid? Designer { get; set; }//制图人，由项目经理指定
     #endregion
 
     #region 文件属性
@@ -21,8 +24,18 @@ public class ProjectDto:BaseDto
 
     #region 状态属性
     public ProjectStatus_e ProjectStatus { get; set; }//计划,制图,生产,入库,结束
-    //有没有待解决得问题，如果有则另起一行显示异常详细信息
-    public bool IsProblemNotResolved { get; set; }
+    #endregion
+
+    #region 扩展查询属性
+    public List<MainPlanDto> MainPlanDtos { get; set; } = new();
+    public List<DrawingDto> DrawingDtos { get; set; } = new();
+
+    public bool AllIssueClosed { get; set; }
+    public List<LessonDto> LessonDtos { get; set; } = new();
+
+    
+
+
     #endregion
 
 }

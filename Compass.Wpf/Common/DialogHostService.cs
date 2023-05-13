@@ -1,10 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Threading.Tasks;
 using MaterialDesignThemes.Wpf;
-using Prism.Ioc;
 using Prism.Mvvm;
-using Prism.Services.Dialogs;
 
 namespace Compass.Wpf.Common;
 /// <summary>

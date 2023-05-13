@@ -65,15 +65,12 @@ public class ProjectController : ControllerBase
 
 
     #region 扩展的查询功能,Blazor
-    [HttpGet("Search/{searchText}")]
-    public async Task<ApiResponse<List<ProjectDto>>> GetAllFilter(string? searchText) => await _service.GetAllFilterAsync(searchText);
+    
+
 
     //UploadFiles上传文件
     [HttpPut("UploadFiles/{id}")]
     public async Task<ApiResponse<ProjectDto>> UploadFiles([RequiredGuid] Guid id, ProjectDto dto) => await _service.UploadFilesAsync(id, dto);
-
-
-
     #endregion
 
 

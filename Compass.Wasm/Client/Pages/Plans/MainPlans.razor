@@ -1,6 +1,4 @@
 ﻿@page "/mainplans"
-@using Compass.Wasm.Shared.Plans
-@using Compass.Wasm.Client.Services.Plans
 
 @inject NavigationManager NavigationManager
 @inject IMainPlanService MainPlanService
@@ -9,15 +7,26 @@
 <!--sticky固定位置，top: 3.5rem-->
 <div style="position: sticky; top: 3.5rem; z-index: 1;background-color:White">
     <div class="row position-relative">
-        
-        <div class="col input-group mb-2" style="max-width: 230px">
-            <span class="input-group-text">月份</span>
-            <input class="form-control" type="month" value="@(_selectedMonth.ToString("yyyy-MM"))" format="" @onchange="OnMonthChange" />
+        <div class="col input-group mb-2">
+            <span class="input-group-text">搜索</span>
+            <input class="form-control" placeholder="Search"
+                   @bind-value="@_search" @oninput="@Search" />
         </div>
         <div class="col form-check ms-3 mt-2" style="max-width: 70px">
             <input class="form-check-input" type="checkbox" value="@_annual" @onchange="OnAnnualChange">
             <label class="form-check-label">
                 全年
+            </label>
+        </div>
+        <div class="col input-group mb-2" style="max-width: 230px">
+            <span class="input-group-text">月份</span>
+            <input class="form-control" type="month" value="@(_selectedMonth.ToString("yyyy-MM"))" format="" @onchange="OnMonthChange"/>
+        </div>
+        <div class="col form-check ms-3 mt-2" style="max-width: 100px">
+            <input class="form-check-input" type="checkbox" value="@_fromMonth"
+                   checked="checked" @onchange="OnFromMonthChange">
+            <label class="form-check-label">
+                本月往后
             </label>
         </div>
         <div class="col input-group mb-2" style="max-width: 180px">
@@ -35,7 +44,7 @@
             <span class="mx-3">Factory:@_cycleTime.FactoryCycleTime</span>
             <span class="mx-3">Production:@_cycleTime.ProductionCycleTime</span>
         </div>
-        <CompAddButton Roles="admin,pmc" Url="mainplan/add" />
+        <CompAddButton Roles="admin,pmc" Url="mainplan/add"/>
     </div>
 </div>
 
@@ -73,7 +82,9 @@
 
 @code {
     //过滤参数
+    private string _search = string.Empty;
     private bool _annual;
+    private bool _fromMonth=true;
     private DateTime _selectedMonth = DateTime.Today;
     private int _year;
     private int _month;
@@ -89,38 +100,51 @@
         _planType??=MainPlanType_e.NA.ToString();
         var result = await MainPlanService.GetAllAsync();
         _mainPlans = result.Result;
-        Filter();
+        Search(new ChangeEventArgs { Value = "" });
     }
 
     //过滤条件变化
     private void OnAnnualChange(ChangeEventArgs e)
     {
         _annual =Convert.ToBoolean(e.Value);
-        Filter();
+        Search(new ChangeEventArgs { Value = _search });
+    }
+    private void OnFromMonthChange(ChangeEventArgs e)
+    {
+        _fromMonth =Convert.ToBoolean(e.Value);
+        Search(new ChangeEventArgs { Value = _search });
     }
     private void OnMonthChange(ChangeEventArgs e)
     {
         _selectedMonth = Convert.ToDateTime(e.Value);
         _year= _selectedMonth.Year;
         _month= _selectedMonth.Month;
-        Filter();
+        Search(new ChangeEventArgs { Value = _search });
 
     }
     private void OnPlanTypeChange(ChangeEventArgs e)
     {
         _planType = e.Value.ToString();
-        Filter();
+        Search(new ChangeEventArgs { Value = _search });
     }
     //过滤逻辑
-    private void Filter()
+    private void Search(ChangeEventArgs e)
     {
+        _search=e.Value!.ToString()!;
         _filterMainPlans.Clear();
         var type = (MainPlanType_e)Enum.Parse(typeof(MainPlanType_e), _planType);
 
         _filterMainPlans = _mainPlans.Where(
             x => x.MonthOfInvoice.Year.Equals(_year)&& 
-                 (_annual||x.MonthOfInvoice.Month.Equals(_month))&&
+                 (_annual||(_fromMonth&& 
+                            x.MonthOfInvoice.Month>=_month)||
+                  x.MonthOfInvoice.Month.Equals(_month))&&
                  (type.Equals(MainPlanType_e.NA)||
-                  x.MainPlanType.Equals(type))).ToList();
+                  x.MainPlanType.Equals(type))&&
+                 (string.IsNullOrEmpty(_search)||
+                  x.Number.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                  x.Name.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                  x.ModelSummary.Contains(_search, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
     }
 }

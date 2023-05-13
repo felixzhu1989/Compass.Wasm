@@ -1,11 +1,5 @@
-﻿using Compass.Wpf.Extensions;
-using Prism.Events;
-using Prism.Ioc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wpf.BatchWorks;
 

@@ -73,12 +73,6 @@ public interface IProjectRepository
 
 
 
-    //Tracking
-    Task<ApiPaginationResponse<IQueryable<Tracking>>> GetTrackingsAsync(int page);
-    Task<Tracking?> GetTrackingByIdAsync(Guid id);
-    //搜索针对Tracking
-    Task<ApiPaginationResponse<IQueryable<Tracking>>> SearchTrackingsAsync(string searchText,int page);
-    Task<List<string>> GetProjectSearchSuggestions(string searchText);
 
     //Problem
     Task<IQueryable<Problem>> GetProblemsAsync();
@@ -86,8 +80,12 @@ public interface IProjectRepository
     Task<Problem?> GetProblemByIdAsync(Guid id);
     Task<IQueryable<Problem>> GetNotResolvedProblemsByProjectIdAsync(Guid projectId);
 
-    //Issue
-    Task<IQueryable<Issue>> GetIssuesAsync();
-    Task<IQueryable<Issue>> GetIssuesByProjectIdAsync(Guid projectId);
-    Task<Issue?> GetIssueByIdAsync(Guid id);
+
+    
+
+    //Lesson
+    Task<IQueryable<Lesson>> GetLessonsAsync();
+    Task<Lesson?> GetLessonByIdAsync(Guid id);
+    //扩展Lesson查询
+    Task<IQueryable<Lesson>> GetLessonsByProjectIdAsync(Guid projectId);
 }

@@ -1,15 +1,12 @@
-﻿using System.Windows.Controls;
+﻿namespace Compass.Wpf.Views;
 
-namespace Compass.Wpf.Views
+/// <summary>
+/// ToDoView.xaml 的交互逻辑
+/// </summary>
+public partial class TodoView : UserControl
 {
-    /// <summary>
-    /// ToDoView.xaml 的交互逻辑
-    /// </summary>
-    public partial class TodoView : UserControl
+    public TodoView()
     {
-        public TodoView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

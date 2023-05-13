@@ -1,15 +1,12 @@
-﻿using System.Windows.Controls;
+﻿namespace Compass.Wpf.Views;
 
-namespace Compass.Wpf.Views
+/// <summary>
+/// ProjectInfoView.xaml 的交互逻辑
+/// </summary>
+public partial class ProjectInfoView : UserControl
 {
-    /// <summary>
-    /// ProjectInfoView.xaml 的交互逻辑
-    /// </summary>
-    public partial class ProjectInfoView : UserControl
+    public ProjectInfoView()
     {
-        public ProjectInfoView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

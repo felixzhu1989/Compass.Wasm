@@ -1,15 +1,12 @@
-﻿using System.Windows.Controls;
+﻿namespace Compass.Wpf.Views;
 
-namespace Compass.Wpf.Views
+/// <summary>
+/// SettingsView.xaml 的交互逻辑
+/// </summary>
+public partial class SettingsView : UserControl
 {
-    /// <summary>
-    /// SettingsView.xaml 的交互逻辑
-    /// </summary>
-    public partial class SettingsView : UserControl
+    public SettingsView()
     {
-        public SettingsView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -38,6 +38,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Controllers\Data\Ceilings\" />
+	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 
 

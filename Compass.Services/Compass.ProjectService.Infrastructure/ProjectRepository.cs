@@ -143,10 +143,7 @@ public class ProjectRepository : IProjectRepository
     }
 
     #endregion
-
-
-
-
+    
     #region DrawingPlan
 
     public Task<ApiPaginationResponse<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page)
@@ -230,65 +227,18 @@ public class ProjectRepository : IProjectRepository
     }
 
     #endregion
-
-    #region Tracking
-    public Task<ApiPaginationResponse<IQueryable<Tracking>>> GetTrackingsAsync(int page)
-    {
-        var pageResults = 15f;//默认一页显示数据条数
-        var pageCount = Math.Ceiling(_context.Trackings.Count() / pageResults);//计算页总数
-        return Task.FromResult(new ApiPaginationResponse<IQueryable<Tracking>>
-        {
-            /* 使用查询子句先修改掉排序日期
-             * update Trackings set Trackings.SortDate=
-             * (select Projects.DeliveryDate from Projects where Projects.Id=Trackings.Id)
-             */
-            Result = _context.Trackings.OrderByDescending(x=>x.SortDate)
-                .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
-                .Take((int)pageResults),
-            CurrentPage = page,
-            Pages = (int)pageCount
-        });
-    }
-
-    public Task<Tracking?> GetTrackingByIdAsync(Guid id)
-    {
-        return _context.Trackings.SingleOrDefaultAsync(x => x.Id.Equals(id));
-    }
-    //搜索针对Tracking
-    public async Task<ApiPaginationResponse<IQueryable<Tracking>>> SearchTrackingsAsync(string searchText,int page)
-    {
-        var pageResults = 10f;//默认一页显示数据条数
-        var pageCount = Math.Ceiling(SearchProjects(searchText).Count() / pageResults);//计算页总数
-        //查询其实是project的内容，但只获取id
-        var ids1=await SearchProjects(searchText)
-            .Select(x => x.Id).ToListAsync();
-        var ids2 = await SearchProblems(searchText)
-            .Select(x => x.ProjectId).ToListAsync();
-        var ids3=await SearchIssues(searchText)
-            .Select(x=>x.ProjectId).ToListAsync();
-        var ids= ids1.Union(ids2).Union(ids3).ToList();
-
-        var trackings= _context.Trackings.Where(x=>ids.Contains(x.Id))
-            .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
-            .Take((int)pageResults);
-        return new ApiPaginationResponse<IQueryable<Tracking>>
-        {
-            Result = trackings,
-            CurrentPage = page,
-            Pages = (int)pageCount
-        };
-    }
-
+    
+    #region Search
     private IQueryable<Problem> SearchProblems(string serchText)
     {
         return _context.Problems
-            .Where(x => x.Description.ToLower().Contains(serchText.ToLower()) 
+            .Where(x => x.Description.ToLower().Contains(serchText.ToLower())
                         || x.Solution.ToLower().Contains(serchText.ToLower()));
     }
-    private IQueryable<Issue> SearchIssues(string serchText)
+    private IQueryable<Lesson> SearchIssues(string serchText)
     {
-        return _context.Issues
-            .Where(x => x.Description.ToLower().Contains(serchText.ToLower()));
+        return _context.Lessons
+            .Where(x => x.Content.ToLower().Contains(serchText.ToLower()));
     }
     private IQueryable<Project> SearchProjects(string searchText)
     {
@@ -297,7 +247,6 @@ public class ProjectRepository : IProjectRepository
                         || x.Name.ToLower().Contains(searchText.ToLower())
                         || x.SpecialNotes.ToLower().Contains(searchText.ToLower()));
     }
-
     public Task<List<string>> GetProjectSearchSuggestions(string searchText)
     {
         List<string> result = new List<string>();
@@ -323,12 +272,12 @@ public class ProjectRepository : IProjectRepository
         var issues = SearchIssues(searchText);
         foreach (var issue in issues)
         {
-            GetSuggestText(searchText, issue.Description,ref result);
+            GetSuggestText(searchText, issue.Content, ref result);
         }
         return Task.FromResult(result);
     }
 
-    private void GetSuggestText(string searchText, string? str,ref List<string> result )
+    private void GetSuggestText(string searchText, string? str, ref List<string> result)
     {
         if (str != null)
         {
@@ -344,8 +293,7 @@ public class ProjectRepository : IProjectRepository
                 }
             }
         }
-    }
-
+    } 
     #endregion
     
     #region Problem
@@ -367,21 +315,21 @@ public class ProjectRepository : IProjectRepository
         return Task.FromResult(_context.Problems.Where(x => x.ProjectId.Equals(projectId)&&!x.IsClosed).AsQueryable());
     }
     #endregion
-
-    #region Issue
-    public Task<IQueryable<Issue>> GetIssuesAsync()
+    
+    #region Lesson
+    //基本
+    public Task<IQueryable<Lesson>> GetLessonsAsync()
     {
-        return Task.FromResult(_context.Issues.AsQueryable());
+        return Task.FromResult(_context.Lessons.AsQueryable());
     }
-
-    public Task<IQueryable<Issue>> GetIssuesByProjectIdAsync(Guid projectId)
+    public Task<Lesson?> GetLessonByIdAsync(Guid id)
     {
-        return Task.FromResult(_context.Issues.Where(x => x.ProjectId.Equals(projectId)).AsQueryable());
+        return _context.Lessons.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
-
-    public Task<Issue?> GetIssueByIdAsync(Guid id)
+    //扩展
+    public Task<IQueryable<Lesson>> GetLessonsByProjectIdAsync(Guid projectId)
     {
-        return _context.Issues.SingleOrDefaultAsync(x => x.Id.Equals(id));
+        return Task.FromResult(_context.Lessons.Where(x => x.ProjectId.Equals(projectId)).AsQueryable());
     }
     #endregion
 }

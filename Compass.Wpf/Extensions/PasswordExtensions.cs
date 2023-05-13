@@ -1,7 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace Compass.Wpf.Extensions;
+﻿namespace Compass.Wpf.Extensions;
 public class PasswordExtensions
 {
     //propa附加属性，让PasswordBox支持绑定

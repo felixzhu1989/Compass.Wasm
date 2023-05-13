@@ -1,8 +1,6 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using Compass.Wasm.Shared;
-using Compass.Wpf.Common;
 using Newtonsoft.Json;
 using RestSharp;
 

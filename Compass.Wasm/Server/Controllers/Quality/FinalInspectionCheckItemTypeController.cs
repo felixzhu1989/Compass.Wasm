@@ -61,12 +61,7 @@ public class FinalInspectionCheckItemTypeController : ControllerBase
         checkItemType.SoftDelete();
         return Ok();
     }
-    [HttpPut("Sort")]
-    public async Task<ActionResult> Sort([Required]CategorySortRequest request)
-    {
-        await _domainService.SortProductsAsync(request.SortedIds);
-        return Ok();
-    }
+    
 
 
 

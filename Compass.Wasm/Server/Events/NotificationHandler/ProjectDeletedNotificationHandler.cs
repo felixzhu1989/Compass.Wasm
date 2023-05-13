@@ -6,28 +6,21 @@ namespace Compass.Wasm.Server.Events.NotificationHandler;
 public class ProjectDeletedNotificationHandler : NotificationHandler<ProjectDeletedNotification>
 {
     private readonly ProjectDbContext _dbContext;
-    private readonly PlanDbContext _psDbContext;
+    private readonly PlanDbContext _planDbContext;
 
-    public ProjectDeletedNotificationHandler(ProjectDbContext dbContext, PlanDbContext psDbContext)
+    public ProjectDeletedNotificationHandler(ProjectDbContext dbContext, PlanDbContext planDbContext)
     {
         _dbContext = dbContext;
-        _psDbContext = psDbContext;
+        _planDbContext = planDbContext;
     }
     protected override void Handle(ProjectDeletedNotification notification)
     {
-        //删除项目跟踪数据
-        var tracking = _dbContext.Trackings.SingleOrDefault(x => x.Id.Equals(notification.Id));
-        if (tracking != null) tracking.SoftDelete();
-        //删除项目制图计划数据
-        var drawingPlan = _dbContext.DrawingsPlan.SingleOrDefault(x => x.Id.Equals(notification.Id));
-        if (drawingPlan != null) drawingPlan.SoftDelete();
-
         //同时删除计划绑定的项目
-        var prodPlan = _psDbContext.MainPlans.FirstOrDefault(x => x.ProjectId.Equals(notification.Id));
-        if (prodPlan != null)
+        var prodPlans = _planDbContext.MainPlans.Where(x => x.ProjectId.Equals(notification.Id));
+        foreach (var plan in prodPlans) 
         {
-            prodPlan.ChangeProjectId(null);
-            _psDbContext.SaveChangesAsync();
+            plan.ChangeProjectId(null);
+            _planDbContext.SaveChangesAsync();
         }
     }
 }

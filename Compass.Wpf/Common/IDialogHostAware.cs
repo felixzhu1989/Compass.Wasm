@@ -1,7 +1,4 @@
-﻿using Prism.Commands;
-using Prism.Services.Dialogs;
-
-namespace Compass.Wpf.Common;
+﻿namespace Compass.Wpf.Common;
 
 /// <summary>
 /// 自定义对话服务,prism对话服务

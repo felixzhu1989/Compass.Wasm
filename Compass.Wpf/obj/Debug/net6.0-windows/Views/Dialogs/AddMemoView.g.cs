@@ -9,9 +9,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Compass.Wasm.Shared.Categories;
+using Compass.Wasm.Shared.Projects;
+using Compass.Wpf.Common.Converters;
+using Compass.Wpf.Extensions;
+using Compass.Wpf.Views;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignThemes.Wpf.Converters;
 using MaterialDesignThemes.Wpf.Transitions;
+using Microsoft.Xaml.Behaviors;
+using Microsoft.Xaml.Behaviors.Core;
+using Microsoft.Xaml.Behaviors.Input;
+using Microsoft.Xaml.Behaviors.Layout;
+using Microsoft.Xaml.Behaviors.Media;
+using Prism.DryIoc;
+using Prism.Interactivity;
+using Prism.Ioc;
+using Prism.Mvvm;
+using Prism.Regions;
+using Prism.Regions.Behaviors;
+using Prism.Services.Dialogs;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -49,7 +66,7 @@ namespace Compass.Wpf.Views.Dialogs {
         /// InitializeComponent
         /// </summary>
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.3.0")]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.5.0")]
         public void InitializeComponent() {
             if (_contentLoaded) {
                 return;
@@ -65,7 +82,7 @@ namespace Compass.Wpf.Views.Dialogs {
         }
         
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.3.0")]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.5.0")]
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1033:InterfaceMethodsShouldBeCallableByChildTypes")]
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
