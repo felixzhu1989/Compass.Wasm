@@ -1,7 +1,7 @@
 ﻿using System.Text;
 
 namespace Compass.Wasm.Server.Events.Projects;
-
+public record IssueAssignedEvent(string Responder, string Email, string Number, string Name, string Content, DateTime Deadline, string Url);
 //处理ProblemController发出的集成事件，异常指派责任人后邮件通知责任人，
 [EventName("ProjectService.Problem.Assigned")]
 public class IssueAssignedEventHandler : JsonIntegrationEventHandler<IssueAssignedEvent>

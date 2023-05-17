@@ -16,7 +16,7 @@
 <EditForm Model="_lessonDto" OnSubmit="Save">
     <div class="input-group mb-2">
         <span class="input-group-text">内容</span>
-        <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 550px" @bind="@_lessonDto.Content"></textarea>
+        <textarea class="form-control" placeholder="请详细描述经验教训，可输入多行" style="height: 350px" @bind="@_lessonDto.Content"></textarea>
     </div>
 
     <MultiFileUpload Title="附件(可添加多个)" FileType="application/pdf" @bind-MultiFileUrl="@_lessonDto.ContentUrl" />

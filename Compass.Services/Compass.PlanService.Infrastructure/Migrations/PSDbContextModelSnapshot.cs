@@ -94,6 +94,9 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<int>("Batch")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("ClosedTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("datetime2");
 

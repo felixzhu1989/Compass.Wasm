@@ -62,7 +62,6 @@
             await JsRuntime.InvokeVoidAsync("alert", "请选择项目");
             return;
         }
-        _mainPlanDto.Status = MainPlanStatus_e.制图;
         var result = await MainPlanService.UpdateStatusesAsync(Guid.Parse(Id), _mainPlanDto);
         if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("mainplans");
     }

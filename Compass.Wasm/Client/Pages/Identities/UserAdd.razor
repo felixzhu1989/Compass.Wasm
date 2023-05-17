@@ -1,0 +1,44 @@
+﻿@page "/user/add"
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject IUserService UserService
+
+<PageTitle>新增用户</PageTitle>
+
+<EditForm Model="_userDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">名称</span>
+        <input class="form-control" placeholder="如：Felix.Zhu" @bind-value="@_userDto.UserName" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">邮箱</span>
+        <input class="form-control" placeholder="如：felix.zhu@halton.com" @bind-value="@_userDto.Email" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">电话</span>
+        <input class="form-control" placeholder="如：17621298210" @bind-value="@_userDto.PhoneNumber" />
+    </div>
+
+    <div class="input-group mb-2">
+        <span class="input-group-text">角色</span>
+        <select class="form-select" @bind="@_userDto.Role">
+            <CompEnumList Type="typeof(Roles_e)" />
+        </select>
+    </div>
+    <CompSaveCancelButtons CancelUrl="users" />
+</EditForm>
+
+@code {
+    private UserDto _userDto = new ();
+    private async Task Save()
+    {
+        if (string.IsNullOrWhiteSpace(_userDto.UserName) || string.IsNullOrWhiteSpace(_userDto.Email))
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
+            return;
+        }
+        var result = await UserService.AddAsync(_userDto);
+        //跳转回主页
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("users");
+    }
+}

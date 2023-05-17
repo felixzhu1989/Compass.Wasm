@@ -1,9 +1,10 @@
 ﻿@page "/login"
-@using Compass.Wasm.Shared.Identities
 @inject HttpClient Http
 @inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+
 <PageTitle>Login</PageTitle>
 <EditForm Model="dto" OnSubmit="HandleLogin">
     <DataAnnotationsValidator />
@@ -40,6 +41,11 @@
             await LocalStorage.SetItemAsync("token", token);
             await AuthStateProvider.GetAuthenticationStateAsync();
             NavigationManager.NavigateTo("");
+        }
+        else
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "登录失败，请重试！");
+            dto.Password = "";
         }
     }
 }

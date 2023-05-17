@@ -1,0 +1,71 @@
+﻿@page "/user/changepwd/{Id}"
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject IUserService UserService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject ILocalStorageService LocalStorage
+
+<PageTitle>更新密码</PageTitle>
+<div class="row">
+    <div class="col">
+        <p class="fs-5">更新密码：@_userDto.UserName</p>
+    </div>
+    <div class="col" style="text-align: right">
+        <button class="btn mb-2" type="button" @onclick="Reset">
+            <span class="oi oi-key text-danger">重置密码</span>
+        </button>
+    </div>
+
+</div>
+<EditForm Model="_userDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">密码</span>
+        <input class="form-control" type="password" placeholder="请输入密码" @bind-value="@_userDto.Password" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">重复</span>
+        <input class="form-control" type="password" placeholder="请再次输入密码" @bind-value="@_userDto.Password2" />
+    </div>
+    <CompSaveCancelButtons CancelUrl="" />
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private UserDto _userDto = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await UserService.GetFirstOrDefault(Guid.Parse(Id));
+        if (result.Status) _userDto = result.Result;
+    }
+
+    private async Task Reset()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要重置用户【{_userDto.UserName}】的密码为123吗？");
+        if (confirmResult)
+        {
+            var result = await UserService.ResetPwdAsync(Guid.Parse(Id),_userDto);
+            await LocalStorage.RemoveItemAsync("token");
+            await AuthStateProvider.GetAuthenticationStateAsync();
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("login");
+        }
+    }
+    private async Task Save()
+    {
+        if (string.IsNullOrWhiteSpace(_userDto.Password) || _userDto.Password.Length<2)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "密码不能为空，且不能少于2位！");
+            return;
+        }
+        if (_userDto.Password!=_userDto.Password2)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", "两次输入的密码不相同！");
+            return;
+        }
+        var result = await UserService.ChangePwdAsync(Guid.Parse(Id), _userDto);
+        await LocalStorage.RemoveItemAsync("token");
+        await AuthStateProvider.GetAuthenticationStateAsync();
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("login");
+    }
+}

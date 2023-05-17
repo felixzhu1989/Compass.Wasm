@@ -1,7 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Security.AccessControl;
+using AutoMapper;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;
+using Compass.PlanService.Infrastructure.Migrations;
 using Compass.Wasm.Server.Events.Plans;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Plans;
@@ -18,15 +20,17 @@ public interface IMainPlanService : IBaseService<MainPlanDto>
 public class MainPlanService : IMainPlanService
 {
     private readonly PlanDomainService _domainService;
+    private readonly IIssueService _issueService;
     private readonly PlanDbContext _dbContext;
     private readonly IPlanRepository _repository;
     private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
     private readonly IProjectRepository _projectRepository;
 
-    public MainPlanService(PlanDomainService domainService, PlanDbContext dbContext, IPlanRepository repository, IMapper mapper, IEventBus eventBus, IProjectRepository projectRepository)
+    public MainPlanService(PlanDomainService domainService,IIssueService issueService, PlanDbContext dbContext, IPlanRepository repository, IMapper mapper, IEventBus eventBus, IProjectRepository projectRepository)
     {
         _domainService = domainService;
+        _issueService = issueService;
         _dbContext = dbContext;
         _repository = repository;
         _mapper = mapper;
@@ -42,6 +46,10 @@ public class MainPlanService : IMainPlanService
             var models = await _repository.GetMainPlansAsync();
             var orderModels = models.OrderByDescending(x => x.FinishTime);
             var dtos = await _mapper.ProjectTo<MainPlanDto>(orderModels).ToListAsync();
+            foreach (var dto in dtos)
+            {
+                await GetIssues(dto);
+            }
             return new ApiResponse<List<MainPlanDto>> { Status = true, Result = dtos };
         }
         catch (Exception e)
@@ -57,6 +65,7 @@ public class MainPlanService : IMainPlanService
             var model = await _repository.GetMainPlanByIdAsync(id);
             if (model == null) return new ApiResponse<MainPlanDto> { Status = false, Message = "查询数据失败" };
             var dto = _mapper.Map<MainPlanDto>(model);
+            await GetIssues(dto);
             return new ApiResponse<MainPlanDto> { Status = true, Result = dto };
         }
         catch (Exception e)
@@ -145,13 +154,7 @@ public class MainPlanService : IMainPlanService
             var dtos = await _mapper.ProjectTo<MainPlanDto>(orderModels).ToListAsync();
             foreach (var dto in dtos)
             {
-                if (dto.ProjectId != null && dto.ProjectId != Guid.Empty)
-                {
-                    //var problems = await _projectRepository.GetNotResolvedProblemsByProjectIdAsync(dto.Id);
-                    //if (!problems.Any()) continue;
-                    //dto.ProblemNotResolved = true;
-                    //dto.ProblemDtos =await _mapper.ProjectTo<ProblemDto>(problems).ToListAsync();
-                }
+                await GetIssues(dto);
             }
             return new ApiResponse<List<MainPlanDto>> { Status = true, Result = dtos };
         }
@@ -167,6 +170,10 @@ public class MainPlanService : IMainPlanService
         {
             var models = await _repository.GetMainPlansByProjectIdAsync(projectId);
             var dtos = await _mapper.ProjectTo<MainPlanDto>(models).ToListAsync();
+            foreach (var dto in dtos)
+            {
+                await GetIssues(dto);
+            }
             return new ApiResponse<List<MainPlanDto>> { Status = true, Result = dtos };
         }
         catch (Exception e)
@@ -176,4 +183,16 @@ public class MainPlanService : IMainPlanService
     }
 
     #endregion
+
+    private async Task GetIssues(MainPlanDto dto)
+    {
+        dto.IssueDtos = (await _issueService.GetAllByMainPlanIdAsync(dto.Id.Value)).Result;
+        dto.AllIssueClosed = true;
+        foreach (var issueDto in dto.IssueDtos)
+        {
+            dto.AllIssueClosed = dto.AllIssueClosed && issueDto.IsClosed;
+        }
+    }
+
+
 }

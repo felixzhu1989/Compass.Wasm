@@ -1,4 +1,5 @@
 ﻿@inject IIssueService IssueService
+@inject IUserService UserService
 
 <h5>
     <span>@MainPlanDto.Number-</span>
@@ -8,7 +9,7 @@
 {
     //虚线分割
     <hr size="1" style="border-top:1px deeppink dashed;">
-    <CompUpdateIcon Roles="admin,pm,designer" Url="@($"issue/update/{issue.Id}")" />
+    <CompUpdateIcon Roles="" Url="@($"issue/update/{issue.Id}")" />
     <span style="font-weight: bold;color:deeppink ">@issue.Title</span>
     @if (issue.IsClosed)
     {
@@ -19,11 +20,13 @@
         <span class="text-danger">(异常未关闭)</span>
     }
     <br />
-    <span>内容：</span>
+    <span style="color: dodgerblue">上报：@(issue.Reporter?.UserName)</span>
+    <br />
+    <span style="color: dodgerblue">内容：</span>
     <br />
     <CompMultiLineText Text="@issue.Content" />
-    <span>附件：</span>
-    <br />
+    <span style="color: dodgerblue">附件：</span>
+    <br />  
     <CompFiles Roles="admin,pm,designer"
            FileUrls="@issue.ContentUrl"
            UpLoadUrl="@($"issue/update/{issue.Id}")" />
@@ -33,24 +36,32 @@
     <span style="font-weight: bold;color: green">解决方案</span>
     <br />
     <span>
-        跟进：
-        @issue.ResponderId
+        <span style="color: dodgerblue">跟进：</span>
+        @if (issue.Responder == null)
+        {
+            //todo:指派负责人
+            <AuthorizeView Roles="admin,pm">
+                <Authorized>
+                    <a href="issue/solution/@issue.Id">指派负责人</a> 
+                </Authorized>
+            </AuthorizeView>
+        }
+        else
+        {
+            @(issue.Responder?.UserName)
+        }
     </span>
     <br />
-    <span >期限：
-        @issue.Deadline</span>
+    <span style="color: dodgerblue">期限：@(issue.Deadline?.ToString("yyyy-MM-dd"))</span>
     <br />
-    <span>措施：</span>
+    <span style="color: dodgerblue">措施：</span>
     <br />
     <CompMultiLineText Text="@issue.Solution" />
-    <span>附件：</span>
+    <span style="color: dodgerblue">附件：</span>
     <br />
     <CompFiles Roles="admin,pm,designer"
            FileUrls="@issue.SolutionUrl"
            UpLoadUrl="@($"issue/solution/{issue.Id}")" />
-
-
-
 
 }
 

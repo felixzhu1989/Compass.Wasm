@@ -141,7 +141,7 @@
                         {
                             <a href="issues/mainplan/@plan.Id">
                                 <span>查看异常</span>
-                                <img class="ms-1 me-2" src="andon_red.gif"/>
+                                <img class="ms-1 me-2" style="width: 23px" src="andon_red.gif"/>
                             </a>
                             
                         }
@@ -153,26 +153,6 @@
                         }
                     </td>
                 </tr>
-
-                @*@if (!plan.AllIssueClosed)
-                {
-                    <tr class="table-danger">
-                        <td colspan="11">
-                            <a href="problem/report/@plan.ProjectId">
-                                <span class="badge bg-danger ms-1 me-1">异常</span>
-                            </a>
-                            <img class="ms-1 me-2" src="andon_red.gif" />
-                            <br />
-                            @if (plan.IssueDtos.Count != 0)
-                            {
-                                foreach (var issue in plan.IssueDtos)
-                                {
-
-                                }
-                            }
-                        </td>
-                    </tr>
-                }*@
             }
         }
     </tbody>
@@ -194,16 +174,6 @@
         _month= _selectedMonth.Month;
         var result = await MainPlanService.GetIndexDataAsync();
         _mainPlanDtos = result.Result;
-        foreach (var mainPlanDto in _mainPlanDtos)
-        {
-            var iResult = await IssueService.GetAllByMainPlanIdAsync(mainPlanDto.Id.Value);
-            mainPlanDto.IssueDtos = iResult.Result;
-            mainPlanDto.AllIssueClosed = true;            
-            foreach (var issueDto in mainPlanDto.IssueDtos)
-            {
-                mainPlanDto.AllIssueClosed = mainPlanDto.AllIssueClosed && issueDto.IsClosed;
-            }
-        }
         //过滤条件变化
         Search(new ChangeEventArgs { Value = _search });
     }

@@ -55,7 +55,7 @@
 @code {
     [Parameter]
     public string Id { get; set; }
-    private ProjectDto? _projectDto = new();
+    private ProjectDto _projectDto = new();
     protected override async Task OnInitializedAsync()
     {
         var response = await ProjectService.GetFirstOrDefault(Guid.Parse(Id));

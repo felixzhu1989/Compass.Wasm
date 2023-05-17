@@ -26,7 +26,7 @@ public class MainPlanDto:BaseDto
     public DateTime? DrwReleaseTime { get;set; }
     public DateTime? WarehousingTime { get; set; }//第一台生产完工入库的时间->进入库存状态
     public DateTime? ShippingTime { get; set; }//项目第一台真实发货的时间->进入发货状态，用减去WarehousingTime，用户计算成品库存时间
-
+    public DateTime? ClosedTime { get; set; }//项目总结经验后结束的时间
 
 
 

@@ -1,0 +1,60 @@
+﻿@page "/user/update/{Id}"
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+@inject IUserService UserService
+
+<PageTitle>更新用户</PageTitle>
+<div class="row">
+    <div class="col">
+        <p class="fs-5">更新用户信息</p>
+    </div>
+    <CompDeleteIcon Roles="admin" Click="Delete" />
+
+</div>
+<EditForm Model="_userDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">名称</span>
+        <input class="form-control" placeholder="如：Felix.Zhu" @bind-value="@_userDto.UserName" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">邮箱</span>
+        <input class="form-control" placeholder="如：felix.zhu@halton.com" @bind-value="@_userDto.Email" />
+    </div>
+    <div class="input-group mb-2">
+        <span class="input-group-text">电话</span>
+        <input class="form-control" placeholder="如：17621298210" @bind-value="@_userDto.PhoneNumber" />
+    </div>
+
+    <div class="input-group mb-2">
+        <span class="input-group-text">角色</span>
+        <select class="form-select" @bind="@_userDto.Role">
+            <CompEnumList Type="typeof(Roles_e)" />
+        </select>
+    </div>
+    <CompSaveCancelButtons CancelUrl="users" />
+</EditForm>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private UserDto _userDto = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await UserService.GetFirstOrDefault(Guid.Parse(Id));
+        if (result.Status) _userDto = result.Result;
+    }
+    private async Task Delete()
+    {
+        var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除用户【{_userDto.UserName}】吗？");
+        if (confirmResult)
+        {
+            var result = await UserService.DeleteAsync(Guid.Parse(Id));
+            if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("users");
+        }
+    }
+    private async Task Save()
+    {
+        var result = await UserService.UpdateAsync(Guid.Parse(Id), _userDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("users");
+    }
+}

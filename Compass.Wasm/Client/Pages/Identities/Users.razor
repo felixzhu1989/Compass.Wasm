@@ -1,0 +1,81 @@
+﻿@page "/users"
+
+@inject IUserService UserService
+
+<PageTitle>用户列表</PageTitle>
+<!--sticky固定位置，top: 3.5rem-->
+<div style="position: sticky; top: 3.5rem; z-index: 1;background-color:White">
+    <div class="row position-relative">
+        <div class="col input-group mb-2">
+            <span class="input-group-text">搜索</span>
+            <input class="form-control" placeholder="Search"
+                   @bind-value="@_search" @oninput="@Search" />
+        </div>
+        <div class="col"></div>
+        <CompAddButton Roles="admin" Url="user/add" />
+    </div>
+</div>
+<table class="table table-hover" style="table-layout: fixed; word-break: break-all;">
+    <!--sticky固定位置，top: 6rem-->
+    <thead style="position: sticky; top: 6rem; z-index: 1; background-color: White">
+        <tr>
+            <th>UserName</th>
+            <th>Roles</th>
+            <th>Email</th>
+            <th>PhoneNumber</th>
+            <th>ChangePwd</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (_filterUserDtos.Count == 0)
+        {
+            <p>...</p>
+        }
+        else
+        {
+            @foreach (var user in _filterUserDtos)
+            {
+                <tr>
+                    <td>
+                        <CompUpdateIcon Roles="admin" Url="@($"user/update/{user.Id}")"/>
+                        @user.UserName
+                    </td>
+                    <td>@user.Role</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>
+                        <a href="user/changepwd/@user.Id">
+                            <span class="oi oi-key">修改密码</span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    private string _search = string.Empty;
+
+    private List<UserDto> _userDtos = new();
+    private List<UserDto> _filterUserDtos = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        var result = await UserService.GetAllAsync();
+        _userDtos = result.Result;
+        Search(new ChangeEventArgs { Value = "" });
+    }
+
+    private void Search(ChangeEventArgs e)
+    {
+        _search=e.Value!.ToString()!;
+        _filterUserDtos.Clear();
+        _filterUserDtos = _userDtos.Where(
+            x => string.IsNullOrEmpty(_search)||
+                  x.UserName.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                  x.Email.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                 x.Role.Contains(_search, StringComparison.OrdinalIgnoreCase)
+            )
+            .ToList();
+    }
+}

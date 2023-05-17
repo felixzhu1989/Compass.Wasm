@@ -37,7 +37,11 @@ public class IssueController : ControllerBase
     #region 扩展的查询功能,Blazor
     [HttpGet("MainPlan/{mainPlanId}")]
     public async Task<ApiResponse<List<IssueDto>>> GetAllByMainPlanId([RequiredGuid] Guid mainPlanId) => await _service.GetAllByMainPlanIdAsync(mainPlanId);
-
+    /// <summary>
+    /// 更新主计划状态
+    /// </summary>
+    [HttpPut("UpdateStatuses/{id}")]
+    public async Task<ApiResponse<IssueDto>> UpdateStatuses([RequiredGuid] Guid id, IssueDto dto) => await _service.UpdateStatusesAsync(id, dto);
     #endregion
 
 

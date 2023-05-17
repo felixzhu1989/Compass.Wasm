@@ -1,8 +1,12 @@
-﻿@inject AuthenticationStateProvider AuthStateProvider
+﻿@using System.Security.Claims
+@inject AuthenticationStateProvider AuthStateProvider
 @inject ILocalStorageService LocalStorage
+
+
 <AuthorizeView>
     <Authorized>
         <span class="ms-3">@context.User.Identity.Name</span>
+        <a href="user/changepwd/@_id">修改密码</a>
         <a @onclick="Logout" href="javascript:void(0)">退出</a>
     </Authorized>
     <NotAuthorized>
@@ -11,9 +15,21 @@
 </AuthorizeView>
 
 @code {
+    private string? _id;
+    protected override async Task OnInitializedAsync()
+    {
+        //获取当前登录的用户
+        _id =await GetUserIdAsync();
+    }
     private async Task Logout()
     {
         await LocalStorage.RemoveItemAsync("token");
-        await AuthStateProvider.GetAuthenticationStateAsync();
+        _id = await GetUserIdAsync();
+    }
+
+    private async Task<string?> GetUserIdAsync()
+    {
+        var state = await AuthStateProvider.GetAuthenticationStateAsync();
+        return state.User.FindFirst(x => x.Type.Contains("nameidentifier"))?.Value!;
     }
 }

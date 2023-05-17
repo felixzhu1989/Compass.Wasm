@@ -1,6 +1,6 @@
 ﻿using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Projects;
-using Compass.Wasm.Shared.Projects.Notifications;
+using Compass.Wasm.Shared.Projects.Notifs;
 using Zack.DomainCommons.Models;
 
 namespace Compass.ProjectService.Domain.Entities;
@@ -30,7 +30,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         //todo:改成Domain事件,写在Module实体类中
         #region 创建Module的ModuleData参数
         var model = modelName.Split('_')[0];
-        AddDomainEvent(new ModuleCreatedNotification(id, model, modelTypeId, length, width, height, sidePanel));
+        AddDomainEvent(new ModuleCreatedNotif(id, model, modelTypeId, length, width, height, sidePanel));
         #endregion
 
     }
@@ -49,7 +49,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         //todo:改成领域事件
         #region 修改Module的ModuleData参数
         var model = dto.ModelName.Split('_')[0];
-        AddDomainEvent(new ModuleUpdatedNotification(dto.Id.Value, model, dto.ModelTypeId.Value,dto.Length, dto.Width, dto.Height,dto.SidePanel));
+        AddDomainEvent(new ModuleUpdatedNotif(dto.Id.Value, model, dto.ModelTypeId.Value,dto.Length, dto.Width, dto.Height,dto.SidePanel));
         #endregion
     }
 
@@ -92,7 +92,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public override void SoftDelete()
     {
         //发出领域事件，删除当前的参数
-        AddDomainEvent(new ModuleDeleteNotification(Id));
+        AddDomainEvent(new ModuleDeleteNotif(Id));
         base.SoftDelete();
     }
 }

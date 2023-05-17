@@ -61,7 +61,7 @@ public class ProblemController : ControllerBase
         var problem = new Problem(Guid.NewGuid(), request.ProjectId, request.ReportUserId, request.ProblemTypeId,request.Description,request.DescriptionUrl);
         await _dbContext.Problems.AddAsync(problem);
         //todo:发出集成事件，修改项目跟踪状态，是否需要发邮件，"ProjectService.Problem.Created"
-        var users = await _idRepository.FindUsersByRoles("manager,pm");
+        var users = await _idRepository.GetUsersInRolesAsync("manager,pm");
         List<EmailAddress> emails = new List<EmailAddress>();
         foreach (var user in users)
         {

@@ -9,6 +9,6 @@ public class UserDto : BaseDto
     private string password2;
     public string? Password2 { get => password2; set { password2 = value; OnPropertyChanged(); } }
     public string? Email { get; set; }
-    public string? Roles { get; set; }
+    public string? Role { get; set; }
     public string? PhoneNumber { get; set; }
 }

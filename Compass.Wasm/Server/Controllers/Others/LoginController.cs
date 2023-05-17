@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Security.Claims;
-using AutoMapper;
 using Compass.Wasm.Server.Services.Identities;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Identities;
@@ -13,14 +12,12 @@ public class LoginController : ControllerBase
 {
     private readonly IdentityDomainService _idService;
     private readonly IIdentityRepository _repository;
-    private readonly IMapper _mapper;
     private readonly IEventBus _eventBus;
 
-    public LoginController(IdentityDomainService idService, IIdentityRepository repository,IMapper mapper, IEventBus eventBus)
+    public LoginController(IdentityDomainService idService, IIdentityRepository repository,IEventBus eventBus)
     {
         _idService = idService;
         _repository = repository;
-        _mapper = mapper;
         _eventBus = eventBus;
     }
 
@@ -58,12 +55,12 @@ public class LoginController : ControllerBase
         //返回我的信息（当前登录用户）
         Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
         
-        var model = await _repository.FindByIdAsync(userId);
+        var model = await _repository.GetUserByIdAsync(userId);
         if (model == null) return NotFound();//可能用户注销了
         var roles = await _repository.GetRolesAsync(model);
         //出于安全考虑，不要机密信息传递到客户端
         //除非确认没问题，否则尽量不要直接把实体类对象返回给前端
-        var dto= new UserDto { Id=model.Id, UserName = model.UserName, Email = model.Email, Roles = string.Join(',', roles), CreationTime = model.CreationTime };
+        var dto= new UserDto { Id=model.Id, UserName = model.UserName, Email = model.Email, Role = string.Join(',', roles), CreationTime = model.CreationTime };
         return dto;
     }
     [HttpPost("ChangePwd")]
@@ -75,7 +72,7 @@ public class LoginController : ControllerBase
         var resetPwdResult = await _repository.ChangePasswordAsync(userId, dto.Password);
         if (!resetPwdResult.Succeeded) return BadRequest(resetPwdResult.Errors.SumErrors());
 
-        var model = await _repository.FindByIdAsync(userId);
+        var model = await _repository.GetUserByIdAsync(userId);
         //发布集成事件
         var eventData = new ChangePasswordEvent(userId, model.UserName, dto.Password, model.Email);
         _eventBus.Publish("IdentityService.User.PasswordChange", eventData);

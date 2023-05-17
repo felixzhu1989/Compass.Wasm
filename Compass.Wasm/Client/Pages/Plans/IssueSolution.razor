@@ -1,0 +1,122 @@
+﻿@page "/issue/solution/{Id}"
+@inject IIssueService IssueService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JsRuntime
+@inject IMainPlanService MainPlanService
+@inject IUserService UserService
+
+<PageTitle>更新异常解决方案</PageTitle>
+<h3>@_mainPlanDto.Number-@_mainPlanDto.Name</h3>
+<CompUpdateIcon Roles="admin,pm,designer" Url="@($"issue/update/{_issueDto.Id}")" />
+<span style="font-weight: bold;color:deeppink ">@_issueDto.Title</span>
+@if (_issueDto.IsClosed)
+{
+    <span class="text-success">(已关闭)</span>
+    <AuthorizeView Roles="admin,pm">
+        <Authorized Context="auth">
+            <button class="btn btn-outline-success mb-2" @onclick="OpenClose">重新打开</button>
+        </Authorized>
+    </AuthorizeView>
+}
+else
+{
+    <span class="text-danger">(异常未关闭)</span>
+    <AuthorizeView Roles="admin,pm">
+        <Authorized Context="auth">
+            <button class="btn btn-outline-danger mb-2" @onclick="OpenClose">关闭异常</button>
+        </Authorized>
+    </AuthorizeView>
+    
+}
+<br />
+<span>上报：@(_issueDto.Reporter?.UserName)</span>
+<br />
+<span>内容：</span>
+<br />
+<CompMultiLineText Text="@_issueDto.Content" />
+<span>附件：</span>
+<br />  
+<CompFiles Roles="admin,pm,designer"
+           FileUrls="@_issueDto.ContentUrl"
+           UpLoadUrl="@($"issue/update/{_issueDto.Id}")" />
+<hr size="1" style="border-top:1px green dashed;">
+
+<span style="font-weight: bold;color: green">解决方案</span>
+<br />
+<EditForm Model="_issueDto" OnSubmit="Save">
+    <AuthorizeView Roles="admin,pm">
+        <Authorized Context="auth">
+            <div class="input-group mb-2">
+                <span class="input-group-text">跟进</span>
+                <select class="form-select" @bind="@_issueDto.ResponderId">
+                  @foreach (var userDto in _userDtos)
+                  {
+                        <option value="@userDto.Id">@userDto.UserName</option>
+                  }
+                </select>
+            </div>
+            <div class="input-group mb-2" style="width: 230px">
+                <span class="input-group-text">期限</span>
+                <input type="date" class="form-control" @bind-value="@_issueDto.Deadline" />
+            </div>
+        </Authorized>
+        <NotAuthorized Context="auth">
+            <span>
+                跟进：
+                @if (_issueDto.Responder != null)
+                {
+                    @(_issueDto.Responder?.UserName)
+                }
+            </span>
+            <br />
+            <span >期限：@(_issueDto.Deadline?.ToString("yyyy/MM/dd"))</span>
+        </NotAuthorized>
+    </AuthorizeView>
+   
+    <div class="input-group mb-2">
+        <span class="input-group-text">措施</span>
+        <textarea class="form-control" placeholder="请详细描解决方案，可输入多行" style="height: 350px" @bind="@_issueDto.Solution"></textarea>
+    </div>
+
+    <MultiFileUpload Title="附件(可添加多个)" FileType="application/pdf" @bind-MultiFileUrl="@_issueDto.SolutionUrl"/>
+
+    <CompSaveCancelButtons CancelUrl="@($"issues/mainplan/{_issueDto.MainPlanId}")"/>
+</EditForm>
+
+
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private IssueDto _issueDto = new();
+    private MainPlanDto _mainPlanDto = new();
+    private List<UserDto> _userDtos=new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await IssueService.GetFirstOrDefault(Guid.Parse(Id));
+        _issueDto = result.Result;
+
+        var mResult = await MainPlanService.GetFirstOrDefault(_issueDto.MainPlanId);
+        _mainPlanDto = mResult.Result;
+
+        var uResult = await UserService.GetAllAsync();
+        _userDtos = uResult.Result;
+
+    }
+    
+    private async Task Save()
+    {
+        var result = await IssueService.UpdateStatusesAsync(Guid.Parse(Id), _issueDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"issues/mainplan/{_issueDto.MainPlanId}");
+    }
+
+    private async void OpenClose()
+    {
+        _issueDto.IsClosed = !_issueDto.IsClosed;
+        _issueDto.CloseTime=DateTime.Now;
+        var result = await IssueService.UpdateStatusesAsync(Guid.Parse(Id), _issueDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"issues/mainplan/{_issueDto.MainPlanId}");
+    }
+
+}

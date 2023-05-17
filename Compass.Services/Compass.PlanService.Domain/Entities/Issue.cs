@@ -64,7 +64,7 @@ public record Issue : AggregateRootEntity, IAggregateRoot, IHasCreationTime, ISo
     #endregion
 
     #region UpdateStatus
-    public void UpdateStatus(IssueDto dto)
+    public void UpdateStatuses(IssueDto dto)
     {
         ChangeResponderId(dto.ResponderId)
             .ChangeDeadline(dto.Deadline)

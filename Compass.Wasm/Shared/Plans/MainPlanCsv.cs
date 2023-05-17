@@ -11,6 +11,7 @@ public class MainPlanCsv
     public string? FinishTime { get; set; }//->DateTime
     public string? DrwReleaseTarget { get; set; }//->DateTime
     public string? DrwReleaseTime { get; set; }//->double
+    public string? PackingDate { get; set; }//打包日期，todo：暂时作为入库日期，后续优化
     public string? ModelSummary { get; set; }
     public string? Workload { get; set; }//->double,工作量
     public string? MonthOfInvoice { get; set; }//->DateTime,开票月份，input type=month

@@ -1,7 +1,9 @@
-﻿using System.Text;
+﻿using Compass.Wasm.Shared.Identities;
+using System.Text;
 
 namespace Compass.Wasm.Server.Events.Projects;
 
+public record IssueCreatedEvent(List<EmailAddress> Emails, Guid MainPlanId, string Number, string Name, string Reporter, string Content, string Url);
 //处理ProblemController发出的集成事件，生成项目异常后，将项目跟踪的异常为解决修改未true
 [EventName("ProjectService.Issue.Created")]
 public class IssueCreatedEventHandler : JsonIntegrationEventHandler<IssueCreatedEvent>

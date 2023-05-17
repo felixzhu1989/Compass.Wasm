@@ -6,6 +6,7 @@ using Compass.QualityService.Domain;
 using Compass.QualityService.Infrastructure;
 using Compass.TodoService.Domain;
 using Compass.TodoService.Infrastructure;
+using Compass.Wasm.Server.Services.Identities;
 using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Server.Services.Categories;
 using Compass.Wasm.Server.Services.Data;
@@ -162,6 +163,8 @@ idBuilder.AddEntityFrameworkStores<IdentityDbContext>().AddDefaultTokenProviders
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 //获取中心服务器中的smtp设置
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+
+builder.Services.AddScoped<IUserService, UserService>();
 
 #endregion
 

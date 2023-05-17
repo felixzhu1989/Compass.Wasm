@@ -3,6 +3,7 @@
 @inject IProjectService ProjectService
 @inject IMainPlanService MainPlanService
 @inject IDrawingService DrawingService
+@inject IIssueService IssueService
 
 <PageTitle>图纸列表</PageTitle>
 <div class="row position-relative">
@@ -17,17 +18,6 @@
                 </a>
                 <a href="projects">
                     <CompRiskLevel Risk="@_projectDto.RiskLevel" />
-                </a>
-                <a href="issues/project/@ProjectId">
-                    @if (_projectDto.AllIssueClosed)
-                    {
-                        <span class="badge bg-info text-black ms-2">报告异常</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-danger ms-2 me-2">异常列表</span>
-                        <img class="ms-1 me-2" src="andon_red.gif" />
-                    }
                 </a>
                 <a href="lessons/project/@ProjectId">
                     <span class="badge bg-info text-black ms-2 me-2">经验教训</span>
@@ -47,6 +37,7 @@
                                 <th style="color: purple">计划完工</th>
                                 <th style="color: darkgreen">入库时间</th>
                                 <th style="color: darkgreen">发货时间</th>
+                                <th style="width: 130px;">报告异常</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,7 +52,7 @@
                             {
                                 foreach (var plan in _projectDto.MainPlanDtos)
                                 {
-                                    <tr>
+                                    <tr class="@(plan.AllIssueClosed ? "" : "table-danger")">
                                         <td>
                                             <CompBatch Batch="plan.Batch"></CompBatch>
                                         </td>
@@ -109,6 +100,20 @@
                                             </AuthorizeView>
                                             @(plan.ShippingTime != null ?
                                                 plan.ShippingTime.Value.ToString("MM/dd") : "")
+                                        </td>
+                                        <td>
+                                            @if (plan.AllIssueClosed)
+                                            {
+                                                <a href="issues/mainplan/@plan.Id">报告异常</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="issues/mainplan/@plan.Id">
+                                                    <span>查看异常</span>
+                                                    <img class="ms-1 me-2" style="width: 23px" src="andon_red.gif" />
+                                                </a>
+                            
+                                            }
                                         </td>
                                     </tr>
                                 }
@@ -207,6 +212,19 @@
 
         var mResult = await MainPlanService.GetAllByProjectIdAsync(Guid.Parse(ProjectId));
         if (mResult.Status) _projectDto.MainPlanDtos = mResult.Result;
+        foreach (var mainPlanDto in _projectDto.MainPlanDtos)
+        {
+            var iResult = await IssueService.GetAllByMainPlanIdAsync(mainPlanDto.Id.Value);
+            mainPlanDto.IssueDtos = iResult.Result;
+            mainPlanDto.AllIssueClosed = true;
+            foreach (var issueDto in mainPlanDto.IssueDtos)
+            {
+                mainPlanDto.AllIssueClosed = mainPlanDto.AllIssueClosed && issueDto.IsClosed;
+            }
+        }
+
+
+
 
         var dResult = await DrawingService.GetAllByProjectIdAsync(Guid.Parse(ProjectId));
         if (dResult.Status) _projectDto.DrawingDtos= dResult.Result;

@@ -1,4 +1,5 @@
-﻿using Compass.PlanService.Infrastructure;
+﻿using AutoMapper;
+using Compass.PlanService.Infrastructure;
 using Compass.Wasm.Shared.Extensions;
 using Compass.Wasm.Shared.Plans;
 
@@ -10,11 +11,13 @@ public class MainPlanCreatedEventHandler : JsonIntegrationEventHandler<MainPlanC
 {
     private readonly ProjectDbContext _pmDbContext;
     private readonly PlanDbContext _psDbContext;
+    private readonly IMapper _mapper;
 
-    public MainPlanCreatedEventHandler(ProjectDbContext pmDbContext, PlanDbContext psDbContext)
+    public MainPlanCreatedEventHandler(ProjectDbContext pmDbContext, PlanDbContext psDbContext,IMapper mapper)
     {
         _pmDbContext = pmDbContext;
         _psDbContext = psDbContext;
+        _mapper = mapper;
     }
     public override async Task HandleJson(string eventName, MainPlanCreatedEvent? eventData)
     {
@@ -32,11 +35,12 @@ public class MainPlanCreatedEventHandler : JsonIntegrationEventHandler<MainPlanC
         {
             //获取最大值的位置
             var index = results.FindIndex(x => x.Equals(maxResult));
-            var mainPlan = await _psDbContext.MainPlans.SingleOrDefaultAsync(x => x.Id.Equals(eventData.Id));
-            if (mainPlan != null)
+            var model = await _psDbContext.MainPlans.SingleOrDefaultAsync(x => x.Id.Equals(eventData.Id));
+            if (model != null)
             {
-                mainPlan.ChangeProjectId(projects[index].Id);
-                mainPlan.ChangeStatus(MainPlanStatus_e.制图);
+                var dto = _mapper.Map<MainPlanDto>(model);
+                dto.ProjectId = projects[index].Id;
+                model.UpdateStatuses(dto);
                 await _psDbContext.SaveChangesAsync();
             }
         }

@@ -32,7 +32,7 @@ public class LoginService : ILoginService
             ClaimsIdentity identity = new(ParseClaimsFromJwt(token), "jwt");
             var id = identity.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
             var role = identity.Claims.First(x => x.Type == ClaimTypes.Role).Value;
-            UserDto dto = new UserDto {Id = Guid.Parse(id),UserName = identity.Name,Roles = role};
+            UserDto dto = new UserDto {Id = Guid.Parse(id),UserName = identity.Name,Role = role};
             return new ApiResponse<UserDto> { Status = true, Result = dto };
         }
         return new ApiResponse<UserDto> { Status = false,Message = loginResult.Message};

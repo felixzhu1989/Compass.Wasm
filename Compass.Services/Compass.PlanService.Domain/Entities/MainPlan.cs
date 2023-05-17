@@ -32,6 +32,7 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     public DateTime? DrwReleaseTime { get; private set; }
     public DateTime? WarehousingTime { get; private set; }//第一台生产完工入库的时间->进入库存状态
     public DateTime? ShippingTime { get; private set; }//项目第一台真实发货的时间->进入发货状态，用减去WarehousingTime，用户计算成品库存时间
+    public DateTime? ClosedTime { get; private set; }//项目总结经验后结束的时间
 
     #endregion
 
@@ -159,12 +160,21 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     #region 变更状态属性
     public void UpdateStatuses(MainPlanDto dto)
     {
-        ChangeStatus(dto.Status)
-            .ChangeProjectId(dto.ProjectId)//MainPlanStatus_e.生产
-            .ChangeDrwReleaseTime(dto.DrwReleaseTime)//MainPlanStatus_e.生产
-            .ChangeWarehousingTime(dto.WarehousingTime)//MainPlanStatus_e.入库
-            .ChangeShippingTime(dto.ShippingTime);//MainPlanStatus_e.发货
-                                                  //todo:月度总结的时候，将计划状态更改为结束
+        ChangeProjectId(dto.ProjectId)//MainPlanStatus_e.制图
+        .ChangeDrwReleaseTime(dto.DrwReleaseTime)//MainPlanStatus_e.生产
+        .ChangeWarehousingTime(dto.WarehousingTime)//MainPlanStatus_e.入库
+        .ChangeShippingTime(dto.ShippingTime)//MainPlanStatus_e.发货
+        .ChangeClosedTime(dto.ClosedTime);//MainPlanStatus_e.结束
+
+        //判断状态
+        if (dto.ProjectId == null) dto.Status = MainPlanStatus_e.计划;
+        if (dto.ProjectId != null) dto.Status = MainPlanStatus_e.制图;
+        if (dto.DrwReleaseTime != null) dto.Status = MainPlanStatus_e.生产;
+        if (dto.WarehousingTime != null) dto.Status = MainPlanStatus_e.入库;
+        if (dto.ShippingTime != null) dto.Status = MainPlanStatus_e.发货;
+        if (dto.ClosedTime != null) dto.Status = MainPlanStatus_e.结束;
+        ChangeStatus(dto.Status);
+        //todo:月度总结的时候，将计划状态更改为结束
         NotifyModified();
     }
 
@@ -194,6 +204,11 @@ public record MainPlan : AggregateRootEntity, IAggregateRoot, IHasCreationTime, 
     public MainPlan ChangeShippingTime(DateTime? shippingTime)
     {
         ShippingTime = shippingTime;
+        return this;
+    }
+    public MainPlan ChangeClosedTime(DateTime? closedTime)
+    {
+        ClosedTime = closedTime;
         return this;
     }
     #endregion

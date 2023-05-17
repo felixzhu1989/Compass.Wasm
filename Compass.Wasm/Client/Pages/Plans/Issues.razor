@@ -1,6 +1,8 @@
 ﻿@page "/issues"
 @inject IIssueService IssueService
 @inject IProjectService ProjectService
+@inject IMainPlanService MainPlanService
+
 <PageTitle>异常列表</PageTitle>
 <!--sticky固定位置，top: 3.5rem-->
 <div style="position: sticky; top: 3.5rem; z-index: 1;background-color:White">
@@ -37,17 +39,17 @@
         <div class="col"></div>
     </div>
 </div>
-@foreach (var projectDto in _filterProjectDtos)
+@foreach (var mainPlanDto in _filterMainPlanDtos)
 {
-    <hr style="color: red" />
+    <hr size="1" style="border-top:2px dodgerblue solid;">
     <div class="row position-relative">
         <div class="col">
-            <h5>项目异常列表</h5>
+            <h5>异常列表</h5>
         </div>
-        <CompAddButton Roles="admin,pm" Url="@($"issue/add/{projectDto.Id}")" />
+        <CompAddButton Roles="admin,pm" Url="@($"issue/add/{mainPlanDto.Id}")" />
     </div>
 
-    <LessonRow ProjectDto="@projectDto" />
+    <IssueRow MainPlanDto="@mainPlanDto"/>
 }
 
 
@@ -59,15 +61,15 @@
     private int _year;
     private int _month;
 
-    private List<ProjectDto> _projectDtos = new();
-    private List<ProjectDto> _filterProjectDtos = new();
+    private List<MainPlanDto> _mainPlanDtos = new();
+    private List<MainPlanDto> _filterMainPlanDtos = new();
 
     protected override async Task OnParametersSetAsync()
     {
         _year= _selectedMonth.Year;
         _month= _selectedMonth.Month;
-        var result = await ProjectService.GetAllAsync();
-        _projectDtos = result.Result;
+        var result = await MainPlanService.GetAllAsync();
+        _mainPlanDtos = result.Result;
         //过滤条件变化
         Search(new ChangeEventArgs { Value = _search });
     }
@@ -91,17 +93,16 @@
     private void Search(ChangeEventArgs e)
     {
         _search=e.Value!.ToString()!;
-        _filterProjectDtos.Clear();
-        _filterProjectDtos = _projectDtos.Where(
-            x => x.DeliveryDate.Year.Equals(_year)&&
+        _filterMainPlanDtos.Clear();
+        _filterMainPlanDtos = _mainPlanDtos.Where(
+            x => x.MonthOfInvoice.Year.Equals(_year)&&
                  (_annual||(_fromMonth&&
-                x.DeliveryDate.Month>=_month)||
-                  x.DeliveryDate.Month.Equals(_month))&&
+                            x.MonthOfInvoice.Month>=_month)||
+                  x.MonthOfInvoice.Month.Equals(_month))&&
                  (string.IsNullOrEmpty(_search)||
-                  x.OdpNumber.Contains(_search, StringComparison.OrdinalIgnoreCase)||
-                  x.Name.Contains(_search, StringComparison.OrdinalIgnoreCase)||
-                  (x.SpecialNotes!=null &&
-                   x.SpecialNotes.Contains(_search, StringComparison.OrdinalIgnoreCase))))
-                     .ToList();
+                  string.IsNullOrEmpty(x.Number)||
+                  x.Number.Contains(_search, StringComparison.OrdinalIgnoreCase)||
+                  string.IsNullOrEmpty(x.Name)||
+                  x.Name.Contains(_search, StringComparison.OrdinalIgnoreCase))).ToList();
     }
 }

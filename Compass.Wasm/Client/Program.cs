@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using Compass.Wasm.Client;
 using Compass.Wasm.Client.Services.Categories;
+using Compass.Wasm.Client.Services.Identities;
 using Compass.Wasm.Client.Services.Plans;
 using Compass.Wasm.Client.Services.Projects;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -44,4 +45,7 @@ builder.Services.AddScoped<IIssueService, IssueService>();
 
 #endregion
 
+
+
+builder.Services.AddScoped<IUserService, UserService>();
 await builder.Build().RunAsync();

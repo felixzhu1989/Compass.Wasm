@@ -73,7 +73,7 @@ public class LoginViewModel : BindableBase, IDialogAware
         {
             AppSession.Id = loginResult.Result.Id;
             AppSession.UserName = loginResult.Result.UserName;
-            AppSession.Roles = loginResult.Result.Roles;
+            AppSession.Roles = loginResult.Result.Role;
             if (SaveUser)
             {
                 //保存用户名和密码

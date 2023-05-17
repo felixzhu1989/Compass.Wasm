@@ -1,5 +1,5 @@
 ﻿using Compass.Wasm.Shared.Projects;
-using Compass.Wasm.Shared.Projects.Notifications;
+using Compass.Wasm.Shared.Projects.Notifs;
 using Zack.DomainCommons.Models;
 
 namespace Compass.ProjectService.Domain.Entities;
@@ -42,7 +42,7 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         SpecialNotes= specialNotes;
         ProjectStatus = ProjectStatus_e.计划;//初始状态是计划状态
         //发布领域事件
-        AddDomainEvent(new ProjectCreatedNotification(id, name));
+        AddDomainEvent(new ProjectCreatedNotif(id, name));
 
     }
     #endregion
@@ -150,7 +150,7 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     {
         base.SoftDelete();
         //发布删除项目领域事件
-        AddDomainEvent(new ProjectDeletedNotification(Id));
+        AddDomainEvent(new ProjectDeletedNotif(Id));
     } 
     #endregion
 }
