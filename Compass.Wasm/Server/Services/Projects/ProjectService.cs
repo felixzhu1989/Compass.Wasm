@@ -237,6 +237,7 @@ public class ProjectService : IProjectService
                 moduleDtos.ForEach(x =>
                 {
                     x.ItemNumber = drawingDto.ItemNumber;
+                    x.Batch = drawingDto.Batch;
                     x.OdpNumber = project.OdpNumber;
                     x.ProjectName = project.Name;
                     x.IsJobCardOk = x.IsModuleDataOk && !string.IsNullOrEmpty(drawingDto.ImageUrl);
@@ -246,6 +247,7 @@ public class ProjectService : IProjectService
                     x.ProjectType = project.ProjectType;
                     x.DeliveryDate = project.DeliveryDate;
                     x.ProjectSpecialNotes = project.SpecialNotes;
+                    
                 });
                 dtos.AddRange(moduleDtos);
             }

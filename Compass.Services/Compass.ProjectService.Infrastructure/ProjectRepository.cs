@@ -66,10 +66,10 @@ public class ProjectRepository : IProjectRepository
         return _context.Drawings.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
 
-
+    //扩展查询
     public Task<IQueryable<Drawing>> GetDrawingsByProjectIdAsync(Guid projectId)
     {
-        return Task.FromResult(_context.Drawings.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x => x.ItemNumber).AsQueryable());
+        return Task.FromResult(_context.Drawings.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x => x.Batch).ThenBy(x=>x.ItemNumber).AsQueryable());
     }
 
 

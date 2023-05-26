@@ -44,7 +44,7 @@ public enum AnsulDetectorEnd_e
 #region 烟罩结构
 public enum ExhaustType_e
 {
-    NA,KV,UV,KW,UW,CMOD,M,UVHW,UWHW
+    NA,KV,UV,KW,UW,CMOD,M
 }
 
 public enum ExhaustHeight_e

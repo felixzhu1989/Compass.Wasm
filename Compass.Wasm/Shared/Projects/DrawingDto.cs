@@ -10,6 +10,15 @@ public class DrawingDto:BaseDto,IComparable<DrawingDto>
     public string ItemNumber { get=>itemNumber;
         set { itemNumber = value;OnPropertyChanged(); }
     }
+    private int batch;
+    public int Batch
+    {
+        get => batch;
+        set { batch = value; OnPropertyChanged();}
+    }
+
+
+
 
     private string? drawingUrl;
     public string? DrawingUrl

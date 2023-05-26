@@ -236,9 +236,15 @@ public class ModuleDto : BaseDto
             projectSpecialNotes = value;
             OnPropertyChanged();
         }
-    } 
+    }
     #endregion
-
+    //分批
+    private int batch;
+    public int Batch
+    {
+        get => batch;
+        set { batch = value; OnPropertyChanged(); }
+    }
     #endregion
 
 }

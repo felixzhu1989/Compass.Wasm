@@ -1,4 +1,4 @@
-﻿using Compass.Wpf.DrawingServices;
+﻿using Compass.Wpf.SwServices;
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.BatchWorks;

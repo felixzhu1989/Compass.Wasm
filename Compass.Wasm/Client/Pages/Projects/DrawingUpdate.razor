@@ -15,9 +15,17 @@
 
 
 <EditForm Model="_drawingDto" OnSubmit="Save">
-    <div class="input-group mb-2">
-        <span class="input-group-text">Item编号</span>
-        <input class="form-control" placeholder="Item" @bind-value="@_drawingDto.ItemNumber" />
+    <div class="row">
+        <div class="col input-group mb-2">
+            <span class="input-group-text">Item编号</span>
+            <input class="form-control" placeholder="Item" @bind-value="@_drawingDto.ItemNumber" />
+        </div>
+        <div class="col input-group mb-2">
+            <span class="input-group-text">分批</span>
+            <input class="form-control" type="number" @bind-value="@_drawingDto.Batch" />
+        </div>
+        <div class="col"></div>
+        <div class="col"></div>
     </div>
     <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@_drawingDto.DrawingUrl" />
 

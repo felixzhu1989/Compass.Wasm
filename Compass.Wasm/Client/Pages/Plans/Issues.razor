@@ -44,11 +44,13 @@
     <hr size="1" style="border-top:2px dodgerblue solid;">
     <div class="row position-relative">
         <div class="col">
-            <h5>异常列表</h5>
+            <h5>
+                <span>@mainPlanDto.Number @mainPlanDto.Name</span>
+                <a href="issues/mainplan/@mainPlanDto.Id">[单独查看]</a>
+            </h5>
         </div>
         <CompAddButton Roles="admin,pm" Url="@($"issue/add/{mainPlanDto.Id}")" />
     </div>
-
     <IssueRow MainPlanDto="@mainPlanDto"/>
 }
 

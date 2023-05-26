@@ -40,15 +40,19 @@
 
 @foreach (var projectDto in _filterProjectDtos)
 {
-    <hr style="color: red"/>
+    <hr size="1" style="border-top:2px dodgerblue solid;">
     <div class="row position-relative">
         <div class="col">
-            <h5>项目经验教训</h5>
+            <h5>
+                <a href="drawings/@projectDto.Id">@projectDto.OdpNumber</a>
+                <span> @projectDto.Name</span>
+                <a href="lessons/project/@projectDto.Id">[单独查看]</a>
+            </h5>
         </div>
         <CompAddButton Roles="admin,pm" Url="@($"lesson/add/{projectDto.Id}")" />
     </div>
-    
-    <LessonRow ProjectDto="@projectDto"/>
+
+    <LessonRow ProjectDto="@projectDto" />
 }
 
 
@@ -99,7 +103,7 @@
                 x.DeliveryDate.Month>=_month)||
                   x.DeliveryDate.Month.Equals(_month))&&
                  (string.IsNullOrEmpty(_search)||
-                  x.OdpNumber.Contains(_search, StringComparison.OrdinalIgnoreCase)|| 
+                  x.OdpNumber.Contains(_search, StringComparison.OrdinalIgnoreCase)||
                   x.Name.Contains(_search, StringComparison.OrdinalIgnoreCase)||
                   (x.SpecialNotes!=null &&
                    x.SpecialNotes.Contains(_search, StringComparison.OrdinalIgnoreCase))))

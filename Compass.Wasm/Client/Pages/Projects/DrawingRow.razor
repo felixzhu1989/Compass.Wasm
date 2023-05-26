@@ -3,27 +3,30 @@
 @inject IJSRuntime JsRuntime
 <tr>
     <td>
-        <CompUpdateIcon Roles="admin,pm" Url="@($"drawing/update/{Drawing.Id}")"/>
-        @Drawing.ItemNumber
+        <CompBatch Batch="DrawingDto.Batch" />
     </td>
     <td>
-        <CompPdfFiles PdfUrls="@Drawing.DrawingUrl" UploadUrl="@($"drawing/update/{Drawing.Id}")" />
+        <CompUpdateIcon Roles="admin,pm" Url="@($"drawing/update/{DrawingDto.Id}")"/>
+        @DrawingDto.ItemNumber
     </td>
     <td>
-        <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(Drawing.ImageUrl))">@(showImage ? "▲" : "▼")</span>
+        <CompPdfFiles PdfUrls="@DrawingDto.DrawingUrl" UploadUrl="@($"drawing/update/{DrawingDto.Id}")"/>
+    </td>
+    <td>
+        <span @onclick="Show" hidden="@(string.IsNullOrWhiteSpace(DrawingDto.ImageUrl))">@(showImage ? "▲" : "▼")</span>
     </td>
 </tr>
 @if (showImage)
 {
     <tr>
         <td colspan="3">
-            <img src="@Drawing.ImageUrl" asp-append-version="true" height="300px" />
+            <img src="@DrawingDto.ImageUrl" asp-append-version="true" height="300px" />
         </td>
     </tr>
 }
 @code {
     [Parameter]
-    public DrawingDto Drawing { get; set; }
+    public DrawingDto DrawingDto { get; set; }
     private bool showImage = false;
     private void Show()
     {

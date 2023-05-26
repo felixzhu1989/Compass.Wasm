@@ -1,13 +1,13 @@
 ﻿@page "/lessons/project/{ProjectId}"
 
-
 @inject IProjectService ProjectService
 <PageTitle>项目经验教训</PageTitle>
 <div class="row position-relative">
     <div class="col">
         <h5>
-            <span>项目经验教训</span>
-            <a href="lessons">(All)</a>
+            <a href="drawings/@_projectDto.Id">@_projectDto.OdpNumber</a>
+            <span> @_projectDto.Name</span>
+            <a href="lessons">[查看所有]</a>
         </h5>
     </div>
     <CompAddButton Roles="admin,pm" Url="@($"lesson/add/{ProjectId}")" />

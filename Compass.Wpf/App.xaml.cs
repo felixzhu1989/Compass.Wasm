@@ -7,7 +7,7 @@ using Compass.Wpf.ApiServices.Projects;
 using Compass.Wpf.ApiServices.Todos;
 using Compass.Wpf.BatchWorks;
 using Compass.Wpf.BatchWorks.Hoods;
-using Compass.Wpf.DrawingServices;
+using Compass.Wpf.SwServices;
 using Compass.Wpf.ViewModels;
 using Compass.Wpf.ViewModels.Dialogs;
 using Compass.Wpf.ViewModels.Hoods;

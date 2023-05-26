@@ -1,10 +1,6 @@
 ﻿@inject IIssueService IssueService
 @inject IUserService UserService
 
-<h5>
-    <span>@MainPlanDto.Number-</span>
-    <span class="ms-2">@MainPlanDto.Name</span>
-</h5>
 @foreach (var issue in MainPlanDto.IssueDtos)
 {
     //虚线分割

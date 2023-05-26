@@ -19,6 +19,9 @@ public static class CommonExtensions
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KWI_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWF_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWI_555.SLDASM",
+            //Huawei
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_HW_650.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_HW_650.SLDASM",
             //Ceilings
 
 
@@ -28,7 +31,7 @@ public static class CommonExtensions
         var modelPath = modelPathList.FirstOrDefault(x => x.Contains(modelName, StringComparison.OrdinalIgnoreCase));
         if (string.IsNullOrEmpty(modelPath))
         {
-            throw new ArgumentNullException(modelName, $@"模型{modelName}在PDM中未找到！");
+            throw new ArgumentNullException(modelName, $@"PDM中暂时没有标准化模型{modelName}，请联系管理员处理！");
         }
         return modelPath;
     }

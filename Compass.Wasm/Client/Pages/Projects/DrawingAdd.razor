@@ -24,6 +24,13 @@
                 </div>
             </div>
             <div class="col">
+                <span>分批 ：</span><br />
+                <div class="input-group mb-2">
+                    <span class="input-group-text">分批</span>
+                    <input class="form-control" type="number" @bind-value="@dto.Batch"/>
+                </div>
+            </div>
+            <div class="col">
                 <MultiFileUpload Title="图纸(可添加多张)" FileType="application/pdf" @bind-MultiFileUrl="@dto.DrawingUrl" />
             </div>
             

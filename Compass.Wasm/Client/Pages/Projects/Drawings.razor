@@ -54,7 +54,7 @@
                                 {
                                     <tr class="@(plan.AllIssueClosed ? "" : "table-danger")">
                                         <td>
-                                            <CompBatch Batch="plan.Batch"></CompBatch>
+                                            <CompBatch Batch="plan.Batch" />
                                         </td>
                                         <td style="text-align: center">
                                             <CompMainPlanStatus Status="@plan.Status"></CompMainPlanStatus>
@@ -112,7 +112,7 @@
                                                     <span>查看异常</span>
                                                     <img class="ms-1 me-2" style="width: 23px" src="andon_red.gif" />
                                                 </a>
-                            
+
                                             }
                                         </td>
                                     </tr>
@@ -127,8 +127,8 @@
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">系统合同:</div>
                 <CompFile Roles="admin,pm,designer"
-                        FileUrl="@_projectDto.ContractUrl"
-                        UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
+                      FileUrl="@_projectDto.ContractUrl"
+                      UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
             </div>
             <div class="row">
                 <div class="col-sm-3" style="width: 95px">物料清单:</div>
@@ -164,12 +164,12 @@
                     <div class="col-sm-3" style="width: 95px">异常列表:</div>
                     <div class="col-sm-9" style="color: red">
                         @*@if (_problemDtos != null && _problemDtos.Length != 0)
-                        {
-                            foreach (var problem in _problemDtos)
-                            {
-                                <ShowProblem Problem="@problem" />
-                            }
-                        }*@
+                {
+                foreach (var problem in _problemDtos)
+                {
+                <ShowProblem Problem="@problem" />
+                }
+                }*@
                     </div>
                 </div>
             }
@@ -180,6 +180,7 @@
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
     <thead>
         <tr>
+            <th style="width: 50px; color: dodgerblue">分批</th>
             <th style="width: 30%">Item编号</th>
             <th>PDF图纸</th>
             <td>截图预览</td>
@@ -194,7 +195,7 @@
         {
             @foreach (var drawing in _projectDto.DrawingDtos)
             {
-                <DrawingRow Drawing="drawing" />
+                <DrawingRow DrawingDto="drawing" />
             }
         }
     </tbody>
@@ -204,7 +205,7 @@
     [Parameter]
     public string ProjectId { get; set; }
     private ProjectDto _projectDto = new();
-    
+
     protected override async Task OnInitializedAsync()
     {
         var pResult = await ProjectService.GetFirstOrDefault(Guid.Parse(ProjectId));
