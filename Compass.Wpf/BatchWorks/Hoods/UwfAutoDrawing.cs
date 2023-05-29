@@ -37,10 +37,10 @@ public class UwfAutoDrawing : BaseAutoDrawing, IUwfAutoDrawing
 
             switch (moduleDto.ModelName)
             {
-                case "UVF_555":
+                case "UWF_555":
                     Uwf555(data, swModelTop, swAssyTop, suffix);
                     break;
-                case "UVF_HW_650":
+                case "UWF_HW_650":
                     UwfHw650(data, swModelTop, swAssyTop, suffix);
                     break;
             }

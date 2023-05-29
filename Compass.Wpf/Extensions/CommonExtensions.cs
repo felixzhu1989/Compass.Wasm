@@ -22,6 +22,7 @@ public static class CommonExtensions
             //Huawei
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_HW_650.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_HW_650.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWF_HW_650.SLDASM",
             //Ceilings
 
 

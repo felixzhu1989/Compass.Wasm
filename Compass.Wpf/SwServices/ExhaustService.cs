@@ -1756,7 +1756,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         KsaFilter(swAssyLevel1, suffix, length-3d, "FNHE0160-1", "FNHE0161-1", "FNHE0170-1");
 
         //排风滑门导轨
-        ExhaustRail(swAssyLevel1, suffix, marvel, length, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, "FNCE0165-1", "FNCE0165-2");
+        ExhaustRail(swAssyLevel1, suffix, marvel, length, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, "FNHE0165-1", "FNHE0165-2");
 
         //Ksa阵列，水洗烟罩在三角板内侧，因此长度减去3，三角板的厚度
         Ksa(swAssyLevel1, length-3d);
@@ -1904,7 +1904,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
                 swModelLevel2.ChangeDim("UvCable@SketchUvCable", 1500d);
                 swCompLevel2.Suppress("UvDoorDouble");
-                swCompLevel2.Suppress("UvCcableDouble");
+                swCompLevel2.Suppress("UvCableDouble");
                 break;
             case UvLightType_e.UVR4S:
             case UvLightType_e.UVR6S:
@@ -1919,7 +1919,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
                 swModelLevel2.ChangeDim("UvCable@SketchUvCable", 790d);
                 swCompLevel2.Suppress("UvDoorDouble");
-                swCompLevel2.Suppress("UvCcableDouble");
+                swCompLevel2.Suppress("UvCableDouble");
                 break;
             case UvLightType_e.Double:
                 swCompLevel2.UnSuppress("TabUp");
@@ -1929,7 +1929,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swCompLevel2.Suppress("UvDoorLong");
                 swCompLevel2.Suppress("UvCable");
                 swCompLevel2.UnSuppress("UvDoorDouble");
-                swCompLevel2.UnSuppress("UvCcableDouble");
+                swCompLevel2.UnSuppress("UvCableDouble");
                 break;
             case UvLightType_e.NA:
             default:
@@ -1940,7 +1940,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swCompLevel2.Suppress("UvDoorLong");
                 swCompLevel2.Suppress("UvCable");
                 swCompLevel2.Suppress("UvDoorDouble");
-                swCompLevel2.Suppress("UvCcableDouble");
+                swCompLevel2.Suppress("UvCableDouble");
                 break;
         }
         #endregion
