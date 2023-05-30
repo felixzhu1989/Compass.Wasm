@@ -5,6 +5,7 @@ using Compass.PlanService.Domain.Entities;
 using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Plans;
 using Compass.Wasm.Shared.Projects;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -14,7 +15,7 @@ public interface IProjectService : IBaseService<ProjectDto>
 {
     //扩展的查询功能,WPF
     Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParameter parameter);
-    Task<ApiResponse<ProjectSummaryDto>> GetSummaryAsync();
+    
     Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter);//用于树结构
     Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter);//用于自动作图
 
@@ -145,33 +146,6 @@ public class ProjectService : IProjectService
         catch (Exception e)
         {
             return new ApiResponse<List<ProjectDto>> { Status = false, Message = e.Message };
-        }
-    }
-
-    /// <summary>
-    /// 查询项目的统计信息
-    /// </summary>
-    /// <returns></returns>
-    public async Task<ApiResponse<ProjectSummaryDto>> GetSummaryAsync()
-    {
-        try
-        {
-            //所有项目
-            var dtos = (await GetAllAsync()).Result;
-            ProjectSummaryDto summary = new();
-            summary.Sum = dtos.Count;//总项目数
-            summary.PlanCount = dtos.Count(x => x.ProjectStatus == ProjectStatus_e.计划);
-            summary.DrawingCount = dtos.Count(x => x.ProjectStatus == ProjectStatus_e.制图);
-            summary.ProductionCount = dtos.Count(x => x.ProjectStatus == ProjectStatus_e.生产);
-            summary.WarehousingCount = dtos.Count(x => x.ProjectStatus == ProjectStatus_e.入库);
-            summary.ShippingCount = dtos.Count(x => x.ProjectStatus == ProjectStatus_e.发货);
-            summary.CompletedCount = dtos.Count(x => x.ProjectStatus == ProjectStatus_e.结束);
-
-            return new ApiResponse<ProjectSummaryDto> { Status = true, Result = summary };
-        }
-        catch (Exception e)
-        {
-            return new ApiResponse<ProjectSummaryDto> { Status = false, Message = e.Message };
         }
     }
 

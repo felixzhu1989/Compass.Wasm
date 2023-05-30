@@ -8,6 +8,7 @@ namespace Compass.Wpf.ApiServices.Plans;
 public interface IMainPlanService : IBaseService<MainPlanDto>
 {
     Task<ApiResponse<MainPlanDto>> UpdateStatusesAsync(Guid id, MainPlanDto dto);
+    Task<ApiResponse<MainPlanCountDto>> GetCountAsync();
 }
 public class MainPlanService : BaseService<MainPlanDto>, IMainPlanService
 {
@@ -26,5 +27,15 @@ public class MainPlanService : BaseService<MainPlanDto>, IMainPlanService
             Parameter = dto
         };
         return await _client.ExecuteAsync<MainPlanDto>(request);
+    }
+
+    public async Task<ApiResponse<MainPlanCountDto>> GetCountAsync()
+    {
+        BaseRequest request = new()
+        {
+            Method = RestSharp.Method.Get,
+            Route = "api/MainPlan/Count"
+        };
+        return await _client.ExecuteAsync<MainPlanCountDto>(request);
     }
 }

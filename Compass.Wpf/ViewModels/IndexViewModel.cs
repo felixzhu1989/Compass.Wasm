@@ -1,6 +1,7 @@
-﻿using Compass.Wpf.ApiServices.Todos;
+﻿using Compass.Wpf.ApiServices.Plans;
+using Compass.Wpf.ApiServices.Todos;
 using Compass.Wpf.ApiServices.Projects;
- 
+
 namespace Compass.Wpf.ViewModels;
 
 public class IndexViewModel : NavigationViewModel
@@ -9,12 +10,13 @@ public class IndexViewModel : NavigationViewModel
     private readonly ITodoService _todoService;
     private readonly IMemoService _memoService;
     private readonly IProjectService _projectService;
-
+    private readonly IMainPlanService _mainPlanService;
     public IndexViewModel(IContainerProvider provider) : base(provider)
     {
         _todoService = provider.Resolve<ITodoService>();
         _memoService = provider.Resolve<IMemoService>();
         _projectService= provider.Resolve<IProjectService>();
+        _mainPlanService=provider.Resolve<IMainPlanService>();
 
         StatusTaskBars = new ObservableCollection<TaskBar>();
         TodoTaskBars = new ObservableCollection<TaskBar>();
@@ -56,11 +58,11 @@ public class IndexViewModel : NavigationViewModel
         set { todoSummary = value; RaisePropertyChanged(); }
     }
 
-    private ProjectSummaryDto projectSummary = null!;
-    public ProjectSummaryDto ProjectSummary
+    private MainPlanCountDto planCount = null!;
+    public MainPlanCountDto PlanCount
     {
-        get => projectSummary;
-        set { projectSummary = value; RaisePropertyChanged(); }
+        get => planCount;
+        set { planCount = value; RaisePropertyChanged(); }
     }
 
     private string welcomeText = null!;
@@ -114,22 +116,17 @@ public class IndexViewModel : NavigationViewModel
 
             //计划,制图,生产,入库,发货,结束
             case "计划":
-                param.Add("Value", 1);
                 break;
             case "制图":
                 param.Add("Value", 2);
                 break;
             case "生产":
-                param.Add("Value", 3);
                 break;
             case "入库":
-                param.Add("Value", 4);
                 break;
             case "发货":
-                param.Add("Value", 5);
                 break;
             case "结束":
-                param.Add("Value", 6);
                 break;
         }
         RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.Target, back =>
@@ -312,16 +309,16 @@ public class IndexViewModel : NavigationViewModel
 
     private async void InitProjectSummary()
     {
-        var projectSummaryResult = await _projectService.GetSummaryAsync();
-        if (projectSummaryResult.Status)
+        var planCountResult = await _mainPlanService.GetCountAsync();
+        if (planCountResult.Status)
         {
-            ProjectSummary = projectSummaryResult.Result;
-            StatusTaskBars[0].Content=ProjectSummary.PlanCount.ToString();
-            StatusTaskBars[1].Content=ProjectSummary.DrawingCount.ToString();
-            StatusTaskBars[2].Content=ProjectSummary.ProductionCount.ToString();
-            StatusTaskBars[3].Content=ProjectSummary.WarehousingCount.ToString();
-            StatusTaskBars[4].Content=ProjectSummary.ShippingCount.ToString();
-            StatusTaskBars[5].Content=$"{ProjectSummary.CompletedCount} / {ProjectSummary.Sum}";
+            PlanCount = planCountResult.Result;
+            StatusTaskBars[0].Content=PlanCount.PlanCount.ToString();
+            StatusTaskBars[1].Content=PlanCount.DrawingCount.ToString();
+            StatusTaskBars[2].Content=PlanCount.ProductionCount.ToString();
+            StatusTaskBars[3].Content=PlanCount.WarehousingCount.ToString();
+            StatusTaskBars[4].Content=PlanCount.ShippingCount.ToString();
+            StatusTaskBars[5].Content=$"{PlanCount.CompletedCount} / {PlanCount.Sum}";
         }
     }
 

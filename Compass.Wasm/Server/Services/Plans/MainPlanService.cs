@@ -7,6 +7,7 @@ using Compass.PlanService.Infrastructure.Migrations;
 using Compass.Wasm.Server.Events.Plans;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Plans;
+using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Server.Services.Plans;
 public interface IMainPlanService : IBaseService<MainPlanDto>
@@ -16,9 +17,13 @@ public interface IMainPlanService : IBaseService<MainPlanDto>
     //GetIndexDataAsync
     Task<ApiResponse<List<MainPlanDto>>> GetIndexDataAsync();
     Task<ApiResponse<List<MainPlanDto>>> GetAllByProjectIdAsync(Guid projectId);
+    //WPF主页，计划信息统计
+    Task<ApiResponse<MainPlanCountDto>> GetCountAsync();
+
 }
 public class MainPlanService : IMainPlanService
 {
+    #region ctor
     private readonly PlanDomainService _domainService;
     private readonly IIssueService _issueService;
     private readonly PlanDbContext _dbContext;
@@ -27,7 +32,7 @@ public class MainPlanService : IMainPlanService
     private readonly IEventBus _eventBus;
     private readonly IProjectRepository _projectRepository;
 
-    public MainPlanService(PlanDomainService domainService,IIssueService issueService, PlanDbContext dbContext, IPlanRepository repository, IMapper mapper, IEventBus eventBus, IProjectRepository projectRepository)
+    public MainPlanService(PlanDomainService domainService, IIssueService issueService, PlanDbContext dbContext, IPlanRepository repository, IMapper mapper, IEventBus eventBus, IProjectRepository projectRepository)
     {
         _domainService = domainService;
         _issueService = issueService;
@@ -36,7 +41,8 @@ public class MainPlanService : IMainPlanService
         _mapper = mapper;
         _eventBus = eventBus;
         _projectRepository = projectRepository;
-    }
+    } 
+    #endregion
 
     #region 基本增删改查
     public async Task<ApiResponse<List<MainPlanDto>>> GetAllAsync()
@@ -181,7 +187,32 @@ public class MainPlanService : IMainPlanService
             return new ApiResponse<List<MainPlanDto>> { Status = false, Message = e.Message };
         }
     }
+    /// <summary>
+    /// 查询项目的统计信息
+    /// </summary>
+    /// <returns></returns>
+    public async Task<ApiResponse<MainPlanCountDto>> GetCountAsync()
+    {
+        try
+        {
+            //所有项目
+            var dtos = (await GetAllAsync()).Result;
+            MainPlanCountDto summary = new();
+            summary.Sum = dtos.Count;//总项目数
+            summary.PlanCount = dtos.Count(x => x.Status == MainPlanStatus_e.计划);
+            summary.DrawingCount = dtos.Count(x => x.Status == MainPlanStatus_e.制图);
+            summary.ProductionCount = dtos.Count(x => x.Status == MainPlanStatus_e.生产);
+            summary.WarehousingCount = dtos.Count(x => x.Status == MainPlanStatus_e.入库);
+            summary.ShippingCount = dtos.Count(x => x.Status == MainPlanStatus_e.发货);
+            summary.CompletedCount = dtos.Count(x => x.Status == MainPlanStatus_e.结束);
 
+            return new ApiResponse<MainPlanCountDto> { Status = true, Result = summary };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<MainPlanCountDto> { Status = false, Message = e.Message };
+        }
+    }
     #endregion
 
     private async Task GetIssues(MainPlanDto dto)
@@ -194,5 +225,6 @@ public class MainPlanService : IMainPlanService
         }
     }
 
+    
 
 }

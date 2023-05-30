@@ -53,6 +53,16 @@ public class MainPlanController : ControllerBase
     /// </summary>
     [HttpGet("Project/{projectId}")]
     public async Task<ApiResponse<List<MainPlanDto>>> GetAllByProjectId([RequiredGuid] Guid projectId) => await _service.GetAllByProjectIdAsync(projectId);
+
+
+
+    /// <summary>
+    /// 查询项目汇总结果
+    /// </summary>
+    [HttpGet("Count")]
+    public async Task<ApiResponse<MainPlanCountDto>> GetCount() => await _service.GetCountAsync();
+
+
     #endregion
 
 }

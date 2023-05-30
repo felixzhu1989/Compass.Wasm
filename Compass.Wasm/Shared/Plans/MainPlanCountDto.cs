@@ -1,14 +1,14 @@
-﻿namespace Compass.Wasm.Shared.Projects;
+﻿namespace Compass.Wasm.Shared.Plans;
 
-public class ProjectSummaryDto:BaseDto
+public class MainPlanCountDto : BaseDto
 {
     //订单总数
     private int sum;
     public int Sum
-	{
-		get => sum;
-        set { sum = value; OnPropertyChanged();}
-	}
+    {
+        get => sum;
+        set { sum = value; OnPropertyChanged(); }
+    }
     //计划,制图,生产,入库,发货,结束
     private int planCount;
     public int PlanCount

@@ -2,6 +2,7 @@
 using Compass.Wasm.Server.Services.Projects;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Plans;
 using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Server.Controllers.Projects;
@@ -42,12 +43,6 @@ public class ProjectController : ControllerBase
     /// </summary>
     [HttpGet("Filter")]
     public async Task<ApiResponse<List<ProjectDto>>> GetAllFilter(ProjectParameter parameter) => await _service.GetAllFilterAsync(parameter);
-
-    /// <summary>
-    /// 查询项目汇总结果
-    /// </summary>
-    [HttpGet("Summary")]
-    public async Task<ApiResponse<ProjectSummaryDto>> GetUserSummary() => await _service.GetSummaryAsync();
 
     /// <summary>
     /// 查询单个项目的图纸和分段的树结构

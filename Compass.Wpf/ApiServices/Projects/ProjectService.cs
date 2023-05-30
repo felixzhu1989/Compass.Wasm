@@ -9,7 +9,7 @@ namespace Compass.Wpf.ApiServices.Projects;
 public interface IProjectService : IBaseService<ProjectDto>
 {
     Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParameter parameter);
-    Task<ApiResponse<ProjectSummaryDto>> GetSummaryAsync();
+    
     Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter);
     Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter);
 
@@ -39,15 +39,7 @@ public class ProjectService : BaseService<ProjectDto>, IProjectService
         return await _client.ExecuteAsync<List<ProjectDto>>(request);
     }
 
-    public async Task<ApiResponse<ProjectSummaryDto>> GetSummaryAsync()
-    {
-        BaseRequest request = new()
-        {
-            Method = RestSharp.Method.Get,
-            Route = "api/Project/Summary"
-        };
-        return await _client.ExecuteAsync<ProjectSummaryDto>(request);
-    }
+    
 
     public async Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter)
     {
