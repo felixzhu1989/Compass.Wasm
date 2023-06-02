@@ -42,7 +42,7 @@ public class ProjectController : ControllerBase
     /// 根据查询条件筛选结果
     /// </summary>
     [HttpGet("Filter")]
-    public async Task<ApiResponse<List<ProjectDto>>> GetAllFilter(ProjectParameter parameter) => await _service.GetAllFilterAsync(parameter);
+    public async Task<ApiResponse<List<ProjectDto>?>> GetAllFilter(ProjectParameter parameter) => await _service.GetAllFilterAsync(parameter);
 
     /// <summary>
     /// 查询单个项目的图纸和分段的树结构

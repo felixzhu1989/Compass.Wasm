@@ -1,4 +1,6 @@
-﻿namespace Compass.Wpf.Views.Dialogs;
+﻿using Compass.Update;
+
+namespace Compass.Wpf.Views.Dialogs;
 
 /// <summary>
 /// LoginView.xaml 的交互逻辑
@@ -14,4 +16,5 @@ public partial class LoginView : UserControl
             LoginSnackBar.MessageQueue.Enqueue(arg.Message);
         }, Filter_e.Login);
     }
+    
 }

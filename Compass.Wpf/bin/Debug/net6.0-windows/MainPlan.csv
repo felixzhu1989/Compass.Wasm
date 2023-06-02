@@ -1,11 +1,1 @@
-Batch,CreateTime,Number,Name,Status,Quantity,ItemLine,ModelSummary,Workload,FinishTime,DrwReleaseTarget,DrwReleaseTime,,,,,,,,,,,,,PackingDate,,Purchase,Value,MonthOfInvoice,Remark,,,,
-,2023-5-11,FSO230188,Guian Huawei B4.1贵安华为云数据中心B4.1云山餐厅,in production,5,12,UVF(5)/UCP(1)/Ansul,10.0,2023-6-6,5-24,5-23,5-24,5-24,5-24,5-25,5-26,5-26,5-27,5-27,5-30,6-5,,,,,," 250,139.82 ", Jun??? ,,,,,
-3,2023-4-12,FSO230152-3,Huawei Shenzhen JLS华为深圳九华山,in production,22,36,UVF(16)/UVI(6)/Ansul box(6)/Ansul,52.0,2023-6-12,5-8,5-8,5-18,5-20,5-22,5-26,5-25,5-30,5-26,5-31,6-1,6-7,,,,,," 1,200,518.58 ", Jun??? ,6/12提货,,,,
-4,2023-4-12,FSO230152-4,Huawei Shenzhen JLS华为深圳九华山,in production,26,35,UVF(26)/Ansul box(10)/Ansul,65.0,2023-6-15,5-9,5-6,5-25,5-27,5-27,5-31,5-30,6-1,5-31,6-3,6-6,6-10,,,,,," 1,200,518.58 ", Jun??? ,6/15提货,,,,
-,2023-3-29,FSO230120,"Chiba honda,Chiba,Japan phase 2",in production,1,17,KCJ-MRV(1),52.0,2023-6-30,6-1,5-23,5-29,5-30,6-1,6-2,6-2,6-3,6-3,6-5,6-6,6-12,,,,,," 242,607.35 ", Jun??? ,7/1出货,,,,
-1,2023-3-29,FSO230119-1,"Chiba honda,Chiba,Japan phase1",in production,1,46,B1-B6 KCJ-MRV(1),346.3,2023-6-30,5-30,5-30,5-31,6-2,6-3,6-6,6-5,6-7,6-6,6-8,6-10,6-15,,,,,," 1,700,696.62 ", Jun??? ,7/1出货,,,,
-2,2023-3-29,FSO230119-2,"Chiba honda,Chiba,Japan phase1",in production,1,,B7-B10 KCJ-MRV(1),,2023-6-30,6-2,5-30,6-3,6-6,6-7,6-9,6-8,6-10,6-9,6-12,6-14,6-19,,,,,,,,7/1出货,,,,
-3,2023-3-29,FSO230119-3,"Chiba honda,Chiba,Japan phase1",in production,1,,B11-B20 KCJ-MRV(1),,2023-6-30,6-6,5-30,6-7,6-9,6-10,6-13,6-12,6-14,6-13,6-15,6-16,6-21,,,,,,,,7/1出货,,,,
-1,2023-4-6,FSO230139-1,Huawei Qingpu E area staff kitchen华为青浦E区员工厨房,drawings checking(client),29,31,UVF(25)/UVI(4)/Ansul,70.5,2023-6-30,6-9,,6-10,6-13,6-14,6-17,6-15,6-19,6-16,6-20,6-21,6-27,,,,,," 970,193.50 ", Jul??? ,6月底出货,,,,
-,2023-4-28,FSO230173,GOOGLE TAIPEI - phase 1,drawing making,10,7,UVF(7)/UVI(2)/UVIR(1)/MCP(1)/ABD(1)/MARVEL,25.5,2023-6-30,6-13,,6-14,6-15,6-19,6-20,6-20,6-21,6-21,6-23,6-26,6-28,,,,,," 323,155.49 ", Jun??? ,,,,,
-,2023-4-28,FSO230174,GOOGLE TAIPEI - phase 2,drawing making,16,11,UVF(14)/UVI(2)/MCP(3)/MARVEL,40.5,2023-6-30,6-15,,6-16,6-19,6-20,6-23,6-23,6-26,6-24,6-27,6-28,6-30,,,,,," 561,202.15 ", Jun??? ,,,,,
+Batch,CreateTime,Number,Name,Status,Quantity,ItemLine,ModelSummary,Workload,FinishTime,DrwReleaseTarget,DrwReleaseTime,,,,,,,,,,,,,PackingDate,,Purchase,Value,MonthOfInvoice,Remark

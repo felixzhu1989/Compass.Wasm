@@ -2,6 +2,7 @@
 using System.Configuration;
 using Compass.Wasm.Shared.Identities;
 using Compass.Wpf.ApiService;
+using Compass.Update;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 
@@ -21,6 +22,9 @@ public class LoginViewModel : BindableBase, IDialogAware
         ExecuteCommand =new DelegateCommand<string>(Execute);
     }
     #endregion
+
+    
+
 
     #region 属性
     public string Title { get; } = "Compass";
@@ -62,6 +66,7 @@ public class LoginViewModel : BindableBase, IDialogAware
     /// </summary>
     private async void Login()
     {
+        CheckUpdate();
         if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(Password))
             return;
         var loginResult = await _loginService.LoginAsync(new UserDto
@@ -93,6 +98,7 @@ public class LoginViewModel : BindableBase, IDialogAware
         _aggregator.SendMessage(loginResult.Message, Filter_e.Login);
     }
 
+
     /// <summary>
     /// 退出操作
     /// </summary>
@@ -100,7 +106,17 @@ public class LoginViewModel : BindableBase, IDialogAware
     {
         RequestClose?.Invoke(new DialogResult(ButtonResult.No));
     }
-    
+
+    //检查更新
+    private void CheckUpdate()
+    {
+        var updateMgr = new UpdateManager();
+        if (!updateMgr.NeedUpdate) return;
+        Logout();
+        //启动升级程序
+        System.Diagnostics.Process.Start("Compass.Update.exe");
+    }
+
     #region 记住密码
     /// <summary>
     /// 读取客户设置,初始化的时候给其赋值,LoginName = GetSettingString("UserName");

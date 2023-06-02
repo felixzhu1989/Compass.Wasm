@@ -563,8 +563,8 @@ public class MidRoofService : BaseSwService, IMidRoofService
         ExhaustType_e exhaustType)
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
-
-        swModelLevel2.ChangeDim("Length@SketchBase", netWidth - 3.5d);
+        //2023.6.2以前减3.5，因为MidRoof宽度方向塞不进去，多减1
+        swModelLevel2.ChangeDim("Length@SketchBase", netWidth - 4.5d);
         swModelLevel2.ChangeDim("Height@SketchBase", height - 478d);
 
         //因为后方一点距离前端固定90，这里计算前端一点移动的距离

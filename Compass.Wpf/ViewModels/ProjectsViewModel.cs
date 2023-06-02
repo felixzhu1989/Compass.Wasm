@@ -35,14 +35,14 @@ public class ProjectsViewModel : NavigationViewModel
         get => search;
         set { search = value; RaisePropertyChanged(); }
     }
-    private int selectedProjectStatus;
+    private int selectedStatus;
     /// <summary>
     /// 选中状态，用于搜索筛选
     /// </summary>
-    public int SelectedProjectStatus
+    public int SelectedStatus
     {
-        get => selectedProjectStatus;
-        set { selectedProjectStatus = value; RaisePropertyChanged(); }
+        get => selectedStatus;
+        set { selectedStatus = value; RaisePropertyChanged(); }
     }
     #endregion
 
@@ -80,19 +80,19 @@ public class ProjectsViewModel : NavigationViewModel
     #region 导航初始化
     private async void GetDataAsync()
     {
-        int? status = SelectedProjectStatus == 0 ? null : SelectedProjectStatus-1;
-        ProjectParameter parameter = new() { Search = this.Search, ProjectStatus =status==null ? null : (ProjectStatus_e)status };
+        int? status = SelectedStatus;
+        ProjectParameter parameter = new() { Search = this.Search, Status =status==null ? null : (MainPlanStatus_e)status };
         var result = await _projectService.GetAllFilterAsync(parameter);
+        ProjectDtos.Clear();
         if (result.Status)
         {
-            ProjectDtos.Clear();
             ProjectDtos.AddRange(result.Result);
         }
     }
     public override void OnNavigatedTo(NavigationContext navigationContext)
     {
         base.OnNavigatedTo(navigationContext);
-        SelectedProjectStatus = navigationContext.Parameters.ContainsKey("Value")
+        SelectedStatus = navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<int>("Value")
             : 0;
         GetDataAsync();

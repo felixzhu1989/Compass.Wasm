@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Compass.DataService.Domain;
 using Compass.PlanService.Domain;
-using Compass.PlanService.Domain.Entities;
 using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameters;
-using Compass.Wasm.Shared.Plans;
 using Compass.Wasm.Shared.Projects;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -14,8 +12,8 @@ namespace Compass.Wasm.Server.Services.Projects;
 public interface IProjectService : IBaseService<ProjectDto>
 {
     //扩展的查询功能,WPF
-    Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParameter parameter);
-    
+    Task<ApiResponse<List<ProjectDto>?>> GetAllFilterAsync(ProjectParameter parameter);
+
     Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter);//用于树结构
     Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter);//用于自动作图
 
@@ -41,14 +39,14 @@ public class ProjectService : IProjectService
     private readonly IPlanRepository _planRepository;
     private readonly IMapper _mapper;
     private readonly IDataRepository _dataRepository;
-    public ProjectService(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository,IPlanRepository planRepository, IMapper mapper, IEventBus eventBus, ExportExcelService export, IDataRepository dataRepository)
+    public ProjectService(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IPlanRepository planRepository, IMapper mapper, IEventBus eventBus, ExportExcelService export, IDataRepository dataRepository)
     {
         _dbContext = dbContext;
         _repository = repository;
         _planRepository = planRepository;
         _mapper = mapper;
         _dataRepository = dataRepository;
-    } 
+    }
     #endregion
 
     #region 基本增删改查
@@ -132,20 +130,27 @@ public class ProjectService : IProjectService
     /// <summary>
     /// 根据筛选条件查询
     /// </summary>
-    public async Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParameter parameter)
+    public async Task<ApiResponse<List<ProjectDto>?>> GetAllFilterAsync(ProjectParameter parameter)
     {
         try
         {
+            //查询计划，根据状态查询到Id
+            var ids = await _planRepository.GetProjectIdsByStatusAsync(parameter.Status);
+            if (ids.Count == 0)
+            {
+                return new ApiResponse<List<ProjectDto>?> { Status = false, Message ="当前状态无项目" };
+            }
             var models = await _repository.GetProjectsAsync();
             //筛选结果，按照发货时间倒序排序
             var filterModels = models.Where(x => (
-                string.IsNullOrWhiteSpace(parameter.Search) || x.OdpNumber.Contains(parameter.Search) || x.Name.Contains(parameter.Search) || x.SpecialNotes.Contains(parameter.Search)) && (parameter.ProjectStatus == null || x.ProjectStatus == parameter.ProjectStatus)).OrderByDescending(x => x.DeliveryDate);
+                string.IsNullOrWhiteSpace(parameter.Search) || x.OdpNumber.Contains(parameter.Search) || x.Name.Contains(parameter.Search) || x.SpecialNotes.Contains(parameter.Search)) && ids.Contains(x.Id)).OrderByDescending(x => x.DeliveryDate);
             var dtos = await _mapper.ProjectTo<ProjectDto>(filterModels).ToListAsync();
-            return new ApiResponse<List<ProjectDto>> { Status = true, Result = dtos };
+            dtos.ForEach(x=>x.Status=parameter.Status);
+            return new ApiResponse<List<ProjectDto>?> { Status = true, Result = dtos };
         }
         catch (Exception e)
         {
-            return new ApiResponse<List<ProjectDto>> { Status = false, Message = e.Message };
+            return new ApiResponse<List<ProjectDto>?> { Status = false, Message = e.Message };
         }
     }
 
@@ -221,7 +226,7 @@ public class ProjectService : IProjectService
                     x.ProjectType = project.ProjectType;
                     x.DeliveryDate = project.DeliveryDate;
                     x.ProjectSpecialNotes = project.SpecialNotes;
-                    
+
                 });
                 dtos.AddRange(moduleDtos);
             }

@@ -3,6 +3,7 @@ using Compass.PlanService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Compass.Wasm.Shared.Plans;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.Linq;
 
 namespace Compass.PlanService.Infrastructure;
 
@@ -30,6 +31,17 @@ public class PlanRepository : IPlanRepository
     {
         return Task.FromResult(_context.MainPlans.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x => x.FinishTime).AsQueryable());
     }
+    public Task<List<Guid?>> GetProjectIdsByStatusAsync(MainPlanStatus_e? status)
+    {
+        var plans = _context.MainPlans.Where(x => x.Status == status);
+        var ids = plans.Select(x => x.ProjectId).ToList();
+        return Task.FromResult(ids);
+    }
+
+
+
+
+
 
     //扩展MainPlan查询
     public Task<CycleTimeDto> GetCycleTimeByMonthAsync(int year, int month)

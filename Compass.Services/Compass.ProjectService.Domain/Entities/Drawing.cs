@@ -14,11 +14,12 @@ public record Drawing : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
 
 
     private Drawing() { }
-    public Drawing(Guid id, Guid projectId, string itemNumber,string? drawingUrl,string imageUrl)
+    public Drawing(Guid id, Guid projectId, string itemNumber,int batch,string? drawingUrl,string imageUrl)
     {
         Id =id;
         ProjectId = projectId;
         ItemNumber = itemNumber;
+        Batch = batch;
         DrawingUrl = drawingUrl;
         ImageUrl = imageUrl;
     }

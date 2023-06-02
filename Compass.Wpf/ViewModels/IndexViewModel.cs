@@ -118,7 +118,7 @@ public class IndexViewModel : NavigationViewModel
             case "计划":
                 break;
             case "制图":
-                param.Add("Value", 2);
+                param.Add("Value", 1);
                 break;
             case "生产":
                 break;

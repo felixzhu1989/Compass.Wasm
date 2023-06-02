@@ -23,7 +23,7 @@ public class ProjectDto:BaseDto
 
 
     #region 状态属性
-    public ProjectStatus_e ProjectStatus { get; set; }//计划,制图,生产,入库,结束
+    public MainPlanStatus_e? Status { get; set; }//计划,制图,生产,入库,结束
     #endregion
 
     #region 扩展查询属性

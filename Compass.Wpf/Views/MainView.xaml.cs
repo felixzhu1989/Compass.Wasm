@@ -56,14 +56,7 @@ public partial class MainView : Window
             Close();
         };
         
-        this.Loaded += (s, e) =>
-        {
-            var updateMgr = new UpdateManager();
-            if(!updateMgr.NeedUpdate)return;
-            Close();
-            //启动升级程序
-            System.Diagnostics.Process.Start("Compass.Update.exe");
-        };
+        
 
 
         BtnUpdate.Click += async (s, e) =>
