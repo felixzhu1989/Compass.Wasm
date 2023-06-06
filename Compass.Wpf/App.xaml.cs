@@ -81,9 +81,9 @@ public partial class App : PrismApplication
         containerRegistry.GetContainer()
             .Register<HttpRestClient>(made: Parameters.Of.Type<string>(serviceKey: "apiUrl"));
         //生产环境API
-        //containerRegistry.GetContainer().RegisterInstance(@"http://10.9.18.31/", serviceKey: "apiUrl");
+        containerRegistry.GetContainer().RegisterInstance(@"http://10.9.18.31/", serviceKey: "apiUrl");
         //测试环境API
-        containerRegistry.GetContainer().RegisterInstance(@"http://localhost/", serviceKey: "apiUrl");
+        //containerRegistry.GetContainer().RegisterInstance(@"http://localhost/", serviceKey: "apiUrl");
         #endregion
 
         #region 注册页面服务,View,ViewModel
@@ -94,7 +94,7 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<AboutView>();//设置界面
         containerRegistry.RegisterForNavigation<ProjectsView, ProjectsViewModel>();
         containerRegistry.RegisterForNavigation<DetailView, DetailViewModel>();
-        containerRegistry.RegisterForNavigation<ProjectInfoView, ProjectInfoViewModel>();
+        
         containerRegistry.RegisterForNavigation<DrawingView, DrawingViewModel>();
         containerRegistry.RegisterForNavigation<ModulesView, ModulesViewModel>();
 

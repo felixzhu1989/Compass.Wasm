@@ -22,20 +22,13 @@ public class DetailViewModel : NavigationViewModel
         ProductDtos=new ObservableCollection<ProductDto>();
         FilterModelDtos=new ObservableCollection<ModelDto>();
 
-        ProjectInfoCommand = new DelegateCommand(ProjectInfoNavigate);
         ExecuteCommand = new DelegateCommand<string>(Execute);
         SelectedItemChangedCommand = new DelegateCommand<object>(SelectedItemChanged);
         UpdateModuleDataCommand = new DelegateCommand<object>(UpdateModuleDataNavigate);
         SelectedModelChangedCommand = new DelegateCommand<object>(SelectedModelChanged);
-        ModulesCommand = new DelegateCommand(() =>
-        {
-            var param = new NavigationParameters { { "Value", Project } };
-            //将Project传递给要导航的页面
-            RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ModulesView", back => { Journal = back.Context.NavigationService.Journal; }, param);
-        });
+        ModulesCommand = new DelegateCommand(ModulesNavigate);
     }
     //Commands
-    public DelegateCommand ProjectInfoCommand { get; }//跳转到项目概况界面
     public DelegateCommand<string> ExecuteCommand { get; }//根据提供的不同参数执行不同的逻辑
     public DelegateCommand<object> SelectedItemChangedCommand { get; }//选择图纸和分段更改
     public DelegateCommand<object> UpdateModuleDataCommand { get; }//编辑ModuleData
@@ -51,6 +44,13 @@ public class DetailViewModel : NavigationViewModel
     {
         get => title;
         set { title = value; RaisePropertyChanged(); }
+    }
+    //链接
+    private string url;
+    public string Url
+    {
+        get => url;
+        set { url = value; RaisePropertyChanged(); }
     }
     //当前页面显示得项目
     private ProjectDto project = null!;
@@ -175,14 +175,6 @@ public class DetailViewModel : NavigationViewModel
 
     #endregion
     
-    #region 点击项目文字，导航到项目概况
-    private void ProjectInfoNavigate()
-    {
-        var param = new NavigationParameters { { "Value", Project } };
-        RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ProjectInfoView", back => { Journal = back.Context.NavigationService.Journal; }, param);
-    }
-    #endregion
-
     #region 选择图纸树节点的动作
     /// <summary>
     /// 选择树节点时赋值
@@ -191,9 +183,6 @@ public class DetailViewModel : NavigationViewModel
     {
         SelectedItem = obj;
         //todo:右侧容器中填充导航内容
-
-
-
     }
     #endregion
 
@@ -419,12 +408,22 @@ public class DetailViewModel : NavigationViewModel
         Project = navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<ProjectDto>("Value")
             : new ProjectDto();
-        ProjectInfoNavigate();
         Title = $"{Project.OdpNumber} - {Project.Name}";
+        Url = $"http://10.9.18.31/drawings/{Project.Id}";//点击链接打开网页端
         Sbu = Enum.GetNames(typeof(Sbu_e));
         GetModuleTreeDataAsync();
         GetModelTreeDataAsync();
         SidePanels=Enum.GetNames(typeof(SidePanel_e));
+        ModulesNavigate();
+    }
+    #endregion
+
+    #region 导航到分段列表
+    private void ModulesNavigate()
+    {
+        var param = new NavigationParameters { { "Value", Project } };
+        //将Project传递给要导航的页面
+        RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ModulesView", back => { Journal = back.Context.NavigationService.Journal; }, param);
     }
     #endregion
 

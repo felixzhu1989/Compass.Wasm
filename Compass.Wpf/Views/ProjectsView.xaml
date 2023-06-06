@@ -38,14 +38,8 @@
             <TextBlock Text="状态:"
                        Margin="10,0"
                        VerticalAlignment="Center" />
-            <ComboBox SelectedIndex="{Binding SelectedStatus}">
-                <!--计划,制图,生产,入库,发货,结束-->
-                <ComboBoxItem>计划</ComboBoxItem>
-                <ComboBoxItem>制图</ComboBoxItem>
-                <ComboBoxItem>生产</ComboBoxItem>
-                <ComboBoxItem>入库</ComboBoxItem>
-                <ComboBoxItem>发货</ComboBoxItem>
-                <ComboBoxItem>结束</ComboBoxItem>
+            <ComboBox SelectedIndex="{Binding SelectedStatus}"
+                      ItemsSource="{Binding Status}">
                 <!--筛选触发器-->
                 <behavior:Interaction.Triggers>
                     <behavior:EventTrigger EventName="SelectionChanged">

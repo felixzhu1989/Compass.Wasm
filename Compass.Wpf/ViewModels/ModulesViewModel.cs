@@ -14,6 +14,7 @@ public class ModulesViewModel : NavigationViewModel
     public ModulesViewModel(IContainerProvider provider) : base(provider)
     {
         _projectService = provider.Resolve<IProjectService>();
+        AllModules = new ObservableCollection<ModuleDto>();
         ModuleDtos =new ObservableCollection<ModuleDto>();
         ExecuteCommand = new DelegateCommand<string>(Execute);
         ShowCutListCommand = new DelegateCommand<ModuleDto>(ShowCutList);
@@ -35,9 +36,26 @@ public class ModulesViewModel : NavigationViewModel
         get => project;
         set { project = value; RaisePropertyChanged(); }
     }
+    private int selectedBatch;
+    /// <summary>
+    /// 选中状态，用于搜索筛选
+    /// </summary>
+    public int SelectedBatch
+    {
+        get => selectedBatch;
+        set { selectedBatch = value; RaisePropertyChanged(); }
+    }
+    //使用枚举初始化下拉框
+    private int[] batchs = null!;
+    public int[] Batchs
+    {
+        get => batchs;
+        set { batchs = value; RaisePropertyChanged(); }
+    }
     #endregion
 
     #region DataGrid数据属性
+    public ObservableCollection<ModuleDto> AllModules { get; set; }
     private ObservableCollection<ModuleDto> moduleDtos;
     public ObservableCollection<ModuleDto> ModuleDtos
     {
@@ -118,6 +136,7 @@ public class ModulesViewModel : NavigationViewModel
     {
         switch (obj)
         {
+            case "Batch": BatchChanges();break;
             case "AutoDrawing": AutoDrawing(); break;
             case "ExportDxf": ExportDxf(); break;
             case "PrintCutList": PrintCutList(); break;
@@ -125,6 +144,21 @@ public class ModulesViewModel : NavigationViewModel
             case "HoodPackingList": ExportPackingList();break;
         }
     }
+
+    private void BatchChanges()
+    {
+        //查询分批的分段模型
+        ModuleDtos.Clear();
+        if (Batchs.Length == 0)
+        {
+            ModuleDtos = AllModules;
+        }
+        else
+        {
+            AllModules.Where(x => x.Batch == SelectedBatch).ToList().ForEach(x => ModuleDtos.Add(x));
+        }
+    }
+
     private async void AutoDrawing()
     {
         const BatchWorksAction_e actionName = BatchWorksAction_e.自动作图;
@@ -188,11 +222,17 @@ public class ModulesViewModel : NavigationViewModel
         var moduleDtosResult = await _projectService.GetModuleListAsync(parameter);
         if (moduleDtosResult.Status)
         {
-            ModuleDtos.Clear();
-            ModuleDtos.AddRange(moduleDtosResult.Result);
+            AllModules.Clear();
+            AllModules.AddRange(moduleDtosResult.Result);
+            Batchs = AllModules.Select(x => x.Batch).Distinct().ToArray();
+            if (Batchs.Length != 0)
+            {
+                SelectedBatch = Batchs[0];
+            }
+            BatchChanges();
         }
         //绑定勾选数据变更
-        foreach (var model in ModuleDtos)
+        foreach (var model in AllModules)
         {
             model.PropertyChanged += (sender, args) =>
             {

@@ -25,14 +25,25 @@
         <DockPanel Grid.Row="0" LastChildFill="False"
                    IsEnabled="{Binding CanBatchWorks}">
             <TextBlock DockPanel.Dock="Left"
-                       Text="分段列表 - 批量操作:"
+                       Text="分段列表：批次"
                        FontSize="20"
                        Margin="10" />
+            <ComboBox DockPanel.Dock="Left"
+                      SelectedItem="{Binding SelectedBatch}"
+                      ItemsSource="{Binding Batchs}">
+                <!--筛选触发器-->
+                <behavior:Interaction.Triggers>
+                    <behavior:EventTrigger EventName="SelectionChanged">
+                        <behavior:InvokeCommandAction Command="{Binding ExecuteCommand}"
+                                                      CommandParameter="Batch" />
+                    </behavior:EventTrigger>
+                </behavior:Interaction.Triggers>
+            </ComboBox>
             <Button DockPanel.Dock="Left"
                     Content="自动作图"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="AutoDrawing"
-                    Margin="10,0"
+                    Margin="20,0,10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="GreenYellow"
                     BorderThickness="0" />

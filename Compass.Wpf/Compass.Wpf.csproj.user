@@ -69,9 +69,6 @@
     <Compile Update="Views\Dialogs\MsgView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\ProjectInfoView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\ProjectsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -159,9 +156,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProcessView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\ProjectInfoView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProjectsView.xaml">

@@ -44,6 +44,13 @@ public class ProjectsViewModel : NavigationViewModel
         get => selectedStatus;
         set { selectedStatus = value; RaisePropertyChanged(); }
     }
+    //使用枚举初始化下拉框
+    private string[] status = null!;
+    public string[] Status
+    {
+        get => status;
+        set { status = value; RaisePropertyChanged(); }
+    }
     #endregion
 
     #region 导航到详细页面
@@ -95,6 +102,7 @@ public class ProjectsViewModel : NavigationViewModel
         SelectedStatus = navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<int>("Value")
             : 0;
+        Status = Enum.GetNames(typeof(MainPlanStatus_e));
         GetDataAsync();
     } 
     #endregion
