@@ -1,6 +1,5 @@
 ﻿using Compass.Wasm.Shared;
 using Compass.Wpf.ApiService;
-using SolidWorks.Interop.sldworks;
 using System.Threading.Tasks;
 
 namespace Compass.Wpf.ApiServices.Plans;

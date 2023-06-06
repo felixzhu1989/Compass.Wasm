@@ -6,6 +6,11 @@ using RestSharp;
 
 namespace Compass.Wpf.ApiService;
 
+public interface IFileUploadService
+{
+    Task<UploadResponse> Upload(string filePath);
+}
+
 public class FileUploadService : IFileUploadService
 {
     public async Task<UploadResponse> Upload(string filePath)

@@ -5,13 +5,20 @@ using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ApiServices;
 
-public class BaseDataService<TEntity> : IBaseDataService<TEntity> where TEntity : class
+public interface IBaseDataService<TEntity> where TEntity : class
+{
+    Task<ApiResponse<TEntity>> UpdateAsync(Guid id, TEntity entity);
+    Task<ApiResponse<TEntity>> GetFirstOrDefault(Guid id);
+}
+
+//抽象的模型数据请求类，为了给模型继承使用
+public abstract class BaseDataService<TEntity> : IBaseDataService<TEntity> where TEntity : class
 {
     private readonly HttpRestClient _client;
     private readonly string _serviceName;
     private readonly IModuleService _moduleService;
 
-    public BaseDataService(HttpRestClient client, string serviceName, IModuleService moduleService)
+    protected BaseDataService(HttpRestClient client, string serviceName, IModuleService moduleService)
     {
         _client = client;
         _serviceName = serviceName;

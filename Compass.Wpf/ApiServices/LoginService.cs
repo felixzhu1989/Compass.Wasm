@@ -7,6 +7,11 @@ using Compass.Wasm.Shared.Identities;
 
 namespace Compass.Wpf.ApiService;
 
+public interface ILoginService
+{
+    Task<ApiResponse<UserDto>> LoginAsync(UserDto user);
+}
+
 public class LoginService : ILoginService
 {
     private readonly HttpRestClient _client;

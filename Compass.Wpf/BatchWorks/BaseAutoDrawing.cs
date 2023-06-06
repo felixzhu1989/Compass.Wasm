@@ -2,8 +2,14 @@
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.BatchWorks;
+using System.Threading.Tasks;
 
-public class BaseAutoDrawing
+public interface IAutoDrawing
+{
+    Task AutoDrawingAsync(ModuleDto moduleDto);
+}
+
+public abstract class BaseAutoDrawing
 {
     public readonly ISldWorks SwApp;
     public readonly IExhaustService ExhaustService;
@@ -12,7 +18,7 @@ public class BaseAutoDrawing
     public readonly ISupplyService SupplyService;
     public readonly IEventAggregator Aggregator;
 
-    public BaseAutoDrawing(IContainerProvider provider)
+    protected BaseAutoDrawing(IContainerProvider provider)
     {
         SwApp = provider.Resolve<ISldWorksService>().SwApp;
         ExhaustService = provider.Resolve<IExhaustService>();

@@ -11,7 +11,6 @@ public class CategoryDbContext : BaseDbContext
     public DbSet<Model> Models { get; set; }
     public DbSet<ModelType> ModelTypes { get; set; }
 
-    public DbSet<ProblemType> ProblemTypes { get; set; }
 
     public CategoryDbContext(DbContextOptions<CategoryDbContext> options, IMediator? mediator) : base(options, mediator)
     {

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Compass.Wasm.Shared;
 
-public class BaseDto : INotifyPropertyChanged
+public abstract class BaseDto : INotifyPropertyChanged
 {
     public Guid? Id { get; set; }
     public event PropertyChangedEventHandler? PropertyChanged;

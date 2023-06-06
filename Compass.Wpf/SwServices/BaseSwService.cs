@@ -2,12 +2,12 @@
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
-
-public class BaseSwService
+//抽象类，为了复用代码
+public abstract class BaseSwService
 {
     public readonly ISldWorks SwApp;
     public readonly IEventAggregator Aggregator;
-    public BaseSwService(IContainerProvider provider)
+    protected BaseSwService(IContainerProvider provider)
     {
         SwApp = provider.Resolve<ISldWorksService>().SwApp;
         Aggregator= provider.Resolve<IEventAggregator>();

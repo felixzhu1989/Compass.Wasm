@@ -15,6 +15,19 @@ using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
 
 namespace Compass.Wpf.BatchWorks;
 
+public interface IPrintsService
+{
+    Task BatchPrintCutListAsync(List<ModuleDto> moduleDtos);
+    Task PrintOneCutListAsync(ModuleDto moduleDto);
+
+    Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos);
+    Task PrintOneJobCardAsync(ModuleDto moduleDto);
+
+
+
+}
+
+
 public class PrintsService : IPrintsService
 {
     #region ctor

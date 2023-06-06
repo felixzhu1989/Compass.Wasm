@@ -112,38 +112,6 @@ namespace Compass.CategoryService.Infrastructure.Migrations
                     b.ToTable("ModelTypes");
                 });
 
-            modelBuilder.Entity("Compass.CategoryService.Domain.Entities.ProblemType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Stakeholder")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"));
-
-                    b.ToTable("ProblemTypes");
-                });
-
             modelBuilder.Entity("Compass.CategoryService.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")

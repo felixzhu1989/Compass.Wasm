@@ -29,9 +29,7 @@ public interface ICategoryRepository
     Task<string> GetModelNameByModelTypeIdAsync(Guid modelTypeId);
 
 
-    //ProblemType
-    Task<ProblemType?> GetProblemTypeByIdAsync(Guid id);
-    Task<IQueryable<ProblemType>> GetProblemTypesAsync(Stakeholder_e stakeholder);
+    
     
 
 }

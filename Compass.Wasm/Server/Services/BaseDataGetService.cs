@@ -3,10 +3,20 @@ using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Services;
 
-public class BaseDataGetService<T> : IBaseDataGetService<T> where T : class
+public interface IBaseDataGetService<T> where T : class
+{
+    Task<ApiResponse<T>> GetSingleAsync(Guid id);
+}
+
+public interface IBaseDataUpdateService<T> where T : class
+{
+    Task<ApiResponse<T>> UpdateAsync(Guid id, T dto);
+}
+
+public abstract class BaseDataGetService<T> : IBaseDataGetService<T> where T : class
 {
     private readonly IDataRepository _repository;
-    public BaseDataGetService(IDataRepository repository)
+    protected BaseDataGetService(IDataRepository repository)
     {
         _repository = repository;
     }

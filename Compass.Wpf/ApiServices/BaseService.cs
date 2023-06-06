@@ -4,12 +4,22 @@ using Compass.Wasm.Shared;
 
 namespace Compass.Wpf.ApiService;
 
-public class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class
+public interface IBaseService<TEntity> where TEntity : class
+{
+    Task<ApiResponse<TEntity>> AddAsync(TEntity entity);
+    Task<ApiResponse<TEntity>> UpdateAsync(Guid id, TEntity entity);
+    Task<ApiResponse<TEntity>> DeleteAsync(Guid id);
+    Task<ApiResponse<TEntity>> GetFirstOrDefault(Guid id);
+    Task<ApiResponse<List<TEntity>>> GetAllAsync();
+}
+
+//抽象的普通数据请求类
+public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity : class
 {
     private readonly HttpRestClient _client;
     private readonly string _serviceName;
 
-    public BaseService(HttpRestClient client, string serviceName)
+    protected BaseService(HttpRestClient client, string serviceName)
     {
         _client = client;
         _serviceName = serviceName;

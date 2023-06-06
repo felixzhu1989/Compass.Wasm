@@ -9,8 +9,15 @@ using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.BatchWorks;
 
+public interface IExportDxfService
+{
+    Task ExportHoodDxfAsync(ModuleDto moduleDto);
+}
+
+
 public class ExportDxfService : IExportDxfService
 {
+    #region ctor
     private readonly ICutListService _cutListService;
     private readonly IModuleService _moduleService;
     private readonly ISldWorks _swApp;
@@ -21,7 +28,8 @@ public class ExportDxfService : IExportDxfService
         _moduleService = provider.Resolve<IModuleService>();
         _swApp = provider.Resolve<ISldWorksService>().SwApp;
         _aggregator= provider.Resolve<IEventAggregator>();
-    }
+    } 
+    #endregion
 
     public async Task ExportHoodDxfAsync(ModuleDto moduleDto)
     {
@@ -90,8 +98,13 @@ public class ExportDxfService : IExportDxfService
         //关闭
         _swApp.CloseDoc(swModel.GetPathName());
     }
-    
 
+    #region 内部实现
+    /// <summary>
+    /// 检查零件状态，压缩，封套和虚拟零部件
+    /// </summary>
+    /// <param name="swComp"></param>
+    /// <returns></returns>
     private bool CheckPartStatus(Component2 swComp)
     {
         var status = true;
@@ -108,7 +121,11 @@ public class ExportDxfService : IExportDxfService
         }
         return status;
     }
-
+    /// <summary>
+    /// 检查零件是否包含钣金实体
+    /// </summary>
+    /// <param name="swComp"></param>
+    /// <returns></returns>
     private bool CheckSheetMetal(Component2 swComp)
     {
         var bodies = swComp.GetBodies3((int)swBodyType_e.swSolidBody, out _);
@@ -122,7 +139,11 @@ public class ExportDxfService : IExportDxfService
         }
         return false;
     }
-
+    /// <summary>
+    /// 获取Cutlist信息
+    /// </summary>
+    /// <param name="swFeat"></param>
+    /// <returns></returns>
     private CutListDto? GetCutListDto(Feature swFeat)
     {
         if (!swFeat.IIsSuppressed2(1, 1, null)
@@ -154,7 +175,13 @@ public class ExportDxfService : IExportDxfService
         }
         return null;
     }
-
+    /// <summary>
+    /// 导出DXF图纸
+    /// </summary>
+    /// <param name="swCompModel"></param>
+    /// <param name="partName"></param>
+    /// <param name="moduleDto"></param>
+    /// <returns></returns>
     private bool ExportDxf(ModelDoc2 swCompModel, string partName, ModuleDto moduleDto)
     {
         var swCompPart = swCompModel as PartDoc;
@@ -163,7 +190,7 @@ public class ExportDxfService : IExportDxfService
         //如果不存在则创建该文件夹
         if (!Directory.Exists(dxfDir)) Directory.CreateDirectory(dxfDir);
         var outPath = Path.Combine(dxfDir, $"{partName}.dxf");
-        _aggregator.SendMessage($"导出Dxf:\t{outPath}",Filter_e.Batch);
+        _aggregator.SendMessage($"导出Dxf:\t{outPath}", Filter_e.Batch);
         swCompModel.Visible = true;
         //获取拉丝方向
         var dataAlignment = GetAlignment(swCompModel);
@@ -175,6 +202,11 @@ public class ExportDxfService : IExportDxfService
         swCompModel.Visible = false;
         return result;
     }
+    /// <summary>
+    /// 获取导出DXF图的XY方向
+    /// </summary>
+    /// <param name="swCompModel"></param>
+    /// <returns></returns>
     private double[] GetAlignment(ModelDoc2 swCompModel)
     {
         double[] dataAlignment = { 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1 };
@@ -230,6 +262,7 @@ public class ExportDxfService : IExportDxfService
         }
         swCompModel.ClearSelection2(true);
         return dataAlignment;
-    }
+    } 
+    #endregion
 
 }

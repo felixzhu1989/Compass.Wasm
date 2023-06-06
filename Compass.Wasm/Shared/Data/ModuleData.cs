@@ -1,7 +1,21 @@
-﻿namespace Compass.Wasm.Shared.Data;
+﻿using Zack.DomainCommons.Models;
 
-public class ModuleData : BaseDataEntity
+namespace Compass.Wasm.Shared.Data;
+
+public class ModuleData : BaseDto, IAggregateRoot, ISoftDelete, IHasDeletionTime, IHasCreationTime, IHasModificationTime
 {
+    public bool IsDeleted { get; private set; }
+    public DateTime? DeletionTime { get; private set; }
+    public virtual void SoftDelete()
+    {
+        IsDeleted = true;
+        DeletionTime = DateTime.Now;
+    }
+    public void NotifyModified()
+    {
+        LastModificationTime = DateTime.Now;
+    }
+
 
     //Id直接使用ModuleId
     //产品基本属性有长宽高，注意和以前的作图程序不同，这里是总长，

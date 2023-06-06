@@ -83,16 +83,4 @@ public class CategoryRepository : ICategoryRepository
     }
 
     #endregion
-
-    #region ProblemType
-    public Task<ProblemType?> GetProblemTypeByIdAsync(Guid id)
-    {
-        return _context.ProblemTypes.SingleOrDefaultAsync(x => x.Id.Equals(id));
-    }
-
-    public Task<IQueryable<ProblemType>> GetProblemTypesAsync(Stakeholder_e stakeholder)
-    {
-        return Task.FromResult(_context.ProblemTypes.Where(x => x.Stakeholder.Equals(stakeholder)).AsQueryable());
-    }
-    #endregion
 }
