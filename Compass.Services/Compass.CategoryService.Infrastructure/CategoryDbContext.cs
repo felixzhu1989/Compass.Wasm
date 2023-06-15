@@ -10,7 +10,7 @@ public class CategoryDbContext : BaseDbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Model> Models { get; set; }
     public DbSet<ModelType> ModelTypes { get; set; }
-
+    public DbSet<MaterialItem> MaterialItems { get; set; }
 
     public CategoryDbContext(DbContextOptions<CategoryDbContext> options, IMediator? mediator) : base(options, mediator)
     {

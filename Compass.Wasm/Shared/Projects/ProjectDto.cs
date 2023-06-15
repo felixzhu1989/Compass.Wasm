@@ -27,15 +27,13 @@ public class ProjectDto:BaseDto
     #endregion
 
     #region 扩展查询属性
+    public string? UserName { get; set; }
+
     public List<MainPlanDto> MainPlanDtos { get; set; } = new();
     public List<DrawingDto> DrawingDtos { get; set; } = new();
 
     public bool AllIssueClosed { get; set; }
     public List<LessonDto> LessonDtos { get; set; } = new();
-
-    
-
-
     #endregion
 
 }

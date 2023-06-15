@@ -5,18 +5,21 @@ namespace Compass.CategoryService.Domain;
 
 public class CategoryDomainService
 {
+    #region ctor
     private readonly ICategoryRepository _repository;
     public CategoryDomainService(ICategoryRepository repository)
     {
         _repository = repository;
     }
+    #endregion
 
+    #region Product
     public async Task<Product> AddProductAsync(string name, Sbu_e sbu)
     {
         int maxSeq = await _repository.GetMaxSeqOfProductsAsync(sbu);
         return new Product(Guid.NewGuid(), maxSeq+1, name, sbu);
     }
-    public async Task SortProductsAsync(Sbu_e sbu,Guid[] sortedProductIds)
+    public async Task SortProductsAsync(Sbu_e sbu, Guid[] sortedProductIds)
     {
         var products = await _repository.GetProductsBySbuAsync(sbu);
         var idsInDb = products.Select(x => x.Id);
@@ -33,13 +36,13 @@ public class CategoryDomainService
             seqNum++;
         }
     }
-
-
-
-    public async Task<Model> AddModelAsync(Guid productId, string name,double workload)
+    #endregion
+    
+    #region Model
+    public async Task<Model> AddModelAsync(Guid productId, string name, double workload)
     {
         int maxSeq = await _repository.GetMaxSeqOfModelsAsync(productId);
-        return new Model(Guid.NewGuid(),productId, maxSeq + 1, name,workload);
+        return new Model(Guid.NewGuid(), productId, maxSeq + 1, name, workload);
     }
     public async Task SortModelsAsync(Guid productId, Guid[] sortedModelIds)
     {
@@ -58,10 +61,13 @@ public class CategoryDomainService
             seqNum++;
         }
     }
-    public async Task<ModelType> AddModelTypeAsync(Guid modelId, string name,string description,double length,double width,double height)
+    #endregion
+
+    #region ModelType
+    public async Task<ModelType> AddModelTypeAsync(Guid modelId, string name, string description, double length, double width, double height)
     {
         int maxSeq = await _repository.GetMaxSeqOfModelTypesAsync(modelId);
-        return new ModelType(Guid.NewGuid(), modelId, maxSeq + 1, name, description,length,width,height);
+        return new ModelType(Guid.NewGuid(), modelId, maxSeq + 1, name, description, length, width, height);
     }
     public async Task SortModelTypesAsync(Guid modelId, Guid[] sortedModelTypeIds)
     {
@@ -79,5 +85,9 @@ public class CategoryDomainService
             modelType.ChangeSequenceNumber(seqNum);
             seqNum++;
         }
-    }
+    } 
+    #endregion
+
+
+
 }

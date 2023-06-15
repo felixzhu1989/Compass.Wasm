@@ -122,6 +122,7 @@ public class KwfDataViewModel : NavigationViewModel
     }
     private async void GetDataAsync()
     {
+        DataDto = new KwfData();
         var dataResult = await _service.GetFirstOrDefault(CurrentModule.Id.Value);
         if (dataResult.Status)
         {
@@ -129,7 +130,6 @@ public class KwfDataViewModel : NavigationViewModel
         }
         else
         {
-            DataDto = new KwfData();
             //提示用户，查询失败了
             Aggregator.SendMessage(dataResult.Message??"查询失败了");
         }
@@ -138,7 +138,8 @@ public class KwfDataViewModel : NavigationViewModel
     {
         base.OnNavigatedTo(navigationContext);
         //ModuleDto
-        CurrentModule= navigationContext.Parameters.ContainsKey("Value")
+        CurrentModule = new ModuleDto();
+        CurrentModule = navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<ModuleDto>("Value")
             : new ModuleDto();
         var specialNotes = string.IsNullOrEmpty(CurrentModule.SpecialNotes) ? "" : $" ({CurrentModule.SpecialNotes})";

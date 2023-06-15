@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("hoodpackinglist.xlsm")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("jobcard.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mainplan.csv")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("materialitem.csv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("updatelist.xml")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cutlist.xlsx")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("ceilingpackinglist.xlsx")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("packinglist.xlsx")]
 
 

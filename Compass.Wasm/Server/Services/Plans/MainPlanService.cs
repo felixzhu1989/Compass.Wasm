@@ -1,13 +1,10 @@
-﻿using System.Security.AccessControl;
-using AutoMapper;
+﻿using AutoMapper;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;
-using Compass.PlanService.Infrastructure.Migrations;
-using Compass.Wasm.Server.Events.Plans;
+using Compass.Wasm.Server.Events;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Plans;
-using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Server.Services.Plans;
 public interface IMainPlanService : IBaseService<MainPlanDto>

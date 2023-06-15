@@ -14,6 +14,7 @@
         <converter:SidePanelConverter x:Key="SidePanelConverter" />
         <converter:IntToStringConverter x:Key="IntToStringConverter" />
         <converter:LightTypeConverter x:Key="LightTypeConverter" />
+        <converter:UvLightTypeConverter x:Key="UvLightTypeConverter" />
         <converter:ShowSpotLightConverter x:Key="ShowSpotLightConverter" />
         <converter:WaterInletConverter x:Key="WaterInletConverter" />
         <converter:DrainTypeConverter x:Key="DrainTypeConverter" />
@@ -249,7 +250,7 @@
                                Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding UvLightTypes}"
-                              SelectedItem="{Binding DataDto.UvLightType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding DataDto.UvLightType,Converter={StaticResource UvLightTypeConverter },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="UV灯类型:   " />
                     <CheckBox IsChecked="{Binding DataDto.Bluetooth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               Content="蓝牙面板"

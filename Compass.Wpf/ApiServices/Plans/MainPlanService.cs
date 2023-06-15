@@ -11,12 +11,15 @@ public interface IMainPlanService : IBaseService<MainPlanDto>
 }
 public class MainPlanService : BaseService<MainPlanDto>, IMainPlanService
 {
+    #region ctor
     private readonly HttpRestClient _client;
     public MainPlanService(HttpRestClient client) : base(client, "MainPlan")
     {
         _client = client;
     }
+    #endregion
 
+    #region 扩展
     public async Task<ApiResponse<MainPlanDto>> UpdateStatusesAsync(Guid id, MainPlanDto dto)
     {
         BaseRequest request = new BaseRequest
@@ -36,5 +39,6 @@ public class MainPlanService : BaseService<MainPlanDto>, IMainPlanService
             Route = "api/MainPlan/Count"
         };
         return await _client.ExecuteAsync<MainPlanCountDto>(request);
-    }
+    } 
+    #endregion
 }

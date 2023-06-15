@@ -1,7 +1,6 @@
 ﻿using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Identities;
 using System.Net.Http.Json;
-using Zack.DomainCommons.Models;
 
 namespace Compass.Wasm.Client.Services.Identities;
 public interface IUserService : IBaseService<UserDto>

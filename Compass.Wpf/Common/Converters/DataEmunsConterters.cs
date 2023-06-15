@@ -14,3 +14,6 @@ public class WaterInletConverter : EnumConverter<WaterInlet_e> { }
 public class AnsulSideConverter : EnumConverter<AnsulSide_e> { }
 public class AnsulDetectorConverter : EnumConverter<AnsulDetector_e> { }
 public class AnsulDetectorEndConverter : EnumConverter<AnsulDetectorEnd_e> { }
+
+public class UvLightTypeConverter : EnumConverter<UvLightType_e> { }
+

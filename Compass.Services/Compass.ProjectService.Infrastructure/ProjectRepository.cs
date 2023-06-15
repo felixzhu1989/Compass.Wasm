@@ -1,6 +1,5 @@
 ﻿using Compass.ProjectService.Domain;
 using Compass.ProjectService.Domain.Entities;
-using Compass.Wasm.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace Compass.ProjectService.Infrastructure;
@@ -12,6 +11,7 @@ public class ProjectRepository : IProjectRepository
     {
         _context = context;
     }
+
     #region Project
     public Task<IQueryable<Project>> GetProjectsAsync()
     {
@@ -34,9 +34,7 @@ public class ProjectRepository : IProjectRepository
     {
         return _context.Projects.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
-
-
-
+    
 
     public Task<Project?> GetProjectByOdpAsync(string odpNumber)
     {
@@ -49,11 +47,6 @@ public class ProjectRepository : IProjectRepository
         return project.OdpNumber;
     }
     
-    public Task<IQueryable<Project>> GetUnbindProjectsAsync(List<Guid?> ids)
-    {
-       return Task.FromResult(_context.Projects.Where(x => !ids.Contains(x.Id)));
-    }
-
     #endregion
 
     #region Drawing
@@ -71,26 +64,7 @@ public class ProjectRepository : IProjectRepository
     {
         return Task.FromResult(_context.Drawings.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x => x.Batch).ThenBy(x=>x.ItemNumber).AsQueryable());
     }
-
-
-    public Task<IQueryable<Drawing>> GetDrawingsByUserIdAsync(Guid userId)
-    {
-        throw new NotImplementedException();
-    }
-    public Task<bool> DrawingExistsInProjectAsync(Guid projectId)
-    {
-        return _context.Drawings.AnyAsync(x => x.ProjectId.Equals(projectId));
-    }
-    public Task<int> GetTotalDrawingsCountInProjectAsync(Guid projectId)
-    {
-        return _context.Drawings.CountAsync(x => x.ProjectId.Equals(projectId));
-    }
-
-    public Task<int> GetNotAssignedDrawingsCountInProjectAsync(Guid projectId)
-    {
-        throw new NotImplementedException();
-    }
-
+    
     #endregion
 
     #region Module
@@ -120,9 +94,7 @@ public class ProjectRepository : IProjectRepository
         var drawing = await GetDrawingByIdAsync(module.DrawingId);
         return drawing.DrawingUrl;
     }
-
-
-
+    
     #endregion
 
     #region CutList
@@ -140,90 +112,6 @@ public class ProjectRepository : IProjectRepository
     {
         //先按照零件排序，然后按照材料倒序排序，最后按照厚度倒序排序
         return Task.FromResult(_context.CutLists.Where(x => x.ModuleId.Equals(moduleId)).OrderBy(x => x.PartNo).ThenByDescending(x=>x.Material).ThenByDescending(x=>x.Thickness).AsQueryable());
-    }
-
-    #endregion
-    
-    #region DrawingPlan
-
-    public Task<ApiPaginationResponse<IQueryable<DrawingPlan>>> GetDrawingPlansAsync(int page)
-    {
-        var pageResults = 5f;//默认一页显示数据条数
-        var pageCount = Math.Ceiling(_context.DrawingsPlan.Count() / pageResults);//计算页总数
-        return Task.FromResult(new ApiPaginationResponse<IQueryable<DrawingPlan>>
-        {
-            //Result = _context.DrawingsPlan
-            //    .OrderByDescending(x => x.ReleaseTime)
-            //    .Skip((page - 1) * (int)pageResults)//page为当前页，因此跳过前几页
-            //    .Take((int)pageResults),
-                
-            CurrentPage = page,
-            Pages = (int)pageCount
-        });
-    }
-
-    public Task<DrawingPlan?> GetDrawingPlanByIdAsync(Guid id)
-    {
-        return _context.DrawingsPlan.SingleOrDefaultAsync(x => x.Id.Equals(id));
-    }
-
-    
-
-    public async Task<IEnumerable<Project>> GetProjectsNotDrawingPlannedAsync()
-    {
-        var projects =await _context.Projects.ToListAsync();//所有项目
-        var plannedProjects =await _context.DrawingsPlan.ToListAsync() ;//所有制图计划
-        var notDrawingPlannedProjects = projects.Where(x => !plannedProjects.Exists(dp => x.Id.Equals(dp.Id)));
-        return notDrawingPlannedProjects;
-    }
-
-    //public async Task<bool> IsDrawingsNotAssignedByProjectIdAsync(Guid projectId)
-    //{
-    //    var drawings = await GetDrawingsByProjectIdAsync(projectId);
-    //    return drawings.Any(x => x.UserId == null || x.UserId.Equals(Guid.Empty));
-    //}
-
-    public async Task<IEnumerable<Drawing>> GetDrawingsNotAssignedByProjectIdAsync(Guid projectId)
-    {
-        var drawings = await GetDrawingsByProjectIdAsync(projectId);
-        var notAssignedDrawings = new List<Drawing>();
-        //foreach (var drawing in drawings)
-        //{
-        //    if (drawing.UserId == null)//空的
-        //    {
-        //        notAssignedDrawings.Add(drawing);
-        //    }
-        //    else if (drawing.UserId.Equals(Guid.Empty))//全部是0
-        //    {
-        //        notAssignedDrawings.Add(drawing);
-        //    }
-        //}
-        return notAssignedDrawings;
-    }
-
-    public async Task<Dictionary<Guid, IQueryable<Drawing>>> GetDrawingsAssignedByProjectIdAsync(Guid projectId)
-    {
-        var drawings = await GetDrawingsByProjectIdAsync(projectId);
-        //var userIds = drawings.Where(x => !string.IsNullOrWhiteSpace(x.UserId.ToString())).Select(x => x.UserId).Distinct();
-        var assignedDrawings = new Dictionary<Guid, IQueryable<Drawing>>();
-        //if (userIds != null )
-        //{
-        //    //userIds.OfType<Guid>()
-        //    foreach (var userId in userIds)
-        //    {
-        //        var items = drawings.Where(x => x.UserId.Equals(userId));
-        //        assignedDrawings.Add(userId.GetValueOrDefault(), items);
-        //    }
-        //}
-        return assignedDrawings;
-    }
-
-    public async Task AssignDrawingsToUserAsync(IEnumerable<Guid> drawingIds, Guid userId)
-    {
-        foreach (var drawingId in drawingIds)
-        {
-            var dbDrawing = await GetDrawingByIdAsync(drawingId);
-        }
     }
 
     #endregion
@@ -295,27 +183,7 @@ public class ProjectRepository : IProjectRepository
         }
     } 
     #endregion
-    
-    #region Problem
-    public Task<IQueryable<Problem>> GetProblemsAsync()
-    {
-        return Task.FromResult(_context.Problems.AsQueryable());
-    }
-    public Task<IQueryable<Problem>> GetProblemsByProjectIdAsync(Guid projectId)
-    {
-        return Task.FromResult(_context.Problems.Where(x => x.ProjectId.Equals(projectId)).AsQueryable());
-    }
-    public Task<Problem?> GetProblemByIdAsync(Guid id)
-    {
-        return _context.Problems.SingleOrDefaultAsync(x => x.Id.Equals(id));
-    }
-
-    public Task<IQueryable<Problem>> GetNotResolvedProblemsByProjectIdAsync(Guid projectId)
-    {
-        return Task.FromResult(_context.Problems.Where(x => x.ProjectId.Equals(projectId)&&!x.IsClosed).AsQueryable());
-    }
-    #endregion
-    
+  
     #region Lesson
     //基本
     public Task<IQueryable<Lesson>> GetLessonsAsync()

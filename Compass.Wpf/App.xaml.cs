@@ -1,6 +1,7 @@
 ﻿
 using Compass.Wpf.ApiService;
 using Compass.Wpf.ApiServices;
+using Compass.Wpf.ApiServices.Categories;
 using Compass.Wpf.ApiServices.Hoods;
 using Compass.Wpf.ApiServices.Plans;
 using Compass.Wpf.ApiServices.Projects;
@@ -100,6 +101,8 @@ public partial class App : PrismApplication
 
         containerRegistry.RegisterForNavigation<MainPlansView,MainPlansViewModel>();
 
+        containerRegistry.RegisterForNavigation<MaterialItemsView,MaterialItemsViewModel>();
+
         #endregion
 
         #region 注册页面Api数据服务
@@ -112,6 +115,7 @@ public partial class App : PrismApplication
         containerRegistry.Register<IModuleService, ModuleService>();
 
         containerRegistry.Register<IMainPlanService,MainPlanService>();
+        containerRegistry.Register<IMaterialItemService,MaterialItemService>();
 
         
         containerRegistry.Register<ICutListService, CutListService>();

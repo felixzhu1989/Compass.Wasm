@@ -431,8 +431,13 @@ public class SupplyService : BaseSwService, ISupplyService
         #region 新风前面板卡口，距离与铆螺母数量相同，无需重复计算
         swModelLevel2.ChangeDim("Dis@LPatternPlug", midRoofNutDis);
         //蜂窝板压紧结构
+        var sideDis = midRoofNutDis / 2d + 150d;
+        swModelLevel2.ChangeDim("Side@SketchHandBending", sideDis);
         swModelLevel2.ChangeDim("Dis@LPatternHandBending", midRoofNutDis);
+        swModelLevel2.ChangeDim("Side@LPatternHandBending", sideDis-80d);
         swModelLevel2.ChangeDim("Dis@LPatternHandBendingHole", midRoofNutDis);
+        swModelLevel2.ChangeDim("Side@LPatternHandBendingHole", sideDis-80d);
+
         #endregion
 
         #region 前面板螺丝孔

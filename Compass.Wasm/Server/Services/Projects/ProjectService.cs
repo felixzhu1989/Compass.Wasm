@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Compass.DataService.Domain;
 using Compass.PlanService.Domain;
+using Compass.Wasm.Server.Events;
 using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Parameters;
 using Compass.Wasm.Shared.Projects;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Zack.EventBus;
 
 namespace Compass.Wasm.Server.Services.Projects;
 
@@ -18,18 +20,10 @@ public interface IProjectService : IBaseService<ProjectDto>
     Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter);//用于自动作图
 
     //扩展查询功能，Blazor
-    //带Issue信息
-    Task<ApiResponse<List<ProjectDto>>> GetAllWithIssuesAsync();
-    Task<ApiResponse<ProjectDto>> GetSingleWithIssuesAsync(Guid id);
-
-    //带MainPlan信息
-    Task<ApiResponse<List<ProjectDto>>> GetAllWithMainPlansAsync();
-    Task<ApiResponse<ProjectDto>> GetSingleWithMainPlansAsync(Guid id);
-
+    
 
     //UploadFiles
     Task<ApiResponse<ProjectDto>> UploadFilesAsync(Guid id, ProjectDto dto);
-
 }
 public class ProjectService : IProjectService
 {
@@ -37,14 +31,18 @@ public class ProjectService : IProjectService
     private readonly ProjectDbContext _dbContext;
     private readonly IProjectRepository _repository;
     private readonly IPlanRepository _planRepository;
+    private readonly IIdentityRepository _identityRepository;
     private readonly IMapper _mapper;
+    private readonly IEventBus _eventBus;
     private readonly IDataRepository _dataRepository;
-    public ProjectService(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IPlanRepository planRepository, IMapper mapper, IEventBus eventBus, ExportExcelService export, IDataRepository dataRepository)
+    public ProjectService(ProjectDomainService domainService, ProjectDbContext dbContext, IProjectRepository repository, IPlanRepository planRepository,IIdentityRepository identityRepository, IMapper mapper, IEventBus eventBus, ExportExcelService export, IDataRepository dataRepository)
     {
         _dbContext = dbContext;
         _repository = repository;
         _planRepository = planRepository;
+        _identityRepository = identityRepository;
         _mapper = mapper;
+        _eventBus = eventBus;
         _dataRepository = dataRepository;
     }
     #endregion
@@ -57,6 +55,11 @@ public class ProjectService : IProjectService
             var models = await _repository.GetProjectsAsync();
             var orderModels = models.OrderByDescending(x => x.DeliveryDate);
             var dtos = await _mapper.ProjectTo<ProjectDto>(orderModels).ToListAsync();
+            foreach (var dto in dtos.Where(dto => dto.Designer != null && dto.Designer != Guid.Empty))
+            {
+                var user =await _identityRepository.GetUserByIdAsync(dto.Designer.Value);
+                dto.UserName = user.UserName;
+            }
             return new ApiResponse<List<ProjectDto>> { Status = true, Result = dtos };
         }
         catch (Exception e)
@@ -72,6 +75,11 @@ public class ProjectService : IProjectService
             var model = await _repository.GetProjectByIdAsync(id);
             if (model == null) return new ApiResponse<ProjectDto> { Status = false, Message = "查询数据失败" };
             var dto = _mapper.Map<ProjectDto>(model);
+            if (dto.Designer != null && dto.Designer != Guid.Empty)
+            {
+                var user = await _identityRepository.GetUserByIdAsync(dto.Designer.Value);
+                dto.UserName =user.UserName;
+            }
             return new ApiResponse<ProjectDto> { Status = true, Result = dto };
         }
         catch (Exception e)
@@ -84,9 +92,15 @@ public class ProjectService : IProjectService
     {
         try
         {
-            var model = new Project(Guid.NewGuid(), dto.OdpNumber.ToUpper(), dto.Name, dto.DeliveryDate, dto.ProjectType, dto.RiskLevel, dto.SpecialNotes);
+            var model = new Project(Guid.NewGuid(), dto.OdpNumber.ToUpper(), dto.Name, dto.DeliveryDate, dto.ProjectType, dto.RiskLevel, dto.SpecialNotes,dto.Designer);
             await _dbContext.Projects.AddAsync(model);
             dto.Id = model.Id;
+
+            //Todo:发出集成事件，添加待办事项
+            var eventData = new ProjectCreatedEvent(dto.OdpNumber, dto.Name,dto.Designer);
+            //发布集成事件
+            _eventBus.Publish("ProjectService.Project.Created", eventData);
+
             return new ApiResponse<ProjectDto> { Status = true, Result = dto };
         }
         catch (Exception e)
@@ -145,7 +159,13 @@ public class ProjectService : IProjectService
             var filterModels = models.Where(x => (
                 string.IsNullOrWhiteSpace(parameter.Search) || x.OdpNumber.Contains(parameter.Search) || x.Name.Contains(parameter.Search) || x.SpecialNotes.Contains(parameter.Search)) && ids.Contains(x.Id)).OrderByDescending(x => x.DeliveryDate);
             var dtos = await _mapper.ProjectTo<ProjectDto>(filterModels).ToListAsync();
-            dtos.ForEach(x=>x.Status=parameter.Status);
+            foreach (var dto in dtos)
+            {
+                dto.Status = parameter.Status;
+                if (dto.Designer == null || dto.Designer == Guid.Empty) continue;
+                var user = await _identityRepository.GetUserByIdAsync(dto.Designer.Value);
+                dto.UserName = user.UserName;
+            }
             return new ApiResponse<List<ProjectDto>?> { Status = true, Result = dtos };
         }
         catch (Exception e)
@@ -253,28 +273,14 @@ public class ProjectService : IProjectService
     #endregion
 
     #region 扩展查询功能，Blazor
+    
 
-    public Task<ApiResponse<List<ProjectDto>>> GetAllWithIssuesAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ApiResponse<ProjectDto>> GetSingleWithIssuesAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ApiResponse<List<ProjectDto>>> GetAllWithMainPlansAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<ApiResponse<ProjectDto>> GetSingleWithMainPlansAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-
+    /// <summary>
+    /// 上传项目文件
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="dto"></param>
+    /// <returns></returns>
     public async Task<ApiResponse<ProjectDto>> UploadFilesAsync(Guid id, ProjectDto dto)
     {
         try

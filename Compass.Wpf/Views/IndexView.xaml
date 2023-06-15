@@ -226,7 +226,7 @@
                     </behavior:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <DockPanel MaxHeight="80"
+                            <DockPanel MaxHeight="35"
                                        LastChildFill="True">
                                 <ToggleButton DockPanel.Dock="Right"
                                               IsChecked="{Binding Status,Converter={StaticResource intToBool}}"
@@ -281,7 +281,7 @@
                     </behavior:Interaction.Triggers>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel MaxHeight="80">
+                            <StackPanel MaxHeight="35">
                                 <TextBlock Text="{Binding Title}"
                                            FontWeight="Bold" />
                                 <TextBlock Text="{Binding Content}"

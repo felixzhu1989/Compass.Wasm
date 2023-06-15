@@ -48,6 +48,9 @@
     <Compile Update="Views\MainPlansView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\MaterialItemsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ModulesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -123,6 +126,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainPlansView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MaterialItemsView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ModulesView.xaml">

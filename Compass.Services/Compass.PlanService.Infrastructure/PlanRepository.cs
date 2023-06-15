@@ -2,18 +2,18 @@
 using Compass.PlanService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Compass.Wasm.Shared.Plans;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using System.Linq;
 
 namespace Compass.PlanService.Infrastructure;
 
 public class PlanRepository : IPlanRepository
 {
+    #region ctor
     private readonly PlanDbContext _context;
     public PlanRepository(PlanDbContext context)
     {
         _context = context;
-    }
+    } 
+    #endregion
 
     #region MainPlan
     //MainPlan
@@ -27,9 +27,16 @@ public class PlanRepository : IPlanRepository
         return _context.MainPlans.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
     //扩展查询
+    
     public Task<IQueryable<MainPlan>> GetMainPlansByProjectIdAsync(Guid projectId)
     {
         return Task.FromResult(_context.MainPlans.Where(x => x.ProjectId.Equals(projectId)).OrderBy(x => x.FinishTime).AsQueryable());
+    }
+    public Task<MainPlan?> GetMainPlanByProjectIdAndBatchAsync(Guid projectId,int batch)
+    {
+        return _context.MainPlans
+            .SingleOrDefaultAsync(x => x.ProjectId.Equals(projectId)
+                                       && x.Batch==batch);
     }
     public Task<List<Guid?>> GetProjectIdsByStatusAsync(MainPlanStatus_e? status)
     {
@@ -107,5 +114,24 @@ public class PlanRepository : IPlanRepository
         return Task.FromResult(_context.Issues.Where(x => x.MainPlanId.Equals(mainPlanId)).OrderBy(x => x.CreationTime).AsQueryable());
     }
     #endregion
+
+    #region PackingList
+    public Task<IQueryable<PackingList>> GetPackingListsAsync()
+    {
+        return Task.FromResult(_context.PackingLists.AsQueryable());
+    }
+
+    public Task<PackingList?> GetPackingListByIdAsync(Guid id)
+    {
+        return _context.PackingLists.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+    public Task<PackingList?> GetPackingListByMainPlanIdAsync(Guid mainPlanId)
+    {
+        return _context.PackingLists.SingleOrDefaultAsync(x => x.MainPlanId.Equals(mainPlanId));
+    } 
+    #endregion
+
+
 
 }

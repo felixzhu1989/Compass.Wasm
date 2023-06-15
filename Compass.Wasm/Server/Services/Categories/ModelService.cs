@@ -3,7 +3,9 @@ using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Categories;
 
 namespace Compass.Wasm.Server.Services.Categories;
-
+public interface IModelService : IBaseService<ModelDto>
+{
+}
 public class ModelService : IModelService
 {
     private readonly CategoryDomainService _domainService;

@@ -129,6 +129,7 @@ public class UwiDataViewModel : NavigationViewModel
     }
     private async void GetDataAsync()
     {
+        DataDto = new UwiData();
         var dataResult = await _service.GetFirstOrDefault(CurrentModule.Id.Value);
         if (dataResult.Status)
         {
@@ -136,7 +137,6 @@ public class UwiDataViewModel : NavigationViewModel
         }
         else
         {
-            DataDto = new UwiData();
             //提示用户，查询失败了
             Aggregator.SendMessage(dataResult.Message??"查询失败了");
         }
@@ -145,7 +145,8 @@ public class UwiDataViewModel : NavigationViewModel
     {
         base.OnNavigatedTo(navigationContext);
         //ModuleDto
-        CurrentModule= navigationContext.Parameters.ContainsKey("Value")
+        CurrentModule = new ModuleDto();
+        CurrentModule = navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<ModuleDto>("Value")
             : new ModuleDto();
         var specialNotes = string.IsNullOrEmpty(CurrentModule.SpecialNotes) ? "" : $" ({CurrentModule.SpecialNotes})";

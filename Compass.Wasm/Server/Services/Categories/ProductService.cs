@@ -3,7 +3,11 @@ using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Categories;
 
 namespace Compass.Wasm.Server.Services.Categories;
-
+public interface IProductService : IBaseService<ProductDto>
+{
+    //扩展的查询功能,WPF
+    Task<ApiResponse<List<ProductDto>>> GetModelTypeTreeAsync();
+}
 public class ProductService : IProductService
 {
 
@@ -39,12 +43,9 @@ public class ProductService : IProductService
         try
         {
             var model = await _repository.GetProductByIdAsync(id);
-            if (model != null)
-            {
-                var dto = _mapper.Map<ProductDto>(model);
-                return new ApiResponse<ProductDto> { Status = true, Result = dto };
-            }
-            return new ApiResponse<ProductDto> { Status = false, Message = "查询数据失败" };
+            if (model == null) return new ApiResponse<ProductDto> { Status = false, Message = "查询数据失败" };
+            var dto = _mapper.Map<ProductDto>(model);
+            return new ApiResponse<ProductDto> { Status = true, Result = dto };
         }
         catch (Exception e)
         {

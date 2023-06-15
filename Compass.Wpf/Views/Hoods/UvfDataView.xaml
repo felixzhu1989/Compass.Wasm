@@ -1,8 +1,8 @@
 ﻿<UserControl x:Class="Compass.Wpf.Views.Hoods.UvfDataView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Compass.Wpf.Views.Hoods"
              mc:Ignorable="d"
              d:DesignHeight="550"
@@ -14,6 +14,7 @@
         <converter:SidePanelConverter x:Key="SidePanelConverter" />
         <converter:IntToStringConverter x:Key="IntToStringConverter" />
         <converter:LightTypeConverter x:Key="LightTypeConverter" />
+        <converter:UvLightTypeConverter x:Key="UvLightTypeConverter" />
         <converter:ShowSpotLightConverter x:Key="ShowSpotLightConverter" />
         <converter:DrainTypeConverter x:Key="DrainTypeConverter" />
         <converter:AnsulSideConverter x:Key="AnsulSideConverter" />
@@ -179,7 +180,6 @@
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="CJ脖颈距右："
                              materialDesign:TextFieldAssist.SuffixText="(当有背部CJ时填)" />
-                    
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="2"
@@ -249,7 +249,7 @@
                                Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding UvLightTypes}"
-                              SelectedItem="{Binding DataDto.UvLightType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding DataDto.UvLightType,Converter={StaticResource UvLightTypeConverter },Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="UV灯类型:   " />
                     <CheckBox IsChecked="{Binding DataDto.Bluetooth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               Content="蓝牙面板"

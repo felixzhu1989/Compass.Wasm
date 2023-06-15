@@ -7,173 +7,176 @@
 
 <PageTitle>图纸列表</PageTitle>
 <div class="row position-relative">
+    
     <div class="col">
-        @if (_projectDto != null)
-        {
-            <h5>
-                <CompUpdateIcon Roles="admin,pm" Url="@($"project/update/{ProjectId}")" />
-                <span>@_projectDto.OdpNumber</span>
-                <a href="projects">
-                    <span class="badge ms-2 bg-light text-black">@_projectDto.ProjectType</span>
-                </a>
-                <a href="projects">
-                    <CompRiskLevel Risk="@_projectDto.RiskLevel" />
-                </a>
-                <a href="lessons/project/@ProjectId">
-                    <span class="badge bg-info text-black ms-2 me-2">经验教训</span>
-                </a>
-                @_projectDto.Name
-            </h5>
-            <!--todo:table生产计划（根据ProjectId查询）-->
-            <div class="row">
-                <div class="col">
-                    <table class="table table-hover" style="table-layout: fixed; word-break: break-all;">
-                        <thead>
-                            <tr>
-                                <th style="width: 50px; color: dodgerblue">分批</th>
-                                <th style="width: 60px; text-align: center; color: dodgerblue">状态</th>
-                                <th style="color: purple">计划发图</th>
-                                <th style="color: darkgreen">发图时间</th>
-                                <th style="color: purple">计划完工</th>
-                                <th style="color: darkgreen">入库时间</th>
-                                <th style="color: darkgreen">发货时间</th>
-                                <th style="width: 130px;">报告异常</th>
+        <h5>
+            <CompUpdateIcon Roles="admin,pm" Url="@($"project/update/{ProjectId}")"/>
+            <span>@_projectDto.OdpNumber</span>
+            <span class="badge ms-2 bg-success text-white">@_projectDto.UserName</span>
+            <a href="projects">
+                <span class="badge ms-2 bg-primary text-white">@_projectDto.ProjectType</span>
+            </a>
+            <a href="projects">
+                <CompRiskLevel Risk="@_projectDto.RiskLevel"/>
+            </a>
+            <a href="lessons/project/@ProjectId">
+                <span class="badge bg-info text-white ms-2 me-2">经验教训</span>
+            </a>
+            @_projectDto.Name
+        </h5>
+        <!--todo:table生产计划（根据ProjectId查询）-->
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover" style="table-layout: fixed; word-break: break-all;">
+                    <thead>
+                    <tr>
+                        <th style="width: 50px; color: dodgerblue">分批</th>
+                        <th style="width: 60px; text-align: center; color: dodgerblue">状态</th>
+                        <th style="color: purple">计划发图</th>
+                        <th style="color: darkgreen">发图时间</th>
+                        <th style="color: purple">计划完工</th>
+                        <th style="color: darkgreen">入库时间</th>
+                        <th style="color: darkgreen">发货时间</th>
+                        <th style="width: 130px;">报告异常</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    @if (_projectDto.MainPlanDtos.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="7">无计划...</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var plan in _projectDto.MainPlanDtos)
+                        {
+                            <tr class="@(plan.AllIssueClosed ? "" : "table-danger")">
+                                <td>
+                                    <CompBatch Batch="plan.Batch"/>
+                                </td>
+                                <td style="text-align: center">
+                                    <CompMainPlanStatus Status="@plan.Status"></CompMainPlanStatus>
+                                </td>
+                                <td style="font-weight: bold; @(plan.DrwReleaseTarget < DateTime.Today && plan.DrwReleaseTime == null ? "color:red" : plan.DrwReleaseTarget < DateTime.Today ? "color:green" : "")">
+                                    @plan.DrwReleaseTarget.ToString("MM/dd")
+                                </td>
+                                <td>
+                                    <AuthorizeView Roles="admin">
+                                        <Authorized>
+                                            <!--todo:使用弹窗解决这个问题-->
+                                            <a href="">
+                                                <span class="oi oi-cog"></span>
+                                            </a>
+                                        </Authorized>
+                                    </AuthorizeView>
+                                    @(plan.DrwReleaseTime != null ?
+                                        plan.DrwReleaseTime.Value.ToString("MM/dd") : "")
+                                </td>
+                                <td style="font-weight: bold; @(plan.FinishTime < DateTime.Today && plan.Status < MainPlanStatus_e.入库 ? "color:red" : plan.FinishTime < DateTime.Today ? "color:green" : "")">
+                                    @plan.FinishTime.ToString("MM/dd")
+                                </td>
+                                <td>
+                                    <AuthorizeView Roles="admin">
+                                        <Authorized>
+                                            <!--todo:使用弹窗解决这个问题-->
+                                            <a href="">
+                                                <span class="oi oi-cog"></span>
+                                            </a>
+                                        </Authorized>
+                                    </AuthorizeView>
+                                    @(plan.WarehousingTime != null ?
+                                        plan.WarehousingTime.Value.ToString("MM/dd") : "")
+                                </td>
+                                <td>
+                                    <AuthorizeView Roles="admin">
+                                        <Authorized>
+                                            <!--todo:使用弹窗解决这个问题-->
+                                            <a href="">
+                                                <span class="oi oi-cog"></span>
+                                            </a>
+                                        </Authorized>
+                                    </AuthorizeView>
+                                    @(plan.ShippingTime != null ?
+                                        plan.ShippingTime.Value.ToString("MM/dd") : "")
+                                </td>
+                                <td>
+                                    @if (plan.AllIssueClosed)
+                                    {
+                                        <a href="issues/mainplan/@plan.Id">报告异常</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="issues/mainplan/@plan.Id">
+                                            <span>查看异常</span>
+                                            <img class="ms-1 me-2" style="width: 23px" src="andon_red.gif"/>
+                                        </a>
+
+                                    }
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-
-                            @if (_projectDto.MainPlanDtos.Count == 0)
-                            {
-                                <tr>
-                                    <td colspan="7">无计划...</td>
-                                </tr>
-                            }
-                            else
-                            {
-                                foreach (var plan in _projectDto.MainPlanDtos)
-                                {
-                                    <tr class="@(plan.AllIssueClosed ? "" : "table-danger")">
-                                        <td>
-                                            <CompBatch Batch="plan.Batch" />
-                                        </td>
-                                        <td style="text-align: center">
-                                            <CompMainPlanStatus Status="@plan.Status"></CompMainPlanStatus>
-                                        </td>
-                                        <td style="font-weight: bold; @(plan.DrwReleaseTarget < DateTime.Today && plan.DrwReleaseTime == null ? "color:red" : plan.DrwReleaseTarget < DateTime.Today ? "color:green" : "")">
-                                            @plan.DrwReleaseTarget.ToString("MM/dd")
-                                        </td>
-                                        <td>
-                                            <AuthorizeView Roles="admin">
-                                                <Authorized>
-                                                    <!--todo:使用弹窗解决这个问题-->
-                                                    <a href="">
-                                                        <span class="oi oi-cog"></span>
-                                                    </a>
-                                                </Authorized>
-                                            </AuthorizeView>
-                                            @(plan.DrwReleaseTime != null ?
-                                                plan.DrwReleaseTime.Value.ToString("MM/dd") : "")
-                                        </td>
-                                        <td style="font-weight: bold; @(plan.FinishTime < DateTime.Today && plan.Status < MainPlanStatus_e.入库 ? "color:red" : plan.FinishTime < DateTime.Today ? "color:green" : "")">
-                                            @plan.FinishTime.ToString("MM/dd")
-                                        </td>
-                                        <td>
-                                            <AuthorizeView Roles="admin">
-                                                <Authorized>
-                                                    <!--todo:使用弹窗解决这个问题-->
-                                                    <a href="">
-                                                        <span class="oi oi-cog"></span>
-                                                    </a>
-                                                </Authorized>
-                                            </AuthorizeView>
-                                            @(plan.WarehousingTime != null ?
-                                                plan.WarehousingTime.Value.ToString("MM/dd") : "")
-                                        </td>
-                                        <td>
-                                            <AuthorizeView Roles="admin">
-                                                <Authorized>
-                                                    <!--todo:使用弹窗解决这个问题-->
-                                                    <a href="">
-                                                        <span class="oi oi-cog"></span>
-                                                    </a>
-                                                </Authorized>
-                                            </AuthorizeView>
-                                            @(plan.ShippingTime != null ?
-                                                plan.ShippingTime.Value.ToString("MM/dd") : "")
-                                        </td>
-                                        <td>
-                                            @if (plan.AllIssueClosed)
-                                            {
-                                                <a href="issues/mainplan/@plan.Id">报告异常</a>
-                                            }
-                                            else
-                                            {
-                                                <a href="issues/mainplan/@plan.Id">
-                                                    <span>查看异常</span>
-                                                    <img class="ms-1 me-2" style="width: 23px" src="andon_red.gif" />
-                                                </a>
-
-                                            }
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col">
-                </div>
+                        }
+                    }
+                    </tbody>
+                </table>
             </div>
-            <div class="row">
-                <div class="col-sm-3" style="width: 95px">系统合同:</div>
-                <CompFile Roles="admin,pm,designer"
+            <div class="col">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" style="width: 95px">系统合同:</div>
+            <CompFile Roles="admin,pm,designer"
                       FileUrl="@_projectDto.ContractUrl"
-                      UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
-            </div>
-            <div class="row">
-                <div class="col-sm-3" style="width: 95px">物料清单:</div>
-                <CompFiles Roles="admin,pm,designer"
+                      UpLoadUrl="@($"project/uploadfiles/{ProjectId}")"/>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" style="width: 95px">物料清单:</div>
+            <CompFiles Roles="admin,pm,designer"
                        FileUrls="@_projectDto.BomUrl"
-                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
-            </div>
-            <div class="row">
-                <div class="col-sm-3" style="width: 95px">其他附件:</div>
-                <CompFiles Roles="admin,pm,designer"
+                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")"/>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" style="width: 95px">其他附件:</div>
+            <CompFiles Roles="admin,pm,designer"
                        FileUrls="@_projectDto.AttachmentsUrl"
-                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
-            </div>
-            <div class="row">
-                <div class="col-sm-3" style="width: 95px">最终检验:</div>
-                <CompFiles Roles="admin,inspector"
+                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")"/>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" style="width: 95px">最终检验:</div>
+            <CompFiles Roles="admin,inspector"
                        FileUrls="@_projectDto.FinalInspectionUrl"
-                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")" />
+                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")"/>
 
-            </div>
-            @if (!string.IsNullOrWhiteSpace(_projectDto.SpecialNotes))
-            {
-                <div class="row">
-                    <div class="col-sm-3" style="width: 95px">特殊要求:</div>
-                    <div class="col-sm-9" style="color: red">
-                        <CompMultiLineText Text="@_projectDto.SpecialNotes" />
-                    </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(_projectDto.SpecialNotes))
+        {
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">特殊要求:</div>
+                <div class="col-sm-9" style="color: red">
+                    <CompMultiLineText Text="@_projectDto.SpecialNotes"/>
                 </div>
-            }
-            @if (!_projectDto.AllIssueClosed)
-            {
-                <div class="row">
-                    <div class="col-sm-3" style="width: 95px">异常列表:</div>
-                    <div class="col-sm-9" style="color: red">
-                        @*@if (_problemDtos != null && _problemDtos.Length != 0)
+            </div>
+        }
+        @if (!_projectDto.AllIssueClosed)
+        {
+            <div class="row">
+                <div class="col-sm-3" style="width: 95px">异常列表:</div>
+                <div class="col-sm-9" style="color: red">
+                    @*@if (_problemDtos != null && _problemDtos.Length != 0)
                 {
                 foreach (var problem in _problemDtos)
                 {
                 <ShowProblem Problem="@problem" />
                 }
                 }*@
-                    </div>
                 </div>
-            }
+            </div>
         }
+    </div>
+    <!--显示一个二维码-->
+    <div class="col position-absolute top-0 end-0 me-5" style="text-align: right; width: 20%">
+        <img src=@($"https://api.wrdan.com/qr?data={_projectDto.Id}") data-origin=@($"https://api.wrdan.com/qr?data={_projectDto.Id}") alt="">
     </div>
     <CompAddButton Roles="admin,pm,designer" Url="@($"drawing/add/{ProjectId}")" />
 </div>
@@ -223,7 +226,6 @@
                 mainPlanDto.AllIssueClosed = mainPlanDto.AllIssueClosed && issueDto.IsClosed;
             }
         }
-
 
 
 

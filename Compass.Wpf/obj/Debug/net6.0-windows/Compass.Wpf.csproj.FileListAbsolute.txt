@@ -2,12 +2,12 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Update
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Update.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Update.exe
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.exe
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\HoodPackingList.xlsm
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\JobCard.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\MainPlan.csv
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\MaterialItem.csv
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\UpdateList.xml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\CutList.xlsx
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\CeilingPackingList.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\PackingList.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.deps.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wpf.dll
@@ -105,6 +105,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\Uw
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\IndexView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MainPlansView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MainView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MaterialItemsView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MemoView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\ModulesView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\ProcessView.g.cs
@@ -136,6 +137,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\Hoods\Uw
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\IndexView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MainPlansView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MainView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MaterialItemsView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\MemoView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\ModulesView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Views\ProjectsView.baml

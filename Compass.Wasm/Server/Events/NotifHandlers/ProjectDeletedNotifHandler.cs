@@ -5,12 +5,9 @@ namespace Compass.Wasm.Server.Events.NotifHandlers;
 
 public class ProjectDeletedNotifHandler : NotificationHandler<ProjectDeletedNotif>
 {
-    private readonly ProjectDbContext _dbContext;
     private readonly PlanDbContext _planDbContext;
-
-    public ProjectDeletedNotifHandler(ProjectDbContext dbContext, PlanDbContext planDbContext)
+    public ProjectDeletedNotifHandler(PlanDbContext planDbContext)
     {
-        _dbContext = dbContext;
         _planDbContext = planDbContext;
     }
     protected override void Handle(ProjectDeletedNotif notification)

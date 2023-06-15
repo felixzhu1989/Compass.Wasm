@@ -9,8 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="CeilingPackingList.xlsx" />
-    <None Remove="HoodPackingList.xlsm" />
     <None Remove="Images\compass_64px.ico" />
     <None Remove="Images\halton_logo.png" />
     <None Remove="Images\Halton_Logo_RGB.jpg" />
@@ -18,17 +16,19 @@
     <None Remove="Images\login.png" />
     <None Remove="Images\wind.png" />
     <None Remove="MainPlan.csv" />
+    <None Remove="MaterialItem.csv" />
+    <None Remove="PackingList.xlsx" />
     <None Remove="UpdateList.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="HoodPackingList.xlsm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="JobCard.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MainPlan.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MaterialItem.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UpdateList.xml">
@@ -79,7 +79,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="CeilingPackingList.xlsx">
+    <Content Include="PackingList.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

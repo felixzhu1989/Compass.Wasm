@@ -2,7 +2,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\Compass.Upda
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\Compass.Update.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\Compass.Update.exe
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\Compass.Wpf.exe
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\HoodPackingList.xlsm
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\JobCard.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\UpdateList.xml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\CutList.xlsx
@@ -149,8 +148,11 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\refint\Compa
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Compass.Wpf.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Compass.Wpf.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\ref\Compass.Wpf.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\CeilingPackingList.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\MainPlan.csv
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\CsvHelper.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\MainPlansView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\MainPlansView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\MaterialItem.csv
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\MaterialItemsView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\MaterialItemsView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\PackingList.xlsx

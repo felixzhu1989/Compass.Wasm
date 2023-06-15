@@ -104,10 +104,10 @@ public class KvfDataViewModel : NavigationViewModel
         DrainTypes = Enum.GetNames(typeof(DrainType_e));
         AnsulSides= Enum.GetNames(typeof(AnsulSide_e));
         AnsulDetectors = Enum.GetNames(typeof(AnsulDetector_e));
-
     }
     private async void GetDataAsync()
     {
+        DataDto = new KvfData();
         var dataResult = await _service.GetFirstOrDefault(CurrentModule.Id.Value);
         if (dataResult.Status)
         {
@@ -115,7 +115,6 @@ public class KvfDataViewModel : NavigationViewModel
         }
         else
         {
-            DataDto = new KvfData();
             //提示用户，查询失败了
             Aggregator.SendMessage(dataResult.Message??"查询失败了");
         }
@@ -124,7 +123,8 @@ public class KvfDataViewModel : NavigationViewModel
     {
         base.OnNavigatedTo(navigationContext);
         //ModuleDto
-        CurrentModule= navigationContext.Parameters.ContainsKey("Value")
+        CurrentModule = new ModuleDto();
+        CurrentModule = navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<ModuleDto>("Value")
             : new ModuleDto();
         var specialNotes = string.IsNullOrEmpty(CurrentModule.SpecialNotes) ? "" : $" ({CurrentModule.SpecialNotes})";

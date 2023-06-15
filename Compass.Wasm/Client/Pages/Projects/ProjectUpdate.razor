@@ -1,6 +1,7 @@
 ﻿@page "/project/update/{Id}"
 
 @inject IProjectService ProjectService
+@inject IUserService UserService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
 
@@ -15,7 +16,22 @@
 
 <EditForm Model="_projectDto" OnSubmit="Save">
     <!--由项目经理修改的数据-->
-
+    <div class="input-group mb-2">
+        <span class="input-group-text">主绘图人</span>
+        <select class="form-select" @bind="@_projectDto.Designer">
+            @foreach (var user in _userDtos)
+            {
+                @if (_projectDto != null && user.Id == _projectDto.Designer)
+                {
+                    <option selected="selected" value="@user.Id">@user.UserName</option>
+                }
+                else
+                {
+                    <option value="@user.Id">@user.UserName</option>
+                }
+            }
+        </select>
+    </div>
     <div class="input-group mb-2">
         <span class="input-group-text">项目编号</span>
         <input class="form-control" placeholder="ODP" @bind-value="@_projectDto.OdpNumber" />
@@ -56,11 +72,14 @@
     [Parameter]
     public string Id { get; set; }
     private ProjectDto _projectDto = new();
+    private List<UserDto> _userDtos = new();
     protected override async Task OnInitializedAsync()
     {
-        var response = await ProjectService.GetFirstOrDefault(Guid.Parse(Id));
-        if (!response.Status) NavigationManager.NavigateTo("projects");
-        _projectDto = response.Result;
+        var pResponse = await ProjectService.GetFirstOrDefault(Guid.Parse(Id));
+        if (!pResponse.Status) NavigationManager.NavigateTo("projects");
+        _projectDto = pResponse.Result;
+        var uResponse = await UserService.GetUsersInRolesAsync("pm,designer");
+        if(uResponse.Status) _userDtos = uResponse.Result;
     }
 
     private async Task Delete()

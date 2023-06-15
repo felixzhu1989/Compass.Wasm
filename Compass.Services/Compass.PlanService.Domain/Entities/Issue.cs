@@ -42,7 +42,9 @@ public record Issue : AggregateRootEntity, IAggregateRoot, IHasCreationTime, ISo
     #region Update
     public void Update(IssueDto dto)
     {
-        ChangeTitle(dto.Title).ChangeContent(dto.Content).ChangeContentUrl(dto.ContentUrl);
+        ChangeTitle(dto.Title)
+            .ChangeContent(dto.Content)
+            .ChangeContentUrl(dto.ContentUrl);
         NotifyModified();
     }
 

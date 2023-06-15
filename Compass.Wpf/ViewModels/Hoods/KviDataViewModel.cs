@@ -106,6 +106,7 @@ public class KviDataViewModel : NavigationViewModel
     }
     private async void GetDataAsync()
     {
+        DataDto = new KviData();
         var dataResult = await _service.GetFirstOrDefault(CurrentModule.Id.Value);
         if (dataResult.Status)
         {
@@ -113,7 +114,6 @@ public class KviDataViewModel : NavigationViewModel
         }
         else
         {
-            DataDto = new KviData();
             //提示用户，查询失败了
             Aggregator.SendMessage(dataResult.Message??"查询失败了");
         }
@@ -122,6 +122,7 @@ public class KviDataViewModel : NavigationViewModel
     {
         base.OnNavigatedTo(navigationContext);
         //ModuleDto
+        currentModule = new ModuleDto();
         CurrentModule= navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<ModuleDto>("Value")
             : new ModuleDto();

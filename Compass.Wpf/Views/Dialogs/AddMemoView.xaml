@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Width="450"
-             Height="280">
+             Width="650"
+             Height="450">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -27,7 +27,7 @@
                      materialDesign:HintAssist.Hint="请输入备忘内容"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
-                     MinHeight="100"
+                     MinHeight="300"
                      DockPanel.Dock="Top"
                      Margin="20,10" />
         </DockPanel>

@@ -155,7 +155,8 @@ public class ModulesViewModel : NavigationViewModel
         }
         else
         {
-            AllModules.Where(x => x.Batch == SelectedBatch).ToList().ForEach(x => ModuleDtos.Add(x));
+            var dtos= AllModules.Where(x => x.Batch == SelectedBatch);
+            ModuleDtos.AddRange(dtos);
         }
     }
 
@@ -229,7 +230,6 @@ public class ModulesViewModel : NavigationViewModel
             {
                 SelectedBatch = Batchs[0];
             }
-            BatchChanges();
         }
         //绑定勾选数据变更
         foreach (var model in AllModules)
@@ -246,6 +246,7 @@ public class ModulesViewModel : NavigationViewModel
             model.PackDir=packDir;
         }
         IsAllModuleDtosSelected = false;
+        BatchChanges();
     }
 
     public override void OnNavigatedTo(NavigationContext navigationContext)

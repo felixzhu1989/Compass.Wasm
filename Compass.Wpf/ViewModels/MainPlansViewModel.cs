@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using Compass.Wasm.Shared.Extensions;
 using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace Compass.Wpf.ViewModels;
@@ -27,12 +28,13 @@ public class MainPlansViewModel : NavigationViewModel
     public DelegateCommand OpenCsvCommand { get; }
     public DelegateCommand UpdateCommand { get; }
     #endregion
+
     #region 属性
     private ObservableCollection<MainPlanDto> mainPlanDtos;
     public ObservableCollection<MainPlanDto> MainPlanDtos
     {
-        get { return mainPlanDtos; }
-        set { mainPlanDtos = value; }
+        get => mainPlanDtos;
+        set { mainPlanDtos = value; RaisePropertyChanged(); }
     }
     private string search;
     /// <summary>
@@ -67,11 +69,7 @@ public class MainPlansViewModel : NavigationViewModel
         List<MainPlanCsv> mainplans;
         try
         {
-            //Excel默认以ANSI格式保存csv文件，读取的时候中文会乱码，应当指定Encoding为GB2312
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            using var reader = new StreamReader(path, Encoding.GetEncoding("GB2312"));
-            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
-            mainplans= csv.GetRecords<MainPlanCsv>().ToList();
+            mainplans= path.GetRecords<MainPlanCsv>();
         }
         //StreamReader的异常
         catch (Exception e)

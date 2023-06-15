@@ -130,6 +130,7 @@ public class UwfDataViewModel : NavigationViewModel
     }
     private async void GetDataAsync()
     {
+        DataDto = new UwfData();
         var dataResult = await _service.GetFirstOrDefault(CurrentModule.Id.Value);
         if (dataResult.Status)
         {
@@ -137,7 +138,6 @@ public class UwfDataViewModel : NavigationViewModel
         }
         else
         {
-            DataDto = new UwfData();
             //提示用户，查询失败了
             Aggregator.SendMessage(dataResult.Message??"查询失败了");
         }
@@ -146,7 +146,8 @@ public class UwfDataViewModel : NavigationViewModel
     {
         base.OnNavigatedTo(navigationContext);
         //ModuleDto
-        CurrentModule= navigationContext.Parameters.ContainsKey("Value")
+        CurrentModule = new ModuleDto();
+        CurrentModule = navigationContext.Parameters.ContainsKey("Value")
             ? navigationContext.Parameters.GetValue<ModuleDto>("Value")
             : new ModuleDto();
         var specialNotes = string.IsNullOrEmpty(CurrentModule.SpecialNotes) ? "" : $" ({CurrentModule.SpecialNotes})";

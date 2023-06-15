@@ -9,11 +9,9 @@ public interface IPlanRepository
     Task<MainPlan?> GetMainPlanByIdAsync(Guid id);
     //扩展MainPlan查询
     Task<IQueryable<MainPlan>> GetMainPlansByProjectIdAsync(Guid projectId);
+    Task<MainPlan?> GetMainPlanByProjectIdAndBatchAsync(Guid projectId, int batch);
     Task<List<Guid?>> GetProjectIdsByStatusAsync(MainPlanStatus_e? status);
-
-
-
-
+    
 
     Task<CycleTimeDto> GetCycleTimeByMonthAsync(int year,int month);
     Task<CycleTimeDto> GetCycleTimeByYearAsync(int year);
@@ -26,8 +24,10 @@ public interface IPlanRepository
     Task<IQueryable<Issue>> GetIssuesByMainPlanIdAsync(Guid mainPlanId);
     //Task<IQueryable<Issue>> GetIssuesByProjectIdAsync(Guid projectId);
 
-
-
-
+    //PackingList
+    Task<IQueryable<PackingList>> GetPackingListsAsync();
+    Task<PackingList?> GetPackingListByIdAsync(Guid id);
+    //扩展PackingList查询
+    Task<PackingList?> GetPackingListByMainPlanIdAsync(Guid mainPlanId);
 
 }

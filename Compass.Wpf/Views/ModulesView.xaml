@@ -71,15 +71,6 @@
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="LimeGreen"
                     BorderThickness="0" />
-            <Button DockPanel.Dock="Left"
-                    Content="新增烟罩装箱清单"
-                    Command="{Binding ExecuteCommand}"
-                    CommandParameter="AddHoodPackingList"
-                    Margin="10,0"
-                    materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="ForestGreen"
-                    BorderThickness="0" />
-            
         </DockPanel>
         <!--分段数据-->
         <DataGrid Grid.Row="1" ItemsSource="{Binding ModuleDtos}"
@@ -208,20 +199,12 @@
                        FontSize="20"
                        Margin="10" />
             <Button DockPanel.Dock="Left"
-                    Content="烟罩装箱清单"
+                    Content="发货清单"
                     Command="{Binding ExecuteCommand}"
-                    CommandParameter="HoodPackingList"
+                    CommandParameter="PackingList"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="LightSkyBlue"
-                    BorderThickness="0" />
-            <Button DockPanel.Dock="Left"
-                    Content="天花发货清单"
-                    Command="{Binding ExecuteCommand}"
-                    CommandParameter="CeilingPackingList"
-                    Margin="10,0"
-                    materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="CornflowerBlue"
                     BorderThickness="0" />
         </DockPanel>
     </Grid>

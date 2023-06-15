@@ -4,9 +4,6 @@
 
 <PageTitle>Function Test</PageTitle>
 
-
-
-
 <p>
     <button @onclick="TriggerPrompt">按需加载JavaScript脚本</button>
 </p>
@@ -41,17 +38,6 @@ else if (IsDownloadStarted == 2)
 
 
 @code {
-    //await JsRuntime.InvokeVoidAsync("alert", "该项目下包含图纸，不能删除！");
-    //var confirmResult = await JsRuntime.InvokeAsync<bool>("confirm", $"确定要删除项目【{project.OdpNumber}】吗？");
-    private ModuleDto? _module = new();
-    
-    protected override async Task OnInitializedAsync()
-    {
-        var id = "0B4CC771-D029-4838-9004-92A14DC21D7E";
-        _module = await Http.GetFromJsonAsync<ModuleDto>($"api/Module/{id}");
-    }
-
-
     public int IsDownloadStarted { get; set; } = 0;
     private IJSObjectReference _moduleDownload;
     protected async Task DownloadFile()

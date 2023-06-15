@@ -3,57 +3,80 @@
 @inject IJSRuntime JsRuntime
 @inject NavigationManager NavigationManager
 @inject IProjectService ProjectService
+@inject IUserService UserService
 
 <PageTitle>新增项目</PageTitle>
 
-<EditForm Model="_project" OnSubmit="Save">
+<EditForm Model="_projectDto" OnSubmit="Save">
+    <div class="input-group mb-2">
+        <span class="input-group-text">主绘图人</span>
+        <select class="form-select" @bind="@_projectDto.Designer">
+            @foreach (var user in _userDtos)
+            {
+                @if (_projectDto != null && user.Id == _projectDto.Designer)
+                {
+                    <option selected="selected" value="@user.Id">@user.UserName</option>
+                }
+                else
+                {
+                    <option value="@user.Id">@user.UserName</option>
+                }
+            }
+        </select>
+    </div>
     <div class="input-group mb-2 mt-2">
         <span class="input-group-text">项目编号</span>
-        <input class="form-control" placeholder="ODP" @bind-value="@_project.OdpNumber" />
+        <input class="form-control" placeholder="ODP" @bind-value="@_projectDto.OdpNumber" />
     </div>
     <div class="input-group mb-2">
         <span class="input-group-text">项目名称</span>
-        <input class="form-control" placeholder="Name" @bind-value="@_project.Name" />
+        <input class="form-control" placeholder="Name" @bind-value="@_projectDto.Name" />
     </div>
-    <div class="col input-group mb-2 ms-2" style="width: 230px">
+    <div class="input-group mb-2" style="width: 230px">
         <span class="input-group-text">交货日期</span>
-        <input type="date" class="form-control" @bind-value="@_project.DeliveryDate" />
+        <input type="date" class="form-control" @bind-value="@_projectDto.DeliveryDate" />
     </div>
     <div class="input-group mb-2">
         <span class="input-group-text">项目类型</span>
-        <select class="form-select" @bind="@_project.ProjectType">
+        <select class="form-select" @bind="@_projectDto.ProjectType">
             <CompEnumList Type="typeof(ProjectType_e)"/>
         </select>
     </div>
     <div class="input-group mb-2">
         <span class="input-group-text">风险等级</span>
-        <select class="form-select" @bind="@_project.RiskLevel">
-            <CompEnumList Type="typeof(RiskLevel_e)" />
+        <select class="form-select" @bind="@_projectDto.RiskLevel">
+            <CompEnumList Type="typeof(RiskLevel_e)"/>
         </select>
         @*Todo:风险值=概率*影响，概率影响矩阵*@
         <button class="btn btn-warning" type="button">风险评级</button>
     </div>
     <div class="input-group mb-2">
         <span class="input-group-text">特殊要求</span>
-        <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 150px" @bind="@_project.SpecialNotes"></textarea>
+        <textarea class="form-control" placeholder="Special Notes，可输入多行" style="height: 150px" @bind="@_projectDto.SpecialNotes"></textarea>
     </div>
-    
-    <CompSaveCancelButtons CancelUrl="projects" />
+
+    <CompSaveCancelButtons CancelUrl="projects"/>
 </EditForm>
 
 @code {
     //初始化发货日期为今天后的2周
-    private ProjectDto _project = new (){DeliveryDate = DateTime.Now.AddDays(14)};
+    private ProjectDto _projectDto = new (){DeliveryDate = DateTime.Now.AddDays(14)};
     //todo:绑定MainPlan
+    private List<UserDto> _userDtos = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var uResponse = await UserService.GetUsersInRolesAsync("pm,designer");
+        if (uResponse.Status) _userDtos = uResponse.Result;
+    }
 
     private async Task Save()
     {
-        if (string.IsNullOrWhiteSpace(_project.Name) || string.IsNullOrWhiteSpace(_project.OdpNumber))
+        if (string.IsNullOrWhiteSpace(_projectDto.Name) || string.IsNullOrWhiteSpace(_projectDto.OdpNumber))
         {
             await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
             return;
         }
-        var result = await ProjectService.AddAsync(_project);
+        var result = await ProjectService.AddAsync(_projectDto);
         //跳转回主页
         if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("projects");
     }

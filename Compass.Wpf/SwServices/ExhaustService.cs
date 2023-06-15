@@ -1514,6 +1514,8 @@ public class ExhaustService : BaseSwService, IExhaustService
             case UvLightType_e.UVR4L:
             case UvLightType_e.UVR6L:
             case UvLightType_e.UVR8L:
+                swCompLevel2.Suppress("UvDoorDouble");
+                swCompLevel2.Suppress("UvCableDouble");
                 swCompLevel2.UnSuppress("TabUp");
                 swCompLevel2.UnSuppress("SensorCable");
                 swCompLevel2.Suppress("UvDoorShort");
@@ -1522,12 +1524,13 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swCompLevel2.UnSuppress("UvCable");
                 swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
                 swModelLevel2.ChangeDim("UvCable@SketchUvCable", 1500d);
-                swCompLevel2.Suppress("UvDoorDouble");
-                swCompLevel2.Suppress("UvCableDouble");
+                
                 break;
             case UvLightType_e.UVR4S:
             case UvLightType_e.UVR6S:
             case UvLightType_e.UVR8S:
+                swCompLevel2.Suppress("UvDoorDouble");
+                swCompLevel2.Suppress("UvCableDouble");
                 swCompLevel2.UnSuppress("TabUp");
                 swCompLevel2.UnSuppress("SensorCable");
                 swCompLevel2.UnSuppress("UvDoorShort");
@@ -1536,8 +1539,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swCompLevel2.UnSuppress("UvCable");
                 swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
                 swModelLevel2.ChangeDim("UvCable@SketchUvCable", 790d);
-                swCompLevel2.Suppress("UvDoorDouble");
-                swCompLevel2.Suppress("UvCableDouble");
+                
                 break;
             case UvLightType_e.Double:
                 swCompLevel2.UnSuppress("TabUp");

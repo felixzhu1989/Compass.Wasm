@@ -182,6 +182,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddScoped<IModelService,ModelService>();
 builder.Services.AddScoped<IModelTypeService,ModelTypeService>();
+builder.Services.AddScoped<IMaterialItemService, MaterialItemService>();//ŒÔ¡œ
+
 
 #endregion
 

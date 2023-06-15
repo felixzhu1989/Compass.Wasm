@@ -5,7 +5,7 @@
 	<!--升级文件信息-->
 	<UpdateInfo>
 		<!--升级文件的更新日期-->
-		<UpdateTime Date="2023-06-06 16:00"/>
+		<UpdateTime Date="2023-06-14 14:30"/>
 	</UpdateInfo>
 	<!--升级文件列表-->
 	<UpdateFileList>
@@ -19,10 +19,10 @@
 
 		<UpdateFile FileName="CsvHelper.dll" />
 
+		<UpdateFile FileName="MaterialItem.csv" />
 		<UpdateFile FileName="MainPlan.csv" />
 		<UpdateFile FileName="CutList.xlsx" />
-		<UpdateFile FileName="HoodPackingList.xlsm" />
-		<UpdateFile FileName="CeilingPackingList.xlsx" />
+		<UpdateFile FileName="PackingList.xlsx" />
 		<UpdateFile FileName="JobCard.xlsx" />
 	</UpdateFileList>
 </autoUpdater>

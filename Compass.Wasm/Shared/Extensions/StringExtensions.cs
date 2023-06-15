@@ -1,4 +1,7 @@
-﻿namespace Compass.Wasm.Shared.Extensions;
+﻿using System.Formats.Asn1;
+using System.Globalization;
+
+namespace Compass.Wasm.Shared.Extensions;
 
 public static class StringExtensions
 {
@@ -46,4 +49,116 @@ public static class StringExtensions
         //Console.WriteLine("相似度：" + similarity);
         return similarity;
     }
+
+    
+    /// <summary>
+    /// 转换成日期
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static DateTime ToDateTime(this string value)
+    {
+        if ((!string.IsNullOrEmpty(value))&& value.Contains("→"))
+        {
+            var strs = value.Split("→");
+            value = strs[^1];
+        }
+        var result = DateTime.TryParse(value, out var date);
+        return result ? date : DateTime.Now;
+    }
+
+    /// <summary>
+    /// 转换成日期，可以null
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static DateTime? ToDateTimeWithNull(this string value)
+    {
+        var result = DateTime.TryParse(value, out var date);
+        return result ? date : null;
+    }
+
+    /// <summary>
+    /// 转换成int 
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static int ToInt(this string value)
+    {
+        var result = int.TryParse(value, out var intValue);
+        return result ? intValue : 0;
+    }
+
+    /// <summary>
+    /// 转换成double
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static double ToDouble(this string value)
+    {
+        var result = double.TryParse(value, out var doubleValue);
+        return result ? doubleValue : 0;
+    }
+
+    /// <summary>
+    /// 转换成月份
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static DateTime ToMonth(this string value)
+    {
+        var today = DateTime.Today;
+        var month = value.Contains("Jan", StringComparison.OrdinalIgnoreCase) ? 1 :
+            value.Contains("Feb", StringComparison.OrdinalIgnoreCase) ? 2 :
+            value.Contains("Mar", StringComparison.OrdinalIgnoreCase) ? 3 :
+            value.Contains("Apr", StringComparison.OrdinalIgnoreCase) ? 4 :
+            value.Contains("May", StringComparison.OrdinalIgnoreCase) ? 5 :
+            value.Contains("Jun", StringComparison.OrdinalIgnoreCase) ? 6 :
+            value.Contains("Jul", StringComparison.OrdinalIgnoreCase) ? 7 :
+            value.Contains("Aug", StringComparison.OrdinalIgnoreCase) ? 8 :
+            value.Contains("Sep", StringComparison.OrdinalIgnoreCase) ? 9 :
+            value.Contains("Oct", StringComparison.OrdinalIgnoreCase) ? 10 :
+            value.Contains("Nov", StringComparison.OrdinalIgnoreCase) ? 11 :
+            12;
+        return new DateTime(today.Year, month, 1);
+    }
+
+    /// <summary>
+    /// 添加Remarks
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="remarks"></param>
+    /// <returns></returns>
+    public static string ToRemarks(this string value, string remarks)
+    {
+        value=value.Replace("/", "-");
+        if (string.IsNullOrEmpty(remarks))
+        {
+            remarks=value;
+        }
+        else
+        {
+            if (!remarks.Contains(value)) remarks += $"\n{value}";
+        }
+        return remarks;
+    }
+
+    /// <summary>
+    /// 返回枚举类型
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public static T? ToEnum<T>(this string value)
+    {
+        if (string.IsNullOrEmpty(value)) return default;
+        return (T)Enum.Parse(typeof(T), value, true);
+    }
+
+    public static bool ToBool(this string value)
+    {
+        var result = bool.TryParse(value, out var boolValue);
+        return result && boolValue;
+    }
+
 }

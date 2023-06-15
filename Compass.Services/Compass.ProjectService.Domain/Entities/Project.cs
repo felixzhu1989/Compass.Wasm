@@ -31,7 +31,7 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
     
     #region ctor
     private Project() { }
-    public Project(Guid id, string odpNumber, string name, DateTime deliveryDate, ProjectType_e projectType, RiskLevel_e riskLevel, string? specialNotes)
+    public Project(Guid id, string odpNumber, string name, DateTime deliveryDate, ProjectType_e projectType, RiskLevel_e riskLevel, string? specialNotes,Guid? designer)
     {
         Id = id;
         OdpNumber= odpNumber;
@@ -40,6 +40,7 @@ public record Project : AggregateRootEntity, IAggregateRoot, IHasCreationTime, I
         ProjectType= projectType;
         RiskLevel= riskLevel;
         SpecialNotes= specialNotes;
+        Designer = designer;
         ProjectStatus = ProjectStatus_e.计划;//初始状态是计划状态
         //发布领域事件
         AddDomainEvent(new ProjectCreatedNotif(id, name));

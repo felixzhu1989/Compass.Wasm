@@ -35,6 +35,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Product, ProductDto>().ReverseMap();
         CreateMap<Model, ModelDto>().ReverseMap();
         CreateMap<ModelType, ModelTypeDto>().ReverseMap();
+        CreateMap<MaterialItem, MaterialItemDto>().ReverseMap();
         #endregion
 
         #region PlanService

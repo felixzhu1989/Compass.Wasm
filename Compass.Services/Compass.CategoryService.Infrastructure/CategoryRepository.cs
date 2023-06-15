@@ -8,11 +8,13 @@ namespace Compass.CategoryService.Infrastructure;
 
 public class CategoryRepository : ICategoryRepository
 {
+    #region ctor
     private readonly CategoryDbContext _context;
     public CategoryRepository(CategoryDbContext context)
     {
         _context = context;
-    }
+    } 
+    #endregion
 
     #region ProductCategory
     public Task<IQueryable<Product>> GetProductsAsync()
@@ -81,6 +83,16 @@ public class CategoryRepository : ICategoryRepository
         var model = await _context.Models.SingleOrDefaultAsync(x => x.Id.Equals(modelType.ModelId));
         return model.Name;
     }
+    #endregion
 
+    #region MaterialItem
+    public Task<IQueryable<MaterialItem>> GetMaterialItemsAsync()
+    {
+        return Task.FromResult(_context.MaterialItems.AsQueryable());
+    }
+    public Task<MaterialItem?> GetMaterialItemByIdAsync(Guid id)
+    {
+        return _context.MaterialItems.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
     #endregion
 }

@@ -5,7 +5,6 @@ using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;
 using Compass.Wasm.Server.Services.Identities;
-using Compass.Wasm.Shared.Identities;
 
 namespace Compass.Wasm.Server.Services.Plans;
 public interface IIssueService : IBaseService<IssueDto>
@@ -28,7 +27,6 @@ public class IssueService : IIssueService
         _dbContext = dbContext;
         _repository = repository;
         _userService = userService;
-
         _mapper = mapper;
     }
 

@@ -9,7 +9,7 @@ namespace Compass.Wpf.Common.Converters;
 /// </summary>
 public class StatusToColorConverter : IValueConverter
 {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
         switch (value.ToString())
         {

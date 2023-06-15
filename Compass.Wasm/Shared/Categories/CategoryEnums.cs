@@ -7,20 +7,23 @@ public enum Sbu_e
     FS, MA, SBA
 }
 
-//发货清单，装箱清单枚举值
-public enum ProductType_e
-{
-    Hood, Ceiling
-}
+//物料信息与筛选
 public enum Unit_e
 {
-    PCS, M米
+    PCS,M,SET
 }
-public enum AccGroup_e
+
+public enum HoodGroup_e
 {
-    UV, ULUV, Marvel, Ansul, WaterWash, Electric, Light, Fan, Profile, Filter, Fastener, Eto
+    NA,筒灯, UV系统,ULUV系统,MARVEL系统,水洗系统,CMOD,ANSUL,自制件
 }
-public enum AccRule_e
+
+public enum CeilingGroup_e
 {
-    JapanNoNeed, JapanOnly, All, EtoNoPrint, EtoPrint
+    NA, 过滤器, 电, 灯具, 风机, 型材, 紧固件, UV系统, MARVEL系统, 水洗系统, ANSUL, 自制件
+}
+
+public enum CeilingRule_e
+{
+    NA,所有项目要,日本项目不要,日本项目单独要
 }

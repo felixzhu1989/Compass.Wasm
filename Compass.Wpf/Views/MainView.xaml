@@ -30,7 +30,8 @@
                                    IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <!--弹出菜单-->
             <materialDesign:DrawerHost.LeftDrawerContent>
-                <DockPanel MinWidth="220">
+                <!--弹出菜单的宽度-->
+                <DockPanel MinWidth="150">
                     <!--添加头像，名字和菜单的代码，ListBox中绑定MenuBars-->
                     <StackPanel DockPanel.Dock="Top"
                                 Margin="0,20">

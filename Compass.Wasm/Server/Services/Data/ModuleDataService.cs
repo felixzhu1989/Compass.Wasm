@@ -4,7 +4,9 @@ using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Data;
 
 namespace Compass.Wasm.Server.Services.Data;
-
+public interface IModuleDataService : IBaseService<ModuleData>
+{
+}
 public class ModuleDataService : IModuleDataService
 {
     private readonly DataDomainService _domainService;
