@@ -3,7 +3,7 @@ using System.Security.Claims;
 using Compass.TodoService.Infrastructure;
 using Compass.Wasm.Server.Services.Todos;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Todos;
 using Microsoft.AspNetCore.Authorization;
 
@@ -64,6 +64,6 @@ public class MemoController : ControllerBase
     /// </summary>
     [Authorize]
     [HttpGet("Filter")]
-    public async Task<ApiResponse<List<MemoDto>>> GetAllFilter(QueryParameter parameter) => await _service.GetAllFilterAsync(parameter, GetUserId());
+    public async Task<ApiResponse<List<MemoDto>>> GetAllFilter(QueryParam parameter) => await _service.GetAllFilterAsync(parameter, GetUserId());
 
 }

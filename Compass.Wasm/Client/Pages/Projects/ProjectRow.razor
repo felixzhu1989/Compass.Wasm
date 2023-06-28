@@ -6,7 +6,7 @@
     else
     {
         <td>
-            <CompUpdateIcon Roles="admin,pm" Url="@($"project/update/{ProjectDto.Id}")"/>
+            <CompUpdateIcon Roles="admin,pm,manager" Url="@($"project/update/{ProjectDto.Id}")" />
             <a href="/drawings/@ProjectDto.Id">@ProjectDto.OdpNumber</a>
         </td>
         <td>@ProjectDto.Name</td>

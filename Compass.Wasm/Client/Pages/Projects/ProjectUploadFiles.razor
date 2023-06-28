@@ -8,7 +8,7 @@
 
 <EditForm Model="project" OnSubmit="Save">
 
-    <AuthorizeView Roles="admin,pm,designer">
+    <AuthorizeView Roles="admin,pm,designer,manager">
         <Authorized Context="auth">
             <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@project.ContractUrl" />
 
@@ -18,7 +18,7 @@
         </Authorized>
     </AuthorizeView>
 
-    <AuthorizeView Roles="admin,inspector">
+    <AuthorizeView Roles="admin,quality,inspector">
         <Authorized Context="auth">
             <MultiFileUpload Title="最终检验" @bind-MultiFileUrl="@project.FinalInspectionUrl" />
         </Authorized>

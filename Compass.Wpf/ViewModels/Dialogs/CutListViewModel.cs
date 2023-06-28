@@ -3,7 +3,7 @@ using MaterialDesignThemes.Wpf;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Prism.Mvvm;
 using System.Threading.Tasks;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
@@ -71,7 +71,7 @@ public class CutListViewModel : BindableBase, IDialogHostAware
         if (ModuleDto != null)
         {
             Title = $"{ModuleDto.OdpNumber} / {ModuleDto.ProjectName} ( {ModuleDto.ItemNumber} / {ModuleDto.Name} / {ModuleDto.ModelName} ) ({ModuleDto.Length} x {ModuleDto.Width} x {ModuleDto.Height})";
-            CutListParameter param = new CutListParameter
+            var param = new CutListParam
             {
                 ModuleId = ModuleDto.Id.Value
             };

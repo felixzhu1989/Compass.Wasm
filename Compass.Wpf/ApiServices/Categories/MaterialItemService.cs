@@ -27,29 +27,29 @@ public class MaterialItemService:BaseService<MaterialItemDto>,IMaterialItemServi
     #region 扩展
     public async Task<ApiResponse<MaterialItemDto>> UpdateInventoryAsync(Guid id, MaterialItemDto dto)
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Put,
             Route = $"api/MaterialItem/UpdateInventory/{id}",
-            Parameter = dto
+            Param = dto
         };
         return await _client.ExecuteAsync<MaterialItemDto>(request);
     }
 
     public async Task<ApiResponse<MaterialItemDto>> UpdateOtherAsync(Guid id, MaterialItemDto dto)
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Put,
             Route = $"api/MaterialItem/UpdateOther/{id}",
-            Parameter = dto
+            Param = dto
         };
         return await _client.ExecuteAsync<MaterialItemDto>(request);
     }
 
     public async Task<ApiResponse<List<MaterialItemDto>>> GetTop50Async()
     {
-        BaseRequest request = new()
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = "api/MaterialItem/Top50"

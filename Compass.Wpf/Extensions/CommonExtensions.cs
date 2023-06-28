@@ -29,6 +29,9 @@ public static class CommonExtensions
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KWI_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWF_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWI_555.SLDASM",
+
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_450_400.SLDASM",
+
             //Huawei
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_HW_650.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_HW_650.SLDASM",
@@ -78,6 +81,4 @@ public static class CommonExtensions
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         return csv.GetRecords<T>().ToList();
     }
-
-
 }

@@ -1,5 +1,4 @@
 ﻿using Compass.Wasm.Shared.Categories;
-using Compass.Wasm.Shared.Plans;
 using Zack.DomainCommons.Models;
 
 namespace Compass.CategoryService.Domain.Entities;
@@ -26,12 +25,16 @@ public record MaterialItem : AggregateRootEntity, IAggregateRoot, IHasCreationTi
     public string? Height { get; private set; } //高
     public string? Material { get; private set; } //材质
 
+
     public bool Hood { get; private set; }
     public HoodGroup_e HoodGroup { get; private set; }
     public bool Ceiling { get; private set; }
 	public CeilingGroup_e CeilingGroup { get; private set; }
 	public CeilingRule_e CeilingRule { get; private set; }
-    public string? Remark { get; private set; }//备注，计算规则
+    public string? CalcRule { get; private set; }//计算规则
+
+    public bool NoLabel { get; private set; }//不要打印标签，
+    public bool OneLabel { get; private set; }//打印1张标签，默认false表示需要根据数量Quantity打印多张
     #endregion
 
     #region ctor
@@ -117,7 +120,9 @@ public record MaterialItem : AggregateRootEntity, IAggregateRoot, IHasCreationTi
             .ChangeCeiling(dto.Ceiling)
             .ChangeCeilingGroup(dto.CeilingGroup)
             .ChangeCeilingRule(dto.CeilingRule)
-            .ChangeRemark(dto.Remark);
+            .ChangeCalcRule(dto.Remark)
+            .ChangeNoLabel(dto.NoLabel)
+            .ChangeOneLabel(dto.OneLabel);
         NotifyModified();
     }
     public MaterialItem ChangeLength(string? length)
@@ -167,9 +172,20 @@ public record MaterialItem : AggregateRootEntity, IAggregateRoot, IHasCreationTi
         return this;
     }
 
-    public MaterialItem ChangeRemark(string? remark)
+    public MaterialItem ChangeCalcRule(string? calcRule)
     {
-        Remark = remark;
+        CalcRule = calcRule;
+        return this;
+    }
+
+    public MaterialItem ChangeNoLabel(bool noLabel)
+    {
+        NoLabel = noLabel;
+        return this;
+    }
+    public MaterialItem ChangeOneLabel(bool oneLabel)
+    {
+        OneLabel = oneLabel;
         return this;
     }
     #endregion

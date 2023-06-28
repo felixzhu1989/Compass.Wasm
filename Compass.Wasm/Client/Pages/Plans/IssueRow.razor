@@ -22,8 +22,8 @@
     <br />
     <CompMultiLineText Text="@issue.Content" />
     <span style="color: dodgerblue">附件：</span>
-    <br />  
-    <CompFiles Roles="admin,pm,designer"
+    <br />
+    <CompFiles Roles="admin,pm,manager,designer"
            FileUrls="@issue.ContentUrl"
            UpLoadUrl="@($"issue/update/{issue.Id}")" />
     <hr size="1" style="border-top:1px green dashed;">
@@ -36,7 +36,7 @@
         @if (issue.Responder == null)
         {
             //todo:指派负责人
-            <AuthorizeView Roles="admin,pm">
+            <AuthorizeView Roles="admin,pm,manager">
                 <Authorized>
                     <a href="issue/solution/@issue.Id">指派负责人</a> 
                 </Authorized>
@@ -55,7 +55,7 @@
     <CompMultiLineText Text="@issue.Solution" />
     <span style="color: dodgerblue">附件：</span>
     <br />
-    <CompFiles Roles="admin,pm,designer"
+    <CompFiles Roles="admin,pm,manager,designer"
            FileUrls="@issue.SolutionUrl"
            UpLoadUrl="@($"issue/solution/{issue.Id}")" />
 

@@ -6,6 +6,8 @@ using System.IO;
 using System.Diagnostics;
 using SolidWorks.Interop.swconst;
 using Compass.Wpf.ApiServices.Projects;
+using Compass.Wpf.SwServices;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -26,8 +28,8 @@ public class ExportDxfService : IExportDxfService
     {
         _cutListService = provider.Resolve<ICutListService>();
         _moduleService = provider.Resolve<IModuleService>();
-        _swApp = provider.Resolve<ISldWorksService>().SwApp;
         _aggregator= provider.Resolve<IEventAggregator>();
+        _swApp = SwUtility.ConnectSw(_aggregator);
     } 
     #endregion
 

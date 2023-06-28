@@ -1,8 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Compass.Wasm.Server.Services.Projects;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameters;
-using Compass.Wasm.Shared.Plans;
+using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Server.Controllers.Projects;
@@ -42,19 +41,19 @@ public class ProjectController : ControllerBase
     /// 根据查询条件筛选结果
     /// </summary>
     [HttpGet("Filter")]
-    public async Task<ApiResponse<List<ProjectDto>?>> GetAllFilter(ProjectParameter parameter) => await _service.GetAllFilterAsync(parameter);
+    public async Task<ApiResponse<List<ProjectDto>?>> GetAllFilter(ProjectParam param) => await _service.GetAllFilterAsync(param);
 
     /// <summary>
     /// 查询单个项目的图纸和分段的树结构
     /// </summary>
     [HttpGet("ModuleTree")]
-    public async Task<ApiResponse<List<DrawingDto>>> GetModuleTree(ProjectParameter parameter) => await _service.GetModuleTreeAsync(parameter);
+    public async Task<ApiResponse<List<DrawingDto>>> GetModuleTree(ProjectParam param) => await _service.GetModuleTreeAsync(param);
 
     /// <summary>
     /// 查询单个项目的所有分段，用于自动作图和JobCard
     /// </summary>
     [HttpGet("ModuleList")]
-    public async Task<ApiResponse<List<ModuleDto>>> GetModuleList(ProjectParameter parameter) => await _service.GetModuleListAsync(parameter);
+    public async Task<ApiResponse<List<ModuleDto>>> GetModuleList(ProjectParam param) => await _service.GetModuleListAsync(param);
 
     #endregion
 

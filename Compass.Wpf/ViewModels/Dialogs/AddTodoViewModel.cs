@@ -4,6 +4,7 @@ using Prism.Mvvm;
 namespace Compass.Wpf.ViewModels.Dialogs;
 public class AddTodoViewModel : BindableBase, IDialogHostAware
 {
+    #region ctor
     public AddTodoViewModel()
     {
         SaveCommand=new DelegateCommand(Save);
@@ -11,7 +12,9 @@ public class AddTodoViewModel : BindableBase, IDialogHostAware
     }
     public string DialogHostName { get; set; }
     public DelegateCommand SaveCommand { get; set; }
-    public DelegateCommand CancelCommand { get; set; }
+    public DelegateCommand CancelCommand { get; set; } 
+    #endregion
+
     private TodoDto model;
     public TodoDto Model
     {
@@ -29,15 +32,13 @@ public class AddTodoViewModel : BindableBase, IDialogHostAware
     {
         //验证数据已填写
         if (string.IsNullOrWhiteSpace(Model.Title)||string.IsNullOrWhiteSpace(model.Content)) return;
-        if (DialogHost.IsDialogOpen(DialogHostName))
-        {
-            DialogParameters param = new() { { "Value", Model } };
-            //保存时传递参数param
-            DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.OK, param));
-        }
+        if (!DialogHost.IsDialogOpen(DialogHostName)) return;
+        DialogParameters param = new() { { "Value", Model } };
+        //保存时传递参数param
+        DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.OK, param));
     }
     public void OnDialogOpen(IDialogParameters parameters)
     {
-        Model = parameters.ContainsKey("Value") ? parameters.GetValue<TodoDto>("Value") : new();
+        Model = parameters.ContainsKey("Value") ? parameters.GetValue<TodoDto>("Value") : new TodoDto();
     }
 }

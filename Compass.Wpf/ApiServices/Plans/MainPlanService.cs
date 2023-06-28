@@ -22,18 +22,18 @@ public class MainPlanService : BaseService<MainPlanDto>, IMainPlanService
     #region 扩展
     public async Task<ApiResponse<MainPlanDto>> UpdateStatusesAsync(Guid id, MainPlanDto dto)
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Put,
             Route = $"api/MainPlan/UpdateStatuses/{id}",
-            Parameter = dto
+            Param = dto
         };
         return await _client.ExecuteAsync<MainPlanDto>(request);
     }
 
     public async Task<ApiResponse<MainPlanCountDto>> GetCountAsync()
     {
-        BaseRequest request = new()
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = "api/MainPlan/Count"

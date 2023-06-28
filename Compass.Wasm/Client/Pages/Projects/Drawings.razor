@@ -10,7 +10,7 @@
     
     <div class="col">
         <h5>
-            <CompUpdateIcon Roles="admin,pm" Url="@($"project/update/{ProjectId}")"/>
+            <CompUpdateIcon Roles="admin,pm,manager" Url="@($"project/update/{ProjectId}")" />
             <span>@_projectDto.OdpNumber</span>
             <span class="badge ms-2 bg-success text-white">@_projectDto.UserName</span>
             <a href="projects">
@@ -126,25 +126,25 @@
         </div>
         <div class="row">
             <div class="col-sm-3" style="width: 95px">系统合同:</div>
-            <CompFile Roles="admin,pm,designer"
+            <CompFile Roles="admin,pm,manager,designer"
                       FileUrl="@_projectDto.ContractUrl"
                       UpLoadUrl="@($"project/uploadfiles/{ProjectId}")"/>
         </div>
         <div class="row">
             <div class="col-sm-3" style="width: 95px">物料清单:</div>
-            <CompFiles Roles="admin,pm,designer"
+            <CompFiles Roles="admin,pm,manager,designer"
                        FileUrls="@_projectDto.BomUrl"
                        UpLoadUrl="@($"project/uploadfiles/{ProjectId}")"/>
         </div>
         <div class="row">
             <div class="col-sm-3" style="width: 95px">其他附件:</div>
-            <CompFiles Roles="admin,pm,designer"
+            <CompFiles Roles="admin,pm,manager,designer"
                        FileUrls="@_projectDto.AttachmentsUrl"
                        UpLoadUrl="@($"project/uploadfiles/{ProjectId}")"/>
         </div>
         <div class="row">
             <div class="col-sm-3" style="width: 95px">最终检验:</div>
-            <CompFiles Roles="admin,inspector"
+            <CompFiles Roles="admin,quality,inspector"
                        FileUrls="@_projectDto.FinalInspectionUrl"
                        UpLoadUrl="@($"project/uploadfiles/{ProjectId}")"/>
 
@@ -178,7 +178,7 @@
     <div class="col position-absolute top-0 end-0 me-5" style="text-align: right; width: 20%">
         <img src=@($"https://api.wrdan.com/qr?data={_projectDto.Id}") data-origin=@($"https://api.wrdan.com/qr?data={_projectDto.Id}") alt="">
     </div>
-    <CompAddButton Roles="admin,pm,designer" Url="@($"drawing/add/{ProjectId}")" />
+    <CompAddButton Roles="admin,pm,manager,designer" Url="@($"drawing/add/{ProjectId}")" />
 </div>
 <table class="table table-hover " style="table-layout: fixed;word-break:break-all;">
     <thead>

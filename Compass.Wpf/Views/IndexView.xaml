@@ -9,10 +9,10 @@
              d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
     <UserControl.Resources>
-        <converter:IntToBoolConverter x:Key="intToBool" />
-        <converter:StatusToColorConverter x:Key="StatusToColorConverter" />
+        <cvt:IntToBoolCvt x:Key="intToBool" />
+        <cvt:StatusToColorCvt x:Key="StatusToColorCvt" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -38,7 +38,7 @@
                 <DataTemplate>
                     <!--prism的载入动画-->
                     <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn}">
-                        <Border Background="{Binding Title,Converter={StaticResource StatusToColorConverter}}"
+                        <Border Background="{Binding Title,Converter={StaticResource StatusToColorCvt}}"
                                 Margin="5"
                                 CornerRadius="5">
                             <Border.InputBindings>

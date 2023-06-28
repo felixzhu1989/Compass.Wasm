@@ -30,12 +30,10 @@ public class AddMemoViewModel : BindableBase, IDialogHostAware
     {
         //验证数据已填写
         if (string.IsNullOrWhiteSpace(Model.Title)||string.IsNullOrWhiteSpace(model.Content)) return;
-        if (DialogHost.IsDialogOpen(DialogHostName))
-        {
-            DialogParameters param = new() { { "Value", Model } };
-            //保存时传递参数
-            DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.OK, param));
-        }
+        if (!DialogHost.IsDialogOpen(DialogHostName)) return;
+        DialogParameters param = new() { { "Value", Model } };
+        //保存时传递参数
+        DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.OK, param));
     }
     public void OnDialogOpen(IDialogParameters parameters)
     {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Compass.Wasm.Server.Services.Projects;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Server.Controllers.Projects;
@@ -36,12 +36,12 @@ public class CutListController : ControllerBase
 
 
     #region 扩展的查询功能,WPF
-
+    [HttpGet("Module")]
+    public async Task<ApiResponse<List<CutListDto>>> GetAllByModuleId(CutListParam param) => await _service.GetAllByModuleIdAsync(param);
     #endregion
 
     #region 扩展的查询功能,Blazor
-    [HttpGet("Module")]
-    public async Task<ApiResponse<List<CutListDto>>> GetAllByModuleId(CutListParameter parameter) => await _service.GetAllByModuleIdAsync(parameter);
+
 
 
     #endregion

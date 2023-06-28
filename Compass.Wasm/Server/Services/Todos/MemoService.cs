@@ -3,7 +3,7 @@ using Compass.TodoService.Domain;
 using Compass.TodoService.Domain.Entities;
 using Compass.TodoService.Infrastructure;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Todos;
 
 namespace Compass.Wasm.Server.Services.Todos;
@@ -15,7 +15,7 @@ public interface IMemoService : IBaseService<MemoDto>
     Task<ApiResponse<List<MemoDto>>> GetUserAllAsync(Guid userId);
     Task<ApiResponse<MemoDto>> UserAddAsync(MemoDto dto, Guid userId);
 
-    Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParameter parameter, Guid userId);
+    Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParam parameter, Guid userId);
 }
 
 public class MemoService : IMemoService
@@ -155,7 +155,7 @@ public class MemoService : IMemoService
     /// <summary>
     /// 根据筛选条件查询
     /// </summary>
-    public async Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParameter parameter, Guid userId)
+    public async Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParam parameter, Guid userId)
     {
         try
         {

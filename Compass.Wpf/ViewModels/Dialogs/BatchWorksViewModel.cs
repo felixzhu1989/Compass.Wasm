@@ -114,6 +114,11 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
             catch (Exception ex)
             {
                 _aggregator.SendMessage($"{ActionName}发生异常!\n{ex.Message}", Filter_e.Batch);
+                //todo:记录日志？往admin的待办中添加待办？
+
+
+
+
                 await Task.Delay(8000);
             }
             var timeSpan = DateTime.Now - startTime;
@@ -136,10 +141,11 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
             DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.No));
     }
 
+    
     public void OnDialogOpen(IDialogParameters parameters)
     {
         ModuleDtos = parameters.ContainsKey("Value") ? parameters.GetValue<List<ModuleDto>>("Value") : new List<ModuleDto>();
         ActionName= parameters.ContainsKey("ActionName") ? parameters.GetValue<BatchWorksAction_e>("ActionName") : BatchWorksAction_e.自动作图;
-        _aggregator.SendMessage($"请确认开始{ActionName}...", Filter_e.Batch);
+        _aggregator.SendMessage($"请点击右下方【{ActionName}】按钮，确认批量执行{ActionName}程序...", Filter_e.Batch);
     }
 }

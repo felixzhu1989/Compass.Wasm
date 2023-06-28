@@ -33,7 +33,8 @@ public class DataDbContext : BaseDbContext
     public DbSet<KwfData> KwfData { get; set; }
     public DbSet<UwiData> UwiData { get; set; }
     public DbSet<UwfData> UwfData { get; set; }
-    
+
+    public DbSet<KvvData> KvvData { get; set; }
 
     #endregion
 

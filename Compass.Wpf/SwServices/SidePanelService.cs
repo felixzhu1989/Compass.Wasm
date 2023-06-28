@@ -1,4 +1,5 @@
 ﻿using Compass.Wasm.Shared.Data;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
@@ -12,7 +13,8 @@ public class SidePanelService : BaseSwService, ISidePanelService
     {
         //KV/UV烟罩侧边CJ留出安全距离110
         //KW/UW烟罩侧边CJ流出安全距离190
-        var sideCjEnd = exhaustType == ExhaustType_e.KW || exhaustType == ExhaustType_e.UW ? 190d : 110d;
+        var sideCjEnd = exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 190d : 110d;
+        if (backCj) sideCjEnd += 90d;//有BackCj时需要让侧面CJ孔避让排风腔
 
         //todo:是否需要合并M型烟罩
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "SidePanel_Fs-1", Aggregator);
@@ -56,7 +58,7 @@ public class SidePanelService : BaseSwService, ISidePanelService
     {
         //KV/UV烟罩侧边CJ留出安全距离110
         //KW/UW烟罩侧边CJ流出安全距离190
-        var sideCjEnd = exhaustType == ExhaustType_e.KW || exhaustType == ExhaustType_e.UW ? 190d : 110d;
+        var sideCjEnd = exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 190d : 110d;
 
         //todo:是否需要合并M型烟罩
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "SidePanel_Hw-1", Aggregator);
@@ -93,6 +95,64 @@ public class SidePanelService : BaseSwService, ISidePanelService
             swAssyLevel1.Suppress(suffix, "FNHS0068-1");
             swAssyLevel1.Suppress(suffix, "FNHS0069-1");
             swAssyLevel1.Suppress(suffix, "FNHS0070-1");
+        }
+    }
+
+
+    public void SidePanelNeq(AssemblyDoc swAssyTop, string suffix, SidePanel_e sidePanel, double length, double width, double height,double suHeight, bool backCj, ExhaustType_e exhaustType)
+    {
+        //KV/UV烟罩侧边CJ留出安全距离30
+        //KW/UW烟罩侧边CJ流出安全距离110
+        var sideCjEnd = exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 110d : 30d;
+        //
+        var bottom = 77d;
+        if (height == 555d)
+        {
+            bottom= exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 150d : 77d;
+        }
+        else if(height ==450d)
+        {
+            bottom = 106d;
+        }
+        if (backCj) bottom += 90d;
+
+
+
+        //todo:是否需要合并M型烟罩
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "SidePanel_Neq-1", Aggregator);
+        if (sidePanel == SidePanel_e.双)
+        {
+            FNHS0012(swAssyLevel1, suffix, "FNHS0012-1", width, height,suHeight, backCj, sideCjEnd,bottom);
+            FNHS0013(swAssyLevel1, suffix, "FNHS0013-1", width, height, suHeight, backCj, bottom);
+
+            FNHS0012(swAssyLevel1, suffix, "FNHS0014-1", width, height, suHeight, backCj, sideCjEnd, bottom);
+            FNHS0013(swAssyLevel1, suffix, "FNHS0015-1", width, height, suHeight, backCj, bottom);
+
+            swAssyLevel1.ChangeDim("Length@DistanceLeft", length/2d);
+            swAssyLevel1.ChangeDim("Length@DistanceRight", length/2d);
+        }
+        else if (sidePanel == SidePanel_e.左)
+        {
+            FNHS0012(swAssyLevel1, suffix, "FNHS0012-1", width, height, suHeight, backCj, sideCjEnd, bottom);
+            FNHS0013(swAssyLevel1, suffix, "FNHS0013-1", width, height, suHeight, backCj, bottom);
+            swAssyLevel1.Suppress(suffix, "FNHS0014-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0015-1");
+            swAssyLevel1.ChangeDim("Length@DistanceLeft", length/2d);
+        }
+        else if (sidePanel == SidePanel_e.右)
+        {
+            swAssyLevel1.Suppress(suffix, "FNHS0012-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0013-1");
+            FNHS0012(swAssyLevel1, suffix, "FNHS0014-1", width, height, suHeight, backCj, sideCjEnd, bottom);
+            FNHS0013(swAssyLevel1, suffix, "FNHS0015-1", width, height, suHeight, backCj, bottom);
+            swAssyLevel1.ChangeDim("Length@DistanceRight", length/2d);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffix, "FNHS0012-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0013-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0014-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0015-1");
         }
     }
 
@@ -149,4 +209,41 @@ public class SidePanelService : BaseSwService, ISidePanelService
         //else swCompLevel2.Suppress("BackCj");
     }
     #endregion
+
+    #region 斜侧板
+
+    private void FNHS0012(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height,double suHeight, bool backCj, double sideCjEnd,double bottom)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", width);
+        swModelLevel2.ChangeDim("Height@SketchBase", height);
+        swModelLevel2.ChangeDim("SuHeight@SketchBase", suHeight);
+        swModelLevel2.ChangeDim("Bottom@SketchBase", bottom);
+        swModelLevel2.ChangeDim("End@CjSide", sideCjEnd);
+
+        //if (backCj) swCompLevel2.UnSuppress("BackCj");
+        //else swCompLevel2.Suppress("BackCj");
+    }
+
+    private void FNHS0013(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, double suHeight, bool backCj, double bottom)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", width);
+        swModelLevel2.ChangeDim("Height@SketchBase", height);
+        swModelLevel2.ChangeDim("SuHeight@SketchBase", suHeight);
+        swModelLevel2.ChangeDim("Bottom@SketchBase", bottom);
+        
+        //swCompLevel2.Suppress("FI450");
+        swCompLevel2.Suppress("FI400");
+        if (suHeight.Equals(400d)) swCompLevel2.UnSuppress("FI400");
+        
+        //if (backCj) swCompLevel2.UnSuppress("BackCj");
+        //else swCompLevel2.Suppress("BackCj");
+    }
+
+
+
+    #endregion
+
+
 }

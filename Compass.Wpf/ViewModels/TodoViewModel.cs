@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.Parameters;
+﻿using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Todos;
 
 namespace Compass.Wpf.ViewModels;
@@ -201,12 +201,12 @@ public class TodoViewModel : NavigationViewModel
     {
         UpdateLoading(true);//打开等待窗口
         int? status = SelectedIndex == 0 ? null : SelectedIndex == 1 ? 0 : 1;
-        TodoParameter parameter = new()
+        TodoParam param = new()
         {
             Search = this.Search,
             Status = status
         };
-        var result = await _todoService.GetAllFilterAsync(parameter);
+        var result = await _todoService.GetAllFilterAsync(param);
         if (result.Status)
         {
             TodoDtos.Clear();

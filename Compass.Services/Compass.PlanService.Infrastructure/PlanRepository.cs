@@ -97,7 +97,6 @@ public class PlanRepository : IPlanRepository
     }
     #endregion
 
-
     #region Issue
     public Task<IQueryable<Issue>> GetIssuesAsync()
     {
@@ -129,9 +128,25 @@ public class PlanRepository : IPlanRepository
     public Task<PackingList?> GetPackingListByMainPlanIdAsync(Guid mainPlanId)
     {
         return _context.PackingLists.SingleOrDefaultAsync(x => x.MainPlanId.Equals(mainPlanId));
+    }
+    #endregion
+
+    #region PackingItem
+    public Task<IQueryable<PackingItem>> GetPackingItemsAsync()
+    {
+        return Task.FromResult(_context.PackingItems.AsQueryable());
+    }
+
+    public Task<PackingItem?> GetPackingItemByIdAsync(Guid id)
+    {
+        return _context.PackingItems.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
+
+    public Task<IQueryable<PackingItem>> GetPackingItemsByListIdAsync(Guid packingListId)
+    {
+        return Task.FromResult(_context.PackingItems.Where(x=>x.PackingListId.Equals(packingListId)));
     } 
     #endregion
 
-
-
+    
 }

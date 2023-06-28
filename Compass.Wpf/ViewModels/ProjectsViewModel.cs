@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.Parameters;
+﻿using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ViewModels;
@@ -88,8 +88,8 @@ public class ProjectsViewModel : NavigationViewModel
     private async void GetDataAsync()
     {
         int? status = SelectedStatus;
-        ProjectParameter parameter = new() { Search = this.Search, Status =status==null ? null : (MainPlanStatus_e)status };
-        var result = await _projectService.GetAllFilterAsync(parameter);
+        ProjectParam param = new() { Search = this.Search, Status =status==null ? null : (MainPlanStatus_e)status };
+        var result = await _projectService.GetAllFilterAsync(param);
         ProjectDtos.Clear();
         if (result.Status)
         {

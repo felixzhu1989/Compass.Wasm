@@ -8,9 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
     <UserControl.Resources>
-        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -47,7 +47,7 @@
                         materialDesign:ButtonAssist.CornerRadius="15"
                         Background="OrangeRed"
                         BorderThickness="0"
-                        Visibility="{Binding CanUpdateInfo,Converter={StaticResource BoolToVisibilityConverter}}" />
+                        Visibility="{Binding CanUpdateInfo,Converter={StaticResource BoolToVisibilityCvt}}" />
                 <Button Content="②更新库存信息"
                         Command="{Binding UpdateCommand}"
                         CommandParameter="Inventory"
@@ -62,7 +62,7 @@
                         materialDesign:ButtonAssist.CornerRadius="15"
                         Background="PaleVioletRed"
                         BorderThickness="0"
-                        Visibility="{Binding CanUpdateInfo,Converter={StaticResource BoolToVisibilityConverter}}" />
+                        Visibility="{Binding CanUpdateInfo,Converter={StaticResource BoolToVisibilityCvt}}" />
                 
             </StackPanel>
             <TextBlock Margin="0,5"
@@ -123,6 +123,10 @@
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 <DataGridTextColumn Binding="{Binding Material}"
                                     Header="材质"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding OneLabel}"
+                                    Header="单张标签"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 <DataGridTextColumn Binding="{Binding Hood}"

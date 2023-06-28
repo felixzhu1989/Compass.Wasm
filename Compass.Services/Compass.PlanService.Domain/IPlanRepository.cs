@@ -30,4 +30,10 @@ public interface IPlanRepository
     //扩展PackingList查询
     Task<PackingList?> GetPackingListByMainPlanIdAsync(Guid mainPlanId);
 
+    //PackingItem
+    Task<IQueryable<PackingItem>> GetPackingItemsAsync();
+    Task<PackingItem?> GetPackingItemByIdAsync(Guid id);
+    //扩展PackingItem查询
+    Task<IQueryable<PackingItem>> GetPackingItemsByListIdAsync(Guid packingListId);
+
 }

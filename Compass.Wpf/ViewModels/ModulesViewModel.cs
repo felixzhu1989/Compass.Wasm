@@ -2,8 +2,9 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Projects;
+using Compass.Wpf.SwServices;
 
 namespace Compass.Wpf.ViewModels;
 
@@ -36,11 +37,11 @@ public class ModulesViewModel : NavigationViewModel
         get => project;
         set { project = value; RaisePropertyChanged(); }
     }
-    private int selectedBatch;
+    private int? selectedBatch;
     /// <summary>
     /// 选中状态，用于搜索筛选
     /// </summary>
-    public int SelectedBatch
+    public int? SelectedBatch
     {
         get => selectedBatch;
         set { selectedBatch = value; RaisePropertyChanged(); }
@@ -55,7 +56,14 @@ public class ModulesViewModel : NavigationViewModel
     #endregion
 
     #region DataGrid数据属性
-    public ObservableCollection<ModuleDto> AllModules { get; set; }
+
+    private ObservableCollection<ModuleDto> allModules;
+    public ObservableCollection<ModuleDto> AllModules 
+    { 
+        get=> allModules; 
+        set { allModules=value;RaisePropertyChanged(); }
+    }
+    
     private ObservableCollection<ModuleDto> moduleDtos;
     public ObservableCollection<ModuleDto> ModuleDtos
     {
@@ -141,24 +149,27 @@ public class ModulesViewModel : NavigationViewModel
             case "ExportDxf": ExportDxf(); break;
             case "PrintCutList": PrintCutList(); break;
             case "PrintJobCard": PrintJobCard();break;
-            case "HoodPackingList": ExportPackingList();break;
+            case "SyncFiles": SyncFiles();break;
+
+            case "PackingList": PackingList();break;
+            case "PalletInfo": PalletInfo(); break;
         }
     }
 
-    private void BatchChanges()
+    #region 同步文件
+    private void SyncFiles()
     {
-        //查询分批的分段模型
-        ModuleDtos.Clear();
-        if (Batchs.Length == 0)
-        {
-            ModuleDtos = AllModules;
-        }
-        else
-        {
-            var dtos= AllModules.Where(x => x.Batch == SelectedBatch);
-            ModuleDtos.AddRange(dtos);
-        }
-    }
+        //弹窗，同步本地和公共盘的文件
+
+
+
+
+
+    } 
+    #endregion
+
+    #region 批量操作
+    
 
     private async void AutoDrawing()
     {
@@ -183,21 +194,36 @@ public class ModulesViewModel : NavigationViewModel
         const BatchWorksAction_e actionName = BatchWorksAction_e.打印JobCard;
         await BatchWorks(actionName);
     }
-    //ExportPackingList
-    private async void ExportPackingList()
+    #endregion
+
+    #region 装箱清单和装箱信息
+    private void PackingList()
     {
-        //var actionName = BatchWorksAction_e.导出装箱清单;
-        //await BatchWorks(actionName);
-        //todo:实现导出装箱清单
-
-
+        if(Project.Id==null||Project.Id==Guid.Empty||SelectedBatch==null)return;
+        var packingListParam = new PackingListParam
+        {
+            ProjectId = Project.Id,
+            Batch = SelectedBatch
+        };
+        var param = new NavigationParameters { { "Value", packingListParam } };
+        RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("PackingListView", back =>
+        {
+            Journal = back.Context.NavigationService.Journal;
+        }, param);
     }
+    private void PalletInfo()
+    {
+        
+    } 
+    #endregion
+
+
 
     private async Task BatchWorks(BatchWorksAction_e actionName)
     {
         CanBatchWorks = false;
         //获取勾选的ModuleDto
-        List<ModuleDto> selectedModuleDto = ModuleDtos.Where(x => x.IsSelected).ToList();
+        var selectedModuleDto = ModuleDtos.Where(x => x.IsSelected).ToList();
         //判断是否勾选分段
         if (!selectedModuleDto.Any())
         {
@@ -206,7 +232,7 @@ public class ModulesViewModel : NavigationViewModel
             return;
         }
         //弹出模式窗口，向弹窗传递信息
-        DialogParameters param = new DialogParameters
+        var param = new DialogParameters
         {
             { "Value", selectedModuleDto },
             { "ActionName", actionName }
@@ -219,8 +245,8 @@ public class ModulesViewModel : NavigationViewModel
     #region 初始化
     private async void GetModuleDtosDataAsync()
     {
-        ProjectParameter parameter = new() { ProjectId = Project.Id };
-        var moduleDtosResult = await _projectService.GetModuleListAsync(parameter);
+        var param = new ProjectParam { ProjectId = Project.Id };
+        var moduleDtosResult = await _projectService.GetModuleListAsync(param);
         if (moduleDtosResult.Status)
         {
             AllModules.Clear();
@@ -230,6 +256,10 @@ public class ModulesViewModel : NavigationViewModel
             {
                 SelectedBatch = Batchs[0];
             }
+        }
+        else
+        {
+            AllModules = new ObservableCollection<ModuleDto>();
         }
         //绑定勾选数据变更
         foreach (var model in AllModules)
@@ -248,7 +278,23 @@ public class ModulesViewModel : NavigationViewModel
         IsAllModuleDtosSelected = false;
         BatchChanges();
     }
-
+    /// <summary>
+    /// 分批变更时
+    /// </summary>
+    private void BatchChanges()
+    {
+        //查询分批的分段模型
+        ModuleDtos.Clear();
+        if (Batchs.Length == 0)
+        {
+            ModuleDtos = new ObservableCollection<ModuleDto>();//初始化
+        }
+        else
+        {
+            var dtos = AllModules.Where(x => x.Batch == SelectedBatch);
+            ModuleDtos.AddRange(dtos);
+        }
+    }
     public override void OnNavigatedTo(NavigationContext navigationContext)
     {
         base.OnNavigatedTo(navigationContext);

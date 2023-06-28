@@ -4,20 +4,19 @@ using Compass.PlanService.Domain;
 using Compass.Wasm.Server.Events;
 using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Projects;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Zack.EventBus;
 
 namespace Compass.Wasm.Server.Services.Projects;
 
 public interface IProjectService : IBaseService<ProjectDto>
 {
     //扩展的查询功能,WPF
-    Task<ApiResponse<List<ProjectDto>?>> GetAllFilterAsync(ProjectParameter parameter);
+    Task<ApiResponse<List<ProjectDto>?>> GetAllFilterAsync(ProjectParam param);
 
-    Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter);//用于树结构
-    Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter);//用于自动作图
+    Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParam param);//用于树结构
+    Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParam param);//用于自动作图
 
     //扩展查询功能，Blazor
     
@@ -144,12 +143,12 @@ public class ProjectService : IProjectService
     /// <summary>
     /// 根据筛选条件查询
     /// </summary>
-    public async Task<ApiResponse<List<ProjectDto>?>> GetAllFilterAsync(ProjectParameter parameter)
+    public async Task<ApiResponse<List<ProjectDto>?>> GetAllFilterAsync(ProjectParam param)
     {
         try
         {
             //查询计划，根据状态查询到Id
-            var ids = await _planRepository.GetProjectIdsByStatusAsync(parameter.Status);
+            var ids = await _planRepository.GetProjectIdsByStatusAsync(param.Status);
             if (ids.Count == 0)
             {
                 return new ApiResponse<List<ProjectDto>?> { Status = false, Message ="当前状态无项目" };
@@ -157,11 +156,11 @@ public class ProjectService : IProjectService
             var models = await _repository.GetProjectsAsync();
             //筛选结果，按照发货时间倒序排序
             var filterModels = models.Where(x => (
-                string.IsNullOrWhiteSpace(parameter.Search) || x.OdpNumber.Contains(parameter.Search) || x.Name.Contains(parameter.Search) || x.SpecialNotes.Contains(parameter.Search)) && ids.Contains(x.Id)).OrderByDescending(x => x.DeliveryDate);
+                string.IsNullOrWhiteSpace(param.Search) || x.OdpNumber.Contains(param.Search) || x.Name.Contains(param.Search) || x.SpecialNotes.Contains(param.Search)) && ids.Contains(x.Id)).OrderByDescending(x => x.DeliveryDate);
             var dtos = await _mapper.ProjectTo<ProjectDto>(filterModels).ToListAsync();
             foreach (var dto in dtos)
             {
-                dto.Status = parameter.Status;
+                dto.Status = param.Status;
                 if (dto.Designer == null || dto.Designer == Guid.Empty) continue;
                 var user = await _identityRepository.GetUserByIdAsync(dto.Designer.Value);
                 dto.UserName = user.UserName;
@@ -177,12 +176,12 @@ public class ProjectService : IProjectService
     /// <summary>
     /// 查询单个项目的图纸和分段的树结构
     /// </summary>
-    public async Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter)
+    public async Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParam param)
     {
         try
         {
             //先查询项目下的所有图纸Item
-            var models = await _repository.GetDrawingsByProjectIdAsync(parameter.ProjectId.Value);
+            var models = await _repository.GetDrawingsByProjectIdAsync(param.ProjectId.Value);
             var dtos = await _mapper.ProjectTo<DrawingDto>(models).ToListAsync();
             foreach (var dto in dtos)
             {
@@ -215,13 +214,13 @@ public class ProjectService : IProjectService
     /// <summary>
     /// 查询单个项目中所有的图纸
     /// </summary>
-    public async Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter)
+    public async Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParam param)
     {
         try
         {
-            var project = await _repository.GetProjectByIdAsync(parameter.ProjectId.Value);
+            var project = await _repository.GetProjectByIdAsync(param.ProjectId.Value);
             //先查询项目下的所有图纸Item
-            var drawings = await _repository.GetDrawingsByProjectIdAsync(parameter.ProjectId.Value);
+            var drawings = await _repository.GetDrawingsByProjectIdAsync(param.ProjectId.Value);
             var drawingDtos = await _mapper.ProjectTo<DrawingDto>(drawings).ToListAsync();
 
             var dtos = new List<ModuleDto>();

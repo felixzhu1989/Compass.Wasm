@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiService;
 
 namespace Compass.Wpf.ApiServices.Todos;
@@ -10,7 +10,7 @@ public interface IMemoService : IBaseService<MemoDto>
 {
     //扩展的请求
     Task<ApiResponse<MemoDto>> UserAddAsync(MemoDto dto);
-    Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParameter parameter);
+    Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParam param);
 }
 
 public class MemoService : BaseService<MemoDto>, IMemoService
@@ -23,22 +23,22 @@ public class MemoService : BaseService<MemoDto>, IMemoService
     }
     public async Task<ApiResponse<MemoDto>> UserAddAsync(MemoDto dto)
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Post,
             Route = "api/Memo/User/Add",
-            Parameter = dto
+            Param = dto
         };
         return await _client.ExecuteAsync<MemoDto>(request);
     }
 
-    public async Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParameter parameter)
+    public async Task<ApiResponse<List<MemoDto>>> GetAllFilterAsync(QueryParam param)
     {
-        BaseRequest request = new()
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = "api/Memo/Filter",
-            Parameter = parameter
+            Param = param
         };
         return await _client.ExecuteAsync<List<MemoDto>>(request);
     }

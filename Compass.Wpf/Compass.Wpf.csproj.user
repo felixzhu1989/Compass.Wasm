@@ -12,6 +12,15 @@
     <Compile Update="Views\AboutView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Dialogs\AddPackingListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\AddSplMaterialView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\AddStdMaterialView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Dialogs\BatchWorksView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -25,6 +34,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Hoods\KvfDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Hoods\KvvDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Hoods\KwfDataView.xaml.cs">
@@ -72,6 +84,9 @@
     <Compile Update="Views\Dialogs\MsgView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\PackingListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ProjectsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -92,6 +107,15 @@
     <Page Update="Views\AboutView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Dialogs\AddPackingListView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\AddSplMaterialView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\AddStdMaterialView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Dialogs\BatchWorksView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -105,6 +129,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Hoods\KvfDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Hoods\KvvDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Hoods\KwfDataView.xaml">
@@ -159,6 +186,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\MsgView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PackingListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProcessView.xaml">

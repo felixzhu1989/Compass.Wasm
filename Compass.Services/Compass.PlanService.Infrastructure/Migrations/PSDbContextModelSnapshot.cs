@@ -216,6 +216,9 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<string>("MtlNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("NoLabel")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("OneLabel")
                         .HasColumnType("bit");
 
@@ -225,14 +228,8 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<bool>("Pallet")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("PrintLabel")
-                        .HasColumnType("bit");
-
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
-
-                    b.Property<bool>("ReCreate")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Remark")
                         .HasColumnType("nvarchar(max)");
@@ -241,6 +238,7 @@ namespace Compass.PlanService.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Unit")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Width")

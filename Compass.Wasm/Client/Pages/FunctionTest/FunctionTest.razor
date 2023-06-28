@@ -4,7 +4,7 @@
 
 <PageTitle>Function Test</PageTitle>
 
-<p>
+@*<p>
     <button @onclick="TriggerPrompt">按需加载JavaScript脚本</button>
 </p>
 <p>@_result</p>
@@ -20,7 +20,7 @@
 else if (IsDownloadStarted == 2)
 {
     <p>Download complete.</p>
-}
+}*@
 
 
 
@@ -38,39 +38,40 @@ else if (IsDownloadStarted == 2)
 
 
 @code {
-    public int IsDownloadStarted { get; set; } = 0;
-    private IJSObjectReference _moduleDownload;
-    protected async Task DownloadFile()
-    {
-        if (await JsRuntime.InvokeAsync<bool>("confirm", "Do you want to Export?"))
-        {
-            IsDownloadStarted = 1;
-            StateHasChanged();
 
-            var response = await Http.GetAsync("api/Project/ExportExcel");
-            response.EnsureSuccessStatusCode();
+    //public int IsDownloadStarted { get; set; } = 0;
+    //private IJSObjectReference _moduleDownload;
+    //protected async Task DownloadFile()
+    //{
+    //    if (await JsRuntime.InvokeAsync<bool>("confirm", "Do you want to Export?"))
+    //    {
+    //        IsDownloadStarted = 1;
+    //        StateHasChanged();
 
-            var fileBytes = await response.Content.ReadAsByteArrayAsync();
-            var fileName = $"Projects{DateTime.Now.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)}.xlsx";
+    //        var response = await Http.GetAsync("api/Project/ExportExcel");
+    //        response.EnsureSuccessStatusCode();
+
+    //        var fileBytes = await response.Content.ReadAsByteArrayAsync();
+    //        var fileName = $"Projects{DateTime.Now.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture)}.xlsx";
             
-            //使用JS代码下载
-            await _moduleDownload.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
-            IsDownloadStarted = 2;
-        }
-    }
+    //        //使用JS代码下载
+    //        await _moduleDownload.InvokeAsync<object>("saveAsFile", fileName, Convert.ToBase64String(fileBytes));
+    //        IsDownloadStarted = 2;
+    //    }
+    //}
 
-    private IJSObjectReference _jsModule;
-    private string _result;
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/scripts.js");
-            _moduleDownload = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/download.js");
-        }
-    }
-    private async Task TriggerPrompt()
-    {
-        _result=  await _jsModule.InvokeAsync<string>("showPrompt", "输入文字：");
-    }
+    //private IJSObjectReference _jsModule;
+    //private string _result;
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    if (firstRender)
+    //    {
+    //        _jsModule = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/scripts.js");
+    //        _moduleDownload = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/download.js");
+    //    }
+    //}
+    //private async Task TriggerPrompt()
+    //{
+    //    _result=  await _jsModule.InvokeAsync<string>("showPrompt", "输入文字：");
+    //}
 }

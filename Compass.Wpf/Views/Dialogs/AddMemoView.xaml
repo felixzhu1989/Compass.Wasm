@@ -13,7 +13,7 @@
             <RowDefinition />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="添加备忘"
+        <TextBlock Text="备忘"
                    FontWeight="Bold"
                    FontSize="20"
                    Padding="20,10" />

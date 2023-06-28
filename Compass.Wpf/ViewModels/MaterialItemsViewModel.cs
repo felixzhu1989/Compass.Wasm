@@ -1,13 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Text;
 using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared.Extensions;
-using Compass.Wasm.Shared.Plans;
 using Compass.Wpf.ApiServices.Categories;
-using CsvHelper;
-using ImTools;
 using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace Compass.Wpf.ViewModels;
@@ -127,7 +122,9 @@ public class MaterialItemsViewModel : NavigationViewModel
                         dto.Ceiling = itemDto.Ceiling.ToBool();
                         dto.CeilingGroup = itemDto.CeilingGroup.ToEnum<CeilingGroup_e>();
                         dto.CeilingRule = itemDto.CeilingRule.ToEnum<CeilingRule_e>();
-                        dto.Remark=itemDto.Remark;
+                        dto.CalcRule=itemDto.CalcRule;
+                        dto.NoLabel=itemDto.NoLabel;
+                        dto.OneLabel=itemDto.OneLabel;
                         await _materialItemService.UpdateOtherAsync(dto.Id.Value, dto);
                     }
                     break;

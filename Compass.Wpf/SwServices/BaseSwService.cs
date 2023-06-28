@@ -9,7 +9,7 @@ public abstract class BaseSwService
     public readonly IEventAggregator Aggregator;
     protected BaseSwService(IContainerProvider provider)
     {
-        SwApp = provider.Resolve<ISldWorksService>().SwApp;
         Aggregator= provider.Resolve<IEventAggregator>();
+        SwApp = SwUtility.ConnectSw(Aggregator);
     }
 }

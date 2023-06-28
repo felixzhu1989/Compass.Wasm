@@ -8,20 +8,21 @@
              d:DesignHeight="550"
              d:DesignWidth="800"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters"
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
     <UserControl.Resources>
-        <converter:SidePanelConverter x:Key="SidePanelConverter" />
-        <converter:IntToStringConverter x:Key="IntToStringConverter" />
-        <converter:LightTypeConverter x:Key="LightTypeConverter" />
-        <converter:ShowSpotLightConverter x:Key="ShowSpotLightConverter" />
-        <converter:WaterInletConverter x:Key="WaterInletConverter" />
-        <converter:DrainTypeConverter x:Key="DrainTypeConverter" />
-        <converter:AnsulSideConverter x:Key="AnsulSideConverter" />
-        <converter:AnsulDetectorConverter x:Key="AnsulDetectorConverter" />
-        <converter:AnsulDetectorEndConverter x:Key="AnsulDetectorEndConverter" />
-        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <converter:OneToVisibilityConverter x:Key="OneToVisibilityConverter" />
+        <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
+        <cvt:SidePanelCvt x:Key="SidePanelCvt" />
+        <cvt:IntToStringCvt x:Key="IntToStringCvt" />
+        <cvt:LightTypeCvt x:Key="LightTypeCvt" />
+        <cvt:ShowSpotLightCvt x:Key="ShowSpotLightCvt" />
+        <cvt:WaterInletCvt x:Key="WaterInletCvt" />
+        <cvt:DrainTypeCvt x:Key="DrainTypeCvt" />
+        <cvt:AnsulSideCvt x:Key="AnsulSideCvt" />
+        <cvt:AnsulDetectorCvt x:Key="AnsulDetectorCvt" />
+        <cvt:AnsulDetectorEndCvt x:Key="AnsulDetectorEndCvt" />
+        <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
+        <cvt:OneToVisibilityCvt x:Key="OneToVisibilityCvt" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -41,8 +42,9 @@
                     ToolTip="查看PDF图纸"
                     DockPanel.Dock="Left"
                     Margin="20,0"
-                    Visibility="{Binding CurrentModule.IsDrawingOk,Converter={StaticResource BoolToVisibilityConverter}}" />
+                    Visibility="{Binding CurrentModule.IsDrawingOk,Converter={StaticResource BoolToVisibilityCvt}}" />
             <Button DockPanel.Dock="Right"
+                    Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}"
                     Content="保存参数"
                     Command="{Binding SaveDataCommand}"
                     Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
@@ -78,7 +80,7 @@
                              materialDesign:TextFieldAssist.PrefixText="高度：" />
                     <ComboBox ItemsSource="{Binding SidePanels}"
                               Margin="0,5"
-                              SelectedItem="{Binding DataDto.SidePanel,Converter={StaticResource SidePanelConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding DataDto.SidePanel,Converter={StaticResource SidePanelCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="侧板:   " />
                 </StackPanel>
                 <!--排风口参数-->
@@ -101,10 +103,10 @@
                              materialDesign:TextFieldAssist.PrefixText="脖颈高度：" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding ExhaustSpigotNumbers}"
-                              SelectedItem="{Binding DataDto.ExhaustSpigotNumber,Converter={StaticResource IntToStringConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding DataDto.ExhaustSpigotNumber,Converter={StaticResource IntToStringCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="脖颈数量:   " />
                     <TextBox Text="{Binding DataDto.ExhaustSpigotDis,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.ExhaustSpigotNumber,Converter={StaticResource OneToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.ExhaustSpigotNumber,Converter={StaticResource OneToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="脖颈间距："
                              materialDesign:TextFieldAssist.SuffixText="(脖颈数>1时填)" />
@@ -116,10 +118,10 @@
                                Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding SupplySpigotNumbers}"
-                              SelectedItem="{Binding DataDto.SupplySpigotNumber,Converter={StaticResource IntToStringConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding DataDto.SupplySpigotNumber,Converter={StaticResource IntToStringCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="新风脖颈数量:   " />
                     <TextBox Text="{Binding DataDto.SupplySpigotDis,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.SupplySpigotNumber,Converter={StaticResource OneToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.SupplySpigotNumber,Converter={StaticResource OneToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="新风脖颈间距："
                              materialDesign:TextFieldAssist.SuffixText="(新风脖颈数>1时填)" />
@@ -134,18 +136,18 @@
                                Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding LightTypes}"
-                              SelectedItem="{Binding DataDto.LightType,Converter={StaticResource LightTypeConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding DataDto.LightType,Converter={StaticResource LightTypeCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="灯具类型:   " />
                     <TextBox Text="{Binding DataDto.LightToFront,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="中心距离前端："
                              materialDesign:TextFieldAssist.SuffixText="(居中为0，不修改)" />
                     <TextBox Text="{Binding DataDto.SpotLightNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.LightType,Converter={StaticResource ShowSpotLightConverter}}"
+                             Visibility="{Binding DataDto.LightType,Converter={StaticResource ShowSpotLightCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="筒灯数量：" />
                     <TextBox Text="{Binding DataDto.SpotLightDistance,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.LightType,Converter={StaticResource ShowSpotLightConverter}}"
+                             Visibility="{Binding DataDto.LightType,Converter={StaticResource ShowSpotLightCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="筒灯间距：" />
                 </StackPanel>
@@ -156,11 +158,11 @@
                                Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding WaterInlets}"
-                              SelectedItem="{Binding DataDto.WaterInlet,Converter={StaticResource WaterInletConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding DataDto.WaterInlet,Converter={StaticResource WaterInletCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="入水口:   " />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding DrainTypes}"
-                              SelectedItem="{Binding DataDto.DrainType,Converter={StaticResource DrainTypeConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              SelectedItem="{Binding DataDto.DrainType,Converter={StaticResource DrainTypeCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               materialDesign:TextFieldAssist.PrefixText="油塞/排水:   " />
                     <CheckBox IsChecked="{Binding DataDto.WaterCollection,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               Content="集水翻边"
@@ -181,7 +183,7 @@
                               Content="背部CJ"
                               Margin="0,10" />
                     <TextBox Text="{Binding DataDto.CjSpigotToRight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.BackCj,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.BackCj,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="CJ脖颈距右："
                              materialDesign:TextFieldAssist.SuffixText="(当有背部CJ时填)" />
@@ -199,43 +201,43 @@
                               Margin="0,10" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding AnsulSides}"
-                              SelectedItem="{Binding DataDto.AnsulSide,Converter={StaticResource AnsulSideConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                              SelectedItem="{Binding DataDto.AnsulSide,Converter={StaticResource AnsulSideCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                               materialDesign:TextFieldAssist.PrefixText="侧喷位置:   " />
                 </StackPanel>
                 <!--Ansul下喷参数-->
                 <StackPanel>
                     <TextBlock Text="Ansul下喷参数"
-                               Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                               Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                                Margin="0,5,0,0"
                                Foreground="DodgerBlue" />
                     <TextBox Text="{Binding DataDto.AnsulDropNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="下喷数量：" />
                     <TextBox Text="{Binding DataDto.AnsulDropToFront,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="下喷距离前端：" />
                     <TextBox Text="{Binding DataDto.AnsulDropDis1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="下喷间距1："
                              materialDesign:TextFieldAssist.SuffixText="(从左端算起)" />
                     <TextBox Text="{Binding DataDto.AnsulDropDis2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="下喷间距2：" />
                     <TextBox Text="{Binding DataDto.AnsulDropDis3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="下喷间距3：" />
                     <TextBox Text="{Binding DataDto.AnsulDropDis4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="下喷间距4：" />
                     <TextBox Text="{Binding DataDto.AnsulDropDis5,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="下喷间距5：" />
                 </StackPanel>
@@ -245,37 +247,37 @@
                 <!--Ansul探测器参数（水洗烟罩）-->
                 <StackPanel>
                     <TextBlock Text="Ansul探测器参数（水洗烟罩）"
-                               Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                               Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                                Margin="0,5,0,0"
                                Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
                               ItemsSource="{Binding AnsulDetectorEnds}"
-                              SelectedItem="{Binding DataDto.AnsulDetectorEnd,Converter={StaticResource AnsulDetectorEndConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                              SelectedItem="{Binding DataDto.AnsulDetectorEnd,Converter={StaticResource AnsulDetectorEndCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                               materialDesign:TextFieldAssist.PrefixText="末端探测器位置:   " />
                     <TextBox Text="{Binding DataDto.AnsulDetectorNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="探测器数量：" />
                     <TextBox Text="{Binding DataDto.AnsulDetectorDis1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="探测器间距1："
                              materialDesign:TextFieldAssist.SuffixText="(从左端算起)" />
                     <TextBox Text="{Binding DataDto.AnsulDetectorDis2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="探测器间距2：" />
                     <TextBox Text="{Binding DataDto.AnsulDetectorDis3,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="探测器间距3：" />
                     <TextBox Text="{Binding DataDto.AnsulDetectorDis4,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="探测器间距4：" />
                     <TextBox Text="{Binding DataDto.AnsulDetectorDis5,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityConverter}}"
+                             Visibility="{Binding DataDto.Ansul,Converter={StaticResource BoolToVisibilityCvt}}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="探测器间距5：" />
                 </StackPanel>

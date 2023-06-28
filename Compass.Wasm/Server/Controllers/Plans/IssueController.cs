@@ -12,11 +12,14 @@ namespace Compass.Wasm.Server.Controllers.Plans;
 [UnitOfWork(typeof(PlanDbContext))]
 public class IssueController : ControllerBase
 {
+    #region ctor
     private readonly IIssueService _service;
     public IssueController(IIssueService service)
     {
         _service = service;
-    }
+    } 
+    #endregion
+
     #region 标准增删改查
     [HttpGet("All")]
     public async Task<ApiResponse<List<IssueDto>>> GetAll() => await _service.GetAllAsync();

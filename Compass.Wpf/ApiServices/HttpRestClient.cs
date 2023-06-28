@@ -32,7 +32,7 @@ public class HttpRestClient
             request.AddOrUpdateHeader("Authorization", $"Bearer {token.Replace("\"", "")}");
         }
         //传递的参数，必须使用Newtonsoft.Json，不能使用微软自带Json
-        if (baseRequest.Parameter != null) request.AddJsonBody(baseRequest.Parameter);
+        if (baseRequest.Param != null) request.AddJsonBody(baseRequest.Param);
         var response = await _client.ExecuteAsync(request);
         if (response.StatusCode == HttpStatusCode.OK)
         {

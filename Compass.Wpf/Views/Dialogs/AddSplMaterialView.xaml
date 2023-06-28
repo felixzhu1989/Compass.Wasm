@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="Compass.Wpf.Views.Dialogs.AddSplMaterialView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Compass.Wpf.Views.Dialogs"
+             mc:Ignorable="d"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters"
+             Width="420"
+             Height="660">
+    <UserControl.Resources>
+        <cvt:UnitCvt x:Key="UnitCvt" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="物料明细"
+                   FontWeight="Bold"
+                   FontSize="20"
+                   Padding="20,10" />
+        <DockPanel Grid.Row="1"
+                   LastChildFill="False"
+                   Margin="20">
+            <TextBlock Text="物料号在清单中是唯一的，用于识别不同的物料，内容可自定义，如果物料号相同则物料信息将会被覆盖"
+                       Foreground="Red"
+                       DockPanel.Dock="Top"
+                       TextWrapping="Wrap"/>
+            <TextBox Text="{Binding PackingItemDto.MtlNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入唯一的物料号"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="料号：" />
+            <TextBox Text="{Binding PackingItemDto.Description,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入描述"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="描述：" />
+            <TextBox Text="{Binding PackingItemDto.EnDescription,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入英文描述"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="英文：" />
+            <TextBox Text="{Binding PackingItemDto.Type,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入类型"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="类型：" />
+            <TextBox Text="{Binding PackingItemDto.Quantity,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入数量"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="数量：" />
+            <ComboBox ItemsSource="{Binding Units}"
+                      DockPanel.Dock="Top"
+                      Margin="0,5"
+                      SelectedItem="{Binding PackingItemDto.Unit,Converter={StaticResource UnitCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      materialDesign:TextFieldAssist.PrefixText="单位:   " />
+            <TextBox Text="{Binding PackingItemDto.Length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入长度"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="长度：" />
+            <TextBox Text="{Binding PackingItemDto.Width,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入宽度"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="宽度：" />
+            <TextBox Text="{Binding PackingItemDto.Height,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入高度"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="高度：" />
+            <TextBox Text="{Binding PackingItemDto.Material,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入材质"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="材质：" />
+            <TextBox Text="{Binding PackingItemDto.Remark,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入备注"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="备注：" />
+            <CheckBox IsChecked="{Binding PackingItemDto.Pallet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      Content="单独托盘"
+                      DockPanel.Dock="Top"
+                      Margin="0,10" />
+            <CheckBox IsChecked="{Binding PackingItemDto.NoLabel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      Content="不打标签"
+                      DockPanel.Dock="Top"
+                      Margin="0,10" />
+            <CheckBox IsChecked="{Binding PackingItemDto.OneLabel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      Content="只打一张标签"
+                      DockPanel.Dock="Top"
+                      Margin="0,10" />
+        </DockPanel>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    HorizontalAlignment="Right"
+                    Margin="20,10">
+            <Button Content="取消"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    Margin="0,0,10,0" />
+            <Button Content="确定"
+                    Command="{Binding SaveCommand}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

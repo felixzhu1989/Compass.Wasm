@@ -22,7 +22,14 @@ public class KviDataViewModel : NavigationViewModel
     public DelegateCommand SaveDataCommand { get; }
     public DelegateCommand OpenHttpLinkCommand { get; }
     #endregion
-
+    #region 角色控制属性
+    private string updateRoles;
+    public string UpdateRoles
+    {
+        get => updateRoles;
+        set { updateRoles = value; RaisePropertyChanged(); }
+    }
+    #endregion
     #region Module和ModuleData属性
     private ModuleDto currentModule = null!;
     public ModuleDto CurrentModule
@@ -130,6 +137,7 @@ public class KviDataViewModel : NavigationViewModel
         Title = $"{CurrentModule.Name} {CurrentModule.ModelName}{specialNotes}";
         GetEnumNames();
         GetDataAsync();
+        UpdateRoles = "admin,pm,manager,designer";
     }
     #endregion
 }

@@ -2,16 +2,16 @@
 using System.Threading.Tasks;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Categories;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiService;
 
 namespace Compass.Wpf.ApiServices.Projects;
 public interface IProjectService : IBaseService<ProjectDto>
 {
-    Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParameter parameter);
+    Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParam param);
     
-    Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter);
-    Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter);
+    Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParam param);
+    Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParam param);
 
     //获取产品模型树
     Task<ApiResponse<List<ProductDto>>> GetModelTypeTreeAsync();
@@ -28,37 +28,37 @@ public class ProjectService : BaseService<ProjectDto>, IProjectService
     }
 
 
-    public async Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParameter parameter)
+    public async Task<ApiResponse<List<ProjectDto>>> GetAllFilterAsync(ProjectParam param)
     {
-        BaseRequest request = new()
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = "api/Project/Filter",
-            Parameter = parameter
+            Param = param
         };
         return await _client.ExecuteAsync<List<ProjectDto>>(request);
     }
 
     
 
-    public async Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParameter parameter)
+    public async Task<ApiResponse<List<DrawingDto>>> GetModuleTreeAsync(ProjectParam param)
     {
-        BaseRequest request = new()
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = "api/Project/ModuleTree",
-            Parameter = parameter
+            Param = param
         };
         return await _client.ExecuteAsync<List<DrawingDto>>(request);
     }
 
-    public async Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParameter parameter)
+    public async Task<ApiResponse<List<ModuleDto>>> GetModuleListAsync(ProjectParam param)
     {
-        BaseRequest request = new()
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = "api/Project/ModuleList",
-            Parameter = parameter
+            Param = param
         };
         return await _client.ExecuteAsync<List<ModuleDto>>(request);
     }
@@ -66,7 +66,7 @@ public class ProjectService : BaseService<ProjectDto>, IProjectService
 
     public async Task<ApiResponse<List<ProductDto>>> GetModelTypeTreeAsync()
     {
-        BaseRequest request = new()
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = "api/Product/ModelTypeTree"

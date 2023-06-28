@@ -28,6 +28,9 @@ namespace Compass.CategoryService.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CalcRule")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("Ceiling")
                         .HasColumnType("bit");
 
@@ -79,8 +82,11 @@ namespace Compass.CategoryService.Infrastructure.Migrations
                     b.Property<string>("MtlNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("NoLabel")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("OneLabel")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");

@@ -26,7 +26,7 @@ public class LoginService : ILoginService
         {
             Method=RestSharp.Method.Post,
             Route=$"api/{serviceName}/Name",
-            Parameter=user
+            Param=user
         };
         var loginResult = await _client.ExecuteAsync<string>(request);
         if (loginResult.Status)

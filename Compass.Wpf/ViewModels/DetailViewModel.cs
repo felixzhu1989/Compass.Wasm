@@ -2,7 +2,7 @@
 using System.Globalization;
 using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared.Data;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.Views;
@@ -34,7 +34,16 @@ public class DetailViewModel : NavigationViewModel
     public DelegateCommand<object> UpdateModuleDataCommand { get; }//编辑ModuleData
     public DelegateCommand<object> SelectedModelChangedCommand { get; }//选择模型更改
     public DelegateCommand ModulesCommand { get; }//跳转到制图界面
-    
+
+    #endregion
+
+    #region 角色控制属性
+    private string updateRoles;
+    public string UpdateRoles
+    {
+        get => updateRoles;
+        set { updateRoles = value; RaisePropertyChanged(); }
+    }
     #endregion
 
     #region 项目内容属性
@@ -174,7 +183,7 @@ public class DetailViewModel : NavigationViewModel
     //
 
     #endregion
-    
+
     #region 选择图纸树节点的动作
     /// <summary>
     /// 选择树节点时赋值
@@ -330,21 +339,26 @@ public class DetailViewModel : NavigationViewModel
             }
             else//新增ModuleDto
             {
-                var addResult = await _moduleService.AddAsync(CurrentModuleDto);
-                if (addResult.Status)
+                //todo:判断有没有重复
+                CurrentModuleDto.Name= CurrentModuleDto.Name.ToUpper();
+                var drawingDto =
+                    DrawingDtos.FirstOrDefault(x => x.Id.Equals(CurrentModuleDto.DrawingId));
+                if (drawingDto != null)
                 {
-                    //更新界面上分段树的显示，不关闭弹出侧边栏，只给顶部发送添加成功的消息
-                    var drawingDto =
-                        DrawingDtos.FirstOrDefault(x => x.Id.Equals(CurrentModuleDto.DrawingId));
-                    if (drawingDto != null)
-                    {
-                        addResult.Result.Name= addResult.Result.Name.ToUpper();
-                        drawingDto.ModuleDtos.Add(addResult.Result);
-                    }
-                    //不关闭侧边框，初始化CurrentModuleDto，并重新绑定数据，发送提示
-                    Aggregator.SendMessage($"分段{CurrentModuleDto.Name} {CurrentModuleDto.ModelName}添加成功！");
-                    CurrentModuleDto.Id=null;//置空id，继续添加下一个分段
+                  var same=  drawingDto.ModuleDtos.Any(x=>x.Name.Equals(CurrentModuleDto.Name,StringComparison.OrdinalIgnoreCase));
+                  if (same)
+                  {
+                      Aggregator.SendMessage($"请不要重复添加，分段{CurrentModuleDto.Name} {CurrentModuleDto.ModelName}！");
+                      return;
+                  }
                 }
+                var addResult = await _moduleService.AddAsync(CurrentModuleDto);
+                if (!addResult.Status) return;
+                //更新界面上分段树的显示，不关闭弹出侧边栏，只给顶部发送添加成功的消息
+                drawingDto.ModuleDtos.Add(addResult.Result);
+                //不关闭侧边框，初始化CurrentModuleDto，并重新绑定数据，发送提示
+                Aggregator.SendMessage($"分段{CurrentModuleDto.Name} {CurrentModuleDto.ModelName}添加成功！");
+                CurrentModuleDto.Id=null;//置空id，继续添加下一个分段
             }
         }
         catch (Exception e)
@@ -363,16 +377,11 @@ public class DetailViewModel : NavigationViewModel
             var dialogResult = await DialogHost.Question("删除确认", $"确认删除分段：{moduleDto.Name} {moduleDto.ModelName} 吗?");
             if (dialogResult.Result != ButtonResult.OK) return;
             var deleteResult = await _moduleService.DeleteAsync(moduleDto.Id.Value);
-            if (deleteResult.Status)
-            {
-                var drawingDto =
-                    DrawingDtos.FirstOrDefault(x => x.Id.Equals(moduleDto.DrawingId));
-                if (drawingDto != null)
-                {
-                    drawingDto.ModuleDtos.Remove(moduleDto);
-                }
-            }
-
+            if (!deleteResult.Status) return;
+            var drawingDto =
+                DrawingDtos.FirstOrDefault(x => x.Id.Equals(moduleDto.DrawingId));
+            if (drawingDto == null) return;
+            drawingDto.ModuleDtos.Remove(moduleDto);
         }
     }
     #endregion
@@ -386,8 +395,8 @@ public class DetailViewModel : NavigationViewModel
     }
     private async void GetModuleTreeDataAsync()
     {
-        ProjectParameter parameter = new() { ProjectId = Project.Id };
-        var moduleTreeResult = await _projectService.GetModuleTreeAsync(parameter);
+        ProjectParam param = new() { ProjectId = Project.Id };
+        var moduleTreeResult = await _projectService.GetModuleTreeAsync(param);
         if (!moduleTreeResult.Status) return;
         DrawingDtos.Clear();
         DrawingDtos.AddRange(moduleTreeResult.Result);
@@ -415,6 +424,7 @@ public class DetailViewModel : NavigationViewModel
         GetModelTreeDataAsync();
         SidePanels=Enum.GetNames(typeof(SidePanel_e));
         ModulesNavigate();
+        UpdateRoles = "admin,pm,manager";
     }
     #endregion
 
@@ -424,6 +434,7 @@ public class DetailViewModel : NavigationViewModel
         var param = new NavigationParameters { { "Value", Project } };
         //将Project传递给要导航的页面
         RegionManager.Regions[PrismManager.DetailViewRegionName].RequestNavigate("ModulesView", back => { Journal = back.Context.NavigationService.Journal; }, param);
+
     }
     #endregion
 

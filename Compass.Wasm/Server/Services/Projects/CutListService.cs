@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wasm.Server.Services.Projects;
 public interface ICutListService : IBaseService<CutListDto>
 {
     //扩展查询
-    Task<ApiResponse<List<CutListDto>>> GetAllByModuleIdAsync(CutListParameter parameter);
+    Task<ApiResponse<List<CutListDto>>> GetAllByModuleIdAsync(CutListParam param);
 }
 public class CutListService : ICutListService
 {
@@ -109,11 +109,11 @@ public class CutListService : ICutListService
     #endregion
 
     #region 扩展查询功能，WPF
-    public async Task<ApiResponse<List<CutListDto>>> GetAllByModuleIdAsync(CutListParameter parameter)
+    public async Task<ApiResponse<List<CutListDto>>> GetAllByModuleIdAsync(CutListParam param)
     {
         try
         {
-            var models = await _repository.GetCutListsByModuleIdAsync(parameter.ModuleId);
+            var models = await _repository.GetCutListsByModuleIdAsync(param.ModuleId.Value);
             var dtos = await _mapper.ProjectTo<CutListDto>(models).ToListAsync();
             var i = 1;
             dtos.ForEach(x => { x.Index = i++; });

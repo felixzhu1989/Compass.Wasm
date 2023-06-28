@@ -3,6 +3,7 @@ using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Data.Hoods;
 using Compass.Wpf.ApiServices.Hoods;
+using Compass.Wpf.SwServices;
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.BatchWorks.Hoods;
@@ -32,7 +33,7 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
             //todo:检查模型moduleDto.ModelName，看是那种子类
             var modelPath = moduleDto.ModelName.GetModelPath();
             //打包,后续需要使用到的变量：suffix，packPath
-            var packPath = SwApp.PackToProject(out var suffix, modelPath, moduleDto);
+            var packPath = SwApp.PackToProject(out var suffix, modelPath, moduleDto, Aggregator);
             //顶级Model,顶级Assy,打开Pack后的模型packPath
             var swAssyTop = SwApp.OpenAssemblyDoc(out var swModelTop, packPath, Aggregator);
             #endregion
@@ -76,7 +77,7 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         #endregion
 
         #region  Exhaust_UV_555，KV555排风装配
-        ExhaustService.Uv555(swAssyTop, suffix, netLength, data.SidePanel, data.UvLightType, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
+        ExhaustService.Uv555(swAssyTop, suffix, netLength, data.Height, data.SidePanel, data.UvLightType, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
 
         #endregion
 
@@ -110,7 +111,7 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         #endregion
 
         #region  Exhaust_UV_HW_650，排风装配
-        ExhaustService.UvHw650(swAssyTop, suffix, netLength, data.SidePanel, data.UvLightType, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
+        ExhaustService.UvHw650(swAssyTop, suffix, netLength, data.Height, data.SidePanel, data.UvLightType, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
 
         #endregion
 

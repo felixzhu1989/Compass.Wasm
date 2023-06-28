@@ -72,8 +72,8 @@ public class MidRoofService : BaseSwService, IMidRoofService
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
 
         swModelLevel2.ChangeDim("Length@SketchBase", length - 4d);
-        swModelLevel2.ChangeDim("Width@SketchBase", netWidth + 226d);
-        swModelLevel2.ChangeDim("Width@SketchWidth", netWidth - 1d);
+        swModelLevel2.ChangeDim("Width@SketchBase", netWidth + 221d+4d);
+        swModelLevel2.ChangeDim("Width@SketchWidth", netWidth - 2d);
 
         //因为后方一点距离前端固定90，这里计算前端一点移动的距离
         const double holeDis = 50d;//两孔间距，槽钢开孔50

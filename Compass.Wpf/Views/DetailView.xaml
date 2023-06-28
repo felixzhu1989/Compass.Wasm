@@ -11,7 +11,7 @@
              xmlns:regions="http://prismlibrary.com/"
              xmlns:extensions="clr-namespace:Compass.Wpf.Extensions"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters"
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters"
              xmlns:domaincategory="clr-namespace:Compass.Wasm.Shared.Categories;assembly=Compass.Wasm.Shared"
              xmlns:domainproject="clr-namespace:Compass.Wasm.Shared.Projects;assembly=Compass.Wasm.Shared">
     <UserControl.Resources>
@@ -21,7 +21,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converter:SidePanelConverter x:Key="SidePanelConverter" />
+            <cvt:SidePanelCvt x:Key="SidePanelCvt" />
+            <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <materialDesign:DialogHost>
@@ -146,7 +147,7 @@
                                  materialDesign:TextFieldAssist.SuffixText="(为默认值时可不填写)" />
                         <ComboBox ItemsSource="{Binding SidePanels}"
                                   Margin="0,5"
-                                  SelectedItem="{Binding CurrentModuleDto.SidePanel,Converter={StaticResource SidePanelConverter},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedItem="{Binding CurrentModuleDto.SidePanel,Converter={StaticResource SidePanelCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                   materialDesign:TextFieldAssist.PrefixText="侧板:   " />
                         <CheckBox IsChecked="{Binding CurrentModuleDto.IsModuleDataOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                   Content="分段数据已经OK"
@@ -204,7 +205,9 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+                        <materialDesign:PopupBox 
+Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}"
+Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}"
                                                  PlacementMode="RightAndAlignMiddles"
                                                  UnfurlOrientation="Horizontal"
                                                  ToolTip="分段操作，添加/修改/删除"

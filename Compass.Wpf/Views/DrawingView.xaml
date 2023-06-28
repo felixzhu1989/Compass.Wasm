@@ -8,9 +8,9 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
     <UserControl.Resources>
-        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -48,7 +48,7 @@
                     ToolTip="查看PDF图纸"
                     DockPanel.Dock="Left"
                     Margin="20,0"
-                    Visibility="{Binding CurrentDrawing.IsDrawingOk,Converter={StaticResource BoolToVisibilityConverter}}" />
+                    Visibility="{Binding CurrentDrawing.IsDrawingOk,Converter={StaticResource BoolToVisibilityCvt}}" />
             <Button DockPanel.Dock="Right"
                     Content="保存参数"
                     Command="{Binding ExecuteCommand}"

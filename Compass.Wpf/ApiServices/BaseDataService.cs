@@ -37,7 +37,7 @@ public abstract class BaseDataService<TEntity> : IBaseDataService<TEntity> where
         {
             Method = RestSharp.Method.Put,
             Route = $"api/{_serviceName}/{id}",
-            Parameter = entity
+            Param = entity
         };
         return await _client.ExecuteAsync<TEntity>(request);
     }

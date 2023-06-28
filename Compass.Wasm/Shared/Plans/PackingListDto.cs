@@ -1,10 +1,12 @@
-﻿namespace Compass.Wasm.Shared.Plans;
+﻿using System.Collections.ObjectModel;
+
+namespace Compass.Wasm.Shared.Plans;
 
 public class PackingListDto:BaseDto
 {
     #region 基本信息
-    private Guid mainPlanId;
-    public Guid MainPlanId
+    private Guid? mainPlanId;
+    public Guid? MainPlanId
     {
         get => mainPlanId;
         set { mainPlanId = value; OnPropertyChanged(); }
@@ -24,7 +26,7 @@ public class PackingListDto:BaseDto
         set { packingType = value; OnPropertyChanged(); }
     }//包装形式
 
-    public string deliveryType;
+    private string deliveryType;
     public string DeliveryType
     {
         get => deliveryType;
@@ -40,25 +42,34 @@ public class PackingListDto:BaseDto
     #endregion
 
     #region 扩展查询
-    private int batch;
-    public int Batch
+    private int? batch;
+    public int? Batch
     {
         get => batch;
         set { batch = value;OnPropertyChanged(); }
     }//分批
-    private Guid projectId;
-    public Guid ProjectId
+    private Guid? projectId;
+    public Guid? ProjectId
     {
         get => projectId;
         set { projectId = value; OnPropertyChanged(); }
     }//项目Id
 
-    private string projectName;
-    public string ProjectName
+    private string? projectName;
+    public string? ProjectName
     {
         get => projectName;
         set { projectName = value;OnPropertyChanged(); }
     }//根据计划查询得出
+
+
+    private ObservableCollection<PackingItemDto> packingItemDtos=new ();
+    public ObservableCollection<PackingItemDto> PackingItemDtos
+    {
+        get => packingItemDtos ;
+        set { packingItemDtos = value; OnPropertyChanged();}
+    }//查询获取PackingItem列表
+
 
     #endregion
 }

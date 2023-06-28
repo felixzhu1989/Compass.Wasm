@@ -1,4 +1,4 @@
-﻿using Compass.Wasm.Shared.Parameters;
+﻿using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Todos;
 
 namespace Compass.Wpf.ViewModels;
@@ -189,7 +189,7 @@ public class MemoViewModel : NavigationViewModel
     private async void GetDataAsync()
     {
         UpdateLoading(true);//打开等待窗口
-        QueryParameter parameter = new() { Search = this.Search };
+        QueryParam parameter = new() { Search = this.Search };
         var result = await _memoService.GetAllFilterAsync(parameter);
         if (result.Status)
         {

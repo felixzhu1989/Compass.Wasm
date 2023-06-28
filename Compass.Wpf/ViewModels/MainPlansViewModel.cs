@@ -1,9 +1,6 @@
 ﻿using Compass.Wpf.ApiServices.Plans;
-using CsvHelper;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Text;
 using Compass.Wasm.Shared.Extensions;
 using Application = Microsoft.Office.Interop.Excel.Application;
 
@@ -17,9 +14,7 @@ public class MainPlansViewModel : NavigationViewModel
     public MainPlansViewModel(IContainerProvider provider) : base(provider)
     {
         _mainPlanService = provider.Resolve<IMainPlanService>();
-
         MainPlanDtos = new ObservableCollection<MainPlanDto>();
-
         OpenPlanCommand = new DelegateCommand(OpenPlan);
         OpenCsvCommand = new DelegateCommand(OpenCsv);
         UpdateCommand = new DelegateCommand(UpdateMainplan);
@@ -27,6 +22,15 @@ public class MainPlansViewModel : NavigationViewModel
     public DelegateCommand OpenPlanCommand { get; }
     public DelegateCommand OpenCsvCommand { get; }
     public DelegateCommand UpdateCommand { get; }
+    #endregion
+
+    #region 角色控制属性
+    private string updateRoles;
+    public string UpdateRoles
+    {
+        get => updateRoles;
+        set { updateRoles = value;RaisePropertyChanged(); }
+    }
     #endregion
 
     #region 属性
@@ -145,6 +149,7 @@ public class MainPlansViewModel : NavigationViewModel
         //    ? navigationContext.Parameters.GetValue<int>("Value")
         //    : 0;
         GetDataAsync();
+        UpdateRoles = "admin,pm,manager,pmc";
     }
     #endregion
 

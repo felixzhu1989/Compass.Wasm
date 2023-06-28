@@ -9,9 +9,10 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
     <UserControl.Resources>
-        <converter:StatusToColorConverter x:Key="StatusToColorConverter" />
+        <cvt:StatusToColorCvt x:Key="StatusToColorCvt" />
+        <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -41,18 +42,21 @@
                         materialDesign:ButtonAssist.CornerRadius="15"
                         Background="LightSeaGreen"
                         BorderThickness="0" />
-                <Button Content="②打开更新计划模板"
-                        Command="{Binding OpenCsvCommand}"
-                        Margin="10,5"
-                        materialDesign:ButtonAssist.CornerRadius="15"
-                        Background="GreenYellow"
-                        BorderThickness="0" />
-                <Button Content="③更新主计划"
-                        Command="{Binding UpdateCommand}"
-                        Margin="10,5"
-                        materialDesign:ButtonAssist.CornerRadius="15"
-                        Background="Orange"
-                        BorderThickness="0" />
+                <StackPanel Orientation="Horizontal"
+                            Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}" >
+                    <Button Content="②打开更新计划模板"
+                            Command="{Binding OpenCsvCommand}"
+                            Margin="10,5"
+                            materialDesign:ButtonAssist.CornerRadius="15"
+                            Background="GreenYellow"
+                            BorderThickness="0" />
+                    <Button Content="③更新主计划"
+                            Command="{Binding UpdateCommand}"
+                            Margin="10,5"
+                            materialDesign:ButtonAssist.CornerRadius="15"
+                            Background="Orange"
+                            BorderThickness="0" />
+                </StackPanel>
             </StackPanel>
             <TextBlock Margin="0,5"
                        VerticalAlignment="Center"
@@ -78,7 +82,7 @@
                                     materialDesign:ButtonAssist.CornerRadius="15"
                                     Height="30"
                                     Content="{Binding Status}"
-                                    Background="{Binding Status,Converter={StaticResource StatusToColorConverter}}"
+                                    Background="{Binding Status,Converter={StaticResource StatusToColorCvt}}"
                                     BorderThickness="0"
                                     CommandParameter="{Binding }"
                                     Command="{Binding DataContext.DetailCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" />

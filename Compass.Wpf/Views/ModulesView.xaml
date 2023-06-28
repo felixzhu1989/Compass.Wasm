@@ -8,10 +8,10 @@
              d:DesignHeight="550"
              d:DesignWidth="900"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters"
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
     <UserControl.Resources>
-        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -71,6 +71,14 @@
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="LimeGreen"
                     BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="同步文件"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="SyncFiles"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="Orange"
+                    BorderThickness="0" />
         </DockPanel>
         <!--分段数据-->
         <DataGrid Grid.Row="1" ItemsSource="{Binding ModuleDtos}"
@@ -104,7 +112,7 @@
                         <DataTemplate>
                             <!--绑定当前对象使用{Binding}，RelativeSource查找父对象的ViewModel-->
                             <TextBlock Text="OK"
-                                       Visibility="{Binding IsModuleDataOk,Converter={StaticResource BoolToVisibilityConverter}}" />
+                                       Visibility="{Binding IsModuleDataOk,Converter={StaticResource BoolToVisibilityCvt}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -115,7 +123,7 @@
                             <TextBlock Text="Open"
                                        TextDecorations="UnderLine"
                                        Foreground="Blue"
-                                       Visibility="{Binding IsFilesOk,Converter={StaticResource BoolToVisibilityConverter}}">
+                                       Visibility="{Binding IsFilesOk,Converter={StaticResource BoolToVisibilityCvt}}">
                                 <behavior:Interaction.Triggers>
                                     <behavior:EventTrigger EventName="MouseLeftButtonDown">
                                         <behavior:InvokeCommandAction Command="{Binding DataContext.ShowFilesCommand,Source={x:Reference DataContextProxy}}"
@@ -160,7 +168,7 @@
                             <TextBlock Text="Print"
                                        TextDecorations="UnderLine"
                                        Foreground="Blue"
-                                       Visibility="{Binding IsCutListOk,Converter={StaticResource BoolToVisibilityConverter}}">
+                                       Visibility="{Binding IsCutListOk,Converter={StaticResource BoolToVisibilityCvt}}">
     <behavior:Interaction.Triggers>
         <behavior:EventTrigger EventName="MouseLeftButtonDown">
             <behavior:InvokeCommandAction Command="{Binding DataContext.ShowCutListCommand,Source={x:Reference DataContextProxy}}"
@@ -176,7 +184,7 @@
                             <TextBlock Text="Print"
                                        TextDecorations="UnderLine"
                                        Foreground="Blue"
-                                       Visibility="{Binding IsJobCardOk,Converter={StaticResource BoolToVisibilityConverter}}">
+                                       Visibility="{Binding IsJobCardOk,Converter={StaticResource BoolToVisibilityCvt}}">
                                 <behavior:Interaction.Triggers>
                                     <behavior:EventTrigger EventName="MouseLeftButtonDown">
                                         <behavior:InvokeCommandAction Command="{Binding DataContext.ShowJobCardCommand,Source={x:Reference DataContextProxy}}"
@@ -193,18 +201,23 @@
             </DataGrid.Columns>
         </DataGrid>
         <DockPanel Grid.Row="2" LastChildFill="False"
-                    IsEnabled="{Binding CanBatchWorks}">
-            <TextBlock DockPanel.Dock="Left"
-                       Text="清单"
-                       FontSize="20"
-                       Margin="10" />
+                    IsEnabled="{Binding CanBatchWorks}"
+                    Margin="10">
             <Button DockPanel.Dock="Left"
-                    Content="发货清单"
+                    Content="装箱清单"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="PackingList"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="LightSkyBlue"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="装箱信息表"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PalletInfo"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="DodgerBlue"
                     BorderThickness="0" />
         </DockPanel>
     </Grid>

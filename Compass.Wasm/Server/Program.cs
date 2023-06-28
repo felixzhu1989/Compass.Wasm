@@ -221,6 +221,9 @@ builder.Services.AddScoped<IPlanRepository, PlanRepository>();
 
 builder.Services.AddScoped<IMainPlanService, MainPlanService>();
 builder.Services.AddScoped<IIssueService, IssueService>();
+builder.Services.AddScoped<IPackingListService, PackingListService>();
+builder.Services.AddScoped<IPackingItemService, PackingItemService>();
+
 
 #endregion
 
@@ -248,6 +251,7 @@ builder.Services.AddScoped<IKwfDataService, KwfDataService>();
 builder.Services.AddScoped<IUwiDataService, UwiDataService>();
 builder.Services.AddScoped<IUwfDataService, UwfDataService>();
 
+builder.Services.AddScoped<IKvvDataService, KvvDataService>();
 
 #endregion
 

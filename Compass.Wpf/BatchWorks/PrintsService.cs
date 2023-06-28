@@ -1,5 +1,4 @@
-﻿using Compass.Wasm.Shared.Parameters;
-using Compass.Wpf.ApiService;
+﻿using Compass.Wpf.ApiService;
 using Compass.Wpf.ApiServices.Projects;
 using Microsoft.Office.Core;
 using Microsoft.Office.Interop.Excel;
@@ -9,9 +8,11 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Compass.Wasm.Shared.Params;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
+using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -23,7 +24,7 @@ public interface IPrintsService
     Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos);
     Task PrintOneJobCardAsync(ModuleDto moduleDto);
 
-
+    Task PrintPackingListAsync(PackingListDto packingListDto);
 
 }
 
@@ -143,6 +144,28 @@ public class PrintsService : IPrintsService
         GC.Collect(); //垃圾回收机制
     }
 
+    /// <summary>
+    /// 打印装箱清单
+    /// </summary>
+    public async Task PrintPackingListAsync(PackingListDto packingListDto)
+    {
+
+        var template = Path.Combine(Environment.CurrentDirectory, "PackingList.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+        //调试时预览
+        //excelApp.Visible = true;
+
+        await UseExcelPrintPackingList(worksheet, packingListDto);
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+
+
+    }
     #endregion
 
     #region Excel打印内部实现
@@ -150,7 +173,7 @@ public class PrintsService : IPrintsService
     #region CutList
     private async Task GetCutListAndPrint(Worksheet worksheet, ModuleDto moduleDto, ICutListService cutListService)
     {
-        var param = new CutListParameter
+        var param = new CutListParam
         {
             ModuleId = moduleDto.Id.Value
         };
@@ -171,8 +194,8 @@ public class PrintsService : IPrintsService
         //worksheet.PrintPreview(true);
         //打印
         worksheet.PrintOutEx();
-        //清空打印内容,11行到末尾
-        var rows = (Range)worksheet.Rows[$"11:{cutListDtos.Count + 10}", Missing.Value];
+        //清空打印内容,5行到末尾
+        var rows = (Range)worksheet.Rows[$"5:{cutListDtos.Count + 4}", Missing.Value];
         rows.Delete(XlDirection.xlDown);
     }
 
@@ -184,15 +207,11 @@ public class PrintsService : IPrintsService
     private void FillCutListTitle(Worksheet worksheet, ModuleDto moduleDto)
     {
         //worksheet.Cells[行,列]
-        worksheet.Cells[1, 2] = moduleDto.ProjectName;
-        worksheet.Cells[2, 2] = moduleDto.OdpNumber;
-        worksheet.Cells[3, 2] = moduleDto.ItemNumber;
-        worksheet.Cells[4, 2] = moduleDto.Name;
-        worksheet.Cells[5, 2] = moduleDto.ModelName;
-        var specialNotes = string.IsNullOrEmpty(moduleDto.SpecialNotes) ? "" : moduleDto.SpecialNotes;
-        worksheet.Cells[6, 2] = $"{moduleDto.Length}x{moduleDto.Width}x{moduleDto.Height} {specialNotes}";
-        worksheet.Cells[7, 2] = DateTime.Now.ToShortDateString();
-        worksheet.Cells[8, 2] = Environment.UserName;
+        worksheet.Cells[1, 2] = $"{moduleDto.OdpNumber}-{moduleDto.ProjectName}";
+        worksheet.Cells[2, 2] = $"{moduleDto.ItemNumber}({moduleDto.Name})";
+        worksheet.Cells[2, 6] = $"{moduleDto.ModelName}({moduleDto.Length}x{moduleDto.Width}x{moduleDto.Height})";
+        worksheet.Cells[1, 10] = DateTime.Now.ToShortDateString();
+        worksheet.Cells[2, 10] = Environment.UserName;
     }
 
     /// <summary>
@@ -202,20 +221,20 @@ public class PrintsService : IPrintsService
     /// <param name="cutListDtos"></param>
     private void FillCutListData(Worksheet worksheet, List<CutListDto> cutListDtos)
     {
-        for (int i = 0; i < cutListDtos.Count; i++)
+        for (var i = 0; i < cutListDtos.Count; i++)
         {
-            worksheet.Cells[i + 11, 1] = cutListDtos[i].PartDescription;
-            worksheet.Cells[i + 11, 2] = cutListDtos[i].Length;
-            worksheet.Cells[i + 11, 3] = cutListDtos[i].Width;
-            worksheet.Cells[i + 11, 4] = cutListDtos[i].Thickness;
-            worksheet.Cells[i + 11, 5] = cutListDtos[i].Quantity;
-            worksheet.Cells[i + 11, 6] = cutListDtos[i].Material;
-            worksheet.Cells[i + 11, 7] = cutListDtos[i].PartNo;
-            worksheet.Cells[i + 11, 11] = cutListDtos[i].Index;
-            worksheet.Cells[i + 11, 9] = GetSidePanelLength(cutListDtos[i]);
+            worksheet.Cells[i + 5, 1] = cutListDtos[i].PartDescription;
+            worksheet.Cells[i + 5, 2] = cutListDtos[i].Length;
+            worksheet.Cells[i + 5, 3] = cutListDtos[i].Width;
+            worksheet.Cells[i + 5, 4] = cutListDtos[i].Thickness;
+            worksheet.Cells[i + 5, 5] = cutListDtos[i].Quantity;
+            worksheet.Cells[i + 5, 6] = cutListDtos[i].Material;
+            worksheet.Cells[i + 5, 7] = cutListDtos[i].PartNo;
+            worksheet.Cells[i + 5, 11] = cutListDtos[i].Index;
+            worksheet.Cells[i + 5, 9] = GetSidePanelLength(cutListDtos[i]);
         }
         //设置边框
-        Range range = worksheet.Range["A11", $"K{cutListDtos.Count + 10}"];
+        Range range = worksheet.Range["A5", $"K{cutListDtos.Count + 4}"];
         range.Borders.Value = 1;
         //设置列宽
         ((Range)worksheet.Cells[1, 1]).ColumnWidth = 30;
@@ -243,23 +262,39 @@ public class PrintsService : IPrintsService
         if (dto.PartNo.Contains("FNHE0003") || dto.PartNo.Contains("FNHE0004") || dto.PartNo.Contains("FNHE0026") || dto.PartNo.Contains("FNHE0027"))
         {
             //普通KSA小侧边
-            return dto.Length.Equals(310.67d) ? $"{dto.Width-50}" : $"{dto.Length-50}";
+            return dto.Length.Equals(310.67d) ? $"{dto.Width-50.13d}" : $"{dto.Length-50.13d}";
         }
+
         if (dto.PartNo.Contains("FNHE0005") || dto.PartNo.Contains("FNHE0028") || dto.PartNo.Contains("FNHE0170"))
         {
-            //KSA小侧边特殊
+            //普通KSA小侧边特殊
             return dto.Length.Equals(300d) ? $"{dto.Width-29}" : $"{dto.Length-29}";
         }
-        if (dto.PartNo.Contains("FNHE0012") || dto.PartNo.Contains("FNHE0013") || dto.PartNo.Contains("FNHE0029") || dto.PartNo.Contains("FNHE0030")|| dto.PartNo.Contains("FNHE0038") || dto.PartNo.Contains("FNHE0039")|| dto.PartNo.Contains("FNHE0162") || dto.PartNo.Contains("FNHE0163"))
+        
+
+        if (dto.PartNo.Contains("FNHE0012") || dto.PartNo.Contains("FNHE0013") || dto.PartNo.Contains("FNHE0029") || dto.PartNo.Contains("FNHE0030")|| dto.PartNo.Contains("FNHE0038") || dto.PartNo.Contains("FNHE0039"))
         {
-            //MESH油网侧边
-            return dto.Length.Equals(308d) ? $"{dto.Width-46}" : $"{dto.Length-46}";
+            //普通MESH油网侧边
+            return dto.Length.Equals(308d) ? $"{dto.Width-46.58407}" : $"{dto.Length-46.58407}";
         }
+
+
+
+        
+
         if (dto.PartNo.Contains("FNHE0160") || dto.PartNo.Contains("FNHE0161"))
         {
-            //KSA小侧边-华为
-            return dto.Length.Equals(310.87d) ? $"{dto.Width-50}" : $"{dto.Length-50}";
+            //华为KSA小侧边
+            return dto.Length.Equals(310.87d) ? $"{dto.Width-48.49}" : $"{dto.Length-48.49}";
         }
+        if (dto.PartNo.Contains("FNHE0162") || dto.PartNo.Contains("FNHE0163"))
+        {
+            //华为MESH油网侧边
+            return dto.Length.Equals(308d) ? $"{dto.Width-45.39}" : $"{dto.Length-45.39}";
+        }
+
+
+
         return "";
     }
     #endregion
@@ -344,6 +379,59 @@ public class PrintsService : IPrintsService
         stream.Close();
     }
     #endregion
+
+
+    #region PackingList
+    private async Task UseExcelPrintPackingList(Worksheet worksheet, PackingListDto packingListDto)
+    {
+        //worksheet.Cells[行,列]
+        worksheet.Cells[2, 2] = packingListDto.ProjectName;
+        worksheet.Cells[3, 2] = packingListDto.PackingType;
+        worksheet.Cells[4, 2] = packingListDto.DeliveryType;
+
+        worksheet.Cells[2, 10] = packingListDto.Product.ToString();
+        worksheet.Cells[3, 10] = DateTime.Now.ToShortDateString();
+        worksheet.Cells[4, 10] = Environment.UserName;
+
+        var items = packingListDto.PackingItemDtos;
+
+        for (var i = 0; i < items.Count; i++)
+        {
+            worksheet.Cells[i + 7, 2] = items[i].Description;
+            worksheet.Cells[i + 7, 3] = items[i].Type;
+            worksheet.Cells[i + 7, 4] = items[i].Quantity;
+            worksheet.Cells[i + 7, 5] = items[i].Unit.ToString();
+            worksheet.Cells[i + 7, 6] = items[i].Length;
+            worksheet.Cells[i + 7, 7] = items[i].Width;
+            worksheet.Cells[i + 7, 8] = items[i].Height;
+            worksheet.Cells[i + 7, 9] = items[i].Material;
+            worksheet.Cells[i + 7, 10] = items[i].Remark;
+        }
+        //设置边框
+        Range range = worksheet.Range["A7", $"K{items.Count + 6}"];
+        range.Borders.Value = 1;
+        //设置列宽
+        //((Range)worksheet.Cells[1, 1]).ColumnWidth = 15;
+        //((Range)worksheet.Cells[1, 2]).ColumnWidth = 30;
+        //((Range)worksheet.Cells[1, 3]).ColumnWidth = 10;
+        //((Range)worksheet.Cells[1, 4]).ColumnWidth = 5;
+        //((Range)worksheet.Cells[1, 5]).ColumnWidth = 5;
+        //((Range)worksheet.Cells[1, 6]).ColumnWidth = 28;
+        //((Range)worksheet.Cells[1, 7]).ColumnWidth = 30;
+        //((Range)worksheet.Cells[1, 8]).ColumnWidth = 8;
+        //((Range)worksheet.Cells[1, 9]).ColumnWidth = 8;
+        //((Range)worksheet.Cells[1, 10]).ColumnWidth = 8;
+
+        //调试时预览
+        //worksheet.PrintPreview(true);
+        //打印
+        worksheet.PrintOutEx();
+        //清空打印内容,11行到末尾
+        var rows = (Range)worksheet.Rows[$"7:{items.Count + 6}", Missing.Value];
+        rows.Delete(XlDirection.xlDown);
+    }
+    #endregion
+
 
     #endregion
 

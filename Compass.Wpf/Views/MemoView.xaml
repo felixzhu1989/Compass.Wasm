@@ -9,9 +9,9 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
     <UserControl.Resources>
-        <converter:IntToVisibilityConverter x:Key="IntToVisibility" />
+        <cvt:IntToVisibilityCvt x:Key="IntToVisibility" />
     </UserControl.Resources>
     <materialDesign:DialogHost>
         <materialDesign:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">

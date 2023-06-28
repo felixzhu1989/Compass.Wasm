@@ -21,7 +21,7 @@ public record Pallet:AggregateRootEntity,IAggregateRoot,IHasCreationTime,ISoftDe
     public string? Height { get; private set; } //包装高
     public string? GrossWeight { get; private set; } //毛重
     public string? NetWeight { get; private set; } //净重
-    public string? Remark { get; set; }//备注
+    public string? Remark { get; private set; }//备注
 
     #endregion
 

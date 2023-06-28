@@ -20,11 +20,15 @@ public class MaterialItemCsv
     public string? Width { get; set; } //宽
     public string? Height { get; set; } //高
     public string? Material { get; set; } //材质
+
     public string? Hood { get; set; }
     public string? HoodGroup { get; set; }
     public string? Ceiling { get; set; }
     public string? CeilingGroup { get; set; }
     public string? CeilingRule { get; set; }
-    public string? Remark { get; set; }//备注，计算规则
+    public string? CalcRule { get; set; }//计算规则
+
+    public bool NoLabel { get; set; }//不要打印标签，
+    public bool OneLabel { get; set; }//打印1张标签，默认false表示需要根据数量Quantity打印多张
     #endregion
 }

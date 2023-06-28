@@ -8,9 +8,9 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Width="1080"
              Height="680"
-             xmlns:converter="clr-namespace:Compass.Wpf.Common.Converters">
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
     <UserControl.Resources>
-        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -26,7 +26,7 @@
         <!--制图时弹出的ProgressBar-->
         <ProgressBar Grid.Row="1" IsIndeterminate="True"
                      Margin="0,5"
-                     Visibility="{Binding ShowProgressBar,Converter={StaticResource BoolToVisibilityConverter}}" />
+                     Visibility="{Binding ShowProgressBar,Converter={StaticResource BoolToVisibilityCvt}}" />
         <ScrollViewer Grid.Row="2"
                       Margin="20,5"
                       VerticalScrollBarVisibility="Auto">

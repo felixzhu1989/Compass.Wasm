@@ -20,12 +20,11 @@ public abstract class BaseAutoDrawing
 
     protected BaseAutoDrawing(IContainerProvider provider)
     {
-        SwApp = provider.Resolve<ISldWorksService>().SwApp;
         ExhaustService = provider.Resolve<IExhaustService>();
         SidePanelService = provider.Resolve<ISidePanelService>();
         MidRoofService = provider.Resolve<IMidRoofService>();
         SupplyService = provider.Resolve<ISupplyService>();
         Aggregator = provider.Resolve<IEventAggregator>();
-
+        SwApp = SwUtility.ConnectSw(Aggregator);
     }
 }

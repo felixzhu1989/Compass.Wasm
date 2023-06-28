@@ -33,6 +33,7 @@ public static class DialogExtensions
     {
         aggregator.GetEvent<UpdateLoadingEvent>().Publish(model);
     }
+
     /// <summary>
     /// 注册等待消息，给MainView注册
     /// </summary>
@@ -50,6 +51,7 @@ public static class DialogExtensions
     {        
         aggregator.GetEvent<MessageEvent>().Subscribe(action, ThreadOption.PublisherThread, true, (m) => m.Filter.Equals(filterName));
     }
+
     /// <summary>
     /// 发送提示消息
     /// </summary>   

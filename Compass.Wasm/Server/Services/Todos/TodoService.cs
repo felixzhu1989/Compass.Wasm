@@ -4,7 +4,7 @@ using Compass.TodoService.Domain;
 using Compass.TodoService.Domain.Entities;
 using Compass.TodoService.Infrastructure;
 using Compass.Wasm.Shared;
-using Compass.Wasm.Shared.Parameters;
+using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Todos;
 
 namespace Compass.Wasm.Server.Services.Todos;
@@ -15,7 +15,7 @@ public interface ITodoService : IBaseService<TodoDto>
     Task<ApiResponse<List<TodoDto>>> GetUserAllAsync(Guid userId);
     Task<ApiResponse<TodoDto>> UserAddAsync(TodoDto dto, Guid userId);
 
-    Task<ApiResponse<List<TodoDto>>> GetAllFilterAsync(TodoParameter parameter, Guid userId);
+    Task<ApiResponse<List<TodoDto>>> GetAllFilterAsync(TodoParam param, Guid userId);
     Task<ApiResponse<TodoSummaryDto>> GetSummary(Guid userId);
 }
 
@@ -159,14 +159,14 @@ public class TodoService : ITodoService
     /// <summary>
     /// 根据筛选条件查询
     /// </summary>
-    public async Task<ApiResponse<List<TodoDto>>> GetAllFilterAsync(TodoParameter parameter, Guid userId)
+    public async Task<ApiResponse<List<TodoDto>>> GetAllFilterAsync(TodoParam param, Guid userId)
     {
         try
         {
             var models = await _repository.GetTodosAsync();
             //筛选结果，按照创建时间排序
             var filterModels = models.Where(x =>
-                (string.IsNullOrWhiteSpace(parameter.Search) || x.Title.Contains(parameter.Search) || x.Content.Contains(parameter.Search)) && (parameter.Status == null || x.Status == parameter.Status) && x.UserId.Equals(userId)).OrderBy(x => x.CreationTime);
+                (string.IsNullOrWhiteSpace(param.Search) || x.Title.Contains(param.Search) || x.Content.Contains(param.Search)) && (param.Status == null || x.Status == param.Status) && x.UserId.Equals(userId)).OrderBy(x => x.CreationTime);
             var dtos = await _mapper.ProjectTo<TodoDto>(filterModels).ToListAsync();
             return new ApiResponse<List<TodoDto>> { Status = true, Result = dtos };
         }

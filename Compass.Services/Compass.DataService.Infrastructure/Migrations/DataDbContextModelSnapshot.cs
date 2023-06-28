@@ -22,7 +22,7 @@ namespace Compass.DataService.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.ModuleData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.ModuleData", b =>
                 {
                     b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,9 +77,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.KviData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KviData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.ModuleData");
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
 
                     b.Property<bool>("Ansul")
                         .HasColumnType("bit")
@@ -142,22 +142,27 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("DrainType");
 
                     b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("ExhaustSpigotDis");
 
                     b.Property<double>("ExhaustSpigotHeight")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("ExhaustSpigotHeight");
 
                     b.Property<double>("ExhaustSpigotLength")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("ExhaustSpigotLength");
 
                     b.Property<int>("ExhaustSpigotNumber")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("ExhaustSpigotNumber");
 
                     b.Property<double>("ExhaustSpigotWidth")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("ExhaustSpigotWidth");
 
@@ -170,6 +175,7 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("LightToFront");
 
                     b.Property<int>("LightType")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("LightType");
 
@@ -178,6 +184,7 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("Marvel");
 
                     b.Property<double>("MiddleToRight")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("MiddleToRight");
 
@@ -196,9 +203,51 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KviData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.KvfData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KvvData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.KviData");
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotDis");
+
+                    b.Property<double>("ExhaustSpigotHeight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotHeight");
+
+                    b.Property<double>("ExhaustSpigotLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotLength");
+
+                    b.Property<int>("ExhaustSpigotNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("ExhaustSpigotNumber");
+
+                    b.Property<double>("ExhaustSpigotWidth")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotWidth");
+
+                    b.Property<int>("LightType")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("LightType");
+
+                    b.Property<double>("MiddleToRight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("MiddleToRight");
+
+                    b.HasDiscriminator().HasValue("KvvData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KvfData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KviData");
 
                     b.Property<double>("SupplySpigotDis")
                         .ValueGeneratedOnUpdateSometimes()
@@ -213,9 +262,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KvfData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.KwiData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KwiData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.KviData");
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KviData");
 
                     b.Property<double>("AnsulDetectorDis1")
                         .HasColumnType("float")
@@ -252,9 +301,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KwiData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UviData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.UviData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.KviData");
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KviData");
 
                     b.Property<bool>("Bluetooth")
                         .ValueGeneratedOnUpdateSometimes()
@@ -269,9 +318,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("UviData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.KwfData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KwfData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.KwiData");
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KwiData");
 
                     b.Property<double>("SupplySpigotDis")
                         .ValueGeneratedOnUpdateSometimes()
@@ -286,9 +335,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KwfData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UwiData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.UwiData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.KwiData");
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KwiData");
 
                     b.Property<bool>("Bluetooth")
                         .ValueGeneratedOnUpdateSometimes()
@@ -303,9 +352,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("UwiData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UvfData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.UvfData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.UviData");
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.UviData");
 
                     b.Property<double>("SupplySpigotDis")
                         .ValueGeneratedOnUpdateSometimes()
@@ -320,9 +369,9 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("UvfData");
                 });
 
-            modelBuilder.Entity("Compass.Wasm.Shared.DataService.Hoods.UwfData", b =>
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.UwfData", b =>
                 {
-                    b.HasBaseType("Compass.Wasm.Shared.DataService.Hoods.UwiData");
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.UwiData");
 
                     b.Property<double>("SupplySpigotDis")
                         .ValueGeneratedOnUpdateSometimes()

@@ -103,7 +103,7 @@ public class IndexViewModel : NavigationViewModel
     private void Navigate(TaskBar obj)
     {
         if (string.IsNullOrEmpty(obj.Target)) return;
-        NavigationParameters param = new NavigationParameters();
+        var param = new NavigationParameters();
         switch (obj.Title)
         {
             case "已完成待办汇总":
@@ -162,40 +162,32 @@ public class IndexViewModel : NavigationViewModel
         try
         {
             UpdateLoading(true);
-            DialogParameters param = new DialogParameters();
+            var param = new DialogParameters();
             if (model!=null) param.Add("Value", model);
             var dialogResult = await DialogHost.ShowDialog("AddTodoView", param);
-            if (dialogResult.Result == ButtonResult.OK)
+            if (dialogResult.Result != ButtonResult.OK) return;
+            var dto = dialogResult.Parameters.GetValue<TodoDto>("Value");
+            if (dto.Id != null && dto.Id != Guid.Empty)
             {
-                var dto = dialogResult.Parameters.GetValue<TodoDto>("Value");
-                if (dto.Id != null && dto.Id != Guid.Empty)
-                {
-                    //修改？
-                    var updateResult = await _todoService.UpdateAsync(dto.Id.Value, dto);
-                    if (updateResult.Status)
-                    {
-                        var viewDto = TodoSummary.TodoDtos.FirstOrDefault(t => t.Id.Equals(dto.Id));
-                        if (viewDto!=null)
-                        {
-                            viewDto.Title=dto.Title;
-                            viewDto.Content=dto.Content;
-                            viewDto.Status = dto.Status;
-                        }
-                    }
-                }
-                else
-                {
-                    //新增
-                    var addResult = await _todoService.UserAddAsync(dto);
-                    if (addResult.Status)
-                    {
-                        TodoSummary.TodoDtos.Add(addResult.Result);//界面显示
-                                                                   //更新代办事项汇总选项卡
-                        TodoSummary.Sum+=1;
-                        TodoSummary.CompletedRatio=(TodoSummary.CompletedCount/(double)TodoSummary.Sum).ToString("0%");
-                        Refresh();
-                    }
-                }
+                //修改？
+                var updateResult = await _todoService.UpdateAsync(dto.Id.Value, dto);
+                if (!updateResult.Status) return;
+                var viewDto = TodoSummary.TodoDtos.FirstOrDefault(t => t.Id.Equals(dto.Id));
+                if (viewDto == null) return;
+                viewDto.Title=dto.Title;
+                viewDto.Content=dto.Content;
+                viewDto.Status = dto.Status;
+            }
+            else
+            {
+                //新增
+                var addResult = await _todoService.UserAddAsync(dto);
+                if (!addResult.Status) return;
+                TodoSummary.TodoDtos.Add(addResult.Result);//界面显示
+                //更新代办事项汇总选项卡
+                TodoSummary.Sum+=1;
+                TodoSummary.CompletedRatio=(TodoSummary.CompletedCount/(double)TodoSummary.Sum).ToString("0%");
+                Refresh();
             }
         }
         finally
@@ -213,38 +205,30 @@ public class IndexViewModel : NavigationViewModel
         {
 
             UpdateLoading(true);
-            DialogParameters param = new DialogParameters();
+            var param = new DialogParameters();
             if (model != null) param.Add("Value", model);
             var dialogResult = await DialogHost.ShowDialog("AddMemoView", param);
-            if (dialogResult.Result == ButtonResult.OK)
+            if (dialogResult.Result != ButtonResult.OK) return;
+            var dto = dialogResult.Parameters.GetValue<MemoDto>("Value");
+            if (dto.Id != null && dto.Id != Guid.Empty)
             {
-                var dto = dialogResult.Parameters.GetValue<MemoDto>("Value");
-                if (dto.Id != null && dto.Id != Guid.Empty)
-                {
-                    //修改？
-                    var updateResult = await _memoService.UpdateAsync(dto.Id.Value, dto);
-                    if (updateResult.Status)
-                    {
-                        var viewDto = TodoSummary.MemoDtos.FirstOrDefault(t => t.Id.Equals(dto.Id.Value));
-                        if (viewDto != null)
-                        {
-                            viewDto.Title = dto.Title;
-                            viewDto.Content = dto.Content;
-                        }
-                    }
-                }
-                else
-                {
-                    //新增
-                    var addResult = await _memoService.UserAddAsync(dto);
-                    if (addResult.Status)
-                    {
-                        TodoSummary.MemoDtos.Add(addResult.Result);
-                        //更新备忘汇总选项卡
-                        TodoSummary.MemoCount += 1;
-                        Refresh();
-                    }
-                }
+                //修改？
+                var updateResult = await _memoService.UpdateAsync(dto.Id.Value, dto);
+                if (!updateResult.Status) return;
+                var viewDto = TodoSummary.MemoDtos.FirstOrDefault(t => t.Id.Equals(dto.Id.Value));
+                if (viewDto == null) return;
+                viewDto.Title = dto.Title;
+                viewDto.Content = dto.Content;
+            }
+            else
+            {
+                //新增
+                var addResult = await _memoService.UserAddAsync(dto);
+                if (!addResult.Status) return;
+                TodoSummary.MemoDtos.Add(addResult.Result);
+                //更新备忘汇总选项卡
+                TodoSummary.MemoCount += 1;
+                Refresh();
             }
         }
         finally
@@ -263,20 +247,18 @@ public class IndexViewModel : NavigationViewModel
         {
             UpdateLoading(true);
             var updateResult = await _todoService.UpdateAsync(obj.Id.Value, obj);//修改数据
-            if (updateResult.Status)
+            if (!updateResult.Status) return;
+            var todo = TodoSummary.TodoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id));
+            if (todo!=null)
             {
-                var todo = TodoSummary.TodoDtos.FirstOrDefault(t => t.Id.Equals(obj.Id));
-                if (todo!=null)
-                {
-                    TodoSummary.TodoDtos.Remove(todo);//从界面列表删除
-                    //更新完成率汇总选项卡
-                    TodoSummary.CompletedCount++;
-                    TodoSummary.CompletedRatio=(TodoSummary.CompletedCount/(double)TodoSummary.Sum).ToString("0%");
-                    Refresh();
-                }
-                //发送全局通知，显示在Snackbar上
-                Aggregator.SendMessage("待办事项已完成！");
+                TodoSummary.TodoDtos.Remove(todo);//从界面列表删除
+                //更新完成率汇总选项卡
+                TodoSummary.CompletedCount++;
+                TodoSummary.CompletedRatio=(TodoSummary.CompletedCount/(double)TodoSummary.Sum).ToString("0%");
+                Refresh();
             }
+            //发送全局通知，显示在Snackbar上
+            Aggregator.SendMessage("待办事项已完成！");
         }
         finally
         {
@@ -300,26 +282,22 @@ public class IndexViewModel : NavigationViewModel
     private async void InitToDoSummary()
     {
         var todoSummaryResult = await _todoService.GetSummaryAsync();
-        if (todoSummaryResult.Status)
-        {
-            TodoSummary=todoSummaryResult.Result;
-            Refresh();
-        }
+        if (!todoSummaryResult.Status) return;
+        TodoSummary=todoSummaryResult.Result;
+        Refresh();
     }
 
     private async void InitProjectSummary()
     {
         var planCountResult = await _mainPlanService.GetCountAsync();
-        if (planCountResult.Status)
-        {
-            PlanCount = planCountResult.Result;
-            StatusTaskBars[0].Content=PlanCount.PlanCount.ToString();
-            StatusTaskBars[1].Content=PlanCount.DrawingCount.ToString();
-            StatusTaskBars[2].Content=PlanCount.ProductionCount.ToString();
-            StatusTaskBars[3].Content=PlanCount.WarehousingCount.ToString();
-            StatusTaskBars[4].Content=PlanCount.ShippingCount.ToString();
-            StatusTaskBars[5].Content=$"{PlanCount.CompletedCount} / {PlanCount.Sum}";
-        }
+        if (!planCountResult.Status) return;
+        PlanCount = planCountResult.Result;
+        StatusTaskBars[0].Content=PlanCount.PlanCount.ToString();
+        StatusTaskBars[1].Content=PlanCount.DrawingCount.ToString();
+        StatusTaskBars[2].Content=PlanCount.ProductionCount.ToString();
+        StatusTaskBars[3].Content=PlanCount.WarehousingCount.ToString();
+        StatusTaskBars[4].Content=PlanCount.ShippingCount.ToString();
+        StatusTaskBars[5].Content=$"{PlanCount.CompletedCount} / {PlanCount.Sum}";
     }
 
     public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -333,6 +311,4 @@ public class IndexViewModel : NavigationViewModel
         base.OnNavigatedTo(navigationContext);
     }
     #endregion
-
-
 }

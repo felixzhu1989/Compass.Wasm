@@ -27,29 +27,29 @@ public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity
 
     public async Task<ApiResponse<TEntity>> AddAsync(TEntity entity)
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Post,
             Route = $"api/{_serviceName}/Add",
-            Parameter = entity
+            Param = entity
         };
         return await _client.ExecuteAsync<TEntity>(request);
     }
 
     public async Task<ApiResponse<TEntity>> UpdateAsync(Guid id, TEntity entity)
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Put,
             Route = $"api/{_serviceName}/{id}",
-            Parameter = entity
+            Param = entity
         };
         return await _client.ExecuteAsync<TEntity>(request);
     }
 
     public async Task<ApiResponse<TEntity>> DeleteAsync(Guid id)
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Delete,
             Route = $"api/{_serviceName}/{id}"
@@ -59,7 +59,7 @@ public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity
 
     public async Task<ApiResponse<TEntity>> GetFirstOrDefault(Guid id)
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = $"api/{_serviceName}/{id}"
@@ -69,7 +69,7 @@ public abstract class BaseService<TEntity> : IBaseService<TEntity> where TEntity
 
     public async Task<ApiResponse<List<TEntity>>> GetAllAsync()
     {
-        BaseRequest request = new BaseRequest
+        var request = new BaseRequest
         {
             Method = RestSharp.Method.Get,
             Route = $"api/{_serviceName}/All"
