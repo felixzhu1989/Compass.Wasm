@@ -10,8 +10,6 @@ namespace Compass.Wpf.ViewModels;
 
 public class PackingListViewModel : NavigationViewModel
 {
-
-
     #region ctor
     private readonly IContainerProvider _provider;
     private readonly IPackingListService _packingListService;
@@ -53,6 +51,8 @@ public class PackingListViewModel : NavigationViewModel
             case "AddStdMaterial": AddStdMaterial(); break;
             case "AddSplMaterial": AddSplMaterial(); break;
             case "Print": Print(); break;
+            case "PrintPackingInfo": PrintPackingInfo(); break;
+
         }
     }
     /// <summary>
@@ -99,8 +99,9 @@ public class PackingListViewModel : NavigationViewModel
                             Width = module.Width.ToString(),
                             Height = module.Height.ToString(),
                             Pallet=true,//单独托盘
+                            Order = 0
                         };
-                        //更新内容,PackingListId和物料编码相同时
+                        //更新内容,PackingListId和物料编码及其托盘相同时
                         var oldItem = PackingList.PackingItemDtos.SingleOrDefault(x =>x.PackingListId==PackingList.Id && x.MtlNumber.Equals(newItem.MtlNumber));
                         if (oldItem != null)
                         {
@@ -113,6 +114,8 @@ public class PackingListViewModel : NavigationViewModel
                             await _packingItemService.AddAsync(newItem);
                         }
                     }
+                    //更新托盘号
+                    await _packingItemService.UpdatePalletNumberAsync(packingList.Id.Value);
                     break;
                 }
             case Product_e.Ceiling:
@@ -166,7 +169,7 @@ public class PackingListViewModel : NavigationViewModel
     private async Task AddSplMaterial()
     {
         //弹出修改界面
-        var obj = new PackingItemDto { PackingListId = PackingList.Id, Type="配件",Quantity=1, Unit=Unit_e.PCS, Pallet =false, NoLabel=false, OneLabel =true};
+        var obj = new PackingItemDto { PackingListId = PackingList.Id, Type="配件",Quantity=1, Unit=Unit_e.PCS, Pallet =false, NoLabel=false, OneLabel =true,Order = 1};
         var dialogParams = new DialogParameters { { "Value", obj } };
         var dialogResult = await DialogHost.ShowDialog("AddSplMaterialView", dialogParams);
         if (dialogResult.Result != ButtonResult.OK) return;
@@ -206,7 +209,24 @@ public class PackingListViewModel : NavigationViewModel
         var printsService = _provider.Resolve<IPrintsService>();
         await printsService.PrintPackingListAsync(PackingList);
     }
-
+    /// <summary>
+    /// 打印空白装箱信息表
+    /// </summary>
+    private async Task PrintPackingInfo()
+    {
+        //打印询问
+        var dialogResult = await DialogHost.Question("打印确认", "确认要打印空白装箱信息表吗?");
+        if (dialogResult.Result != ButtonResult.OK) return;
+        await Task.Delay(500);//防止卡屏
+        var printsService = _provider.Resolve<IPrintsService>();
+        var param = new PackingListParam
+        {
+            ProjectId = PackingList.ProjectId,
+            Batch = PackingList.Batch
+        };
+        var response = await _packingListService.GetPackingInfoAsync(param);
+        await printsService.PrintPackingInfoAsync(response.Result);
+    }
     #endregion
 
     #region 初始化

@@ -62,6 +62,13 @@ public class PackingListDto:BaseDto
         set { projectName = value;OnPropertyChanged(); }
     }//根据计划查询得出
 
+    private DateTime finishTime;
+    public DateTime FinishTime 
+    { 
+        get=>finishTime; 
+        set { finishTime = value;OnPropertyChanged(); }
+    }
+
 
     private ObservableCollection<PackingItemDto> packingItemDtos=new ();
     public ObservableCollection<PackingItemDto> PackingItemDtos

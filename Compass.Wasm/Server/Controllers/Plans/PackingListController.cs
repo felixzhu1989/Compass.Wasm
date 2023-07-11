@@ -41,6 +41,9 @@ public class PackingListController : ControllerBase
     [HttpGet("ProjectIdAndBatch")]
     public async Task<ApiResponse<PackingListDto>> GetSingleByProjectIdAndBath(PackingListParam param) => await _service.GetSingleByProjectIdAndBathAsync(param);
 
+    [HttpGet("PackingInfo")]
+    public async Task<ApiResponse<PackingListDto>> GetPackingInfo(PackingListParam param) => await _service.GetPackingInfoAsync(param);
+
     [HttpPost("Add/ProjectIdAndBatch")]
     public async Task<ApiResponse<PackingListDto>> AddByProjectIdAndBath(PackingListDto dto) => await _service.AddByProjectIdAndBathAsync(dto);
     #endregion

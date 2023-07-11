@@ -14,28 +14,41 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <FrameworkElement x:Name="DataContextProxy"
                           DataContext="{Binding}" />
         <!--第1行,显示标题-->
-        <DockPanel Grid.Row="0"
-                   LastChildFill="False">
-            <TextBlock Text="项目装箱清单(Project Packing List)"
-                       FontWeight="Bold"
-                       FontSize="25"
-                       Margin="5"
-                       DockPanel.Dock="Left" />
+        <TextBlock Grid.Row="0" Text="装箱清单(Project Packing List)"
+                   FontWeight="Bold"
+                   FontSize="25" Margin="5,0,0,0"/>
+        <!--第2行,显示PackingList的基本信息-->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <materialDesign:Chip Content="更新属性"
+                                 Command="{Binding ExecuteCommand}"
+                                 CommandParameter="UpdatePackingList"
+                                 Background="Orange" />
+            <materialDesign:Chip Content="{Binding PackingList.ProjectName}" />
+            <materialDesign:Chip Content="{Binding PackingList.Product}" />
+            <materialDesign:Chip Content="{Binding PackingList.PackingType}" />
+            <materialDesign:Chip Content="{Binding PackingList.DeliveryType}" />
+            <materialDesign:Chip Content="{Binding PackingList.AssyPath}" />
+        </StackPanel>
+        <!--第3行,显示标题-->
+        <DockPanel Grid.Row="2"
+                   LastChildFill="False" Margin="5">
             <Button DockPanel.Dock="Left"
-                    Content="更新清单"
+                    Content="①更新清单"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="ReCreate"
-                    Margin="20,0,10,0"
+                    Margin="0,0,10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="GreenYellow"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
-                    Content="添加标准物料"
+                    Content="②添加标准物料"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="AddStdMaterial"
                     Margin="10,0"
@@ -43,7 +56,7 @@
                     Background="Chartreuse"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
-                    Content="添加特殊物料"
+                    Content="③添加特殊物料"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="AddSplMaterial"
                     Margin="10,0"
@@ -58,22 +71,33 @@
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="LightSkyBlue"
                     BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="打印空白装箱信息表"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintPackingInfo"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="CornflowerBlue"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="填写装箱信息表"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PalletInfo"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="DodgerBlue"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="导出装箱信息表Excel"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PalletInfo"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="DodgerBlue"
+                    BorderThickness="0" />
         </DockPanel>
-        <!--第2行,显示PackingList的基本信息-->
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal">
-            <materialDesign:Chip Content="更新属性"
-                                 Command="{Binding ExecuteCommand}"
-                                 CommandParameter="UpdatePackingList"
-                                 Background="Orange" />
-            <materialDesign:Chip Content="{Binding PackingList.ProjectName}" />
-            <materialDesign:Chip Content="{Binding PackingList.Product}" />
-            <materialDesign:Chip Content="{Binding PackingList.PackingType}" />
-            <materialDesign:Chip Content="{Binding PackingList.DeliveryType}" />
-            <materialDesign:Chip Content="{Binding PackingList.AssyPath}" />
-        </StackPanel>
-        <!--第三行，PackingItem数据-->
-        <DataGrid Grid.Row="2"
+        <!--第4行，PackingItem数据-->
+        <DataGrid Grid.Row="3"
                   ItemsSource="{Binding PackingList.PackingItemDtos}"
                   CanUserAddRows="False"
                   AutoGenerateColumns="False"
@@ -82,6 +106,10 @@
                   CanUserSortColumns="True"
                   ScrollViewer.VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding PalletNumber}"
+                                    Header="托盘号"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 <DataGridTextColumn Binding="{Binding MtlNumber}"
                                     Header="物料编码"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"

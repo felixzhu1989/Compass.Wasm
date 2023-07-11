@@ -156,7 +156,14 @@ public class SidePanelService : BaseSwService, ISidePanelService
         }
     }
 
-
+    public void SidePanelKvv(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, double panelAngle, double panelHeight,double insidePanelWidth)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "SidePanel_Kvv-1", Aggregator);
+        swAssyLevel1.ChangeDim("Length@DistanceLeft", length/2d);
+        swAssyLevel1.ChangeDim("Length@DistanceRight", length/2d);
+        FNHS0035(swAssyLevel1, suffix, "FNHS0035-1", width, height);
+        FNHS0034(swAssyLevel1, suffix, "FNHS0034-1", width, height, panelAngle, panelHeight, insidePanelWidth);
+    }
 
     #region 标准烟罩
     private void FNHS0001(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, bool backCj, double sideCjEnd)
@@ -245,5 +252,22 @@ public class SidePanelService : BaseSwService, ISidePanelService
 
     #endregion
 
+    #region KVV大侧板
+    private void FNHS0035(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Width@SketchBase", width);
+        swModelLevel2.ChangeDim("Height@SketchBase", height);
+    }
+    private void FNHS0034(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, double panelAngle, double panelHeight, double insidePanelWidth)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Width@SketchBase", width-3.5d);
+        swModelLevel2.ChangeDim("Height@SketchBase", height-1d);
+        swModelLevel2.ChangeDim("Angle@SketchPanelHoles", panelAngle*1000d);
+        swModelLevel2.ChangeDim("Height@SketchPanelHoles", panelHeight);
+        swModelLevel2.ChangeDim("Width@SketchMidRoofHoles", insidePanelWidth);
+    }
+    #endregion
 
 }

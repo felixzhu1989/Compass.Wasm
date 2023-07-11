@@ -1,1 +1,1 @@
-MtlNumber,Description,EnDescription,Inventory,Type,Length,Width,Height,Material,NoLabel,OneLabel,Unit,,UnitCost,Hood,HoodGroup,Ceiling,CeilingGroup,CeilingRule,CalcRule
+MtlNumber,Description,EnDescription,Inventory,Type,Length,Width,Height,Material,NoLabel,OneLabel,Unit,Order,UnitCost,Hood,HoodGroup,Ceiling,CeilingGroup,CeilingRule,CalcRule

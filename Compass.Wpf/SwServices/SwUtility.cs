@@ -11,7 +11,12 @@ public static class SwUtility
 {
     #region ConnectSw
     private static ISldWorks? _swApp;
-    private const string ProgId = "SldWorks.Application";
+    private const string ProgId = "SldWorks.Application";//SldWorks.Application.31代表SolidWorks2023
+    //将注册表，修改为当前的CLSID
+    //计算机\HKEY_CLASSES_ROOT\SldWorks.Application\CLSID（主要修改这个就可以了）
+    //计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Classes\SldWorks.Application\CLSID
+    //2021：{0A5BC87B-FDBF-4A0B-BC8A-DE1271220E81}
+    //2023：{b2f1524f-6cfe-4386-b472-ab1148dea4f1}
     public static ISldWorks ConnectSw(IEventAggregator aggregator)
     {
         if (_swApp != null) return _swApp;
@@ -56,7 +61,11 @@ public static class SwUtility
 
         return obj;
     }
-    
+
+    #endregion
+
+    #region 转换单位
+
     #endregion
 
     #region ISldWorks扩展
@@ -68,8 +77,6 @@ public static class SwUtility
         //packandgo文件夹位置
         packDir = Path.Combine(@"D:\MyProjects", moduleDto.OdpNumber,moduleDto.ItemNumber, $"{moduleDto.Name}_{moduleDto.ModelName}");
 
-        //判断打包目标文件夹是否存在，不存在则创建
-        if (!Directory.Exists(packDir)) Directory.CreateDirectory(packDir);
         suffix = $"_{moduleDto.ItemNumber}_{moduleDto.Name}_{moduleDto.OdpNumber.Substring(moduleDto.OdpNumber.Length-6)}";
         //packandgo装配体位置
         var packPath = Path.Combine(packDir, $"{moduleDto.ModelName}{suffix}.SLDASM");
@@ -289,6 +296,8 @@ public static class SwUtility
             swPackAndGo.IncludeSuppressed = true;
 
             // Set folder where to save the files,目标存放文件夹
+            //判断打包目标文件夹是否存在，不存在则创建
+            if (!Directory.Exists(packDir)) Directory.CreateDirectory(packDir);
             swPackAndGo.SetSaveToName(true, packDir);
             swPackAndGo.FlattenToSingleFolder = true;
             swPackAndGo.AddSuffix = suffix;

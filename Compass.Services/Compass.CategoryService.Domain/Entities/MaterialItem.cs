@@ -35,6 +35,8 @@ public record MaterialItem : AggregateRootEntity, IAggregateRoot, IHasCreationTi
 
     public bool NoLabel { get; private set; }//不要打印标签，
     public bool OneLabel { get; private set; }//打印1张标签，默认false表示需要根据数量Quantity打印多张
+
+    public int Order { get; private set; } //排序
     #endregion
 
     #region ctor
@@ -122,7 +124,8 @@ public record MaterialItem : AggregateRootEntity, IAggregateRoot, IHasCreationTi
             .ChangeCeilingRule(dto.CeilingRule)
             .ChangeCalcRule(dto.Remark)
             .ChangeNoLabel(dto.NoLabel)
-            .ChangeOneLabel(dto.OneLabel);
+            .ChangeOneLabel(dto.OneLabel)
+            .ChangeOrder(dto.Order);
         NotifyModified();
     }
     public MaterialItem ChangeLength(string? length)
@@ -186,6 +189,11 @@ public record MaterialItem : AggregateRootEntity, IAggregateRoot, IHasCreationTi
     public MaterialItem ChangeOneLabel(bool oneLabel)
     {
         OneLabel = oneLabel;
+        return this;
+    }
+    public MaterialItem ChangeOrder(int order)
+    {
+        Order = order;
         return this;
     }
     #endregion

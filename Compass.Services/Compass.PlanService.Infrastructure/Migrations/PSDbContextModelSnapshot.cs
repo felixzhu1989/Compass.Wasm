@@ -198,6 +198,9 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<string>("EnDescription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("GrossWeight")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Height")
                         .HasColumnType("nvarchar(max)");
 
@@ -216,17 +219,38 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<string>("MtlNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NetWeight")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("NoLabel")
                         .HasColumnType("bit");
 
                     b.Property<bool>("OneLabel")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("PackingListId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Pallet")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PalletHeight")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PalletLength")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PalletNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PalletRemark")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PalletWidth")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
@@ -300,74 +324,6 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.HasIndex("MainPlanId", "IsDeleted");
 
                     b.ToTable("PackingLists");
-                });
-
-            modelBuilder.Entity("Compass.PlanService.Domain.Entities.Pallet", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GrossWeight")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Height")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ItemHeight")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemLength")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ItemWidth")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Length")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NetWeight")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("PackingListId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("PalletNumber")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remark")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Width")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    SqlServerKeyBuilderExtensions.IsClustered(b.HasKey("Id"), false);
-
-                    b.HasIndex("Id", "IsDeleted");
-
-                    b.HasIndex("PackingListId", "IsDeleted");
-
-                    b.ToTable("Pallets");
                 });
 #pragma warning restore 612, 618
         }

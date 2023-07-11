@@ -43,7 +43,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Issue, IssueDto>().ReverseMap();
         CreateMap<PackingList, PackingListDto>().ReverseMap();
         CreateMap<PackingItem,PackingItemDto>().ReverseMap();
-        CreateMap<Pallet, PalletDto>().ReverseMap();
+        
 
         #endregion
 

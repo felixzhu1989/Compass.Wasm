@@ -68,6 +68,12 @@ public class MaterialItemDto:BaseDto
     private bool oneLabel;
     public bool OneLabel { get=>oneLabel; set { oneLabel=value;OnPropertyChanged(); } }//打印1张标签，默认false表示需要根据数量Quantity打印多张
 
+    private int order;
+    public int Order
+    {
+        get => order;
+        set { order=value; OnPropertyChanged(); }
+    }//排序 
     #endregion
 
     #region 扩展查询信息

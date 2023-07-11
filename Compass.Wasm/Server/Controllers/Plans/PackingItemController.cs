@@ -37,5 +37,14 @@ public class PackingItemController : ControllerBase
     public async Task<ApiResponse<PackingItemDto>> Delete([RequiredGuid] Guid id) => await _service.DeleteAsync(id);
     #endregion
 
+    #region  扩展新增和更新Pallet
+    [HttpPost("AddPallet")]
+    public async Task<ApiResponse<PackingItemDto>> AddPallet(PackingItemDto dto) => await _service.AddPalletAsync(dto);
 
+    [HttpPut("Pallet/{id}")]
+    public async Task<ApiResponse<PackingItemDto>> UpdatePallet([RequiredGuid] Guid id, PackingItemDto dto) => await _service.UpdatePalletAsync(id, dto);
+
+    [HttpPut("PalletNumber/{id}")]
+    public async Task<ApiResponse<PackingItemDto>> UpdatePalletNumber([RequiredGuid] Guid id, object obj) => await _service.UpdatePalletNumberAsync(id, obj);
+    #endregion
 }

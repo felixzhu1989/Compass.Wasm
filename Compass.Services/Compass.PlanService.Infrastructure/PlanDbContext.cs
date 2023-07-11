@@ -11,8 +11,6 @@ public class PlanDbContext : BaseDbContext
     public DbSet<Issue> Issues { get; set; }
     public DbSet<PackingList> PackingLists { get; set; }
     public DbSet<PackingItem> PackingItems { get; set; }
-    public DbSet<Pallet> Pallets { get; set; }
-
 
     public PlanDbContext(DbContextOptions<PlanDbContext> options, IMediator? mediator) : base(options, mediator)
     {

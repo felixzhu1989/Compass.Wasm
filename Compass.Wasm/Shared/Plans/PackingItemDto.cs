@@ -13,6 +13,81 @@ public class PackingItemDto : BaseDto
         set { packingListId = value;OnPropertyChanged(); }
     } //关联装箱清单
 
+    //托盘号
+    private string palletNumber;
+    public string PalletNumber
+    {
+        get => palletNumber;
+        set { palletNumber = value; OnPropertyChanged(); }
+    }
+    #region 生产部填写信息
+    //包装长宽高
+    private string palletLength;
+    public string PalletLength
+    {
+        get => palletLength;
+        set
+        {
+            palletLength = value;
+            OnPropertyChanged();
+        }
+    }
+    private string palletWidth;
+    public string PalletWidth
+    {
+        get => palletWidth;
+        set
+        {
+            palletWidth = value;
+            OnPropertyChanged();
+        }
+    }
+    private string palletHeight;
+    public string PalletHeight
+    {
+        get => palletHeight;
+        set
+        {
+            palletHeight = value;
+            OnPropertyChanged();
+        }
+    }
+    private string grossWeight;
+    public string GrossWeight
+    {
+        get => grossWeight;
+        set
+        {
+            grossWeight = value;
+            OnPropertyChanged();
+        }
+    }
+    private string netWeight;
+    public string NetWeight
+    {
+        get => netWeight;
+        set
+        {
+            netWeight = value;
+            OnPropertyChanged();
+        }
+    }
+    private string? palletRemark;
+    public string? PalletRemark
+    {
+        get => palletRemark;
+        set { palletRemark=value; OnPropertyChanged(); }
+    }//备注 
+
+    private int order;
+    public int Order
+    {
+        get => order;
+        set { order=value; OnPropertyChanged(); }
+    }//排序 
+    #endregion
+
+
     //从物料模板查询信息
     private string? mtlNumber;
     public string? MtlNumber { get=> mtlNumber;
@@ -82,12 +157,7 @@ public class PackingItemDto : BaseDto
         set { material=value; OnPropertyChanged(); }
     } //材质
 
-    private string? remark;
-    public string? Remark
-    {
-        get => remark;
-        set { remark=value; OnPropertyChanged(); }
-    }//备注
+    
 
     private string? calcRule;
     public string? CalcRule
@@ -95,7 +165,12 @@ public class PackingItemDto : BaseDto
         get => calcRule;
         set { calcRule=value; OnPropertyChanged(); }
     } //计算规则
-
+    private string? remark;
+    public string? Remark
+    {
+        get => remark;
+        set { remark=value; OnPropertyChanged(); }
+    }//备注 
     #endregion
     #region 状态信息
     private bool pallet;

@@ -10,6 +10,16 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
     #region 基本信息
     public Guid PackingListId { get; init; } //关联装箱清单
 
+    public string? PalletNumber { get; private set; } //自增，从1开始
+    //生产现场填写信息
+    public string? PalletLength { get; private set; } //包装长
+    public string? PalletWidth { get; private set; } //包装宽
+    public string? PalletHeight { get; private set; } //包装高
+    public string? GrossWeight { get; private set; } //毛重
+    public string? NetWeight { get; private set; } //净重
+    public string? PalletRemark { get; private set; }//备注
+
+    public int Order { get; private set; } //排序
     //从物料模板查询信息
     public string? MtlNumber { get; private set; } //物料编码
     public string? Description { get;private set; } //中文描述/产品编号
@@ -21,9 +31,8 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
     public string? Width { get; private set; } //宽
     public string? Height { get; private set; } //高
     public string? Material { get; private set; } //材质
-    public string? Remark { get; private set; }//备注
     public string? CalcRule { get; private set; } //计算规则
-
+    public string? Remark { get; private set; }//备注
     #endregion
     #region 状态信息
     public bool Pallet { get; private set; }//单独托盘，查询烟罩分段时设置为true，自定义物料时设定
@@ -33,7 +42,8 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
 
     #region ctor
     private PackingItem() { }
-    public PackingItem(Guid id,Guid packingListId,string? mtlNumber,string? description,string? enDescription,string? type,double quantity,Unit_e unit,string? length,string? width,string? height,string? material,string? remark,string? calcRule,bool pallet,bool noLabel,bool oneLabel)
+    //正常新增物料
+    public PackingItem(Guid id,Guid packingListId,string? mtlNumber,string? description,string? enDescription,string? type,double quantity,Unit_e unit,string? length,string? width,string? height,string? material,string? remark,string? calcRule,bool pallet,bool noLabel,bool oneLabel,int order)
     {
         Id=id;
         PackingListId=packingListId;
@@ -52,10 +62,28 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
         Pallet=pallet;
         NoLabel=noLabel;
         OneLabel=oneLabel;
+        Order=order;
+    }
+    //直接新增托盘
+    public PackingItem(Guid id, Guid packingListId, string? mtlNumber, string palletNumber,string palletLength,string palletWidth,string palletHeight,string grossWeight,string netWeight,string? palletRemark)
+    {
+        Id=id;
+        PackingListId=packingListId;
+        MtlNumber = mtlNumber;
+        PalletNumber=palletNumber;
+        PalletLength=palletLength;
+        PalletWidth=palletWidth;
+        PalletHeight = palletHeight;
+        GrossWeight=grossWeight;
+        NetWeight=netWeight;
+        PalletRemark=palletRemark;
+        Pallet = true;
+        Type = "托盘";
+        Order = 1;
     }
     #endregion
 
-    #region update
+    #region update物料信息
     public void Update(PackingItemDto dto)
     {
         ChangeMtlNumber(dto.MtlNumber)
@@ -70,7 +98,8 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
             .ChangeCalcRule(dto.CalcRule)
             .ChangePallet(dto.Pallet)
             .ChangeNoLabel(dto.NoLabel)
-            .ChangeOneLabel(dto.OneLabel);
+            .ChangeOneLabel(dto.OneLabel)
+            .ChangeOrder(dto.Order);
         NotifyModified();
     }
 
@@ -145,5 +174,62 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
         OneLabel=oneLabel;
         return this;
     }
+
+    public PackingItem ChangeOrder(int order)
+    {
+        Order = order;
+        return this;
+    }
     #endregion
+
+    #region UpdatePallet
+    public void UpdatePallet(PackingItemDto dto)
+    {
+        ChangeMtlNumber(dto.MtlNumber)
+            .ChangePalletNumber(dto.PalletNumber)
+            .ChangePalletLength(dto.PalletLength)
+            .ChangePalletWidth(dto.PalletWidth)
+            .ChangePalletHeight(dto.PalletHeight)
+            .ChangeGrossWeight(dto.GrossWeight)
+            .ChangeNetWeight(dto.NetWeight)
+            .ChangePalletRemark(dto.PalletRemark);
+        NotifyModified();
+    }
+    public PackingItem ChangePalletNumber(string? palletNumber)
+    {
+        PalletNumber = palletNumber;
+        return this;
+    }
+    public PackingItem ChangePalletLength(string? palletLength)
+    {
+        PalletLength = palletLength;
+        return this;
+    }
+    public PackingItem ChangePalletWidth(string? palletWidth)
+    {
+        PalletWidth = palletWidth;
+        return this;
+    }
+    public PackingItem ChangePalletHeight(string? palletHeight)
+    {
+        PalletHeight = palletHeight;
+        return this;
+    }
+    public PackingItem ChangeGrossWeight(string? grossWeight)
+    {
+        GrossWeight = grossWeight;
+        return this;
+    }
+    public PackingItem ChangeNetWeight(string? netWeight)
+    {
+        NetWeight = netWeight;
+        return this;
+    }
+    public PackingItem ChangePalletRemark(string? palletRemark)
+    {
+        PalletRemark = palletRemark;
+        return this;
+    }
+    #endregion
+
 }

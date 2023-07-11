@@ -8,6 +8,7 @@ namespace Compass.Wpf.ApiServices.Plans;
 public interface IPackingListService:IBaseService<PackingListDto>
 {
     Task<ApiResponse<PackingListDto>> GetSingleByProjectIdAndBathAsync(PackingListParam param);
+    Task<ApiResponse<PackingListDto>> GetPackingInfoAsync(PackingListParam param);
     Task<ApiResponse<PackingListDto>> AddByProjectIdAndBathAsync(PackingListDto dto);
 }
 
@@ -32,6 +33,18 @@ public class PackingListService:BaseService<PackingListDto>, IPackingListService
         };
         return await _client.ExecuteAsync<PackingListDto>(request);
     }
+
+    public async Task<ApiResponse<PackingListDto>> GetPackingInfoAsync(PackingListParam param)
+    {
+        var request = new BaseRequest
+        {
+            Method = RestSharp.Method.Get,
+            Route = "api/PackingList/PackingInfo",
+            Param = param
+        };
+        return await _client.ExecuteAsync<PackingListDto>(request);
+    }
+
     public async Task<ApiResponse<PackingListDto>> AddByProjectIdAndBathAsync(PackingListDto dto)
     {
         var request = new BaseRequest

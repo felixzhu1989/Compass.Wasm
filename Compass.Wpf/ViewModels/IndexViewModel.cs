@@ -121,12 +121,16 @@ public class IndexViewModel : NavigationViewModel
                 param.Add("Value", 1);
                 break;
             case "生产":
+                param.Add("Value",2);
                 break;
             case "入库":
+                param.Add("Value", 3);
                 break;
             case "发货":
+                param.Add("Value", 4);
                 break;
             case "结束":
+                param.Add("Value", 5);
                 break;
         }
         RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.Target, back =>

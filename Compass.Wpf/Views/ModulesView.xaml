@@ -17,7 +17,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <FrameworkElement x:Name="DataContextProxy"
                           DataContext="{Binding}" />
@@ -78,6 +77,14 @@
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="Orange"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="装箱清单"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PackingList"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="LightSkyBlue"
                     BorderThickness="0" />
         </DockPanel>
         <!--分段数据-->
@@ -200,25 +207,5 @@
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
             </DataGrid.Columns>
         </DataGrid>
-        <DockPanel Grid.Row="2" LastChildFill="False"
-                    IsEnabled="{Binding CanBatchWorks}"
-                    Margin="10">
-            <Button DockPanel.Dock="Left"
-                    Content="装箱清单"
-                    Command="{Binding ExecuteCommand}"
-                    CommandParameter="PackingList"
-                    Margin="10,0"
-                    materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="LightSkyBlue"
-                    BorderThickness="0" />
-            <Button DockPanel.Dock="Left"
-                    Content="装箱信息表"
-                    Command="{Binding ExecuteCommand}"
-                    CommandParameter="PalletInfo"
-                    Margin="10,0"
-                    materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="DodgerBlue"
-                    BorderThickness="0" />
-        </DockPanel>
     </Grid>
 </UserControl>

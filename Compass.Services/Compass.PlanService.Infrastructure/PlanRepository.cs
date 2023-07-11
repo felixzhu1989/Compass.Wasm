@@ -141,7 +141,7 @@ public class PlanRepository : IPlanRepository
     {
         return _context.PackingItems.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
-
+    
     public Task<IQueryable<PackingItem>> GetPackingItemsByListIdAsync(Guid packingListId)
     {
         return Task.FromResult(_context.PackingItems.Where(x=>x.PackingListId.Equals(packingListId)));

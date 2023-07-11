@@ -13,6 +13,7 @@ public class MaterialItemCsv
     #region 其他信息(刷新的信息)
     public string? Inventory { get; set; }
     public string? UnitCost { get; set; }
+    public string? Order { get; set; }
     #endregion
 
     #region 筛选信息(不变更的信息)

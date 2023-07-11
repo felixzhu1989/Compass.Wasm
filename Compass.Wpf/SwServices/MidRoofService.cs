@@ -67,7 +67,34 @@ public class MidRoofService : BaseSwService, IMidRoofService
         FNHM0032(swAssyLevel1, suffix, "FNHM0032-1",netWidth,height,ExhaustType_e.UV);
     }
 
-    public void FNHM0001(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double netWidth, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
+    public void MidRoofKvv(AssemblyDoc swAssyTop, string suffix, double length, double width, double insidePanelWidth, double exhaustSpigotLength, double exhaustSpigotWidth,LightType_e lightType)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "MidRoof_Kvv-1", Aggregator);
+        FNHM0008(swAssyLevel1,suffix,"FNHM0008-1",length,insidePanelWidth,lightType);
+
+        var sideDis = width > 1400 ? 200d : 150d;
+        var insHole = 50d * Convert.ToInt32((width / 2d - sideDis) / 50d);
+        if (width > 1400)
+        {
+            swAssyLevel1.Suppress(suffix, "FNHM0007-1");
+            swAssyLevel1.UnSuppress(out _, suffix, "FNHM0017-2",Aggregator);
+            FNHM0007(swAssyLevel1, suffix, "FNHM0017-1", length, width, insHole, exhaustSpigotLength,
+                exhaustSpigotWidth, lightType);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffix, "FNHM0017-1");
+            swAssyLevel1.Suppress(suffix, "FNHM0017-2");
+            FNHM0007(swAssyLevel1, suffix, "FNHM0007-1", length, width, insHole, exhaustSpigotLength,
+                exhaustSpigotWidth, lightType);
+        }
+    }
+    
+
+
+
+    #region 普通烟罩
+    private void FNHM0001(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double netWidth, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
 
@@ -155,31 +182,31 @@ public class MidRoofService : BaseSwService, IMidRoofService
         switch (lightType)
         {
             case LightType_e.筒灯60:
-            {
-                swCompLevel2.UnSuppress("Led60");
-                if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed60", 0d);
-                else
                 {
-                    swModelLevel2.ChangeDim("ToMiddle@SketchLed60", toMiddle);
-                    swCompLevel2.UnSuppress("LPatternLed60");
-                    swModelLevel2.ChangeDim("Number@LPatternLed60", spotLightNumber);
-                    swModelLevel2.ChangeDim("Dis@LPatternLed60", spotLightDistance);
+                    swCompLevel2.UnSuppress("Led60");
+                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed60", 0d);
+                    else
+                    {
+                        swModelLevel2.ChangeDim("ToMiddle@SketchLed60", toMiddle);
+                        swCompLevel2.UnSuppress("LPatternLed60");
+                        swModelLevel2.ChangeDim("Number@LPatternLed60", spotLightNumber);
+                        swModelLevel2.ChangeDim("Dis@LPatternLed60", spotLightDistance);
+                    }
+                    break;
                 }
-                break;
-            }
             case LightType_e.筒灯140:
-            {
-                swCompLevel2.UnSuppress("Led140");
-                if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed140", 0d);
-                else
                 {
-                    swModelLevel2.ChangeDim("ToMiddle@SketchLed140", toMiddle);
-                    swCompLevel2.UnSuppress("LPatternLed140");
-                    swModelLevel2.ChangeDim("Number@LPatternLed140", spotLightNumber);
-                    swModelLevel2.ChangeDim("Dis@LPatternLed140", spotLightDistance);
+                    swCompLevel2.UnSuppress("Led140");
+                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed140", 0d);
+                    else
+                    {
+                        swModelLevel2.ChangeDim("ToMiddle@SketchLed140", toMiddle);
+                        swCompLevel2.UnSuppress("LPatternLed140");
+                        swModelLevel2.ChangeDim("Number@LPatternLed140", spotLightNumber);
+                        swModelLevel2.ChangeDim("Dis@LPatternLed140", spotLightDistance);
+                    }
+                    break;
                 }
-                break;
-            }
             case LightType_e.长灯:
                 swCompLevel2.UnSuppress("FsLong");
                 break;
@@ -305,23 +332,26 @@ public class MidRoofService : BaseSwService, IMidRoofService
         #endregion
     }
 
-    public void FNHM0006(AssemblyDoc swAssyLevel1, string suffix, string partName, double netWidth)
+    private void FNHM0006(AssemblyDoc swAssyLevel1, string suffix, string partName, double netWidth)
     {
         swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", netWidth-4d);
     }
 
-    public void FNHM0031(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double netWidth,double height, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, double lightToFront, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
+    #endregion
+    
+    #region 华为烟罩
+    private void FNHM0031(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double netWidth, double height, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, double lightToFront, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
     {
         var diff = height-555d;
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
-        
+
         swModelLevel2.ChangeDim("Length@SketchBase", length);
         swModelLevel2.ChangeDim("Width@SketchBase", netWidth + 221d+2d*diff);
         swModelLevel2.ChangeDim("Width@SketchWidth", netWidth - 3d);
         swModelLevel2.ChangeDim("Height@SketchHeight1", 85d+diff);//180,85
         swModelLevel2.ChangeDim("Height@SketchHeight2", 85d+diff);
-        
+
         //侧向连接孔
         swModelLevel2.ChangeDim("Dis@SketchSide", netWidth*2d / 3d);
 
@@ -392,8 +422,8 @@ public class MidRoofService : BaseSwService, IMidRoofService
 
         #region 灯具选项
 
-        var toFront = lightToFront==0?netWidth/2d: lightToFront - 360d;
-        
+        var toFront = lightToFront==0 ? netWidth/2d : lightToFront - 360d;
+
         swCompLevel2.Suppress("Led60");
         swCompLevel2.Suppress("LPatternLed60");
         swCompLevel2.Suppress("Led140");
@@ -457,7 +487,7 @@ public class MidRoofService : BaseSwService, IMidRoofService
         swCompLevel2.Suppress("AnsulDetector3");
         swCompLevel2.Suppress("AnsulDetector4");
         swCompLevel2.Suppress("AnsulDetector5");
-        
+
         if (ansul)
         {
             #region Ansul下喷
@@ -557,8 +587,6 @@ public class MidRoofService : BaseSwService, IMidRoofService
         #endregion
     }
 
-
-
     private void FNHM0032(AssemblyDoc swAssyLevel1, string suffix, string partName, double netWidth, double height,
         ExhaustType_e exhaustType)
     {
@@ -588,4 +616,35 @@ public class MidRoofService : BaseSwService, IMidRoofService
             swCompLevel2.Suppress("AnsulDetectorAcross");
         }
     }
+    #endregion
+
+    #region KVV
+
+    private void FNHM0007(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, double insHole,double exhaustSpigotLength, double exhaustSpigotWidth, LightType_e lightType)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+
+        swModelLevel2.ChangeDim("Length@SketchBase", length - 6d);
+        swModelLevel2.ChangeDim("Width@SketchBase", width-4d);
+        swModelLevel2.ChangeDim("Width@SketchMidRpoof", insHole);
+        swModelLevel2.ChangeDim("Length@SketchSpigot", exhaustSpigotLength);
+        swModelLevel2.ChangeDim("Width@SketchSpigot", exhaustSpigotWidth);
+        //PhilipsLamp
+        if(lightType==LightType_e.飞利浦三防灯)swCompLevel2.UnSuppress("PhilipsLamp");
+        else swCompLevel2.Suppress("PhilipsLamp");
+    }
+
+    private void FNHM0008(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double insidePanelWidth, LightType_e lightType)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+
+        swModelLevel2.ChangeDim("Length@SketchBase", length - 6d);
+        swModelLevel2.ChangeDim("Width@SketchBase", insidePanelWidth);
+        //PhilipsLamp
+        if (lightType==LightType_e.飞利浦三防灯) swCompLevel2.UnSuppress("PhilipsLamp");
+        else swCompLevel2.Suppress("PhilipsLamp");
+    }
+
+
+    #endregion
 }

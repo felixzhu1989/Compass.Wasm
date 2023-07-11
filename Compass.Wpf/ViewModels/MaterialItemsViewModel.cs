@@ -125,6 +125,7 @@ public class MaterialItemsViewModel : NavigationViewModel
                         dto.CalcRule=itemDto.CalcRule;
                         dto.NoLabel=itemDto.NoLabel;
                         dto.OneLabel=itemDto.OneLabel;
+                        dto.Order = itemDto.Order.ToInt();
                         await _materialItemService.UpdateOtherAsync(dto.Id.Value, dto);
                     }
                     break;

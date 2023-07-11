@@ -150,9 +150,7 @@ public class ModulesViewModel : NavigationViewModel
             case "PrintCutList": PrintCutList(); break;
             case "PrintJobCard": PrintJobCard();break;
             case "SyncFiles": SyncFiles();break;
-
             case "PackingList": PackingList();break;
-            case "PalletInfo": PalletInfo(); break;
         }
     }
 
@@ -175,6 +173,7 @@ public class ModulesViewModel : NavigationViewModel
     {
         const BatchWorksAction_e actionName = BatchWorksAction_e.自动作图;
         await BatchWorks(actionName);
+        GetModuleDtosDataAsync();
     }
 
     private async void ExportDxf()
@@ -211,10 +210,6 @@ public class ModulesViewModel : NavigationViewModel
             Journal = back.Context.NavigationService.Journal;
         }, param);
     }
-    private void PalletInfo()
-    {
-        
-    } 
     #endregion
 
 

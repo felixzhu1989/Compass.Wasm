@@ -145,7 +145,8 @@ public class AddStdMaterialViewModel : BindableBase, IDialogHostAware
                 CalcRule = x.CalcRule,
                 NoLabel = x.NoLabel,
                 OneLabel = x.OneLabel,
-                Pallet = false
+                Pallet = false,
+                Order=x.Order
             })
             .ToList();
 

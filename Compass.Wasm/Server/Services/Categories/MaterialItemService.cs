@@ -35,7 +35,7 @@ public class MaterialItemService : IMaterialItemService
         try
         {
             var models = await _repository.GetMaterialItemsAsync();
-            var dtos = await _mapper.ProjectTo<MaterialItemDto>(models).ToListAsync();
+            var dtos =await _mapper.ProjectTo<MaterialItemDto>(models).OrderBy(x=>x.Order).ToListAsync();
             return new ApiResponse<List<MaterialItemDto>> { Status = true, Result = dtos };
         }
         catch (Exception e)

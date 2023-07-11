@@ -84,6 +84,11 @@
                      DockPanel.Dock="Top"
                      Margin="0,5"
                      materialDesign:TextFieldAssist.PrefixText="备注：" />
+            <TextBox Text="{Binding PackingItemDto.Order,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="请输入排序"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="排序：" />
             <CheckBox IsChecked="{Binding PackingItemDto.Pallet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       Content="单独托盘"
                       DockPanel.Dock="Top"

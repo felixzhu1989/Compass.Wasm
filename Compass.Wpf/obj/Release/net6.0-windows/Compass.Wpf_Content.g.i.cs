@@ -11,6 +11,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("jobcard.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mainplan.csv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("materialitem.csv")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("packinginfo.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("updatelist.xml")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cutlist.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("packinglist.xlsx")]

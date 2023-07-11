@@ -5,24 +5,29 @@
 	<!--升级文件信息-->
 	<UpdateInfo>
 		<!--升级文件的更新日期-->
-		<UpdateTime Date="2023-06-27 13:00"/>
+		<UpdateTime Date="2023-07-10 17:00"/>
 	</UpdateInfo>
 	<!--升级文件列表-->
 	<UpdateFileList>
+		<!--1.更新文件信息表xml-->
 		<UpdateFile FileName="UpdateList.xml" />
-
+		<!--2.主程序文件-->
 		<UpdateFile FileName="Compass.Wpf.exe" />
 		<UpdateFile FileName="Compass.Wasm.Shared.dll" />
 		<UpdateFile FileName="Compass.Wpf.dll" />
 		<UpdateFile FileName="Compass.Wpf.deps.json" />
 
-
+		<!--3.依赖类库-->
 		<UpdateFile FileName="CsvHelper.dll" />
 
+		<!--4.导入数据csv文件-->
 		<UpdateFile FileName="MaterialItem.csv" />
 		<UpdateFile FileName="MainPlan.csv" />
+		<!--5.打印和导出Excel文件-->
+		<UpdateFile FileName="JobCard.xlsx" />
 		<UpdateFile FileName="CutList.xlsx" />
 		<UpdateFile FileName="PackingList.xlsx" />
-		<UpdateFile FileName="JobCard.xlsx" />
+		<UpdateFile FileName="PackingInfo.xlsx" />
+		
 	</UpdateFileList>
 </autoUpdater>

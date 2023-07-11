@@ -6,7 +6,7 @@ public enum SidePanel_e
 }
 public enum LightType_e
 {
-    NA,长灯, 短灯, 筒灯60, 筒灯140
+    NA,长灯, 短灯, 筒灯60, 筒灯140,飞利浦三防灯
 }
 public enum UvLightType_e
 {

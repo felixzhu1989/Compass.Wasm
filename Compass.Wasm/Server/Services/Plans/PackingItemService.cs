@@ -9,6 +9,9 @@ namespace Compass.Wasm.Server.Services.Plans;
 
 public interface IPackingItemService : IBaseService<PackingItemDto>
 {
+    Task<ApiResponse<PackingItemDto>> AddPalletAsync(PackingItemDto dto);
+    Task<ApiResponse<PackingItemDto>> UpdatePalletAsync(Guid id, PackingItemDto dto);
+    Task<ApiResponse<PackingItemDto>> UpdatePalletNumberAsync(Guid id, object obj);
 }
 
 public class PackingItemService:IPackingItemService
@@ -60,7 +63,7 @@ public class PackingItemService:IPackingItemService
     {
         try
         {
-            var model = new PackingItem(Guid.NewGuid(), dto.PackingListId.Value, dto.MtlNumber, dto.Description, dto.EnDescription, dto.Type,dto.Quantity,dto.Unit,dto.Length,dto.Width,dto.Height,dto.Material,dto.Remark,dto.CalcRule,dto.Pallet,dto.NoLabel,dto.OneLabel);
+            var model = new PackingItem(Guid.NewGuid(), dto.PackingListId.Value, dto.MtlNumber, dto.Description, dto.EnDescription, dto.Type,dto.Quantity,dto.Unit,dto.Length,dto.Width,dto.Height,dto.Material,dto.Remark,dto.CalcRule,dto.Pallet,dto.NoLabel,dto.OneLabel,dto.Order);
             await _dbContext.PackingItems.AddAsync(model);
             dto.Id = model.Id;
             return new ApiResponse<PackingItemDto> { Status = true, Result = dto };
@@ -100,5 +103,61 @@ public class PackingItemService:IPackingItemService
             return new ApiResponse<PackingItemDto> { Status = false, Message = e.Message };
         }
     }
+    #endregion
+
+
+    #region 扩展新增和更新Pallet
+    /// <summary>
+    /// 生成装箱清单号
+    /// </summary>
+    public async Task<ApiResponse<PackingItemDto>> UpdatePalletNumberAsync(Guid id, object obj)
+    {
+        try
+        {
+            var model = await _repository.GetPackingItemsByListIdAsync(id);
+            if (model == null) return new ApiResponse<PackingItemDto> { Status = false, Message = "更新数据失败" };
+            var pallets = model.Where(x => x.Pallet && x.Type != "托盘").OrderBy(x=>x.Order).ThenBy(x=>x.MtlNumber);
+            var i = 1;
+            foreach (var item in pallets)
+            {
+                item.ChangePalletNumber(i.ToString());
+                i++;
+            }
+            return new ApiResponse<PackingItemDto> { Status = true, Result = null };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<PackingItemDto> { Status = false, Message = e.Message };
+        }
+    }
+
+    public async Task<ApiResponse<PackingItemDto>> AddPalletAsync(PackingItemDto dto)
+    {
+        try
+        {
+            var model = new PackingItem(Guid.NewGuid(), dto.PackingListId.Value, dto.MtlNumber, dto.PalletNumber, dto.PalletLength, dto.PalletWidth, dto.PalletHeight, dto.GrossWeight, dto.NetWeight, dto.PalletRemark);
+            await _dbContext.PackingItems.AddAsync(model);
+            dto.Id = model.Id;
+            return new ApiResponse<PackingItemDto> { Status = true, Result = dto };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<PackingItemDto> { Status = false, Message = e.Message };
+        }
+    }
+    public async Task<ApiResponse<PackingItemDto>> UpdatePalletAsync(Guid id, PackingItemDto dto)
+    {
+        try
+        {
+            var model = await _repository.GetPackingItemByIdAsync(id);
+            if (model == null) return new ApiResponse<PackingItemDto> { Status = false, Message = "更新数据失败" };
+            model.UpdatePallet(dto);
+            return new ApiResponse<PackingItemDto> { Status = true, Result = dto };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<PackingItemDto> { Status = false, Message = e.Message };
+        }
+    } 
     #endregion
 }

@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+using AutoMapper;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;
@@ -11,6 +13,7 @@ namespace Compass.Wasm.Server.Services.Plans;
 public interface IPackingListService : IBaseService<PackingListDto>
 {
     Task<ApiResponse<PackingListDto>> GetSingleByProjectIdAndBathAsync(PackingListParam param);
+    Task<ApiResponse<PackingListDto>> GetPackingInfoAsync(PackingListParam param);
     Task<ApiResponse<PackingListDto>> AddByProjectIdAndBathAsync(PackingListDto dto);
 }
 
@@ -63,7 +66,7 @@ public class PackingListService:IPackingListService
     {
         try
         {
-            var model = new PackingList(Guid.NewGuid(), dto.MainPlanId.Value, dto.Product, dto.PackingType, dto.deliveryType, dto.AssyPath);
+            var model = new PackingList(Guid.NewGuid(), dto.MainPlanId.Value, dto.Product, dto.PackingType, dto.DeliveryType, dto.AssyPath);
             await _dbContext.PackingLists.AddAsync(model);
             dto.Id = model.Id;
             return new ApiResponse<PackingListDto> { Status = true, Result = dto };
@@ -122,10 +125,11 @@ public class PackingListService:IPackingListService
             dto.ProjectId=mainPlan.ProjectId.Value;
             dto.Batch=mainPlan.Batch;
             dto.ProjectName=$"{mainPlan.Number}-{mainPlan.Name}";
+            dto.FinishTime = mainPlan.FinishTime;
             //查询PackingItem列表
             var packingItems = await _repository.GetPackingItemsByListIdAsync(dto.Id.Value);
-            var piDtos = await _mapper.ProjectTo<PackingItemDto>(packingItems).ToListAsync();
-            dto.PackingItemDtos =piDtos;
+            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).Where(x=>x.Type!="托盘").OrderBy(x=>x.Order).ThenBy(x=>x.MtlNumber);//过滤掉托盘信息
+            dto.PackingItemDtos = new ObservableCollection<PackingItemDto>(piDtos);
 
             return new ApiResponse<PackingListDto> { Status = true, Result = dto };
         }
@@ -134,7 +138,32 @@ public class PackingListService:IPackingListService
             return new ApiResponse<PackingListDto> { Status = false, Message = e.Message };
         }
     }
+    public async Task<ApiResponse<PackingListDto>> GetPackingInfoAsync(PackingListParam param)
+    {
+        try
+        {
+            var mainPlan = await _repository.GetMainPlanByProjectIdAndBatchAsync(param.ProjectId.Value, param.Batch.Value);
+            if (mainPlan == null) return new ApiResponse<PackingListDto> { Status = false };
+            var model = await _repository.GetPackingListByMainPlanIdAsync(mainPlan.Id);
 
+            if (model == null) return new ApiResponse<PackingListDto> { Status = false, Message = "查询数据失败" };
+            var dto = _mapper.Map<PackingListDto>(model);
+            dto.ProjectId=mainPlan.ProjectId.Value;
+            dto.Batch=mainPlan.Batch;
+            dto.ProjectName=$"{mainPlan.Number}-{mainPlan.Name}";
+            dto.FinishTime = mainPlan.FinishTime;
+            //查询PackingItem列表
+            var packingItems = await _repository.GetPackingItemsByListIdAsync(dto.Id.Value);
+            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).Where(x => x.Pallet).OrderBy(x => x.Order).ThenBy(x => x.MtlNumber);//过滤掉非托盘信息
+            dto.PackingItemDtos = new ObservableCollection<PackingItemDto>(piDtos);
+
+            return new ApiResponse<PackingListDto> { Status = true, Result = dto };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<PackingListDto> { Status = false, Message = e.Message };
+        }
+    }
     public async Task<ApiResponse<PackingListDto>> AddByProjectIdAndBathAsync(PackingListDto dto)
     {
         var mainPlan = await _repository.GetMainPlanByProjectIdAndBatchAsync(dto.ProjectId.Value, dto.Batch.Value);

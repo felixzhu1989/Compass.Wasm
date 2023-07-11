@@ -88,6 +88,9 @@ namespace Compass.CategoryService.Infrastructure.Migrations
                     b.Property<bool>("OneLabel")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 

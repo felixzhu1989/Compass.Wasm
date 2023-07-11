@@ -236,15 +236,15 @@
       "mscorlib.dll": "sha256-C3gpWQMELcHYfrHU\/1agQUvWTtSNs9Ul2suMxcKFnIc=",
       "netstandard.dll": "sha256-CgGkoZQx73t3qchcsu85kgBcgrjNEOiudArOwKNb18k=",
       "System.Private.CoreLib.dll": "sha256-6nUSjiT7okMlkN897OnDypwppYuK7JxTahOClXkAuwE=",
-      "Compass.Wasm.Shared.dll": "sha256-OEcQttVqWClBjjiTLzM7N1PRThTCfmWwddhkkb2Lh7U=",
-      "Compass.Wasm.Client.dll": "sha256-c7PYQaqobcr7\/TWnWGdbvPEVx3F1J+e2iDdg0\/bDJeM="
+      "Compass.Wasm.Shared.dll": "sha256-vu4lDIMDn9OH9ypuhjQImWtLdpY4uDy7HhdPJu9ApUU=",
+      "Compass.Wasm.Client.dll": "sha256-WjQpsPL9g7h\/qRc59NXWVX59RQJKBhsVczWFBUhnAc4="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "Compass.Wasm.Shared.pdb": "sha256-J1fuuIZEJm1enWPY3veKICTNHHWWG\/WNsUnMRdy21YU=",
-      "Compass.Wasm.Client.pdb": "sha256-fxlus90hJnhcoKTQECFPB5Xjc2dgilQnId+B+\/+gRT4="
+      "Compass.Wasm.Shared.pdb": "sha256-hzXJ9R16S2kmWSftjomx4h1K3zVLB76hacWgUeC9\/xU=",
+      "Compass.Wasm.Client.pdb": "sha256-luVHQ3q\/h5lTb\/xMhhGO+WORd76rn5hVxBxGfSTc7cE="
     },
     "runtime": {
       "dotnet.6.0.16.c20ip8ofhz.js": "sha256-GT2gK+GjOisRXJY+9yh6H8s6K\/KDIsaFMFIgWvAnttY=",

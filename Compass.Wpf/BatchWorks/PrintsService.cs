@@ -13,6 +13,7 @@ using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
 using Compass.Wasm.Shared.Projects;
+using ImTools;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -25,7 +26,7 @@ public interface IPrintsService
     Task PrintOneJobCardAsync(ModuleDto moduleDto);
 
     Task PrintPackingListAsync(PackingListDto packingListDto);
-
+    Task PrintPackingInfoAsync(PackingListDto packingListDto);
 }
 
 
@@ -166,6 +167,30 @@ public class PrintsService : IPrintsService
 
 
     }
+
+    /// <summary>
+    /// 打印空白装箱信息表
+    /// </summary>
+    public async Task PrintPackingInfoAsync(PackingListDto packingListDto)
+    {
+
+        var template = Path.Combine(Environment.CurrentDirectory, "PackingInfo.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+        //调试时预览
+        //excelApp.Visible = true;
+
+        await UseExcelPrintPackingInfo(worksheet, packingListDto);
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+
+
+    }
+
     #endregion
 
     #region Excel打印内部实现
@@ -379,8 +404,7 @@ public class PrintsService : IPrintsService
         stream.Close();
     }
     #endregion
-
-
+    
     #region PackingList
     private async Task UseExcelPrintPackingList(Worksheet worksheet, PackingListDto packingListDto)
     {
@@ -397,6 +421,7 @@ public class PrintsService : IPrintsService
 
         for (var i = 0; i < items.Count; i++)
         {
+            worksheet.Cells[i + 7, 1] = items[i].PalletNumber;
             worksheet.Cells[i + 7, 2] = items[i].Description;
             worksheet.Cells[i + 7, 3] = items[i].Type;
             worksheet.Cells[i + 7, 4] = items[i].Quantity;
@@ -432,6 +457,44 @@ public class PrintsService : IPrintsService
     }
     #endregion
 
+    #region PackingInfo
+    private async Task UseExcelPrintPackingInfo(Worksheet worksheet, PackingListDto packingListDto)
+    {
+        //表的页眉页脚
+        worksheet.PageSetup.LeftHeader = $"ODP-项目名: {packingListDto.ProjectName}";
+        worksheet.PageSetup.LeftFooter = $"打印人: {Environment.UserName}";
+        worksheet.PageSetup.CenterFooter = $"完工日期: {packingListDto.FinishTime.ToShortDateString()}";
+        worksheet.PageSetup.RightFooter = $"打印日期: {DateTime.Now.ToShortDateString()}";
+
+        var items = packingListDto.PackingItemDtos;
+        var itemsCount = items.Count;
+        //首先复制表格[1,7][8-14][15-21]...
+        for (int i = 0; i < itemsCount; i++)
+        {
+            worksheet.Range["A1:E7"].Copy(worksheet.Range[$"A{8+i*7}"]);
+            //itemsCount不用-1，这样会多出一张空白的，用于填写配件
+        }
+        //填写数据
+        //worksheet.Cells[行,列]
+        for (int i = 0; i < itemsCount; i++)
+        {
+            worksheet.Cells[2+i*7, 1]=items[i].PalletNumber;
+            worksheet.Cells[6+i*7, 1]=items[i].MtlNumber;
+            worksheet.Cells[5+i*7, 3]=$"产品长(L): {items[i].Length}";
+            worksheet.Cells[6+i*7, 3]=$"产品宽(W): {items[i].Width}";
+            worksheet.Cells[7+i*7, 3]=$"产品高(H): {items[i].Height}";
+            worksheet.Cells[6+i*7, 4]=items[i].Type;
+        }
+
+        //调试时预览
+        //worksheet.PrintPreview(true);
+        //打印
+        worksheet.PrintOutEx();
+        //清空打印内容,8行到末尾
+        var rows = (Range)worksheet.Rows[$"8:{8+itemsCount*7}", Missing.Value];
+        rows.Delete(XlDirection.xlDown);
+    }
+    #endregion
 
     #endregion
 
