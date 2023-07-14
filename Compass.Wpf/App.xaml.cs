@@ -70,7 +70,7 @@ public partial class App : PrismApplication
                 var journal = back.Context.NavigationService.Journal;
             });
         });
-    } 
+    }
     #endregion
 
     //依赖注入容器：private readonly IContainerProvider _provider;
@@ -94,15 +94,16 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<AboutView>();//设置界面
         containerRegistry.RegisterForNavigation<ProjectsView, ProjectsViewModel>();
         containerRegistry.RegisterForNavigation<DetailView, DetailViewModel>();
-        
+
         containerRegistry.RegisterForNavigation<DrawingView, DrawingViewModel>();
         containerRegistry.RegisterForNavigation<ModulesView, ModulesViewModel>();
 
-        containerRegistry.RegisterForNavigation<MainPlansView,MainPlansViewModel>();
+        containerRegistry.RegisterForNavigation<MainPlansView, MainPlansViewModel>();
 
-        containerRegistry.RegisterForNavigation<MaterialItemsView,MaterialItemsViewModel>();
-        containerRegistry.RegisterForNavigation<PackingListView,PackingListViewModel>();
-        
+        containerRegistry.RegisterForNavigation<MaterialItemsView, MaterialItemsViewModel>();
+        containerRegistry.RegisterForNavigation<PackingListView, PackingListViewModel>();
+        containerRegistry.RegisterForNavigation<PackingInfoView, PackingInfoViewModel>();
+
 
 
         #endregion
@@ -116,10 +117,10 @@ public partial class App : PrismApplication
         containerRegistry.Register<IDrawingService, DrawingService>();
         containerRegistry.Register<IModuleService, ModuleService>();
 
-        containerRegistry.Register<IMainPlanService,MainPlanService>();
-        containerRegistry.Register<IMaterialItemService,MaterialItemService>();
-        containerRegistry.Register<IPackingListService,PackingListService>();
-        containerRegistry.Register<IPackingItemService,PackingItemService>();
+        containerRegistry.Register<IMainPlanService, MainPlanService>();
+        containerRegistry.Register<IMaterialItemService, MaterialItemService>();
+        containerRegistry.Register<IPackingListService, PackingListService>();
+        containerRegistry.Register<IPackingItemService, PackingItemService>();
 
         containerRegistry.Register<ICutListService, CutListService>();
         containerRegistry.Register<IBatchWorksService, BatchWorksService>();
@@ -142,7 +143,7 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<UwiDataView, UwiDataViewModel>();
         containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
 
-        containerRegistry.RegisterForNavigation<KvvDataView,KvvDataViewModel>();
+        containerRegistry.RegisterForNavigation<KvvDataView, KvvDataViewModel>();
 
 
 
@@ -159,7 +160,7 @@ public partial class App : PrismApplication
         containerRegistry.Register<IUwiDataService, UwiDataService>();
         containerRegistry.Register<IUwfDataService, UwfDataService>();
 
-        containerRegistry.Register<IKvvDataService,KvvDataService>();
+        containerRegistry.Register<IKvvDataService, KvvDataService>();
 
 
 
@@ -176,7 +177,7 @@ public partial class App : PrismApplication
         containerRegistry.Register<IUwiAutoDrawing, UwiAutoDrawing>();
         containerRegistry.Register<IUwfAutoDrawing, UwfAutoDrawing>();
 
-        containerRegistry.Register<IKvvAutoDrawing,KvvAutoDrawing>();
+        containerRegistry.Register<IKvvAutoDrawing, KvvAutoDrawing>();
 
 
         #endregion
@@ -187,8 +188,8 @@ public partial class App : PrismApplication
         containerRegistry.Register<ISupplyService, SupplyService>();
         containerRegistry.Register<ISidePanelService, SidePanelService>();
         containerRegistry.Register<IMidRoofService, MidRoofService>();
-            
-            
+
+
 
 
 
@@ -205,17 +206,17 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<AddTodoView, AddTodoViewModel>();
         containerRegistry.RegisterForNavigation<AddMemoView, AddMemoViewModel>();
         containerRegistry.RegisterForNavigation<AddPackingListView, AddPackingListViewModel>();
-        containerRegistry.RegisterForNavigation<AddStdMaterialView,AddStdMaterialViewModel>();
+        containerRegistry.RegisterForNavigation<AddStdMaterialView, AddStdMaterialViewModel>();
         containerRegistry.RegisterForNavigation<AddSplMaterialView, AddSplMaterialViewModel>();
 
         containerRegistry.RegisterForNavigation<CutListView, CutListViewModel>();
         containerRegistry.RegisterForNavigation<JobCardView, JobCardViewModel>();
         containerRegistry.RegisterForNavigation<BatchWorksView, BatchWorksViewModel>();
-            
 
-            
-            
-            
+
+
+
+
         #endregion
     }
 }

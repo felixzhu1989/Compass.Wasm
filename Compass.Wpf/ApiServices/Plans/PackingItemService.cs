@@ -6,7 +6,10 @@ namespace Compass.Wpf.ApiServices.Plans;
 
 public interface IPackingItemService : IBaseService<PackingItemDto>
 {
+    Task<ApiResponse<PackingItemDto>> AddPalletAsync(PackingItemDto dto);
+    Task<ApiResponse<PackingItemDto>> UpdatePalletAsync(Guid id, PackingItemDto dto);
     Task<ApiResponse<PackingItemDto>> UpdatePalletNumberAsync(Guid id);
+    
 }
 
 public class PackingItemService : BaseService<PackingItemDto>, IPackingItemService
@@ -17,6 +20,27 @@ public class PackingItemService : BaseService<PackingItemDto>, IPackingItemServi
         _client = client;
     }
 
+    public async Task<ApiResponse<PackingItemDto>> AddPalletAsync(PackingItemDto dto)
+    {
+        var request = new BaseRequest
+        {
+            Method = RestSharp.Method.Post,
+            Route = "api/PackingItem/AddPallet",
+            Param = dto
+        };
+        return await _client.ExecuteAsync<PackingItemDto>(request);
+    }
+    public async Task<ApiResponse<PackingItemDto>> UpdatePalletAsync(Guid id, PackingItemDto dto)
+    {
+        var request = new BaseRequest
+        {
+            Method = RestSharp.Method.Put,
+            Route = $"api/PackingItem/Pallet/{id}",
+            Param = dto
+        };
+        return await _client.ExecuteAsync<PackingItemDto>(request);
+
+    }
     public async Task<ApiResponse<PackingItemDto>> UpdatePalletNumberAsync(Guid id)
     {
         var request = new BaseRequest
@@ -28,4 +52,5 @@ public class PackingItemService : BaseService<PackingItemDto>, IPackingItemServi
         return await _client.ExecuteAsync<PackingItemDto>(request);
 
     }
+    
 }

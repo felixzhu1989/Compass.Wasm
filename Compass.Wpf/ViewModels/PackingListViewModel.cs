@@ -5,22 +5,23 @@ using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Plans;
 using Compass.Wpf.ApiServices.Projects;
 using Compass.Wpf.BatchWorks;
+using Prism.Regions;
 
 namespace Compass.Wpf.ViewModels;
 
 public class PackingListViewModel : NavigationViewModel
 {
     #region ctor
-    private readonly IContainerProvider _provider;
     private readonly IPackingListService _packingListService;
     private readonly IPackingItemService _packingItemService;
     private readonly IProjectService  _projectService;
+    private readonly IPrintsService _printsService;
     public PackingListViewModel(IContainerProvider provider) : base(provider)
     {
-        _provider = provider;
         _packingListService = provider.Resolve<IPackingListService>();
         _packingItemService = provider.Resolve<IPackingItemService>();
         _projectService = provider.Resolve<IProjectService>();
+        _printsService=provider.Resolve<IPrintsService>();
         PackingList = new PackingListDto();
         ExecuteCommand = new DelegateCommand<string>(Execute);
         UpdateItem = new DelegateCommand<PackingItemDto>(UpdatePackingItem);
@@ -52,7 +53,7 @@ public class PackingListViewModel : NavigationViewModel
             case "AddSplMaterial": AddSplMaterial(); break;
             case "Print": Print(); break;
             case "PrintPackingInfo": PrintPackingInfo(); break;
-
+            case "PackingInfo": PackingInfo(); break;
         }
     }
     /// <summary>
@@ -206,8 +207,7 @@ public class PackingListViewModel : NavigationViewModel
         var dialogResult = await DialogHost.Question("打印确认", "确认要打印装箱清单吗?");
         if (dialogResult.Result != ButtonResult.OK) return;
         await Task.Delay(500);//防止卡屏
-        var printsService = _provider.Resolve<IPrintsService>();
-        await printsService.PrintPackingListAsync(PackingList);
+        await _printsService.PrintPackingListAsync(PackingList);
     }
     /// <summary>
     /// 打印空白装箱信息表
@@ -218,15 +218,32 @@ public class PackingListViewModel : NavigationViewModel
         var dialogResult = await DialogHost.Question("打印确认", "确认要打印空白装箱信息表吗?");
         if (dialogResult.Result != ButtonResult.OK) return;
         await Task.Delay(500);//防止卡屏
-        var printsService = _provider.Resolve<IPrintsService>();
         var param = new PackingListParam
         {
             ProjectId = PackingList.ProjectId,
             Batch = PackingList.Batch
         };
         var response = await _packingListService.GetPackingInfoAsync(param);
-        await printsService.PrintPackingInfoAsync(response.Result);
+        await _printsService.PrintPackingInfoAsync(response.Result);
     }
+    /// <summary>
+    /// 导航到装箱信息页面
+    /// </summary>
+    private void PackingInfo()
+    {
+        var packingListParam = new PackingListParam
+        {
+            ProjectId = PackingList.ProjectId,
+            Batch = PackingList.Batch
+        };
+        var param = new NavigationParameters { { "Value", packingListParam } };
+        RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("PackingInfoView", back =>
+        {
+            Journal = back.Context.NavigationService.Journal;
+        }, param);
+    }
+
+
     #endregion
 
     #region 初始化
@@ -276,8 +293,8 @@ public class PackingListViewModel : NavigationViewModel
         var param = navigationContext.Parameters.ContainsKey("Value") ?
             navigationContext.Parameters.GetValue<PackingListParam>("Value")
             : null;
-        if (param != null) { if (Journal is { CanGoBack: true }) Journal.GoBack(); }
-       await GetDataAsync(param);
+        
+        await GetDataAsync(param);
     }
     #endregion
 }

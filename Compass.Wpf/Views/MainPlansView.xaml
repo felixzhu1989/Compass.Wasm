@@ -65,7 +65,7 @@
         </StackPanel>
         <!--第2行,数据-->
         <DataGrid Grid.Row="1"
-                  ItemsSource="{Binding MainPlanDtos}"
+                  ItemsSource="{Binding FilterMainPlanDtos}"
                   CanUserAddRows="False"
                   AutoGenerateColumns="False"
                   HeadersVisibility="All"
@@ -92,13 +92,11 @@
                 <DataGridTextColumn Binding="{Binding Batch}"
                                     Header="分批"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="60" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding Number}"
                                     Header="编号"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="120" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding Name}"
                                     Header="项目名称"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -107,8 +105,7 @@
                 <DataGridTextColumn Binding="{Binding Quantity}"
                                     Header="数量"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="60" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding ModelSummary}"
                                     Header="型号"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -117,23 +114,36 @@
                 <DataGridTextColumn Binding="{Binding CreateTime,StringFormat='MM/dd'}"
                                     Header="创建时间"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="100" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding FinishTime,StringFormat='MM/dd'}"
                                     Header="完工时间"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="100" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding DrwReleaseTarget,StringFormat='MM/dd'}"
                                     Header="计划发图"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="100" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
                 <DataGridTextColumn Binding="{Binding MainPlanType}"
                                     Header="分类"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="85" />
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                <DataGridTemplateColumn Width="120"
+                                        Header="装箱信息">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!--绑定当前对象使用{Binding}，RelativeSource查找父对象的ViewModel-->
+                            <Button VerticalAlignment="Top"
+                                    materialDesign:ButtonAssist.CornerRadius="15"
+                                    Height="30"
+                                    Content="装箱信息"
+                                    Background="LightSkyBlue"
+                                    BorderThickness="0"
+                                    CommandParameter="{Binding }"
+                                    Command="{Binding DataContext.PackingInfoCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=DataGrid}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn >
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

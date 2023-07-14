@@ -12,8 +12,6 @@ using Compass.Wasm.Shared.Params;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
-using Compass.Wasm.Shared.Projects;
-using ImTools;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -27,6 +25,7 @@ public interface IPrintsService
 
     Task PrintPackingListAsync(PackingListDto packingListDto);
     Task PrintPackingInfoAsync(PackingListDto packingListDto);
+    Task ExportPackingInfoAsync(PackingListDto packingListDto);
 }
 
 
@@ -189,6 +188,33 @@ public class PrintsService : IPrintsService
         GC.Collect(); //垃圾回收机制
 
 
+    }
+
+    /// <summary>
+    /// 导出装箱信息表Excel
+    /// </summary>
+    public async Task ExportPackingInfoAsync(PackingListDto packingListDto)
+    {
+        
+        var template = Path.Combine(Environment.CurrentDirectory, "PackingInfo.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+        
+        excelApp.Application.DisplayAlerts = false;
+
+        await UseExcelExportPackingInfo(worksheet, packingListDto);
+
+        //保存Excel到桌面
+        var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        var odp = packingListDto.ProjectName.Split('-')[0];
+        var fileName = Path.Combine(desktop, $"{odp} PackingInfo装箱信息表.xlsx");
+        var workBook = excelApp.ActiveWorkbook;
+        workBook.SaveAs(fileName);
+
+        excelApp.Application.DisplayAlerts = true;
+        excelApp.Visible = true;
     }
 
     #endregion
@@ -460,11 +486,7 @@ public class PrintsService : IPrintsService
     #region PackingInfo
     private async Task UseExcelPrintPackingInfo(Worksheet worksheet, PackingListDto packingListDto)
     {
-        //表的页眉页脚
-        worksheet.PageSetup.LeftHeader = $"ODP-项目名: {packingListDto.ProjectName}";
-        worksheet.PageSetup.LeftFooter = $"打印人: {Environment.UserName}";
-        worksheet.PageSetup.CenterFooter = $"完工日期: {packingListDto.FinishTime.ToShortDateString()}";
-        worksheet.PageSetup.RightFooter = $"打印日期: {DateTime.Now.ToShortDateString()}";
+        FillPackingInfoTitle(worksheet,packingListDto);
 
         var items = packingListDto.PackingItemDtos;
         var itemsCount = items.Count;
@@ -474,9 +496,10 @@ public class PrintsService : IPrintsService
             worksheet.Range["A1:E7"].Copy(worksheet.Range[$"A{8+i*7}"]);
             //itemsCount不用-1，这样会多出一张空白的，用于填写配件
         }
+
         //填写数据
         //worksheet.Cells[行,列]
-        for (int i = 0; i < itemsCount; i++)
+        for (int i = 0; i < items.Count; i++)
         {
             worksheet.Cells[2+i*7, 1]=items[i].PalletNumber;
             worksheet.Cells[6+i*7, 1]=items[i].MtlNumber;
@@ -494,6 +517,47 @@ public class PrintsService : IPrintsService
         var rows = (Range)worksheet.Rows[$"8:{8+itemsCount*7}", Missing.Value];
         rows.Delete(XlDirection.xlDown);
     }
+
+    private async Task UseExcelExportPackingInfo(Worksheet worksheet, PackingListDto packingListDto)
+    {
+        FillPackingInfoTitle(worksheet, packingListDto);
+
+        var items = packingListDto.PackingItemDtos;
+        var itemsCount = items.Count;
+        //首先复制表格[1,7][8-14][15-21]...
+        for (int i = 0; i < itemsCount-1; i++)
+        {
+            worksheet.Range["A1:E7"].Copy(worksheet.Range[$"A{8+i*7}"]);
+            //itemsCount不用-1，这样会多出一张空白的，用于填写配件
+        }
+        //填写数据
+        //worksheet.Cells[行,列]
+        for (int i = 0; i < items.Count; i++)
+        {
+            worksheet.Cells[2+i*7, 1]=items[i].PalletNumber;
+            worksheet.Cells[6+i*7, 1]=items[i].MtlNumber;
+            worksheet.Cells[2+i*7, 3]=items[i].PalletLength;
+            worksheet.Cells[3+i*7, 3]=items[i].PalletWidth;
+            worksheet.Cells[4+i*7, 3]=items[i].PalletHeight;
+            worksheet.Cells[5+i*7, 3]=$"产品长(L): {items[i].Length}";
+            worksheet.Cells[6+i*7, 3]=$"产品宽(W): {items[i].Width}";
+            worksheet.Cells[7+i*7, 3]=$"产品高(H): {items[i].Height}";
+            worksheet.Cells[2+i*7, 4]=items[i].GrossWeight;
+            worksheet.Cells[4+i*7, 4]=items[i].NetWeight;
+            worksheet.Cells[6+i*7, 4]=items[i].Type.Equals("托盘")?"": items[i].Type;
+            worksheet.Cells[2+i*7, 5]=items[i].PalletRemark;
+        }
+    }
+
+    private void FillPackingInfoTitle(Worksheet worksheet, PackingListDto packingListDto)
+    {
+        //表的页眉页脚
+        worksheet.PageSetup.LeftHeader = $"ODP-项目名: {packingListDto.ProjectName}";
+        worksheet.PageSetup.LeftFooter = $"打印人: {Environment.UserName}";
+        worksheet.PageSetup.CenterFooter = $"完工日期: {packingListDto.FinishTime.ToShortDateString()}";
+        worksheet.PageSetup.RightFooter = $"打印日期: {DateTime.Now.ToShortDateString()}";
+    }
+    
     #endregion
 
     #endregion

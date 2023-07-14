@@ -539,10 +539,8 @@ public class ExhaustService : BaseSwService, IExhaustService
             case < goodKsaSideLength and >= minKsaSideLength/2d:
                 swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
                 swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2);
-                if (height.Equals(450d)&&waterCollection&&(sidePanel is SidePanel_e.双 or SidePanel_e.左))
-                {
-                    swCompLevel2.UnSuppress("DrainChannel");
-                }
+                if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+                else swCompLevel2.Suppress("DrainChannel");
                 swAssyLevel1.Suppress(suffix, rightPart);
                 swAssyLevel1.Suppress(suffix, specialPart);
 
@@ -552,10 +550,8 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
                 swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
                 swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
-                if (height.Equals(450d)&&waterCollection&&(sidePanel is SidePanel_e.双 or SidePanel_e.右))
-                {
-                    swCompLevel2.UnSuppress("DrainChannel");
-                }
+                if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+                else swCompLevel2.Suppress("DrainChannel");
                 swAssyLevel1.Suppress(suffix, specialPart);
                 break;
         }

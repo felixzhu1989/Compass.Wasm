@@ -169,3 +169,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Dialog
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Dialogs\AddSplMaterialView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Dialogs\AddSplMaterialView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\PackingInfo.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\PackingInfoView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\PackingInfoView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\PrintPackingInfo.xlsx

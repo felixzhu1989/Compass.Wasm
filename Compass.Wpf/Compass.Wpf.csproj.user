@@ -84,6 +84,9 @@
     <Compile Update="Views\Dialogs\MsgView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\PackingInfoView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\PackingListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -186,6 +189,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\MsgView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PackingInfoView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\PackingListView.xaml">

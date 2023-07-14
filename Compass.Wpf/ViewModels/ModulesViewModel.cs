@@ -150,7 +150,7 @@ public class ModulesViewModel : NavigationViewModel
             case "PrintCutList": PrintCutList(); break;
             case "PrintJobCard": PrintJobCard();break;
             case "SyncFiles": SyncFiles();break;
-            case "PackingList": PackingList();break;
+            case "PackingList": PackingListNavigate();break;
         }
     }
 
@@ -195,8 +195,8 @@ public class ModulesViewModel : NavigationViewModel
     }
     #endregion
 
-    #region 装箱清单和装箱信息
-    private void PackingList()
+    #region 装箱清单
+    private void PackingListNavigate()
     {
         if(Project.Id==null||Project.Id==Guid.Empty||SelectedBatch==null)return;
         var packingListParam = new PackingListParam

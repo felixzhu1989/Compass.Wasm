@@ -3,6 +3,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\JobC
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\MainPlan.csv
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\MaterialItem.csv
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PackingInfo.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PrintPackingInfo.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\UpdateList.xml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\CutList.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PackingList.xlsx

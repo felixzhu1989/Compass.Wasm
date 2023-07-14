@@ -147,6 +147,51 @@ public class SupplyService : BaseSwService, ISupplyService
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
 
+    public void F400(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_F_400-1", Aggregator);
+
+        //新风面板螺丝孔数量及间距,最小间距580，距离边缘150 2023/6/20
+        const double sideDis = 150d;
+        const double minFrontPanelNutDis = 580d;
+        var frontPanelNutNumber = Math.Ceiling((length - 2*sideDis) / minFrontPanelNutDis);
+        frontPanelNutNumber = frontPanelNutNumber < 2d ? 2d : frontPanelNutNumber;
+        var frontPanelNutDis = (length -  2*sideDis) / (frontPanelNutNumber - 1);
+
+        //MidRoof铆螺母孔 2023/3/10
+        //修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
+        var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
+
+        //新风网孔板加强筋
+        if (length > 1599d) swAssyLevel1.UnSuppress(suffix, "FNHA0030-1", Aggregator);
+        else swAssyLevel1.Suppress(suffix, "FNHA0030-1");
+
+
+        //新风主体
+        FNHA0004(swAssyLevel1, suffix, "FNHA0021-1", length, width, sidePanel, uvLightType, bluetooth, marvel, midRoofNutDis, supplySpigotNumber, supplySpigotDis);
+
+        //F新风底部CJ孔板,FNHA0005重用FNHA0002方法
+        FNHA0002(swAssyLevel1, suffix, "FNHA0005-1", length, sidePanel, bluetooth, ledLogo, waterCollection, frontPanelNutDis);
+
+        //F新风前面板，FNHA0007
+        FNHA0007(swAssyLevel1, suffix, "FNHA0007-1", length, 400d, midRoofNutDis, frontPanelNutDis);
+
+        //镀锌板
+        FNHA0006(swAssyLevel1, suffix, "FNHA0022-1", length);
+
+        //新风滑门导轨
+        FNHA0010(swAssyLevel1, suffix, "FNHA0010-1", length);
+        FNHA0010(swAssyLevel1, suffix, "FNHE0010-1", length);
+
+        //集水翻边
+        const double suHeight = 400d;
+        const string leftPart = "FNHS0005-1";
+        const string rightPart = "FNHS0006-1";
+        WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
+    }
 
     #endregion
 

@@ -55,14 +55,7 @@
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="Chartreuse"
                     BorderThickness="0" />
-            <Button DockPanel.Dock="Left"
-                    Content="③添加特殊物料"
-                    Command="{Binding ExecuteCommand}"
-                    CommandParameter="AddSplMaterial"
-                    Margin="10,0"
-                    materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="Lime"
-                    BorderThickness="0" />
+            
             <Button DockPanel.Dock="Left"
                     Content="打印装箱清单"
                     Command="{Binding ExecuteCommand}"
@@ -80,17 +73,9 @@
                     Background="CornflowerBlue"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
-                    Content="填写装箱信息表"
+                    Content="装箱信息表"
                     Command="{Binding ExecuteCommand}"
-                    CommandParameter="PalletInfo"
-                    Margin="10,0"
-                    materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="DodgerBlue"
-                    BorderThickness="0" />
-            <Button DockPanel.Dock="Left"
-                    Content="导出装箱信息表Excel"
-                    Command="{Binding ExecuteCommand}"
-                    CommandParameter="PalletInfo"
+                    CommandParameter="PackingInfo"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="DodgerBlue"

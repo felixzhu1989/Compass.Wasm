@@ -19,6 +19,7 @@
     <None Remove="MaterialItem.csv" />
     <None Remove="PackingInfo.xlsx" />
     <None Remove="PackingList.xlsx" />
+    <None Remove="PrintPackingInfo.xlsx" />
     <None Remove="UpdateList.xml" />
   </ItemGroup>
 
@@ -33,6 +34,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="PackingInfo.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PrintPackingInfo.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UpdateList.xml">

@@ -34,6 +34,7 @@ public static class CommonExtensions
 
 
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_450_400.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_450_400.SLDASM",
             
             //Huawei
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_HW_650.SLDASM",

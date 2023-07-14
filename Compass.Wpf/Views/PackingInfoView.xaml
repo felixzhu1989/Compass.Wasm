@@ -1,0 +1,296 @@
+﻿<UserControl x:Class="Compass.Wpf.Views.PackingInfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Compass.Wpf.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
+    <UserControl.Resources>
+        <cvt:TypeToEnableCvt x:Key="TypeToEnableCvt"/>
+        <cvt:TypeToVisibilityCvt x:Key="TypeToVisibilityCvt"/>
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <FrameworkElement x:Name="DataContextProxy"
+                          DataContext="{Binding}" />
+        <!--第1行,显示标题-->
+        <DockPanel Grid.Row="0"
+                   LastChildFill="False" Margin="5">
+            <TextBlock DockPanel.Dock="Left"
+                       Text="装箱信息表(Project Packing Info)"
+                       FontWeight="Bold"
+                       FontSize="25"/>
+            <TextBlock DockPanel.Dock="Left"
+                       Text="{Binding PackingList.ProjectName}"
+                       Margin="20,0,0,0" 
+                       VerticalAlignment="Center"/>
+            <Button DockPanel.Dock="Right"
+                    Content="装箱清单"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PackingList"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="LightSkyBlue"
+                    BorderThickness="0" />
+        </DockPanel>
+       
+        <!--第3行,显示项目名称-->
+        <DockPanel Grid.Row="1">
+            <TextBlock DockPanel.Dock="Left"
+                       Text="【请填写包装尺寸、毛重、净重和备注。滚轮到底，添加托盘、保存信息、导出Excel】"
+                       Foreground="DarkGreen" 
+                       Margin="0,0,0,10"/>
+        </DockPanel>
+        
+        <!--第3行,显示项目名称-->
+        <ScrollViewer Grid.Row="2"
+                      VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ItemsControl ItemsSource="{Binding PackingList.PackingItemDtos}"
+                              Margin="5">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="2" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment"
+                                                Value="Center" />
+                                        <Setter Property="VerticalAlignment"
+                                                Value="Center" />
+                                        <Setter Property="Margin"
+                                                Value="3" />
+                                    </Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="BorderBrush"
+                                                Value="Black" />
+                                        <Setter Property="BorderThickness"
+                                                Value="0,0,1,1" />
+                                    </Style>
+                                    <!--输入框样式继承自MaterialDesign-->
+                                    <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignTextBox}">
+                                        <Setter Property="FontWeight"
+                                                Value="Bold" />
+                                        <Setter Property="Foreground"
+                                                Value="DarkGreen" />
+                                        <Setter Property="Margin" Value="10,0"></Setter>
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.RowSpan="7"
+                                        Grid.ColumnSpan="5"
+                                        BorderThickness="2,1,1,1"></Border>
+                                <Border Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.RowSpan="4">
+                                    <DockPanel>
+                                        <TextBlock Text="托盘号 Pallet No."
+                                                   FontWeight="Bold" 
+                                                   DockPanel.Dock="Top"/>
+                                        <TextBox Text="{Binding PalletNumber}"
+                                                 IsEnabled="{Binding Type,Converter={StaticResource TypeToEnableCvt}}"
+                                                   FontWeight="Bold"
+                                                   FontSize="35" 
+                                                   Margin="30,10"/>
+                                    </DockPanel>
+                                </Border>
+                                <Border Grid.Row="4"
+                                        Grid.Column="0"
+                                        Grid.RowSpan="3">
+                                    <DockPanel>
+                                        <TextBlock Text="产品编号"
+                                                   DockPanel.Dock="Top" />
+                                        <TextBox Text="{Binding MtlNumber}"
+                                                 IsEnabled="{Binding Type,Converter={StaticResource TypeToEnableCvt}}"/>
+                                    </DockPanel>
+                                </Border>
+                                <Border Grid.Row="0"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2">
+                                    <StackPanel>
+                                        <TextBlock Text="包装尺寸 Packing Size (mm)" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="1"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2">
+                                    <DockPanel >
+                                        <TextBlock Text="L(长):" />
+                                        <TextBox Text="{Binding PalletLength}"/>
+                                    </DockPanel>
+                                </Border>
+                                <Border Grid.Row="2"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2">
+                                    <DockPanel >
+                                        <TextBlock Text="W(宽):" />
+                                        <TextBox Text="{Binding PalletWidth}"/>
+                                    </DockPanel>
+                                </Border>
+                                <Border Grid.Row="3"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2">
+                                    <DockPanel >
+                                        <TextBlock Text="H(高):" />
+                                        <TextBox Text="{Binding PalletHeight}"/>
+                                    </DockPanel>
+                                </Border>
+                                <Border Grid.Row="4"
+                                        Grid.Column="1"
+                                        Grid.RowSpan="3">
+                                    <StackPanel>
+                                        <TextBlock Text="产品尺寸" />
+                                        <TextBlock Text="Item Size" />
+                                        <TextBlock Text="(mm)" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="4"
+                                        Grid.Column="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="产品长(L):" />
+                                        <TextBlock Text="{Binding Length}" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="5"
+                                        Grid.Column="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="产品宽(W):" />
+                                        <TextBlock Text="{Binding Width}" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="6"
+                                        Grid.Column="2">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="产品高(H):" />
+                                        <TextBlock Text="{Binding Height}" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="0"
+                                        Grid.Column="3"
+                                        Grid.RowSpan="2">
+                                    <StackPanel>
+                                        <TextBlock Text="毛重 Gross. KG:" />
+                                        <TextBox Text="{Binding GrossWeight}"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="2"
+                                        Grid.Column="3"
+                                        Grid.RowSpan="2">
+                                    <StackPanel>
+                                        <TextBlock Text="净重 Net. KG:" />
+                                        <TextBox Text="{Binding NetWeight}"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="4"
+                                        Grid.Column="3"
+                                        Grid.RowSpan="3">
+                                    <StackPanel>
+                                        <TextBlock Text="产品型号 Type:" />
+                                        <TextBlock Text="{Binding Type}"
+                                                   Visibility="{Binding Type,Converter={StaticResource TypeToVisibilityCvt}}"/>
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="0"
+                                        Grid.Column="4">
+                                    <StackPanel>
+                                        <TextBlock Text="备注 Remark" />
+                                    </StackPanel>
+                                </Border>
+                                <Border Grid.Row="1"
+                                        Grid.Column="4"
+                                        Grid.RowSpan="6">
+                                    <StackPanel>
+                                        <TextBox Text="{Binding PalletRemark}"
+                                                 MinHeight="150"
+                                                   TextWrapping="Wrap"
+                                                 AcceptsReturn="True"/>
+                                    </StackPanel>
+                                </Border>
+                                <Button Grid.Row="5"
+                                        Grid.Column="5"
+                                        Grid.RowSpan="2"
+                                        Height="25"
+                                        Width="25"
+                                        Margin="3"
+                                        Background="Red"
+                                        BorderBrush="Red"
+                                        IsEnabled="{Binding Type,Converter={StaticResource TypeToEnableCvt}}"
+                                        Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryDarkButton}"
+                                        Command="{Binding DataContext.DeleteItem,Source={x:Reference DataContextProxy}}"
+                                        CommandParameter="{Binding}">
+                                    <materialDesign:PackIcon Kind="DeleteForever"
+                                                             VerticalAlignment="Center"
+                                                             Foreground="AliceBlue" />
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <DockPanel Grid.Row="1"
+                           LastChildFill="False"
+                           Margin="5">
+                    <Button DockPanel.Dock="Left"
+                            Content="添加托盘"
+                            Command="{Binding ExecuteCommand}"
+                            CommandParameter="AddPallet"
+                            Margin="10,0"
+                            materialDesign:ButtonAssist.CornerRadius="15"
+                            Background="Orange"
+                            BorderThickness="0" />
+                    
+                    <Button DockPanel.Dock="Right"
+                            Content="导出Excel到桌面"
+                            Command="{Binding ExecuteCommand}"
+                            CommandParameter="ExportPackingInfo"
+                            Margin="10,0"
+                            materialDesign:ButtonAssist.CornerRadius="15"
+                            Background="SkyBlue"
+                            BorderThickness="0" />
+                    <Button DockPanel.Dock="Right"
+                            Content="保存信息"
+                            Command="{Binding ExecuteCommand}"
+                            CommandParameter="Save"
+                            Margin="10,0"
+                            materialDesign:ButtonAssist.CornerRadius="15"
+                            Background="Lime"
+                            BorderThickness="0" />
+                </DockPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

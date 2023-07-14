@@ -123,7 +123,7 @@ public class UviAutoDrawing : BaseAutoDrawing, IUviAutoDrawing
         MidRoofService.MidRoofFs(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.UV, data.UvLightType, data.Bluetooth, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
         #endregion
 
-        #region Supply_I_555,I555新风装配
+        #region Supply_I_400,I400新风装配
         SupplyService.I400(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection);
         #endregion
 
