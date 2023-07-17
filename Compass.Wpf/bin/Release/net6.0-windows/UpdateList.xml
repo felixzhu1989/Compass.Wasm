@@ -5,7 +5,7 @@
 	<!--升级文件信息-->
 	<UpdateInfo>
 		<!--升级文件的更新日期-->
-		<UpdateTime Date="2023-07-13 17:30"/>
+		<UpdateTime Date="2023-07-17 13:30"/>
 	</UpdateInfo>
 	<!--升级文件列表-->
 	<UpdateFileList>
@@ -25,6 +25,10 @@
 		<UpdateFile FileName="MainPlan.csv" />
 		<!--5.打印和导出Excel文件-->
 		<UpdateFile FileName="JobCard.xlsx" />
+		<UpdateFile FileName="FinalInspection.xlsx" />
+		<UpdateFile FileName="FinalInspectionEn.xlsx" />
+		<UpdateFile FileName="ScreenShot.xlsx" />
+		<UpdateFile FileName="ScreenShotEn.xlsx" />
 		<UpdateFile FileName="CutList.xlsx" />
 		<UpdateFile FileName="PackingList.xlsx" />
 		<UpdateFile FileName="PackingInfo.xlsx" />

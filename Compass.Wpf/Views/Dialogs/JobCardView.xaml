@@ -103,17 +103,18 @@
                     Grid.Column="1"
                     HorizontalAlignment="Right"
                     Margin="20,10">
-            
-            <Button Content="打印截图页"
-                    Background="LightSkyBlue"
-                    BorderThickness="0"
-                    Command="{Binding PrintLabelCommand}"
-                    Margin="0,0,10,0" />
-            <Button Content="打印最终检验"
+            <Button Content="打印最终检验页"
                     Background="LightSkyBlue"
                     BorderThickness="0"
                     Command="{Binding PrintFinalCommand}"
-                    Margin="0,0,10,0" />
+                    Margin="0,0,10,0"
+                    Visibility="Hidden" />
+            <Button Content="打印截图页"
+                    Background="LightSkyBlue"
+                    BorderThickness="0"
+                    Command="{Binding PrintScreenShotCommand}"
+                    Margin="0,0,10,0"
+                    Visibility="Hidden" />
             <Button Content="打印JobCard"
                     Command="{Binding SaveCommand}"
                     Margin="0,0,10,0" />

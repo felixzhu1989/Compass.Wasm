@@ -14,7 +14,7 @@ public class JobCardViewModel : BindableBase, IDialogHostAware
         _provider = provider;
         SaveCommand = new DelegateCommand(PrintJobCard);//使用Save当作执行打印操作
         CancelCommand =new DelegateCommand(Cancel);
-        PrintLabelCommand = new DelegateCommand(PrintLabel);
+        PrintLabelCommand = new DelegateCommand(PrintScreenShot);
         PrintFinalCommand = new DelegateCommand(PrintFinal);
     }
 
@@ -56,7 +56,7 @@ public class JobCardViewModel : BindableBase, IDialogHostAware
     /// <summary>
     /// 打印最终检验
     /// </summary>
-    private void PrintLabel()
+    private void PrintScreenShot()
     {
         //todo:待完善
 

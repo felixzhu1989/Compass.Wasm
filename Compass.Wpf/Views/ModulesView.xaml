@@ -17,11 +17,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <FrameworkElement x:Name="DataContextProxy"
                           DataContext="{Binding}" />
         <!--标题栏，项目号，项目名称-->
-        <DockPanel Grid.Row="0" LastChildFill="False"
+        <DockPanel Grid.Row="0"
+                   LastChildFill="False"
                    IsEnabled="{Binding CanBatchWorks}">
             <TextBlock DockPanel.Dock="Left"
                        Text="分段列表：批次"
@@ -88,7 +90,8 @@
                     BorderThickness="0" />
         </DockPanel>
         <!--分段数据-->
-        <DataGrid Grid.Row="1" ItemsSource="{Binding ModuleDtos}"
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding ModuleDtos}"
                   CanUserAddRows="False"
                   AutoGenerateColumns="False"
                   HeadersVisibility="All"
@@ -207,5 +210,45 @@
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
             </DataGrid.Columns>
         </DataGrid>
+        <DockPanel Grid.Row="2"
+                   LastChildFill="False"
+                   IsEnabled="{Binding CanBatchWorks}"
+                   Margin="10">
+            <Button DockPanel.Dock="Left"
+                    Content="打印最终检验页"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintFinal"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="Turquoise"
+                    BorderThickness="0"
+                    Visibility="Hidden" />
+            <Button DockPanel.Dock="Left"
+                    Content="打印英文最终检验页"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintEnFinal"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="DarkTurquoise"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Content="打印截图页"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintScreenShot"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="LightSkyBlue"
+                    BorderThickness="0" 
+                    Visibility="Hidden"/>
+            <Button DockPanel.Dock="Left"
+                    Content="打印英文截图页"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintEnScreenShot"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="SkyBlue"
+                    BorderThickness="0"/>
+
+        </DockPanel>
     </Grid>
 </UserControl>

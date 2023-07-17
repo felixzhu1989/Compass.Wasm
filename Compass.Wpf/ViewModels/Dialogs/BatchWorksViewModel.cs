@@ -109,15 +109,24 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
                     case BatchWorksAction_e.打印JobCard:
                         await _batchWorksService.BatchPrintJobCardAsync(ModuleDtos);
                         break;
+
+                    case BatchWorksAction_e.打印最终检验页:
+                        await _batchWorksService.BatchPrintFinalAsync(ModuleDtos);
+                        break;
+                    case BatchWorksAction_e.打印英文最终检验页:
+                        await _batchWorksService.BatchPrintEnFinalAsync(ModuleDtos);
+                        break;
+
+                    case BatchWorksAction_e.打印英文截图页:
+                        await _batchWorksService.BatchPrintEnScreenShotAsync(ModuleDtos);
+                        break;
+
                 }
             }
             catch (Exception ex)
             {
                 _aggregator.SendMessage($"{ActionName}发生异常!\n{ex.Message}", Filter_e.Batch);
                 //todo:记录日志？往admin的待办中添加待办？
-
-
-
 
                 await Task.Delay(8000);
             }

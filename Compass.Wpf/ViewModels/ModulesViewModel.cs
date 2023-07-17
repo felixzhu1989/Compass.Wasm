@@ -151,6 +151,11 @@ public class ModulesViewModel : NavigationViewModel
             case "PrintJobCard": PrintJobCard();break;
             case "SyncFiles": SyncFiles();break;
             case "PackingList": PackingListNavigate();break;
+
+            case "PrintFinal": PrintFinal(); break;
+            case "PrintEnFinal": PrintEnFinal(); break;
+            case "PrintEnScreenShot": PrintEnScreenShot();break;
+
         }
     }
 
@@ -193,6 +198,27 @@ public class ModulesViewModel : NavigationViewModel
         const BatchWorksAction_e actionName = BatchWorksAction_e.打印JobCard;
         await BatchWorks(actionName);
     }
+
+
+    private async void PrintFinal()
+    {
+        const BatchWorksAction_e actionName = BatchWorksAction_e.打印最终检验页;
+        await BatchWorks(actionName);
+    }
+    private async void PrintEnFinal()
+    {
+        const BatchWorksAction_e actionName = BatchWorksAction_e.打印英文最终检验页;
+        await BatchWorks(actionName);
+    }
+
+    private async void PrintEnScreenShot()
+    {
+        const BatchWorksAction_e actionName = BatchWorksAction_e.打印英文截图页;
+        await BatchWorks(actionName);
+    }
+
+
+
     #endregion
 
     #region 装箱清单

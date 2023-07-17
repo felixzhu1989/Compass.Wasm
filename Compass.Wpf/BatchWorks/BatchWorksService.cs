@@ -14,6 +14,16 @@ public interface IBatchWorksService
     Task BatchPrintCutListAsync(List<ModuleDto> moduleDtos);
     //JobCard
     Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos);
+
+
+    //打印最终检验
+    Task BatchPrintFinalAsync(List<ModuleDto> moduleDtos);
+    Task BatchPrintEnFinalAsync(List<ModuleDto> moduleDtos);
+    //打印截图页
+    Task BatchPrintEnScreenShotAsync(List<ModuleDto> moduleDtos);
+
+
+
 }
 
 
@@ -98,6 +108,29 @@ public class BatchWorksService : IBatchWorksService
         await printService.BatchPrintJobCardAsync(moduleDtos);
     }
 
+    /// <summary>
+    /// 批量打印最终检验
+    /// </summary>
+    public async Task BatchPrintFinalAsync(List<ModuleDto> moduleDtos)
+    {
+        var printService = _provider.Resolve<IPrintsService>();
+        await printService.BatchPrintFinalAsync(moduleDtos);
+    }
 
-
+    /// <summary>
+    /// 批量打印英文最终检验
+    /// </summary>
+    public async Task BatchPrintEnFinalAsync(List<ModuleDto> moduleDtos)
+    {
+        var printService = _provider.Resolve<IPrintsService>();
+        await printService.BatchPrintEnFinalAsync(moduleDtos);
+    }
+    /// <summary>
+    /// 批量打印英文最终检验
+    /// </summary>
+    public async Task BatchPrintEnScreenShotAsync(List<ModuleDto> moduleDtos)
+    {
+        var printService = _provider.Resolve<IPrintsService>();
+        await printService.BatchPrintEnScreenShotAsync(moduleDtos);
+    }
 }

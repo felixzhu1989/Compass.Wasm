@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="FinalInspection.xlsx" />
+    <None Remove="FinalInspectionEn.xlsx" />
     <None Remove="Images\compass_64px.ico" />
     <None Remove="Images\halton_logo.png" />
     <None Remove="Images\Halton_Logo_RGB.jpg" />
@@ -20,10 +22,18 @@
     <None Remove="PackingInfo.xlsx" />
     <None Remove="PackingList.xlsx" />
     <None Remove="PrintPackingInfo.xlsx" />
+    <None Remove="ScreenShot.xlsx" />
+    <None Remove="ScreenShotEn.xlsx" />
     <None Remove="UpdateList.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="FinalInspection.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FinalInspectionEn.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="JobCard.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -37,6 +47,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="PrintPackingInfo.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ScreenShot.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ScreenShotEn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UpdateList.xml">

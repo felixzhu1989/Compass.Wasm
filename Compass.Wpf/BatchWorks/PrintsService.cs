@@ -12,6 +12,8 @@ using Compass.Wasm.Shared.Params;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
+using Compass.Wasm.Shared.Projects;
+using Module = System.Reflection.Module;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -22,6 +24,12 @@ public interface IPrintsService
 
     Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos);
     Task PrintOneJobCardAsync(ModuleDto moduleDto);
+
+    Task BatchPrintFinalAsync(List<ModuleDto> moduleDtos);
+    Task PrintOneFinalAsync(ModuleDto moduleDto);
+    Task BatchPrintEnFinalAsync(List<ModuleDto> moduleDtos);
+    Task PrintOneEnFinalAsync(ModuleDto moduleDto);
+    Task BatchPrintEnScreenShotAsync(List<ModuleDto> moduleDtos);
 
     Task PrintPackingListAsync(PackingListDto packingListDto);
     Task PrintPackingInfoAsync(PackingListDto packingListDto);
@@ -143,6 +151,130 @@ public class PrintsService : IPrintsService
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
     }
+
+
+    /// <summary>
+    /// 批量打印最终检验
+    /// </summary>
+    public async Task BatchPrintFinalAsync(List<ModuleDto> moduleDtos)
+    {
+        var template = Path.Combine(Environment.CurrentDirectory, "FinalInspection.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+
+        foreach (var moduleDto in moduleDtos)
+        {
+            if (!moduleDto.IsJobCardOk)
+            {
+                _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******JobCard不OK，跳过打印******", Filter_e.Batch);
+                continue;
+            }
+            _aggregator.SendMessage($"正在打印:\t{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}", Filter_e.Batch);
+            await UseExcelPrintFinal(worksheet, moduleDto);
+        }
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
+    /// <summary>
+    /// 单独打印最终检验
+    /// </summary>
+    public async Task PrintOneFinalAsync(ModuleDto moduleDto)
+    {
+        var template = Path.Combine(Environment.CurrentDirectory, "FinalInspection.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+        //调试时预览
+        //excelApp.Visible = true;
+
+        await UseExcelPrintFinal(worksheet, moduleDto);
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
+    /// <summary>
+    /// 批量打印英文最终检验
+    /// </summary>
+    public async Task BatchPrintEnFinalAsync(List<ModuleDto> moduleDtos)
+    {
+        var template = Path.Combine(Environment.CurrentDirectory, "FinalInspectionEn.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+
+        foreach (var moduleDto in moduleDtos)
+        {
+            if (!moduleDto.IsJobCardOk)
+            {
+                _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******JobCard不OK，跳过打印******", Filter_e.Batch);
+                continue;
+            }
+            _aggregator.SendMessage($"正在打印:\t{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}", Filter_e.Batch);
+            await UseExcelPrintFinal(worksheet, moduleDto);
+        }
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
+    /// <summary>
+    /// 单独打印英文最终检验
+    /// </summary>
+    public async Task PrintOneEnFinalAsync(ModuleDto moduleDto)
+    {
+        var template = Path.Combine(Environment.CurrentDirectory, "FinalInspectionEn.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+        //调试时预览
+        //excelApp.Visible = true;
+
+        await UseExcelPrintFinal(worksheet, moduleDto);
+
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
+    /// <summary>
+    /// 批量打印英文最终检验
+    /// </summary>
+    public async Task BatchPrintEnScreenShotAsync(List<ModuleDto> moduleDtos)
+    {
+        var template = Path.Combine(Environment.CurrentDirectory, "ScreenShotEn.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+
+        foreach (var moduleDto in moduleDtos)
+        {
+            if (!moduleDto.IsJobCardOk)
+            {
+                _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******JobCard不OK，跳过打印******", Filter_e.Batch);
+                continue;
+            }
+            _aggregator.SendMessage($"正在打印:\t{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}", Filter_e.Batch);
+            await UseExcelPrintScreenShot(worksheet, moduleDto);
+        }
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
 
     /// <summary>
     /// 打印装箱清单
@@ -384,19 +516,7 @@ public class PrintsService : IPrintsService
             worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4692, 610, 280);//左，上，宽度，高度
         }
 
-        //生成二维码插入Excel并上传
-        var content = moduleDto.Id.ToString();
-        var bmp = content.GetQrCodeBitmap();//获取QrCode的扩展方法
-        var qrCodePath = Path.Combine(Environment.CurrentDirectory, "moduleidqrcode.png");
-        bmp.Save(qrCodePath);
-
-        //判断module的qrcode是否存在，不存在则上传，存在则不上传
-        if (string.IsNullOrEmpty(moduleDto.ImageUrl))
-        {
-            var result = await _fileUploadService.Upload(qrCodePath);
-            moduleDto.QrCodeUrl = result.RemoteUrl.ToString();
-            await _moduleService.UpdateAsync(moduleDto.Id.Value, moduleDto);
-        }
+        var qrCodePath =await CreateQrCodeImage(moduleDto);
 
         //wpf imageSource
         //var bs = Imaging.CreateBitmapSourceFromHBitmap(bmp.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
@@ -418,6 +538,24 @@ public class PrintsService : IPrintsService
         worksheet.PrintOutEx();
     }
 
+    private async Task<string> CreateQrCodeImage(ModuleDto moduleDto)
+    {
+        //生成二维码插入Excel并上传
+        var content = moduleDto.Id.ToString();
+        var bmp = content.GetQrCodeBitmap();//获取QrCode的扩展方法
+        var qrCodePath = Path.Combine(Environment.CurrentDirectory, "moduleidqrcode.png");
+        bmp.Save(qrCodePath);
+
+        //判断module的qrcode是否存在，不存在则上传，存在则不上传
+        if (!string.IsNullOrEmpty(moduleDto.ImageUrl)) return qrCodePath;
+
+        var result = await _fileUploadService.Upload(qrCodePath);
+        moduleDto.QrCodeUrl = result.RemoteUrl.ToString();
+        await _moduleService.UpdateAsync(moduleDto.Id.Value, moduleDto);
+
+        return qrCodePath;
+    }
+
     /// <summary>
     /// 从网络下载图片保存在系统目录
     /// </summary>
@@ -430,7 +568,57 @@ public class PrintsService : IPrintsService
         stream.Close();
     }
     #endregion
-    
+
+
+    #region 最终检验
+
+    private async Task UseExcelPrintFinal(Worksheet worksheet, ModuleDto moduleDto)
+    {
+        worksheet.Cells[3, 3] = moduleDto.OdpNumber;
+        worksheet.Cells[4, 3] = moduleDto.ProjectName;
+        worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";
+        worksheet.Cells[6, 3] = moduleDto.ModelName.Split('_')[0];
+
+        var qrCodePath = await CreateQrCodeImage(moduleDto);
+
+        //将图片插入excel
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 35, 63, 63);//左，上，宽度，高度
+
+        worksheet.PrintOutEx();
+    }
+
+    private async Task UseExcelPrintScreenShot(Worksheet worksheet, ModuleDto moduleDto)
+    {
+        worksheet.Cells[3, 3] = moduleDto.OdpNumber;
+        worksheet.Cells[4, 3] = moduleDto.ProjectName;
+        worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";
+        worksheet.Cells[6, 3] = moduleDto.ModelName.Split('_')[0];
+
+        var qrCodePath = await CreateQrCodeImage(moduleDto);
+
+        //将图片插入excel
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 35, 63, 63);//相差4,097
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 486, 63, 63);
+
+        //插入Item图片
+        if (!string.IsNullOrEmpty(moduleDto.ImageUrl))
+        {
+            //保存图片到系统目录中
+            await DownloadImage(moduleDto.ImageUrl);
+
+            var imagePath = Path.Combine(Environment.CurrentDirectory, "label.png");
+            //将图片插入excel
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 143, 610, 280);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 595, 610, 280);//左，上，宽度，高度
+        }
+
+        worksheet.PrintOutEx();
+    }
+
+    #endregion
+
+
+
     #region PackingList
     private async Task UseExcelPrintPackingList(Worksheet worksheet, PackingListDto packingListDto)
     {
