@@ -252,6 +252,9 @@ builder.Services.AddScoped<IUwiDataService, UwiDataService>();
 builder.Services.AddScoped<IUwfDataService, UwfDataService>();
 
 builder.Services.AddScoped<IKvvDataService, KvvDataService>();
+builder.Services.AddScoped<ICmodiDataService, CmodiDataService>();
+builder.Services.AddScoped<ICmodfDataService, CmodfDataService>();
+
 
 #endregion
 

@@ -108,7 +108,7 @@ public class SidePanelService : BaseSwService, ISidePanelService
         var bottom = 77d;
         if (height == 555d)
         {
-            bottom= exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 150d : 77d;
+            bottom=exhaustType is ExhaustType_e.CMOD? 175d: exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 150d : 77d;
         }
         else if(height ==450d)
         {

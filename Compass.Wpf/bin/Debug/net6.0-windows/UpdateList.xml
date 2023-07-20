@@ -27,8 +27,8 @@
 		<UpdateFile FileName="JobCard.xlsx" />
 		<UpdateFile FileName="FinalInspection.xlsx" />
 		<UpdateFile FileName="FinalInspectionEn.xlsx" />
-		<UpdateFile FileName="FinalScreenShot.xlsx" />
-		<UpdateFile FileName="FinalScreenShotEn.xlsx" />
+		<UpdateFile FileName="ScreenShot.xlsx" />
+		<UpdateFile FileName="ScreenShotEn.xlsx" />
 		<UpdateFile FileName="CutList.xlsx" />
 		<UpdateFile FileName="PackingList.xlsx" />
 		<UpdateFile FileName="PackingInfo.xlsx" />

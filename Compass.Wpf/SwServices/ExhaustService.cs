@@ -53,6 +53,14 @@ public class ExhaustService : BaseSwService, IExhaustService
         //UwExhaust555
         ExhaustUw555(swAssyLevel1, suffix, length, uvLightType, middleToRight, ansul, ansulSide, waterInlet);
     }
+
+    public void Cmod555(AssemblyDoc swAssyTop, string suffix, double length, double height, SidePanel_e sidePanel, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_CMOD_555-1", Aggregator);
+        ExhaustCmod555(swAssyLevel1, suffix, length, height, sidePanel,  middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotHeight, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, waterInlet, ExhaustType_e.CMOD);
+    }
+
+
     #endregion
 
     #region 华为烟罩
@@ -2133,8 +2141,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         #endregion
     }
     #endregion
-
-
+    
     #region KVV
     private void ExhaustKvvBack(AssemblyDoc swAssyLevel1, string suffix, double length, double height,double panelAngle, double panelHeight)
     {
@@ -2212,9 +2219,225 @@ public class ExhaustService : BaseSwService, IExhaustService
     }
 
     #endregion
+    
+    #region CMOD
+
+    private void ExhaustCmod555(AssemblyDoc swAssyLevel1, string suffix, double length, double height, SidePanel_e sidePanel, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet, ExhaustType_e exhaustType)
+    {
+
+        //排风主体(背板)
+        FNHE0070(swAssyLevel1, suffix, "FNHE0070-1", length, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, marvel, ansul, ansulSide, waterInlet, sidePanel, drainType, waterCollection, backToBack);
+        FNHE0071(swAssyLevel1, suffix, "FNHE0071-1", length);
+        FNHE0074(swAssyLevel1, suffix, "FNHE0074-1", length);
+        FNHE0088(swAssyLevel1, suffix, "FNHE0088-1", length);
+
+        //排风脖颈
+        var swAssyLevel2 = swAssyLevel1.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Cmod-1", Aggregator);
+        ExhaustSpigotCmod(swAssyLevel2, suffix, length, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotHeight, exhaustSpigotDis, marvel, ansul, exhaustType);
+
+        //挡水板
+        swAssyLevel2 = swAssyLevel1.GetSubAssemblyDoc(suffix, "Baffle_Cmod-1", Aggregator);
+
+        BaffleCmod(swAssyLevel2, suffix,length);
 
 
 
+    }
+    private void FNHE0070(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool marvel, bool ansul, AnsulSide_e ansulSide, WaterInlet_e waterInlet,SidePanel_e sidePanel, DrainType_e drainType, bool waterCollection, bool backToBack)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", length);
+
+        #region MidRoof铆螺母孔
+        //2023/3/10 修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
+        const double sideDis = 150d;
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        midRoofNutNumber = midRoofNutNumber < 3 ? 3 : midRoofNutNumber;
+        var midRoofNutDis = (length - 2*sideDis)/(midRoofNutNumber-1);
+
+        swModelLevel2.ChangeDim("Dis@LPatternMidRoofNut", midRoofNutDis);
+        #endregion
+
+        #region 入水口
+        switch (waterInlet)
+        {
+            case WaterInlet_e.右入水:
+                swCompLevel2.Suppress("WaterPipeInLeft");
+                swCompLevel2.UnSuppress("WaterPipeInRight");
+                break;
+            case WaterInlet_e.左入水:
+                swCompLevel2.UnSuppress("WaterPipeInLeft");
+                swCompLevel2.Suppress("WaterPipeInRight");
+                break;
+            case WaterInlet_e.NA:
+            default:
+                swCompLevel2.Suppress("WaterPipeInLeft");
+                swCompLevel2.Suppress("WaterPipeInRight");
+                break;
+        }
+        #endregion
+
+        #region 排水管
+        switch (drainType)
+        {
+
+            case DrainType_e.右排水管:
+                swCompLevel2.Suppress("DrainPipeLeft");
+                swCompLevel2.UnSuppress("DrainPipeRight");
+                swCompLevel2.Suppress("AutoDrainLeft");
+                swCompLevel2.Suppress("AutoDrainRight");
+                break;
+            case DrainType_e.左排水管:
+                swCompLevel2.UnSuppress("DrainPipeLeft");
+                swCompLevel2.Suppress("DrainPipeRight");
+                swCompLevel2.Suppress("AutoDrainLeft");
+                swCompLevel2.Suppress("AutoDrainRight");
+                break;
+            case DrainType_e.上排水:
+                swCompLevel2.UnSuppress("AutoDrainLeft");//默认左侧上排水
+                swCompLevel2.Suppress("AutoDrainRight");
+                //?
+                swCompLevel2.Suppress("DrainPipeLeft");
+                swCompLevel2.Suppress("DrainPipeRight");
+                break;
+            case DrainType_e.左油塞:
+            case DrainType_e.右油塞:
+            case DrainType_e.集油槽:
+            case DrainType_e.NA:
+            default:
+                swCompLevel2.Suppress("DrainPipeLeft");
+                swCompLevel2.Suppress("DrainPipeRight");
+                swCompLevel2.Suppress("AutoDrainLeft");
+                swCompLevel2.Suppress("AutoDrainRight");
+                break;
+        }
+        #endregion
+
+        #region 排风口
+        swCompLevel2.UnSuppress("OneSpigot");
+        swModelLevel2.ChangeDim("ToRight@SketchOneSpigot", middleToRight);
+        swModelLevel2.ChangeDim("Length@SketchOneSpigot", exhaustSpigotLength);
+        swModelLevel2.ChangeDim("Width@SketchOneSpigot", exhaustSpigotWidth);
+        //if (exhaustSpigotNumber == 1)
+        //{
+        //    swCompLevel2.UnSuppress("OneSpigot");
+        //    swCompLevel2.Suppress("TwoSpigots");
+        //    swModelLevel2.ChangeDim("ToRight@SketchOneSpigot", middleToRight);
+        //    swModelLevel2.ChangeDim("Length@SketchOneSpigot", exhaustSpigotLength);
+        //    swModelLevel2.ChangeDim("Width@SketchOneSpigot", exhaustSpigotWidth);
+        //}
+        //else
+        //{
+        //    swCompLevel2.Suppress("OneSpigot");
+        //    swCompLevel2.UnSuppress("TwoSpigots");
+        //    swModelLevel2.ChangeDim("ToRight@SketchTwoSpigots", middleToRight);
+        //    swModelLevel2.ChangeDim("Dis@SketchTwoSpigots", exhaustSpigotDis);
+        //    swModelLevel2.ChangeDim("Length@SketchTwoSpigots", exhaustSpigotLength);
+        //    swModelLevel2.ChangeDim("Width@SketchTwoSpigots", exhaustSpigotWidth);
+        //}
+
+        #endregion
+        
+        #region 背靠背
+        if (backToBack) swCompLevel2.UnSuppress("BackToBack");
+        else swCompLevel2.Suppress("BackToBack");
+        #endregion
+
+        #region ANSUL
+        switch (ansulSide)
+        {
+            //侧喷
+            case AnsulSide_e.左侧喷:
+                swCompLevel2.UnSuppress("AnsulSideLeft");
+                break;
+            case AnsulSide_e.右侧喷:
+                swCompLevel2.UnSuppress("AnsulSideRight");
+                break;
+            case AnsulSide_e.NA:
+            case AnsulSide_e.无侧喷:
+            default:
+                swCompLevel2.Suppress("AnsulSideRight");
+                swCompLevel2.Suppress("AnsulSideLeft");
+                break;
+        }
+        #endregion
+    }
+    private void FNHE0071(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", length);
+    }
+    private void FNHE0074(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", length-7.5d);
+    }
+    private void FNHE0088(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", length-8.5d);
+    }
+    /// <summary>
+    /// CMOD排风脖颈
+    /// </summary>
+    private void ExhaustSpigotCmod(AssemblyDoc swAssyLevel1, string suffix, double length, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, bool marvel, bool ansul, ExhaustType_e exhaustType)
+    {
+        //前后
+        FNHE0089(swAssyLevel1, suffix, "FNHE0089-1", exhaustSpigotLength,exhaustSpigotHeight);
+        //左右
+        FNHE0090(swAssyLevel1, suffix, "FNHE0090-1", exhaustSpigotWidth,exhaustSpigotHeight);
+        //滑门
+        if (marvel)
+        {
+            swAssyLevel1.Suppress(suffix, "FNCE0013-1");
+            swAssyLevel1.Suppress(suffix, "FNCE0013-5");
+        }
+        else
+        {
+            swAssyLevel1.UnSuppress(suffix, "FNCE0013-5",Aggregator);
+            FNCE0013(swAssyLevel1, suffix, "FNCE0013-1", exhaustSpigotLength, exhaustSpigotWidth);
+        }
+        //排风滑门导轨
+        ExhaustRail(swAssyLevel1, suffix, marvel, exhaustSpigotLength, "FNCE0018-1", "FNCE0018-5");
+    }
+    private void FNHE0089(AssemblyDoc swAssyLevel1, string suffix, string partName, double exhaustSpigotLength, double exhaustSpigotHeight)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", exhaustSpigotLength );
+        swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
+    }
+    private void FNHE0090(AssemblyDoc swAssyLevel1, string suffix, string partName, double exhaustSpigotWidth, double exhaustSpigotHeight)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Width@SketchBase", exhaustSpigotWidth-2.5d);
+        swModelLevel2.ChangeDim("Height@SketchBase", exhaustSpigotHeight);
+    }
+
+
+    private void BaffleCmod(AssemblyDoc swAssyLevel1, string suffix, double length)
+    {
+        FNHE0075(swAssyLevel1, suffix, "FNHE0075-1", length);
+
+        FNHE0078(swAssyLevel1, suffix, "FNHE0078-1", length);
+        FNHE0079(swAssyLevel1, suffix, "FNHE0079-1", length);
+    }
+    private void FNHE0075(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", (length-113d)/2d);
+    }
+    private void FNHE0078(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", (length-170d)/2d);
+    }
+    private void FNHE0079(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
+    {
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", (length-200d)/2d);
+    }
+    #endregion
 
 
 }

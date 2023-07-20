@@ -176,3 +176,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\FinalInspect
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\FinalInspectionEn.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\ScreenShot.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\ScreenShotEn.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Hoods\CmodfDataView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Hoods\CmodiDataView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Hoods\CmodiDataView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Hoods\CmodfDataView.baml

@@ -144,8 +144,8 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
 
         containerRegistry.RegisterForNavigation<KvvDataView, KvvDataViewModel>();
-
-
+        containerRegistry.RegisterForNavigation<CmodiDataView,CmodiDataViewModel>();
+        containerRegistry.RegisterForNavigation<CmodfDataView,CmodfDataViewModel>();
 
         #endregion
 
@@ -161,7 +161,8 @@ public partial class App : PrismApplication
         containerRegistry.Register<IUwfDataService, UwfDataService>();
 
         containerRegistry.Register<IKvvDataService, KvvDataService>();
-
+        containerRegistry.Register<ICmodiDataService,CmodiDataService>();
+        containerRegistry.Register<ICmodfDataService,CmodfDataService>();
 
 
         #endregion
@@ -178,6 +179,8 @@ public partial class App : PrismApplication
         containerRegistry.Register<IUwfAutoDrawing, UwfAutoDrawing>();
 
         containerRegistry.Register<IKvvAutoDrawing, KvvAutoDrawing>();
+        containerRegistry.Register<ICmodiAutoDrawing, CmodiAutoDrawing>();
+        containerRegistry.Register<ICmodfAutoDrawing, CmodfAutoDrawing>();
 
 
         #endregion

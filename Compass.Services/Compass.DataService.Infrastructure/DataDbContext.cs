@@ -35,6 +35,9 @@ public class DataDbContext : BaseDbContext
     public DbSet<UwfData> UwfData { get; set; }
 
     public DbSet<KvvData> KvvData { get; set; }
+    public DbSet<CmodiData> CmodiData { get; set; }
+    public DbSet<CmodfData> CmodfData { get; set; }
+
 
     #endregion
 

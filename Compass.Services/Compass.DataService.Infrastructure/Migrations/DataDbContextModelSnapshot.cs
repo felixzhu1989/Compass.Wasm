@@ -318,6 +318,13 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("UviData");
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.CmodiData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KwiData");
+
+                    b.HasDiscriminator().HasValue("CmodiData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KwfData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KwiData");
@@ -367,6 +374,13 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("SupplySpigotNumber");
 
                     b.HasDiscriminator().HasValue("UvfData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.CmodfData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KwfData");
+
+                    b.HasDiscriminator().HasValue("CmodfData");
                 });
 
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.UwfData", b =>
