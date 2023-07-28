@@ -21,7 +21,8 @@
     <None Remove="MaterialItem.csv" />
     <None Remove="PackingInfo.xlsx" />
     <None Remove="PackingList.xlsx" />
-    <None Remove="PrintPackingInfo.xlsx" />
+    <None Remove="PackingListCeiling.xlsx" />
+    <None Remove="PackingListHood.xlsx" />
     <None Remove="ScreenShot.xlsx" />
     <None Remove="ScreenShotEn.xlsx" />
     <None Remove="UpdateList.xml" />
@@ -46,7 +47,10 @@
     <Content Include="PackingInfo.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="PrintPackingInfo.xlsx">
+    <Content Include="PackingListCeiling.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PackingListHood.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ScreenShot.xlsx">
@@ -99,12 +103,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Content Include="CutList.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="PackingList.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

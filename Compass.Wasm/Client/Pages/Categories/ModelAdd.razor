@@ -1,6 +1,4 @@
 ﻿@page "/model/add/{ProductId}"
-@using Compass.Wasm.Shared.Categories
-@using Compass.Wasm.Client.Services.Categories
 @inject IModelService ModelService
 @inject IProductService ProductService
 @inject NavigationManager NavigationManager
@@ -14,7 +12,7 @@
     </div>
     <div class="input-group mb-2">
         <span class="input-group-text">工作量</span>
-        <input class="form-control" type="number" @bind-value="@_modelDto.Workload" />
+        <input class="form-control" type="number" step="0.1" @bind-value="@_modelDto.Workload" />
     </div>
     
     <CompSaveCancelButtons CancelUrl="categories" />

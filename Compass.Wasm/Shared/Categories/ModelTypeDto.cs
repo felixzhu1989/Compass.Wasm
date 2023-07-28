@@ -44,6 +44,13 @@ public class ModelTypeDto:BaseDto
         set { height = value;OnPropertyChanged(); }
     }
 
+    private bool pallet;
+    public bool Pallet
+    {
+        get => pallet;
+        set { pallet=value; OnPropertyChanged(); }
+    }//单独托盘
+
 
     #region 附加属性
     private string product;

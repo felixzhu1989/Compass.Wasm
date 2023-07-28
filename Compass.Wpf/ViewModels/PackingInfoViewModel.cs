@@ -34,6 +34,12 @@ public class PackingInfoViewModel : NavigationViewModel
         get => packingList;
         set { packingList = value; RaisePropertyChanged(); }
     }
+    private bool preview;
+    public bool Preview
+    {
+        get => preview;
+        set { preview = value; RaisePropertyChanged(); }
+    }
 
     #endregion
     #region 执行操作
@@ -74,7 +80,7 @@ public class PackingInfoViewModel : NavigationViewModel
             Type="托盘",
             Pallet = true
         });
-
+        Aggregator.SendMessage("已添加行，请使用滚轮定位到最后一行填写信息！");
     }
     private async void DeletePackingItem(PackingItemDto obj)
     {
@@ -88,6 +94,7 @@ public class PackingInfoViewModel : NavigationViewModel
            await _packingItemService.DeleteAsync(obj.Id.Value);
         }
         PackingList.PackingItemDtos.Remove(obj);
+        Aggregator.SendMessage("删除托盘信息完成！");
     }
 
     private async Task Save()
@@ -96,6 +103,7 @@ public class PackingInfoViewModel : NavigationViewModel
         {
             if (item.Id != null && item.Id != Guid.Empty)
             {
+                //更新Pallet
                 await _packingItemService.UpdatePalletAsync(item.Id.Value, item);
             }
             else
@@ -103,7 +111,8 @@ public class PackingInfoViewModel : NavigationViewModel
                 //更新Pallet
                 if (string.IsNullOrEmpty(item.PalletNumber) || string.IsNullOrWhiteSpace(item.MtlNumber))
                 {
-                    await DialogHost.Question("提示", "请填写托盘号，产品编号（用来描述产品,请勿重复）");
+                    //await DialogHost.Question("提示", "请填写托盘号，产品编号（用来描述产品,请勿重复）");
+                    //空的不添加
                     continue;
                 }
                 await _packingItemService.AddPalletAsync(item);

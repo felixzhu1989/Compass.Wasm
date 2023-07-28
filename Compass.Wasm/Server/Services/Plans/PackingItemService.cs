@@ -63,7 +63,7 @@ public class PackingItemService:IPackingItemService
     {
         try
         {
-            var model = new PackingItem(Guid.NewGuid(), dto.PackingListId.Value, dto.MtlNumber, dto.Description, dto.EnDescription, dto.Type,dto.Quantity,dto.Unit,dto.Length,dto.Width,dto.Height,dto.Material,dto.Remark,dto.CalcRule,dto.Pallet,dto.NoLabel,dto.OneLabel,dto.Order);
+            var model = new PackingItem(Guid.NewGuid(), dto.PackingListId.Value,dto.PalletNumber, dto.MtlNumber, dto.Description, dto.EnDescription, dto.Type,dto.Quantity,dto.Unit,dto.Length,dto.Width,dto.Height,dto.Material,dto.Remark,dto.CalcRule,dto.Pallet,dto.NoLabel,dto.OneLabel,dto.Order);
             await _dbContext.PackingItems.AddAsync(model);
             dto.Id = model.Id;
             return new ApiResponse<PackingItemDto> { Status = true, Result = dto };
@@ -135,7 +135,7 @@ public class PackingItemService:IPackingItemService
     {
         try
         {
-            var model = new PackingItem(Guid.NewGuid(), dto.PackingListId.Value, dto.MtlNumber, dto.PalletNumber, dto.PalletLength, dto.PalletWidth, dto.PalletHeight, dto.GrossWeight, dto.NetWeight, dto.PalletRemark);
+            var model = new PackingItem(Guid.NewGuid(), dto.PackingListId.Value, dto.MtlNumber, dto.PalletNumber, dto.PalletLength, dto.PalletWidth, dto.PalletHeight, dto.GrossWeight, dto.NetWeight, dto.Remark);
             await _dbContext.PackingItems.AddAsync(model);
             dto.Id = model.Id;
             return new ApiResponse<PackingItemDto> { Status = true, Result = dto };

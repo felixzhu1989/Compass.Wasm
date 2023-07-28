@@ -106,9 +106,6 @@ public class PackingListService:IPackingListService
             return new ApiResponse<PackingListDto> { Status = false, Message = e.Message };
         }
     }
-
-
-
     #endregion
 
     #region 扩展查询功能
@@ -128,7 +125,7 @@ public class PackingListService:IPackingListService
             dto.FinishTime = mainPlan.FinishTime;
             //查询PackingItem列表
             var packingItems = await _repository.GetPackingItemsByListIdAsync(dto.Id.Value);
-            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).Where(x=>x.Type!="托盘").OrderBy(x=>x.Order).ThenBy(x=>x.MtlNumber);//过滤掉托盘信息
+            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).OrderBy(x=>x.Order).ThenBy(x=>x.MtlNumber);
             dto.PackingItemDtos = new ObservableCollection<PackingItemDto>(piDtos);
 
             return new ApiResponse<PackingListDto> { Status = true, Result = dto };
@@ -138,6 +135,7 @@ public class PackingListService:IPackingListService
             return new ApiResponse<PackingListDto> { Status = false, Message = e.Message };
         }
     }
+    
     public async Task<ApiResponse<PackingListDto>> GetPackingInfoAsync(PackingListParam param)
     {
         try
@@ -154,7 +152,7 @@ public class PackingListService:IPackingListService
             dto.FinishTime = mainPlan.FinishTime;
             //查询PackingItem列表
             var packingItems = await _repository.GetPackingItemsByListIdAsync(dto.Id.Value);
-            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).Where(x => x.Pallet).OrderBy(x=>x.PalletNumber).ThenBy(x => x.Order).ThenBy(x => x.MtlNumber);//过滤掉非托盘信息
+            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).Where(x => x.Pallet).OrderBy(x => x.Order).ThenBy(x => x.MtlNumber);//过滤掉非托盘信息
             dto.PackingItemDtos = new ObservableCollection<PackingItemDto>(piDtos);
 
             return new ApiResponse<PackingListDto> { Status = true, Result = dto };
@@ -164,6 +162,7 @@ public class PackingListService:IPackingListService
             return new ApiResponse<PackingListDto> { Status = false, Message = e.Message };
         }
     }
+
     public async Task<ApiResponse<PackingListDto>> AddByProjectIdAndBathAsync(PackingListDto dto)
     {
         var mainPlan = await _repository.GetMainPlanByProjectIdAndBatchAsync(dto.ProjectId.Value, dto.Batch.Value);

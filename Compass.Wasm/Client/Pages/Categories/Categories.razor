@@ -28,14 +28,15 @@
     <!--sticky固定位置，top: 6rem-->
     <thead style="position: sticky; top: 6rem; z-index: 1; background-color:White">
         <tr>
-            <th>产品</th>
-            <th>(排序)模型</th>
+            <th style="width: 8%">产品</th>
+            <th style="width: 10%">(排序)模型</th>
             <th>(排序)子类</th>
             <th>组合名称</th>
             <th>子类描述</th>
             <th style="width: 8%">默认长</th>
             <th style="width: 8%">默认宽</th>
             <th style="width: 8%">默认高</th>
+            <th style="width: 8%">独立托盘</th>
         </tr>
     </thead>
     <tbody>
@@ -77,6 +78,7 @@
                     <td>@modelTypeDto.Length</td>
                     <td>@modelTypeDto.Width</td>
                     <td>@modelTypeDto.Height</td>
+                    <td>@modelTypeDto.Pallet</td>
                 </tr>
             }
         }

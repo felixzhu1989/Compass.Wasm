@@ -5,12 +5,12 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\JobC
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\MainPlan.csv
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\MaterialItem.csv
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PackingInfo.xlsx
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PrintPackingInfo.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PackingListCeiling.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PackingListHood.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\ScreenShot.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\ScreenShotEn.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\UpdateList.xml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\CutList.xlsx
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PackingList.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Compass.Wpf.exe
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Compass.Update.deps.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Compass.Update.runtimeconfig.json

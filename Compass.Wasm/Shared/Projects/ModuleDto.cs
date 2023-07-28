@@ -77,11 +77,18 @@ public class ModuleDto : BaseDto
     {
         get => isCutListOk;
         set { isCutListOk = value; OnPropertyChanged(); }
-    } 
+    }
+
+    private bool pallet;
+    public bool Pallet
+    {
+        get => pallet;
+        set { pallet=value; OnPropertyChanged(); }
+    }//单独托盘
     #endregion
-    
+
     #region 额外属性
-    
+
     #region 长宽高侧板
     private double length;
     public double Length

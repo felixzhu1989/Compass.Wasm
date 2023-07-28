@@ -12,9 +12,11 @@ public record ModelType : AggregateRootEntity, IAggregateRoot, IHasCreationTime,
     public double Length { get; private set; }
     public double Width { get; private set; }
     public double Height { get; private set; }
+    public bool Pallet { get; private set; }
+
     private ModelType() { }
 
-    public ModelType(Guid id, Guid modelId, int sequenceNumber, string name,string description,double length,double width,double height)
+    public ModelType(Guid id, Guid modelId, int sequenceNumber, string name,string description,double length,double width,double height,bool pallet)
     {
         Id = id;
         ModelId = modelId;
@@ -24,6 +26,7 @@ public record ModelType : AggregateRootEntity, IAggregateRoot, IHasCreationTime,
         Length=length;
         Width=width;
         Height=height;
+        Pallet=pallet;
     }
 
     public void Update(ModelTypeDto dto)
@@ -33,7 +36,8 @@ public record ModelType : AggregateRootEntity, IAggregateRoot, IHasCreationTime,
             .ChangeDescription(dto.Description)
             .ChangeLength(dto.Length)
             .ChangeWidth(dto.Width)
-            .ChangeHeight(dto.Height);
+            .ChangeHeight(dto.Height)
+            .ChangePallet(dto.Pallet);
         NotifyModified();
     }
 
@@ -66,6 +70,11 @@ public record ModelType : AggregateRootEntity, IAggregateRoot, IHasCreationTime,
     public ModelType ChangeHeight(double height)
     {
         Height=height;
+        return this;
+    }
+    public ModelType ChangePallet(bool pallet)
+    {
+        Pallet=pallet;
         return this;
     }
 }

@@ -17,7 +17,6 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
     public string? PalletHeight { get; private set; } //包装高
     public string? GrossWeight { get; private set; } //毛重
     public string? NetWeight { get; private set; } //净重
-    public string? PalletRemark { get; private set; }//备注
 
     public int Order { get; private set; } //排序
     //从物料模板查询信息
@@ -43,10 +42,11 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
     #region ctor
     private PackingItem() { }
     //正常新增物料
-    public PackingItem(Guid id,Guid packingListId,string? mtlNumber,string? description,string? enDescription,string? type,double quantity,Unit_e unit,string? length,string? width,string? height,string? material,string? remark,string? calcRule,bool pallet,bool noLabel,bool oneLabel,int order)
+    public PackingItem(Guid id,Guid packingListId,string? palletNumber,string? mtlNumber,string? description,string? enDescription,string? type,double quantity,Unit_e unit,string? length,string? width,string? height,string? material,string? remark,string? calcRule,bool pallet,bool noLabel,bool oneLabel,int order)
     {
         Id=id;
         PackingListId=packingListId;
+        PalletNumber = palletNumber;
         MtlNumber = mtlNumber;
         Description=description;
         EnDescription=enDescription;
@@ -65,7 +65,7 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
         Order=order;
     }
     //直接新增托盘
-    public PackingItem(Guid id, Guid packingListId, string? mtlNumber, string palletNumber,string palletLength,string palletWidth,string palletHeight,string grossWeight,string netWeight,string? palletRemark)
+    public PackingItem(Guid id, Guid packingListId, string? mtlNumber, string? palletNumber,string? palletLength,string? palletWidth,string? palletHeight,string? grossWeight,string? netWeight,string? remark)
     {
         Id=id;
         PackingListId=packingListId;
@@ -76,7 +76,7 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
         PalletHeight = palletHeight;
         GrossWeight=grossWeight;
         NetWeight=netWeight;
-        PalletRemark=palletRemark;
+        Remark=remark;
         Pallet = true;
         Type = "托盘";
         Order = 1;
@@ -86,7 +86,8 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
     #region update物料信息
     public void Update(PackingItemDto dto)
     {
-        ChangeMtlNumber(dto.MtlNumber)
+        ChangePalletNumber(dto.PalletNumber)
+            .ChangeMtlNumber(dto.MtlNumber)
             .ChangeDescription(dto.Description)
             .ChangeEnDescription(dto.EnDescription)
             .ChangeType(dto.Type)
@@ -161,7 +162,6 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
     {
         Pallet=pallet;
         return this;
-
     }
     public PackingItem ChangeNoLabel(bool noLabel)
     {
@@ -192,7 +192,7 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
             .ChangePalletHeight(dto.PalletHeight)
             .ChangeGrossWeight(dto.GrossWeight)
             .ChangeNetWeight(dto.NetWeight)
-            .ChangePalletRemark(dto.PalletRemark);
+            .ChangeRemark(dto.Remark);
         NotifyModified();
     }
     public PackingItem ChangePalletNumber(string? palletNumber)
@@ -223,11 +223,6 @@ public record PackingItem : AggregateRootEntity, IAggregateRoot, IHasCreationTim
     public PackingItem ChangeNetWeight(string? netWeight)
     {
         NetWeight = netWeight;
-        return this;
-    }
-    public PackingItem ChangePalletRemark(string? palletRemark)
-    {
-        PalletRemark = palletRemark;
         return this;
     }
     #endregion

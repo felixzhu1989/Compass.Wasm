@@ -130,6 +130,9 @@
                                  MinHeight="70"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True" />
+                        <CheckBox IsChecked="{Binding CurrentModuleDto.Pallet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                  Content="独立托盘"
+                                  Margin="0,10" />
                         <TextBox Text="{Binding CurrentModuleDto.Length}"
                                  Margin="0,5"
                                  VerticalAlignment="Center"

@@ -64,10 +64,10 @@ public class CategoryDomainService
     #endregion
 
     #region ModelType
-    public async Task<ModelType> AddModelTypeAsync(Guid modelId, string name, string description, double length, double width, double height)
+    public async Task<ModelType> AddModelTypeAsync(ModelTypeDto dto)
     {
-        int maxSeq = await _repository.GetMaxSeqOfModelTypesAsync(modelId);
-        return new ModelType(Guid.NewGuid(), modelId, maxSeq + 1, name, description, length, width, height);
+        int maxSeq = await _repository.GetMaxSeqOfModelTypesAsync(dto.ModelId);
+        return new ModelType(Guid.NewGuid(), dto.ModelId, maxSeq + 1, dto.Name, dto.Description, dto.Length, dto.Width, dto.Height,dto.Pallet);
     }
     public async Task SortModelTypesAsync(Guid modelId, Guid[] sortedModelTypeIds)
     {

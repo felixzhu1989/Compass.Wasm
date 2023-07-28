@@ -226,6 +226,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Pallet")
+                        .HasColumnType("bit");
+
                     b.Property<string>("QrCodeUrl")
                         .HasColumnType("nvarchar(max)");
 

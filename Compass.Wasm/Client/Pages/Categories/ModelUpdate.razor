@@ -1,6 +1,4 @@
 ﻿@page "/model/update/{Id}"
-@using Compass.Wasm.Shared.Categories
-@using Compass.Wasm.Client.Services.Categories
 @inject IModelService ModelService
 @inject NavigationManager NavigationManager
 <PageTitle>更新模型</PageTitle>
@@ -13,7 +11,7 @@
     </div>
     <div class="input-group mb-2">
         <span class="input-group-text">工作量</span>
-        <input class="form-control" type="number" @bind-value="@_modelDto.Workload" />
+        <input class="form-control" type="number" step="0.1" @bind-value="@_modelDto.Workload" />
     </div>
     
     <div class="input-group mb-2">

@@ -1,6 +1,4 @@
 ﻿@page "/modeltype/update/{Id}"
-@using Compass.Wasm.Shared.Categories
-@using Compass.Wasm.Client.Services.Categories
 @inject IModelTypeService ModelTypeService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JsRuntime
@@ -33,7 +31,10 @@
         <span class="input-group-text">排序号</span>
         <input class="form-control" type="number" @bind-value="@_modelTypeDto.SequenceNumber" />
     </div>
-    
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="modelType" @bind="@_modelTypeDto.Pallet">
+        <label class="form-check-label">单独托盘</label>
+    </div>
     <CompSaveCancelButtons CancelUrl="categories" />
 </EditForm>
 

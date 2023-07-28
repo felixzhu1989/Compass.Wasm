@@ -15,10 +15,10 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public string? QrCodeUrl { get; set; }
     public bool IsModuleDataOk { get;private set; }//用于标记图纸得参数是否已经得到修改
     public bool IsCutListOk { get; private set; }
-
+    public bool Pallet { get; private set; }//单独托盘
 
     private Module() { }
-    public Module(Guid id,Guid drawingId,Guid modelTypeId, string name,string modelName, string? specialNotes,double length,double width,double height,SidePanel_e sidePanel)
+    public Module(Guid id,Guid drawingId,Guid modelTypeId, string name,string modelName, string? specialNotes,double length,double width,double height,SidePanel_e sidePanel,bool pallet)
     {
         Id = id;
         DrawingId = drawingId;
@@ -26,6 +26,7 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         Name = name;
         ModelName=modelName;
         SpecialNotes = specialNotes;
+        Pallet = pallet;
 
         //todo:改成Domain事件,写在Module实体类中
         #region 创建Module的ModuleData参数
@@ -43,7 +44,8 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
             .ChangeSpecialNotes(dto.SpecialNotes)
             .ChangeQrCodeUrl(dto.QrCodeUrl)
             .ChangeIsModuleDataOk(dto.IsModuleDataOk)
-            .ChangeIsCutListOk(dto.IsCutListOk);
+            .ChangeIsCutListOk(dto.IsCutListOk)
+            .ChangePallet(dto.Pallet);
         NotifyModified();
 
         //todo:改成领域事件
@@ -89,6 +91,12 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         IsCutListOk = isCutListOk;
         return this;
     }
+    public Module ChangePallet(bool pallet)
+    {
+        Pallet=pallet;
+        return this;
+    }
+
     public override void SoftDelete()
     {
         //发出领域事件，删除当前的参数

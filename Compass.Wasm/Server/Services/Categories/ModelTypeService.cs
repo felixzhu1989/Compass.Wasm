@@ -57,7 +57,7 @@ public class ModelTypeService : IModelTypeService
     {
         try
         {
-            var model = await _domainService.AddModelTypeAsync(dto.ModelId, dto.Name, dto.Description, dto.Length, dto.Width, dto.Height);
+            var model = await _domainService.AddModelTypeAsync(dto);
             await _dbContext.ModelTypes.AddAsync(model);
             dto.Id = model.Id;
             return new ApiResponse<ModelTypeDto> { Status = true, Result = dto };

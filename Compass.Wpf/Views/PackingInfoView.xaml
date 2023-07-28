@@ -13,12 +13,15 @@
     <UserControl.Resources>
         <cvt:TypeToEnableCvt x:Key="TypeToEnableCvt"/>
         <cvt:TypeToVisibilityCvt x:Key="TypeToVisibilityCvt"/>
+        <cvt:BoolToHeightCvt x:Key="BoolToHeightCvt"/>
+        <cvt:BoolToHeightInverseCvt x:Key="BoolToHeightInverseCvt"/>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <FrameworkElement x:Name="DataContextProxy"
                           DataContext="{Binding}" />
@@ -33,6 +36,7 @@
                        Text="{Binding PackingList.ProjectName}"
                        Margin="20,0,0,0" 
                        VerticalAlignment="Center"/>
+            
             <Button DockPanel.Dock="Right"
                     Content="装箱清单"
                     Command="{Binding ExecuteCommand}"
@@ -41,24 +45,100 @@
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="LightSkyBlue"
                     BorderThickness="0" />
+            <StackPanel DockPanel.Dock="Right"
+                        Orientation="Horizontal">
+                <TextBlock Text="填表" VerticalAlignment="Center"></TextBlock>
+                <ToggleButton IsChecked="{Binding Preview}"
+                              Style="{StaticResource MaterialDesignSwitchAccentToggleButton}"
+                              ToolTip="MaterialDesignSwitchAccentToggleButton" 
+                              Margin="5,0"/>
+                <TextBlock Text="预览"
+                           VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+            
         </DockPanel>
        
-        <!--第3行,显示项目名称-->
+        <!--第2行,显示提示-->
         <DockPanel Grid.Row="1">
             <TextBlock DockPanel.Dock="Left"
                        Text="【请填写包装尺寸、毛重、净重和备注。滚轮到底，添加托盘、保存信息、导出Excel】"
                        Foreground="DarkGreen" 
                        Margin="0,0,0,10"/>
         </DockPanel>
-        
+
+        <!--第3行,显示填表-->
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding PackingList.PackingItemDtos}"
+                  Height="{Binding Preview,Converter={StaticResource BoolToHeightInverseCvt}}"
+                  CanUserAddRows="False"
+                  CanUserSortColumns="False"
+                  AutoGenerateColumns="False"
+                  HeadersVisibility="All"
+                  IsReadOnly="False"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding PalletNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="托盘号"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                <DataGridTextColumn Binding="{Binding MtlNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="产品编号"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"/>
+                <DataGridTextColumn Binding="{Binding Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="产品型号"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding Length,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="产品长"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding Width,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="产品宽"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding Height,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="产品高"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding PalletLength,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="包装长"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" 
+                                    Foreground="DarkGreen"/>
+                <DataGridTextColumn Binding="{Binding PalletWidth,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="包装宽"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" />
+                <DataGridTextColumn Binding="{Binding PalletHeight,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="包装高"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" />
+                <DataGridTextColumn Binding="{Binding GrossWeight,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="毛重 KG"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" />
+                <DataGridTextColumn Binding="{Binding NetWeight,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="净重 KG"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" />
+                <DataGridTextColumn Binding="{Binding Remark,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="备注"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" />
+            </DataGrid.Columns>
+        </DataGrid>
+
         <!--第3行,显示项目名称-->
         <ScrollViewer Grid.Row="2"
-                      VerticalScrollBarVisibility="Auto">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                      VerticalScrollBarVisibility="Auto"
+                      Height="{Binding Preview,Converter={StaticResource BoolToHeightCvt}}">
+            <Grid >
                 <ItemsControl ItemsSource="{Binding PackingList.PackingItemDtos}"
                               Margin="5">
                     <ItemsControl.ItemsPanel>
@@ -235,7 +315,7 @@
                                         Grid.Column="4"
                                         Grid.RowSpan="6">
                                     <StackPanel>
-                                        <TextBox Text="{Binding PalletRemark}"
+                                        <TextBox Text="{Binding Remark}"
                                                  MinHeight="150"
                                                    TextWrapping="Wrap"
                                                  AcceptsReturn="True"/>
@@ -261,36 +341,36 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <DockPanel Grid.Row="1"
-                           LastChildFill="False"
-                           Margin="5">
-                    <Button DockPanel.Dock="Left"
-                            Content="添加托盘"
-                            Command="{Binding ExecuteCommand}"
-                            CommandParameter="AddPallet"
-                            Margin="10,0"
-                            materialDesign:ButtonAssist.CornerRadius="15"
-                            Background="Orange"
-                            BorderThickness="0" />
-                    
-                    <Button DockPanel.Dock="Right"
-                            Content="导出Excel到桌面"
-                            Command="{Binding ExecuteCommand}"
-                            CommandParameter="ExportPackingInfo"
-                            Margin="10,0"
-                            materialDesign:ButtonAssist.CornerRadius="15"
-                            Background="SkyBlue"
-                            BorderThickness="0" />
-                    <Button DockPanel.Dock="Right"
-                            Content="保存信息"
-                            Command="{Binding ExecuteCommand}"
-                            CommandParameter="Save"
-                            Margin="10,0"
-                            materialDesign:ButtonAssist.CornerRadius="15"
-                            Background="Lime"
-                            BorderThickness="0" />
-                </DockPanel>
+                
             </Grid>
         </ScrollViewer>
+        <DockPanel Grid.Row="3"
+                   LastChildFill="False"
+                   Margin="5">
+            <Button DockPanel.Dock="Left"
+                    Content="添加托盘"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="AddPallet"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="Orange"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Right"
+                    Content="导出Excel到桌面"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="ExportPackingInfo"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="SkyBlue"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Right"
+                    Content="保存信息"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="Save"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="Lime"
+                    BorderThickness="0" />
+        </DockPanel>
     </Grid>
 </UserControl>

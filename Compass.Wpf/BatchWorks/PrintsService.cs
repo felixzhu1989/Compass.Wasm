@@ -14,6 +14,7 @@ using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
 using Compass.Wasm.Shared.Projects;
 using Module = System.Reflection.Module;
+using ImTools;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -32,7 +33,7 @@ public interface IPrintsService
     Task BatchPrintEnScreenShotAsync(List<ModuleDto> moduleDtos);
 
     Task PrintPackingListAsync(PackingListDto packingListDto);
-    Task PrintPackingInfoAsync(PackingListDto packingListDto);
+    
     Task ExportPackingInfoAsync(PackingListDto packingListDto);
 }
 
@@ -281,8 +282,8 @@ public class PrintsService : IPrintsService
     /// </summary>
     public async Task PrintPackingListAsync(PackingListDto packingListDto)
     {
-
-        var template = Path.Combine(Environment.CurrentDirectory, "PackingList.xlsx");
+        var tempPath = packingListDto.Product == Product_e.Hood ? "PackingListHood.xlsx" : "PackingListCeiling.xlsx";
+        var template = Path.Combine(Environment.CurrentDirectory, tempPath);
         //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
         var excelApp = new Application();
         excelApp.Workbooks.Add(template);
@@ -290,36 +291,18 @@ public class PrintsService : IPrintsService
         //调试时预览
         //excelApp.Visible = true;
 
-        await UseExcelPrintPackingList(worksheet, packingListDto);
-
+        if (packingListDto.Product == Product_e.Hood)
+        {
+            await UseExcelPrintPackingListHood(worksheet, packingListDto);
+        }
+        else
+        {
+            await UseExcelPrintPackingListCeiling(worksheet, packingListDto);
+        }
+        
         KillProcess(excelApp);
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
-
-
-    }
-
-    /// <summary>
-    /// 打印空白装箱信息表
-    /// </summary>
-    public async Task PrintPackingInfoAsync(PackingListDto packingListDto)
-    {
-
-        var template = Path.Combine(Environment.CurrentDirectory, "PackingInfo.xlsx");
-        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
-        var excelApp = new Application();
-        excelApp.Workbooks.Add(template);
-        var worksheet = (Worksheet)excelApp.Worksheets[1];
-        //调试时预览
-        //excelApp.Visible = true;
-
-        await UseExcelPrintPackingInfo(worksheet, packingListDto);
-
-        KillProcess(excelApp);
-        excelApp = null;//对象置空
-        GC.Collect(); //垃圾回收机制
-
-
     }
 
     /// <summary>
@@ -512,8 +495,8 @@ public class PrintsService : IPrintsService
 
             var imagePath = Path.Combine(Environment.CurrentDirectory, "label.png");
             //将图片插入excel
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4240, 610, 280);//左，上，宽度，高度
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4692, 610, 280);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 3562, 610, 280);//左，上，宽度，高度4240-678
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4014, 610, 280);//左，上，宽度，高度4692-678
         }
 
         var qrCodePath =await CreateQrCodeImage(moduleDto);
@@ -527,9 +510,8 @@ public class PrintsService : IPrintsService
         worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 926, 63, 63);
         worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 1736, 63, 63);
         worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 2564, 63, 63);
-        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 3454, 63, 63);
-        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 4132, 63, 63);
-        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 4583, 63, 63);
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 3454, 63, 63);//4132-678
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 3905, 63, 63);//4583-678
 
 
         //调试时预览
@@ -568,8 +550,7 @@ public class PrintsService : IPrintsService
         stream.Close();
     }
     #endregion
-
-
+    
     #region 最终检验
 
     private async Task UseExcelPrintFinal(Worksheet worksheet, ModuleDto moduleDto)
@@ -616,38 +597,95 @@ public class PrintsService : IPrintsService
     }
 
     #endregion
-
-
-
-    #region PackingList
-    private async Task UseExcelPrintPackingList(Worksheet worksheet, PackingListDto packingListDto)
+    
+    #region PackingListCeiling
+    private async Task UseExcelPrintPackingListHood(Worksheet worksheet, PackingListDto packingListDto)
     {
+        worksheet.PageSetup.LeftHeader = $"项目名称: {packingListDto.ProjectName}";
         //worksheet.Cells[行,列]
-        worksheet.Cells[2, 2] = packingListDto.ProjectName;
-        worksheet.Cells[3, 2] = packingListDto.PackingType;
-        worksheet.Cells[4, 2] = packingListDto.DeliveryType;
+        worksheet.Cells[2, 2] = packingListDto.PackingType;
+        worksheet.Cells[3, 2] = packingListDto.DeliveryType;
 
-        worksheet.Cells[2, 10] = packingListDto.Product.ToString();
-        worksheet.Cells[3, 10] = DateTime.Now.ToShortDateString();
-        worksheet.Cells[4, 10] = Environment.UserName;
+        worksheet.Cells[2, 12] = DateTime.Now.ToShortDateString();
+        worksheet.Cells[3, 12] = Environment.UserName;
+
+        var items = packingListDto.PackingItemDtos.Where(x=>x.Pallet==true).ToArray();
+        var pCount= items.Length;
+        for (var i = 0; i < pCount; i++)
+        {
+            worksheet.Cells[i + 6, 1] = items[i].PalletNumber;
+            worksheet.Cells[i + 6, 2] = items[i].MtlNumber;
+            worksheet.Cells[i + 6, 3] = items[i].Type;
+            worksheet.Cells[i + 6, 4] = items[i].Length;
+            worksheet.Cells[i + 6, 5] = items[i].Width;
+            worksheet.Cells[i + 6, 6] = items[i].Height;
+            worksheet.Cells[i + 6, 12] = items[i].Remark;
+        }
+
+        //隔开3行打印配件accessories
+        var accs = packingListDto.PackingItemDtos.Where(x => x.Pallet==false).ToArray();
+        var aCount=accs.Length;
+        for (int j= 0; j < aCount; j++)
+        {
+            worksheet.Cells[j + 6+pCount+3, 2] = accs[j].MtlNumber;
+            worksheet.Cells[j + 6+pCount+3, 3] = accs[j].Type;
+            worksheet.Cells[j + 6+pCount+3, 4] = $"{accs[j].Quantity} {accs[j].Unit}";
+            worksheet.Cells[j + 6+pCount+3, 12] = accs[j].Description;
+        }
+
+
+        //设置边框
+        Range range = worksheet.Range["A6", $"L{pCount+aCount+3 + 5}"];
+        range.Borders.Value = 1;
+        //设置列宽
+        //((Range)worksheet.Cells[1, 1]).ColumnWidth = 15;
+        //((Range)worksheet.Cells[1, 2]).ColumnWidth = 30;
+        //((Range)worksheet.Cells[1, 3]).ColumnWidth = 10;
+        //((Range)worksheet.Cells[1, 4]).ColumnWidth = 5;
+        //((Range)worksheet.Cells[1, 5]).ColumnWidth = 5;
+        //((Range)worksheet.Cells[1, 6]).ColumnWidth = 28;
+        //((Range)worksheet.Cells[1, 7]).ColumnWidth = 30;
+        //((Range)worksheet.Cells[1, 8]).ColumnWidth = 8;
+        //((Range)worksheet.Cells[1, 9]).ColumnWidth = 8;
+        //((Range)worksheet.Cells[1, 10]).ColumnWidth = 8;
+
+        //调试时预览
+        //worksheet.PrintPreview(true);
+        //打印
+        worksheet.PrintOutEx();
+        //清空打印内容,11行到末尾
+        var rows = (Range)worksheet.Rows[$"6:{pCount +aCount+3+ 5}", Missing.Value];
+        rows.Delete(XlDirection.xlDown);
+    }
+
+
+    private async Task UseExcelPrintPackingListCeiling(Worksheet worksheet, PackingListDto packingListDto)
+    {
+        worksheet.PageSetup.LeftHeader = $"项目名称: {packingListDto.ProjectName}";
+        //worksheet.Cells[行,列]
+        worksheet.Cells[2, 2] = packingListDto.PackingType;
+        worksheet.Cells[3, 2] = packingListDto.DeliveryType;
+
+        worksheet.Cells[2, 10] = DateTime.Now.ToShortDateString();
+        worksheet.Cells[3, 10] = Environment.UserName;
 
         var items = packingListDto.PackingItemDtos;
 
         for (var i = 0; i < items.Count; i++)
         {
-            worksheet.Cells[i + 7, 1] = items[i].PalletNumber;
-            worksheet.Cells[i + 7, 2] = items[i].Description;
-            worksheet.Cells[i + 7, 3] = items[i].Type;
-            worksheet.Cells[i + 7, 4] = items[i].Quantity;
-            worksheet.Cells[i + 7, 5] = items[i].Unit.ToString();
-            worksheet.Cells[i + 7, 6] = items[i].Length;
-            worksheet.Cells[i + 7, 7] = items[i].Width;
-            worksheet.Cells[i + 7, 8] = items[i].Height;
-            worksheet.Cells[i + 7, 9] = items[i].Material;
-            worksheet.Cells[i + 7, 10] = items[i].Remark;
+            worksheet.Cells[i + 6, 1] = items[i].PalletNumber;
+            worksheet.Cells[i + 6, 2] = items[i].Description;
+            worksheet.Cells[i + 6, 3] = items[i].Type;
+            worksheet.Cells[i + 6, 4] = items[i].Quantity;
+            worksheet.Cells[i + 6, 5] = items[i].Unit.ToString();
+            worksheet.Cells[i + 6, 6] = items[i].Length;
+            worksheet.Cells[i + 6, 7] = items[i].Width;
+            worksheet.Cells[i + 6, 8] = items[i].Height;
+            worksheet.Cells[i + 6, 9] = items[i].Material;
+            worksheet.Cells[i + 6, 10] = items[i].Remark;
         }
         //设置边框
-        Range range = worksheet.Range["A7", $"K{items.Count + 6}"];
+        Range range = worksheet.Range["A6", $"J{items.Count + 5}"];
         range.Borders.Value = 1;
         //设置列宽
         //((Range)worksheet.Cells[1, 1]).ColumnWidth = 15;
@@ -672,43 +710,13 @@ public class PrintsService : IPrintsService
     #endregion
 
     #region PackingInfo
-    private async Task UseExcelPrintPackingInfo(Worksheet worksheet, PackingListDto packingListDto)
-    {
-        FillPackingInfoTitle(worksheet,packingListDto);
-
-        var items = packingListDto.PackingItemDtos;
-        var itemsCount = items.Count;
-        //首先复制表格[1,7][8-14][15-21]...
-        for (int i = 0; i < itemsCount; i++)
-        {
-            worksheet.Range["A1:E7"].Copy(worksheet.Range[$"A{8+i*7}"]);
-            //itemsCount不用-1，这样会多出一张空白的，用于填写配件
-        }
-
-        //填写数据
-        //worksheet.Cells[行,列]
-        for (int i = 0; i < items.Count; i++)
-        {
-            worksheet.Cells[2+i*7, 1]=items[i].PalletNumber;
-            worksheet.Cells[6+i*7, 1]=items[i].MtlNumber;
-            worksheet.Cells[5+i*7, 3]=$"产品长(L): {items[i].Length}";
-            worksheet.Cells[6+i*7, 3]=$"产品宽(W): {items[i].Width}";
-            worksheet.Cells[7+i*7, 3]=$"产品高(H): {items[i].Height}";
-            worksheet.Cells[6+i*7, 4]=items[i].Type;
-        }
-
-        //调试时预览
-        //worksheet.PrintPreview(true);
-        //打印
-        worksheet.PrintOutEx();
-        //清空打印内容,8行到末尾
-        var rows = (Range)worksheet.Rows[$"8:{8+itemsCount*7}", Missing.Value];
-        rows.Delete(XlDirection.xlDown);
-    }
-
     private async Task UseExcelExportPackingInfo(Worksheet worksheet, PackingListDto packingListDto)
     {
-        FillPackingInfoTitle(worksheet, packingListDto);
+        //表的页眉页脚
+        worksheet.PageSetup.LeftHeader = $"项目: {packingListDto.ProjectName}";
+        worksheet.PageSetup.LeftFooter = $"填表: {Environment.UserName}";
+        worksheet.PageSetup.CenterFooter = $"完工: {packingListDto.FinishTime.ToShortDateString()}";
+        worksheet.PageSetup.RightFooter = $"打印: {DateTime.Now.ToShortDateString()}";
 
         var items = packingListDto.PackingItemDtos;
         var itemsCount = items.Count;
@@ -733,19 +741,11 @@ public class PrintsService : IPrintsService
             worksheet.Cells[2+i*7, 4]=items[i].GrossWeight;
             worksheet.Cells[4+i*7, 4]=items[i].NetWeight;
             worksheet.Cells[6+i*7, 4]=items[i].Type.Equals("托盘")?"": items[i].Type;
-            worksheet.Cells[2+i*7, 5]=items[i].PalletRemark;
+            worksheet.Cells[2+i*7, 5]=items[i].Remark;
         }
     }
 
-    private void FillPackingInfoTitle(Worksheet worksheet, PackingListDto packingListDto)
-    {
-        //表的页眉页脚
-        worksheet.PageSetup.LeftHeader = $"ODP-项目名: {packingListDto.ProjectName}";
-        worksheet.PageSetup.LeftFooter = $"打印人: {Environment.UserName}";
-        worksheet.PageSetup.CenterFooter = $"完工日期: {packingListDto.FinishTime.ToShortDateString()}";
-        worksheet.PageSetup.RightFooter = $"打印日期: {DateTime.Now.ToShortDateString()}";
-    }
-    
+   
     #endregion
 
     #endregion

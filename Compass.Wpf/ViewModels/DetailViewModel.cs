@@ -235,6 +235,7 @@ public class DetailViewModel : NavigationViewModel
             //给CurrentModuleDto赋值
             CurrentModuleDto.ModelTypeId = currentModelType.Id;
             CurrentModuleDto.ModelName = currentModelType.ModelName;
+            CurrentModuleDto.Pallet=currentModelType.Pallet;
         }
     }
     #endregion
@@ -331,6 +332,7 @@ public class DetailViewModel : NavigationViewModel
                         dto.Width = CurrentModuleDto.Width;
                         dto.Height = CurrentModuleDto.Height;
                         dto.SidePanel=CurrentModuleDto.SidePanel;
+                        dto.Pallet = CurrentModuleDto.Pallet;
                     }
                 }
                 IsRightDrawerOpen = false;//关闭弹窗

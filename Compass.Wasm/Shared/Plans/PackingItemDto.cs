@@ -14,16 +14,16 @@ public class PackingItemDto : BaseDto
     } //关联装箱清单
 
     //托盘号
-    private string palletNumber;
-    public string PalletNumber
+    private string? palletNumber;
+    public string? PalletNumber
     {
         get => palletNumber;
         set { palletNumber = value; OnPropertyChanged(); }
     }
     #region 生产部填写信息
     //包装长宽高
-    private string palletLength;
-    public string PalletLength
+    private string? palletLength;
+    public string? PalletLength
     {
         get => palletLength;
         set
@@ -32,8 +32,8 @@ public class PackingItemDto : BaseDto
             OnPropertyChanged();
         }
     }
-    private string palletWidth;
-    public string PalletWidth
+    private string? palletWidth;
+    public string? PalletWidth
     {
         get => palletWidth;
         set
@@ -42,8 +42,8 @@ public class PackingItemDto : BaseDto
             OnPropertyChanged();
         }
     }
-    private string palletHeight;
-    public string PalletHeight
+    private string? palletHeight;
+    public string? PalletHeight
     {
         get => palletHeight;
         set
@@ -52,8 +52,8 @@ public class PackingItemDto : BaseDto
             OnPropertyChanged();
         }
     }
-    private string grossWeight;
-    public string GrossWeight
+    private string? grossWeight;
+    public string? GrossWeight
     {
         get => grossWeight;
         set
@@ -62,8 +62,8 @@ public class PackingItemDto : BaseDto
             OnPropertyChanged();
         }
     }
-    private string netWeight;
-    public string NetWeight
+    private string? netWeight;
+    public string? NetWeight
     {
         get => netWeight;
         set
@@ -72,12 +72,6 @@ public class PackingItemDto : BaseDto
             OnPropertyChanged();
         }
     }
-    private string? palletRemark;
-    public string? PalletRemark
-    {
-        get => palletRemark;
-        set { palletRemark=value; OnPropertyChanged(); }
-    }//备注 
 
     private int order;
     public int Order

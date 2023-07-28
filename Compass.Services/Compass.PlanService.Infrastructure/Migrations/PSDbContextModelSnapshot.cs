@@ -246,9 +246,6 @@ namespace Compass.PlanService.Infrastructure.Migrations
                     b.Property<string>("PalletNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PalletRemark")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PalletWidth")
                         .HasColumnType("nvarchar(max)");
 

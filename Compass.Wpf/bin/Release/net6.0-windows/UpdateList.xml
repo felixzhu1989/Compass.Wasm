@@ -5,7 +5,7 @@
 	<!--升级文件信息-->
 	<UpdateInfo>
 		<!--升级文件的更新日期-->
-		<UpdateTime Date="2023-07-19 13:30"/>
+		<UpdateTime Date="2023-07-25 14:30"/>
 	</UpdateInfo>
 	<!--升级文件列表-->
 	<UpdateFileList>
@@ -30,9 +30,10 @@
 		<UpdateFile FileName="ScreenShot.xlsx" />
 		<UpdateFile FileName="ScreenShotEn.xlsx" />
 		<UpdateFile FileName="CutList.xlsx" />
-		<UpdateFile FileName="PackingList.xlsx" />
+		<UpdateFile FileName="PackingListCeiling.xlsx" />
+		<UpdateFile FileName="PackingListHood.xlsx" />
 		<UpdateFile FileName="PackingInfo.xlsx" />
-		<UpdateFile FileName="PrintPackingInfo.xlsx" />
+		
 		
 	</UpdateFileList>
 </autoUpdater>

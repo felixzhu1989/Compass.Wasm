@@ -188,6 +188,9 @@ namespace Compass.CategoryService.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Pallet")
+                        .HasColumnType("bit");
+
                     b.Property<int>("SequenceNumber")
                         .HasColumnType("int");
 

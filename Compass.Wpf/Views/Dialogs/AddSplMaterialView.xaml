@@ -8,7 +8,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters"
              Width="420"
-             Height="660">
+             Height="760">
     <UserControl.Resources>
         <cvt:UnitCvt x:Key="UnitCvt" />
     </UserControl.Resources>
@@ -29,8 +29,10 @@
                        Foreground="Red"
                        DockPanel.Dock="Top"
                        TextWrapping="Wrap"/>
+            
             <TextBox Text="{Binding PackingItemDto.MtlNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                      materialDesign:HintAssist.Hint="请输入唯一的物料号"
+                     ToolTip="请输入唯一的物料号"
                      DockPanel.Dock="Top"
                      Margin="0,5"
                      materialDesign:TextFieldAssist.PrefixText="料号：" />
@@ -85,10 +87,17 @@
                      Margin="0,5"
                      materialDesign:TextFieldAssist.PrefixText="备注：" />
             <TextBox Text="{Binding PackingItemDto.Order,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     materialDesign:HintAssist.Hint="请输入排序"
+                     materialDesign:HintAssist.Hint="烟罩排序填写0，配件填写大于1"
+                     ToolTip="烟罩排序填写0，配件填写大于1"
                      DockPanel.Dock="Top"
                      Margin="0,5"
                      materialDesign:TextFieldAssist.PrefixText="排序：" />
+            <TextBox Text="{Binding PackingItemDto.PalletNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                     materialDesign:HintAssist.Hint="如果不是独立托盘请不要填写"
+                     ToolTip="如果不是独立托盘请不要填写"
+                     DockPanel.Dock="Top"
+                     Margin="0,5"
+                     materialDesign:TextFieldAssist.PrefixText="托盘号：" />
             <CheckBox IsChecked="{Binding PackingItemDto.Pallet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       Content="单独托盘"
                       DockPanel.Dock="Top"
