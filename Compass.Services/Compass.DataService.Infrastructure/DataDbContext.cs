@@ -1,5 +1,6 @@
 ﻿using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Data.Hoods;
+using Compass.Wasm.Shared.Data.UL;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Zack.Infrastructure.EFCore;
@@ -38,10 +39,24 @@ public class DataDbContext : BaseDbContext
     public DbSet<CmodiData> CmodiData { get; set; }
     public DbSet<CmodfData> CmodfData { get; set; }
 
+    public DbSet<KchData> KchData { get; set; }
+
+
 
     #endregion
 
-
+    #region UL烟罩
+    public DbSet<ChData> ChData { get; set; }
+    public DbSet<KvrData> KvrData { get; set; }
+    public DbSet<KvcData> KvcData { get; set; }
+    public DbSet<KvcUvData> KvcUvData { get; set; }
+    public DbSet<KvcUvWwData> KvcUvWwData { get; set; }
+    public DbSet<KvcWwData> KvcWwData { get; set; }
+    public DbSet<KveData> KveData { get; set; }
+    public DbSet<KveUvData> KveUvData { get; set; }
+    public DbSet<KveUvWwData> KveUvWwData { get; set; }
+    public DbSet<KveWwData> KveWwData { get; set; }
+    #endregion
 
 
 

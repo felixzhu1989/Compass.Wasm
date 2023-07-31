@@ -11,6 +11,7 @@ using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Server.Services.Categories;
 using Compass.Wasm.Server.Services.Data;
 using Compass.Wasm.Server.Services.Data.Hoods;
+using Compass.Wasm.Server.Services.Data.UL;
 using Compass.Wasm.Server.Services.Plans;
 using Compass.Wasm.Server.Services.Projects;
 using Compass.Wasm.Server.Services.Todos;
@@ -255,10 +256,24 @@ builder.Services.AddScoped<IKvvDataService, KvvDataService>();
 builder.Services.AddScoped<ICmodiDataService, CmodiDataService>();
 builder.Services.AddScoped<ICmodfDataService, CmodfDataService>();
 
+builder.Services.AddScoped<IKchDataService, KchDataService>();
 
 #endregion
 
+#region ULService
+builder.Services.AddScoped<IChDataService, ChDataService>();
+builder.Services.AddScoped<IKvcDataService, KvcDataService>();
+builder.Services.AddScoped<IKvcUvDataService, KvcUvDataService>();
+builder.Services.AddScoped<IKvcUvWwDataService, KvcUvWwDataService>();
+builder.Services.AddScoped<IKvcWwDataService, KvcWwDataService>();
+builder.Services.AddScoped<IKveDataService, KveDataService>();
+builder.Services.AddScoped<IKveUvDataService, KveUvDataService>();
+builder.Services.AddScoped<IKveUvWwDataService, KveUvWwDataService>();
+builder.Services.AddScoped<IKveWwDataService, KveWwDataService>();
+builder.Services.AddScoped<IKvrDataService, KvrDataService>();
 
+
+#endregion
 
 #endregion
 

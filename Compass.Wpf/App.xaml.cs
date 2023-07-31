@@ -5,6 +5,7 @@ using Compass.Wpf.ApiServices.Hoods;
 using Compass.Wpf.ApiServices.Plans;
 using Compass.Wpf.ApiServices.Projects;
 using Compass.Wpf.ApiServices.Todos;
+using Compass.Wpf.ApiServices.UL;
 using Compass.Wpf.BatchWorks;
 using Compass.Wpf.BatchWorks.Hoods;
 using Compass.Wpf.SwServices;
@@ -147,6 +148,9 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<CmodiDataView,CmodiDataViewModel>();
         containerRegistry.RegisterForNavigation<CmodfDataView,CmodfDataViewModel>();
 
+
+        
+
         #endregion
 
         #region 模型参数Api数据服务
@@ -163,6 +167,23 @@ public partial class App : PrismApplication
         containerRegistry.Register<IKvvDataService, KvvDataService>();
         containerRegistry.Register<ICmodiDataService,CmodiDataService>();
         containerRegistry.Register<ICmodfDataService,CmodfDataService>();
+
+        containerRegistry.Register<IKchDataService, KchDataService>();
+
+
+
+        //UL烟罩
+        containerRegistry.Register<IChDataService, ChDataService>();
+        containerRegistry.Register<IKvrDataService, KvrDataService>();
+        containerRegistry.Register<IKvcDataService, KvcDataService>();
+        containerRegistry.Register<IKvcUvDataService, KvcUvDataService>();
+        containerRegistry.Register<IKvcUvWwDataService, KvcUvWwDataService>();
+        containerRegistry.Register<IKvcWwDataService, KvcWwDataService>();
+        containerRegistry.Register<IKveDataService, KveDataService>();
+        containerRegistry.Register<IKveUvDataService, KveUvDataService>();
+        containerRegistry.Register<IKveUvWwDataService, KveUvWwDataService>();
+        containerRegistry.Register<IKveWwDataService, KveWwDataService>();
+
 
 
         #endregion

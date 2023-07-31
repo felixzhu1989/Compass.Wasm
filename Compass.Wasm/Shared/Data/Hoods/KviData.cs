@@ -2,8 +2,6 @@
 
 public class KviData : ModuleData
 {
-
-
     #region 排风口参数
     //中心距离右端
     private double middleToRight = 0;

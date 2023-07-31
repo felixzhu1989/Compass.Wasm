@@ -245,6 +245,69 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KvvData");
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KvcData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KvcData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KvcUvData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KvcUvData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KvcUvWwData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KvcUvWwData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KvcWwData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KvcWwData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KveData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KveData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KveUvData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KveUvData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KveUvWwData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KveUvWwData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KveWwData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KveWwData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KvrData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("KvrData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KvfData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KviData");
@@ -316,6 +379,20 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("UvLightType");
 
                     b.HasDiscriminator().HasValue("UviData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.ChData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KvvData");
+
+                    b.HasDiscriminator().HasValue("ChData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KchData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KvfData");
+
+                    b.HasDiscriminator().HasValue("KchData");
                 });
 
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.CmodiData", b =>
