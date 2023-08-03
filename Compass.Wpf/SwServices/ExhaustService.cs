@@ -554,8 +554,11 @@ public class ExhaustService : BaseSwService, IExhaustService
 
                 break;
             default:
-                swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
+                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
                 swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
+                if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+                else swCompLevel2.Suppress("DrainChannel");
+
                 swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
                 swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
                 if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
