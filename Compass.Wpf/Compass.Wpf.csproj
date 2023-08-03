@@ -17,6 +17,7 @@
     <None Remove="Images\halton_logo_small.png" />
     <None Remove="Images\login.png" />
     <None Remove="Images\wind.png" />
+    <None Remove="JobCardEn.xlsx" />
     <None Remove="MainPlan.csv" />
     <None Remove="MaterialItem.csv" />
     <None Remove="PackingInfo.xlsx" />
@@ -36,6 +37,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="JobCard.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="JobCardEn.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MainPlan.csv">

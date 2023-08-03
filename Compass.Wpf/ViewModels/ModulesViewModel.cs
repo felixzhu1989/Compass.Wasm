@@ -149,6 +149,7 @@ public class ModulesViewModel : NavigationViewModel
             case "ExportDxf": ExportDxf(); break;
             case "PrintCutList": PrintCutList(); break;
             case "PrintJobCard": PrintJobCard();break;
+            case "PrintEnJobCard": PrintEnJobCard(); break;
             case "SyncFiles": SyncFiles();break;
             case "PackingList": PackingListNavigate();break;
 
@@ -198,7 +199,11 @@ public class ModulesViewModel : NavigationViewModel
         const BatchWorksAction_e actionName = BatchWorksAction_e.打印JobCard;
         await BatchWorks(actionName);
     }
-
+    private async void PrintEnJobCard()
+    {
+        const BatchWorksAction_e actionName = BatchWorksAction_e.打印英文JobCard;
+        await BatchWorks(actionName);
+    }
 
     private async void PrintFinal()
     {

@@ -11,6 +11,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("finalinspection.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("finalinspectionen.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("jobcard.xlsx")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("jobcarden.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("mainplan.csv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("materialitem.csv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("packinginfo.xlsx")]

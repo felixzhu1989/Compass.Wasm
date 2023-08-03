@@ -24,6 +24,7 @@ public interface IPrintsService
     Task PrintOneCutListAsync(ModuleDto moduleDto);
 
     Task BatchPrintJobCardAsync(List<ModuleDto> moduleDtos);
+    Task BatchPrintEnJobCardAsync(List<ModuleDto> moduleDtos);
     Task PrintOneJobCardAsync(ModuleDto moduleDto);
 
     Task BatchPrintFinalAsync(List<ModuleDto> moduleDtos);
@@ -132,6 +133,33 @@ public class PrintsService : IPrintsService
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
     }
+    /// <summary>
+    /// 批量打印英文JobCard
+    /// </summary>
+    public async Task BatchPrintEnJobCardAsync(List<ModuleDto> moduleDtos)
+    {
+        var template = Path.Combine(Environment.CurrentDirectory, "JobCardEn.xlsx");
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+
+        foreach (var moduleDto in moduleDtos)
+        {
+            if (!moduleDto.IsJobCardOk)
+            {
+                _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******JobCard不OK，跳过打印******", Filter_e.Batch);
+                continue;
+            }
+            _aggregator.SendMessage($"正在打印:\t{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}", Filter_e.Batch);
+            await UseExcelPrintJobCard(worksheet, moduleDto);
+        }
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
 
     /// <summary>
     /// 单独打印
@@ -495,8 +523,8 @@ public class PrintsService : IPrintsService
 
             var imagePath = Path.Combine(Environment.CurrentDirectory, "label.png");
             //将图片插入excel
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 3562, 610, 280);//左，上，宽度，高度4240-678
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4014, 610, 280);//左，上，宽度，高度4692-678
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 3563, 610, 280);//左，上，宽度，高度4240-678
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 4015, 610, 280);//左，上，宽度，高度4692-678
         }
 
         var qrCodePath =await CreateQrCodeImage(moduleDto);
@@ -510,8 +538,8 @@ public class PrintsService : IPrintsService
         worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 926, 63, 63);
         worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 1736, 63, 63);
         worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 2564, 63, 63);
-        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 3454, 63, 63);//4132-678
-        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 3905, 63, 63);//4583-678
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 3455, 63, 63);//4132-678
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 3906, 63, 63);//4583-678
 
 
         //调试时预览
@@ -559,7 +587,7 @@ public class PrintsService : IPrintsService
         worksheet.Cells[4, 3] = moduleDto.ProjectName;
         worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";
         worksheet.Cells[6, 3] = moduleDto.ModelName.Split('_')[0];
-
+        
         var qrCodePath = await CreateQrCodeImage(moduleDto);
 
         //将图片插入excel
@@ -575,11 +603,15 @@ public class PrintsService : IPrintsService
         worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";
         worksheet.Cells[6, 3] = moduleDto.ModelName.Split('_')[0];
 
+        worksheet.Cells[7, 3] = moduleDto.Length;
+        worksheet.Cells[7, 5] = moduleDto.Width;
+        worksheet.Cells[7, 7] = moduleDto.Height;
+
         var qrCodePath = await CreateQrCodeImage(moduleDto);
 
         //将图片插入excel
-        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 35, 63, 63);//相差4,097
-        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 486, 63, 63);
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 36, 63, 63);//相差4,097
+        worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 560, 487, 63, 63);
 
         //插入Item图片
         if (!string.IsNullOrEmpty(moduleDto.ImageUrl))
@@ -589,8 +621,8 @@ public class PrintsService : IPrintsService
 
             var imagePath = Path.Combine(Environment.CurrentDirectory, "label.png");
             //将图片插入excel
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 143, 610, 280);//左，上，宽度，高度
-            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 595, 610, 280);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 144, 610, 280);//左，上，宽度，高度
+            worksheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 596, 610, 280);//左，上，宽度，高度
         }
 
         worksheet.PrintOutEx();

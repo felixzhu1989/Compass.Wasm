@@ -109,7 +109,9 @@ public class BatchWorksViewModel : BindableBase, IDialogHostAware
                     case BatchWorksAction_e.打印JobCard:
                         await _batchWorksService.BatchPrintJobCardAsync(ModuleDtos);
                         break;
-
+                    case BatchWorksAction_e.打印英文JobCard:
+                        await _batchWorksService.BatchPrintEnJobCardAsync(ModuleDtos);
+                        break;
                     case BatchWorksAction_e.打印最终检验页:
                         await _batchWorksService.BatchPrintFinalAsync(ModuleDtos);
                         break;

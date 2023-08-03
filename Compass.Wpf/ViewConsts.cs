@@ -6,6 +6,7 @@ public enum BatchWorksAction_e
     导出DXF图,
     打印CutList,
     打印JobCard,
+    打印英文JobCard,
     打印最终检验页,
     打印英文最终检验页,
     打印截图页,

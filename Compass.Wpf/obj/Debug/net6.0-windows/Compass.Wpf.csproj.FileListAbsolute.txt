@@ -180,3 +180,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\refint\Compass
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Compass.Wpf.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\Compass.Wpf.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\ref\Compass.Wpf.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\JobCardEn.xlsx

@@ -73,6 +73,14 @@
                     Background="LimeGreen"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
+                    Content="打印英文JobCard"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintEnJobCard"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="LimeGreen"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
                     Content="同步文件"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="SyncFiles"
