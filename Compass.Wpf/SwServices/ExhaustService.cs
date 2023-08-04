@@ -2428,7 +2428,7 @@ public class ExhaustService : BaseSwService, IExhaustService
     private void FNHE0075(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
-        swModelLevel2.ChangeDim("Length@Base-Flange", (length-113d)/2d);
+        swModelLevel2.ChangeDim("Length@Base-Flange", (length-115d)/2d);
     }
     private void FNHE0078(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
     {

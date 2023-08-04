@@ -82,6 +82,8 @@
         var result = true;
         foreach (var dto in _drawingDtos)
         {
+            //为了避免Item号前后有空格，导致后续创建文件夹时出现错误，此处消除空格
+            dto.ItemNumber = dto.ItemNumber.Trim();
             result = result&&(await DrawingService.AddAsync(dto)).IsSuccessStatusCode;
         }
         if (result) NavigationManager.NavigateTo($"drawings/{ProjectId}");

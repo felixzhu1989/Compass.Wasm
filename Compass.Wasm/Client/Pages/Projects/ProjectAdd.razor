@@ -76,6 +76,8 @@
             await JsRuntime.InvokeVoidAsync("alert", "填写的信息不完整");
             return;
         }
+        //为了避免FSO号前后有空格，导致后续创建文件夹时出现错误，此处消除空格
+        _projectDto.OdpNumber = _projectDto.OdpNumber.Trim();
         var result = await ProjectService.AddAsync(_projectDto);
         //跳转回主页
         if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("projects");

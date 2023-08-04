@@ -190,7 +190,11 @@ public class ExportDxfService : IExportDxfService
         var modelPath = swCompModel.GetPathName();
         var dxfDir = Path.Combine(@"D:\MyProjects", moduleDto.OdpNumber, "DxfCutlist", $"{moduleDto.ItemNumber}_{moduleDto.Name}_{moduleDto.ModelName}");
         //如果不存在则创建该文件夹
-        if (!Directory.Exists(dxfDir)) Directory.CreateDirectory(dxfDir);
+        if (!Directory.Exists(dxfDir))
+        {
+            Directory.CreateDirectory(dxfDir);
+
+        }
         var outPath = Path.Combine(dxfDir, $"{partName}.dxf");
         _aggregator.SendMessage($"导出Dxf:\t{outPath}", Filter_e.Batch);
         swCompModel.Visible = true;

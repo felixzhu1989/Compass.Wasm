@@ -68,6 +68,8 @@
     }
     private async Task Save()
     {
+        //为了避免Item号前后有空格，导致后续创建文件夹时出现错误，此处消除空格
+        _drawingDto.ItemNumber = _drawingDto.ItemNumber.Trim();
         var result = await DrawingService.UpdateAsync(Guid.Parse(Id), _drawingDto);
         if (result.IsSuccessStatusCode) NavigationManager.NavigateTo($"drawings/{_drawingDto.ProjectId}");
     }

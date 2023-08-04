@@ -297,7 +297,10 @@ public static class SwUtility
 
             // Set folder where to save the files,目标存放文件夹
             //判断打包目标文件夹是否存在，不存在则创建
-            if (!Directory.Exists(packDir)) Directory.CreateDirectory(packDir);
+            if (!Directory.Exists(packDir))
+            {
+                Directory.CreateDirectory(packDir);
+            }
             swPackAndGo.SetSaveToName(true, packDir);
             swPackAndGo.FlattenToSingleFolder = true;
             swPackAndGo.AddSuffix = suffix;

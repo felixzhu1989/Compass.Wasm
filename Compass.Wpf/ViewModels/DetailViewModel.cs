@@ -315,7 +315,9 @@ public class DetailViewModel : NavigationViewModel
         {
             if (CurrentModuleDto.Id!=null&&CurrentModuleDto.Id.Value!=Guid.Empty)//编辑ModuleDto
             {
-                var updateResult = await _moduleService.UpdateAsync(CurrentModuleDto.Id.Value, currentModuleDto);
+                //为了避免分段号前后有空格，导致后续创建文件夹时出现错误，此处消除空格
+                CurrentModuleDto.Name = CurrentModuleDto.Name.Trim().ToUpper();
+                var updateResult = await _moduleService.UpdateAsync(CurrentModuleDto.Id.Value, CurrentModuleDto);
                 //更新界面
                 if (updateResult.Status)
                 {
@@ -324,7 +326,7 @@ public class DetailViewModel : NavigationViewModel
                     if (drawingDto != null)
                     {
                         var dto = drawingDto.ModuleDtos.First(x => x.Id.Equals(CurrentModuleDto.Id));
-                        dto.Name = CurrentModuleDto.Name.ToUpper();
+                        dto.Name = CurrentModuleDto.Name;
                         dto.ModelTypeId = CurrentModuleDto.ModelTypeId;
                         dto.ModelName=CurrentModuleDto.ModelName;
                         dto.SpecialNotes=CurrentModuleDto.SpecialNotes;
@@ -342,7 +344,7 @@ public class DetailViewModel : NavigationViewModel
             else//新增ModuleDto
             {
                 //todo:判断有没有重复
-                CurrentModuleDto.Name= CurrentModuleDto.Name.ToUpper();
+                CurrentModuleDto.Name= CurrentModuleDto.Name.Trim().ToUpper();
                 var drawingDto =
                     DrawingDtos.FirstOrDefault(x => x.Id.Equals(CurrentModuleDto.DrawingId));
                 if (drawingDto != null)
