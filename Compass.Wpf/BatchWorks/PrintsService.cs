@@ -12,8 +12,6 @@ using Compass.Wasm.Shared.Params;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
-using Compass.Wasm.Shared.Projects;
-using Module = System.Reflection.Module;
 using ImTools;
 
 namespace Compass.Wpf.BatchWorks;
@@ -657,11 +655,15 @@ public class PrintsService : IPrintsService
         //隔开3行打印配件accessories
         var accs = packingListDto.PackingItemDtos.Where(x => x.Pallet==false).ToArray();
         var aCount=accs.Length;
+        worksheet.Cells[6+pCount+2, 1] = "配件数量";
         for (int j= 0; j < aCount; j++)
         {
+            worksheet.Cells[j + 6+pCount+3, 1] = $"{accs[j].Quantity} {accs[j].Unit}";
             worksheet.Cells[j + 6+pCount+3, 2] = accs[j].MtlNumber;
             worksheet.Cells[j + 6+pCount+3, 3] = accs[j].Type;
-            worksheet.Cells[j + 6+pCount+3, 4] = $"{accs[j].Quantity} {accs[j].Unit}";
+            worksheet.Cells[j + 6+pCount+3, 4] = accs[j].Length;
+            worksheet.Cells[j + 6+pCount+3, 5] = accs[j].Width;
+            worksheet.Cells[j + 6+pCount+3, 6] = accs[j].Height;
             worksheet.Cells[j + 6+pCount+3, 12] = accs[j].Description;
         }
 
