@@ -30,6 +30,7 @@ public static class CommonExtensions
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWF_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWI_555.SLDASM",
 
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVI_450.SLDASM",
             //KVV
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVV_555.SLDASM",
 

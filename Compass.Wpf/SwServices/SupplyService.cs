@@ -40,6 +40,70 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
+    public void I450(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_I_450-1", Aggregator);
+
+        //新风面板螺丝孔数量及间距,最小间距580，距离边缘150 2023/6/20
+        const double sideDis = 150d;
+        const double minFrontPanelNutDis = 580d;
+        var frontPanelNutNumber = Math.Ceiling((length - 2*sideDis) / minFrontPanelNutDis);
+        frontPanelNutNumber = frontPanelNutNumber < 2d ? 2d : frontPanelNutNumber;
+        var frontPanelNutDis = (length -  2*sideDis) / (frontPanelNutNumber - 1);
+
+        //MidRoof铆螺母孔 2023/3/10
+        //修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
+        var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
+
+        //新风主体
+        FNHA0001(swAssyLevel1, suffix, "FNHA0077-1", length, width, sidePanel, uvLightType, bluetooth, marvel, midRoofNutDis);
+        //I新风底部CJ孔板
+        FNHA0002(swAssyLevel1, suffix, "FNHA0002-1", length, sidePanel, bluetooth, ledLogo, waterCollection, frontPanelNutDis);
+        //I新风前面板
+        FNHA0003(swAssyLevel1, suffix, "FNHA0003-1", length, 450d, midRoofNutDis, frontPanelNutDis);
+
+        //集水翻边
+        const double suHeight = 450d;
+        const string leftPart = "FNHS0005-1";
+        const string rightPart = "FNHS0006-1";
+        WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
+    }
+    public void I400(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_I_400-1", Aggregator);
+
+        //新风面板螺丝孔数量及间距,最小间距580，距离边缘150 2023/6/20
+        const double sideDis = 150d;
+        const double minFrontPanelNutDis = 580d;
+        var frontPanelNutNumber = Math.Ceiling((length - 2*sideDis) / minFrontPanelNutDis);
+        frontPanelNutNumber = frontPanelNutNumber < 2d ? 2d : frontPanelNutNumber;
+        var frontPanelNutDis = (length -  2*sideDis) / (frontPanelNutNumber - 1);
+
+        //MidRoof铆螺母孔 2023/3/10
+        //修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
+        var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
+
+        //新风主体
+        FNHA0001(swAssyLevel1, suffix, "FNHA0040-1", length, width, sidePanel, uvLightType, bluetooth, marvel, midRoofNutDis);
+        //I新风底部CJ孔板
+        FNHA0002(swAssyLevel1, suffix, "FNHA0002-1", length, sidePanel, bluetooth, ledLogo, waterCollection, frontPanelNutDis);
+        //I新风前面板
+        FNHA0003(swAssyLevel1, suffix, "FNHA0003-1", length, 400d, midRoofNutDis, frontPanelNutDis);
+
+        //集水翻边
+        const double suHeight = 400d;
+        const string leftPart = "FNHS0005-1";
+        const string rightPart = "FNHS0006-1";
+        WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
+    }
+
+
 
     public void F555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis)
     {
@@ -86,67 +150,6 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
-
-    public void BackCj(AssemblyDoc swAssyTop, string suffix, bool backCj, double length, double height, double cjSpigotToRight)
-    {
-        if (!backCj)
-        {
-            swAssyTop.Suppress(suffix, "BackCj_Fs-1");
-            return;
-        }
-        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "BackCj_Fs-1", Aggregator);
-
-        const double cjHoleDis = 30d;//天花烟罩马蹄形CJ孔阵列距离为30
-        const double minCjDis = 20d;//距边最小距离
-        int cjNumber = (int)((length - 2* minCjDis) / cjHoleDis);
-        double firstCjDis = (length - cjHoleDis * cjNumber) / 2d;
-        if (firstCjDis < minCjDis) firstCjDis += minCjDis;
-
-        swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, "FNHA0084-1", Aggregator);
-        swModelLevel2.ChangeDim("Length@SketchBase", length);
-        swModelLevel2.ChangeDim("Height@SketchBase", height+1d);
-        swModelLevel2.ChangeDim("Dis@SketchCj", firstCjDis);
-        swModelLevel2.ChangeDim("ToRight@SketchSpigot", cjSpigotToRight);
-
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNCJ0016-1", Aggregator);
-        swModelLevel2.ChangeDim("Length@SketchBase", length-10d);
-
-        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0102-1", Aggregator);
-        swModelLevel2.ChangeDim("Height@SketchBase", height-1d);
-    }
-
-    public void I400(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection)
-    {
-        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_I_400-1", Aggregator);
-
-        //新风面板螺丝孔数量及间距,最小间距580，距离边缘150 2023/6/20
-        const double sideDis = 150d;
-        const double minFrontPanelNutDis = 580d;
-        var frontPanelNutNumber = Math.Ceiling((length - 2*sideDis) / minFrontPanelNutDis);
-        frontPanelNutNumber = frontPanelNutNumber < 2d ? 2d : frontPanelNutNumber;
-        var frontPanelNutDis = (length -  2*sideDis) / (frontPanelNutNumber - 1);
-
-        //MidRoof铆螺母孔 2023/3/10
-        //修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
-        const double minMidRoofNutDis = 450d;
-        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
-        midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
-        var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
-
-        //新风主体
-        FNHA0001(swAssyLevel1, suffix, "FNHA0040-1", length, width, sidePanel, uvLightType, bluetooth, marvel, midRoofNutDis);
-        //I新风底部CJ孔板
-        FNHA0002(swAssyLevel1, suffix, "FNHA0002-1", length, sidePanel, bluetooth, ledLogo, waterCollection, frontPanelNutDis);
-        //I新风前面板
-        FNHA0003(swAssyLevel1, suffix, "FNHA0003-1", length,400d, midRoofNutDis, frontPanelNutDis);
-
-        //集水翻边
-        const double suHeight = 400d;
-        const string leftPart = "FNHS0005-1";
-        const string rightPart = "FNHS0006-1";
-        WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
-    }
-
     public void F400(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_F_400-1", Aggregator);
@@ -193,6 +196,39 @@ public class SupplyService : BaseSwService, ISupplyService
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
 
+
+
+    public void BackCj(AssemblyDoc swAssyTop, string suffix, bool backCj, double length, double height, double cjSpigotToRight)
+    {
+        if (!backCj)
+        {
+            swAssyTop.Suppress(suffix, "BackCj_Fs-1");
+            return;
+        }
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "BackCj_Fs-1", Aggregator);
+
+        const double cjHoleDis = 30d;//天花烟罩马蹄形CJ孔阵列距离为30
+        const double minCjDis = 20d;//距边最小距离
+        int cjNumber = (int)((length - 2* minCjDis) / cjHoleDis);
+        double firstCjDis = (length - cjHoleDis * cjNumber) / 2d;
+        if (firstCjDis < minCjDis) firstCjDis += minCjDis;
+
+        swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, "FNHA0084-1", Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+        swModelLevel2.ChangeDim("Height@SketchBase", height+1d);
+        swModelLevel2.ChangeDim("Dis@SketchCj", firstCjDis);
+        swModelLevel2.ChangeDim("ToRight@SketchSpigot", cjSpigotToRight);
+
+        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNCJ0016-1", Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length-10d);
+
+        swAssyLevel1.UnSuppress(out swModelLevel2, suffix, "FNHE0102-1", Aggregator);
+        swModelLevel2.ChangeDim("Height@SketchBase", height-1d);
+    }
+
+    
+
+    
     #endregion
 
     #region 华为烟罩

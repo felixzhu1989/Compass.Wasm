@@ -12,8 +12,17 @@ public class SidePanelService : BaseSwService, ISidePanelService
     public void SidePanelFs(AssemblyDoc swAssyTop, string suffix, SidePanel_e sidePanel, double length, double width, double height, bool backCj, ExhaustType_e exhaustType)
     {
         //KV/UV烟罩侧边CJ留出安全距离110
+        //KV/UV450烟罩安全距离140
         //KW/UW烟罩侧边CJ流出安全距离190
-        var sideCjEnd = exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 190d : 110d;
+        var sideCjEnd = 110d;
+        if (height == 555d)
+        {
+            sideCjEnd= exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 190d : 110d;
+        }
+        else if (height ==450d)
+        {
+            sideCjEnd = 140d;
+        }
         if (backCj) sideCjEnd += 90d;//有BackCj时需要让侧面CJ孔避让排风腔
 
         //todo:是否需要合并M型烟罩
