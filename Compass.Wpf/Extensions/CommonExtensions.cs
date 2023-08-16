@@ -30,24 +30,44 @@ public static class CommonExtensions
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWF_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWI_555.SLDASM",
 
+            //其他高度烟罩
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVI_450.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_450.SLDASM",
+
+
+
+            //555斜烟罩
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_555_400.SLDASM",
+
+
+
+
+
+            //450斜烟罩
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_450_400.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_450_400.SLDASM",
+            
+            
+
+
             //KVV
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVV_555.SLDASM",
+
 
             //CMOD
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\CMODF_555_400.SLDASM",
 
-
-
-            //斜烟罩
-            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_450_400.SLDASM",
-            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_450_400.SLDASM",
             
+
+
+
             //Huawei
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_HW_650.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_HW_650.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWF_HW_650.SLDASM",
             //Ceilings
+
+
 
 
 

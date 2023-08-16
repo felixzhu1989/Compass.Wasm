@@ -52,25 +52,25 @@
                 <tr class="bg- @(modelTypeDto.SequenceNumber==1? "bg-success bg-opacity-10":"")">
                     <td>
                         <span>@modelTypeDto.Product</span>
-                        <a href="model/add/@modelTypeDto.ProductId">
+                        @*<a href="model/add/@modelTypeDto.ProductId">
                             <span class="oi oi-plus"></span>
-                        </a>
+                        </a>*@
+
+                        <CompAddIcon Roles="admin" Url="@($"model/add/{modelTypeDto.ProductId}")" />
                     </td>
                     <td>
-                        <a href="model/update/@modelTypeDto.ModelId">
-                            <span class="oi oi-cog"></span>
-                        </a>
+                        <CompUpdateIcon Roles="admin" Url="@($"model/update/{modelTypeDto.ModelId}")" />
 
                         <span>( @modelTypeDto.ModelSeqNumber ) @modelTypeDto.Model</span>
 
-                        <a href="modeltype/add/@modelTypeDto.ModelId">
+                        @*<a href="modeltype/add/@modelTypeDto.ModelId">
                             <span class="oi oi-plus"></span>
-                        </a>
+                        </a>*@
+                        <CompAddIcon Roles="admin" Url="@($"modeltype/add/{modelTypeDto.ModelId}")"/>
                     </td>
                     <td>
-                        <a href="modeltype/update/@modelTypeDto.Id">
-                            <span class="oi oi-cog"></span>
-                        </a>
+                        <CompUpdateIcon Roles="admin" Url="@($"modeltype/update/{modelTypeDto.Id}")"/>
+
                         <span>( @modelTypeDto.SequenceNumber ) @modelTypeDto.Name</span>
                     </td>
                     <td>@modelTypeDto.ModelName</td>

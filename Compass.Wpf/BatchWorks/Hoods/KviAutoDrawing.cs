@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Data.Hoods;
 using Compass.Wpf.ApiServices.Hoods;
