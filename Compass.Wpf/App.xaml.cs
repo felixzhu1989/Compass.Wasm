@@ -144,6 +144,7 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<UwiDataView, UwiDataViewModel>();
         containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
 
+        
         containerRegistry.RegisterForNavigation<KvvDataView, KvvDataViewModel>();
         containerRegistry.RegisterForNavigation<CmodiDataView,CmodiDataViewModel>();
         containerRegistry.RegisterForNavigation<CmodfDataView,CmodfDataViewModel>();
@@ -163,6 +164,8 @@ public partial class App : PrismApplication
         containerRegistry.Register<IKwfDataService, KwfDataService>();
         containerRegistry.Register<IUwiDataService, UwiDataService>();
         containerRegistry.Register<IUwfDataService, UwfDataService>();
+
+        containerRegistry.Register<IUvimDataService,UvimDataService>();
 
         containerRegistry.Register<IKvvDataService, KvvDataService>();
         containerRegistry.Register<ICmodiDataService,CmodiDataService>();

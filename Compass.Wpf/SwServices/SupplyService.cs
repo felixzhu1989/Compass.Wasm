@@ -8,6 +8,7 @@ public class SupplyService : BaseSwService, ISupplyService
     public SupplyService(IContainerProvider provider) : base(provider)
     {
     }
+
     #region 标准烟罩
     public void I555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection)
     {
@@ -691,5 +692,10 @@ public class SupplyService : BaseSwService, ISupplyService
         #endregion
     }
     #endregion
+
+
+
+
+
 
 }

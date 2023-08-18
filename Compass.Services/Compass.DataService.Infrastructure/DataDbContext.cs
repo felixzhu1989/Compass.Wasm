@@ -35,11 +35,14 @@ public class DataDbContext : BaseDbContext
     public DbSet<UwiData> UwiData { get; set; }
     public DbSet<UwfData> UwfData { get; set; }
 
+    public DbSet<UvimData> UvimData { get; set; }
+
     public DbSet<KvvData> KvvData { get; set; }
     public DbSet<CmodiData> CmodiData { get; set; }
     public DbSet<CmodfData> CmodfData { get; set; }
 
     public DbSet<KchData> KchData { get; set; }
+
 
 
 

@@ -245,6 +245,13 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KvvData");
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.UvimData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("UvimData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.UL.KvcData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");

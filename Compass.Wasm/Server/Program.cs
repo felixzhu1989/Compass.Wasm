@@ -252,6 +252,8 @@ builder.Services.AddScoped<IKwfDataService, KwfDataService>();
 builder.Services.AddScoped<IUwiDataService, UwiDataService>();
 builder.Services.AddScoped<IUwfDataService, UwfDataService>();
 
+builder.Services.AddScoped<IUvimDataService, UvimDataService>();
+
 builder.Services.AddScoped<IKvvDataService, KvvDataService>();
 builder.Services.AddScoped<ICmodiDataService, CmodiDataService>();
 builder.Services.AddScoped<ICmodfDataService, CmodfDataService>();
