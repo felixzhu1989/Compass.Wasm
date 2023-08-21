@@ -151,6 +151,62 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
+
+    public void FFr555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_F_FR_555-1", Aggregator);
+
+        //新风面板螺丝孔数量及间距,最小间距580，距离边缘150 2023/6/20
+        const double sideDis = 150d;
+        const double minFrontPanelNutDis = 580d;
+        var frontPanelNutNumber = Math.Ceiling((length - 2*sideDis) / minFrontPanelNutDis);
+        frontPanelNutNumber = frontPanelNutNumber < 2d ? 2d : frontPanelNutNumber;
+        var frontPanelNutDis = (length -  2*sideDis) / (frontPanelNutNumber - 1);
+
+        //MidRoof铆螺母孔 2023/3/10
+        //修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
+        const double minMidRoofNutDis = 450d;
+        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
+        var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
+
+        ////新风网孔板加强筋
+        //if (length > 1599d) swAssyLevel1.UnSuppress(suffix, "FNHA0011-1", Aggregator);
+        //else swAssyLevel1.Suppress(suffix, "FNHA0011-1");
+
+
+        //F新风底部CJ孔板,FNHA0115重用FNHA0002方法
+        FNHA0002(swAssyLevel1, suffix, "FNHA0115-1", length, sidePanel, bluetooth, ledLogo, waterCollection, frontPanelNutDis);
+
+        //F新风前面板，FNHA0111
+        FNHA0111(swAssyLevel1, suffix, "FNHA0111-1", length, 555d, midRoofNutDis, frontPanelNutDis);
+        
+        //新风主体
+        FNHA0116(swAssyLevel1, suffix, "FNHA0116-1", length, width, sidePanel, uvLightType, bluetooth, marvel, frontPanelNutDis, supplySpigotNumber, supplySpigotDis);
+
+        //新风顶面
+        FNHA0117(swAssyLevel1, suffix, "FNHA0117-1", length, width, sidePanel, uvLightType, bluetooth, marvel, frontPanelNutDis, supplySpigotNumber, supplySpigotDis);
+        
+        //镀锌板
+        FNHA0006(swAssyLevel1, suffix, "FNHA0112-1", length+6);
+
+        //新风滑门导轨
+        FNHA0010(swAssyLevel1, suffix, "FNHA0010-1", length);
+        FNHA0010(swAssyLevel1, suffix, "FNHE0010-1", length);
+
+        //集水翻边
+        const double suHeight = 555d;
+        const string leftPart = "FNHS0077-1";
+        const string rightPart = "FNHS0078-1";
+        WaterCollectionFr(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
+
+
+        //IR安装支架
+        if (marvel) swAssyLevel1.UnSuppress(suffix, "IR_LHC_2-1", Aggregator);
+        else swAssyLevel1.Suppress(suffix, "IR_LHC_2-1");
+    }
+
+
     public void F400(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_F_400-1", Aggregator);
@@ -196,8 +252,7 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
-
-
+    
 
     public void BackCj(AssemblyDoc swAssyTop, string suffix, bool backCj, double length, double height, double cjSpigotToRight)
     {
@@ -358,6 +413,8 @@ public class SupplyService : BaseSwService, ISupplyService
             swAssyLevel1.Suppress(suffix, rightPart);
         }
     }
+
+
     private void FNHS0005(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, ExhaustType_e exhaustType, double suHeight)
     {
         // KVUV555排风尺寸，     ExHeitht555，ExButton76.5，ExFront85,ExAngle135
@@ -377,6 +434,60 @@ public class SupplyService : BaseSwService, ISupplyService
         swModelLevel2.ChangeDim("ExFront@SketchHood", exFront);
         swModelLevel2.ChangeDim("ExAngle@SketchHood", exAngle);
     }
+
+    private void WaterCollectionFr(AssemblyDoc swAssyLevel1, string suffix, bool waterCollection, SidePanel_e sidePanel, ExhaustType_e exhaustType, double width, double height, double suHeight, string leftPart, string rightPart)
+    {
+        if (waterCollection)
+        {
+            if (sidePanel == SidePanel_e.双)
+            {
+                FNHS0077(swAssyLevel1, suffix, leftPart, width, height, exhaustType, suHeight);
+                FNHS0077(swAssyLevel1, suffix, rightPart, width, height, exhaustType, suHeight);
+            }
+            else if (sidePanel == SidePanel_e.左)
+            {
+                FNHS0077(swAssyLevel1, suffix, leftPart, width, height, exhaustType, suHeight);
+                swAssyLevel1.Suppress(suffix, rightPart);
+            }
+            else if (sidePanel == SidePanel_e.右)
+            {
+                swAssyLevel1.Suppress(suffix, leftPart);
+                FNHS0077(swAssyLevel1, suffix, rightPart, width, height, exhaustType, suHeight);
+            }
+            else
+            {
+                swAssyLevel1.Suppress(suffix, leftPart);
+                swAssyLevel1.Suppress(suffix, rightPart);
+            }
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffix, leftPart);
+            swAssyLevel1.Suppress(suffix, rightPart);
+        }
+    }
+
+    private void FNHS0077(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, ExhaustType_e exhaustType, double suHeight)
+    {
+        // KVUV555排风尺寸，     ExHeitht555，ExButton76.5，ExFront85,ExAngle135
+        // KWUW排风尺寸，        ExHeitht555，ExButton150，ExFront101,ExAngle145
+        // 450高度排风没有水洗，  ExHeitht450，ExButton105，ExFront50,ExAngle135
+        var exButton = height.Equals(450d) ? 105d : exhaustType == ExhaustType_e.KW||exhaustType == ExhaustType_e.UW ? 150d : 76.5d;
+        var exFront = height.Equals(450d) ? 50d : exhaustType == ExhaustType_e.KW||exhaustType == ExhaustType_e.UW ? 101d : 85d;
+        // 角度特殊，不能除以1000,应当乘回去
+        var exAngle = (height.Equals(450d) ? 135d : exhaustType == ExhaustType_e.KW||exhaustType == ExhaustType_e.UW ? 145d : 135d)*1000d* Math.PI/ 180d;
+
+        swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);//todo:?
+        swModelLevel2.ChangeDim("Width@Base-Flange", width - 283.5d);
+        //swModelLevel2.ChangeDim("Width@SketchHood", width);
+        //swModelLevel2.ChangeDim("SuHeight@SketchHood", suHeight);//新风
+        //swModelLevel2.ChangeDim("ExHeight@SketchHood", height);//排风
+
+        //swModelLevel2.ChangeDim("ExButton@SketchHood", exButton);
+        //swModelLevel2.ChangeDim("ExFront@SketchHood", exFront);
+        //swModelLevel2.ChangeDim("ExAngle@SketchHood", exAngle);
+    }
+
     #endregion
 
     #region I555
@@ -541,6 +652,7 @@ public class SupplyService : BaseSwService, ISupplyService
         else swCompLevel2.Suppress("IrLhc2");
         #endregion
     }
+
     private void FNHA0007(AssemblyDoc swAssyLevel1, string suffix, string partName, double length,double suHeight, double midRoofNutDis, double frontPanelNutDis)
     {
         swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
@@ -549,14 +661,7 @@ public class SupplyService : BaseSwService, ISupplyService
 
         #region 新风前面板卡口，距离与铆螺母数量相同，无需重复计算
         swModelLevel2.ChangeDim("Dis@LPatternPlug", midRoofNutDis);
-        //蜂窝板压紧结构
-        var sideDis = midRoofNutDis / 2d + 150d;
-        swModelLevel2.ChangeDim("Side@SketchHandBending", sideDis);
-        swModelLevel2.ChangeDim("Dis@LPatternHandBending", midRoofNutDis);
-        swModelLevel2.ChangeDim("Side@LPatternHandBending", sideDis-80d);
-        swModelLevel2.ChangeDim("Dis@LPatternHandBendingHole", midRoofNutDis);
-        swModelLevel2.ChangeDim("Side@LPatternHandBendingHole", sideDis-80d);
-
+        
         #endregion
 
         #region 前面板螺丝孔
@@ -564,6 +669,7 @@ public class SupplyService : BaseSwService, ISupplyService
         #endregion
 
     }
+
     //镀锌板
     private void FNHA0006(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
     {
@@ -584,6 +690,114 @@ public class SupplyService : BaseSwService, ISupplyService
         swModelLevel2.ChangeDim("Length@Base-Flange", length - 200d);
     }
     #endregion
+
+    #region 法国烟罩
+    private void FNHA0111(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double suHeight, double midRoofNutDis, double frontPanelNutDis)
+    {
+        swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+        swModelLevel2.ChangeDim("Height@SketchBase", suHeight - 119d);
+
+        #region 新风前面板卡口，距离与铆螺母数量相同，无需重复计算
+        swModelLevel2.ChangeDim("Dis@LPatternPlug", midRoofNutDis);
+        #endregion
+
+        #region 前面板螺丝孔
+        swModelLevel2.ChangeDim("Dis@LPatternFrontPanelNut", frontPanelNutDis);
+        #endregion
+
+    }
+
+    private void FNHA0116(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, double frontPanelNutDis, int supplySpigotNumber, double supplySpigotDis)
+    {
+        const double supply = 365d;
+        const double light = 204d;
+        const double exhaust = 535d;
+        var midWidth = (length - exhaust - light - supply) / 2d;
+        
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", length);
+        //随着烟罩宽度变化，等距MidRoof
+        swModelLevel2.ChangeDim("Width@SketchBase", midWidth + 0.5d);
+        
+        #region 前面板螺丝孔
+        swModelLevel2.ChangeDim("Dis@LPatternFrontPanelNut", frontPanelNutDis);
+        #endregion
+
+        #region IR
+        if (marvel) swCompLevel2.UnSuppress("IrLhc2");
+        else swCompLevel2.Suppress("IrLhc2");
+        #endregion
+
+        //todo:MidRoof特征
+
+
+
+    }
+
+    private void FNHA0117(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, double midRoofNutDis, int supplySpigotNumber, double supplySpigotDis)
+    {
+        var suToMiddle = supplySpigotDis * (supplySpigotNumber/2-1)+supplySpigotDis/2d;//新风脖颈口距离中间位置
+
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+
+        #region 新风脖颈
+        if (supplySpigotNumber == 1)
+        {
+            swCompLevel2.Suppress("LPatternSu250");
+            swModelLevel2.ChangeDim("ToMiddle@SketchSu250", 0);
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LPatternSu250");
+            swModelLevel2.ChangeDim("ToMiddle@SketchSu250", suToMiddle);
+            swModelLevel2.ChangeDim("Number@LPatternSu250", supplySpigotNumber);
+            swModelLevel2.ChangeDim("Dis@LPatternSu250", supplySpigotDis);
+
+        }
+        #endregion
+
+        //吊装孔
+        //swModelLevel2.ChangeDim("Dis@SketchTopHole", 4*holeDis - midRoofTopHoleDis);
+
+        #region 新风前面板卡口，距离与铆螺母数量相同，无需重复计算
+        swModelLevel2.ChangeDim("Dis@LPatternPlug", midRoofNutDis);
+        #endregion
+
+        #region UV HOOD
+        if (uvLightType!=UvLightType_e.NA)
+        {
+            if (bluetooth) swCompLevel2.UnSuppress("BluetoothCable");
+            else swCompLevel2.Suppress("BluetoothCable");
+            if (sidePanel == SidePanel_e.左 || sidePanel== SidePanel_e.双) swCompLevel2.UnSuppress("JunctionBoxUv");
+            else swCompLevel2.Suppress("JunctionBoxUv");
+        }
+        else
+        {
+            swCompLevel2.Suppress("BluetoothCable");
+            if (marvel) swCompLevel2.UnSuppress("JunctionBoxUv");
+            else swCompLevel2.Suppress("JunctionBoxUv");
+        }
+        #endregion
+
+        #region IR
+        if (marvel)
+        {
+            swCompLevel2.UnSuppress("IrLhc2");
+            swCompLevel2.UnSuppress("IrLhc2-2");
+        }
+        else
+        {
+            swCompLevel2.Suppress("IrLhc2");
+            swCompLevel2.Suppress("IrLhc2-2");
+        }
+        #endregion
+    }
+
+
+    #endregion
+
 
     #region 华为烟罩
     private void FNHA0113(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, double midRoofNutDis)

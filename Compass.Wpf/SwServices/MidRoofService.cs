@@ -43,6 +43,33 @@ public class MidRoofService : BaseSwService, IMidRoofService
         else swAssyLevel1.Suppress(suffix, "IR_LHC_2-1");
     }
 
+    public void MidRoofFr(AssemblyDoc swAssyTop, string suffix, double length, double width, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
+    {
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "MidRoof_Fr-1", Aggregator);
+        FNHM0041(swAssyLevel1, suffix, "FNHM0041-1", length, lightType);
+
+        switch (lightType)
+        {
+            case LightType_e.长灯:
+                swAssyLevel1.UnSuppress(suffix, "5201020405-1",Aggregator);
+                swAssyLevel1.Suppress(suffix, "5201020404-1");
+                break;
+            case LightType_e.短灯:
+                swAssyLevel1.UnSuppress(suffix, "5201020404-1", Aggregator);
+                swAssyLevel1.Suppress(suffix, "5201020405-1");
+                break;
+            case LightType_e.筒灯60://todo:等筒灯建立模型
+            case LightType_e.NA:
+            case LightType_e.筒灯140:
+            case LightType_e.飞利浦三防灯:
+            default:
+                swAssyLevel1.Suppress(suffix, "5201020404-1");
+                swAssyLevel1.Suppress(suffix, "5201020405-1");
+                break;
+        }
+    }
+
+
     public void MidRoofHw(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, double lightToFront, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "MidRoof_Hw-1", Aggregator);
@@ -339,6 +366,19 @@ public class MidRoofService : BaseSwService, IMidRoofService
     }
 
     #endregion
+
+    #region 法国烟罩
+    private void FNHM0041(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, LightType_e lightType)
+    {
+        //随着烟罩长度的变化，MidRoof侧板根据灯具的不同发生变化，长灯1353，短灯753,多减去1dm
+        var panelLength = (length - 1335d) / 2d;//长
+        if (lightType is LightType_e.短灯) panelLength = (length - 735d) / 2d;//短
+
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", panelLength);
+    }
+    #endregion
+
 
     #region 华为烟罩
     private void FNHM0031(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double netWidth, double height, ExhaustType_e exhaustType, UvLightType_e uvLightType, bool bluetooth, double middleToRight, LightType_e lightType, double lightToFront, int spotLightNumber, double spotLightDistance, bool marvel, bool ansul, int ansulDropNumber, double ansulDropToFront, double ansulDropDis1, double ansulDropDis2, double ansulDropDis3, double ansulDropDis4, double ansulDropDis5, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5)
