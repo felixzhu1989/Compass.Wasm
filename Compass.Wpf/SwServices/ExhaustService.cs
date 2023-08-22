@@ -38,10 +38,10 @@ public class ExhaustService : BaseSwService, IExhaustService
         ExhaustKv555(swAssyLevel1, suffix, length, height, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotHeight, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, ansulDetector, ExhaustType_e.UV);
         ExhaustUv555(swAssyLevel1, suffix, length, uvLightType, middleToRight, ansul, ansulSide, ansulDetector);
     }
-    public void UvFr555(AssemblyDoc swAssyTop, string suffix, double length, double height, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector)
+    public void UvFr555(AssemblyDoc swAssyTop, string suffix, double length,double width, double height, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Exhaust_UV_FR_555-1", Aggregator);
-        ExhaustKvFr555(swAssyLevel1, suffix, length, height, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotHeight, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, ansulDetector, ExhaustType_e.UV);
+        ExhaustKvFr555(swAssyLevel1, suffix, length,width, height, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotHeight, exhaustSpigotDis, drainType, waterCollection, backToBack, marvel, ansul, ansulSide, ansulDetector, ExhaustType_e.UV);
         ExhaustUvFr555(swAssyLevel1, suffix, length, uvLightType, middleToRight, ansul, ansulSide, ansulDetector);
     }
     public void Uv450(AssemblyDoc swAssyTop, string suffix, double length, double height, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector)
@@ -638,7 +638,7 @@ public class ExhaustService : BaseSwService, IExhaustService
     #endregion
 
     #region KvFr555
-    private void ExhaustKvFr555(AssemblyDoc swAssyLevel1, string suffix, double length, double height, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, ExhaustType_e exhaustType)
+    private void ExhaustKvFr555(AssemblyDoc swAssyLevel1, string suffix, double length, double width, double height, SidePanel_e sidePanel, UvLightType_e uvLightType, double middleToRight, int exhaustSpigotNumber, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotHeight, double exhaustSpigotDis, DrainType_e drainType, bool waterCollection, bool backToBack, bool marvel, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, ExhaustType_e exhaustType)
     {
         //排风背面板
         FNHE0195(swAssyLevel1, suffix, "FNHE0195-1", length, sidePanel,  drainType, waterCollection, backToBack);
@@ -647,7 +647,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         FNHE0196(swAssyLevel1, suffix, "FNHE0196-1", length, sidePanel, uvLightType, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis,  marvel, ansul, ansulSide, ansulDetector);
 
         //排风腔前面板
-        FNHE0197(swAssyLevel1, suffix, "FNHE0197-1", length, uvLightType, middleToRight);
+        FNHE0197(swAssyLevel1, suffix, "FNHE0197-1", length,width, uvLightType, middleToRight);
         
         //排风脖颈
         var swAssyLevel2 = swAssyLevel1.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1", Aggregator);
@@ -841,18 +841,18 @@ public class ExhaustService : BaseSwService, IExhaustService
         }
         #endregion
     }
-    private void FNHE0197(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, UvLightType_e uvLightType,
+    private void FNHE0197(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, UvLightType_e uvLightType,
         double middleToRight)
     {
         const double supply = 365d;
-        const double light = 204d;
+        const double light = 251d;
         const double exhaust = 535d;
-        var midWidth = (length - exhaust - light - supply) / 2d;
+        var midWidth = (width - exhaust - light - supply) / 2d;
 
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
         //随着烟罩宽度变化，等距MidRoof
-        swModelLevel2.ChangeDim("Width@SketchBase", midWidth + 0.5d);
+        swModelLevel2.ChangeDim("Width@SketchBase", midWidth + 2.5d);
         
         #region UVHood
         switch (uvLightType)

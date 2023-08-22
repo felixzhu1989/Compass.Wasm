@@ -30,6 +30,13 @@ public static class CommonExtensions
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWF_555.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UWI_555.SLDASM",
 
+            //法国烟罩
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVF_FR_555.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVI_FR_555.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVF_FR_555.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_FR_555.SLDASM",
+
+
             //其他高度烟罩
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\KVI_450.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\02 Hood\UVI_450.SLDASM",

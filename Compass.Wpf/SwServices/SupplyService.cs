@@ -711,14 +711,14 @@ public class SupplyService : BaseSwService, ISupplyService
     private void FNHA0116(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, double frontPanelNutDis, int supplySpigotNumber, double supplySpigotDis)
     {
         const double supply = 365d;
-        const double light = 204d;
+        const double light = 251d;
         const double exhaust = 535d;
-        var midWidth = (length - exhaust - light - supply) / 2d;
+        var midWidth = (width - exhaust - light - supply) / 2d;
         
         var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
         //随着烟罩宽度变化，等距MidRoof
-        swModelLevel2.ChangeDim("Width@SketchBase", midWidth + 0.5d);
+        swModelLevel2.ChangeDim("Width@SketchBase", midWidth + 2.5d);
         
         #region 前面板螺丝孔
         swModelLevel2.ChangeDim("Dis@LPatternFrontPanelNut", frontPanelNutDis);
