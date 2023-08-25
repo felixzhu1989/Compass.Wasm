@@ -37,3 +37,19 @@ Console.WriteLine("Hello, World!");
 ////Console.WriteLine(clsid.GetValue("(默认)").ToString());
 //rgrt.Close();
 //clsid.Close();
+
+//用一个数组保存另一个数组的排序
+/*var score = new double[] { 40, 13, 89, 52, 7 };
+var rank = new int[] { 1, 1, 1, 1, 1 };
+for (int i = 0; i < score.Length; i++)
+{
+    for (int j = 0; j < score.Length; j++)
+    {
+        if (score[i] < score[j]) rank[i]++;
+    }
+}
+
+foreach (var i in rank)
+{
+    Console.WriteLine(i);
+}*/
