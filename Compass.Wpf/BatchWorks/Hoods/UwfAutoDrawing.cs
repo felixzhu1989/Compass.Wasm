@@ -119,11 +119,11 @@ public class UwfAutoDrawing : BaseAutoDrawing, IUwfAutoDrawing
         #endregion
 
         #region MidRoof_Hw,MidRoof装配
-        MidRoofService.MidRoofHw(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UV, data.UvLightType, data.Bluetooth, netMiddleToRight, data.LightType, data.LightToFront, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
+        MidRoofService.MidRoofHw(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UW, data.UvLightType, data.Bluetooth, netMiddleToRight, data.LightType, data.LightToFront, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
         #endregion
 
         #region Supply_F_HW_650,F555新风装配
-        SupplyService.FHw650(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis);
+        SupplyService.FHw650(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UW, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis);
         #endregion
     }
 }

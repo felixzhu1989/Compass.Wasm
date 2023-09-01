@@ -6,7 +6,7 @@ public enum SidePanel_e
 }
 public enum LightType_e
 {
-    NA,长灯, 短灯, 筒灯60, 筒灯140,飞利浦三防灯
+    NA,长灯, 短灯, 筒灯,飞利浦三防灯
 }
 public enum UvLightType_e
 {
@@ -58,5 +58,31 @@ public enum SupplyType_e
     NA,I,F,Rectangle,Round
 }
 
+
+#endregion
+
+
+#region 天花烟罩
+public enum FilterType_e
+{
+    FC,KSA
+}
+public enum FilterSide_e
+{
+    NA, 无油网, 左油网, 右油网, 两油网
+}
+public enum CeilingLightType_e
+{
+    NA, 日光灯, 筒灯,HCL
+}
+
+public enum LightCable_e
+{
+    NA, 无出线孔, 左出线孔, 右出线孔, 两出线孔
+}
+public enum HclSide_e
+{
+    NA, 无HCL侧板, 左HCL侧板, 右HCL侧板, 两HCL侧板
+}
 
 #endregion

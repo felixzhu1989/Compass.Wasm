@@ -273,6 +273,7 @@ builder.Services.AddScoped<IKveUvDataService, KveUvDataService>();
 builder.Services.AddScoped<IKveUvWwDataService, KveUvWwDataService>();
 builder.Services.AddScoped<IKveWwDataService, KveWwDataService>();
 builder.Services.AddScoped<IKvrDataService, KvrDataService>();
+builder.Services.AddScoped<IKvwDataService, KvwDataService>();
 
 
 #endregion

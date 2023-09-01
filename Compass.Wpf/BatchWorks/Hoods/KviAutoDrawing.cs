@@ -42,6 +42,10 @@ public class KviAutoDrawing : BaseAutoDrawing, IKviAutoDrawing
                 case "KVI_555":
                     Kvi555(data,swModelTop,swAssyTop,suffix);
                     break;
+                case "KVI_FR_555":
+                    KviFr555(data, swModelTop, swAssyTop, suffix);
+                    break;
+
                 case "KVI_450":
                     Kvi450(data, swModelTop, swAssyTop, suffix);
                     break;
@@ -99,6 +103,40 @@ public class KviAutoDrawing : BaseAutoDrawing, IKviAutoDrawing
         #endregion
     }
 
+    private void KviFr555(KviData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix)
+    {
+        #region 计算中间值与顶层操作
+        //计算烟罩净长度，计算烟罩净深度
+        var netLength = data.SidePanel==SidePanel_e.左||data.SidePanel==SidePanel_e.右 ? data.Length-50d : data.SidePanel==SidePanel_e.双 ? data.Length-100 : data.Length;
+        //赋值为0时为均分一半，否则需要赋值
+        var netMiddleToRight = data.MiddleToRight.Equals(0) ? netLength/2d : data.MiddleToRight;
+        var netWidth = data.BackCj ? data.Width - 90 : data.Width;
+
+        //烟罩宽度，考虑是否右BackCj
+        swModelTop.ChangeDim("Width@DistanceWidth", netWidth);
+        #endregion
+
+        #region  Exhaust_KV_FR_555，KVFR555排风装配
+        ExhaustService.KvFr555(swAssyTop, suffix, netLength, data.Width, data.Height, data.SidePanel, UvLightType_e.NA, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
+        #endregion
+
+        #region SidePanel_Fr,大侧板装配
+        SidePanelService.SidePanelFr(swAssyTop, suffix, data.SidePanel, netLength, data.Width, data.Height, data.BackCj, ExhaustType_e.KV);
+        #endregion
+
+        #region MidRoof_Fs,MidRoof装配
+        MidRoofService.MidRoofFr(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.KV, UvLightType_e.NA, false, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
+        #endregion
+
+        #region Supply_I_FR_555,IFR555新风装配
+        SupplyService.IFr555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, UvLightType_e.NA, false, data.Marvel, data.LedLogo, data.WaterCollection);
+        #endregion
+
+        #region BackCj_Fr,BackCj装配
+        SupplyService.BackCjFr(swAssyTop, suffix, data.BackCj, netLength, data.Height, data.CjSpigotToRight);
+        #endregion
+
+    }
     private void Kvi450(KviData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix)
     {
         #region 计算中间值与顶层操作

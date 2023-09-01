@@ -260,25 +260,33 @@ public class SidePanelService : BaseSwService, ISidePanelService
         swModelLevel2.ChangeDim("Length@SketchBase", width);
         swModelLevel2.ChangeDim("Height@SketchBase", height);
         swModelLevel2.ChangeDim("End@CjSide", sideCjEnd);
-        //if (backCj) swCompLevel2.UnSuppress("BackCj");
-        //else swCompLevel2.Suppress("BackCj");
+        if (backCj)
+        {
+            swCompLevel2.UnSuppress("MoveFaceBackCj");
+            swCompLevel2.UnSuppress("BackCj");
+        }
+        else
+        {
+            swCompLevel2.Suppress("MoveFaceBackCj");
+            swCompLevel2.Suppress("BackCj");
+        }
     }
     private void FNHS0075(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, bool backCj)
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", width);
         swModelLevel2.ChangeDim("Height@SketchBase", height);
+
         //swCompLevel2.Suppress("FI555");
         //swCompLevel2.Suppress("FI450");
         //swCompLevel2.Suppress("FI400");
         //if (height.Equals(555d)||height.Equals(650d)) swCompLevel2.UnSuppress("FI555");
         //else if (height.Equals(450d)) swCompLevel2.UnSuppress("FI450");
         //else if (height.Equals(400d)) swCompLevel2.UnSuppress("FI400");
-        //if (backCj) swCompLevel2.UnSuppress("BackCj");
-        //else swCompLevel2.Suppress("BackCj");
+
+        if (backCj) swCompLevel2.UnSuppress("BackCj");
+        else swCompLevel2.Suppress("BackCj");
         //todo:处理MidRoof铆钉孔
-
-
 
     }
 

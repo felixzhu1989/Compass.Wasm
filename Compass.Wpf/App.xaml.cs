@@ -186,7 +186,7 @@ public partial class App : PrismApplication
         containerRegistry.Register<IKveUvDataService, KveUvDataService>();
         containerRegistry.Register<IKveUvWwDataService, KveUvWwDataService>();
         containerRegistry.Register<IKveWwDataService, KveWwDataService>();
-
+        containerRegistry.Register<IKvwDataService, KvwDataService>();
 
 
         #endregion

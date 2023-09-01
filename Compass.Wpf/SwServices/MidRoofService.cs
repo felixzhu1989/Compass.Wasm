@@ -33,6 +33,26 @@ public class MidRoofService : BaseSwService, IMidRoofService
             swAssyLevel1.Suppress(suffix, "FNHM0006-2");
             swAssyLevel1.Suppress(suffix, "FNHM0006-1");
         }
+        //2023.08.29,有筒灯时,UV时或者Marvel时需要安装UVC的支架，长度为宽度+40
+        if (lightType is LightType_e.筒灯)
+        {
+            if (uvLightType is UvLightType_e.NA && !marvel)
+            {
+                swAssyLevel1.Suppress(suffix, "FNHM0045-2");
+                swAssyLevel1.Suppress(suffix, "FNHM0045-1");
+            }
+            else
+            {
+                swAssyLevel1.UnSuppress(suffix, "FNHM0045-2", Aggregator);
+                FNHM0045(swAssyLevel1, suffix, "FNHM0045-1", netWidth);
+            }
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffix, "FNHM0045-2");
+            swAssyLevel1.Suppress(suffix, "FNHM0045-1");
+        }
+        
 
         //槽钢长度
         swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, "2900100001-1", Aggregator);
@@ -55,18 +75,24 @@ public class MidRoofService : BaseSwService, IMidRoofService
             case LightType_e.长灯:
                 swAssyLevel1.UnSuppress(suffix, "5201020405-1",Aggregator);
                 swAssyLevel1.Suppress(suffix, "5201020404-1");
+                swAssyLevel1.Suppress(suffix, "FNHM0044-1");
                 break;
             case LightType_e.短灯:
                 swAssyLevel1.UnSuppress(suffix, "5201020404-1", Aggregator);
                 swAssyLevel1.Suppress(suffix, "5201020405-1");
+                swAssyLevel1.Suppress(suffix, "FNHM0044-1");
                 break;
-            case LightType_e.筒灯60://todo:等筒灯建立模型
+            case LightType_e.筒灯:
+                swAssyLevel1.Suppress(suffix, "5201020404-1");
+                swAssyLevel1.Suppress(suffix, "5201020405-1");
+                swAssyLevel1.UnSuppress(suffix, "FNHM0044-1", Aggregator);
+                break;
             case LightType_e.NA:
-            case LightType_e.筒灯140:
             case LightType_e.飞利浦三防灯:
             default:
                 swAssyLevel1.Suppress(suffix, "5201020404-1");
                 swAssyLevel1.Suppress(suffix, "5201020405-1");
+                swAssyLevel1.Suppress(suffix, "FNHM0044-1");
                 break;
         }
     }
@@ -201,38 +227,23 @@ public class MidRoofService : BaseSwService, IMidRoofService
         #endregion
 
         #region 灯具选项
-        swCompLevel2.Suppress("Led60");
-        swCompLevel2.Suppress("LPatternLed60");
-        swCompLevel2.Suppress("Led140");
-        swCompLevel2.Suppress("LPatternLed140");
+        swCompLevel2.Suppress("SpotLight");
+        swCompLevel2.Suppress("LPatternSpotLight");
         swCompLevel2.Suppress("FsLong");
         swCompLevel2.Suppress("FsShort");
         var toMiddle = spotLightDistance * (spotLightNumber / 2d - 1d) + spotLightDistance / 2d;
         switch (lightType)
         {
-            case LightType_e.筒灯60:
+            case LightType_e.筒灯:
                 {
-                    swCompLevel2.UnSuppress("Led60");
-                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed60", 0d);
+                    swCompLevel2.UnSuppress("SpotLight");
+                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", 0d);
                     else
                     {
-                        swModelLevel2.ChangeDim("ToMiddle@SketchLed60", toMiddle);
-                        swCompLevel2.UnSuppress("LPatternLed60");
-                        swModelLevel2.ChangeDim("Number@LPatternLed60", spotLightNumber);
-                        swModelLevel2.ChangeDim("Dis@LPatternLed60", spotLightDistance);
-                    }
-                    break;
-                }
-            case LightType_e.筒灯140:
-                {
-                    swCompLevel2.UnSuppress("Led140");
-                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed140", 0d);
-                    else
-                    {
-                        swModelLevel2.ChangeDim("ToMiddle@SketchLed140", toMiddle);
-                        swCompLevel2.UnSuppress("LPatternLed140");
-                        swModelLevel2.ChangeDim("Number@LPatternLed140", spotLightNumber);
-                        swModelLevel2.ChangeDim("Dis@LPatternLed140", spotLightDistance);
+                        swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", toMiddle);
+                        swCompLevel2.UnSuppress("LPatternSpotLight");
+                        swModelLevel2.ChangeDim("Number@LPatternSpotLight", spotLightNumber);
+                        swModelLevel2.ChangeDim("Dis@LPatternSpotLight", spotLightDistance);
                     }
                     break;
                 }
@@ -367,6 +378,12 @@ public class MidRoofService : BaseSwService, IMidRoofService
         swModelLevel2.ChangeDim("Length@Base-Flange", netWidth-4d);
     }
 
+
+    private void FNHM0045(AssemblyDoc swAssyLevel1, string suffix, string partName, double netWidth)
+    {
+        swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@Base-Flange", netWidth+40d);
+    }
     #endregion
 
     #region 法国烟罩
@@ -466,40 +483,24 @@ public class MidRoofService : BaseSwService, IMidRoofService
 
         var toFront = lightToFront==0 ? netWidth/2d : lightToFront - 360d;
 
-        swCompLevel2.Suppress("Led60");
-        swCompLevel2.Suppress("LPatternLed60");
-        swCompLevel2.Suppress("Led140");
-        swCompLevel2.Suppress("LPatternLed140");
+        swCompLevel2.Suppress("SpotLight");
+        swCompLevel2.Suppress("LPatternSpotLight");
         swCompLevel2.Suppress("FsLong");
         swCompLevel2.Suppress("FsShort");
         var toMiddle = spotLightDistance * (spotLightNumber / 2d - 1d) + spotLightDistance / 2d;
         switch (lightType)
         {
-            case LightType_e.筒灯60:
+            case LightType_e.筒灯:
                 {
-                    swCompLevel2.UnSuppress("Led60");
-                    swModelLevel2.ChangeDim("ToFront@SketchLed60", toFront);
-                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed60", 0d);
+                    swCompLevel2.UnSuppress("SpotLight");
+                    swModelLevel2.ChangeDim("ToFront@SketchSpotLight", toFront);
+                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", 0d);
                     else
                     {
-                        swModelLevel2.ChangeDim("ToMiddle@SketchLed60", toMiddle);
-                        swCompLevel2.UnSuppress("LPatternLed60");
-                        swModelLevel2.ChangeDim("Number@LPatternLed60", spotLightNumber);
-                        swModelLevel2.ChangeDim("Dis@LPatternLed60", spotLightDistance);
-                    }
-                    break;
-                }
-            case LightType_e.筒灯140:
-                {
-                    swCompLevel2.UnSuppress("Led140");
-                    swModelLevel2.ChangeDim("ToFront@SketchLed140", toFront);
-                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchLed140", 0d);
-                    else
-                    {
-                        swModelLevel2.ChangeDim("ToMiddle@SketchLed140", toMiddle);
-                        swCompLevel2.UnSuppress("LPatternLed140");
-                        swModelLevel2.ChangeDim("Number@LPatternLed140", spotLightNumber);
-                        swModelLevel2.ChangeDim("Dis@LPatternLed140", spotLightDistance);
+                        swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", toMiddle);
+                        swCompLevel2.UnSuppress("LPatternSpotLight");
+                        swModelLevel2.ChangeDim("Number@LPatternSpotLight", spotLightNumber);
+                        swModelLevel2.ChangeDim("Dis@LPatternSpotLight", spotLightDistance);
                     }
                     break;
                 }

@@ -100,7 +100,7 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         #endregion
 
         #region Supply_F_555,F555新风装配
-        SupplyService.F555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis);
+        SupplyService.F555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis);
         #endregion
 
         #region BackCj_Fs,BackCj装配
@@ -135,11 +135,11 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         #endregion
 
         #region Supply_F_FR_555,FFR555新风装配
-        SupplyService.FFr555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis);
+        SupplyService.FFr555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis);
         #endregion
 
-        #region BackCj_Fs,BackCj装配
-        //SupplyService.BackCj(swAssyTop, suffix, data.BackCj, netLength, data.Height, data.CjSpigotToRight);
+        #region BackCj_Fr,BackCj装配
+        SupplyService.BackCjFr(swAssyTop, suffix, data.BackCj, netLength, data.Height, data.CjSpigotToRight);
         #endregion
     }
 
@@ -194,7 +194,7 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         swModelTop.ChangeDim("Width@DistanceWidth", netWidth);
         #endregion
 
-        #region  Exhaust_UV_555，KV555排风装配
+        #region  Exhaust_UV_555，UV555排风装配
         ExhaustService.Uv450(swAssyTop, suffix, netLength, data.Height, data.SidePanel, data.UvLightType, netMiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
         #endregion
 
@@ -242,7 +242,7 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         #endregion
 
         #region Supply_F_HW_650,F555新风装配
-        SupplyService.FHw650(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.KV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis);
+        SupplyService.FHw650(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis);
         #endregion
 
     }

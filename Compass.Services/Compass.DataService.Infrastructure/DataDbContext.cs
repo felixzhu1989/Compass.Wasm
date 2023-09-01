@@ -1,4 +1,5 @@
 ﻿using Compass.Wasm.Shared.Data;
+using Compass.Wasm.Shared.Data.Ceilings;
 using Compass.Wasm.Shared.Data.Hoods;
 using Compass.Wasm.Shared.Data.UL;
 using MediatR;
@@ -59,9 +60,22 @@ public class DataDbContext : BaseDbContext
     public DbSet<KveUvData> KveUvData { get; set; }
     public DbSet<KveUvWwData> KveUvWwData { get; set; }
     public DbSet<KveWwData> KveWwData { get; set; }
+    public DbSet<KvwData> KvwData { get; set; }
+
     #endregion
 
+    #region 天花烟罩
+    public DbSet<KcjData> KcjData { get; set; }
 
+
+
+
+
+
+
+
+
+    #endregion
 
     public DataDbContext(DbContextOptions<DataDbContext> options, IMediator? mediator) : base(options, mediator)
     {
