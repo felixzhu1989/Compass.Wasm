@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Compass.Andro.Views.MainPage"
+             Title="{Binding Title}">
+
+    <StackLayout HorizontalOptions="CenterAndExpand">
+        <Button Text="扫码"
+                Command="{Binding ScannerCommand}"></Button>
+        <Label Text="{Binding Code}"
+               TextColor="Red"
+               HorizontalOptions="Center" />
+        <Button Text="上传照片"
+                Command="{Binding UploadCommand}"></Button>
+        <Label Text="{Binding ImagePath}"
+               TextColor="Red"
+               HorizontalOptions="Center" />
+        <Image Source="{Binding ImageFile}" HorizontalOptions="CenterAndExpand"></Image>
+    </StackLayout>
+
+</ContentPage>

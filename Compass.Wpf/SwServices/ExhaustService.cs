@@ -584,6 +584,56 @@ public class ExhaustService : BaseSwService, IExhaustService
         }
     }
 
+    private void KsaFilterHw(AssemblyDoc swAssyLevel1, string suffix, double length, double height, bool waterCollection, SidePanel_e sidePanel, string leftPart, string rightPart, string specialPart)
+    {
+        //KSA数量，KSA侧板长度(以全长计算)
+        const double ksaLength = 498d;
+        const double ngKsaSideLength = 2d;
+        const double minKsaSideLength = 12d;
+        const double goodKsaSideLength = 25d;
+        int ksaNo = (int)((length + 0.5d) / ksaLength);
+        double ksaSideLength = (length - ksaNo * ksaLength) / 2d;
+
+        ModelDoc2 swModelLevel2;
+        Component2 swCompLevel2;
+        switch (ksaSideLength)
+        {
+            case <= ngKsaSideLength / 2d:
+                swAssyLevel1.Suppress(suffix, leftPart);
+                swAssyLevel1.Suppress(suffix, rightPart);
+                swAssyLevel1.Suppress(suffix, specialPart);
+                break;
+            case < minKsaSideLength / 2d and > ngKsaSideLength/2d:
+                swAssyLevel1.Suppress(suffix, leftPart);
+                swAssyLevel1.Suppress(suffix, rightPart);
+                swAssyLevel1.UnSuppress(out swModelLevel2, suffix, specialPart, Aggregator);
+                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2d);
+                break;
+            case < goodKsaSideLength and >= minKsaSideLength/2d:
+                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
+                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2);
+                //if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+                //else swCompLevel2.Suppress("DrainChannel");
+                swAssyLevel1.Suppress(suffix, rightPart);
+                swAssyLevel1.Suppress(suffix, specialPart);
+
+                break;
+            default:
+                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
+                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
+                //if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+                //else swCompLevel2.Suppress("DrainChannel");
+
+                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
+                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
+                //if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+                //else swCompLevel2.Suppress("DrainChannel");
+                swAssyLevel1.Suppress(suffix, specialPart);
+                break;
+        }
+    }
+
+
     private void ExhaustSide(AssemblyDoc swAssyLevel1, string suffix, bool ansul, SidePanel_e sidePanel, string leftPart, string rightPart)
     {
         if (ansul)
@@ -1778,7 +1828,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         ExhaustSpigotHw(swAssyLevel2, suffix, length, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotHeight, exhaustSpigotDis, marvel, ansul, exhaustType);
 
         //KSA侧边
-        KsaFilter(swAssyLevel1, suffix, length, height, waterCollection, sidePanel, "FNHE0160-1", "FNHE0161-1", "FNHE0170-1");
+        KsaFilterHw(swAssyLevel1, suffix, length, height, waterCollection, sidePanel, "FNHE0160-1", "FNHE0161-1", "FNHE0170-1");
 
         //排风三角板
         //ExhaustSide(swAssyLevel1, suffix, ansul, sidePanel, "FNHE0185-1", "FNHE0185-2");
@@ -2243,7 +2293,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         ExhaustSpigotHw(swAssyLevel2, suffix, length, middleToRight, exhaustSpigotNumber, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotHeight, exhaustSpigotDis, marvel, ansul, exhaustType);
 
         //KSA侧板，水洗烟罩在三角板内侧，因此长度减去3，三角板的厚度
-        KsaFilter(swAssyLevel1, suffix, length-3d, height, waterCollection, sidePanel, "FNHE0160-1", "FNHE0161-1", "FNHE0170-1");
+        KsaFilterHw(swAssyLevel1, suffix, length-3d, height, waterCollection, sidePanel, "FNHE0160-1", "FNHE0161-1", "FNHE0170-1");
 
         //Ksa阵列，水洗烟罩在三角板内侧，因此长度减去3，三角板的厚度
         Ksa(swAssyLevel1, length-3d);

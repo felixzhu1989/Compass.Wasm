@@ -1,0 +1,14 @@
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\bin\Release\netstandard2.0\Compass.Andro.deps.json
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\bin\Release\netstandard2.0\Compass.Andro.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\bin\Release\netstandard2.0\Compass.Andro.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Compass.Andro.csproj.AssemblyReference.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Compass.Andro.GeneratedMSBuildEditorConfig.editorconfig
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\App.xaml.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Views\MainPage.xaml.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Compass.Andro.AssemblyInfoInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Compass.Andro.AssemblyInfo.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Compass.Andro.csproj.CoreCompileInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\XamlC.stamp
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Compass.Andro.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Compass.Andro.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Release\netstandard2.0\Views\ScannerPage.xaml.g.cs

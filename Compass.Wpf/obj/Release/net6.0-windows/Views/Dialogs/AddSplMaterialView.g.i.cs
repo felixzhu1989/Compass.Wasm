@@ -57,7 +57,7 @@ namespace Compass.Wpf.Views.Dialogs {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Compass.Wpf;component/views/dialogs/addsplmaterialview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Compass.Wpf;V1.0.0.0;component/views/dialogs/addsplmaterialview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Dialogs\AddSplMaterialView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

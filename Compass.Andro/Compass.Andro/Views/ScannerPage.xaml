@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Compass.Andro.Views.ScannerPage"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             Title="{Binding Title}">
+
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <zxing:ZXingScannerView Grid.Row="0" Grid.RowSpan="3" x:Name="_scanView"
+                                OnScanResult="Handle_OnScanResult"
+                                IsScanning="true"/>
+        <BoxView Grid.Row="0" Color="Black" Opacity="0.5"/>
+        <BoxView Grid.Row="1" Color="Red" Opacity="0.5" HeightRequest="1" VerticalOptions="Center"/>
+        <BoxView Grid.Row="2" Color="Black" Opacity="0.5"/>
+        <Label Grid.Row="2" Margin="5" Text="请对准二维码进行扫描" TextColor="LawnGreen" HorizontalOptions="Center"/>
+    </Grid>
+</ContentPage>

@@ -10,11 +10,13 @@ using Compass.Wasm.Server.Services.Identities;
 using Compass.Wasm.Server.ExportExcel;
 using Compass.Wasm.Server.Services.Categories;
 using Compass.Wasm.Server.Services.Data;
+using Compass.Wasm.Server.Services.Data.Ceilings;
 using Compass.Wasm.Server.Services.Data.Hoods;
 using Compass.Wasm.Server.Services.Data.UL;
 using Compass.Wasm.Server.Services.Plans;
 using Compass.Wasm.Server.Services.Projects;
 using Compass.Wasm.Server.Services.Todos;
+using Compass.Wasm.Shared.Data.Ceilings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -241,7 +243,8 @@ builder.Services.AddScoped<DataDomainService>();
 builder.Services.AddScoped<IDataRepository, DataRepository>();
 
 builder.Services.AddScoped<IModuleDataService, ModuleDataService>();
-#region HoodService
+
+#region HoodService普通烟罩数据服务
 builder.Services.AddScoped<IKviDataService,KviDataService>();
 builder.Services.AddScoped<IKvfDataService,KvfDataService>();
 builder.Services.AddScoped<IUviDataService,UviDataService>();
@@ -262,7 +265,7 @@ builder.Services.AddScoped<IKchDataService, KchDataService>();
 
 #endregion
 
-#region ULService
+#region ULService UL烟罩数据服务
 builder.Services.AddScoped<IChDataService, ChDataService>();
 builder.Services.AddScoped<IKvcDataService, KvcDataService>();
 builder.Services.AddScoped<IKvcUvDataService, KvcUvDataService>();
@@ -277,6 +280,15 @@ builder.Services.AddScoped<IKvwDataService, KvwDataService>();
 
 
 #endregion
+
+#region CeilingService天花烟罩数据服务
+builder.Services.AddScoped<IKcjDataService,KcjDataService>();
+
+
+
+#endregion
+
+
 
 #endregion
 

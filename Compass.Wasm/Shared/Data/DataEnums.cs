@@ -6,7 +6,7 @@ public enum SidePanel_e
 }
 public enum LightType_e
 {
-    NA,长灯, 短灯, 筒灯,飞利浦三防灯
+    NA,长灯, 短灯, 筒灯,HCL,飞利浦三防灯
 }
 public enum UvLightType_e
 {
@@ -55,7 +55,7 @@ public enum ExhaustHeight_e
 
 public enum SupplyType_e
 {
-    NA,I,F,Rectangle,Round
+    NA,I,F,方形,圆形
 }
 
 
@@ -84,5 +84,9 @@ public enum HclSide_e
 {
     NA, 无HCL侧板, 左HCL侧板, 右HCL侧板, 两HCL侧板
 }
+
+
+
+
 
 #endregion

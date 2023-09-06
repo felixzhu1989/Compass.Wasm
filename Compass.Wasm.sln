@@ -49,6 +49,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Update", "Compass.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Test", "Compass.Test\Compass.Test.csproj", "{50EE9B80-780A-4E6D-A785-F364B355164D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.Andro", "Compass.Andro\Compass.Andro\Compass.Andro.csproj", "{F46DCA76-A922-4C3A-952E-EC5D28233601}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.Andro.Android", "Compass.Andro\Compass.Andro.Android\Compass.Andro.Android.csproj", "{3E3223AE-6D81-4DCF-9FCF-6B8FEE9A6E65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -143,6 +147,16 @@ Global
 		{50EE9B80-780A-4E6D-A785-F364B355164D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50EE9B80-780A-4E6D-A785-F364B355164D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50EE9B80-780A-4E6D-A785-F364B355164D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F46DCA76-A922-4C3A-952E-EC5D28233601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F46DCA76-A922-4C3A-952E-EC5D28233601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F46DCA76-A922-4C3A-952E-EC5D28233601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F46DCA76-A922-4C3A-952E-EC5D28233601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E3223AE-6D81-4DCF-9FCF-6B8FEE9A6E65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E3223AE-6D81-4DCF-9FCF-6B8FEE9A6E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E3223AE-6D81-4DCF-9FCF-6B8FEE9A6E65}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3E3223AE-6D81-4DCF-9FCF-6B8FEE9A6E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E3223AE-6D81-4DCF-9FCF-6B8FEE9A6E65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E3223AE-6D81-4DCF-9FCF-6B8FEE9A6E65}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

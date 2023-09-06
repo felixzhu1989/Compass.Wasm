@@ -84,7 +84,7 @@ public class KcjData : ModuleData
 
     #endregion
 
-    #region 灯具
+    #region 灯具，判断KCJ265和290没有的参数
     private CeilingLightType_e ceilingLightType;
     public CeilingLightType_e CeilingLightType
     {
@@ -118,11 +118,8 @@ public class KcjData : ModuleData
         get => hclRight;
         set { hclRight = value; OnPropertyChanged(); }
     }
-
-
-
-
     #endregion
+
     #region 其他选项
     private bool domeSsp;
     public bool DomeSsp
@@ -179,9 +176,52 @@ public class KcjData : ModuleData
         get => ansulDetector;
         set { ansulDetector = value; OnPropertyChanged(); }
     }
-
     #endregion
 
+    #region Ansul探测器，判断双排风时需要探测器参数
+    private AnsulDetectorEnd_e ansulDetectorEnd;
+    public AnsulDetectorEnd_e AnsulDetectorEnd
+    {
+        get => ansulDetectorEnd;
+        set { ansulDetectorEnd = value; OnPropertyChanged(); }
+    }//末端探测器位置
+    private int ansulDetectorNumber;
+    public int AnsulDetectorNumber
+    {
+        get => ansulDetectorNumber;
+        set { ansulDetectorNumber = value; OnPropertyChanged(); }
+    }//探测器数量
+    private double ansulDetectorDis1;
+    public double AnsulDetectorDis1
+    {
+        get => ansulDetectorDis1;
+        set { ansulDetectorDis1 = value; OnPropertyChanged(); }
+    }
+    private double ansulDetectorDis2;
+    public double AnsulDetectorDis2
+    {
+        get => ansulDetectorDis2;
+        set { ansulDetectorDis2 = value; OnPropertyChanged(); }
+    }
+    private double ansulDetectorDis3;
+    public double AnsulDetectorDis3
+    {
+        get => ansulDetectorDis3;
+        set { ansulDetectorDis3 = value; OnPropertyChanged(); }
+    }
+    private double ansulDetectorDis4;
+    public double AnsulDetectorDis4
+    {
+        get => ansulDetectorDis4;
+        set { ansulDetectorDis4 = value; OnPropertyChanged(); }
+    }
+    private double ansulDetectorDis5;
+    public double AnsulDetectorDis5
+    {
+        get => ansulDetectorDis5;
+        set { ansulDetectorDis5 = value; OnPropertyChanged(); }
+    }
+    #endregion
 
     public override bool Accept(string model)
     {

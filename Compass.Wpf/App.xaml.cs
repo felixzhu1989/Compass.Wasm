@@ -1,18 +1,22 @@
 ﻿
 using Compass.Wpf.ApiService;
 using Compass.Wpf.ApiServices.Categories;
+using Compass.Wpf.ApiServices.Ceilings;
 using Compass.Wpf.ApiServices.Hoods;
 using Compass.Wpf.ApiServices.Plans;
 using Compass.Wpf.ApiServices.Projects;
 using Compass.Wpf.ApiServices.Todos;
 using Compass.Wpf.ApiServices.UL;
 using Compass.Wpf.BatchWorks;
+using Compass.Wpf.BatchWorks.Ceilings;
 using Compass.Wpf.BatchWorks.Hoods;
 using Compass.Wpf.SwServices;
 using Compass.Wpf.ViewModels;
+using Compass.Wpf.ViewModels.Ceilings;
 using Compass.Wpf.ViewModels.Dialogs;
 using Compass.Wpf.ViewModels.Hoods;
 using Compass.Wpf.Views;
+using Compass.Wpf.Views.Ceilings;
 using Compass.Wpf.Views.Dialogs;
 using Compass.Wpf.Views.Hoods;
 
@@ -149,7 +153,7 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<CmodiDataView,CmodiDataViewModel>();
         containerRegistry.RegisterForNavigation<CmodfDataView,CmodfDataViewModel>();
 
-
+        containerRegistry.RegisterForNavigation<KcjDataView,KcjDataViewModel>();
         
 
         #endregion
@@ -188,6 +192,11 @@ public partial class App : PrismApplication
         containerRegistry.Register<IKveWwDataService, KveWwDataService>();
         containerRegistry.Register<IKvwDataService, KvwDataService>();
 
+        //天花烟罩
+        containerRegistry.Register<IKcjDataService,KcjDataService>();
+
+
+
 
         #endregion
 
@@ -206,17 +215,17 @@ public partial class App : PrismApplication
         containerRegistry.Register<ICmodiAutoDrawing, CmodiAutoDrawing>();
         containerRegistry.Register<ICmodfAutoDrawing, CmodfAutoDrawing>();
 
+        containerRegistry.Register<IKcjAutoDrawing,KcjAutoDrawing>();
+
 
         #endregion
 
         #region 制图代码库服务
-        containerRegistry.Register<ISharePartService, SharePartService>();
         containerRegistry.Register<IExhaustService, ExhaustService>();
         containerRegistry.Register<ISupplyService, SupplyService>();
         containerRegistry.Register<ISidePanelService, SidePanelService>();
         containerRegistry.Register<IMidRoofService, MidRoofService>();
-
-
+        containerRegistry.Register<ICeilingService, CeilingService>();
 
 
 

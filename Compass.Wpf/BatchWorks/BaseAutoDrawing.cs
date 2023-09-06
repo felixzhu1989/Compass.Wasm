@@ -16,6 +16,7 @@ public abstract class BaseAutoDrawing
     public readonly ISidePanelService SidePanelService;
     public readonly IMidRoofService MidRoofService;
     public readonly ISupplyService SupplyService;
+    public readonly ICeilingService CeilingService;
     public readonly IEventAggregator Aggregator;
 
     protected BaseAutoDrawing(IContainerProvider provider)
@@ -24,6 +25,7 @@ public abstract class BaseAutoDrawing
         SidePanelService = provider.Resolve<ISidePanelService>();
         MidRoofService = provider.Resolve<IMidRoofService>();
         SupplyService = provider.Resolve<ISupplyService>();
+        CeilingService = provider.Resolve<ICeilingService>();
         Aggregator = provider.Resolve<IEventAggregator>();
         SwApp = SwUtility.ConnectSw(Aggregator);
     }

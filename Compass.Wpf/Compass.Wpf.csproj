@@ -147,9 +147,4 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\Ceilings\" />
-    <Folder Include="Views\Ceilings\" />
-  </ItemGroup>
-
 </Project>

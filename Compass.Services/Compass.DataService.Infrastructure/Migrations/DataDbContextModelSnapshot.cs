@@ -91,6 +91,41 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetector");
 
+                    b.Property<double>("AnsulDetectorDis1")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis1");
+
+                    b.Property<double>("AnsulDetectorDis2")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis2");
+
+                    b.Property<double>("AnsulDetectorDis3")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis3");
+
+                    b.Property<double>("AnsulDetectorDis4")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis4");
+
+                    b.Property<double>("AnsulDetectorDis5")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis5");
+
+                    b.Property<int>("AnsulDetectorEnd")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("AnsulDetectorEnd");
+
+                    b.Property<int>("AnsulDetectorNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("AnsulDetectorNumber");
+
                     b.Property<int>("AnsulSide")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
@@ -461,30 +496,37 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KviData");
 
                     b.Property<double>("AnsulDetectorDis1")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDetectorDis1");
 
                     b.Property<double>("AnsulDetectorDis2")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDetectorDis2");
 
                     b.Property<double>("AnsulDetectorDis3")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDetectorDis3");
 
                     b.Property<double>("AnsulDetectorDis4")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDetectorDis4");
 
                     b.Property<double>("AnsulDetectorDis5")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDetectorDis5");
 
                     b.Property<int>("AnsulDetectorEnd")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetectorEnd");
 
                     b.Property<int>("AnsulDetectorNumber")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("AnsulDetectorNumber");
 

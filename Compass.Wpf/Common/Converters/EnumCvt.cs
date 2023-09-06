@@ -37,3 +37,10 @@ public class AnsulDetectorEndCvt : EnumCvt<AnsulDetectorEnd_e> { }
 
 public class UvLightTypeCvt : EnumCvt<UvLightType_e> { }
 
+
+public class FilterTypeCvt:EnumCvt<FilterType_e>{}
+public class FilterSideCvt : EnumCvt<FilterSide_e> {}
+
+public class CeilingLightTypeCvt : EnumCvt<CeilingLightType_e> { }
+public class LightCableCvt : EnumCvt<LightCable_e> { }
+public class HclSideCvt : EnumCvt<HclSide_e> { }
