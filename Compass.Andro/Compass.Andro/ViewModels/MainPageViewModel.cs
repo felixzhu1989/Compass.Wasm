@@ -1,45 +1,59 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
-using Prism.Navigation.Xaml;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+using Compass.Andro.ApiService;
+using Prism.Ioc;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using ZXing.Net.Mobile.Forms;
+using System.Collections.ObjectModel;
 
 namespace Compass.Andro.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
         #region ctor
-        public MainPageViewModel(INavigationService navigationService)
+        private readonly IFileUploadService _fileUploadService;
+        public MainPageViewModel(INavigationService navigationService, IContainerProvider provider)
             : base(navigationService)
         {
+            _fileUploadService = provider.Resolve<IFileUploadService>();
             Title = "Main Page";
             ScannerCommand = new DelegateCommand(Scanner);
-            UploadCommand = new DelegateCommand(Upload);
+            UploadCommand = new DelegateCommand<string>(Upload);
+            MultiImagesCommand = new DelegateCommand(MultiImages);
+            PdfFileCommand = new DelegateCommand(PdfFile);
+            Images = new ObservableCollection<ImageSource>();
+            LogoImage=ImageSource.FromResource("Compass.Andro.Images.halton_logo.png");
         }
+
+
+
         public DelegateCommand ScannerCommand { get; }
-        public DelegateCommand UploadCommand { get; }
+        public DelegateCommand<string> UploadCommand { get; }
+        public DelegateCommand MultiImagesCommand { get; }
+        public DelegateCommand PdfFileCommand { get; }
         #endregion
 
         #region 属性
+        private ImageSource logoImage;
+        public ImageSource LogoImage
+        {
+            get => logoImage;
+            set => SetProperty(ref logoImage, value);
+        }
         private string code;
         public string Code
         {
             get => code;
             set => SetProperty(ref code, value);
         }
-        private string imagePath;
-        public string ImagePath
+        private string uploadStatus;
+        public string UploadStatus
         {
-            get => imagePath;
-            set => SetProperty(ref imagePath, value);
+            get => uploadStatus;
+            set => SetProperty(ref uploadStatus, value);
         }
         private ImageSource imageFile;
         public ImageSource ImageFile
@@ -47,26 +61,104 @@ namespace Compass.Andro.ViewModels
             get => imageFile;
             set => SetProperty(ref imageFile, value);
         }
+        private ObservableCollection<ImageSource> images;
+        public ObservableCollection<ImageSource> Images
+        {
+            get => images;
+            set => SetProperty(ref images, value);
+        }
         #endregion
-
+        /// <summary>
+        /// 扫描
+        /// </summary>
         private async void Scanner()
         {
-           await NavigationService.NavigateAsync("ScannerPage");
+            await NavigationService.NavigateAsync("ScannerPage");
 
         }
-        private async void Upload()
+        /// <summary>
+        /// 上传图片
+        /// </summary>
+        private async void Upload(string obj)
         {
-            var photo = await MediaPicker.CapturePhotoAsync();
-            if(photo==null)return;
-            var type= photo.GetType();
-            ImagePath = Path.Combine("/storage/emulated/0/Pictures", photo.FileName);
-            using (var stream=await photo.OpenReadAsync())
-            using (var newStream = File.OpenWrite(ImagePath))
+            FileResult photo = null;
+            switch (obj)
             {
-                await stream.CopyToAsync(newStream);
+                case "CapturePhoto":
+                    photo = await MediaPicker.CapturePhotoAsync();
+                    //组合文件的地址
+                    var localPath = Path.Combine("/storage/emulated/0/Pictures", photo.FileName);
+                    //读取文件流，将图片保存到本地
+                    using (var stream = await photo.OpenReadAsync())
+                    using (var newStream = File.OpenWrite(localPath))
+                    {
+                        await stream.CopyToAsync(newStream);//将文件保存到目标地址
+                        //stream.Position = 0;//重置流的读取位置
+                        //ImageFile =ImageSource.FromStream(() => stream);//给图片的ImageSource读取流
+                    }
+                    break;
+                case "PickPhoto":
+                    photo = await MediaPicker.PickPhotoAsync();
+                    break;
             }
-            ImageFile = ImageSource.FromFile(ImagePath);
+            if (photo==null) return;
+
+            Debug.Print(photo.FullPath);
+            //上传到WebApi服务器
+            var result = await _fileUploadService.Upload(photo.FullPath);
+            UploadStatus = $"文件上传成功，地址：{result.RemoteUrl}";
+
+            //using (var stream = await photo.OpenReadAsync())
+            //{
+            //    ImageFile =ImageSource.FromStream(() => stream);//给图片的ImageSource读取流
+            //}
+            //ImageFile = ImageSource.FromFile(photo.FullPath);//从文件读取
+            ImageFile=ImageSource.FromUri(result.RemoteUrl);//从网络地址读取,如果图片太大会导致很慢
+
         }
+        /// <summary>
+        /// 选择多张图片展示
+        /// </summary>
+        private async void MultiImages()
+        {
+            //选择多个文件
+            var pickResult = await FilePicker.PickMultipleAsync(
+                new PickOptions
+                {
+                    FileTypes = FilePickerFileType.Images,
+                    PickerTitle = "Pick image(s)"
+                });
+            if (pickResult==null) return;
+            Images.Clear();
+            foreach (var image in pickResult)
+            {
+                var bytes = File.ReadAllBytes(image.FullPath);
+                Images.Add(ImageSource.FromStream(() => new MemoryStream(bytes)));
+            }
+
+            //选择单个文件添加到列表
+            /*var photo = await MediaPicker.PickPhotoAsync();
+            var bytes = File.ReadAllBytes(photo.FullPath);
+            Images.Add(ImageSource.FromStream(() => new MemoryStream(bytes)));*/
+
+        }
+        /// <summary>
+        /// 选择Pdf文件
+        /// </summary>
+        private async void PdfFile()
+        {
+            var customFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>{{ DevicePlatform.Android, new[] { "application/pdf" } } });
+
+            var pickResult = await FilePicker.PickAsync(
+                new PickOptions
+                {
+                    FileTypes = customFileType,
+                    PickerTitle = "Pick Pdf"
+                });
+            if (pickResult==null) return;
+            UploadStatus = $"选择了文件：{pickResult.FileName}";
+        }
+
         //接收导航到页面时传递的参数
         public override void OnNavigatedTo(INavigationParameters parameters)
         {

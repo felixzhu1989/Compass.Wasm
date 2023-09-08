@@ -48,6 +48,11 @@ public class MonoPackageManager_Resources {
 		"zxing.portable.dll",
 		"ZXingNetMobile.dll",
 		"Compass.Andro.dll",
+		"Microsoft.Bcl.AsyncInterfaces.dll",
+		"Newtonsoft.Json.dll",
+		"RestSharp.dll",
+		"System.Text.Encodings.Web.dll",
+		"System.Text.Json.dll",
 	};
 	public static String[] Dependencies = new String[]{
 	};

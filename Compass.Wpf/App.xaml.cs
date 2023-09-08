@@ -19,6 +19,7 @@ using Compass.Wpf.Views;
 using Compass.Wpf.Views.Ceilings;
 using Compass.Wpf.Views.Dialogs;
 using Compass.Wpf.Views.Hoods;
+using RestSharp;
 
 namespace Compass.Wpf;
 

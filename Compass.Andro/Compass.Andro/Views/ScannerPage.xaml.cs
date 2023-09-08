@@ -19,12 +19,12 @@ namespace Compass.Andro.Views
             {
                 //弹窗显示扫描结果
                 //await DisplayAlert("Scanned result", result.Text, "OK");
+                
                 //跳转到其他页面，todo:传递参数
-                var navParam = new NavigationParameters()
-                {
-                    {"value",result.Text}
-                };
-                await _navigationService.NavigateAsync("MainPage", navParam);
+                var navParam = new NavigationParameters { {"value",result.Text} };
+                //返回主页，绝对路径，重置导航栈
+                await _navigationService.NavigateAsync("/NavigationPage/MainPage", navParam);
+                
             });
         }
         protected override void OnAppearing()

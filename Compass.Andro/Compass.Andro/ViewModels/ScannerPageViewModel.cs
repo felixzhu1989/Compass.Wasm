@@ -14,7 +14,6 @@ namespace Compass.Andro.ViewModels
         public ScannerPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Scanner Page";
-            
         }
         
         #endregion

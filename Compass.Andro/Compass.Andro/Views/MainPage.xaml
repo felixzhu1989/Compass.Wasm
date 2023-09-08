@@ -3,19 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Compass.Andro.Views.MainPage"
              Title="{Binding Title}">
-
-    <StackLayout HorizontalOptions="CenterAndExpand">
-        <Button Text="扫码"
-                Command="{Binding ScannerCommand}"></Button>
-        <Label Text="{Binding Code}"
-               TextColor="Red"
-               HorizontalOptions="Center" />
-        <Button Text="上传照片"
-                Command="{Binding UploadCommand}"></Button>
-        <Label Text="{Binding ImagePath}"
-               TextColor="Red"
-               HorizontalOptions="Center" />
-        <Image Source="{Binding ImageFile}" HorizontalOptions="CenterAndExpand"></Image>
-    </StackLayout>
-
+    <ScrollView>
+        <StackLayout HorizontalOptions="CenterAndExpand">
+            <Label HorizontalOptions="CenterAndExpand">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <FormattedString.Spans>
+                            <Span Text="红色的字"
+                                  TextColor="Red" />
+                            <Span Text="绿色的字"
+                                  TextColor="Green" />
+                        </FormattedString.Spans>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <!--<Image Source="halton_logo.png"></Image>-->
+            <Image Source="{Binding LogoImage}"></Image>
+            <Button Text="扫码"
+                    Command="{Binding ScannerCommand}"
+                    HorizontalOptions="FillAndExpand"></Button>
+            <Label Text="{Binding Code}"
+                   TextColor="Red"
+                   HorizontalOptions="Start" />
+            <Button Text="拍照上传"
+                    Command="{Binding UploadCommand}"
+                    CommandParameter="CapturePhoto"
+                    HorizontalOptions="FillAndExpand"></Button>
+            <Button Text="相册上传"
+                    Command="{Binding UploadCommand}"
+                    CommandParameter="PickPhoto"
+                    HorizontalOptions="FillAndExpand"></Button>
+            <Label Text="{Binding UploadStatus}"
+                   TextColor="Red"
+                   HorizontalOptions="Start" />
+            <Image Source="{Binding ImageFile}"
+                   HorizontalOptions="CenterAndExpand"></Image>
+            <Button Text="选择多张图片"
+                    Command="{Binding MultiImagesCommand}"
+                    HorizontalOptions="FillAndExpand"
+                    CornerRadius="2"></Button>
+            <CollectionView ItemsSource="{Binding Images}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding }"></Image>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="选择文件"
+                    Command="{Binding PdfFileCommand}"
+                    Margin="0,0,0,30"></Button>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
