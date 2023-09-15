@@ -1,6 +1,5 @@
 ﻿using Compass.Wasm.Shared.Data.Ceilings;
 using Compass.Wpf.ApiService;
-using Compass.Wpf.ApiServices.Hoods;
 using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ApiServices.Ceilings;

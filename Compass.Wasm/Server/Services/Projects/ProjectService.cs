@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Compass.DataService.Domain;
+using Compass.Dtos;
 using Compass.PlanService.Domain;
 using Compass.Wasm.Server.Events;
 using Compass.Wasm.Server.ExportExcel;

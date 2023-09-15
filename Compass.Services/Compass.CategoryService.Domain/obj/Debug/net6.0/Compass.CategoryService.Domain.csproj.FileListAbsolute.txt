@@ -28,3 +28,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\refint\Compass.CategoryService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\Compass.CategoryService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\ref\Compass.CategoryService.Domain.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\bin\Debug\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\bin\Debug\net6.0\Compass.Dtos.pdb

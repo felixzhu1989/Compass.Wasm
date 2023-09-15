@@ -2,6 +2,7 @@
 using Compass.Wasm.Shared.Data.Hoods;
 using Compass.Wasm.Shared;
 using System.ComponentModel.DataAnnotations;
+using Compass.Dtos;
 using Compass.Wasm.Server.Services.Data.Hoods;
 
 namespace Compass.Wasm.Server.Controllers.Data.Hoods;

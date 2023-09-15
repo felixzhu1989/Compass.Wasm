@@ -66,6 +66,7 @@ public class DataDbContext : BaseDbContext
 
     #region 天花烟罩
     public DbSet<KcjData> KcjData { get; set; }
+    public DbSet<UcjData> UcjData { get; set; }
 
 
 

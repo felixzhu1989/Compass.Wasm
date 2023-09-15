@@ -196,3 +196,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\refint\Compass
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\ref\Compass.Wasm.Server.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\RestSharp.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Dtos.pdb

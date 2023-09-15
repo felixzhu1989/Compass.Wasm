@@ -945,8 +945,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\8IRax
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\updAmW3f.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\yT+ZxHg+.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\C+eOOJx9.gz
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\SptAt81N.gz
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\zxwmJSLT.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\1v9lbIPC.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\jXa7W2wQ.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\KBHFUi2V.gz
@@ -986,3 +984,17 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\Fctzw
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\in9hpDdT.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\twLdxmHn.gz
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\7DciMBPI.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\RestSharp.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\Compass.Dtos.dll.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\Compass.Dtos.pdb.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\wwwroot\_framework\RestSharp.dll.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\RestSharp.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\bin\Debug\net6.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\rMEDRgXw.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\m8oKM+wO.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\tAod+7sD.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\CrypGXcw.gz
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Client\obj\Debug\net6.0\build-gz\L7p68gHJ.gz

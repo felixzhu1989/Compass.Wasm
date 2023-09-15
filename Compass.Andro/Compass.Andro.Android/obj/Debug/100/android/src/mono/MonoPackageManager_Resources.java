@@ -3,6 +3,7 @@ public class MonoPackageManager_Resources {
 	public static String[] Assemblies = new String[]{
 		/* We need to ensure that "Compass.Andro.Android.dll" comes first in this list. */
 		"Compass.Andro.Android.dll",
+		"Compass.Dtos.dll",
 		"Compass.Andro.dll",
 		"DryIoc.dll",
 		"Essential.Interfaces.dll",

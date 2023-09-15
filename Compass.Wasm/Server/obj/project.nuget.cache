@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "g/JJHQoQH4DK0hCN3dzyE8enQN5XQV7OWCLMSQpsEVHIiMzLmA8Kr+jJz+vziq6zwfzp1amjdawssOkOwzHzNA==",
+  "dgSpecHash": "fyB7gLy4mWdI2L0+ZOz/mgXJFa2Ocd+oDeV3sSp8CzJ/11Lw4a50RqqOxxPwquDSy9sakC/BTOqsrZ+p0HXQbg==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\Compass.Wasm.Server.csproj",
   "expectedPackageFiles": [
@@ -114,6 +114,7 @@
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\rabbitmq.client\\6.2.2\\rabbitmq.client.6.2.2.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\redlock.net\\2.3.1\\redlock.net.2.3.1.nupkg.sha512",
+    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
@@ -212,7 +213,7 @@
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
+    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.json\\7.0.2\\system.text.json.7.0.2.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.threading.channels\\4.7.1\\system.threading.channels.4.7.1.nupkg.sha512",

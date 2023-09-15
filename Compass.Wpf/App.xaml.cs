@@ -155,6 +155,7 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<CmodfDataView,CmodfDataViewModel>();
 
         containerRegistry.RegisterForNavigation<KcjDataView,KcjDataViewModel>();
+        containerRegistry.RegisterForNavigation<UcjDataView,UcjDataViewModel>();
         
 
         #endregion
@@ -195,6 +196,7 @@ public partial class App : PrismApplication
 
         //天花烟罩
         containerRegistry.Register<IKcjDataService,KcjDataService>();
+        containerRegistry.Register<IUcjDataService,UcjDataService>();
 
 
 
@@ -217,6 +219,7 @@ public partial class App : PrismApplication
         containerRegistry.Register<ICmodfAutoDrawing, CmodfAutoDrawing>();
 
         containerRegistry.Register<IKcjAutoDrawing,KcjAutoDrawing>();
+        containerRegistry.Register<IUcjAutoDrawing,UcjAutoDrawing>();
 
 
         #endregion

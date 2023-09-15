@@ -77,7 +77,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="QRCoder" Version="1.4.3" />
-    <PackageReference Include="RestSharp" Version="108.0.3" />
+    <PackageReference Include="RestSharp" Version="110.2.0" />
     <PackageReference Include="Visiativ.SOLIDWORKS.Interop" Version="31.1.0" />
   </ItemGroup>
 

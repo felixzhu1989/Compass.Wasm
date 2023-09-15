@@ -12,3 +12,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Debug\netstandard2.
 E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Debug\netstandard2.0\Compass.Andro.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Debug\netstandard2.0\Compass.Andro.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Debug\netstandard2.0\Views\ScannerPage.xaml.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\bin\Debug\netstandard2.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\bin\Debug\netstandard2.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Debug\netstandard2.0\Compass.Andro.csproj.CopyComplete

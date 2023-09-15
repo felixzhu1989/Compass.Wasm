@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "dMk7ODn+feFBCwP5qxh8BtO8uijYTt2p+/jGao7XuApEaNWGRC0VHJDZwL5S3Khu9VqS0Wehwf36Wp1ZvnI5pA==",
+  "dgSpecHash": "iv9jWuxWsKGXQtxyIjo/zKZdLhT23KmQHsz3NnEgRNY8ornNw2kbQnoiDbZRkiLlPDOffyDgOgbC1qvEjxydPg==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Infrastructure\\Compass.DataService.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -51,6 +51,7 @@
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\pipelines.sockets.unofficial\\1.0.7\\pipelines.sockets.unofficial.1.0.7.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\redlock.net\\2.3.1\\redlock.net.2.3.1.nupkg.sha512",
+    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\stackexchange.redis\\2.0.513\\stackexchange.redis.2.0.513.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
@@ -80,7 +81,7 @@
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encoding.codepages\\5.0.0\\system.text.encoding.codepages.5.0.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512",
+    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.json\\7.0.2\\system.text.json.7.0.2.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.threading.channels\\4.5.0\\system.threading.channels.4.5.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",

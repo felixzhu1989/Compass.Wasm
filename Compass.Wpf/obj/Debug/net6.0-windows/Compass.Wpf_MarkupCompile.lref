@@ -2,6 +2,7 @@
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\AboutView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\KcjDataView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\UcjDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\DetailView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Dialogs\AddPackingListView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Dialogs\AddSplMaterialView.xaml;;

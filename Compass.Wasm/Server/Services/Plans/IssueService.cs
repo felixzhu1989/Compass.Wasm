@@ -1,6 +1,7 @@
 ﻿using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Plans;
 using AutoMapper;
+using Compass.Dtos;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;

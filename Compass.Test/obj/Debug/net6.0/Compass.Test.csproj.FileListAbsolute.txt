@@ -74,3 +74,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\refint\Compass.Test.d
 E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\ref\Compass.Test.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\RestSharp.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Dtos.pdb

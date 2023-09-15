@@ -474,6 +474,18 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KvwData");
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.UcjData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Ceilings.KcjData");
+
+                    b.Property<int>("UvLightType")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("UvLightType");
+
+                    b.HasDiscriminator().HasValue("UcjData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KvfData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.Hoods.KviData");

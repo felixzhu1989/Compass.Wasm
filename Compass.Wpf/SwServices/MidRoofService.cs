@@ -664,7 +664,7 @@ public class MidRoofService : BaseSwService, IMidRoofService
 
         swModelLevel2.ChangeDim("Length@SketchBase", length - 6d);
         swModelLevel2.ChangeDim("Width@SketchBase", width-4d);
-        swModelLevel2.ChangeDim("Width@SketchMidRpoof", insHole);
+        swModelLevel2.ChangeDim("Width@SketchMidRoof", insHole);
         swModelLevel2.ChangeDim("Length@SketchSpigot", exhaustSpigotLength);
         swModelLevel2.ChangeDim("Width@SketchSpigot", exhaustSpigotWidth);
         //PhilipsLamp

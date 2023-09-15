@@ -1,6 +1,7 @@
 ﻿using Compass.Wasm.Shared.Projects;
 using Compass.Wasm.Shared;
 using System.Net.Http.Json;
+using Compass.Dtos;
 
 namespace Compass.Wasm.Client.Services.Projects;
 public interface ILessonService : IBaseService<LessonDto>

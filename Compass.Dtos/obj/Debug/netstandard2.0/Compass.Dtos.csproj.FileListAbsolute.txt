@@ -1,0 +1,10 @@
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\bin\Debug\netstandard2.0\Compass.Dtos.deps.json
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\bin\Debug\netstandard2.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\bin\Debug\netstandard2.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.csproj.AssemblyReference.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.GeneratedMSBuildEditorConfig.editorconfig
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.AssemblyInfoInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.AssemblyInfo.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.csproj.CoreCompileInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.pdb

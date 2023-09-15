@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Compass.Dtos;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiService;

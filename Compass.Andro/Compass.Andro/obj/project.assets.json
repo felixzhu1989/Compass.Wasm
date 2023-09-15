@@ -451,6 +451,19 @@
         "runtime": {
           "lib/netstandard1.0/ZXing.Net.Mobile.Forms.dll": {}
         }
+      },
+      "Compass.Dtos/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "RestSharp": "110.2.0"
+        },
+        "compile": {
+          "bin/placeholder/Compass.Dtos.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Compass.Dtos.dll": {}
+        }
       }
     }
   },
@@ -1899,10 +1912,16 @@
         "zxing.net.mobile.forms.2.4.1.nupkg.sha512",
         "zxing.net.mobile.forms.nuspec"
       ]
+    },
+    "Compass.Dtos/1.0.0": {
+      "type": "project",
+      "path": "../../Compass.Dtos/Compass.Dtos.csproj",
+      "msbuildProject": "../../Compass.Dtos/Compass.Dtos.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "Compass.Dtos >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 13.0.3",
       "Prism.DryIoc.Forms >= 8.1.97",
@@ -1944,7 +1963,11 @@
       "frameworks": {
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Dtos\\Compass.Dtos.csproj": {
+              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Dtos\\Compass.Dtos.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

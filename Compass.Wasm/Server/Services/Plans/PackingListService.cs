@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using AutoMapper;
+using Compass.Dtos;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;

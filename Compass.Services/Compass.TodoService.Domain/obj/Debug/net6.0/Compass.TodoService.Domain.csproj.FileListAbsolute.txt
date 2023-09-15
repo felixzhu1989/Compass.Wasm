@@ -28,3 +28,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.TodoService.Domain\obj\Deb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.TodoService.Domain\obj\Debug\net6.0\refint\Compass.TodoService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.TodoService.Domain\obj\Debug\net6.0\Compass.TodoService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.TodoService.Domain\obj\Debug\net6.0\ref\Compass.TodoService.Domain.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.TodoService.Domain\bin\Debug\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.TodoService.Domain\bin\Debug\net6.0\Compass.Dtos.pdb

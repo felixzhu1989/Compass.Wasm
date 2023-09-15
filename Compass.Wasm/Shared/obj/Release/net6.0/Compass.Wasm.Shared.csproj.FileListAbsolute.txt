@@ -10,3 +10,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Release\net6.0\Compass.Wasm
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Release\net6.0\refint\Compass.Wasm.Shared.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Release\net6.0\Compass.Wasm.Shared.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Release\net6.0\ref\Compass.Wasm.Shared.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\bin\Release\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\bin\Release\net6.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Release\net6.0\Compass.Wasm.Shared.csproj.CopyComplete

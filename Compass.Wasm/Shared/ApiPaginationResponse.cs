@@ -1,4 +1,6 @@
-﻿namespace Compass.Wasm.Shared;
+﻿using Compass.Dtos;
+
+namespace Compass.Wasm.Shared;
 
 /// <summary>
 /// 分页api返回结果

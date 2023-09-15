@@ -125,7 +125,7 @@ public class LoginViewModel : BindableBase, IDialogAware
     {
         try
         {
-            string settingString = ConfigurationManager.AppSettings[settingName].ToString();
+            var settingString = ConfigurationManager.AppSettings[settingName]!;
             return settingString;
         }
         catch (Exception)

@@ -1,7 +1,6 @@
 ﻿using Compass.DataService.Domain;
-using Compass.Wasm.Shared;
+using Compass.Dtos;
 using Compass.Wasm.Shared.Data.Ceilings;
-using Compass.Wasm.Shared.Data.Hoods;
 
 namespace Compass.Wasm.Server.Services.Data.Ceilings;
 

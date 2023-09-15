@@ -36,3 +36,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Infrastruc
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\Compass.CategoryService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\Compass.CategoryService.Infrastructure.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Infrastructure\obj\Debug\net6.0\ref\Compass.CategoryService.Infrastructure.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Infrastructure\bin\Debug\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Infrastructure\bin\Debug\net6.0\Compass.Dtos.pdb

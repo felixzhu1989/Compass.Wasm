@@ -183,3 +183,10 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\PackingListH
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\JobCardEn.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Ceilings\KcjDataView.g.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Ceilings\KcjDataView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\Compass.Wpf.dll.config
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\System.Text.Encodings.Web.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Ceilings\UcjDataView.g.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Ceilings\UcjDataView.baml

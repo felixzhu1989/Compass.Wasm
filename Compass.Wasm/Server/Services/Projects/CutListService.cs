@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Compass.Dtos;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Projects;

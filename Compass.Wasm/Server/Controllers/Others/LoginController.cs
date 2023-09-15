@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Security.Claims;
+using Compass.Dtos;
 using Compass.Wasm.Server.Services.Identities;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Identities;

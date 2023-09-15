@@ -2,6 +2,7 @@
 using Compass.Wasm.Shared.Projects;
 using Compass.Wasm.Shared;
 using System.ComponentModel.DataAnnotations;
+using Compass.Dtos;
 
 namespace Compass.Wasm.Server.Controllers.Projects;
 

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using Compass.Dtos;
 using Compass.TodoService.Infrastructure;
 using Compass.Wasm.Server.Services.Todos;
 using Compass.Wasm.Shared;

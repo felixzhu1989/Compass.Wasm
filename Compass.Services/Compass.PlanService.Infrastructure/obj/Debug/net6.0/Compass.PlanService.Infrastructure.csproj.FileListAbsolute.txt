@@ -36,3 +36,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Infrastructure
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Infrastructure\obj\Debug\net6.0\Compass.PlanService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Infrastructure\obj\Debug\net6.0\Compass.PlanService.Infrastructure.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Infrastructure\obj\Debug\net6.0\ref\Compass.PlanService.Infrastructure.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Infrastructure\bin\Debug\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Infrastructure\bin\Debug\net6.0\Compass.Dtos.pdb

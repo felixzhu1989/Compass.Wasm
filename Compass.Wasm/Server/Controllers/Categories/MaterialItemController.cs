@@ -1,6 +1,7 @@
 ﻿using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared;
 using System.ComponentModel.DataAnnotations;
+using Compass.Dtos;
 using Compass.Wasm.Server.Services.Categories;
 
 namespace Compass.Wasm.Server.Controllers.Categories;

@@ -16,8 +16,10 @@ E:\CSharp\repos\Compass.Wasm\Compass.PlanService\Compass.PlanService.Domain\obj\
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\bin\Debug\net6.0\Compass.PlanService.Domain.deps.json
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\bin\Debug\net6.0\Compass.PlanService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\bin\Debug\net6.0\Compass.PlanService.Domain.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\bin\Debug\net6.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\bin\Debug\net6.0\Compass.Wasm.Shared.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\bin\Debug\net6.0\Compass.Wasm.Shared.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\bin\Debug\net6.0\Compass.Dtos.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\obj\Debug\net6.0\Compass.PlanService.Domain.csproj.AssemblyReference.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\obj\Debug\net6.0\Compass.PlanService.Domain.GeneratedMSBuildEditorConfig.editorconfig
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.PlanService.Domain\obj\Debug\net6.0\Compass.PlanService.Domain.AssemblyInfoInputs.cache

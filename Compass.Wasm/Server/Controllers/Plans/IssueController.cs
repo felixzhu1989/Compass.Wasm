@@ -1,6 +1,7 @@
 ﻿using Compass.Wasm.Shared.Projects;
 using Compass.Wasm.Shared;
 using System.ComponentModel.DataAnnotations;
+using Compass.Dtos;
 using Compass.PlanService.Infrastructure;
 using Compass.Wasm.Shared.Plans;
 using Compass.Wasm.Server.Services.Plans;
