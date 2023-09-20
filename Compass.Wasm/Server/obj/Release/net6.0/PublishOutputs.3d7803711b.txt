@@ -81,6 +81,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\B
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\RabbitMQ.Client.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\RedLockNet.Abstractions.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\RedLockNet.SERedis.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\RestSharp.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Serilog.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Serilog.AspNetCore.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Serilog.Extensions.Hosting.dll
@@ -134,6 +135,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\C
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.CategoryService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.DataService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.DataService.Infrastructure.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.FileService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.FileService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.IdentityService.Domain.dll
@@ -160,6 +162,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\C
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.Wasm.Shared.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.CategoryService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.DataService.Domain.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.Dtos.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.FileService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.IdentityService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\PubTmp\Out\Compass.PlanService.Domain.pdb

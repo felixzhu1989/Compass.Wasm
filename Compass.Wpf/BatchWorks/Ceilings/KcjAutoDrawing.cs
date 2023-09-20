@@ -1,4 +1,5 @@
-﻿using Compass.Wasm.Shared.Data.Ceilings;
+﻿using Compass.Wasm.Shared.Data;
+using Compass.Wasm.Shared.Data.Ceilings;
 using Compass.Wpf.ApiServices.Ceilings;
 using Compass.Wpf.SwServices;
 using SolidWorks.Interop.sldworks;
@@ -42,7 +43,7 @@ public class KcjAutoDrawing : BaseAutoDrawing, IKcjAutoDrawing
             switch (moduleDto.ModelName)
             {
                 case "KCJ_DB_800":
-                    KcjDb800(data, swModelTop, swAssyTop, suffix);
+                    KcjDb800(data, swModelTop, swAssyTop, suffix,moduleDto.Name);
                     break;
                 case "KCJ_SB_535":
 
@@ -75,14 +76,13 @@ public class KcjAutoDrawing : BaseAutoDrawing, IKcjAutoDrawing
         }
     }
 
-    private void KcjDb800(KcjData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix)
+    private void KcjDb800(KcjData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix,string module)
     {
-        #region 计算中间值与顶层操作
+        //过滤掉填错的情况
+        if (data.FilterSide is FilterSide_e.右油网 or FilterSide_e.无油网 or FilterSide_e.NA) data.FilterLeft = 0.5d;
+        data.MiddleToRight = data.MiddleToRight.Equals(0) ? data.Length/2d : data.MiddleToRight;
 
 
-
-        #endregion
-
-        //CeilingService.
+        CeilingService.KcjDb800(swModelTop,swAssyTop,suffix,module,data);
     }
 }

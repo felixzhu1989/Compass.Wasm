@@ -59,6 +59,7 @@
       "Microsoft.SqlServer.Server.dll": "sha256-qdyhtCvIdflmt4ssCIDmK4OPDtZWcWbX8fB65LduxL8=",
       "Microsoft.Win32.SystemEvents.dll": "sha256-QV6B1p\/dQJO7qHvPN0JZr5UKKFp+s9zZSnViNcpgVN8=",
       "Newtonsoft.Json.dll": "sha256-IsZJ91\/OW+fHzNqIgEc7Y072ns8z9dGritiSyvR9Wgc=",
+      "RestSharp.dll": "sha256-9iWLm2dQbTv8oD0Ij3cOhoEsBUPbNh91FwYGzc74yZg=",
       "System.Configuration.ConfigurationManager.dll": "sha256-+f64HaAirEWLvWch3\/6+N1Zdy9ME\/tYHmtCceoLR\/GA=",
       "System.Drawing.Common.dll": "sha256-7uPT5rut3tQSDW1wIYatIZCwr80dn7EjO3JUFel1bS0=",
       "System.IdentityModel.Tokens.Jwt.dll": "sha256-KrOPRNkpSD7pfhVRd2cTecXC69Rt7TVEkjqdRe8FMD8=",
@@ -67,6 +68,8 @@
       "System.Runtime.Caching.dll": "sha256-hRr3qHOzX6EbgHRUng6YZvLzDQ8Lv2Nn+m4SFFisBoA=",
       "System.Security.Cryptography.ProtectedData.dll": "sha256-o9hgrSsHZUHXSE21NQsd2rTAi1DjeRPsKygFEIhV7VA=",
       "System.Security.Permissions.dll": "sha256-AW\/sG8Kc4uNCDcvJW3C4knYf5kBPjdRR8bV5mb8A4pg=",
+      "System.Text.Encodings.Web.dll": "sha256-qti5oBj8TEYB7cfJFpNw7uJmKMTZD5Z8lHupqB7EsiQ=",
+      "System.Text.Json.dll": "sha256-Y08ewuDcY1rfvIA0JwymRLvdvXQMSoSQ3iHt18VrSOY=",
       "System.Windows.Extensions.dll": "sha256-BbG3Acl8iXmfE3LuNvbKYS6X2odUBKq\/rEdnj+dGEos=",
       "Zack.Commons.dll": "sha256-CQ17+2GiGUjp72ai4NmOBPdDk\/dI+HmhFG432ipyTo8=",
       "Zack.DomainCommons.dll": "sha256-65sL11PP5KNxb1WqFSk7CZNIOmUYPg7WyeaE3P8NvI8=",
@@ -203,8 +206,6 @@
       "System.Text.Encoding.CodePages.dll": "sha256-i6VsKy5Qarop+xa\/V64cfLcJJBJ27Z0yBDBQa2Ay+8Q=",
       "System.Text.Encoding.Extensions.dll": "sha256-ViDDhM2mm0Lr\/Zjgb9wUltln+hnkUiDoBsgBjg5f67g=",
       "System.Text.Encoding.dll": "sha256-IfuHGD4JOJ62mm1Y\/vxT7E5IYOR6e3UDd30T1lBcLmg=",
-      "System.Text.Encodings.Web.dll": "sha256-JYhs5CrOLF8jBz4dVODJa7sZEfP5bCclnGijb3qRtq4=",
-      "System.Text.Json.dll": "sha256-9mZf08MSt3jiVWiR1jR3DvfiL9hQX+Q1q7FSfdjQs4k=",
       "System.Text.RegularExpressions.dll": "sha256-3XBCtqSMMBNHYDBe76rIQ4I2X1+ATTLl1qTGNhZ2v5s=",
       "System.Threading.Channels.dll": "sha256-zXHvidxJMACwE7Zrb8mFO0GYNYBPVwWRTa9\/WnwCJqA=",
       "System.Threading.Overlapped.dll": "sha256-z+Dhb0bBn\/Sk3x8R1mNtQoV6qPeWCFcfjUpHuHojOxE=",
@@ -236,15 +237,17 @@
       "mscorlib.dll": "sha256-j4L8eYEbpTL2UGB4uTT5qwkcqJsmB46NkVr5uesXgJI=",
       "netstandard.dll": "sha256-2M8m82GceNG8Z8I4dD74L7Tl4vwXdwXcVpYN80ouzQA=",
       "System.Private.CoreLib.dll": "sha256-dFxocfrY9q0E7UJ6nBlyNfnWYTyPu3RKzSggfRhoPJY=",
-      "Compass.Wasm.Shared.dll": "sha256-3lmrVtjaXqcs0I\/DIo6dnfO+cRSJzOFapHMzJ5\/xvMk=",
-      "Compass.Wasm.Client.dll": "sha256-oZgmyDXpQticodhWOxM4z0dL2VzsQupRmZH4RXKejJA="
+      "Compass.Dtos.dll": "sha256-bMw0DVpJoj3ObVx6g1OsNaEWzDQkY6NzpWWizZhpVv4=",
+      "Compass.Wasm.Shared.dll": "sha256-hJWfXMHUL50D644JzKzGNU40ybRnFNLqVPFdmIcpcUw=",
+      "Compass.Wasm.Client.dll": "sha256-g3\/iqeHrJZdyjBwFkXDfSqi2MrFRHDCWup3xMh+nt\/c="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "Compass.Wasm.Shared.pdb": "sha256-kqImuBnFciYakbvBE1GmTBMiFht7qkI7c71i88Htiig=",
-      "Compass.Wasm.Client.pdb": "sha256-fLkR6lJPnOzo\/cLlVtY9Kq2buzR6rBwLXhaSIVK7HXI="
+      "Compass.Wasm.Shared.pdb": "sha256-E5g750iKaStEhtn6OcR62pwVEtBU\/2rWEsI1ddl9svc=",
+      "Compass.Dtos.pdb": "sha256-Z29u0kWmH9oRXDUdC+3A\/Azca7TDvqimh+2g0wX2CBM=",
+      "Compass.Wasm.Client.pdb": "sha256-JgDBB8FVaxQSch92zUDm5P9B19Vi6Jn7tD8ig1ZebU8="
     },
     "runtime": {
       "dotnet.6.0.20.xfhyut2l4q.js": "sha256-iXtnf0CK+zdIWjR0cpE38tWChIpNC6sO+aSQAW+aBQU=",

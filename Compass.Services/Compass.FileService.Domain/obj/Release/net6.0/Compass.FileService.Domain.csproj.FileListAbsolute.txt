@@ -28,3 +28,5 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Domain\obj\Rel
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Domain\obj\Release\net6.0\refint\Compass.FileService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Domain\obj\Release\net6.0\Compass.FileService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Domain\obj\Release\net6.0\ref\Compass.FileService.Domain.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Domain\bin\Release\net6.0\Compass.Dtos.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Domain\bin\Release\net6.0\Compass.Dtos.pdb
