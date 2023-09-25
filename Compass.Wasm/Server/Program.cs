@@ -260,6 +260,7 @@ builder.Services.AddScoped<IUvimDataService, UvimDataService>();
 builder.Services.AddScoped<IKvvDataService, KvvDataService>();
 builder.Services.AddScoped<ICmodiDataService, CmodiDataService>();
 builder.Services.AddScoped<ICmodfDataService, CmodfDataService>();
+builder.Services.AddScoped<ICmodmDataService, CmodmDataService>();
 
 builder.Services.AddScoped<IKchDataService, KchDataService>();
 

@@ -454,7 +454,7 @@ public class PrintsService : IPrintsService
         if (dto.PartNo.Contains("FNHE0003") || dto.PartNo.Contains("FNHE0004") || dto.PartNo.Contains("FNHE0026") || dto.PartNo.Contains("FNHE0027"))
         {
             //普通KSA小侧边
-            return dto.Length.Equals(310.67d) ? $"{dto.Width-50.13d}" : $"{dto.Length-50.13d}";
+            return dto.Length.Equals(310.87d) ? $"{dto.Width-50.13d}" : $"{dto.Length-50.13d}";
         }
 
         if (dto.PartNo.Contains("FNHE0005") || dto.PartNo.Contains("FNHE0028") || dto.PartNo.Contains("FNHE0170"))

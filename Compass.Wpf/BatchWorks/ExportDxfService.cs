@@ -158,15 +158,15 @@ public class ExportDxfService : IExportDxfService
             var swSubFeat = swFeat.GetFirstSubFeature() as Feature;
             if (swSubFeat != null)
             {
-                var dto = new CutListDto { Quantity = 1 };
-                swSubFeat.CustomPropertyManager.Get6("Bounding Box Length", false, out _, out string valout, out _, out _);
-                dto.Length=Convert.ToDouble(valout);
-                swSubFeat.CustomPropertyManager.Get6("Bounding Box Width", false, out _, out valout, out _, out _);
-                dto.Width=Convert.ToDouble(valout);
-                swSubFeat.CustomPropertyManager.Get6("Sheet Metal Thickness", false, out _, out valout, out _, out _);
-                dto.Thickness=Convert.ToDouble(valout);
-                swSubFeat.CustomPropertyManager.Get6("Material", false, out _, out valout, out _, out _);
-                dto.Material=valout;
+                var swPropMgr = swSubFeat.CustomPropertyManager;
+                var dto = new CutListDto
+                {
+                    Quantity = 1,
+                    Length = GetPropDoubleValue(swPropMgr, "Bounding Box Length", "边界框长度"),
+                    Width = GetPropDoubleValue(swPropMgr, "Bounding Box Width", "边界框宽度"),
+                    Thickness = GetPropDoubleValue(swPropMgr, "Sheet Metal Thickness", "钣金厚度"),
+                    Material = GetPropStringValue(swPropMgr, "Material", "材质")
+                };
                 return dto;
             }
         }
@@ -177,6 +177,34 @@ public class ExportDxfService : IExportDxfService
         }
         return null;
     }
+
+    /// <summary>
+    /// 获取属性Double值
+    /// </summary>
+    private double GetPropDoubleValue(CustomPropertyManager swPropMgr,string EnName,string CnName)
+    {
+        swPropMgr.Get6(EnName, false, out _, out string valout, out _, out _);
+        if (string.IsNullOrEmpty(valout))
+        {
+            swPropMgr.Get6(CnName, false, out _, out valout, out _, out _);
+        }
+        if (string.IsNullOrEmpty(valout)) return 0;
+        return Convert.ToDouble(valout);
+    }
+    /// <summary>
+    /// 获取属性String值
+    /// </summary>
+    private string GetPropStringValue(CustomPropertyManager swPropMgr, string EnName, string CnName)
+    {
+        swPropMgr.Get6(EnName, false, out _, out string valout, out _, out _);
+        if (string.IsNullOrEmpty(valout))
+        {
+            swPropMgr.Get6(CnName, false, out _, out valout, out _, out _);
+        }
+        return valout;
+    }
+
+
     /// <summary>
     /// 导出DXF图纸
     /// </summary>

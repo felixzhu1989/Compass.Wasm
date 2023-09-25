@@ -80,6 +80,7 @@ public class KcjAutoDrawing : BaseAutoDrawing, IKcjAutoDrawing
     {
         //过滤掉填错的情况
         if (data.FilterSide is FilterSide_e.右油网 or FilterSide_e.无油网 or FilterSide_e.NA) data.FilterLeft = 0.5d;
+        //居中尺寸的处理
         data.MiddleToRight = data.MiddleToRight.Equals(0) ? data.Length/2d : data.MiddleToRight;
 
 

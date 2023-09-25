@@ -41,6 +41,7 @@ public class DataDbContext : BaseDbContext
     public DbSet<KvvData> KvvData { get; set; }
     public DbSet<CmodiData> CmodiData { get; set; }
     public DbSet<CmodfData> CmodfData { get; set; }
+    public DbSet<CmodmData> CmodmData { get; set; }
 
     public DbSet<KchData> KchData { get; set; }
 

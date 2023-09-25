@@ -11,6 +11,7 @@ public class CeilingService : BaseSwService, ICeilingService
     {
         ExhaustService = provider.Resolve<IExhaustService>();
     }
+    #region 公共方法
     //重命名公共方法
     private Component2? RenameComp(ModelDoc2 swModel, AssemblyDoc swAssy, string suffix, string type, string module, string compName, int num, double length, double width)
     {
@@ -37,7 +38,8 @@ public class CeilingService : BaseSwService, ICeilingService
         var originPath = $"{$"{compName}-{num}".AddSuffix(suffix)}@{assyName}";
         var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
         if (status) { swAssy.Suppress(suffix, $"{compName}-{num}"); }
-    }
+    } 
+    #endregion
 
 
 
@@ -103,64 +105,39 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
+
+
+
+
+    #region KCJDB800
     private void FNCE0115(Component2 swCompLevel2, double length, CeilingLightType_e ceilingLightType, LightCable_e lightCable, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5, bool japan)
     {
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
 
         #region 出线孔
-        if (ceilingLightType is CeilingLightType_e.HCL)
+        switch (lightCable)
         {
-            swCompLevel2.Suppress("LightCableRight");
-            swCompLevel2.Suppress("LightCableLeft");
-            switch (lightCable)
-            {
-                case LightCable_e.左出线孔:
-                    swCompLevel2.Suppress("HclCableRight");
-                    swCompLevel2.UnSuppress("HclCableLeft");
-                    break;
-                case LightCable_e.右出线孔:
-                    swCompLevel2.UnSuppress("HclCableRight");
-                    swCompLevel2.Suppress("HclCableLeft");
-                    break;
-                case LightCable_e.两出线孔:
-                    swCompLevel2.UnSuppress("HclCableRight");
-                    swCompLevel2.UnSuppress("HclCableLeft");
-                    break;
-                case LightCable_e.NA:
-                case LightCable_e.无出线孔:
-                default:
-                    swCompLevel2.Suppress("HclCableRight");
-                    swCompLevel2.Suppress("HclCableLeft");
-                    break;
-            }
+            case LightCable_e.左出线孔:
+                swCompLevel2.Suppress("LightCableRight");
+                swCompLevel2.UnSuppress("LightCableLeft");
+                break;
+            case LightCable_e.右出线孔:
+                swCompLevel2.UnSuppress("LightCableRight");
+                swCompLevel2.Suppress("LightCableLeft");
+                break;
+            case LightCable_e.两出线孔:
+                swCompLevel2.UnSuppress("LightCableRight");
+                swCompLevel2.UnSuppress("LightCableLeft");
+                break;
+            case LightCable_e.NA:
+            case LightCable_e.无出线孔:
+            default:
+                swCompLevel2.Suppress("LightCableRight");
+                swCompLevel2.Suppress("LightCableLeft");
+                break;
         }
-        else
-        {
-            swCompLevel2.Suppress("HclCableRight");
-            swCompLevel2.Suppress("HclCableLeft");
-            switch (lightCable)
-            {
-                case LightCable_e.左出线孔:
-                    swCompLevel2.Suppress("LightCableRight");
-                    swCompLevel2.UnSuppress("LightCableLeft");
-                    break;
-                case LightCable_e.右出线孔:
-                    swCompLevel2.UnSuppress("LightCableRight");
-                    swCompLevel2.Suppress("LightCableLeft");
-                    break;
-                case LightCable_e.两出线孔:
-                    swCompLevel2.UnSuppress("LightCableRight");
-                    swCompLevel2.UnSuppress("LightCableLeft");
-                    break;
-                case LightCable_e.NA:
-                case LightCable_e.无出线孔:
-                default:
-                    swCompLevel2.Suppress("LightCableRight");
-                    swCompLevel2.Suppress("LightCableLeft");
-                    break;
-            }
-        }
+
         #endregion
 
         #region Marvel
@@ -593,5 +570,6 @@ public class CeilingService : BaseSwService, ICeilingService
                 break;
         }
         swModelLevel2.ChangeDim("Length@SketchBase", netLength);
-    }
+    } 
+    #endregion
 }

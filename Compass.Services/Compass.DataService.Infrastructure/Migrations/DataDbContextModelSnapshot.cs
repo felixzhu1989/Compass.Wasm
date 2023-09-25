@@ -225,6 +225,13 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KcjData");
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.CmodmData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("CmodmData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KviData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");

@@ -153,6 +153,8 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<KvvDataView, KvvDataViewModel>();
         containerRegistry.RegisterForNavigation<CmodiDataView,CmodiDataViewModel>();
         containerRegistry.RegisterForNavigation<CmodfDataView,CmodfDataViewModel>();
+        
+
 
         containerRegistry.RegisterForNavigation<KcjDataView,KcjDataViewModel>();
         containerRegistry.RegisterForNavigation<UcjDataView,UcjDataViewModel>();
@@ -176,6 +178,8 @@ public partial class App : PrismApplication
         containerRegistry.Register<IKvvDataService, KvvDataService>();
         containerRegistry.Register<ICmodiDataService,CmodiDataService>();
         containerRegistry.Register<ICmodfDataService,CmodfDataService>();
+        containerRegistry.Register<ICmodmDataService,CmodmDataService>();
+
 
         containerRegistry.Register<IKchDataService, KchDataService>();
 

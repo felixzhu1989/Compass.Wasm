@@ -56,10 +56,10 @@ public class SupplyService : BaseSwService, ISupplyService
 
         //MidRoof铆螺母孔 2023/3/10
         //修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
-        const double minMidRoofNutDis = 450d;
-        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
-        midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
-        var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
+        //const double minMidRoofNutDis = 450d;
+        //var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        //midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
+        //var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
 
         //底部CJ孔板
         FNHA0002(swAssyLevel1, suffix, "FNHA0115-1", length, sidePanel, bluetooth, ledLogo, waterCollection, frontPanelNutDis);
@@ -72,7 +72,7 @@ public class SupplyService : BaseSwService, ISupplyService
         
 
         //F新风前面板，FNHA0111
-        FNHA0111(swAssyLevel1, suffix, "FNHA0119-1", length, 555d, midRoofNutDis, frontPanelNutDis);
+        FNHA0111(swAssyLevel1, suffix, "FNHA0119-1", length, 555d,  frontPanelNutDis);
 
 
 
@@ -211,10 +211,10 @@ public class SupplyService : BaseSwService, ISupplyService
 
         //MidRoof铆螺母孔 2023/3/10
         //修改MidRoof螺丝孔逻辑，以最低450间距计算间距即可
-        const double minMidRoofNutDis = 450d;
-        var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
-        midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
-        var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
+        //const double minMidRoofNutDis = 450d;
+        //var midRoofNutNumber = Math.Ceiling((length - 2*sideDis) / minMidRoofNutDis);
+        //midRoofNutNumber = midRoofNutNumber < 3d ? 3d : midRoofNutNumber;
+        //var midRoofNutDis = (length -  2*sideDis)/(midRoofNutNumber-1);
 
         ////新风网孔板加强筋
         //if (length > 1599d) swAssyLevel1.UnSuppress(suffix, "FNHA0011-1", Aggregator);
@@ -225,7 +225,7 @@ public class SupplyService : BaseSwService, ISupplyService
         FNHA0002(swAssyLevel1, suffix, "FNHA0115-1", length, sidePanel, bluetooth, ledLogo, waterCollection, frontPanelNutDis);
 
         //F新风前面板，FNHA0111
-        FNHA0111(swAssyLevel1, suffix, "FNHA0111-1", length, 555d, midRoofNutDis, frontPanelNutDis);
+        FNHA0111(swAssyLevel1, suffix, "FNHA0111-1", length, 555d,  frontPanelNutDis);
         
         //新风主体
         FNHA0116(swAssyLevel1, suffix, "FNHA0116-1", length, width, marvel, frontPanelNutDis);
@@ -234,7 +234,7 @@ public class SupplyService : BaseSwService, ISupplyService
         FNHA0117(swAssyLevel1, suffix, "FNHA0117-1", length, width, sidePanel, uvLightType, bluetooth, marvel, frontPanelNutDis, supplySpigotNumber, supplySpigotDis);
         
         //镀锌板
-        FNHA0006(swAssyLevel1, suffix, "FNHA0112-1", length+6);
+        FNHA0112(swAssyLevel1, suffix, "FNHA0112-1", length, frontPanelNutDis);
 
         //新风滑门导轨
         FNHA0010(swAssyLevel1, suffix, "FNHA0010-1", length);
@@ -750,20 +750,28 @@ public class SupplyService : BaseSwService, ISupplyService
     #endregion
 
     #region 法国烟罩
-    private void FNHA0111(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double suHeight, double midRoofNutDis, double frontPanelNutDis)
+    private void FNHA0111(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double suHeight, double frontPanelNutDis)
     {
         swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", length);
         swModelLevel2.ChangeDim("Height@SketchBase", suHeight - 118d);
 
         #region 新风前面板卡口，距离与铆螺母数量相同，无需重复计算
-        swModelLevel2.ChangeDim("Dis@LPatternPlug", midRoofNutDis);
+        swModelLevel2.ChangeDim("Dis@LPatternPlug", frontPanelNutDis);
         #endregion
 
         #region 前面板螺丝孔
         swModelLevel2.ChangeDim("Dis@LPatternFrontPanelNut", frontPanelNutDis);
         #endregion
 
+    }
+    private void FNHA0112(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double frontPanelNutDis)
+    {
+        swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+        #region 前面板螺丝孔
+        swModelLevel2.ChangeDim("Dis@LPatternPlug", frontPanelNutDis);
+        #endregion
     }
 
     private void FNHA0116(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, bool marvel, double frontPanelNutDis)
@@ -793,7 +801,7 @@ public class SupplyService : BaseSwService, ISupplyService
 
     }
 
-    private void FNHA0117(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, double midRoofNutDis, int supplySpigotNumber, double supplySpigotDis)
+    private void FNHA0117(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, double frontPanelNutDis, int supplySpigotNumber, double supplySpigotDis)
     {
         var suToMiddle = supplySpigotDis * (supplySpigotNumber/2-1)+supplySpigotDis/2d;//新风脖颈口距离中间位置
 
@@ -830,7 +838,7 @@ public class SupplyService : BaseSwService, ISupplyService
         //swModelLevel2.ChangeDim("Dis@SketchTopHole", 4*holeDis - midRoofTopHoleDis);
 
         #region 新风前面板卡口，距离与铆螺母数量相同，无需重复计算
-        swModelLevel2.ChangeDim("Dis@LPatternPlug", midRoofNutDis);
+        swModelLevel2.ChangeDim("Dis@LPatternPlug", frontPanelNutDis);
         #endregion
 
         #region UV HOOD
