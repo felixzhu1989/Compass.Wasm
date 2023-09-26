@@ -200,8 +200,8 @@
                         BorderThickness="0,0,0,1"></Border>
                 <Grid Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <!--分割线-->
                     <Border Grid.Column="0"
@@ -308,8 +308,8 @@
                                 Foreground="AliceBlue"
                                 Command="{Binding ModulesCommand}"
                                 Margin="10"
-                                Width="180"
-                                HorizontalAlignment="Left" />
+                                materialDesign:ButtonAssist.CornerRadius="15"
+                                HorizontalAlignment="Stretch" />
                     </Grid>
                     <!--导航页面容器-->
                     <ContentControl Grid.Column="1"
