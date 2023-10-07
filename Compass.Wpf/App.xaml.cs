@@ -53,6 +53,19 @@ public partial class App : PrismApplication
             base.OnInitialized();
         });
     }
+
+    #region 当tab键获得焦点时textbox 全选
+    //https://www.cnblogs.com/jane850113/p/6943703.html
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        EventManager.RegisterClassHandler(typeof(TextBox), TextBox.GotFocusEvent, new RoutedEventHandler(TextBox_GotFocus));
+        base.OnStartup(e);
+    }
+    private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+    {
+        (sender as TextBox).SelectAll();
+    }
+    #endregion
     /// <summary>
     /// 退出登录
     /// </summary>

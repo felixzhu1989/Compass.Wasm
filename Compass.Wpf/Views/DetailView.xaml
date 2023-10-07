@@ -126,11 +126,11 @@
                                    Foreground="Red"
                                    Margin="0,5,0,0" />
                         <TextBox Text="{Binding CurrentModuleDto.Name}"
-                                 materialDesign:HintAssist.Hint="烟罩M1、M2...天花B01、CJ01、SSP01..."
+                                 materialDesign:HintAssist.Hint="分段编号：烟罩M1、M2...天花B01、CJ01、SSP01..."
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                  materialDesign:TextFieldAssist.HasClearButton="True" />
                         <TextBox Text="{Binding CurrentModuleDto.SpecialNotes}"
-                                 materialDesign:HintAssist.Hint="请输入分段的特殊要求"
+                                 materialDesign:HintAssist.Hint="特殊要求：请输入分段的特殊要求"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                  materialDesign:TextFieldAssist.HasClearButton="True"
                                  MinHeight="70"

@@ -82,7 +82,7 @@
                      Margin="0,5"
                      materialDesign:TextFieldAssist.PrefixText="材质：" />
             <TextBox Text="{Binding PackingItemDto.Remark,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     materialDesign:HintAssist.Hint="请输入备注"
+                     materialDesign:HintAssist.Hint="备注：请输入备注"
                      DockPanel.Dock="Top"
                      Margin="0,5"
                      materialDesign:TextFieldAssist.PrefixText="备注：" />
@@ -93,7 +93,7 @@
                      Margin="0,5"
                      materialDesign:TextFieldAssist.PrefixText="排序：" />
             <TextBox Text="{Binding PackingItemDto.PalletNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     materialDesign:HintAssist.Hint="如果不是独立托盘请不要填写"
+                     materialDesign:HintAssist.Hint="托盘号： 如果不是独立托盘请不要填写"
                      ToolTip="如果不是独立托盘请不要填写"
                      DockPanel.Dock="Top"
                      Margin="0,5"
