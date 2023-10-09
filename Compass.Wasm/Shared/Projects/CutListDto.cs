@@ -52,7 +52,13 @@ public class CutListDto : BaseDto
         get => partNo;
         set { partNo = value; OnPropertyChanged(); }
     }
-
+    //从文件中读取的折弯属性
+    private string bendingMark;
+    public string BendingMark
+    {
+        get => bendingMark;
+        set { bendingMark = value; OnPropertyChanged(); }
+    }
 
     #region 额外属性
     private int index;
@@ -60,6 +66,13 @@ public class CutListDto : BaseDto
     {
         get => index;
         set { index = value; OnPropertyChanged(); }
+    }
+    //文件地址
+    private string filePath;
+    public string FilePath
+    {
+        get => filePath;
+        set { filePath = value; OnPropertyChanged(); }
     }
     #endregion
 }

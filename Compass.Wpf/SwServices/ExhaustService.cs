@@ -159,7 +159,7 @@ public class ExhaustService : BaseSwService, IExhaustService
     {
         //进入ExhaustSpigot_Fs，子装配
         //当有marvel或者脖颈高度100，且没有ansul时，脖颈宽度为300,无需脖颈
-        if ((marvel|| exhaustSpigotHeight.Equals(100d))&& !ansul&&exhaustSpigotWidth.Equals(300d))
+        if ((marvel || exhaustSpigotHeight.Equals(100d)) && !ansul )
         {
             //压缩脖颈零件，压缩脖颈阵列
             swAssyLevel1.Suppress(suffix, frontPart);
@@ -544,9 +544,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         const double goodKsaSideLength = 25d;
         int ksaNo = (int)((length + 0.5d) / ksaLength);
         double ksaSideLength = (length - ksaNo * ksaLength) / 2d;
-
-        ModelDoc2 swModelLevel2;
-        Component2 swCompLevel2;
+        
         switch (ksaSideLength)
         {
             case <= ngKsaSideLength / 2d:
@@ -557,30 +555,41 @@ public class ExhaustService : BaseSwService, IExhaustService
             case < minKsaSideLength / 2d and > ngKsaSideLength/2d:
                 swAssyLevel1.Suppress(suffix, leftPart);
                 swAssyLevel1.Suppress(suffix, rightPart);
-                swAssyLevel1.UnSuppress(out swModelLevel2, suffix, specialPart, Aggregator);
-                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2d);
+                FNHE0005(ksaSideLength * 2d);
                 break;
             case < goodKsaSideLength and >= minKsaSideLength/2d:
-                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2);
-                if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
-                else swCompLevel2.Suppress("DrainChannel");
+                FNHE0003(ksaSideLength * 2d);
                 swAssyLevel1.Suppress(suffix, rightPart);
                 swAssyLevel1.Suppress(suffix, specialPart);
 
                 break;
             default:
-                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
-                if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
-                else swCompLevel2.Suppress("DrainChannel");
-
-                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
-                if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
-                else swCompLevel2.Suppress("DrainChannel");
+                FNHE0003(ksaSideLength);
+                FNHE0004(ksaSideLength);
                 swAssyLevel1.Suppress(suffix, specialPart);
                 break;
+        }
+        void FNHE0003(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, leftPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
+            if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+            else swCompLevel2.Suppress("DrainChannel");
+        }
+        void FNHE0004(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, rightPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
+            if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+            else swCompLevel2.Suppress("DrainChannel");
+        }
+        void FNHE0005(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, specialPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
         }
     }
 
@@ -606,30 +615,41 @@ public class ExhaustService : BaseSwService, IExhaustService
             case < minKsaSideLength / 2d and > ngKsaSideLength/2d:
                 swAssyLevel1.Suppress(suffix, leftPart);
                 swAssyLevel1.Suppress(suffix, rightPart);
-                swAssyLevel1.UnSuppress(out swModelLevel2, suffix, specialPart, Aggregator);
-                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2d);
+                FNHE0170(ksaSideLength*2d);
                 break;
             case < goodKsaSideLength and >= minKsaSideLength/2d:
-                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength * 2);
-                //if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
-                //else swCompLevel2.Suppress("DrainChannel");
+                FNHE0160(ksaSideLength*2d);
                 swAssyLevel1.Suppress(suffix, rightPart);
                 swAssyLevel1.Suppress(suffix, specialPart);
 
                 break;
             default:
-                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, leftPart, Aggregator);
-                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
-                //if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
-                //else swCompLevel2.Suppress("DrainChannel");
-
-                swCompLevel2= swAssyLevel1.UnSuppress(out swModelLevel2, suffix, rightPart, Aggregator);
-                swModelLevel2.ChangeDim("Length@SketchBase", ksaSideLength);
-                //if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
-                //else swCompLevel2.Suppress("DrainChannel");
+                FNHE0160(ksaSideLength);
+                FNHE0161(ksaSideLength);
                 swAssyLevel1.Suppress(suffix, specialPart);
                 break;
+        }
+        void FNHE0160(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, leftPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
+            //if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+            //else swCompLevel2.Suppress("DrainChannel");
+        }
+        void FNHE0161(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, rightPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
+            //if (height.Equals(450d)) swCompLevel2.UnSuppress("DrainChannel");
+            //else swCompLevel2.Suppress("DrainChannel");
+        }
+        void FNHE0170(double sideLength)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, specialPart, Aggregator);
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
         }
     }
 
@@ -1107,6 +1127,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         {
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, leftPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
             if (ansulSide==AnsulSide_e.左侧喷) swCompLevel2.UnSuppress("AnsulSideLeft");
             else swCompLevel2.Suppress("AnsulSideLeft");
         }
@@ -1114,6 +1135,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         {
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, rightPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
             if (ansulSide==AnsulSide_e.右侧喷) swCompLevel2.UnSuppress("AnsulSideRight");
             else swCompLevel2.Suppress("AnsulSideRight");
         }
@@ -1795,6 +1817,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         {
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, leftPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
             if (waterInlet == WaterInlet_e.左入水) swCompLevel2.UnSuppress("WaterPipeLeft");
             else swCompLevel2.Suppress("WaterPipeLeft");
             if (ansulSide==AnsulSide_e.左侧喷) swCompLevel2.UnSuppress("AnsulSideLeft");
@@ -1804,6 +1827,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         {
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, rightPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
             if (waterInlet == WaterInlet_e.右入水) swCompLevel2.UnSuppress("WaterPipeRight");
             else swCompLevel2.Suppress("WaterPipeRight");
             if (ansulSide==AnsulSide_e.右侧喷) swCompLevel2.UnSuppress("AnsulSideRight");
@@ -2214,6 +2238,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         {
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, leftPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
             if (ansulSide==AnsulSide_e.左侧喷) swCompLevel2.UnSuppress("AnsulSideLeft");
             else swCompLevel2.Suppress("AnsulSideLeft");
             swCompLevel2.Suppress("WaterPipeLeft");
@@ -2222,6 +2247,7 @@ public class ExhaustService : BaseSwService, IExhaustService
         {
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, rightPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
             if (ansulSide==AnsulSide_e.右侧喷) swCompLevel2.UnSuppress("AnsulSideRight");
             else swCompLevel2.Suppress("AnsulSideRight");
             swCompLevel2.Suppress("WaterPipeRight");

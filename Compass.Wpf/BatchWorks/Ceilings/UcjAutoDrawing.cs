@@ -1,8 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Compass.Wasm.Shared.Data.Ceilings;
 using Compass.Wpf.ApiServices.Ceilings;
 using Compass.Wpf.SwServices;
-using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.BatchWorks.Ceilings;
 
@@ -32,6 +30,8 @@ public class UcjAutoDrawing:BaseAutoDrawing,IUcjAutoDrawing
             var data = dataResult.Result; //获取制图数据
             //todo:检查模型moduleDto.ModelName，看是那种子类
             var modelPath = moduleDto.ModelName.GetModelPath();
+            //优化进程外调用命令变缓慢的问题
+            SwApp.CommandInProgress = true;
             //打包,后续需要使用到的变量：suffix，packPath
             var packPath = SwApp.PackToProject(out var suffix, modelPath, moduleDto, Aggregator);
             //顶级Model,顶级Assy,打开Pack后的模型packPath
@@ -42,7 +42,7 @@ public class UcjAutoDrawing:BaseAutoDrawing,IUcjAutoDrawing
             switch (moduleDto.ModelName)
             {
                 case "UCJ_DB_800":
-                    UcjDb800(data, swModelTop, swAssyTop, suffix);
+
                     break;
                 case "UCJ_SB_535":
 
@@ -69,15 +69,10 @@ public class UcjAutoDrawing:BaseAutoDrawing,IUcjAutoDrawing
             await Task.Delay(500);
             throw;
         }
+        finally
+        {
+            SwApp.CommandInProgress = false;
+        }
     }
-    private void UcjDb800(UcjData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix)
-    {
-        #region 计算中间值与顶层操作
-
-
-
-        #endregion
-
-        //CeilingService.
-    }
+    
 }

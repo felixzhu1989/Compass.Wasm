@@ -8,9 +8,11 @@ public interface ICeilingService
 
     void KcjDb800(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix,string module, KcjData data);
 
+    void KcjSb535(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, KcjData data);
 
+    void KcjSb290(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, KcjData data);
 
-
+    void KcjSb265(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, KcjData data);
 
     #endregion
 

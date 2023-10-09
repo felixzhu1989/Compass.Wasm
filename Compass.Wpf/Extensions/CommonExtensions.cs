@@ -76,6 +76,9 @@ public static class CommonExtensions
 
 
             @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\KCJ_DB_800.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\KCJ_SB_535.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\KCJ_SB_290.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\KCJ_SB_265.SLDASM",
 
 
 

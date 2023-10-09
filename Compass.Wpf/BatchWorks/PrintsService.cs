@@ -423,7 +423,7 @@ public class PrintsService : IPrintsService
             worksheet.Cells[i + 5, 6] = cutListDtos[i].Material;
             worksheet.Cells[i + 5, 7] = cutListDtos[i].PartNo;
             worksheet.Cells[i + 5, 11] = cutListDtos[i].Index;
-            worksheet.Cells[i + 5, 9] = GetSidePanelLength(cutListDtos[i]);
+            worksheet.Cells[i + 5, 9] = cutListDtos[i].BendingMark;//折弯尺寸备注
         }
         //设置边框
         Range range = worksheet.Range["A5", $"K{cutListDtos.Count + 4}"];
@@ -454,7 +454,7 @@ public class PrintsService : IPrintsService
         if (dto.PartNo.Contains("FNHE0003") || dto.PartNo.Contains("FNHE0004") || dto.PartNo.Contains("FNHE0026") || dto.PartNo.Contains("FNHE0027"))
         {
             //普通KSA小侧边
-            return dto.Length.Equals(310.87d) ? $"{dto.Width-50.13d}" : $"{dto.Length-50.13d}";
+            return dto.Length.Equals(310.67d) ? $"{dto.Width-50.13d}" : $"{dto.Length-50.13d}";
         }
 
         if (dto.PartNo.Contains("FNHE0005") || dto.PartNo.Contains("FNHE0028") || dto.PartNo.Contains("FNHE0170"))

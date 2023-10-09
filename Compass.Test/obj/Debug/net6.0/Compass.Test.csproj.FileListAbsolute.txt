@@ -79,3 +79,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\System.Text.Encodings
 E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\SolidWorks.Interop.sldworks.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\SolidWorks.Interop.swcommands.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\SolidWorks.Interop.swconst.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\SolidWorks.Interop.swpublished.dll

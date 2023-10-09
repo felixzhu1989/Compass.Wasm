@@ -318,7 +318,48 @@ public static class SwUtility
     }
     #endregion
 
+    #region 属性相关代码
 
+
+    /// <summary>
+    /// 往当前配置中写入属性
+    /// </summary>
+    public static void AddStrConfigProp(this ModelDoc2 swModel,string FieldName,string FieldValue)
+    {
+        var swConfig = (Configuration)swModel.GetActiveConfiguration();
+        var swConfigPropMgr = swConfig.CustomPropertyManager;
+        //写入属性
+        swConfigPropMgr.Add3(FieldName, (int)swCustomInfoType_e.swCustomInfoText, FieldValue, (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
+    }
+
+    /// <summary>
+    /// 获取属性Double值
+    /// </summary>
+    public static double GetPropDoubleValue(this CustomPropertyManager swPropMgr, string EnName, string CnName)
+    {
+        swPropMgr.Get6(EnName, false, out _, out string valout, out _, out _);
+        if (string.IsNullOrEmpty(valout))
+        {
+            swPropMgr.Get6(CnName, false, out _, out valout, out _, out _);
+        }
+        if (string.IsNullOrEmpty(valout)) return 0;
+        return Convert.ToDouble(valout);
+    }
+    /// <summary>
+    /// 获取属性String值
+    /// </summary>
+    public static string GetPropStringValue(this CustomPropertyManager swPropMgr, string EnName, string CnName)
+    {
+        swPropMgr.Get6(EnName, false, out _, out string valout, out _, out _);
+        if (string.IsNullOrEmpty(valout))
+        {
+            swPropMgr.Get6(CnName, false, out _, out valout, out _, out _);
+        }
+        return valout;
+    }
+
+
+    #endregion
 
 
 }

@@ -8,6 +8,7 @@ using SolidWorks.Interop.swconst;
 using Compass.Wpf.ApiServices.Projects;
 using Compass.Wpf.SwServices;
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -40,13 +41,12 @@ public class ExportDxfService : IExportDxfService
         //判断装配体是否存在，不存在抛出异常，提醒用户
         if (!File.Exists(packPath))
         {
-            var psi = new ProcessStartInfo("Explorer.exe")
-            {
-                Arguments =packDir
-            };
+            var psi = new ProcessStartInfo("Explorer.exe") { Arguments =packDir };
             Process.Start(psi);
             throw new FileNotFoundException("PackAndGo后的文件未找到，请检查该分段是否已经完成作图", packPath);
         }
+        //优化进程外调用命令变缓慢的问题，不知是否能够解决导图慢的问题（貌似没什么用）
+        _swApp.CommandInProgress = true;
         //打开装配体
         var swAssy = _swApp.OpenAssemblyDoc(out ModelDoc2 swModel, packPath,_aggregator);
         List<CutListDto> dtos = new List<CutListDto>();
@@ -54,40 +54,49 @@ public class ExportDxfService : IExportDxfService
         foreach (var comp in (IEnumerable)comps)
         {
             var swComp = comp as Component2;
+            //Debug.Print(swComp.GetPathName());//查看所有状态OK的零件文件
+            //获取下料清单,尽早判断是否存在，存在就数量+1，跳出去
+            var partName = Path.GetFileNameWithoutExtension(swComp.GetPathName()); ;
+            var existDto = dtos.FirstOrDefault(x => x.PartNo.Equals(partName, StringComparison.OrdinalIgnoreCase));
+            if (existDto!=null)
+            {
+                existDto.Quantity++;//数量+1
+                continue;//继续循环下一个零件
+            }
+
             //Debug.Print(swComp.GetPathName());//查看所有文件
             var swCompModel = swComp.GetModelDoc2() as ModelDoc2;
-            //检查零部件是否为零件，并且检查状态
-            if (swCompModel!=null&&swCompModel.GetType()==(int)swDocumentTypes_e.swDocPART&&CheckPartStatus(swComp))
-            {
-                //Debug.Print(swComp.GetPathName());//查看所有状态OK的零件文件
-                //获取下料清单,就
-                var partName = Path.GetFileNameWithoutExtension(swComp.GetPathName()); ;
-                var existDto = dtos.FirstOrDefault(x => x.PartNo.Equals(partName, StringComparison.OrdinalIgnoreCase));
-                if (existDto!=null)
-                {
-                    existDto.Quantity++;//数量+1
-                    continue;//继续循环下一个零件
-                }
-                //判断是不是钣金，则继续循环下一个零件
-                if (!CheckSheetMetal(swComp)) continue;
 
+            //检查零部件是否为零件，并且检查状态，并且是钣金
+            if (swCompModel!=null &&
+                swCompModel.GetType()==(int)swDocumentTypes_e.swDocPART &&
+                CheckPartStatus(swComp) &&
+                CheckSheetMetal(swComp))
+            {
                 //如果是则增加下料清单信息
                 var swFeat = swCompModel.FirstFeature() as Feature;
                 //获取下料清单信息
-                var dto = GetCutListDto(swFeat);
+                var dto = GetCutListDto(swCompModel,swFeat);
                 if (dto == null) continue;
 
                 dto.ModuleId = moduleDto.Id.Value;//分段的Id
                 dto.PartDescription = swCompModel.CustomInfo2["", "Part Name"];//描述使用Part Name
                 dto.PartNo = partName;//文件名
+                dto.FilePath = swCompModel.GetPathName();
 
-                //导出DXF,成功一个我们就添加一个到集合中
-                if (ExportDxf(swCompModel, partName, moduleDto))
-                {
-                    dtos.Add(dto);
-                }
+                dtos.Add(dto);
             }
         }
+        //关闭总装
+        _swApp.CloseDoc(swModel.GetPathName());
+
+        //再逐个打开导出dxf图
+        foreach (var dto in dtos.Where(dto => !ExportDxf(dto.FilePath,dto.PartNo, moduleDto)))
+        {
+            throw new Exception($"零件【{dto.PartNo}】导出dxf时发生错误！");
+        }
+        _swApp.CommandInProgress=false;
+
         //所有图纸导出完成后
         foreach (var dto in dtos)
         {
@@ -96,9 +105,7 @@ public class ExportDxfService : IExportDxfService
         }
         //更新Module的IsCutListOk
         moduleDto.IsCutListOk= true;
-        await _moduleService.UpdateAsync(moduleDto.Id.Value,moduleDto);
-        //关闭
-        _swApp.CloseDoc(swModel.GetPathName());
+        await _moduleService.UpdateAsync(moduleDto.Id.Value, moduleDto);
     }
 
     #region 内部实现
@@ -146,7 +153,7 @@ public class ExportDxfService : IExportDxfService
     /// </summary>
     /// <param name="swFeat"></param>
     /// <returns></returns>
-    private CutListDto? GetCutListDto(Feature swFeat)
+    private CutListDto? GetCutListDto(ModelDoc2 swModel,Feature swFeat)
     {
         if (!swFeat.IIsSuppressed2(1, 1, null)
             && swFeat.GetTypeName2() == "SolidBodyFolder")
@@ -158,14 +165,20 @@ public class ExportDxfService : IExportDxfService
             var swSubFeat = swFeat.GetFirstSubFeature() as Feature;
             if (swSubFeat != null)
             {
+                //切割清单属性
                 var swPropMgr = swSubFeat.CustomPropertyManager;
+                //配置特定属性
+                var swConfig = (Configuration)swModel.GetActiveConfiguration();
+                var swConfigPropMgr = swConfig.CustomPropertyManager;
                 var dto = new CutListDto
                 {
                     Quantity = 1,
-                    Length = GetPropDoubleValue(swPropMgr, "Bounding Box Length", "边界框长度"),
-                    Width = GetPropDoubleValue(swPropMgr, "Bounding Box Width", "边界框宽度"),
-                    Thickness = GetPropDoubleValue(swPropMgr, "Sheet Metal Thickness", "钣金厚度"),
-                    Material = GetPropStringValue(swPropMgr, "Material", "材质")
+                    Length = swPropMgr.GetPropDoubleValue("Bounding Box Length", "边界框长度"),
+                    Width = swPropMgr.GetPropDoubleValue( "Bounding Box Width", "边界框宽度"),
+                    Thickness = swPropMgr.GetPropDoubleValue( "Sheet Metal Thickness", "钣金厚度"),
+                    Material = swPropMgr.GetPropStringValue( "Material", "材料"),
+                    //从配置特定读取属性
+                    BendingMark = swConfigPropMgr.GetPropStringValue( "BendingMark", "折弯备注")
                 };
                 return dto;
             }
@@ -173,37 +186,11 @@ public class ExportDxfService : IExportDxfService
         var nextFeat = swFeat.GetNextFeature() as Feature;
         if (nextFeat != null)
         {
-            return GetCutListDto(nextFeat);
+            return GetCutListDto(swModel, nextFeat);
         }
         return null;
     }
-
-    /// <summary>
-    /// 获取属性Double值
-    /// </summary>
-    private double GetPropDoubleValue(CustomPropertyManager swPropMgr,string EnName,string CnName)
-    {
-        swPropMgr.Get6(EnName, false, out _, out string valout, out _, out _);
-        if (string.IsNullOrEmpty(valout))
-        {
-            swPropMgr.Get6(CnName, false, out _, out valout, out _, out _);
-        }
-        if (string.IsNullOrEmpty(valout)) return 0;
-        return Convert.ToDouble(valout);
-    }
-    /// <summary>
-    /// 获取属性String值
-    /// </summary>
-    private string GetPropStringValue(CustomPropertyManager swPropMgr, string EnName, string CnName)
-    {
-        swPropMgr.Get6(EnName, false, out _, out string valout, out _, out _);
-        if (string.IsNullOrEmpty(valout))
-        {
-            swPropMgr.Get6(CnName, false, out _, out valout, out _, out _);
-        }
-        return valout;
-    }
-
+    
 
     /// <summary>
     /// 导出DXF图纸
@@ -212,8 +199,12 @@ public class ExportDxfService : IExportDxfService
     /// <param name="partName"></param>
     /// <param name="moduleDto"></param>
     /// <returns></returns>
-    private bool ExportDxf(ModelDoc2 swCompModel, string partName, ModuleDto moduleDto)
+    private bool ExportDxf(string filePath, string partName, ModuleDto moduleDto)
     {
+        var warnings = 0;
+        var errors = 0;
+        var swCompModel = _swApp.OpenDoc6(filePath, (int)swDocumentTypes_e.swDocPART, 1, "", ref errors,
+            ref warnings);
         var swCompPart = swCompModel as PartDoc;
         var modelPath = swCompModel.GetPathName();
         var dxfDir = Path.Combine(@"D:\MyProjects", moduleDto.OdpNumber, "DxfCutlist", $"{moduleDto.ItemNumber}_{moduleDto.Name}_{moduleDto.ModelName}");
@@ -221,7 +212,6 @@ public class ExportDxfService : IExportDxfService
         if (!Directory.Exists(dxfDir))
         {
             Directory.CreateDirectory(dxfDir);
-
         }
         var outPath = Path.Combine(dxfDir, $"{partName}.dxf");
         _aggregator.SendMessage($"导出Dxf:\t{outPath}", Filter_e.Batch);
@@ -233,7 +223,9 @@ public class ExportDxfService : IExportDxfService
             (int)swExportToDWG_e.swExportToDWG_ExportSheetMetal,
             true, dataAlignment, false, false,
             1, null);
-        swCompModel.Visible = false;
+        //不能直接隐藏，这样会让sw打开的零件越来越多，而是应该全部关闭
+        //swCompModel.Visible = false;
+        _swApp.CloseDoc(filePath);
         return result;
     }
     /// <summary>

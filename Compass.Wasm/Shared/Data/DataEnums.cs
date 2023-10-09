@@ -69,7 +69,7 @@ public enum FilterType_e
 }
 public enum FilterSide_e
 {
-    NA, 无油网, 左油网, 右油网, 两油网
+    NA, 无过滤器侧板, 左过滤器侧板, 右过滤器侧板, 两过滤器侧板
 }
 public enum CeilingLightType_e
 {

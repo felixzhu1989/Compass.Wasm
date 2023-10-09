@@ -1,10 +1,15 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
+using System.Diagnostics;
 using CsvHelper;
 using System.Globalization;
 using System.Text;
 using Compass.Wasm.Shared.Plans;
 using Microsoft.Win32;
 using System.Security.Claims;
+using Compass.Test;
+using SolidWorks.Interop.sldworks;
+using SolidWorks.Interop.swconst;
 
 Console.WriteLine("Hello, World!");
 
@@ -53,3 +58,17 @@ foreach (var i in rank)
 {
     Console.WriteLine(i);
 }*/
+
+
+var swApp=SwUtility.ConnectSw();
+var swModel=(ModelDoc2)swApp.ActiveDoc;
+
+#region 操作属性
+/*var swConfig = (Configuration)swModel.GetActiveConfiguration();
+var swPropMgr = swConfig.CustomPropertyManager;
+//写入属性
+swPropMgr.Add3("BendingMark", (int)swCustomInfoType_e.swCustomInfoText, "123", (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
+//读取属性
+swPropMgr.Get6("BendingMark", false, out _, out var valout, out _, out _);
+Debug.Print(valout);*/ 
+#endregion

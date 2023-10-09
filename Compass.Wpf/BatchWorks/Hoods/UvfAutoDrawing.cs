@@ -31,6 +31,8 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
             var data = dataResult.Result;//获取制图数据
             //todo:检查模型moduleDto.ModelName，看是那种子类
             var modelPath = moduleDto.ModelName.GetModelPath();
+            //优化进程外调用命令变缓慢的问题
+            SwApp.CommandInProgress = true;
             //打包,后续需要使用到的变量：suffix，packPath
             var packPath = SwApp.PackToProject(out var suffix, modelPath, moduleDto, Aggregator);
             //顶级Model,顶级Assy,打开Pack后的模型packPath
@@ -68,6 +70,10 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
             SwApp.CommandInProgress = false;
             await Task.Delay(500);
             throw;
+        }
+        finally
+        {
+            SwApp.CommandInProgress = false;
         }
     }
 

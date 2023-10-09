@@ -61,6 +61,10 @@
                                     Header="PartNo"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                <DataGridTextColumn Binding="{Binding BendingMark}"
+                                    Header="Bending"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                 <DataGridTextColumn Binding="{Binding Index}"
                                     Header="Index"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"

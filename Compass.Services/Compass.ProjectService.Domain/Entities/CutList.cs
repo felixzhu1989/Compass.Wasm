@@ -14,11 +14,13 @@ public record CutList:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISof
     public int Quantity { get; private set; }
     public string Material { get; private set; }
     public string PartNo { get; private set; }
+    public string BendingMark { get; private set; }
 
     private CutList(){ }
-    public CutList(Guid id, Guid moduleId,string partDescription,double length,double width,double thickness,int quantity,string material,string partNo)
+    public CutList(Guid id, Guid moduleId,string partDescription,double length,double width,double thickness,int quantity,string material,string partNo,string bendingMark)
     {
         Id=id; ModuleId=moduleId; PartDescription=partDescription; Length=length; Width=width;Thickness=thickness;Quantity=quantity;Material=material;PartNo=partNo;
+        BendingMark=bendingMark;
     }
 
     public void Update(CutListDto dto)
@@ -26,7 +28,8 @@ public record CutList:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISof
         ChangePartDescription(dto.PartDescription)
             .ChangeLength(dto.Length).ChangeWidth(dto.Width)
             .ChangeThickness(dto.Thickness).ChangeQuantity(dto.Quantity)
-            .ChangeMaterial(dto.Material).ChangePartNo(dto.PartNo);
+            .ChangeMaterial(dto.Material).ChangePartNo(dto.PartNo)
+            .ChangeBendingMark(dto.BendingMark);
 
         NotifyModified();
     }
@@ -60,6 +63,11 @@ public record CutList:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISof
     public CutList ChangePartNo(string partNo)
     {
         PartNo = partNo;
+        return this;
+    }
+    public CutList ChangeBendingMark(string bendingMark)
+    {
+        BendingMark = bendingMark;
         return this;
     }
 }

@@ -67,7 +67,7 @@ public class CutListService : ICutListService
             {
                 return await UpdateAsync(exitModel.Id, dto);
             }
-            var model = new CutList(Guid.NewGuid(), dto.ModuleId, dto.PartDescription, dto.Length, dto.Width, dto.Thickness, dto.Quantity, dto.Material, dto.PartNo);
+            var model = new CutList(Guid.NewGuid(), dto.ModuleId, dto.PartDescription, dto.Length, dto.Width, dto.Thickness, dto.Quantity, dto.Material, dto.PartNo,dto.BendingMark);
             await _dbContext.CutLists.AddAsync(model);
             dto.Id = model.Id;
             return new ApiResponse<CutListDto> { Status = true, Result = dto };

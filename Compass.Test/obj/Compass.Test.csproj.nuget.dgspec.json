@@ -119,6 +119,10 @@
             "CsvHelper": {
               "target": "Package",
               "version": "[30.0.1, )"
+            },
+            "Visiativ.SOLIDWORKS.Interop": {
+              "target": "Package",
+              "version": "[31.3.0, )"
             }
           },
           "imports": [
