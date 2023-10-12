@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Compass.Wasm.Shared.Data;
 using Compass.Wpf.ApiServices.Ceilings;
 using Compass.Wpf.SwServices;
 
@@ -39,17 +40,26 @@ public class UcjAutoDrawing:BaseAutoDrawing,IUcjAutoDrawing
 
             #endregion
 
+
+            //过滤掉填错的情况
+            if (data.FilterSide is FilterSide_e.右过滤器侧板 or FilterSide_e.无过滤器侧板 or FilterSide_e.NA)
+                data.FilterLeft = 0d;
+            if (data.FilterSide is FilterSide_e.左过滤器侧板 or FilterSide_e.无过滤器侧板 or FilterSide_e.NA)
+                data.FilterRight = 0d;
+            //居中尺寸的处理
+            data.MiddleToRight = data.MiddleToRight.Equals(0) ? data.Length / 2d : data.MiddleToRight;
+
             switch (moduleDto.ModelName)
             {
                 case "UCJ_DB_800":
-
+                    CeilingService.UcjDb800(swModelTop,swAssyTop,suffix,moduleDto.Name,data);
                     break;
                 case "UCJ_SB_535":
-
+                    CeilingService.UcjSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
                 case "UCJ_SB_385":
-
+                    CeilingService.UcjSb385(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
             }

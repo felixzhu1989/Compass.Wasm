@@ -4,26 +4,26 @@ public class KcjData : ModuleData
 {
     #region 排风口参数
     //中心距离右端
-    private double middleToRight = 0;
+    private double middleToRight;
     public double MiddleToRight
     {
         get => middleToRight;
         set { middleToRight = value; OnPropertyChanged(); }
     }
-    private double exhaustSpigotLength = 400d;
+    private double exhaustSpigotLength;
     public double ExhaustSpigotLength
     {
         get => exhaustSpigotLength;
         set { exhaustSpigotLength = value; OnPropertyChanged(); }
     }
 
-    private double exhaustSpigotWidth = 300d;
+    private double exhaustSpigotWidth;
     public double ExhaustSpigotWidth
     {
         get => exhaustSpigotWidth;
         set { exhaustSpigotWidth = value; OnPropertyChanged(); }
     }
-    private double exhaustSpigotHeight = 100d;
+    private double exhaustSpigotHeight;
     public double ExhaustSpigotHeight
     {
         get => exhaustSpigotHeight;
@@ -37,7 +37,7 @@ public class KcjData : ModuleData
         set { exhaustSpigotNumber = value; OnPropertyChanged(); }
     } //前端界面input设置为number，min=1,max=2 
 
-    private double exhaustSpigotDis = 200d;
+    private double exhaustSpigotDis;
     public double ExhaustSpigotDis
     {
         get => exhaustSpigotDis;
@@ -133,7 +133,7 @@ public class KcjData : ModuleData
         get => gutter;
         set { gutter = value; OnPropertyChanged(); }
     }
-    private double gutterWidth = 100d;
+    private double gutterWidth;
     public double GutterWidth
     {
         get => gutterWidth;

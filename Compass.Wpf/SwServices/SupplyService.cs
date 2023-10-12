@@ -43,7 +43,7 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
-    public void IFr555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection)
+    public void IFr555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection,LightType_e lightType)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_I_FR_555-1", Aggregator);
 
@@ -65,7 +65,7 @@ public class SupplyService : BaseSwService, ISupplyService
         FNHA0002(swAssyLevel1, suffix, "FNHA0115-1", length, sidePanel, bluetooth, ledLogo, waterCollection, frontPanelNutDis);
 
         //新风主体
-        FNHA0116(swAssyLevel1, suffix, "FNHA0116-1", length, width, marvel, frontPanelNutDis);
+        FNHA0116(swAssyLevel1, suffix, "FNHA0116-1", length, width, marvel, frontPanelNutDis,lightType);
 
         //新风顶面
         FNHA0117(swAssyLevel1, suffix, "FNHA0117-1", length, width, sidePanel, uvLightType, bluetooth, marvel, frontPanelNutDis, 0, 0);
@@ -198,7 +198,7 @@ public class SupplyService : BaseSwService, ISupplyService
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
 
-    public void FFr555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis)
+    public void FFr555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis,LightType_e lightType)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_F_FR_555-1", Aggregator);
 
@@ -228,7 +228,7 @@ public class SupplyService : BaseSwService, ISupplyService
         FNHA0111(swAssyLevel1, suffix, "FNHA0111-1", length, 555d,  frontPanelNutDis);
         
         //新风主体
-        FNHA0116(swAssyLevel1, suffix, "FNHA0116-1", length, width, marvel, frontPanelNutDis);
+        FNHA0116(swAssyLevel1, suffix, "FNHA0116-1", length, width, marvel, frontPanelNutDis,lightType);
 
         //新风顶面
         FNHA0117(swAssyLevel1, suffix, "FNHA0117-1", length, width, sidePanel, uvLightType, bluetooth, marvel, frontPanelNutDis, supplySpigotNumber, supplySpigotDis);
@@ -774,7 +774,7 @@ public class SupplyService : BaseSwService, ISupplyService
         #endregion
     }
 
-    private void FNHA0116(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, bool marvel, double frontPanelNutDis)
+    private void FNHA0116(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double width, bool marvel, double frontPanelNutDis,LightType_e lightType)
     {
         const double supply = 365d;
         const double light = 251d;
@@ -796,7 +796,23 @@ public class SupplyService : BaseSwService, ISupplyService
         #endregion
 
         //todo:MidRoof特征
+        #region 灯具选项
+        switch (lightType)
+        {
+            case LightType_e.短灯:
+                swModelLevel2.ChangeDim("Length@SketchLight", 707);
+                break;
 
+            case LightType_e.NA:
+            case LightType_e.长灯:
+            case LightType_e.筒灯:
+            case LightType_e.HCL:
+            case LightType_e.飞利浦三防灯:
+            default:
+                swModelLevel2.ChangeDim("Length@SketchLight", 1281);
+                break;
+        }
+        #endregion
 
 
     }

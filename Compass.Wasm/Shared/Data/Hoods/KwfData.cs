@@ -9,7 +9,7 @@ public class KwfData : KwiData
         get => supplySpigotNumber;
         set { supplySpigotNumber = value; OnPropertyChanged(); }
     }//前端界面input设置为number，min=1,max=2
-    private double supplySpigotDis = 800d;
+    private double supplySpigotDis;
     public double SupplySpigotDis
     {
         get => supplySpigotDis;

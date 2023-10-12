@@ -143,7 +143,7 @@ public class KvvAutoDrawing : BaseAutoDrawing, IKvvAutoDrawing
         ExhaustService.Kvv555(swAssyTop, suffix, data.Length, data.Height, panelAngle, panelHeight);
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1", Aggregator);
         //脖颈
-        ExhaustService.ExhaustSpigotFs(swAssyLevel1,suffix,data.Length, netMiddleToRight,data.ExhaustSpigotNumber,data.ExhaustSpigotLength,data.ExhaustSpigotWidth,data.ExhaustSpigotHeight,data.ExhaustSpigotDis,false,false,ExhaustType_e.NA);
+        ExhaustService.ExhaustSpigotFs(swAssyLevel1,suffix,data.Length, netMiddleToRight,data.ExhaustSpigotNumber,data.ExhaustSpigotLength,data.ExhaustSpigotWidth,data.ExhaustSpigotHeight,data.ExhaustSpigotDis,false,false,false,ExhaustType_e.NA);
 
 
         SidePanelService.SidePanelKvv(swAssyTop, suffix, data.Length,data.Width, data.Height, panelAngle, panelHeight, insidePanelWidth);

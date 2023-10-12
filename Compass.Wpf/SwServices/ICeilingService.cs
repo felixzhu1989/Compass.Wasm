@@ -14,6 +14,13 @@ public interface ICeilingService
 
     void KcjSb265(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, KcjData data);
 
+    void UcjDb800(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, UcjData data);
+
+    void UcjSb535(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, UcjData data);
+
+    void UcjSb385(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, UcjData data);
+
+
     #endregion
 
 

@@ -95,14 +95,14 @@ public class SidePanelService : BaseSwService, ISidePanelService
         {
             FNHS0073(swAssyLevel1, suffix, "FNHS0073-1", width, height, backCj, sideCjEnd);
             FNHS0075(swAssyLevel1, suffix, "FNHS0075-1", width, height, backCj);
-            swAssyLevel1.Suppress(suffix, "FNHS0003-1");
-            swAssyLevel1.Suppress(suffix, "FNHS0004-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0074-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0076-1");
             swAssyLevel1.ChangeDim("Length@DistanceLeft", length/2d);
         }
         else if (sidePanel == SidePanel_e.右)
         {
-            swAssyLevel1.Suppress(suffix, "FNHS0001-1");
-            swAssyLevel1.Suppress(suffix, "FNHS0002-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0073-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0075-1");
             FNHS0073(swAssyLevel1, suffix, "FNHS0074-1", width, height, backCj, sideCjEnd);
             FNHS0075(swAssyLevel1, suffix, "FNHS0076-1", width, height, backCj);
             swAssyLevel1.ChangeDim("Length@DistanceRight", length/2d);

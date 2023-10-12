@@ -4,26 +4,26 @@ public class KviData : ModuleData
 {
     #region 排风口参数
     //中心距离右端
-    private double middleToRight = 0;
+    private double middleToRight;
     public double MiddleToRight
     {
         get => middleToRight;
         set { middleToRight = value; OnPropertyChanged(); }
     }
-    private double exhaustSpigotLength = 400d;
+    private double exhaustSpigotLength;
     public double ExhaustSpigotLength
     {
         get => exhaustSpigotLength;
         set { exhaustSpigotLength = value; OnPropertyChanged(); }
     }
 
-    private double exhaustSpigotWidth = 300d;
+    private double exhaustSpigotWidth;
     public double ExhaustSpigotWidth
     {
         get => exhaustSpigotWidth;
         set { exhaustSpigotWidth = value; OnPropertyChanged(); }
     }
-    private double exhaustSpigotHeight = 100d;
+    private double exhaustSpigotHeight;
     public double ExhaustSpigotHeight
     {
         get => exhaustSpigotHeight;
@@ -37,7 +37,7 @@ public class KviData : ModuleData
         set { exhaustSpigotNumber = value; OnPropertyChanged(); }
     } //前端界面input设置为number，min=1,max=2 
 
-    private double exhaustSpigotDis = 200d;
+    private double exhaustSpigotDis;
     public double ExhaustSpigotDis
     {
         get => exhaustSpigotDis;
@@ -53,19 +53,19 @@ public class KviData : ModuleData
         set { lightType = value; OnPropertyChanged(); }
     }//长灯, 短灯, 筒灯60, 筒灯140
 
-    private int spotLightNumber = 2;
+    private int spotLightNumber;
     public int SpotLightNumber
     {
         get => spotLightNumber;
         set { spotLightNumber = value; OnPropertyChanged(); }
     }//前端界面input设置为number，min=1
-    private double spotLightDistance = 400d;
+    private double spotLightDistance;
     public double SpotLightDistance
     {
         get => spotLightDistance;
         set { spotLightDistance = value; OnPropertyChanged(); }
     } //默认为400 
-    private double lightToFront = 0;
+    private double lightToFront;
     public double LightToFront
     {
         get => lightToFront;

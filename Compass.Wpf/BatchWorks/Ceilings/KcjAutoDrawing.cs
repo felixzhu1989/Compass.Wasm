@@ -42,7 +42,9 @@ public class KcjAutoDrawing : BaseAutoDrawing, IKcjAutoDrawing
 
             //过滤掉填错的情况
             if (data.FilterSide is FilterSide_e.右过滤器侧板 or FilterSide_e.无过滤器侧板 or FilterSide_e.NA)
-                data.FilterLeft = 0.5d;
+                data.FilterLeft = 0d;
+            if (data.FilterSide is FilterSide_e.左过滤器侧板 or FilterSide_e.无过滤器侧板 or FilterSide_e.NA)
+                data.FilterRight = 0d;
             //居中尺寸的处理
             data.MiddleToRight = data.MiddleToRight.Equals(0) ? data.Length / 2d : data.MiddleToRight;
 
