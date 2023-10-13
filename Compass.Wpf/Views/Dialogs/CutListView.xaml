@@ -6,82 +6,175 @@
              xmlns:local="clr-namespace:Compass.Wpf.Views.Dialogs"
              mc:Ignorable="d"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Width="1280"
+             xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
+             MinWidth="1280"
              Height="680">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <TextBlock Text="{Binding Title}"
-                   FontWeight="Bold"
-                   FontSize="20"
-                   Padding="20,10" />
-        <!--CutList Data-->
-        <DataGrid Grid.Row="1"
-                  x:Name="Data"
-                  ItemsSource="{Binding CutListDtos}"
-                  CanUserAddRows="False"
-                  AutoGenerateColumns="False"
-                  HeadersVisibility="All"
-                  IsReadOnly="True"
-                  CanUserSortColumns="True"
-                  ScrollViewer.VerticalScrollBarVisibility="Visible">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding PartDescription}"
-                                    Header="Part Description"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                <DataGridTextColumn Binding="{Binding Length}"
-                                    Header="Length"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="100" />
-                <DataGridTextColumn Binding="{Binding Width}"
-                                    Header="Width"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="100" />
-                <DataGridTextColumn Binding="{Binding Thickness}"
-                                    Header="Thickness"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="100" />
-                <DataGridTextColumn Binding="{Binding Quantity}"
-                                    Header="Quantity"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="100" />
-                <DataGridTextColumn Binding="{Binding Material}"
-                                    Header="Material"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                <DataGridTextColumn Binding="{Binding PartNo}"
-                                    Header="PartNo"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                <DataGridTextColumn Binding="{Binding BendingMark}"
-                                    Header="Bending"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                <DataGridTextColumn Binding="{Binding Index}"
-                                    Header="Index"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Width="100" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <StackPanel Orientation="Horizontal"
-                    Grid.Row="2"
-                    HorizontalAlignment="Right"
-                    Margin="20,10">
-            <Button Content="打印CutList"
-                    Command="{Binding SaveCommand}"
-                    Margin="0,0,10,0" />
-            <Button Content="返回"
-                    Command="{Binding CancelCommand}"
-                    Style="{StaticResource MaterialDesignOutlinedButton}" />
-        </StackPanel>
-    </Grid>
+    <materialDesign:DialogHost>
+
+        <materialDesign:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
+
+            <materialDesign:DrawerHost.RightDrawerContent>
+                <StackPanel MinWidth="300"
+                      Margin="10,5">
+                        <TextBlock Text="下料清单信息" FontSize="20" FontWeight="Bold"/>
+                        <TextBox Text="{Binding CurrentCutList.Description}"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 materialDesign:TextFieldAssist.PrefixText="Part Description: "
+                                 materialDesign:TextFieldAssist.SuffixText="(请填写零件描述)"/>
+                        <TextBox Text="{Binding CurrentCutList.Length}"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 materialDesign:TextFieldAssist.PrefixText="Length: "
+                                 materialDesign:TextFieldAssist.SuffixText="(请填写展开长度)" />
+                        <TextBox Text="{Binding CurrentCutList.Width}"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 materialDesign:TextFieldAssist.PrefixText="Width: "
+                                 materialDesign:TextFieldAssist.SuffixText="(请填写展开宽度)" />
+                        <TextBox Text="{Binding CurrentCutList.Thickness}"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 materialDesign:TextFieldAssist.PrefixText="Thickness: "
+                                 materialDesign:TextFieldAssist.SuffixText="(请填写钣金厚度)" />
+                    <TextBox Text="{Binding CurrentCutList.Quantity}"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 materialDesign:TextFieldAssist.PrefixText="Quantity: "
+                                 materialDesign:TextFieldAssist.SuffixText="(请填写零件数量)" />
+                    <TextBox Text="{Binding CurrentCutList.Material}"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 materialDesign:TextFieldAssist.PrefixText="Material: "
+                                 materialDesign:TextFieldAssist.SuffixText="(请填写钣金材质)" />
+                        <TextBox Text="{Binding CurrentCutList.PartNumber}"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 materialDesign:TextFieldAssist.PrefixText="Part No.: "
+                                 materialDesign:TextFieldAssist.SuffixText="(请填写零件编号)" />
+                        <TextBox Text="{Binding CurrentCutList.BendingMark}"
+                                 Margin="0,5"
+                                 VerticalAlignment="Center"
+                                 materialDesign:TextFieldAssist.PrefixText="Bending: "
+                                 materialDesign:TextFieldAssist.SuffixText="(请填写折弯备注)" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="保存"
+                                    Command="{Binding SaveItemCommand}"
+                                Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" />
+                            <Button Content="删除"
+                                    Command="{Binding SaveItemCommand}"
+                                    Margin="10"
+                                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                                    Background="Red" 
+                                    BorderThickness="0"/>
+                            <Button Content="取消"
+                                    Command="{Binding SaveItemCommand}"
+                                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                                    Background="Gray"
+                                BorderThickness="0" />
+                    </StackPanel>
+                    
+                </StackPanel>
+            </materialDesign:DrawerHost.RightDrawerContent>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <FrameworkElement x:Name="DataContextProxy"
+                                  DataContext="{Binding}" />
+                <TextBlock Text="{Binding Title}"
+                           FontWeight="Bold"
+                           FontSize="20"
+                           Padding="20,10" />
+                <!--CutList Data-->
+                <DataGrid Grid.Row="1"
+                          x:Name="Data"
+                          ItemsSource="{Binding CutListDtos}"
+                          CanUserAddRows="False"
+                          AutoGenerateColumns="False"
+                          HeadersVisibility="All"
+                          IsReadOnly="True"
+                          CanUserSortColumns="True"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding PartDescription}"
+                                            Header="Part Description"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        <DataGridTextColumn Binding="{Binding Length}"
+                                            Header="Length"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                            Width="100" />
+                        <DataGridTextColumn Binding="{Binding Width}"
+                                            Header="Width"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                            Width="100" />
+                        <DataGridTextColumn Binding="{Binding Thickness}"
+                                            Header="Thickness"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                            Width="100" />
+                        <DataGridTextColumn Binding="{Binding Quantity}"
+                                            Header="Quantity"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                            Width="100" />
+                        <DataGridTextColumn Binding="{Binding Material}"
+                                            Header="Material"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        <DataGridTextColumn Binding="{Binding PartNo}"
+                                            Header="PartNo"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        <DataGridTextColumn Binding="{Binding BendingMark}"
+                                            Header="Bending"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
+                        <DataGridTextColumn Binding="{Binding Index}"
+                                            Header="Index"
+                                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                            Width="100" />
+                        <DataGridTemplateColumn Header="修改">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <materialDesign:PackIcon Kind="Cog"
+                                                                 Foreground="Blue" />
+                                        <behavior:Interaction.Triggers>
+                                            <behavior:EventTrigger EventName="MouseLeftButtonDown">
+                                                <behavior:InvokeCommandAction Command="{Binding DataContext.UpdateItem,Source={x:Reference DataContextProxy}}"
+                                                                              CommandParameter="{Binding}" />
+                                            </behavior:EventTrigger>
+                                        </behavior:Interaction.Triggers></TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Row="2"
+                            HorizontalAlignment="Right"
+                            Margin="20,10">
+                    <Button Content="新增清单行"
+                            Command="{Binding AddItemCommand}"
+                            Margin="0,0,50,0"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryButton}" />
+                    <Button Content="打印CutList"
+                            Command="{Binding SaveCommand}"
+                            Margin="0,0,10,0" />
+                    <Button Content="返回"
+                            Command="{Binding CancelCommand}"
+                            Style="{StaticResource MaterialDesignOutlinedButton}" />
+                </StackPanel>
+            </Grid>
+        </materialDesign:DrawerHost>
+        
+    </materialDesign:DialogHost>
+    
 </UserControl>

@@ -87,7 +87,7 @@ public class CeilingService : BaseSwService, ICeilingService
 
             //排风脖颈
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1", Aggregator);
-            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel,data.Marvel, data.Ansul, ExhaustType_e.NA);
+            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, data.Marvel, data.Ansul, ExhaustType_e.NA);
         }
 
         //HCL
@@ -96,7 +96,7 @@ public class CeilingService : BaseSwService, ICeilingService
             swAssyTop.Suppress(suffix, "NormalLight_KCJ_DB_800-1");
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(out var swModelLevel1, suffix, "HclLight_KCJ_DB_800-1", Aggregator);
 
-            HclLightKcjDb800(swModelLevel1, swAssyLevel1, suffix, module, data.Length, UvLightType_e.NA,0,data.FilterLeft,data.FilterRight,data.LightCable, data.CeilingLightType, data.Japan, data.HclSide, data.HclLeft, data.HclRight);
+            HclLightKcjDb800(swModelLevel1, swAssyLevel1, suffix, module, data.Length, UvLightType_e.NA, 0, data.FilterLeft, data.FilterRight, data.LightCable, data.CeilingLightType, data.Japan, data.HclSide, data.HclLeft, data.HclRight);
 
         }
         else
@@ -104,7 +104,7 @@ public class CeilingService : BaseSwService, ICeilingService
             swAssyTop.Suppress(suffix, "HclLight_KCJ_DB_800-1");
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "NormalLight_KCJ_DB_800-1", Aggregator);
 
-            NormalLightKcjDb800(swAssyLevel1, suffix, data.Length, UvLightType_e.NA,0,data.FilterLeft,data.FilterRight, data.LightCable, data.CeilingLightType, data.Japan);
+            NormalLightKcjDb800(swAssyLevel1, suffix, data.Length, UvLightType_e.NA, 0, data.FilterLeft, data.FilterRight, data.LightCable, data.CeilingLightType, data.Japan);
         }
     }
 
@@ -142,7 +142,7 @@ public class CeilingService : BaseSwService, ICeilingService
 
             //排风脖颈
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1", Aggregator);
-            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel,data.Marvel, data.Ansul, ExhaustType_e.NA);
+            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, data.Marvel, data.Ansul, ExhaustType_e.NA);
         }
 
         //HCL
@@ -151,7 +151,7 @@ public class CeilingService : BaseSwService, ICeilingService
             swAssyTop.Suppress(suffix, "NormalLight_KCJ_SB_535-1");
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(out var swModelLevel1, suffix, "HclLight_KCJ_SB_535-1", Aggregator);
 
-            HclLightKcjSb535(swModelLevel1, swAssyLevel1, suffix, module, data.Length, data.Width, UvLightType_e.NA, data.LightCable, data.CeilingLightType, data.HclSide, data.HclLeft, data.HclRight, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
+            HclLightKcjSb535(swModelLevel1, swAssyLevel1, suffix, module, "KCJSB535", data.Length, data.Width, UvLightType_e.NA, 0, data.FilterLeft, data.LightCable, data.CeilingLightType, data.HclSide, data.HclLeft, data.HclRight, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
 
         }
         else
@@ -159,7 +159,7 @@ public class CeilingService : BaseSwService, ICeilingService
             swAssyTop.Suppress(suffix, "HclLight_KCJ_SB_535-1");
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(out var swModelLevel1, suffix, "NormalLight_KCJ_SB_535-1", Aggregator);
 
-            NormalLightKcjSb535(swModelLevel1, swAssyLevel1, suffix, module, data.Length, data.Width, UvLightType_e.NA, data.LightCable, data.CeilingLightType, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
+            NormalLightKcjSb535(swModelLevel1, swAssyLevel1, suffix, module, "KCJSB535", data.Length, data.Width, UvLightType_e.NA, 0, data.FilterLeft, data.LightCable, data.CeilingLightType, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
         }
 
     }
@@ -173,7 +173,7 @@ public class CeilingService : BaseSwService, ICeilingService
         var swCompLevel2 = RenameComp(swModelTop, swAssyTop, suffix, "KCJSB290", module, "FNCE0127", 1, data.Length, data.Width);
         if (swCompLevel2 != null)
         {
-            FNCE0127(swCompLevel2, data.Length, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
+            FNCE0127(swCompLevel2, data.Length,UvLightType_e.NA, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
         }
 
         //过滤器盲板
@@ -216,7 +216,7 @@ public class CeilingService : BaseSwService, ICeilingService
         var swCompLevel2 = RenameComp(swModelTop, swAssyTop, suffix, "KCJSB265", module, "FNCE0125", 1, data.Length, data.Width);
         if (swCompLevel2 != null)
         {
-            FNCE0127(swCompLevel2, data.Length, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
+            FNCE0127(swCompLevel2, data.Length,UvLightType_e.NA, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
         }
 
 
@@ -275,8 +275,10 @@ public class CeilingService : BaseSwService, ICeilingService
         FilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136", 1, "FNCE0109", 1);
         FilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 1, "FNCE0162", 1);
         //带把手过滤器侧板的磁铁支架
-        FilterSideSensor(swAssyTop,suffix,data.CeilingLightType, "FNCE0100-1", "FNCE0101-1");
-        FilterSideSensor(swAssyTop,suffix,data.CeilingLightType, "FNCE0100-2", "FNCE0101-2");
+        var leftSide = data.FilterSide is FilterSide_e.两过滤器侧板 or FilterSide_e.左过滤器侧板;
+        FilterSideSensor(swAssyTop, suffix, data.CeilingLightType, leftSide, "FNCE0100-1", "FNCE0101-1");
+        var rightSide = data.FilterSide is FilterSide_e.两过滤器侧板 or FilterSide_e.右过滤器侧板;
+        FilterSideSensor(swAssyTop, suffix, data.CeilingLightType, rightSide, "FNCE0100-2", "FNCE0101-2");
 
 
         //SSP灯板支撑条
@@ -303,7 +305,7 @@ public class CeilingService : BaseSwService, ICeilingService
             //排风脖颈
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1", Aggregator);
             //UCJ的排风滑门和轨道在UV灯支架中，因此不需要滑门和导轨,marvelRail取值true
-            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, true,data.Ansul, ExhaustType_e.NA);
+            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, true, data.Ansul, ExhaustType_e.NA);
         }
 
         //HCL
@@ -320,7 +322,7 @@ public class CeilingService : BaseSwService, ICeilingService
             swAssyTop.Suppress(suffix, "HclLight_KCJ_DB_800-1");
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "NormalLight_KCJ_DB_800-1", Aggregator);
 
-            NormalLightKcjDb800(swAssyLevel1, suffix, data.Length, data.UvLightType,data.FilterBlindNumber+filterNumber,data.FilterLeft,data.FilterRight, data.LightCable, data.CeilingLightType, data.Japan);
+            NormalLightKcjDb800(swAssyLevel1, suffix, data.Length, data.UvLightType, data.FilterBlindNumber+filterNumber, data.FilterLeft, data.FilterRight, data.LightCable, data.CeilingLightType, data.Japan);
         }
     }
 
@@ -336,13 +338,20 @@ public class CeilingService : BaseSwService, ICeilingService
         FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0107[BP-500]{500}-1", "LocalLPatternBlind", "Dis@DistanceBlind");
 
         //过滤器
-        Filter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, data.FilterType, "KcjFcFilter-1", "LocalLPatternFc", "Dis@DistanceFc");
+        Filter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, data.FilterType, "UcjFcCombi-1", "LocalLPatternFc", "Dis@DistanceFc");
 
         //过滤器侧板
-        FilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 1, "FNCE0109", 1);
+        FilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136", 1, "FNCE0109", 1);
+        //带把手过滤器侧板的磁铁支架
+        var leftSide = data.FilterSide is FilterSide_e.两过滤器侧板 or FilterSide_e.左过滤器侧板;
+        FilterSideSensor(swAssyTop, suffix, data.CeilingLightType, leftSide, "FNCE0100-1", "FNCE0101-1");
+
 
         //SSP灯板支撑条
         SspSupport(swModelTop, swAssyTop, suffix, data.Length, data.DomeSsp, data.Gutter, data.GutterWidth, "FNCE0035-1", "Dis@DistanceDome", "FNCE0036-1", "Dis@DistanceFlat");
+
+        //UV灯
+        UvLightAsm(swAssyTop, suffix, data.UvLightType, "CeilingUvRackSpecial_4S-1", "CeilingUvRackSpecial_4L-1");
 
         //日本项目需要压缩零件(吊装垫片和脖颈)
         if (data.Japan)
@@ -359,7 +368,7 @@ public class CeilingService : BaseSwService, ICeilingService
             //排风脖颈
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1", Aggregator);
             //UCJ的排风滑门和轨道在UV灯支架中，因此不需要滑门和导轨,marvelRail取值true
-            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel,true, data.Ansul, ExhaustType_e.NA);
+            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, true, data.Ansul, ExhaustType_e.NA);
         }
 
         //HCL
@@ -368,7 +377,7 @@ public class CeilingService : BaseSwService, ICeilingService
             swAssyTop.Suppress(suffix, "NormalLight_KCJ_SB_535-1");
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(out var swModelLevel1, suffix, "HclLight_KCJ_SB_535-1", Aggregator);
 
-            HclLightKcjSb535(swModelLevel1, swAssyLevel1, suffix, module, data.Length, data.Width, UvLightType_e.NA, data.LightCable, data.CeilingLightType, data.HclSide, data.HclLeft, data.HclRight, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
+            HclLightKcjSb535(swModelLevel1, swAssyLevel1, suffix, module, "UCJSB535", data.Length, data.Width, data.UvLightType, data.FilterBlindNumber+filterNumber, data.FilterLeft, data.LightCable, data.CeilingLightType, data.HclSide, data.HclLeft, data.HclRight, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
 
         }
         else
@@ -376,7 +385,7 @@ public class CeilingService : BaseSwService, ICeilingService
             swAssyTop.Suppress(suffix, "HclLight_KCJ_SB_535-1");
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(out var swModelLevel1, suffix, "NormalLight_KCJ_SB_535-1", Aggregator);
 
-            NormalLightKcjSb535(swModelLevel1, swAssyLevel1, suffix, module, data.Length, data.Width, UvLightType_e.NA, data.LightCable, data.CeilingLightType, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
+            NormalLightKcjSb535(swModelLevel1, swAssyLevel1, suffix, module, "UCJSB535", data.Length, data.Width, data.UvLightType, data.FilterBlindNumber+filterNumber, data.FilterLeft, data.LightCable, data.CeilingLightType, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
         }
 
     }
@@ -387,23 +396,34 @@ public class CeilingService : BaseSwService, ICeilingService
         var filterNumber = (int)((data.Length - data.FilterLeft - data.FilterRight) / 499d) - data.FilterBlindNumber;
 
         //重命名排风腔体
-        var swCompLevel2 = RenameComp(swModelTop, swAssyTop, suffix, "KCJSB290", module, "FNCE0127", 1, data.Length, data.Width);
+        var swCompLevel2 = RenameComp(swModelTop, swAssyTop, suffix, "UCJSB385", module, "FNCE0129", 1, data.Length, data.Width);
         if (swCompLevel2 != null)
         {
-            FNCE0127(swCompLevel2, data.Length, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
+            FNCE0127(swCompLevel2, data.Length,data.UvLightType, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
         }
 
         //过滤器盲板
         FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0107[BP-500]{500}-1", "LocalLPatternBlind", "Dis@DistanceBlind");
 
         //过滤器
-        Filter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, data.FilterType, "KcjFcFilter-1", "LocalLPatternFc", "Dis@DistanceFc");
+        Filter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, data.FilterType, "UcjFcCombi-1", "LocalLPatternFc", "Dis@DistanceFc");
 
         //过滤器侧板
-        FilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 1, "FNCE0109", 1);
-
+        FilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136", 1, "FNCE0109", 1);
+        //带把手过滤器侧板的磁铁支架
+        var leftSide = data.FilterSide is FilterSide_e.两过滤器侧板 or FilterSide_e.左过滤器侧板;
+        if (leftSide) swAssyTop.UnSuppress(suffix, "FNCE0100-1", Aggregator);
+        else swAssyTop.Suppress(suffix, "FNCE0100-1");
+        
         //SSP灯板支撑条
         SspSupport(swModelTop, swAssyTop, suffix, data.Length, data.DomeSsp, data.Gutter, data.GutterWidth, "FNCE0035-1", "Dis@DistanceDome", "FNCE0036-1", "Dis@DistanceFlat");
+
+        //UV灯
+        UvLightAsm(swAssyTop, suffix, data.UvLightType, "CeilingUvRackSpecial_4S-1", "CeilingUvRackSpecial_4L-1");
+
+        //磁棒板
+        FNCE0145(swAssyTop, suffix, "FNCE0151-1", data.Length, data.FilterLeft, data.FilterBlindNumber+filterNumber);
+
 
         //日本项目需要压缩零件(吊装垫片和脖颈)
         if (data.Japan)
@@ -420,13 +440,10 @@ public class CeilingService : BaseSwService, ICeilingService
             //排风脖颈
             var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "ExhaustSpigot_Fs-1", Aggregator);
             //UCJ的排风滑门和轨道在UV灯支架中，因此不需要滑门和导轨,marvelRail取值true
-            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel,true, data.Ansul, ExhaustType_e.NA);
+            ExhaustService.ExhaustSpigotFs(swAssyLevel1, suffix, data.Length, data.MiddleToRight, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.Marvel, true, data.Ansul, ExhaustType_e.NA);
         }
 
-    } 
-
-
-
+    }
 
     #endregion
 
@@ -525,16 +542,24 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-    private void FilterSideSensor(AssemblyDoc swAssyLevel1, string suffix, CeilingLightType_e ceilingLightType, string normalPart, string hclPart)
+    private void FilterSideSensor(AssemblyDoc swAssyLevel1, string suffix, CeilingLightType_e ceilingLightType, bool sideCheck, string normalPart, string hclPart)
     {
-        if (ceilingLightType is CeilingLightType_e.HCL)
+        if (sideCheck)
         {
-            swAssyLevel1.UnSuppress(suffix, hclPart,Aggregator);
-            swAssyLevel1.Suppress(suffix, normalPart);
+            if (ceilingLightType is CeilingLightType_e.HCL)
+            {
+                swAssyLevel1.UnSuppress(suffix, hclPart, Aggregator);
+                swAssyLevel1.Suppress(suffix, normalPart);
+            }
+            else
+            {
+                swAssyLevel1.UnSuppress(suffix, normalPart, Aggregator);
+                swAssyLevel1.Suppress(suffix, hclPart);
+            }
         }
         else
         {
-            swAssyLevel1.UnSuppress(suffix, normalPart, Aggregator);
+            swAssyLevel1.Suppress(suffix, normalPart);
             swAssyLevel1.Suppress(suffix, hclPart);
         }
     }
@@ -558,11 +583,11 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-    private void UvLightAsm(AssemblyDoc swAssyLevel1, string suffix, UvLightType_e uvLightType,string shortAsm,string longAsm)
+    private void UvLightAsm(AssemblyDoc swAssyLevel1, string suffix, UvLightType_e uvLightType, string shortAsm, string longAsm)
     {
         switch (uvLightType)
         {
-            
+
             case UvLightType_e.UVR4S:
             case UvLightType_e.UVR6S:
             case UvLightType_e.UVR8S:
@@ -585,9 +610,9 @@ public class CeilingService : BaseSwService, ICeilingService
     }
 
     #endregion
-    
+
     #region KCJ UCJ
-    private void NormalLightKcjDb800(AssemblyDoc swAssyLevel1, string suffix, double length, UvLightType_e uvLightType,int sensorNumber,double filterLeft,double filterRight, LightCable_e lightCable, CeilingLightType_e ceilingLightType, bool japan)
+    private void NormalLightKcjDb800(AssemblyDoc swAssyLevel1, string suffix, double length, UvLightType_e uvLightType, int sensorNumber, double filterLeft, double filterRight, LightCable_e lightCable, CeilingLightType_e ceilingLightType, bool japan)
     {
         //灯腔
         FNCE0116(swAssyLevel1, suffix, "FNCE0116-1", length, uvLightType, lightCable, ceilingLightType, japan);
@@ -609,13 +634,13 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-    private void NormalLightKcjSb535(ModelDoc2 swModelLevel1,AssemblyDoc swAssyLevel1, string suffix, string module, double length,double width, UvLightType_e uvLightType, LightCable_e lightCable, CeilingLightType_e ceilingLightType, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
+    private void NormalLightKcjSb535(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module,string type, double length, double width, UvLightType_e uvLightType, int sensorNumber, double filterLeft, LightCable_e lightCable, CeilingLightType_e ceilingLightType, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
     {
         //重命名排风腔体
-        var swCompLevel2 = RenameComp(swModelLevel1, swAssyLevel1, suffix, "KCJSB535", module, "FNCE0111", 1, length, width);
+        var swCompLevel2 = RenameComp(swModelLevel1, swAssyLevel1, suffix, type, module, "FNCE0111", 1, length, width);
         if (swCompLevel2 != null)
         {
-            FNCE0111(swCompLevel2, length,ceilingLightType, lightCable, HclSide_e.NA, 0, 0, marvel, exhaustSpigotNumber, middleToRight, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, ansul, ansulSide, ansulDetector, japan);
+            FNCE0111(swCompLevel2, length, uvLightType, ceilingLightType, lightCable, HclSide_e.NA, 0, 0, marvel, exhaustSpigotNumber, middleToRight, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, ansul, ansulSide, ansulDetector, japan);
         }
 
         //灯腔
@@ -623,12 +648,23 @@ public class CeilingService : BaseSwService, ICeilingService
 
         //玻璃支架
         FNCE0056(swAssyLevel1, suffix, "FNCE0056-1", length);
+
+        //磁棒板
+        if (uvLightType is UvLightType_e.NA)
+        {
+            swAssyLevel1.Suppress(suffix, "FNCE0145-1");
+        }
+        else
+        {
+            //正面
+            FNCE0145(swAssyLevel1, suffix, "FNCE0145-1", length, filterLeft, sensorNumber);
+        }
     }
 
-    private void HclLightKcjDb800(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, double length, UvLightType_e uvLightType, int sensorNumber, double filterLeft, double filterRight,  LightCable_e lightCable, CeilingLightType_e ceilingLightType, bool japan, HclSide_e hclSide, double hclLeft, double hclRight)
+    private void HclLightKcjDb800(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, double length, UvLightType_e uvLightType, int sensorNumber, double filterLeft, double filterRight, LightCable_e lightCable, CeilingLightType_e ceilingLightType, bool japan, HclSide_e hclSide, double hclLeft, double hclRight)
     {
         swAssyLevel1.ChangeDim("Dis@DistanceLeft", hclLeft);
-        
+
         #region 镀锌铁片
         switch (hclSide)
         {
@@ -678,7 +714,7 @@ public class CeilingService : BaseSwService, ICeilingService
         HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092", 1, "FNCE0094", 1);
     }
 
-    private void HclLightKcjSb535(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, double length, double width,UvLightType_e uvLightType, LightCable_e lightCable, CeilingLightType_e ceilingLightType, HclSide_e hclSide, double hclLeft, double hclRight,  bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
+    private void HclLightKcjSb535(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, string type,double length, double width, UvLightType_e uvLightType, int sensorNumber, double filterLeft, LightCable_e lightCable, CeilingLightType_e ceilingLightType, HclSide_e hclSide, double hclLeft, double hclRight, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
     {
         swAssyLevel1.ChangeDim("Dis@DistanceLeft", hclLeft);
 
@@ -706,14 +742,26 @@ public class CeilingService : BaseSwService, ICeilingService
         #endregion
 
         //重命名排风腔体
-        var swCompLevel2 = RenameComp(swModelLevel1, swAssyLevel1, suffix, "KCJSB535", module, "FNCE0089", 1, length, width);
+        var swCompLevel2 = RenameComp(swModelLevel1, swAssyLevel1, suffix, type, module, "FNCE0089", 1, length, width);
         if (swCompLevel2 != null)
         {
-            FNCE0111(swCompLevel2, length,ceilingLightType, lightCable, hclSide, hclLeft,hclRight, marvel, exhaustSpigotNumber, middleToRight, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, ansul, ansulSide, ansulDetector, japan);
+            FNCE0111(swCompLevel2, length, uvLightType, ceilingLightType, lightCable, hclSide, hclLeft, hclRight, marvel, exhaustSpigotNumber, middleToRight, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, ansul, ansulSide, ansulDetector, japan);
         }
 
         //灯腔
         FNCE0112(swAssyLevel1, suffix, "FNCE0085-1", length, uvLightType, lightCable, ceilingLightType, japan);
+
+        //磁棒板
+        if (uvLightType is UvLightType_e.NA)
+        {
+            swAssyLevel1.Suppress(suffix, "FNCE0069-1");
+        }
+        else
+        {
+            //正面
+            FNCE0145(swAssyLevel1, suffix, "FNCE0069-1", length, filterLeft, sensorNumber);
+        }
+
         //支撑条
         FNCE0099(swAssyLevel1, suffix, "FNCE0090-1", length, hclSide, hclLeft, hclRight);
         //支撑条上部
@@ -773,7 +821,7 @@ public class CeilingService : BaseSwService, ICeilingService
     }
 
     #region 双排风
-    private void FNCE0115(Component2 swCompLevel2, double length,UvLightType_e uvLightType, LightCable_e lightCable, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5, bool japan)
+    private void FNCE0115(Component2 swCompLevel2, double length, UvLightType_e uvLightType, LightCable_e lightCable, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, int ansulDetectorNumber, AnsulDetectorEnd_e ansulDetectorEnd, double ansulDetectorDis1, double ansulDetectorDis2, double ansulDetectorDis3, double ansulDetectorDis4, double ansulDetectorDis5, bool japan)
     {
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
@@ -804,35 +852,34 @@ public class CeilingService : BaseSwService, ICeilingService
         #endregion
 
         #region UV灯支架
-        if (uvLightType is not UvLightType_e.NA)
+
+        switch (uvLightType)
         {
-            switch (uvLightType)
-            {
-                case UvLightType_e.UVR4L:
-                case UvLightType_e.UVR6L:
-                case UvLightType_e.UVR8L:
-                    swCompLevel2.UnSuppress("FcCable");
-                    swCompLevel2.UnSuppress("UvRack");
-                    swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
-                    swModelLevel2.ChangeDim("UvRack@SketchUvRack", 1600d);
-                    swModelLevel2.ChangeDim("UvCable@SketchUvRack", 1200d);
-                    break;
-                case UvLightType_e.UVR4S:
-                case UvLightType_e.UVR6S:
-                case UvLightType_e.UVR8S:
-                    swCompLevel2.UnSuppress("FcCable");
-                    swCompLevel2.UnSuppress("UvRack");
-                    swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
-                    swModelLevel2.ChangeDim("UvRack@SketchUvRack", 893d);
-                    swModelLevel2.ChangeDim("UvCable@SketchUvRack", 600d);
-                    break;
-                case UvLightType_e.NA:
-                default:
-                    swCompLevel2.Suppress("FcCable");
-                    swCompLevel2.Suppress("UvRack");
-                    break;
-            }
+            case UvLightType_e.UVR4L:
+            case UvLightType_e.UVR6L:
+            case UvLightType_e.UVR8L:
+                swCompLevel2.UnSuppress("FcCable");
+                swCompLevel2.UnSuppress("UvRack");
+                swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
+                swModelLevel2.ChangeDim("UvRack@SketchUvRack", 1600d);
+                swModelLevel2.ChangeDim("UvCable@SketchUvRack", 1200d);
+                break;
+            case UvLightType_e.UVR4S:
+            case UvLightType_e.UVR6S:
+            case UvLightType_e.UVR8S:
+                swCompLevel2.UnSuppress("FcCable");
+                swCompLevel2.UnSuppress("UvRack");
+                swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
+                swModelLevel2.ChangeDim("UvRack@SketchUvRack", 893d);
+                swModelLevel2.ChangeDim("UvCable@SketchUvRack", 600d);
+                break;
+            case UvLightType_e.NA:
+            default:
+                swCompLevel2.Suppress("FcCable");
+                swCompLevel2.Suppress("UvRack");
+                break;
         }
+
         #endregion
 
         #region Marvel
@@ -1035,7 +1082,7 @@ public class CeilingService : BaseSwService, ICeilingService
         else
         {
             swCompLevel2.Suppress("HclRight");
-        } 
+        }
         #endregion
     }
 
@@ -1062,7 +1109,7 @@ public class CeilingService : BaseSwService, ICeilingService
         swModelLevel2.ChangeDim("Length@SketchBase", netLength);
     }
 
-    private void FNCE0145(AssemblyDoc swAssyLevel1, string suffix, string partName, double length,double sideLength,int number)
+    private void FNCE0145(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, double sideLength, int number)
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@Base-Flange", length-5d);
@@ -1078,14 +1125,14 @@ public class CeilingService : BaseSwService, ICeilingService
         {
             swCompLevel2.UnSuppress("SideSensor");
             swModelLevel2.ChangeDim("Dis@SketchSideSensor", sideLength/2d-2.5d);
-            
+
         }
     }
 
     #endregion
 
     #region 单排风
-    private void FNCE0111(Component2 swCompLevel2, double length,CeilingLightType_e ceilingLightType, LightCable_e lightCable, HclSide_e hclSide, double hclLeft, double hclRight, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
+    private void FNCE0111(Component2 swCompLevel2, double length, UvLightType_e uvLightType, CeilingLightType_e ceilingLightType, LightCable_e lightCable, HclSide_e hclSide, double hclLeft, double hclRight, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
     {
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
@@ -1110,6 +1157,37 @@ public class CeilingService : BaseSwService, ICeilingService
             default:
                 swCompLevel2.Suppress("LightCableRight");
                 swCompLevel2.Suppress("LightCableLeft");
+                break;
+        }
+
+        #endregion
+
+        #region UV灯支架
+
+        switch (uvLightType)
+        {
+            case UvLightType_e.UVR4L:
+            case UvLightType_e.UVR6L:
+            case UvLightType_e.UVR8L:
+                swCompLevel2.UnSuppress("FcCable");
+                swCompLevel2.UnSuppress("UvRack");
+                swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
+                swModelLevel2.ChangeDim("UvRack@SketchUvRack", 1600d);
+                swModelLevel2.ChangeDim("UvCable@SketchUvRack", 1200d);
+                break;
+            case UvLightType_e.UVR4S:
+            case UvLightType_e.UVR6S:
+            case UvLightType_e.UVR8S:
+                swCompLevel2.UnSuppress("FcCable");
+                swCompLevel2.UnSuppress("UvRack");
+                swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
+                swModelLevel2.ChangeDim("UvRack@SketchUvRack", 893d);
+                swModelLevel2.ChangeDim("UvCable@SketchUvRack", 600d);
+                break;
+            case UvLightType_e.NA:
+            default:
+                swCompLevel2.Suppress("FcCable");
+                swCompLevel2.Suppress("UvRack");
                 break;
         }
 
@@ -1283,12 +1361,11 @@ public class CeilingService : BaseSwService, ICeilingService
     }
 
 
-    private void FNCE0127(Component2 swCompLevel2, double length, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
+    private void FNCE0127(Component2 swCompLevel2, double length, UvLightType_e uvLightType, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
     {
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
-
-
+        
         #region Marvel
         if (marvel)
         {
@@ -1303,6 +1380,45 @@ public class CeilingService : BaseSwService, ICeilingService
             swCompLevel2.Suppress("MarvelNtc");
             swCompLevel2.Suppress("MarvelTab");
         }
+        #endregion
+
+        #region UV灯支架
+        if (uvLightType is not UvLightType_e.NA)
+        {
+            switch (uvLightType)
+            {
+                case UvLightType_e.UVR4L:
+                case UvLightType_e.UVR6L:
+                case UvLightType_e.UVR8L:
+                    swCompLevel2.UnSuppress("FcCable");
+                    swCompLevel2.UnSuppress("UvSensorSupport");
+                    swCompLevel2.UnSuppress("UvRack");
+                    swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
+                    swModelLevel2.ChangeDim("UvRack@SketchUvRack", 1600d);
+                    swCompLevel2.UnSuppress("UvCable");
+                    swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
+                    swModelLevel2.ChangeDim("UvCable@SketchUvCable", 1200d);
+                    break;
+                case UvLightType_e.UVR4S:
+                case UvLightType_e.UVR6S:
+                case UvLightType_e.UVR8S:
+                    swCompLevel2.UnSuppress("FcCable");
+                    swCompLevel2.UnSuppress("UvSensorSupport");
+                    swCompLevel2.UnSuppress("UvRack");
+                    swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
+                    swModelLevel2.ChangeDim("UvRack@SketchUvRack", 893d);
+                    swCompLevel2.UnSuppress("UvCable");
+                    swModelLevel2.ChangeDim("ToRight@SketchUvCable", middleToRight);
+                    swModelLevel2.ChangeDim("UvCable@SketchUvCable", 600d);
+                    break;
+                default:
+                    swCompLevel2.Suppress("FcCable");
+                    swCompLevel2.Suppress("UvSensorSupport");
+                    swCompLevel2.Suppress("UvRack");
+                    break;
+            }
+        }
+
         #endregion
 
         #region ANSUL
@@ -1384,5 +1500,5 @@ public class CeilingService : BaseSwService, ICeilingService
 
     #endregion
     #endregion\\
-    
+
 }

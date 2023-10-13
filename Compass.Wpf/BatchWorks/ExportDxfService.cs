@@ -50,29 +50,32 @@ public class ExportDxfService : IExportDxfService
         //打开装配体
         var swAssy = _swApp.OpenAssemblyDoc(out ModelDoc2 swModel, packPath,_aggregator);
         List<CutListDto> dtos = new List<CutListDto>();
-        var comps = swAssy.GetComponents(false);
-        foreach (var comp in (IEnumerable)comps)
+        var comps = (IEnumerable)swAssy.GetComponents(false);
+        foreach (var comp in comps)
         {
             var swComp = comp as Component2;
             //Debug.Print(swComp.GetPathName());//查看所有状态OK的零件文件
-            //获取下料清单,尽早判断是否存在，存在就数量+1，跳出去
-            var partName = Path.GetFileNameWithoutExtension(swComp.GetPathName()); ;
-            var existDto = dtos.FirstOrDefault(x => x.PartNo.Equals(partName, StringComparison.OrdinalIgnoreCase));
-            if (existDto!=null)
-            {
-                existDto.Quantity++;//数量+1
-                continue;//继续循环下一个零件
-            }
+            
 
             //Debug.Print(swComp.GetPathName());//查看所有文件
             var swCompModel = swComp.GetModelDoc2() as ModelDoc2;
 
-            //检查零部件是否为零件，并且检查状态，并且是钣金
+            //2023.10.13，必须先判断状态，再计数，否则非法状态下的零件也会被计数
+            //检查零部件是否为零件，并且检查合法状态，并且是钣金
             if (swCompModel!=null &&
                 swCompModel.GetType()==(int)swDocumentTypes_e.swDocPART &&
                 CheckPartStatus(swComp) &&
                 CheckSheetMetal(swComp))
             {
+                //获取下料清单,存在就数量+1，跳出去
+                var partName = Path.GetFileNameWithoutExtension(swComp.GetPathName()); ;
+                var existDto = dtos.FirstOrDefault(x => x.PartNo.Equals(partName, StringComparison.OrdinalIgnoreCase));
+                if (existDto!=null)
+                {
+                    existDto.Quantity++;//数量+1
+                    continue;//继续循环下一个零件
+                }
+
                 //如果是则增加下料清单信息
                 var swFeat = swCompModel.FirstFeature() as Feature;
                 //获取下料清单信息
