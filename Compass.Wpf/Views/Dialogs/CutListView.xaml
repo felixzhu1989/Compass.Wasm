@@ -10,70 +10,76 @@
              MinWidth="1280"
              Height="680">
     <materialDesign:DialogHost>
-
         <materialDesign:DrawerHost IsRightDrawerOpen="{Binding IsRightDrawerOpen}">
-
             <materialDesign:DrawerHost.RightDrawerContent>
                 <StackPanel MinWidth="300"
-                      Margin="10,5">
-                        <TextBlock Text="下料清单信息" FontSize="20" FontWeight="Bold"/>
-                        <TextBox Text="{Binding CurrentCutList.Description}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="Part Description: "
-                                 materialDesign:TextFieldAssist.SuffixText="(请填写零件描述)"/>
-                        <TextBox Text="{Binding CurrentCutList.Length}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="Length: "
-                                 materialDesign:TextFieldAssist.SuffixText="(请填写展开长度)" />
-                        <TextBox Text="{Binding CurrentCutList.Width}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="Width: "
-                                 materialDesign:TextFieldAssist.SuffixText="(请填写展开宽度)" />
-                        <TextBox Text="{Binding CurrentCutList.Thickness}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="Thickness: "
-                                 materialDesign:TextFieldAssist.SuffixText="(请填写钣金厚度)" />
+                            Margin="10,5">
+                    <TextBlock Text="下料清单信息"
+                               FontSize="20"
+                               FontWeight="Bold" />
+                    <Button Content="从清单中移除"
+                            HorizontalAlignment="Right"
+                            Command="{Binding DeleteItemCommand}"
+                            Margin="0,10"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                            Background="Red"
+                            BorderThickness="0" />
+                    <TextBox Text="{Binding CurrentCutList.PartDescription}"
+                             Margin="0,5"
+                             VerticalAlignment="Center"
+                             materialDesign:TextFieldAssist.PrefixText="Part Description: "
+                             materialDesign:TextFieldAssist.SuffixText="(零件描述)" />
+                    <TextBox Text="{Binding CurrentCutList.Length}"
+                             Margin="0,5"
+                             VerticalAlignment="Center"
+                             materialDesign:TextFieldAssist.PrefixText="Length: "
+                             materialDesign:TextFieldAssist.SuffixText="(展开长度)" />
+                    <TextBox Text="{Binding CurrentCutList.Width}"
+                             Margin="0,5"
+                             VerticalAlignment="Center"
+                             materialDesign:TextFieldAssist.PrefixText="Width: "
+                             materialDesign:TextFieldAssist.SuffixText="(展开宽度)" />
+                    <TextBox Text="{Binding CurrentCutList.Thickness}"
+                             Margin="0,5"
+                             VerticalAlignment="Center"
+                             materialDesign:TextFieldAssist.PrefixText="Thickness: "
+                             materialDesign:TextFieldAssist.SuffixText="(钣金厚度)" />
                     <TextBox Text="{Binding CurrentCutList.Quantity}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="Quantity: "
-                                 materialDesign:TextFieldAssist.SuffixText="(请填写零件数量)" />
+                             Margin="0,5"
+                             VerticalAlignment="Center"
+                             materialDesign:TextFieldAssist.PrefixText="Quantity: "
+                             materialDesign:TextFieldAssist.SuffixText="(零件数量)" />
                     <TextBox Text="{Binding CurrentCutList.Material}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="Material: "
-                                 materialDesign:TextFieldAssist.SuffixText="(请填写钣金材质)" />
-                        <TextBox Text="{Binding CurrentCutList.PartNumber}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="Part No.: "
-                                 materialDesign:TextFieldAssist.SuffixText="(请填写零件编号)" />
-                        <TextBox Text="{Binding CurrentCutList.BendingMark}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="Bending: "
-                                 materialDesign:TextFieldAssist.SuffixText="(请填写折弯备注)" />
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Content="保存"
-                                    Command="{Binding SaveItemCommand}"
-                                Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" />
-                            <Button Content="删除"
-                                    Command="{Binding SaveItemCommand}"
-                                    Margin="10"
-                                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
-                                    Background="Red" 
-                                    BorderThickness="0"/>
-                            <Button Content="取消"
-                                    Command="{Binding SaveItemCommand}"
-                                    Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
-                                    Background="Gray"
-                                BorderThickness="0" />
-                    </StackPanel>
-                    
+                             Margin="0,5"
+                             VerticalAlignment="Center"
+                             materialDesign:TextFieldAssist.PrefixText="Material: "
+                             materialDesign:TextFieldAssist.SuffixText="(钣金材质)" />
+                    <TextBox Text="{Binding CurrentCutList.PartNo}"
+                             Margin="0,5"
+                             VerticalAlignment="Center"
+                             materialDesign:TextFieldAssist.PrefixText="Part No.: "
+                             materialDesign:TextFieldAssist.SuffixText="(零件编号)" />
+                    <TextBox Text="{Binding CurrentCutList.BendingMark}"
+                             Margin="0,5"
+                             VerticalAlignment="Center"
+                             materialDesign:TextFieldAssist.PrefixText="Bending: "
+                             materialDesign:TextFieldAssist.SuffixText="(折弯备注)" />
+                    <Button HorizontalAlignment="Right"
+                            Margin="0,10"
+                            Content="保存"
+                            Command="{Binding ExecuteItemCommand}"
+                            CommandParameter="SaveItem"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}" />
+                    <Button HorizontalAlignment="Right"
+                            Content="取消"
+                            Command="{Binding ExecuteItemCommand}"
+                            CommandParameter="CancelItem"
+                            Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
+                            Background="Gray"
+                            BorderThickness="0" />
+                    <materialDesign:Snackbar x:Name="CutListSnackBar"
+                                             MessageQueue="{materialDesign:MessageQueue }"
+                                             Panel.ZIndex="1" />
                 </StackPanel>
             </materialDesign:DrawerHost.RightDrawerContent>
             <Grid>
@@ -148,7 +154,7 @@
                                                                  Foreground="Blue" />
                                         <behavior:Interaction.Triggers>
                                             <behavior:EventTrigger EventName="MouseLeftButtonDown">
-                                                <behavior:InvokeCommandAction Command="{Binding DataContext.UpdateItem,Source={x:Reference DataContextProxy}}"
+                                                <behavior:InvokeCommandAction Command="{Binding DataContext.UpdateItemCommand,Source={x:Reference DataContextProxy}}"
                                                                               CommandParameter="{Binding}" />
                                             </behavior:EventTrigger>
                                         </behavior:Interaction.Triggers></TextBlock>
@@ -161,8 +167,9 @@
                             Grid.Row="2"
                             HorizontalAlignment="Right"
                             Margin="20,10">
-                    <Button Content="新增清单行"
-                            Command="{Binding AddItemCommand}"
+                    <Button Content="新增行"
+                            Command="{Binding ExecuteItemCommand}"
+                            CommandParameter="AddItem"
                             Margin="0,0,50,0"
                             Style="{StaticResource MaterialDesignRaisedSecondaryButton}" />
                     <Button Content="打印CutList"
@@ -174,7 +181,5 @@
                 </StackPanel>
             </Grid>
         </materialDesign:DrawerHost>
-        
     </materialDesign:DialogHost>
-    
 </UserControl>

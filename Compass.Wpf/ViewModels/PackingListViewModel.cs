@@ -42,15 +42,15 @@ public class PackingListViewModel : NavigationViewModel
     #endregion
 
     #region 执行操作
-    private void Execute(string obj)
+    private async void Execute(string obj)
     {
         switch (obj)
         {
-            case "UpdatePackingList": UpdatePackingList(); break;
-            case "ReCreate": ReCreate(); break;
-            case "AddStdMaterial": AddStdMaterial(); break;
-            case "AddSplMaterial": AddSplMaterial(); break;
-            case "Print": Print(); break;
+            case "UpdatePackingList":await UpdatePackingList(); break;
+            case "ReCreate":await ReCreate(); break;
+            case "AddStdMaterial":await AddStdMaterial(); break;
+            case "AddSplMaterial":await AddSplMaterial(); break;
+            case "Print":await Print(); break;
             case "PackingInfo": PackingInfo(); break;
         }
     }

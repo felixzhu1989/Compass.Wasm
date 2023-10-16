@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Projects;
 using Compass.Wasm.Shared.Projects;
+using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 
@@ -14,25 +17,28 @@ public class CutListViewModel : BindableBase, IDialogHostAware
     #region ctor
     private readonly IContainerProvider _provider;
     private readonly ICutListService _cutListService;
-    public readonly IDialogHostService _dialogHost;
+    public readonly IEventAggregator _aggregator;//事件聚合器
     public CutListViewModel(IContainerProvider provider)
     {
         _provider = provider;
         _cutListService = provider.Resolve<ICutListService>();
-        _dialogHost = provider.Resolve<IDialogHostService>();
+        _aggregator= _provider.Resolve<EventAggregator>();
+
+        CurrentCutList =new CutListDto();
+        CutListDtos = new ObservableCollection<CutListDto>();
+
+
         SaveCommand = new DelegateCommand(Execute);//使用Save当作执行打印操作
         CancelCommand=new DelegateCommand(Cancel);
-        UpdateItem = new DelegateCommand<CutListDto>(UpdateCutListItem);
-        DeleteItem = new DelegateCommand<CutListDto>(DeleteCutListItem);
+        UpdateItemCommand = new DelegateCommand<CutListDto>(UpdateItem);
+        ExecuteItemCommand = new DelegateCommand<string>(ExecuteItem);
     }
-
     
-
     public string DialogHostName { get; set; } = "RootDialog";
     public DelegateCommand SaveCommand { get; set; }
     public DelegateCommand CancelCommand { get; set; }
-    public DelegateCommand<CutListDto> UpdateItem { get; }
-    public DelegateCommand<CutListDto> DeleteItem { get; }
+    public DelegateCommand<CutListDto> UpdateItemCommand { get; }
+    public DelegateCommand<string> ExecuteItemCommand { get; }
     #endregion
 
     #region 数据属性
@@ -64,9 +70,18 @@ public class CutListViewModel : BindableBase, IDialogHostAware
         get => isRightDrawerOpen;
         set { isRightDrawerOpen = value; RaisePropertyChanged(); }
     }
+
+    private CutListDto currentCutList;
+
+    public CutListDto CurrentCutList
+    {
+        get => currentCutList;
+        set { currentCutList = value;RaisePropertyChanged(); }
+    }
     #endregion
 
-    //todo:是否需要手工修改Cutlist条目
+
+    #region 主界面命令
     /// <summary>
     /// 执行打印CutList
     /// </summary>
@@ -84,34 +99,109 @@ public class CutListViewModel : BindableBase, IDialogHostAware
             //取消时只返回No，告知操作结束
             DialogHost.Close(DialogHostName, new DialogResult(ButtonResult.No));
     }
+    #endregion
 
+
+    #region 手工修改Cutlist条目
     //弹出修改界面
-    private void UpdateCutListItem(CutListDto dto)
+    private void UpdateItem(CutListDto dto)
     {
         IsRightDrawerOpen = true;
+        CurrentCutList= dto;
+    }
+    private void AddItem()
+    {
+        IsRightDrawerOpen = true;
+        CurrentCutList= new CutListDto
+        {
+            ModuleId = ModuleDto.Id.Value,
+            Thickness = 1,
+            Material = "1.0 mm SS304 4B/2B",
+        };
+    }
+    private void CancelItem()
+    {
+        IsRightDrawerOpen = false;
+    }
+    private async void ExecuteItem(string obj)
+    {
+        switch (obj)
+        {
+            case "AddItem": AddItem();break;
+            case "CancelItem": CancelItem();break;
+            case "SaveItem":await SaveItem();break;
+            case "DeleteItem":await DeleteItem();break;
+        }
+    }
+    //todo：以后再优化_aggregator和删除，目前_aggregator暂时无法提示信息
+    private async Task SaveItem()
+    {
+        //请选择模型，或者分段名称不能为空
+        if (string.IsNullOrWhiteSpace(CurrentCutList.PartDescription) ||string.IsNullOrWhiteSpace(CurrentCutList.PartNo))
+        {
+            //发送提示
+            _aggregator.SendMessage("请填写PartDescription零件描述和PartNo零件名称",Filter_e.CutList);
+            return;
+        }
+
+        if (CurrentCutList.Id != Guid.Empty) //编辑
+        {
+            var updateResult = await _cutListService.UpdateAsync(CurrentCutList.Id.Value, CurrentCutList);
+            //更新界面
+            if (updateResult.Status)
+            {
+                _aggregator.SendMessage($"{CurrentCutList.PartDescription} {CurrentCutList.PartNo}修改成功！");
+
+                await RefreshCutListAsync();
+
+                IsRightDrawerOpen = false; //关闭弹窗
+            }
+            else //新增
+            {
+                var addResult = await _cutListService.AddAsync(CurrentCutList);
+                if (addResult.Status)
+                {
+                    _aggregator.SendMessage($"{CurrentCutList.PartDescription} {CurrentCutList.PartNo}添加成功！");
+
+                    await RefreshCutListAsync();
+
+                    IsRightDrawerOpen = false; //关闭弹窗
+                }
+            }
+        }
+
+
     }
     //删除
-    private async void DeleteCutListItem(CutListDto obj)
-    {
-        CutListDtos.Remove(obj);
-        await _cutListService.DeleteAsync(obj.Id.Value);
+    private async Task DeleteItem()
+    { 
+        //await _cutListService.DeleteAsync(CurrentCutList.Id.Value);
+       //await RefreshCutListAsync();
     }
+    #endregion
 
+    #region 初始化
     public async void OnDialogOpen(IDialogParameters parameters)
     {
         ModuleDto = parameters.ContainsKey("Value") ? parameters.GetValue<ModuleDto>("Value") : null;
         if (ModuleDto != null)
         {
             Title = $"{ModuleDto.OdpNumber} / {ModuleDto.ProjectName} ( {ModuleDto.ItemNumber} / {ModuleDto.Name} / {ModuleDto.ModelName} ) ({ModuleDto.Length} x {ModuleDto.Width} x {ModuleDto.Height})";
-            var param = new CutListParam
-            {
-                ModuleId = ModuleDto.Id.Value
-            };
-            var result = await _cutListService.GetAllByModuleIdAsync(param);
-            if (result.Status)
-            {
-                CutListDtos =new ObservableCollectionListSource<CutListDto>(result.Result);
-            }
+            await RefreshCutListAsync();
         }
     }
+
+    public async Task RefreshCutListAsync()
+    {
+        var param = new CutListParam
+        {
+            ModuleId = ModuleDto.Id.Value
+        };
+        var result = await _cutListService.GetAllByModuleIdAsync(param);
+        if (result.Status)
+        {
+            CutListDtos =new ObservableCollectionListSource<CutListDto>(result.Result);
+        }
+    } 
+    #endregion
 }

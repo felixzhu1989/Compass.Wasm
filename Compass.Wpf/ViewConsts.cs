@@ -17,5 +17,7 @@ public enum Filter_e
 {
     Main,
     Login,
-    Batch
+    Batch,
+    CutList,
+
 }
