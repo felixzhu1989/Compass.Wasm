@@ -132,10 +132,12 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("AnsulSide");
 
                     b.Property<int>("CeilingLightType")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("CeilingLightType");
 
                     b.Property<bool>("DomeSsp")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit")
                         .HasColumnName("DomeSsp");
 
@@ -165,18 +167,22 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("ExhaustSpigotWidth");
 
                     b.Property<int>("FilterBlindNumber")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("FilterBlindNumber");
 
                     b.Property<double>("FilterLeft")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("FilterLeft");
 
                     b.Property<double>("FilterRight")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("FilterRight");
 
                     b.Property<int>("FilterSide")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("FilterSide");
 
@@ -185,26 +191,32 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("FilterType");
 
                     b.Property<bool>("Gutter")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit")
                         .HasColumnName("Gutter");
 
                     b.Property<double>("GutterWidth")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("GutterWidth");
 
                     b.Property<double>("HclLeft")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("HclLeft");
 
                     b.Property<double>("HclRight")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("HclRight");
 
                     b.Property<int>("HclSide")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("HclSide");
 
                     b.Property<bool>("Japan")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit")
                         .HasColumnName("Japan");
 
@@ -223,6 +235,126 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("MiddleToRight");
 
                     b.HasDiscriminator().HasValue("KcjData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.KcwData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<bool>("Ansul")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Ansul");
+
+                    b.Property<int>("AnsulSide")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("AnsulSide");
+
+                    b.Property<int>("CeilingLightType")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("CeilingLightType");
+
+                    b.Property<int>("CeilingWaterInlet")
+                        .HasColumnType("int")
+                        .HasColumnName("CeilingWaterInlet");
+
+                    b.Property<bool>("DomeSsp")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("DomeSsp");
+
+                    b.Property<int>("DpSide")
+                        .HasColumnType("int")
+                        .HasColumnName("DpSide");
+
+                    b.Property<double>("ExhaustSpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotDis");
+
+                    b.Property<double>("ExhaustSpigotHeight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotHeight");
+
+                    b.Property<double>("ExhaustSpigotLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotLength");
+
+                    b.Property<int>("ExhaustSpigotNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("ExhaustSpigotNumber");
+
+                    b.Property<double>("ExhaustSpigotWidth")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("ExhaustSpigotWidth");
+
+                    b.Property<int>("FilterBlindNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("FilterBlindNumber");
+
+                    b.Property<double>("FilterLeft")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("FilterLeft");
+
+                    b.Property<double>("FilterRight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("FilterRight");
+
+                    b.Property<int>("FilterSide")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("FilterSide");
+
+                    b.Property<bool>("Gutter")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Gutter");
+
+                    b.Property<double>("GutterWidth")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("GutterWidth");
+
+                    b.Property<double>("HclLeft")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("HclLeft");
+
+                    b.Property<double>("HclRight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("HclRight");
+
+                    b.Property<int>("HclSide")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("HclSide");
+
+                    b.Property<bool>("Japan")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Japan");
+
+                    b.Property<bool>("Marvel")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Marvel");
+
+                    b.Property<double>("MiddleToRight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("MiddleToRight");
+
+                    b.HasDiscriminator().HasValue("KcwData");
                 });
 
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.CmodmData", b =>
@@ -491,6 +623,30 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("UvLightType");
 
                     b.HasDiscriminator().HasValue("UcjData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.UcwData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.Ceilings.KcwData");
+
+                    b.Property<double>("BaffleSensorDis1")
+                        .HasColumnType("float")
+                        .HasColumnName("BaffleSensorDis1");
+
+                    b.Property<double>("BaffleSensorDis2")
+                        .HasColumnType("float")
+                        .HasColumnName("BaffleSensorDis2");
+
+                    b.Property<int>("BaffleSensorNumber")
+                        .HasColumnType("int")
+                        .HasColumnName("BaffleSensorNumber");
+
+                    b.Property<int>("UvLightType")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("UvLightType");
+
+                    b.HasDiscriminator().HasValue("UcwData");
                 });
 
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.KvfData", b =>

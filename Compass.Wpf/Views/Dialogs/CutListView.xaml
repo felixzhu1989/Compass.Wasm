@@ -19,7 +19,8 @@
                                FontWeight="Bold" />
                     <Button Content="从清单中移除"
                             HorizontalAlignment="Right"
-                            Command="{Binding DeleteItemCommand}"
+                            Command="{Binding ExecuteItemCommand}"
+                            CommandParameter="DeleteItem"
                             Margin="0,10"
                             Style="{StaticResource MaterialDesignRaisedSecondaryDarkButton}"
                             Background="Red"

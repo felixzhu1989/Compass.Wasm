@@ -15,7 +15,13 @@
     <Compile Update="Views\Ceilings\KcjDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Ceilings\KcwDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Ceilings\UcjDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Ceilings\UcwDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Dialogs\AddPackingListView.xaml.cs">
@@ -125,7 +131,13 @@
     <Page Update="Views\Ceilings\KcjDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Ceilings\KcwDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Ceilings\UcjDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Ceilings\UcwDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Dialogs\AddPackingListView.xaml">

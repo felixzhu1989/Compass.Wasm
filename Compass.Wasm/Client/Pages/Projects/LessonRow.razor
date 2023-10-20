@@ -8,7 +8,8 @@
     <br />
     <CompMultiLineText Text="@lesson.Content" />
     <span style="color: dodgerblue">附件：</span>
-    <br />
+    <br/>
+    <CompMultiImgs ContentUrl="@lesson.ContentUrl" />
     <CompFiles Roles="admin,pm,manager"
            FileUrls="@lesson.ContentUrl"
            UpLoadUrl="@($"lesson/update/{lesson.Id}")" />

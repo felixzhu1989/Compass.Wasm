@@ -4,9 +4,8 @@ using System.IO;
 using Compass.Wasm.Shared.Extensions;
 using Compass.Wpf.ApiServices.Projects;
 using Application = Microsoft.Office.Interop.Excel.Application;
-using Compass.PlanService.Domain.Entities;
 using Compass.Wasm.Shared.Params;
-using System.CodeDom.Compiler;
+
 
 namespace Compass.Wpf.ViewModels;
 
@@ -217,8 +216,10 @@ public class MainPlansViewModel : NavigationViewModel
                 string.IsNullOrEmpty(Search)||
                 x.Number.Contains(Search,StringComparison.OrdinalIgnoreCase)|| 
                 x.Name.Contains(Search, StringComparison.OrdinalIgnoreCase)||
-                x.ModelSummary.Contains(Search, StringComparison.OrdinalIgnoreCase)||
-                x.Remarks.Contains(Search, StringComparison.OrdinalIgnoreCase)));
+                ((!string.IsNullOrEmpty(x.ModelSummary))&& x.ModelSummary.Contains(Search, StringComparison.OrdinalIgnoreCase))||
+                ((!string.IsNullOrEmpty(x.Remarks))&&x.Remarks!.Contains(Search, StringComparison.OrdinalIgnoreCase))));
+        //有的时候ModelSummary或Remarks是null，导致调用Contains报错
+
     }
     #endregion
 

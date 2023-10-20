@@ -103,7 +103,25 @@ public class MidRoofService : BaseSwService, IMidRoofService
 
         FNHM0031(swAssyLevel1, suffix, "FNHM0031-1", length, netWidth, height, exhaustType, uvLightType, bluetooth, middleToRight, lightType, lightToFront, spotLightNumber, spotLightDistance, marvel, ansul, ansulDropNumber, ansulDropToFront, ansulDropDis1, ansulDropDis2, ansulDropDis3, ansulDropDis4, ansulDropDis5, ansulDetectorNumber, ansulDetectorEnd, ansulDetectorDis1, ansulDetectorDis2, ansulDetectorDis3, ansulDetectorDis4, ansulDetectorDis5);
 
-
+        //2023.10.16,有筒灯时,UV时或者Marvel时需要安装UVC的支架，长度为宽度+40
+        if (lightType is LightType_e.筒灯)
+        {
+            if (uvLightType is UvLightType_e.NA && !marvel)
+            {
+                swAssyLevel1.Suppress(suffix, "FNHM0045-2");
+                swAssyLevel1.Suppress(suffix, "FNHM0045-1");
+            }
+            else
+            {
+                swAssyLevel1.UnSuppress(suffix, "FNHM0045-2", Aggregator);
+                FNHM0045(swAssyLevel1, suffix, "FNHM0045-1", netWidth);
+            }
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffix, "FNHM0045-2");
+            swAssyLevel1.Suppress(suffix, "FNHM0045-1");
+        }
 
         //槽钢长度
         swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, "2900100001-1", Aggregator);

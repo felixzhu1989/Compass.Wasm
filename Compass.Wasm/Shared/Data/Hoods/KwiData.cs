@@ -3,7 +3,7 @@
 public class KwiData : KviData
 {
     #region 水洗管入口
-    private WaterInlet_e waterInlet = WaterInlet_e.右入水;
+    private WaterInlet_e waterInlet = WaterInlet_e.右入水管;
     public WaterInlet_e WaterInlet
     {
         get => waterInlet;

@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Andro", "Compass.An
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.Andro.Android", "Compass.Andro\Compass.Andro.Android\Compass.Andro.Android.csproj", "{3E3223AE-6D81-4DCF-9FCF-6B8FEE9A6E65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.Dtos", "Compass.Dtos\Compass.Dtos.csproj", "{C18D3155-5C87-4D45-9375-E0BCC8FC937F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Dtos", "Compass.Dtos\Compass.Dtos.csproj", "{C18D3155-5C87-4D45-9375-E0BCC8FC937F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

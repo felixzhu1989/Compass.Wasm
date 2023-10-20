@@ -261,6 +261,10 @@ public static class SwUtility
             swPackAndGo.IncludeToolboxComponents = false;
             swPackAndGo.IncludeSuppressed = true;
 
+            // Get current paths and filenames of the assembly's documents
+            var status = swPackAndGo.GetDocumentNames(out var fileNames);
+            var pgFileNames = (object[])fileNames;
+
             // Set folder where to save the files,目标存放文件夹
             //判断打包目标文件夹是否存在，不存在则创建
             if (!Directory.Exists(packDir))
@@ -270,6 +274,9 @@ public static class SwUtility
             swPackAndGo.SetSaveToName(true, packDir);
             swPackAndGo.FlattenToSingleFolder = true;
             swPackAndGo.AddSuffix = suffix;
+
+            status = swPackAndGo.GetDocumentSaveToNames(out var getFileNames, out var getDocumentStatus);
+            var pgGetFileNames = (string[])getFileNames;
 
             // 执行Pack and Go
             swModelExt.SavePackAndGo(swPackAndGo);

@@ -52,6 +52,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcE1haW5QbGFuU3RhdHVzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompMultiImgs.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcE11bHRpSW1ncy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/CSharp/repos/Compass.Wasm/Compass.Wasm/Client/Comps/CompMultiLineText.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcHNcQ29tcE11bHRpTGluZVRleHQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

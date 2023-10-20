@@ -19,7 +19,7 @@ public enum DrainType_e
 
 public enum WaterInlet_e
 {
-    NA,右入水,左入水
+    NA,右入水管,左入水管
 }
 
 
@@ -84,9 +84,14 @@ public enum HclSide_e
 {
     NA, 无HCL侧板, 左HCL侧板, 右HCL侧板, 两HCL侧板
 }
+public enum DpSide_e
+{
+    NA,无DP腔,左侧DP腔, 右侧DP腔,两侧DP腔
+}
 
-
-
-
+public enum CeilingWaterInlet_e
+{
+    NA, 前入水管, 上入水管
+}
 
 #endregion

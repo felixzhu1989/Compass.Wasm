@@ -17,8 +17,8 @@
             <span class="input-group-text">内容</span>
             <textarea class="form-control" placeholder="请记录项目经验教训，可输入多行" style="height: 350px" @bind="@lesson.Content"></textarea>
         </div>
-
-        <MultiFileUpload Title="附件(可添加多个)" FileType="application/pdf" @bind-MultiFileUrl="@lesson.ContentUrl" />
+        <CompMultiImgs ContentUrl="@lesson.ContentUrl" />
+        <MultiFileUpload Title="附件(可添加多个)" FileType="image/*" @bind-MultiFileUrl="@lesson.ContentUrl" />
 
         <span class="text-danger">移除此条 ：</span>
         <button class="btn" type="button" @onclick="@(() => _lessonDtos.Remove(lesson))">

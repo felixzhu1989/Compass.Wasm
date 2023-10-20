@@ -5,10 +5,6 @@ using Prism.Mvvm;
 using System.Threading.Tasks;
 using Compass.Wasm.Shared.Params;
 using Compass.Wpf.ApiServices.Projects;
-using Compass.Wasm.Shared.Projects;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.ViewModels.Dialogs;
 

@@ -1,6 +1,5 @@
 ﻿using Compass.DataService.Infrastructure;
 using Compass.Wasm.Server.Services.Data.Ceilings;
-using Compass.Wasm.Shared;
 using System.ComponentModel.DataAnnotations;
 using Compass.Dtos;
 using Compass.Wasm.Shared.Data.Ceilings;

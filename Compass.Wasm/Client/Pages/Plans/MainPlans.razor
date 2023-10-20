@@ -144,7 +144,8 @@
                  (string.IsNullOrEmpty(_search)||
                   x.Number.Contains(_search, StringComparison.OrdinalIgnoreCase)||
                   x.Name.Contains(_search, StringComparison.OrdinalIgnoreCase)||
-                  x.ModelSummary.Contains(_search, StringComparison.OrdinalIgnoreCase)))
+                  ((!string.IsNullOrEmpty(x.ModelSummary))&& x.ModelSummary.Contains(_search, StringComparison.OrdinalIgnoreCase))||
+                  ((!string.IsNullOrEmpty(x.Remarks))&&x.Remarks!.Contains(_search, StringComparison.OrdinalIgnoreCase))))
             .ToList();
     }
 }

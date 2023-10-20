@@ -88,9 +88,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\compass_64px.ico">
+    <SplashScreen Include="Images\compass_64px.ico">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
+    </SplashScreen>
     <Resource Include="Images\halton_logo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

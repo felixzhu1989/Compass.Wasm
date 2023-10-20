@@ -87,6 +87,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\BouncyCastle.C
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\RabbitMQ.Client.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\RedLockNet.Abstractions.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\RedLockNet.SERedis.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\RestSharp.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Serilog.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Serilog.AspNetCore.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Serilog.Extensions.Hosting.dll
@@ -141,6 +142,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Catego
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.CategoryService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.DataService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.DataService.Infrastructure.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.FileService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.FileService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.IdentityService.Domain.dll
@@ -167,6 +169,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Wasm.C
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Wasm.Shared.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.CategoryService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.DataService.Domain.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Dtos.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.FileService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.IdentityService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.PlanService.Domain.pdb
@@ -196,6 +199,3 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\refint\Compass
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\ref\Compass.Wasm.Server.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\RestSharp.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Dtos.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Debug\net6.0\Compass.Dtos.pdb

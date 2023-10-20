@@ -51,8 +51,10 @@
         </div>
         <CompAddButton Roles="admin,pm,manager" Url="@($"lesson/add/{projectDto.Id}")" />
     </div>
-
-    <LessonRow ProjectDto="@projectDto" />
+    @if (projectDto.Id != null)
+    {
+        <LessonRow ProjectDto="projectDto"></LessonRow>
+    }
 }
 
 

@@ -19,7 +19,6 @@ using Compass.Wpf.Views;
 using Compass.Wpf.Views.Ceilings;
 using Compass.Wpf.Views.Dialogs;
 using Compass.Wpf.Views.Hoods;
-using RestSharp;
 
 namespace Compass.Wpf;
 
@@ -168,10 +167,12 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<CmodfDataView,CmodfDataViewModel>();
         
 
-
+        //天花烟罩
         containerRegistry.RegisterForNavigation<KcjDataView,KcjDataViewModel>();
         containerRegistry.RegisterForNavigation<UcjDataView,UcjDataViewModel>();
-        
+        containerRegistry.RegisterForNavigation<KcwDataView, KcwDataViewModel>();
+        containerRegistry.RegisterForNavigation<UcwDataView, UcwDataViewModel>();
+
 
         #endregion
 
@@ -214,7 +215,8 @@ public partial class App : PrismApplication
         //天花烟罩
         containerRegistry.Register<IKcjDataService,KcjDataService>();
         containerRegistry.Register<IUcjDataService,UcjDataService>();
-
+        containerRegistry.Register<IKcwDataService, KcwDataService>();
+        containerRegistry.Register<IUcwDataService, UcwDataService>();
 
 
 
@@ -234,10 +236,11 @@ public partial class App : PrismApplication
         containerRegistry.Register<IKvvAutoDrawing, KvvAutoDrawing>();
         containerRegistry.Register<ICmodiAutoDrawing, CmodiAutoDrawing>();
         containerRegistry.Register<ICmodfAutoDrawing, CmodfAutoDrawing>();
-
+        //天花烟罩
         containerRegistry.Register<IKcjAutoDrawing,KcjAutoDrawing>();
         containerRegistry.Register<IUcjAutoDrawing,UcjAutoDrawing>();
-
+        containerRegistry.Register<IKcwAutoDrawing, KcwAutoDrawing>();
+        containerRegistry.Register<IUcwAutoDrawing, UcwAutoDrawing>();
 
         #endregion
 

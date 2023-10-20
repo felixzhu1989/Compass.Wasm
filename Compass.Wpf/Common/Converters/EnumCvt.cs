@@ -44,3 +44,6 @@ public class FilterSideCvt : EnumCvt<FilterSide_e> {}
 public class CeilingLightTypeCvt : EnumCvt<CeilingLightType_e> { }
 public class LightCableCvt : EnumCvt<LightCable_e> { }
 public class HclSideCvt : EnumCvt<HclSide_e> { }
+
+public class DpSideCvt : EnumCvt<DpSide_e> { }
+public class CeilingWaterInletCvt : EnumCvt<CeilingWaterInlet_e> { }

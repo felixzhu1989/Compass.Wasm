@@ -21,10 +21,12 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.FileService.Infrastructure.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.FileService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.FileService.Infrastructure.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.FileService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.Wasm.Shared.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.Wasm.Shared.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.FileService.Domain.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.Dtos.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\obj\Debug\net6.0\Compass.FileService.Infrastructure.csproj.AssemblyReference.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\obj\Debug\net6.0\Compass.FileService.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\obj\Debug\net6.0\Compass.FileService.Infrastructure.AssemblyInfoInputs.cache
@@ -36,5 +38,3 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\obj\Debug\net6.0\Compass.FileService.Infrastructure.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\obj\Debug\net6.0\Compass.FileService.Infrastructure.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\obj\Debug\net6.0\ref\Compass.FileService.Infrastructure.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.Dtos.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.FileService.Infrastructure\bin\Debug\net6.0\Compass.Dtos.pdb

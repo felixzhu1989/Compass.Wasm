@@ -285,7 +285,8 @@ builder.Services.AddScoped<IKvwDataService, KvwDataService>();
 #region CeilingService天花烟罩数据服务
 builder.Services.AddScoped<IKcjDataService,KcjDataService>();
 builder.Services.AddScoped<IUcjDataService,UcjDataService>();
-
+builder.Services.AddScoped<IKcwDataService, KcwDataService>();
+builder.Services.AddScoped<IUcwDataService, UcwDataService>();
 
 
 #endregion

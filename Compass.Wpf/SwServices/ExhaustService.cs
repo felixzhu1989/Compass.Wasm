@@ -673,7 +673,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 case SidePanel_e.右:
                     swAssyLevel1.Suppress(suffix, rightPart);
                     swCompLevel2 = swAssyLevel1.UnSuppress(suffix, leftPart, Aggregator);
-                    swCompLevel2.FeatureByName("AnsulDetector");
+                    swCompLevel2.UnSuppress("AnsulDetector");
                     break;
                 case SidePanel_e.双:
                 case SidePanel_e.NA:
@@ -1509,11 +1509,11 @@ public class ExhaustService : BaseSwService, IExhaustService
         {
             switch (door)
             {
-                case WaterInlet_e.右入水:
+                case WaterInlet_e.右入水管:
                     swCompLevel2.Suppress("WaterPipeInDoorLeft");
                     swCompLevel2.UnSuppress("WaterPipeInDoorRight");
                     break;
-                case WaterInlet_e.左入水:
+                case WaterInlet_e.左入水管:
                     swCompLevel2.UnSuppress("WaterPipeInDoorLeft");
                     swCompLevel2.Suppress("WaterPipeInDoorRight");
                     break;
@@ -1530,11 +1530,11 @@ public class ExhaustService : BaseSwService, IExhaustService
         #region 入水口
         switch (waterInlet)
         {
-            case WaterInlet_e.右入水:
+            case WaterInlet_e.右入水管:
                 swCompLevel2.Suppress("WaterPipeInLeft");
                 swCompLevel2.UnSuppress("WaterPipeInRight");
                 break;
-            case WaterInlet_e.左入水:
+            case WaterInlet_e.左入水管:
                 swCompLevel2.UnSuppress("WaterPipeInLeft");
                 swCompLevel2.Suppress("WaterPipeInRight");
                 break;
@@ -1649,11 +1649,11 @@ public class ExhaustService : BaseSwService, IExhaustService
         #region 入水口
         switch (waterInlet)
         {
-            case WaterInlet_e.右入水:
+            case WaterInlet_e.右入水管:
                 swCompLevel2.Suppress("WaterPipeInLeft");
                 swCompLevel2.UnSuppress("WaterPipeInRight");
                 break;
-            case WaterInlet_e.左入水:
+            case WaterInlet_e.左入水管:
                 swCompLevel2.UnSuppress("WaterPipeInLeft");
                 swCompLevel2.Suppress("WaterPipeInRight");
                 break;
@@ -1793,8 +1793,8 @@ public class ExhaustService : BaseSwService, IExhaustService
         double meshSideLength = (length - 3d -2d- meshLength*(int)((length - 2d-minMeshSideLengthAnsul+offsetDis) / meshLength)) / 2d;
 
         //有Ansul时，Ansul和进水管不同一侧
-        if (ansul&&((waterInlet == WaterInlet_e.左入水 && ansulSide == AnsulSide_e.右侧喷) ||
-            (waterInlet == WaterInlet_e.右入水 && ansulSide == AnsulSide_e.左侧喷)))
+        if (ansul&&((waterInlet == WaterInlet_e.左入水管 && ansulSide == AnsulSide_e.右侧喷) ||
+            (waterInlet == WaterInlet_e.右入水管 && ansulSide == AnsulSide_e.左侧喷)))
         {
             //再减少一个MESH(498/2)
             if ((meshSideLength - offsetDis) < minMeshSideLengthAnsul) meshSideLength += meshLength / 2d;
@@ -1809,7 +1809,7 @@ public class ExhaustService : BaseSwService, IExhaustService
             //最大侧板>55，才能穿水管
             if ((meshSideLength + offsetDis) > minMeshSideLengthAnsul)
             {
-                if (waterInlet == WaterInlet_e.左入水)
+                if (waterInlet == WaterInlet_e.左入水管)
                 {
                     FNHE0038(meshSideLength + offsetDis);
                     FNHE0039(meshSideLength - offsetDis);
@@ -1822,7 +1822,7 @@ public class ExhaustService : BaseSwService, IExhaustService
             }
             else
             {
-                if (waterInlet == WaterInlet_e.左入水)
+                if (waterInlet == WaterInlet_e.左入水管)
                 {
                     FNHE0038(meshSideLength *2d);
                     swAssyLevel1.Suppress(suffix, rightPart);
@@ -1840,7 +1840,7 @@ public class ExhaustService : BaseSwService, IExhaustService
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, leftPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
             swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
-            if (waterInlet == WaterInlet_e.左入水) swCompLevel2.UnSuppress("WaterPipeLeft");
+            if (waterInlet == WaterInlet_e.左入水管) swCompLevel2.UnSuppress("WaterPipeLeft");
             else swCompLevel2.Suppress("WaterPipeLeft");
             if (ansulSide==AnsulSide_e.左侧喷) swCompLevel2.UnSuppress("AnsulSideLeft");
             else swCompLevel2.Suppress("AnsulSideLeft");
@@ -1850,7 +1850,7 @@ public class ExhaustService : BaseSwService, IExhaustService
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, rightPart, Aggregator);
             swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
             swModelLevel2.AddStrConfigProp("BendingMark", sideLength.ToString());
-            if (waterInlet == WaterInlet_e.右入水) swCompLevel2.UnSuppress("WaterPipeRight");
+            if (waterInlet == WaterInlet_e.右入水管)  swCompLevel2.UnSuppress("WaterPipeRight");
             else swCompLevel2.Suppress("WaterPipeRight");
             if (ansulSide==AnsulSide_e.右侧喷) swCompLevel2.UnSuppress("AnsulSideRight");
             else swCompLevel2.Suppress("AnsulSideRight");
@@ -2409,11 +2409,11 @@ public class ExhaustService : BaseSwService, IExhaustService
         #region 入水口
         switch (waterInlet)
         {
-            case WaterInlet_e.右入水:
+            case WaterInlet_e.右入水管:
                 swCompLevel2.Suppress("WaterPipeInLeft");
                 swCompLevel2.UnSuppress("WaterPipeInRight");
                 break;
-            case WaterInlet_e.左入水:
+            case WaterInlet_e.左入水管:
                 swCompLevel2.UnSuppress("WaterPipeInLeft");
                 swCompLevel2.Suppress("WaterPipeInRight");
                 break;
@@ -2533,11 +2533,11 @@ public class ExhaustService : BaseSwService, IExhaustService
         #region 入水口
         switch (waterInlet)
         {
-            case WaterInlet_e.右入水:
+            case WaterInlet_e.右入水管:
                 swCompLevel2.Suppress("WaterPipeInLeft");
                 swCompLevel2.UnSuppress("WaterPipeInRight");
                 break;
-            case WaterInlet_e.左入水:
+            case WaterInlet_e.左入水管:
                 swCompLevel2.UnSuppress("WaterPipeInLeft");
                 swCompLevel2.Suppress("WaterPipeInRight");
                 break;
@@ -2671,11 +2671,11 @@ public class ExhaustService : BaseSwService, IExhaustService
         #region 入水口
         switch (waterInlet)
         {
-            case WaterInlet_e.右入水:
+            case WaterInlet_e.右入水管:
                 swCompLevel2.Suppress("WaterPipeInLeft");
                 swCompLevel2.UnSuppress("WaterPipeInRight");
                 break;
-            case WaterInlet_e.左入水:
+            case WaterInlet_e.左入水管:
                 swCompLevel2.UnSuppress("WaterPipeInLeft");
                 swCompLevel2.Suppress("WaterPipeInRight");
                 break;

@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Collections;
 using System.Diagnostics;
 using CsvHelper;
 using System.Globalization;
@@ -61,7 +62,7 @@ foreach (var i in rank)
 
 
 var swApp=SwUtility.ConnectSw();
-var swModel=(ModelDoc2)swApp.ActiveDoc;
+//var swModel=(ModelDoc2)swApp.ActiveDoc;
 
 #region 操作属性
 /*var swConfig = (Configuration)swModel.GetActiveConfiguration();
@@ -70,5 +71,21 @@ var swPropMgr = swConfig.CustomPropertyManager;
 swPropMgr.Add3("BendingMark", (int)swCustomInfoType_e.swCustomInfoText, "123", (int)swCustomPropertyAddOption_e.swCustomPropertyDeleteAndAdd);
 //读取属性
 swPropMgr.Get6("BendingMark", false, out _, out var valout, out _, out _);
-Debug.Print(valout);*/ 
+Debug.Print(valout);*/
+#endregion
+
+
+#region 参考引用
+//var swModelExt = swModel.Extension;
+//var files = (IEnumerable)swModelExt.GetDependencies(true, false, true, true, true);
+#endregion
+
+#region 打包
+
+//var modelPath = @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\UCW_DB_800.SLDASM";
+var modelPath = @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\SidePanel_KCW_DB_800.SLDASM";
+//var modelPath = @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\SidePanel_KCW_DB_800.SLDASM";
+var packDir = @"D:\MyProjects\FSO230000\Test\B2.2_UCW_DB_800";
+swApp.PackAndGo(modelPath, packDir, "_B2.2");
+
 #endregion

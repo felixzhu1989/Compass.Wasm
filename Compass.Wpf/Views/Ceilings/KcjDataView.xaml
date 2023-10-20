@@ -135,7 +135,7 @@
                         Margin="10">
                 <!--灯具参数-->
                 <StackPanel>
-                    <TextBlock Text="灯具参数（SB290和SB265时不需要填写）"
+                    <TextBlock Text="灯具参数(SB385、SB290和SB265时不要填)"
                                Margin="0,5,0,0"
                                Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"

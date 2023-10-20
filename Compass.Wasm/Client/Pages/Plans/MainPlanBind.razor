@@ -33,7 +33,7 @@
         <span>...</span>
     }
     
-    <CompSaveCancelButtons CancelUrl="mainplans" />
+    <CompSaveCancelButtons CancelUrl="" />
 </EditForm>
 
 @code {
@@ -63,7 +63,7 @@
             return;
         }
         var result = await MainPlanService.UpdateStatusesAsync(Guid.Parse(Id), _mainPlanDto);
-        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("mainplans");
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("");
     }
     private void Search(ChangeEventArgs e)
     {

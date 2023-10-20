@@ -68,6 +68,18 @@ public static class SwUtility
 
     #endregion
 
+    #region 文件名添加后缀
+    /// <summary>
+    /// 根据文件名和后缀组合
+    /// </summary>
+    public static string AddSuffix(this string partName, string suffix)
+    {
+        //从-号拆分，-前添加suffix，例如：FNHE0001-1 -> FNHE0001_Item-M1-210203-1 其中（_Item-M1-210203）是suffix
+        var endIndex = partName.LastIndexOf("-", StringComparison.Ordinal);
+        return $"{partName.Substring(0, endIndex)}{suffix}{partName.Substring(endIndex)}";
+    }
+    #endregion
+
     #region ISldWorks扩展
     /// <summary>
     /// 获取pack后的装配体地址
@@ -125,20 +137,6 @@ public static class SwUtility
 
     #endregion
     
-    #region 绘图代码扩展方法
-
-    #region 文件名添加后缀
-    /// <summary>
-    /// 根据文件名和后缀组合
-    /// </summary>
-    public static string AddSuffix(this string partName, string suffix)
-    {
-        //从-号拆分，-前添加suffix，例如：FNHE0001-1 -> FNHE0001_Item-M1-210203-1 其中（_Item-M1-210203）是suffix
-        var endIndex = partName.LastIndexOf("-", StringComparison.Ordinal);
-        return $"{partName.Substring(0, endIndex)}{suffix}{partName.Substring(endIndex)}";
-    }
-    #endregion
-    
     #region AssemblyDoc扩展
     /// <summary>
     /// 获取子装配
@@ -149,6 +147,7 @@ public static class SwUtility
         aggregator.SendMessage($"处理装配:\t{swModelLevel1.GetPathName()}",Filter_e.Batch);
         return (swModelLevel1 as AssemblyDoc)!;
     }
+
     /// <summary>
     /// 获取子装配并抛出ModelDoc2
     /// </summary>
@@ -186,6 +185,7 @@ public static class SwUtility
         var feat = (IFeature)swAssy.FeatureByName(featureName);
         feat.SetSuppression2(0, 2, null);
     }
+
     /// <summary>
     /// 装配体解压特征，重建
     /// </summary>
@@ -196,6 +196,20 @@ public static class SwUtility
         swAssy.ForceRebuild2(true);
     }
 
+    /// <summary>
+    /// 装配体根据条件解压或压缩特征
+    /// </summary>
+    public static void SuppressOnCond(this AssemblyDoc swAssy, string suffix, string featureName, bool cond)
+    {
+        if (cond)
+        {
+            swAssy.UnSuppress(featureName);
+        }
+        else
+        {
+            swAssy.Suppress(featureName);
+        }
+    }
 
     /// <summary>
     /// 装配体压缩部件
@@ -219,6 +233,33 @@ public static class SwUtility
     }
 
     /// <summary>
+    /// 装配体根据条件解压或压缩零部件
+    /// </summary>
+    public static void SuppressOnCond(this AssemblyDoc swAssy, string suffix, string compName,bool cond, IEventAggregator aggregator)
+    {
+        if (cond)
+        {
+            swAssy.UnSuppress(suffix, compName, aggregator);
+        }
+        else
+        {
+            swAssy.Suppress(suffix, compName);
+        }
+    }
+
+    /// <summary>
+    /// 检查是否存在，如果存在就压缩
+    /// </summary>
+    public static void SuppressIfExist(this AssemblyDoc swAssy, string suffix, string compName)
+    {
+        var swModel = (ModelDoc2)swAssy;
+        var assyName = swModel.GetTitle().Substring(0, swModel.GetTitle().Length - 7);
+        var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
+        var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+        if (status) { swAssy.Suppress(suffix, compName); }
+    }
+
+    /// <summary>
     /// 装配体解压部件，抛出ModelDoc2
     /// </summary>
     public static Component2 UnSuppress(this AssemblyDoc swAssy, out ModelDoc2 swModel, string suffix, string compName, IEventAggregator aggregator)
@@ -227,6 +268,41 @@ public static class SwUtility
         swModel=swComp.GetModelDoc2() as ModelDoc2;
         return swComp;
     }
+
+    /// <summary>
+    /// 更改零部件的长度尺寸
+    /// </summary>
+    public static void ChangePartLength(this AssemblyDoc swAssy, string suffix, string partName,string dimName,double dblValue, IEventAggregator aggregator)
+    {
+        var swCompLevel2 = swAssy.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, aggregator);
+        swModelLevel2.ChangeDim(dimName, dblValue);
+    }
+
+    /// <summary>
+    /// 重命名零部件
+    /// </summary>
+    public static Component2? RenameComp(this AssemblyDoc swAssy, string suffix, string typeName, string module, string compName, int num, double length, double width, IEventAggregator aggregator)
+    {
+        var swModel = (ModelDoc2)swAssy;
+        var assyName = swModel.GetTitle().Substring(0, swModel.GetTitle().Length - 7);
+        var originPath = $"{$"{compName}-{num}".AddSuffix(suffix)}@{assyName}";
+        var strRename = $"{compName}[{typeName}-{module}]{{{(int)length}}}({(int)width})";
+        var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+        if (status)
+        {
+            swAssy.UnSuppress(suffix, $"{compName}-{num}", aggregator);
+            swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+            swModel.Extension.RenameDocument(strRename);//执行重命名
+        }
+        swModel.ClearSelection2(true);
+        status = swModel.Extension.SelectByID2($"{strRename}-{num}@{assyName}", "COMPONENT", 0, 0, 0, false,
+            0, null, 0);
+        swModel.ClearSelection2(true);
+        return status ? swAssy.GetComponentByName($"{strRename}-{num}") : null;
+    }
+
+
+
     #endregion
 
     #region ModelDoc2扩展
@@ -266,12 +342,25 @@ public static class SwUtility
         swComp.FeatureByName(featureName).SetSuppression2(1, 2, null);
         var swModel = swComp.GetModelDoc2()as ModelDoc2;
         swModel.ForceRebuild3(true);//进行重建
-    } 
+    }
+    
+    /// <summary>
+    /// 部件根据条件解压或压缩特征
+    /// </summary>
+    public static void SuppressOnCond(this Component2 swComp, string featureName, bool cond)
+    {
+        if (cond)
+        {
+            swComp.UnSuppress(featureName);
+        }
+        else
+        {
+            swComp.Suppress(featureName);
+        }
+    }
     #endregion
     
-    #endregion
-    
-    #region packango
+    #region PackAndGo打包
     public static void PackAndGo(this ISldWorks? swApp, string modelPath, string packDir, string suffix)
     {
         try
@@ -290,10 +379,15 @@ public static class SwUtility
             swModel.ForceRebuild3(true);
             var swModelExt = swModel.Extension;
             var swPackAndGo = swModelExt.GetPackAndGo();
+
             swPackAndGo.IncludeDrawings = false;
             swPackAndGo.IncludeSimulationResults = false;
             swPackAndGo.IncludeToolboxComponents = false;
             swPackAndGo.IncludeSuppressed = true;
+
+            //// Get current paths and filenames of the assembly's documents
+            //var status = swPackAndGo.GetDocumentNames(out var fileNames);
+            //var pgFileNames = (object[])fileNames;
 
             // Set folder where to save the files,目标存放文件夹
             //判断打包目标文件夹是否存在，不存在则创建
@@ -301,12 +395,18 @@ public static class SwUtility
             {
                 Directory.CreateDirectory(packDir);
             }
+
             swPackAndGo.SetSaveToName(true, packDir);
             swPackAndGo.FlattenToSingleFolder = true;
             swPackAndGo.AddSuffix = suffix;
 
+            //status = swPackAndGo.GetDocumentSaveToNames(out var getFileNames, out var getDocumentStatus);
+            //var pgGetFileNames = (string[])getFileNames;
+
+
             // 执行Pack and Go
-            swModelExt.SavePackAndGo(swPackAndGo);
+            var endStatus = swModelExt.SavePackAndGo(swPackAndGo);
+           
             swApp.CloseDoc(modelPath);
         }
         catch
@@ -318,9 +418,7 @@ public static class SwUtility
     }
     #endregion
 
-    #region 属性相关代码
-
-
+    #region 属性相关
     /// <summary>
     /// 往当前配置中写入属性
     /// </summary>

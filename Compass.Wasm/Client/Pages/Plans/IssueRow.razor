@@ -23,6 +23,9 @@
     <CompMultiLineText Text="@issue.Content" />
     <span style="color: dodgerblue">附件：</span>
     <br />
+    <!--改成多张图片显示-->
+    @*<img src="@issue.ContentUrl" alt="@Path.GetFileName(issue.ContentUrl)" />*@
+    <CompMultiImgs ContentUrl="@issue.ContentUrl"/>
     <CompFiles Roles="admin,pm,manager,designer"
            FileUrls="@issue.ContentUrl"
            UpLoadUrl="@($"issue/update/{issue.Id}")" />
@@ -55,6 +58,7 @@
     <CompMultiLineText Text="@issue.Solution" />
     <span style="color: dodgerblue">附件：</span>
     <br />
+    <CompMultiImgs ContentUrl="@issue.SolutionUrl" />
     <CompFiles Roles="admin,pm,manager,designer"
            FileUrls="@issue.SolutionUrl"
            UpLoadUrl="@($"issue/solution/{issue.Id}")" />

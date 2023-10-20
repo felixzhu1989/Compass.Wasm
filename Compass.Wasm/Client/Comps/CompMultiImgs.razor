@@ -1,0 +1,13 @@
+﻿@if (!string.IsNullOrEmpty(ContentUrl))
+{
+    @foreach (var url in ContentUrl.Split('\n'))
+    {
+        <img src="@url" alt="@Path.GetFileName(url)" />
+        <br />
+    }
+}
+
+@code {
+    [Parameter]
+    public string ContentUrl { get; set; }
+}

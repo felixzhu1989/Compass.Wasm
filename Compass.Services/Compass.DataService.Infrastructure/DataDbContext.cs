@@ -66,9 +66,11 @@ public class DataDbContext : BaseDbContext
     #endregion
 
     #region 天花烟罩
+    //排风腔
     public DbSet<KcjData> KcjData { get; set; }
     public DbSet<UcjData> UcjData { get; set; }
-
+    public DbSet<KcwData> KcwData { get; set; }
+    public DbSet<UcwData> UcwData { get; set; }
 
 
 

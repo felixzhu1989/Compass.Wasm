@@ -5,7 +5,7 @@
 @inject IMainPlanService MainPlanService
 @inject IUserService UserService
 
-<PageTitle>更新异常解决方案</PageTitle>
+<PageTitle>更新项目异常解决方案</PageTitle>
 <h3>@_mainPlanDto.Number-@_mainPlanDto.Name</h3>
 <CompUpdateIcon Roles="admin,pm,designer" Url="@($"issue/update/{_issueDto.Id}")" />
 <span style="font-weight: bold;color:deeppink ">@_issueDto.Title</span>
@@ -36,6 +36,7 @@ else
 <CompMultiLineText Text="@_issueDto.Content" />
 <span>附件：</span>
 <br />  
+<CompMultiImgs ContentUrl="@_issueDto.ContentUrl" />
 <CompFiles Roles="admin,pm,designer"
            FileUrls="@_issueDto.ContentUrl"
            UpLoadUrl="@($"issue/update/{_issueDto.Id}")" />
@@ -77,8 +78,8 @@ else
         <span class="input-group-text">措施</span>
         <textarea class="form-control" placeholder="请详细描解决方案，可输入多行" style="height: 350px" @bind="@_issueDto.Solution"></textarea>
     </div>
-
-    <MultiFileUpload Title="附件(可添加多个)" FileType="application/pdf" @bind-MultiFileUrl="@_issueDto.SolutionUrl"/>
+    <CompMultiImgs ContentUrl="@_issueDto.SolutionUrl" />
+    <MultiFileUpload Title="附件(可添加多个)" FileType="image/*" @bind-MultiFileUrl="@_issueDto.SolutionUrl" />
 
     <CompSaveCancelButtons CancelUrl="@($"issues/mainplan/{_issueDto.MainPlanId}")"/>
 </EditForm>
