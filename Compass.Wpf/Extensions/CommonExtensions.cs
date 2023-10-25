@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
+
 namespace Compass.Wpf.Extensions;
 
 public static class CommonExtensions
@@ -117,9 +118,17 @@ public static class CommonExtensions
         //也就是 QRCodeData 二维码中间的 Matrix，
         //之后 QRCode 得到 QRCodeData 并生成二维码
         var codeGenerator = new QRCoder.QRCodeGenerator();
-        var codeData = codeGenerator.CreateQrCode(content, QRCoder.QRCodeGenerator.ECCLevel.M/* 这里设置容错率的一个级别 */, true, true, QRCoder.QRCodeGenerator.EciMode.Utf8, 5);//版本 1 ~ 40
+        //这里设置容错率的一个级别 QRCoder.QRCodeGenerator.ECCLevel.M
+        //版本 1 ~ 40
+        var codeData = codeGenerator.CreateQrCode(content, QRCoder.QRCodeGenerator.ECCLevel.M, true, true, QRCoder.QRCodeGenerator.EciMode.Utf8, 5);
+        
         var code = new QRCoder.QRCode(codeData);
         return code.GetGraphic(4);
+
+
+
+
+
     }
 
     /// <summary>

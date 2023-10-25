@@ -140,7 +140,7 @@ public class CutListViewModel : BindableBase, IDialogHostAware
             return;
         }
 
-        if (CurrentCutList.Id != Guid.Empty) //编辑
+        if (CurrentCutList.Id !=null && CurrentCutList.Id != Guid.Empty) //编辑
         {
             var updateResult = await _cutListService.UpdateAsync(CurrentCutList.Id.Value, CurrentCutList);
             //更新界面
@@ -152,27 +152,27 @@ public class CutListViewModel : BindableBase, IDialogHostAware
 
                 IsRightDrawerOpen = false; //关闭弹窗
             }
-            else //新增
+        }
+        else //新增
+        {
+            var addResult = await _cutListService.AddAsync(CurrentCutList);
+            if (addResult.Status)
             {
-                var addResult = await _cutListService.AddAsync(CurrentCutList);
-                if (addResult.Status)
-                {
-                    _aggregator.SendMessage($"{CurrentCutList.PartDescription} {CurrentCutList.PartNo}添加成功！");
+                _aggregator.SendMessage($"{CurrentCutList.PartDescription} {CurrentCutList.PartNo}添加成功！");
 
-                    await RefreshCutListAsync();
+                await RefreshCutListAsync();
 
-                    IsRightDrawerOpen = false; //关闭弹窗
-                }
+                IsRightDrawerOpen = false; //关闭弹窗
             }
         }
-
 
     }
     //删除
     private async Task DeleteItem()
     { 
-        //await _cutListService.DeleteAsync(CurrentCutList.Id.Value);
-       //await RefreshCutListAsync();
+        await _cutListService.DeleteAsync(CurrentCutList.Id.Value);
+        await RefreshCutListAsync();
+        IsRightDrawerOpen = false; //关闭弹窗
     }
     #endregion
 

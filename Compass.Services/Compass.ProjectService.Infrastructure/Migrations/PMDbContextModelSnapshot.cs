@@ -29,7 +29,6 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BendingMark")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreationTime")
@@ -48,18 +47,15 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Material")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModuleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PartDescription")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PartNo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")

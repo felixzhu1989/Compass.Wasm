@@ -1,5 +1,5 @@
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\bin\Debug\net6.0\Compass.Wasm.Shared.deps.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\bin\Debug\net6.0\Compass.Wasm.Shared.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\bin\Debug\net6.0\Compass.Wasm.Shared.deps.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\bin\Debug\net6.0\Compass.Wasm.Shared.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\bin\Debug\net6.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\bin\Debug\net6.0\Compass.Dtos.pdb

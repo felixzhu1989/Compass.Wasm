@@ -9,8 +9,8 @@ public class CutListDto : BaseDto
         set { moduleId = value;OnPropertyChanged(); }
 	}
 
-    private string partDescription;
-    public string PartDescription
+    private string? partDescription;
+    public string? PartDescription
     {
         get => partDescription;
         set { partDescription = value; OnPropertyChanged(); }
@@ -40,21 +40,21 @@ public class CutListDto : BaseDto
         get => quantity;
         set { quantity = value; OnPropertyChanged(); }
     }
-    private string material;
-    public string Material
+    private string? material;
+    public string? Material
     {
         get => material;
         set { material = value; OnPropertyChanged(); }
     }
-    private string partNo;
-    public string PartNo
+    private string? partNo;
+    public string? PartNo
     {
         get => partNo;
         set { partNo = value; OnPropertyChanged(); }
     }
     //从文件中读取的折弯属性
-    private string bendingMark;
-    public string BendingMark
+    private string? bendingMark;
+    public string? BendingMark
     {
         get => bendingMark;
         set { bendingMark = value; OnPropertyChanged(); }

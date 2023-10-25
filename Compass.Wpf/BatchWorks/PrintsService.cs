@@ -441,54 +441,6 @@ public class PrintsService : IPrintsService
         ((Range)worksheet.Cells[1, 10]).ColumnWidth = 8;
         ((Range)worksheet.Cells[1, 11]).ColumnWidth = 5;
     }
-
-    /// <summary>
-    /// 计算KSA、MESH小侧板长度
-    /// </summary>
-    /// <param name="dto"></param>
-    /// <returns></returns>
-    private string GetSidePanelLength(CutListDto dto)
-    {
-        if (dto.PartNo.Length<8) return "";
-
-        if (dto.PartNo.Contains("FNHE0003") || dto.PartNo.Contains("FNHE0004") || dto.PartNo.Contains("FNHE0026") || dto.PartNo.Contains("FNHE0027"))
-        {
-            //普通KSA小侧边
-            return dto.Length.Equals(310.67d) ? $"{dto.Width-50.13d}" : $"{dto.Length-50.13d}";
-        }
-
-        if (dto.PartNo.Contains("FNHE0005") || dto.PartNo.Contains("FNHE0028") || dto.PartNo.Contains("FNHE0170"))
-        {
-            //普通KSA小侧边特殊
-            return dto.Length.Equals(300d) ? $"{dto.Width-29}" : $"{dto.Length-29}";
-        }
-        
-
-        if (dto.PartNo.Contains("FNHE0012") || dto.PartNo.Contains("FNHE0013") || dto.PartNo.Contains("FNHE0029") || dto.PartNo.Contains("FNHE0030")|| dto.PartNo.Contains("FNHE0038") || dto.PartNo.Contains("FNHE0039"))
-        {
-            //普通MESH油网侧边
-            return dto.Length.Equals(308d) ? $"{dto.Width-46.58407}" : $"{dto.Length-46.58407}";
-        }
-
-
-
-        
-
-        if (dto.PartNo.Contains("FNHE0160") || dto.PartNo.Contains("FNHE0161"))
-        {
-            //华为KSA小侧边
-            return dto.Length.Equals(310.87d) ? $"{dto.Width-48.49}" : $"{dto.Length-48.49}";
-        }
-        if (dto.PartNo.Contains("FNHE0162") || dto.PartNo.Contains("FNHE0163"))
-        {
-            //华为MESH油网侧边
-            return dto.Length.Equals(308d) ? $"{dto.Width-45.39}" : $"{dto.Length-45.39}";
-        }
-
-
-
-        return "";
-    }
     #endregion
 
     #region JobCard

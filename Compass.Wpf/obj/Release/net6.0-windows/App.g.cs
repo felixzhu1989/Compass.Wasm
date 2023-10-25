@@ -79,6 +79,8 @@ namespace Compass.Wpf {
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "7.0.9.0")]
         public static void Main() {
+            SplashScreen splashScreen = new SplashScreen("images/compass_64px.ico");
+            splashScreen.Show(true);
             Compass.Wpf.App app = new Compass.Wpf.App();
             app.InitializeComponent();
             app.Run();

@@ -7,8 +7,6 @@ using System.Diagnostics;
 using SolidWorks.Interop.swconst;
 using Compass.Wpf.ApiServices.Projects;
 using Compass.Wpf.SwServices;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Compass.Wpf.BatchWorks;
 
