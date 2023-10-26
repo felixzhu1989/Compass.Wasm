@@ -56,7 +56,7 @@ public class KcwAutoDrawing:BaseAutoDrawing,IKcwAutoDrawing
                     CeilingService.KcwSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
                 case "KCW_SB_265":
-                    //CeilingService.KcwSb265(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    CeilingService.KcwSb265(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
             }

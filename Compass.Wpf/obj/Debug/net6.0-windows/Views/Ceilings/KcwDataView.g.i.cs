@@ -62,7 +62,7 @@ namespace Compass.Wpf.Views.Ceilings {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Compass.Wpf;component/views/ceilings/kcwdataview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Compass.Wpf;V1.0.0.0;component/views/ceilings/kcwdataview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Ceilings\KcwDataView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -62,7 +62,7 @@ namespace Compass.Wpf.Views.Hoods {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Compass.Wpf;component/views/hoods/cmodfdataview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Compass.Wpf;V1.0.0.0;component/views/hoods/cmodfdataview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\Hoods\CmodfDataView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
