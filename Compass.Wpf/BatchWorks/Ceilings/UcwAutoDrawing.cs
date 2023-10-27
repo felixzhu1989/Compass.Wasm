@@ -50,10 +50,10 @@ public class UcwAutoDrawing : BaseAutoDrawing, IUcwAutoDrawing
             switch (moduleDto.ModelName)
             {
                 case "UCW_DB_800":
-                    CeilingService.UcwDb800(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.UcwDb800(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
                 case "UCW_SB_535":
-                    CeilingService.UcwSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.UcwSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
             }

@@ -77,6 +77,66 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.CjData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<int>("BcjSide")
+                        .HasColumnType("int")
+                        .HasColumnName("BcjSide");
+
+                    b.Property<int>("CjSpigotDirection")
+                        .HasColumnType("int")
+                        .HasColumnName("CjSpigotDirection");
+
+                    b.Property<double>("CjSpigotToRight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("CjSpigotToRight");
+
+                    b.Property<int>("GutterSide")
+                        .HasColumnType("int")
+                        .HasColumnName("GutterSide");
+
+                    b.Property<int>("LeftBeamType")
+                        .HasColumnType("int")
+                        .HasColumnName("LeftBeamType");
+
+                    b.Property<double>("LeftDbToRight")
+                        .HasColumnType("float")
+                        .HasColumnName("LeftDbToRight");
+
+                    b.Property<double>("LeftEndDis")
+                        .HasColumnType("float")
+                        .HasColumnName("LeftEndDis");
+
+                    b.Property<double>("LeftGutterWidth")
+                        .HasColumnType("float")
+                        .HasColumnName("LeftGutterWidth");
+
+                    b.Property<int>("LksSide")
+                        .HasColumnType("int")
+                        .HasColumnName("LksSide");
+
+                    b.Property<int>("RightBeamType")
+                        .HasColumnType("int")
+                        .HasColumnName("RightBeamType");
+
+                    b.Property<double>("RightDbToLeft")
+                        .HasColumnType("float")
+                        .HasColumnName("RightDbToLeft");
+
+                    b.Property<double>("RightEndDis")
+                        .HasColumnType("float")
+                        .HasColumnName("RightEndDis");
+
+                    b.Property<double>("RightGutterWidth")
+                        .HasColumnType("float")
+                        .HasColumnName("RightGutterWidth");
+
+                    b.HasDiscriminator().HasValue("CjData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.KcjData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
@@ -420,6 +480,7 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("BackToBack");
 
                     b.Property<double>("CjSpigotToRight")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("CjSpigotToRight");
 

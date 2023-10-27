@@ -4,10 +4,10 @@ using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
 
-public class CeilingService : BaseSwService, ICeilingService
+public class BeamService : BaseSwService, IBeamService
 {
     public readonly IExhaustService ExhaustService;
-    public CeilingService(IContainerProvider provider) : base(provider)
+    public BeamService(IContainerProvider provider) : base(provider)
     {
         ExhaustService = provider.Resolve<IExhaustService>();
     }

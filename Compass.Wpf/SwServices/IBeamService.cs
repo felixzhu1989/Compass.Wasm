@@ -2,7 +2,7 @@
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
-public interface ICeilingService
+public interface IBeamService
 {
 	#region 排风腔
     void KcjDb800(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix,string module, KcjData data);
@@ -17,16 +17,5 @@ public interface ICeilingService
     void KcwSb265(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, KcwData data);
     void UcwDb800(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, UcwData data);
     void UcwSb535(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, UcwData data);
-
-
-
     #endregion
-
-
-
-
-
-
-
-
 }

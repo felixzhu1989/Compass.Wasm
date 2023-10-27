@@ -52,14 +52,14 @@ public class UcjAutoDrawing:BaseAutoDrawing,IUcjAutoDrawing
             switch (moduleDto.ModelName)
             {
                 case "UCJ_DB_800":
-                    CeilingService.UcjDb800(swModelTop,swAssyTop,suffix,moduleDto.Name,data);
+                    BeamService.UcjDb800(swModelTop,swAssyTop,suffix,moduleDto.Name,data);
                     break;
                 case "UCJ_SB_535":
-                    CeilingService.UcjSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.UcjSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
                 case "UCJ_SB_385":
-                    CeilingService.UcjSb385(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.UcjSb385(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
             }

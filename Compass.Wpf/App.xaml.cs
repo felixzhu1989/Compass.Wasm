@@ -119,6 +119,7 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<MainPlansView, MainPlansViewModel>();
 
         containerRegistry.RegisterForNavigation<MaterialItemsView, MaterialItemsViewModel>();
+        containerRegistry.RegisterForNavigation<AddPackingListView, AddPackingListViewModel>();
         containerRegistry.RegisterForNavigation<PackingListView, PackingListViewModel>();
         containerRegistry.RegisterForNavigation<PackingInfoView, PackingInfoViewModel>();
 
@@ -249,7 +250,7 @@ public partial class App : PrismApplication
         containerRegistry.Register<ISupplyService, SupplyService>();
         containerRegistry.Register<ISidePanelService, SidePanelService>();
         containerRegistry.Register<IMidRoofService, MidRoofService>();
-        containerRegistry.Register<ICeilingService, CeilingService>();
+        containerRegistry.Register<IBeamService, BeamService>();
 
 
 
@@ -265,7 +266,6 @@ public partial class App : PrismApplication
         //注册其他自定义弹窗
         containerRegistry.RegisterForNavigation<AddTodoView, AddTodoViewModel>();
         containerRegistry.RegisterForNavigation<AddMemoView, AddMemoViewModel>();
-        containerRegistry.RegisterForNavigation<AddPackingListView, AddPackingListViewModel>();
         containerRegistry.RegisterForNavigation<AddStdMaterialView, AddStdMaterialViewModel>();
         containerRegistry.RegisterForNavigation<AddSplMaterialView, AddSplMaterialViewModel>();
 

@@ -246,41 +246,32 @@ public class PackingListViewModel : NavigationViewModel
     }
 
 
-    private async Task GetDataAsync(PackingListParam param)
+    private async Task GetDataAsync(PackingListParam pklParam)
     {
         //根据项目ID和分批获取装箱清单
-        var response = await _packingListService.GetSingleByProjectIdAndBathAsync(param);
-        if (!response.Status)
+        var response = await _packingListService.GetSingleByProjectIdAndBathAsync(pklParam);
+        if (response.Status)
         {
-            //如果获取失败，则添加装箱清单
-            var dto = new PackingListDto
-            {
-                ProjectId = param.ProjectId,
-                Batch = param.Batch,
-                Product = Product_e.Hood
-            };
-            //弹窗添加PackingList
-            var dialogParams = new DialogParameters { { "Value", dto } };
-            var dialogResult = await DialogHost.ShowDialog("AddPackingListView", dialogParams);
-            if (dialogResult.Result != ButtonResult.OK) return;
-            //从弹窗获取修改后的数据
-            PackingList = dialogResult.Parameters.GetValue<PackingListDto>("Value");
-            //执行添加到数据库
-            await _packingListService.AddByProjectIdAndBathAsync(PackingList);
-            await Task.Delay(1000);
-            //延迟1s后重新获取装箱清单信息
-           await GetDataAsync(param);
+            PackingList = response.Result;
         }
-        PackingList = response.Result;
+        else
+        {
+            //todo:跳转到新页面添加装箱清单PackingListDto，在返回此地
+            var navParam = new NavigationParameters { { "Value", pklParam } };
+            RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("AddPackingListView", back =>
+            {
+                Journal = back.Context.NavigationService.Journal;
+            }, navParam);
+        }
     }
     public override async void OnNavigatedTo(NavigationContext navigationContext)
     {
         base.OnNavigatedTo(navigationContext);
-        var param = navigationContext.Parameters.ContainsKey("Value") ?
+        var pklParam = navigationContext.Parameters.ContainsKey("Value") ?
             navigationContext.Parameters.GetValue<PackingListParam>("Value")
             : null;
         
-        await GetDataAsync(param);
+        await GetDataAsync(pklParam);
     }
     #endregion
 }

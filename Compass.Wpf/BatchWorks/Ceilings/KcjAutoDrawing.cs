@@ -51,16 +51,16 @@ public class KcjAutoDrawing : BaseAutoDrawing, IKcjAutoDrawing
             switch (moduleDto.ModelName)
             {
                 case "KCJ_DB_800":
-                    CeilingService.KcjDb800(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.KcjDb800(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
                 case "KCJ_SB_535":
-                    CeilingService.KcjSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.KcjSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
                 case "KCJ_SB_290":
-                    CeilingService.KcjSb290(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.KcjSb290(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
                 case "KCJ_SB_265":
-                    CeilingService.KcjSb265(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.KcjSb265(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
             }

@@ -73,7 +73,7 @@ public class DataDbContext : BaseDbContext
     public DbSet<UcwData> UcwData { get; set; }
 
 
-
+    public DbSet<CjData> CjData { get; set; }
 
 
 

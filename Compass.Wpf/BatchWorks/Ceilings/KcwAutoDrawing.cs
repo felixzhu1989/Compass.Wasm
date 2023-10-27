@@ -50,13 +50,13 @@ public class KcwAutoDrawing:BaseAutoDrawing,IKcwAutoDrawing
             switch (moduleDto.ModelName)
             {
                 case "KCW_DB_800":
-                    CeilingService.KcwDb800(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.KcwDb800(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
                 case "KCW_SB_535":
-                    CeilingService.KcwSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.KcwSb535(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
                 case "KCW_SB_265":
-                    CeilingService.KcwSb265(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    BeamService.KcwSb265(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
             }

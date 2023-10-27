@@ -2,39 +2,38 @@
 
 public enum SidePanel_e
 {
-    NA,中,左,右,双
+    NA, 中, 左, 右, 双
 }
 public enum LightType_e
 {
-    NA,长灯, 短灯, 筒灯,HCL,飞利浦三防灯
+    NA, 长灯, 短灯, 筒灯, HCL, 飞利浦三防灯
 }
 public enum UvLightType_e
 {
-    NA,UVR4S,UVR4L,UVR6S,UVR6L,UVR8S,UVR8L,Double
+    NA, UVR4S, UVR4L, UVR6S, UVR6L, UVR8S, UVR8L, Double
 }
 public enum DrainType_e
 {
-    NA,右油塞, 左油塞, 右排水管, 左排水管,上排水,集油槽
+    NA, 右油塞, 左油塞, 右排水管, 左排水管, 上排水, 集油槽
 }
-
 public enum WaterInlet_e
 {
-    NA,右入水管,左入水管
+    NA, 右入水管, 左入水管
 }
 
 
 #region Ansul
 public enum AnsulSide_e
 {
-    NA,无侧喷, 左侧喷,右侧喷
+    NA, 无侧喷, 左侧喷, 右侧喷
 }
-public enum AnsulDetector_e   
+public enum AnsulDetector_e
 {
-    NA,无探测器口, 左探测器口, 右探测器口, 双侧探测器口
+    NA, 无探测器口, 左探测器口, 右探测器口, 双侧探测器口
 }
 public enum AnsulDetectorEnd_e
 {
-    NA,无末端探测器, 左末端探测器, 右末端探测器
+    NA, 无末端探测器, 左末端探测器, 右末端探测器
 }
 
 
@@ -44,18 +43,18 @@ public enum AnsulDetectorEnd_e
 #region 烟罩结构
 public enum ExhaustType_e
 {
-    NA,KV,UV,KW,UW,CMOD,M
+    NA, KV, UV, KW, UW, CMOD, M
 }
 
 public enum ExhaustHeight_e
 {
-    E555,E450,E400,E300
+    NA, E555, E450, E400, E300
 }
 
 
 public enum SupplyType_e
 {
-    NA,I,F,方形,圆形
+    NA, I, F, 方形, 圆形
 }
 
 
@@ -63,9 +62,10 @@ public enum SupplyType_e
 
 
 #region 天花烟罩
+//排风腔
 public enum FilterType_e
 {
-    FC,KSA
+    NA, FC, KSA
 }
 public enum FilterSide_e
 {
@@ -73,7 +73,7 @@ public enum FilterSide_e
 }
 public enum CeilingLightType_e
 {
-    NA, 日光灯, 筒灯,HCL
+    NA, 日光灯, 筒灯, HCL
 }
 
 public enum LightCable_e
@@ -86,12 +86,36 @@ public enum HclSide_e
 }
 public enum DpSide_e
 {
-    NA,无DP腔,左侧DP腔, 右侧DP腔,两侧DP腔
+    NA, 无DP腔, 左侧DP腔, 右侧DP腔, 两侧DP腔
 }
 
 public enum CeilingWaterInlet_e
 {
     NA, 前入水管, 上入水管
 }
+//CJ
+public enum CjSpigotDirection_e
+{
+    NA, 脖颈朝前, 脖颈朝上
+}
+public enum BeamType_e
+{
+    NA, KUCJDB800, KUCJSB535, KCJSB290, KCJSB265, UCJSB385, KUCWDB800, KUCWSB535, KCWSB265
+}
+public enum BcjSide_e
+{
+    NA, 无BCJ, 左BCJ, 右BCJ, 两BCJ
+}
+public enum LksSide_e
+{
+    NA, 无LK灯腔, 左LK灯腔, 右LK灯腔, 两LK灯腔
+}
+public enum GutterSide_e
+{
+    NA, 无Gutter, 左Gutter, 右Gutter, 两Gutter
+}
+//
+
+
 
 #endregion

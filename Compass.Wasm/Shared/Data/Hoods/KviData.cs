@@ -106,7 +106,7 @@ public class KviData : ModuleData
         get => backCj;
         set { backCj = value; OnPropertyChanged(); }
     }
-    private double cjSpigotToRight = 400d;
+    private double cjSpigotToRight;
     public double CjSpigotToRight
     {
         get => cjSpigotToRight;
