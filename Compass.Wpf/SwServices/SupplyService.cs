@@ -1,7 +1,4 @@
-﻿using Compass.Wasm.Shared.Data;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using SolidWorks.Interop.sldworks;
-using System.Windows.Media.Media3D;
+﻿using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
 

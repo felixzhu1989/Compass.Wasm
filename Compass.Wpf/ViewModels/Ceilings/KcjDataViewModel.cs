@@ -1,10 +1,4 @@
-﻿using System.Diagnostics;
-using Compass.Wasm.Shared.Data;
-using Compass.Wasm.Shared.Data.Ceilings;
-using Compass.Wasm.Shared.Data.Hoods;
-using Compass.Wpf.ApiServices.Ceilings;
-
-namespace Compass.Wpf.ViewModels.Ceilings;
+﻿namespace Compass.Wpf.ViewModels.Ceilings;
 
 public class KcjDataViewModel : NavigationViewModel
 {

@@ -1,6 +1,4 @@
-﻿using Compass.Wpf.ApiService;
-
-namespace Compass.Wpf.ApiServices.Projects;
+﻿namespace Compass.Wpf.ApiServices.Projects;
 public interface IDrawingService : IBaseService<DrawingDto>
 {
 }

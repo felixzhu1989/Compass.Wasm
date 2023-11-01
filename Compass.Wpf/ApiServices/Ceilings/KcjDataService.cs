@@ -1,8 +1,4 @@
-﻿using Compass.Wasm.Shared.Data.Ceilings;
-using Compass.Wpf.ApiService;
-using Compass.Wpf.ApiServices.Projects;
-
-namespace Compass.Wpf.ApiServices.Ceilings;
+﻿namespace Compass.Wpf.ApiServices.Ceilings;
 
 public interface IKcjDataService:IBaseDataService<KcjData>
 {

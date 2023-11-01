@@ -1,5 +1,4 @@
-﻿using Compass.Wasm.Shared.Data;
-using SolidWorks.Interop.sldworks;
+﻿using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
 
@@ -476,7 +475,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swCompLevel2.UnSuppress("AnsulDetectorRight");
                 swCompLevel2.Suppress("AnsulDetectorLeft");
                 break;
-            case AnsulDetector_e.双侧探测器口:
+            case AnsulDetector_e.两探测器口:
                 swCompLevel2.UnSuppress("AnsulDetectorRight");
                 swCompLevel2.UnSuppress("AnsulDetectorLeft");
                 break;
@@ -902,7 +901,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swCompLevel2.UnSuppress("AnsulDetectorRight");
                 swCompLevel2.Suppress("AnsulDetectorLeft");
                 break;
-            case AnsulDetector_e.双侧探测器口:
+            case AnsulDetector_e.两探测器口:
                 swCompLevel2.UnSuppress("AnsulDetectorRight");
                 swCompLevel2.UnSuppress("AnsulDetectorLeft");
                 break;
@@ -1021,7 +1020,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                     swCompLevel2.UnSuppress("AnsulDetectorRight");
                     swCompLevel2.Suppress("AnsulDetectorLeft");
                     break;
-                case AnsulDetector_e.双侧探测器口:
+                case AnsulDetector_e.两探测器口:
                     swCompLevel2.UnSuppress("AnsulDetectorRight");
                     swCompLevel2.UnSuppress("AnsulDetectorLeft");
                     break;
@@ -2074,7 +2073,7 @@ public class ExhaustService : BaseSwService, IExhaustService
                 swCompLevel2.UnSuppress("AnsulDetectorRight");
                 swCompLevel2.Suppress("AnsulDetectorLeft");
                 break;
-            case AnsulDetector_e.双侧探测器口:
+            case AnsulDetector_e.两探测器口:
                 swCompLevel2.UnSuppress("AnsulDetectorRight");
                 swCompLevel2.UnSuppress("AnsulDetectorLeft");
                 break;

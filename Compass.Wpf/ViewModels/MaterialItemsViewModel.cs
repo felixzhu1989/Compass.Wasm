@@ -2,7 +2,6 @@
 using System.IO;
 using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared.Extensions;
-using Compass.Wpf.ApiServices.Categories;
 using Application = Microsoft.Office.Interop.Excel.Application;
 
 namespace Compass.Wpf.ViewModels;

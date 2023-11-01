@@ -18,6 +18,7 @@ public class CjData : ModuleData
     #endregion
 
     #region 连接排风、BCJ、LKS、Gutter位置参数
+
     private BeamType_e leftBeamType;
     public BeamType_e LeftBeamType
     {

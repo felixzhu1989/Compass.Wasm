@@ -1,5 +1,5 @@
-﻿using Compass.Wasm.Shared.Params;
-using Compass.Wpf.ApiServices.Plans;
+﻿using Azure;
+using Compass.Wasm.Shared.Params;
 
 namespace Compass.Wpf.ViewModels;
 
@@ -57,7 +57,7 @@ public class AddPackingListViewModel : NavigationViewModel
     private void Cancel()
     {
         //返回首页
-        RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("IndexView", back => { Journal = back.Context.NavigationService.Journal; });
+        if (Journal is { CanGoBack: true }) Journal.GoBack();
     }
     private async void Save()
     {
@@ -69,10 +69,20 @@ public class AddPackingListViewModel : NavigationViewModel
         }
         Warning = string.Empty;
 
-        //执行添加到数据库
-        var response = await _packingListService.AddByProjectIdAndBathAsync(PackingList);
-        //跳转回PackingListView
-        if (response.Status)
+        bool status;
+        if (PackingList.Id != null && PackingList.Id.Value != Guid.Empty) //编辑ToDo
+        {
+            var response = await _packingListService.UpdateAsync(PackingList.Id.Value, PackingList);
+            status = response.Status;
+        }
+        else
+        {
+            //执行添加到数据库
+            var response = await _packingListService.AddByProjectIdAndBathAsync(PackingList);
+            //跳转回PackingListView
+            status = response.Status;
+        }
+        if (status)
         {
             var navParam = new NavigationParameters { { "Value", PklParam } };
             RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("PackingListView", back =>
@@ -96,18 +106,25 @@ public class AddPackingListViewModel : NavigationViewModel
 
     public override void OnNavigatedTo(NavigationContext navigationContext)
     {
-
         base.OnNavigatedTo(navigationContext);
         GetEnumNames();
         if (!navigationContext.Parameters.ContainsKey("Value")) Cancel();
         PklParam = navigationContext.Parameters.GetValue<PackingListParam>("Value");
-        PackingList = new PackingListDto
+        if (navigationContext.Parameters.ContainsKey("Dto"))
         {
-            ProjectId = PklParam.ProjectId,
-            Batch = PklParam.Batch,
-            Product = Product_e.Hood,
-            PackingType = PackingTypes[0],
-            DeliveryType = DeliveryTypes[0]
-        };
+            PackingList=navigationContext.Parameters.GetValue<PackingListDto>("Dto");
+        }
+        else
+        {
+            PackingList = new PackingListDto
+            {
+                ProjectId = PklParam.ProjectId,
+                Batch = PklParam.Batch,
+                Product = Product_e.Hood,
+                PackingType = PackingTypes[0],
+                DeliveryType = DeliveryTypes[0]
+            };
+        }
+        
     }
 }

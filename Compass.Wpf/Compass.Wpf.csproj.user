@@ -12,6 +12,9 @@
     <Compile Update="Views\AboutView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Ceilings\CjDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Ceilings\KcjDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -126,6 +129,9 @@
   <ItemGroup />
   <ItemGroup>
     <Page Update="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Ceilings\CjDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Ceilings\KcjDataView.xaml">

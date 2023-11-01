@@ -1,5 +1,4 @@
 ﻿using Compass.Wasm.Shared.Params;
-using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ViewModels;
 

@@ -1,6 +1,4 @@
-﻿using Compass.Update;
-
-namespace Compass.Wpf.Views.Dialogs;
+﻿namespace Compass.Wpf.Views.Dialogs;
 
 /// <summary>
 /// LoginView.xaml 的交互逻辑

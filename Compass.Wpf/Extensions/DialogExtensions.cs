@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Compass.Wpf.Common.Events;
+﻿using Compass.Wpf.Common.Events;
 
 namespace Compass.Wpf.Extensions;
 public static class DialogExtensions

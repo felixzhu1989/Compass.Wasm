@@ -1,6 +1,4 @@
 ﻿using Compass.Wasm.Shared.Data.Hoods;
-using Compass.Wpf.ApiService;
-using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ApiServices.Hoods;
 

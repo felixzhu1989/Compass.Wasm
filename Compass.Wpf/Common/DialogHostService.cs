@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using Prism.Mvvm;
 
 namespace Compass.Wpf.Common;

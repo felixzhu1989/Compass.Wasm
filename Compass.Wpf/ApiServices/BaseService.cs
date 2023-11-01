@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Compass.Dtos;
-using Compass.Wasm.Shared;
 
 namespace Compass.Wpf.ApiService;
 

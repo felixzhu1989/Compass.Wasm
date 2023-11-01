@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Compass.Wasm.Shared.Categories;
-using Compass.Wpf.ApiServices.Categories;
+﻿using Compass.Wasm.Shared.Categories;
 using MaterialDesignThemes.Wpf;
 using Prism.Mvvm;
 

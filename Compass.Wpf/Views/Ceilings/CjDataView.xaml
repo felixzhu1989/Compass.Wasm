@@ -1,0 +1,149 @@
+﻿<UserControl x:Class="Compass.Wpf.Views.Ceilings.CjDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Compass.Wpf.Views.Ceilings"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters"
+             xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
+    <UserControl.Resources>
+        <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
+        <cvt:SidePanelCvt x:Key="SidePanelCvt" />
+        <cvt:IntToStringCvt x:Key="IntToStringCvt" />
+        <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
+        <cvt:OneToVisibilityCvt x:Key="OneToVisibilityCvt" />
+        <cvt:CjSpigotDirectionCvt x:Key="CjSpigotDirectionCvt" />
+        <cvt:BeamTypeCvt x:Key="BeamTypeCvt" />
+        <cvt:ShowDbCvt x:Key="ShowDbCvt" />
+        <cvt:BcjSideCvt x:Key="BcjSideCvt" />
+        <cvt:LksSideCvt x:Key="LksSideCvt" />
+        <cvt:GutterSideCvt x:Key="GutterSideCvt" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0"
+                   Margin="10"
+                   LastChildFill="False">
+            <TextBlock Text="{Binding Title}"
+                       FontSize="20"
+                       DockPanel.Dock="Left" />
+            <Button Command="{Binding OpenHttpLinkCommand}"
+                    Content="点击浏览图纸"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource HyperlinkStyledButton}"
+                    ToolTip="查看PDF图纸"
+                    DockPanel.Dock="Left"
+                    Margin="20,0"
+                    Visibility="{Binding CurrentModule.IsDrawingOk,Converter={StaticResource BoolToVisibilityCvt}}" />
+            <Button DockPanel.Dock="Right"
+                    Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}"
+                    Content="保存参数"
+                    Command="{Binding SaveDataCommand}"
+                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
+                    materialDesign:ButtonAssist.CornerRadius="15" />
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"
+                        Margin="10">
+                <StackPanel>
+                    <!--CJ基本参数-->
+                    <TextBlock Text="CJ基本参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <TextBox Text="{Binding DataDto.Length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="长度：" />
+                    <TextBox Text="{Binding DataDto.Width,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="宽度：" />
+                    <TextBox Text="{Binding DataDto.Height,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="高度：" />
+                    <ComboBox ItemsSource="{Binding SidePanels}"
+                              Margin="0,5"
+                              SelectedItem="{Binding DataDto.SidePanel,Converter={StaticResource SidePanelCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="侧板:   " />
+                </StackPanel>
+                <!--CJ脖颈参数-->
+                <StackPanel>
+                    <TextBlock Text="CJ脖颈参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding CjSpigotDirections}"
+                              SelectedItem="{Binding DataDto.CjSpigotDirection,Converter={StaticResource CjSpigotDirectionCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="CJ脖颈方向:   " />
+                    <TextBox Text="{Binding DataDto.CjSpigotToRight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="CJ脖颈距离右端：" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1"
+                        Margin="10">
+                <!--连接腔体的参数-->
+                <StackPanel>
+                    <TextBlock Text="连接腔体的参数(背CJ不要填写)"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding BeamTypes}"
+                              SelectedItem="{Binding DataDto.LeftBeamType,Converter={StaticResource BeamTypeCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="左排风腔类型:   " />
+                    <TextBox Text="{Binding DataDto.LeftDbToRight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Visibility="{Binding DataDto.LeftBeamType,Converter={StaticResource ShowDbCvt}}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="左双排风距离右端距离："
+                             materialDesign:TextFieldAssist.SuffixText="(仅双排风填)" />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding BeamTypes}"
+                              SelectedItem="{Binding DataDto.RightBeamType,Converter={StaticResource BeamTypeCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="右排风腔类型:   " />
+                    <TextBox Text="{Binding DataDto.RightDbToLeft,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Visibility="{Binding DataDto.RightBeamType,Converter={StaticResource ShowDbCvt}}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="右双排风距离左端距离："
+                             materialDesign:TextFieldAssist.SuffixText="(仅双排风填)" />
+                    <TextBox Text="{Binding DataDto.LeftEndDis,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="左端超出距离："
+                             materialDesign:TextFieldAssist.SuffixText="(没有时不填)" />
+                    <TextBox Text="{Binding DataDto.RightEndDis,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="右端超出距离："
+                             materialDesign:TextFieldAssist.SuffixText="(没有时不填)" />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding BcjSides}"
+                              SelectedItem="{Binding DataDto.BcjSide,Converter={StaticResource BcjSideCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="BCJ位置:   " />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding LksSides}"
+                              SelectedItem="{Binding DataDto.LksSide,Converter={StaticResource LksSideCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="灯腔位置:   " />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding GutterSides}"
+                              SelectedItem="{Binding DataDto.GutterSide,Converter={StaticResource GutterSideCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="Ansul腔位置:   " />
+                    <TextBox Text="{Binding DataDto.LeftGutterWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="左Ansul腔宽度："/>
+                    <TextBox Text="{Binding DataDto.RightGutterWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="右Ansul腔宽度："/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,8 +1,5 @@
-﻿using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Media.Imaging;
-using Compass.Wpf.ApiService;
-using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.ViewModels;
 

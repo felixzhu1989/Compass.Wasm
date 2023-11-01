@@ -1,9 +1,4 @@
-﻿using Compass.Wasm.Shared.Data;
-using Compass.Wpf.ApiServices.Ceilings;
-using Compass.Wpf.SwServices;
-using System.Threading.Tasks;
-
-namespace Compass.Wpf.BatchWorks.Ceilings;
+﻿namespace Compass.Wpf.BatchWorks.Ceilings;
 public interface IKcjAutoDrawing : IAutoDrawing
 {
 

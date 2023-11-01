@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-
-namespace Compass.Wpf.Views.Dialogs;
+﻿namespace Compass.Wpf.Views.Dialogs;
 
 /// <summary>
 /// CutListView.xaml 的交互逻辑

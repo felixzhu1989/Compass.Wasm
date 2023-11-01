@@ -1,8 +1,4 @@
-﻿using Compass.Wpf.ApiServices.Plans;
-using Compass.Wpf.ApiServices.Todos;
-using Compass.Wpf.ApiServices.Projects;
-
-namespace Compass.Wpf.ViewModels;
+﻿namespace Compass.Wpf.ViewModels;
 
 public class IndexViewModel : NavigationViewModel
 {

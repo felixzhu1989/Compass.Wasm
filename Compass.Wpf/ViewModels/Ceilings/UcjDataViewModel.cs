@@ -1,9 +1,4 @@
-﻿using Compass.Wasm.Shared.Data.Ceilings;
-using Compass.Wasm.Shared.Data;
-using System.Diagnostics;
-using Compass.Wpf.ApiServices.Ceilings;
-
-namespace Compass.Wpf.ViewModels.Ceilings;
+﻿namespace Compass.Wpf.ViewModels.Ceilings;
 
 public class UcjDataViewModel : NavigationViewModel
 {

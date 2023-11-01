@@ -1,7 +1,6 @@
 ﻿using Prism.Mvvm;
 using System.Configuration;
 using Compass.Wasm.Shared.Identities;
-using Compass.Wpf.ApiService;
 using Compass.Update;
 
 namespace Compass.Wpf.ViewModels.Dialogs;

@@ -1,6 +1,4 @@
-﻿using Compass.Wasm.Shared.Data;
-using Compass.Wasm.Shared.Data.Ceilings;
-using SolidWorks.Interop.sldworks;
+﻿using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
 
@@ -1194,10 +1192,10 @@ public class BeamService : BaseSwService, IBeamService
     /// </summary>
     private void ConnDpFlangle(AssemblyDoc swAssyLevel1, string suffix, SidePanel_e sidePanel, DpSide_e dpSide, string leftPart, string rightPart)
     {
-        var left = dpSide is DpSide_e.左侧DP腔 or DpSide_e.两侧DP腔 &&
+        var left = dpSide is DpSide_e.左DP腔 or DpSide_e.两DP腔 &&
                    sidePanel is SidePanel_e.左 or SidePanel_e.双;
         swAssyLevel1.SuppressOnCond(suffix, leftPart, left, Aggregator);
-        var right = dpSide is DpSide_e.右侧DP腔 or DpSide_e.两侧DP腔 &&
+        var right = dpSide is DpSide_e.右DP腔 or DpSide_e.两DP腔 &&
                     sidePanel is SidePanel_e.右 or SidePanel_e.双;
         swAssyLevel1.SuppressOnCond(suffix, rightPart, right, Aggregator);
     }
@@ -2141,7 +2139,7 @@ public class BeamService : BaseSwService, IBeamService
         swCompLevel2.SuppressOnCond("BaffleBack2", baffle);
         swCompLevel2.SuppressOnCond("BaffleBack3", baffle);
         swCompLevel2.SuppressOnCond("BaffleBack4", baffle);
-        var notCut = sidePanel is SidePanel_e.左 or SidePanel_e.双 && dpSide is DpSide_e.右侧DP腔;
+        var notCut = sidePanel is SidePanel_e.左 or SidePanel_e.双 && dpSide is DpSide_e.右DP腔;
         swCompLevel2.SuppressOnCond("CutDrainFront", !notCut);
         swCompLevel2.SuppressOnCond("CutDrainBack", !notCut);
     }
@@ -2157,7 +2155,7 @@ public class BeamService : BaseSwService, IBeamService
         swCompLevel2.SuppressOnCond("BaffleBack2", baffle);
         swCompLevel2.SuppressOnCond("BaffleBack3", baffle);
         swCompLevel2.SuppressOnCond("BaffleBack4", baffle);
-        var notCut = sidePanel is SidePanel_e.右 or SidePanel_e.双 && dpSide is DpSide_e.左侧DP腔;
+        var notCut = sidePanel is SidePanel_e.右 or SidePanel_e.双 && dpSide is DpSide_e.左DP腔;
         swCompLevel2.SuppressOnCond("CutDrainFront", !notCut);
         swCompLevel2.SuppressOnCond("CutDrainBack", !notCut);
     }
@@ -2170,7 +2168,7 @@ public class BeamService : BaseSwService, IBeamService
         swCompLevel2.SuppressOnCond("Baffle2", baffle);
         swCompLevel2.SuppressOnCond("Baffle3", baffle);
         swCompLevel2.SuppressOnCond("Baffle4", baffle);
-        var notCut = sidePanel is SidePanel_e.左 or SidePanel_e.双 && dpSide is DpSide_e.右侧DP腔;
+        var notCut = sidePanel is SidePanel_e.左 or SidePanel_e.双 && dpSide is DpSide_e.右DP腔;
         swCompLevel2.SuppressOnCond("CutDrain", !notCut);
     }
     private void FNCE0045(AssemblyDoc swAssyLevel1, string suffix, string partName, SidePanel_e sidePanel, DpSide_e dpSide)
@@ -2181,7 +2179,7 @@ public class BeamService : BaseSwService, IBeamService
         swCompLevel2.SuppressOnCond("Baffle2", baffle);
         swCompLevel2.SuppressOnCond("Baffle3", baffle);
         swCompLevel2.SuppressOnCond("Baffle4", baffle);
-        var notCut = sidePanel is SidePanel_e.右 or SidePanel_e.双 && dpSide is DpSide_e.左侧DP腔;
+        var notCut = sidePanel is SidePanel_e.右 or SidePanel_e.双 && dpSide is DpSide_e.左DP腔;
         swCompLevel2.SuppressOnCond("CutDrain", !notCut);
     }
 
@@ -2302,7 +2300,7 @@ public class BeamService : BaseSwService, IBeamService
                     swCompLevel2.UnSuppress("AnsulDetectorRight");
                     swCompLevel2.Suppress("AnsulDetectorLeft");
                     break;
-                case AnsulDetector_e.双侧探测器口:
+                case AnsulDetector_e.两探测器口:
                     swCompLevel2.UnSuppress("AnsulDetectorRight");
                     swCompLevel2.UnSuppress("AnsulDetectorLeft");
                     break;
@@ -2516,7 +2514,7 @@ public class BeamService : BaseSwService, IBeamService
                     swCompLevel2.UnSuppress("AnsulDetectorRight");
                     swCompLevel2.Suppress("AnsulDetectorLeft");
                     break;
-                case AnsulDetector_e.双侧探测器口:
+                case AnsulDetector_e.两探测器口:
                     swCompLevel2.UnSuppress("AnsulDetectorRight");
                     swCompLevel2.UnSuppress("AnsulDetectorLeft");
                     break;

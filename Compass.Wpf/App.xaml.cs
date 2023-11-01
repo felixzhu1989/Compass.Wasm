@@ -1,26 +1,4 @@
-﻿
-using Compass.Wpf.ApiService;
-using Compass.Wpf.ApiServices.Categories;
-using Compass.Wpf.ApiServices.Ceilings;
-using Compass.Wpf.ApiServices.Hoods;
-using Compass.Wpf.ApiServices.Plans;
-using Compass.Wpf.ApiServices.Projects;
-using Compass.Wpf.ApiServices.Todos;
-using Compass.Wpf.ApiServices.UL;
-using Compass.Wpf.BatchWorks;
-using Compass.Wpf.BatchWorks.Ceilings;
-using Compass.Wpf.BatchWorks.Hoods;
-using Compass.Wpf.SwServices;
-using Compass.Wpf.ViewModels;
-using Compass.Wpf.ViewModels.Ceilings;
-using Compass.Wpf.ViewModels.Dialogs;
-using Compass.Wpf.ViewModels.Hoods;
-using Compass.Wpf.Views;
-using Compass.Wpf.Views.Ceilings;
-using Compass.Wpf.Views.Dialogs;
-using Compass.Wpf.Views.Hoods;
-
-namespace Compass.Wpf;
+﻿namespace Compass.Wpf;
 
 /// <summary>
 /// Interaction logic for App.xaml
@@ -127,6 +105,35 @@ public partial class App : PrismApplication
 
         #endregion
 
+        #region 注册Data页面服务,View,ViewModel
+        containerRegistry.RegisterForNavigation<KviDataView, KviDataViewModel>();
+        containerRegistry.RegisterForNavigation<KvfDataView, KvfDataViewModel>();
+        containerRegistry.RegisterForNavigation<UviDataView, UviDataViewModel>();
+        containerRegistry.RegisterForNavigation<UvfDataView, UvfDataViewModel>();
+
+        containerRegistry.RegisterForNavigation<KwiDataView, KwiDataViewModel>();
+        containerRegistry.RegisterForNavigation<KwfDataView, KwfDataViewModel>();
+        containerRegistry.RegisterForNavigation<UwiDataView, UwiDataViewModel>();
+        containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
+
+
+        containerRegistry.RegisterForNavigation<KvvDataView, KvvDataViewModel>();
+        containerRegistry.RegisterForNavigation<CmodiDataView, CmodiDataViewModel>();
+        containerRegistry.RegisterForNavigation<CmodfDataView, CmodfDataViewModel>();
+
+
+        //天花烟罩
+        containerRegistry.RegisterForNavigation<KcjDataView, KcjDataViewModel>();
+        containerRegistry.RegisterForNavigation<UcjDataView, UcjDataViewModel>();
+        containerRegistry.RegisterForNavigation<KcwDataView, KcwDataViewModel>();
+        containerRegistry.RegisterForNavigation<UcwDataView, UcwDataViewModel>();
+
+        containerRegistry.RegisterForNavigation<CjDataView, CjDataViewModel>();
+        //containerRegistry.RegisterForNavigation<DpDataView, DpDataViewModel>();
+
+        #endregion
+
+
         #region 注册页面Api数据服务
         containerRegistry.Register<ILoginService, LoginService>();
         containerRegistry.Register<IFileUploadService, FileUploadService>();
@@ -150,34 +157,8 @@ public partial class App : PrismApplication
 
 
         #endregion
-
-        #region 注册HoodsData View/ViewModel模型参数页面服务
-        containerRegistry.RegisterForNavigation<KviDataView, KviDataViewModel>();
-        containerRegistry.RegisterForNavigation<KvfDataView, KvfDataViewModel>();
-        containerRegistry.RegisterForNavigation<UviDataView, UviDataViewModel>();
-        containerRegistry.RegisterForNavigation<UvfDataView, UvfDataViewModel>();
-
-        containerRegistry.RegisterForNavigation<KwiDataView, KwiDataViewModel>();
-        containerRegistry.RegisterForNavigation<KwfDataView, KwfDataViewModel>();
-        containerRegistry.RegisterForNavigation<UwiDataView, UwiDataViewModel>();
-        containerRegistry.RegisterForNavigation<UwfDataView, UwfDataViewModel>();
-
         
-        containerRegistry.RegisterForNavigation<KvvDataView, KvvDataViewModel>();
-        containerRegistry.RegisterForNavigation<CmodiDataView,CmodiDataViewModel>();
-        containerRegistry.RegisterForNavigation<CmodfDataView,CmodfDataViewModel>();
-        
-
-        //天花烟罩
-        containerRegistry.RegisterForNavigation<KcjDataView,KcjDataViewModel>();
-        containerRegistry.RegisterForNavigation<UcjDataView,UcjDataViewModel>();
-        containerRegistry.RegisterForNavigation<KcwDataView, KcwDataViewModel>();
-        containerRegistry.RegisterForNavigation<UcwDataView, UcwDataViewModel>();
-
-
-        #endregion
-
-        #region 模型参数Api数据服务
+        #region 模型Data Api数据服务
         containerRegistry.Register<IKviDataService, KviDataService>();
         containerRegistry.Register<IKvfDataService, KvfDataService>();
         containerRegistry.Register<IUviDataService, UviDataService>();
@@ -194,7 +175,6 @@ public partial class App : PrismApplication
         containerRegistry.Register<ICmodiDataService,CmodiDataService>();
         containerRegistry.Register<ICmodfDataService,CmodfDataService>();
         containerRegistry.Register<ICmodmDataService,CmodmDataService>();
-
 
         containerRegistry.Register<IKchDataService, KchDataService>();
 
@@ -219,6 +199,9 @@ public partial class App : PrismApplication
         containerRegistry.Register<IKcwDataService, KcwDataService>();
         containerRegistry.Register<IUcwDataService, UcwDataService>();
 
+        containerRegistry.Register<ICjDataService,CjDataService>();
+        containerRegistry.Register<IDpDataService,DpDataService>();
+
 
 
         #endregion
@@ -242,6 +225,8 @@ public partial class App : PrismApplication
         containerRegistry.Register<IUcjAutoDrawing,UcjAutoDrawing>();
         containerRegistry.Register<IKcwAutoDrawing, KcwAutoDrawing>();
         containerRegistry.Register<IUcwAutoDrawing, UcwAutoDrawing>();
+        containerRegistry.Register<ICjAutoDrawing, CjAutoDrawing>();
+        containerRegistry.Register<IDpAutoDrawing, DpAutoDrawing>();
 
         #endregion
 
@@ -251,6 +236,7 @@ public partial class App : PrismApplication
         containerRegistry.Register<ISidePanelService, SidePanelService>();
         containerRegistry.Register<IMidRoofService, MidRoofService>();
         containerRegistry.Register<IBeamService, BeamService>();
+        containerRegistry.Register<ICeilingService, CeilingService>();
 
 
 

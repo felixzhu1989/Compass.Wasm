@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using Compass.Update;
 
 namespace Compass.Wpf.Views;
 

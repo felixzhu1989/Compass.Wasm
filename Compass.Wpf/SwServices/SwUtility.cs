@@ -1,7 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 
@@ -284,9 +283,11 @@ public static class SwUtility
     public static Component2? RenameComp(this AssemblyDoc swAssy, string suffix, string typeName, string module, string compName, int num, double length, double width, IEventAggregator aggregator)
     {
         var swModel = (ModelDoc2)swAssy;
-        var assyName = swModel.GetTitle().Substring(0, swModel.GetTitle().Length - 7);
+        var assyName = Path.GetFileNameWithoutExtension(swModel.GetPathName());
         var originPath = $"{$"{compName}-{num}".AddSuffix(suffix)}@{assyName}";
         var strRename = $"{compName}[{typeName}-{module}]{{{(int)length}}}({(int)width})";
+        
+        //尝试直接选择
         var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
         if (status)
         {
@@ -294,14 +295,29 @@ public static class SwUtility
             swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
             swModel.Extension.RenameDocument(strRename);//执行重命名
         }
+        else
+        {
+            //如果没直接选中，可能是上次重命名过了，尝试遍历零部件再选择
+            var comps = (IEnumerable)swAssy.GetComponents(false);
+            foreach (var comp in comps)
+            {
+                var swComp=(Component2)comp;
+                //Name2的返回值：subAssem1-2/Part1-1，使用Split和Last获取末尾的真实零部件名称
+                var swCompName =swComp.Name2.Split('/').Last();
+                if (!swCompName.Contains(compName)) continue;//不包含就循环下一个
+                swComp.Select2(false, 0);//选择该零部件
+                swModel.Extension.RenameDocument(strRename); //执行重命名
+                break;//重命名后直接退出循环，因此重命名时针对的是第一个零件，多个零件的情况不支持
+            }
+        }
         swModel.ClearSelection2(true);
+        swModel.ForceRebuild3(true);
         status = swModel.Extension.SelectByID2($"{strRename}-{num}@{assyName}", "COMPONENT", 0, 0, 0, false,
             0, null, 0);
         swModel.ClearSelection2(true);
         return status ? swAssy.GetComponentByName($"{strRename}-{num}") : null;
     }
-
-
+    
 
     #endregion
 

@@ -1,5 +1,4 @@
-﻿using Compass.Wasm.Shared.Data;
-using SolidWorks.Interop.sldworks;
+﻿using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
 

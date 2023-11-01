@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Navigation;
+﻿using System.Windows.Navigation;
 
 namespace Compass.Wpf.Views;
 

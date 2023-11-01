@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
 using Compass.Wasm.Shared.Files;
 using Newtonsoft.Json;
 using RestSharp;

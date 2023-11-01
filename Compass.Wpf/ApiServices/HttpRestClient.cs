@@ -1,7 +1,5 @@
 ﻿using System.Net;
-using System.Threading.Tasks;
 using Compass.Dtos;
-using Compass.Wasm.Shared;
 using Newtonsoft.Json;
 using RestSharp;
 

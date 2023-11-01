@@ -1,9 +1,6 @@
-﻿using Compass.Wpf.ViewModels;
-using System.Globalization;
+﻿using System.Globalization;
 using Compass.Wasm.Shared.Categories;
-using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Params;
-using Compass.Wpf.ApiServices.Projects;
 
 namespace Compass.Wpf.Views;
 

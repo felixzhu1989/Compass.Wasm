@@ -1,7 +1,4 @@
 ﻿using Compass.Wasm.Shared.Data.Hoods;
-using Compass.Wasm.Shared.Data;
-using System.Diagnostics;
-using Compass.Wpf.ApiServices.Hoods;
 
 namespace Compass.Wpf.ViewModels.Hoods;
 

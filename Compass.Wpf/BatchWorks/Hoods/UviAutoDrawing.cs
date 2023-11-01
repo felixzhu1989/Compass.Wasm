@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Compass.Wasm.Shared.Data;
-using Compass.Wasm.Shared.Data.Hoods;
-using Compass.Wpf.ApiServices.Hoods;
-using Compass.Wpf.SwServices;
+﻿using Compass.Wasm.Shared.Data.Hoods;
 using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.BatchWorks.Hoods;

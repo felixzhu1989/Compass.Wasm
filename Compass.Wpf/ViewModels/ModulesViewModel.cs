@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using Compass.Wasm.Shared.Params;
-using Compass.Wpf.ApiServices.Projects;
-using Compass.Wpf.SwServices;
 
 namespace Compass.Wpf.ViewModels;
 

@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared.Params;
-using Compass.Wpf.ApiServices.Plans;
-using Compass.Wpf.ApiServices.Projects;
-using Compass.Wpf.BatchWorks;
 
 namespace Compass.Wpf.ViewModels;
 
@@ -38,6 +34,12 @@ public class PackingListViewModel : NavigationViewModel
         get => packingList;
         set { packingList = value; RaisePropertyChanged(); }
     }
+    private PackingListParam pklParam;
+    public PackingListParam PklParam
+    {
+        get => pklParam;
+        set { pklParam = value; RaisePropertyChanged();}
+    }
 
     #endregion
 
@@ -59,13 +61,11 @@ public class PackingListViewModel : NavigationViewModel
     /// </summary>
     private async Task UpdatePackingList()
     {
-        //弹窗添加PackingList
-        var dialogParams = new DialogParameters { { "Value", PackingList } };
-        var dialogResult = await DialogHost.ShowDialog("AddPackingListView", dialogParams);
-        if (dialogResult.Result != ButtonResult.OK) return;
-        PackingList = dialogResult.Parameters.GetValue<PackingListDto>("Value");
-        await _packingListService.UpdateAsync(PackingList.Id.Value, PackingList);
-        Aggregator.SendMessage("更新装箱清单属性完成！");
+        var navParam = new NavigationParameters { { "Value", PklParam },{ "Dto", PackingList } };
+        RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("AddPackingListView", back =>
+        {
+            Journal = back.Context.NavigationService.Journal;
+        }, navParam);
     }
     /// <summary>
     /// 重新生成清单
@@ -128,8 +128,7 @@ public class PackingListViewModel : NavigationViewModel
                     break;
                 }
         }
-
-        await RefreshDataAsync();
+        await GetDataAsync();
         Aggregator.SendMessage("重新生成清单完成！");
     }
     /// <summary>
@@ -161,7 +160,7 @@ public class PackingListViewModel : NavigationViewModel
             }
         }
 
-        await RefreshDataAsync();
+        await GetDataAsync();
     }
 
     /// <summary>
@@ -176,7 +175,7 @@ public class PackingListViewModel : NavigationViewModel
         if (dialogResult.Result != ButtonResult.OK) return;
         var newItem = dialogResult.Parameters.GetValue<PackingItemDto>("Value");
         await _packingItemService.AddAsync(newItem);
-        await RefreshDataAsync();
+        await GetDataAsync();
     }
     
     private async void UpdatePackingItem(PackingItemDto obj)
@@ -187,7 +186,7 @@ public class PackingListViewModel : NavigationViewModel
         if (dialogResult.Result != ButtonResult.OK) return;
         var newItem = dialogResult.Parameters.GetValue<PackingItemDto>("Value");
         await _packingItemService.UpdateAsync(obj.Id.Value, newItem);
-        await RefreshDataAsync();
+        await GetDataAsync();
     }
     private async void DeletePackingItem(PackingItemDto obj)
     {
@@ -195,7 +194,7 @@ public class PackingListViewModel : NavigationViewModel
         var dialogResult = await DialogHost.Question("删除确认", $"确认删除物料：{obj.MtlNumber} {obj.Description} 吗?");
         if (dialogResult.Result != ButtonResult.OK) return;
         await _packingItemService.DeleteAsync(obj.Id.Value);
-        await RefreshDataAsync();
+        await GetDataAsync();
     }
 
     /// <summary>
@@ -233,23 +232,10 @@ public class PackingListViewModel : NavigationViewModel
     #endregion
 
     #region 初始化
-
-    private async Task RefreshDataAsync()
-    {
-        //重新查找列表
-        var packingListParam = new PackingListParam
-        {
-            ProjectId = PackingList.ProjectId,
-            Batch = PackingList.Batch
-        };
-        await  GetDataAsync(packingListParam);
-    }
-
-
-    private async Task GetDataAsync(PackingListParam pklParam)
+    private async Task GetDataAsync()
     {
         //根据项目ID和分批获取装箱清单
-        var response = await _packingListService.GetSingleByProjectIdAndBathAsync(pklParam);
+        var response = await _packingListService.GetSingleByProjectIdAndBathAsync(PklParam);
         if (response.Status)
         {
             PackingList = response.Result;
@@ -257,7 +243,7 @@ public class PackingListViewModel : NavigationViewModel
         else
         {
             //todo:跳转到新页面添加装箱清单PackingListDto，在返回此地
-            var navParam = new NavigationParameters { { "Value", pklParam } };
+            var navParam = new NavigationParameters { { "Value", PklParam } };
             RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("AddPackingListView", back =>
             {
                 Journal = back.Context.NavigationService.Journal;
@@ -267,11 +253,12 @@ public class PackingListViewModel : NavigationViewModel
     public override async void OnNavigatedTo(NavigationContext navigationContext)
     {
         base.OnNavigatedTo(navigationContext);
-        var pklParam = navigationContext.Parameters.ContainsKey("Value") ?
-            navigationContext.Parameters.GetValue<PackingListParam>("Value")
-            : null;
-        
-        await GetDataAsync(pklParam);
+        if (!navigationContext.Parameters.ContainsKey("Value"))
+        {
+            if (Journal is { CanGoBack: true }) Journal.GoBack();
+        }
+        PklParam = navigationContext.Parameters.GetValue<PackingListParam>("Value");
+        await GetDataAsync();
     }
     #endregion
 }

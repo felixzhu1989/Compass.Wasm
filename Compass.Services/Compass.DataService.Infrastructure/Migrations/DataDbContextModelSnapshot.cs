@@ -86,6 +86,7 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("BcjSide");
 
                     b.Property<int>("CjSpigotDirection")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("CjSpigotDirection");
 
@@ -135,6 +136,23 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("RightGutterWidth");
 
                     b.HasDiscriminator().HasValue("CjData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.DpData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<int>("CjSpigotDirection")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("CjSpigotDirection");
+
+                    b.Property<double>("CjSpigotToRight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("CjSpigotToRight");
+
+                    b.HasDiscriminator().HasValue("DpData");
                 });
 
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.KcjData", b =>

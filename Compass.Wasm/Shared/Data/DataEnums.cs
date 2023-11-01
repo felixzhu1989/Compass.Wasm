@@ -29,7 +29,7 @@ public enum AnsulSide_e
 }
 public enum AnsulDetector_e
 {
-    NA, 无探测器口, 左探测器口, 右探测器口, 双侧探测器口
+    NA, 无探测器口, 左探测器口, 右探测器口, 两探测器口
 }
 public enum AnsulDetectorEnd_e
 {
@@ -86,7 +86,7 @@ public enum HclSide_e
 }
 public enum DpSide_e
 {
-    NA, 无DP腔, 左侧DP腔, 右侧DP腔, 两侧DP腔
+    NA, 无DP腔, 左DP腔, 右DP腔, 两DP腔
 }
 
 public enum CeilingWaterInlet_e
@@ -96,7 +96,7 @@ public enum CeilingWaterInlet_e
 //CJ
 public enum CjSpigotDirection_e
 {
-    NA, 脖颈朝前, 脖颈朝上
+    NA, CJ脖颈朝前, CJ脖颈朝上
 }
 public enum BeamType_e
 {
@@ -104,7 +104,7 @@ public enum BeamType_e
 }
 public enum BcjSide_e
 {
-    NA, 无BCJ, 左BCJ, 右BCJ, 两BCJ
+    NA, 无BCJ腔, 左BCJ腔, 右BCJ腔, 两BCJ腔
 }
 public enum LksSide_e
 {
@@ -112,7 +112,7 @@ public enum LksSide_e
 }
 public enum GutterSide_e
 {
-    NA, 无Gutter, 左Gutter, 右Gutter, 两Gutter
+    NA, 无Ansul腔, 左Ansul腔, 右Ansul腔, 两Ansul腔
 }
 //
 

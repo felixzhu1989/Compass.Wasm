@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Compass.Wpf.ApiServices.Hoods;
-using Compass.Wpf.SwServices;
-
-namespace Compass.Wpf.BatchWorks.Hoods;
+﻿namespace Compass.Wpf.BatchWorks.Hoods;
 
 public interface ICmodiAutoDrawing : IAutoDrawing
 {

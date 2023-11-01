@@ -1,5 +1,4 @@
-﻿using Compass.Wpf.BatchWorks;
-using SolidWorks.Interop.sldworks;
+﻿using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
 //抽象类，为了复用代码

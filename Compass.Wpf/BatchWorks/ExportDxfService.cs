@@ -1,12 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using SolidWorks.Interop.sldworks;
 using System.IO;
-using System.Diagnostics;
 using SolidWorks.Interop.swconst;
-using Compass.Wpf.ApiServices.Projects;
-using Compass.Wpf.SwServices;
 
 namespace Compass.Wpf.BatchWorks;
 

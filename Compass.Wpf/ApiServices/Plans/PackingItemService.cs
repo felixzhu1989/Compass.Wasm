@@ -1,7 +1,4 @@
-﻿using Compass.Wasm.Shared;
-using Compass.Wpf.ApiService;
-using System.Threading.Tasks;
-using Compass.Dtos;
+﻿using Compass.Dtos;
 
 namespace Compass.Wpf.ApiServices.Plans;
 

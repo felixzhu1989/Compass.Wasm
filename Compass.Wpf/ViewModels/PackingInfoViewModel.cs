@@ -1,7 +1,4 @@
 ﻿using Compass.Wasm.Shared.Params;
-using Compass.Wpf.ApiServices.Plans;
-using Compass.Wpf.BatchWorks;
-using System.Threading.Tasks;
 
 namespace Compass.Wpf.ViewModels;
 

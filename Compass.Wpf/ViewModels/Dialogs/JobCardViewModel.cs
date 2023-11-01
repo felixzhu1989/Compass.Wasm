@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Compass.Wpf.BatchWorks;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using Prism.Mvvm;
 
 namespace Compass.Wpf.ViewModels.Dialogs;

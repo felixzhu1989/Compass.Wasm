@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Compass.Dtos;
-using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Categories;
-using Compass.Wpf.ApiService;
 
 namespace Compass.Wpf.ApiServices.Categories;
 
