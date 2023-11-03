@@ -84,10 +84,7 @@ public enum HclSide_e
 {
     NA, 无HCL侧板, 左HCL侧板, 右HCL侧板, 两HCL侧板
 }
-public enum DpSide_e
-{
-    NA, 无DP腔, 左DP腔, 右DP腔, 两DP腔
-}
+
 
 public enum CeilingWaterInlet_e
 {
@@ -114,8 +111,21 @@ public enum GutterSide_e
 {
     NA, 无Ansul腔, 左Ansul腔, 右Ansul腔, 两Ansul腔
 }
-//
-
-
-
+public enum NocjSide_e
+{
+    NA, 无NOCJ腔, 左NOCJ腔, 右NOCJ腔, 两NOCJ腔
+}
+//背面NOCJ位置
+public enum NocjBackSide_e
+{
+    NA, 无背面NOCJ腔, 左背面NOCJ腔, 右背面NOCJ腔, 两背面NOCJ腔
+}
+public enum DpSide_e
+{
+    NA, 无DP腔, 左DP腔, 右DP腔, 两DP腔
+}
+public enum DpBackSide_e
+{
+    NA, 无背面DP腔, 左背面DP腔, 右背面DP腔, 两背面DP腔
+}
 #endregion

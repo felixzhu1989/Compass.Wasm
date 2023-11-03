@@ -83,6 +83,30 @@ public class CjDataViewModel : NavigationViewModel
         get => gutterSides;
         set { gutterSides = value; RaisePropertyChanged(); }
     }
+    private string[] nocjSides = null!;
+    public string[] NocjSides
+    {
+        get => nocjSides;
+        set { nocjSides = value; RaisePropertyChanged(); }
+    }
+    private string[] nocjBackSides = null!;
+    public string[] NocjBackSides
+    {
+        get => nocjBackSides;
+        set { nocjBackSides = value; RaisePropertyChanged(); }
+    }
+    private string[] dpSides = null!;
+    public string[] DpSides
+    {
+        get => dpSides;
+        set { dpSides = value; RaisePropertyChanged(); }
+    }
+    private string[] dpBackSides = null!;
+    public string[] DpBackSides
+    {
+        get => dpBackSides;
+        set { dpBackSides = value; RaisePropertyChanged(); }
+    }
     #endregion
 
     #region 打开网页链接
@@ -106,6 +130,10 @@ public class CjDataViewModel : NavigationViewModel
         BcjSides = Enum.GetNames(typeof(BcjSide_e));
         LksSides = Enum.GetNames(typeof(LksSide_e));
         GutterSides = Enum.GetNames(typeof(GutterSide_e));
+        NocjSides = Enum.GetNames(typeof(NocjSide_e));
+        NocjBackSides = Enum.GetNames(typeof(NocjBackSide_e));
+        DpSides = Enum.GetNames(typeof(DpSide_e));
+        //DpBackSides = Enum.GetNames(typeof(DpBackSide_e));
     }
     private async void GetDataAsync()
     {

@@ -44,7 +44,7 @@ public class CeilingLightTypeCvt : EnumCvt<CeilingLightType_e> { }
 public class LightCableCvt : EnumCvt<LightCable_e> { }
 public class HclSideCvt : EnumCvt<HclSide_e> { }
 
-public class DpSideCvt : EnumCvt<DpSide_e> { }
+
 public class CeilingWaterInletCvt : EnumCvt<CeilingWaterInlet_e> { }
 
 public class CjSpigotDirectionCvt:EnumCvt<CjSpigotDirection_e>{}
@@ -52,3 +52,8 @@ public class BeamTypeCvt:EnumCvt<BeamType_e>{}
 public class BcjSideCvt:EnumCvt<BcjSide_e>{}
 public class LksSideCvt:EnumCvt<LksSide_e>{}
 public class GutterSideCvt:EnumCvt<GutterSide_e>{}
+
+public class NocjSideCvt:EnumCvt<NocjSide_e>{}
+public class NocjBackSideCvt : EnumCvt<NocjBackSide_e>{}
+public class DpSideCvt : EnumCvt<DpSide_e> { }
+public class DpBackSideCvt : EnumCvt<DpBackSide_e> { }

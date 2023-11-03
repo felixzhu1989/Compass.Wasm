@@ -95,6 +95,10 @@ public static class CommonExtensions
             @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\CJ_B_300.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\CJ_B_330.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\CJ_B_430.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\CJ_NO_300.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\CJ_NO_330.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\CJ_NO_340.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\CJ_NO_SP.SLDASM",
 
 
 

@@ -797,7 +797,7 @@ public class SupplyService : BaseSwService, ISupplyService
         switch (lightType)
         {
             case LightType_e.短灯:
-                swModelLevel2.ChangeDim("Length@SketchLight", 707);
+                swModelLevel2.ChangeDim("Length@SketchLight", 707d);
                 break;
 
             case LightType_e.NA:
@@ -806,7 +806,7 @@ public class SupplyService : BaseSwService, ISupplyService
             case LightType_e.HCL:
             case LightType_e.飞利浦三防灯:
             default:
-                swModelLevel2.ChangeDim("Length@SketchLight", 1281);
+                swModelLevel2.ChangeDim("Length@SketchLight", 1281d);
                 break;
         }
         #endregion

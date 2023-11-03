@@ -18,7 +18,6 @@ public class CjData : ModuleData
     #endregion
 
     #region 连接排风、BCJ、LKS、Gutter位置参数
-
     private BeamType_e leftBeamType;
     public BeamType_e LeftBeamType
     {
@@ -89,6 +88,36 @@ public class CjData : ModuleData
         set { rightGutterWidth = value; OnPropertyChanged(); }
     }
     #endregion
+
+    #region 连接NOCJ时的参数
+    private NocjSide_e nocjSide;
+    public NocjSide_e NocjSide
+    {
+        get => nocjSide;
+        set { nocjSide = value; OnPropertyChanged(); }
+    }
+    private NocjBackSide_e nocjBackSide;
+    public NocjBackSide_e NocjBackSide
+    {
+        get => nocjBackSide;
+        set { nocjBackSide = value; OnPropertyChanged(); }
+    }
+    //日本NOCJ340连接DP340的情况,(或NOCJ330?)
+    private DpSide_e dpSide;
+    public DpSide_e DpSide
+    {
+        get => dpSide;
+        set { dpSide = value; OnPropertyChanged(); }
+    }
+    //private DpBackSide_e dpBackSide;
+    //public DpBackSide_e DpBackSide
+    //{
+    //    get => dpBackSide;
+    //    set { dpBackSide = value; OnPropertyChanged(); }
+    //}
+
+    #endregion
+
 
     public override bool Accept(string model)
     {

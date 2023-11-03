@@ -22,6 +22,10 @@
         <cvt:BcjSideCvt x:Key="BcjSideCvt" />
         <cvt:LksSideCvt x:Key="LksSideCvt" />
         <cvt:GutterSideCvt x:Key="GutterSideCvt" />
+        <cvt:NocjSideCvt x:Key="NocjSideCvt" />
+        <cvt:NocjBackSideCvt x:Key="NocjBackSideCvt" />
+        <cvt:DpSideCvt x:Key="DpSideCvt" />
+        <!--<cvt:DpBackSideCvt x:Key="DpBackSideCvt" />-->
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -79,7 +83,7 @@
                 </StackPanel>
                 <!--CJ脖颈参数-->
                 <StackPanel>
-                    <TextBlock Text="CJ脖颈参数"
+                    <TextBlock Text="CJ脖颈参数(NOCJ不要填写)"
                                Margin="0,5,0,0"
                                Foreground="DodgerBlue" />
                     <ComboBox Margin="0,5"
@@ -142,6 +146,33 @@
                     <TextBox Text="{Binding DataDto.RightGutterWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="右Ansul腔宽度："/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="2"
+                        Margin="10">
+                <!--连接NOCJ腔体的参数-->
+                <StackPanel>
+                    <TextBlock Text="连接NOCJ腔体的参数(看情况填写)"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding NocjSides}"
+                              SelectedItem="{Binding DataDto.NocjSide,Converter={StaticResource NocjSideCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="前NOCJ腔位置:   " />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding NocjBackSides}"
+                              SelectedItem="{Binding DataDto.NocjBackSide,Converter={StaticResource NocjBackSideCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="后NOCJ腔位置:   " />
+                    <ComboBox Margin="0,5"
+                              ItemsSource="{Binding DpSides}"
+                              SelectedItem="{Binding DataDto.DpSide,Converter={StaticResource DpSideCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="前DP腔位置:   " 
+                              materialDesign:TextFieldAssist.SuffixText="(NOCJ340时填写)"/>
+                    <!--<ComboBox Margin="0,5"
+                              ItemsSource="{Binding DpBackSides}"
+                              SelectedItem="{Binding DataDto.DpBackSide,Converter={StaticResource DpBackSideCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="后DP腔位置:   "
+                              materialDesign:TextFieldAssist.SuffixText="(NOCJ340时填写)" />-->
                 </StackPanel>
             </StackPanel>
         </Grid>

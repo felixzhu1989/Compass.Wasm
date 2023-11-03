@@ -46,6 +46,28 @@ public class CjAutoDrawing : BaseAutoDrawing, ICjAutoDrawing
                 //case "CJ_430":
                 //    CeilingService.Cj430(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                 //    break;
+
+                case "CJ_B_300":
+                    CeilingService.Bcj300(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
+                case "CJ_B_330":
+                    CeilingService.Bcj330(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
+                //case "CJ_B_430":
+                //    CeilingService.Bcj430(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                //    break;
+
+
+                case "CJ_NO_300":
+                    CeilingService.Nocj300(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
+                case "CJ_NO_330":
+                    CeilingService.Nocj330(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
+                case "CJ_NO_340":
+                    CeilingService.Nocj340(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break; 
+
             }
 
             #region 保存操作

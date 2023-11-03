@@ -119,6 +119,14 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("LksSide");
 
+                    b.Property<int>("NocjBackSide")
+                        .HasColumnType("int")
+                        .HasColumnName("NocjBackSide");
+
+                    b.Property<int>("NocjSide")
+                        .HasColumnType("int")
+                        .HasColumnName("NocjSide");
+
                     b.Property<int>("RightBeamType")
                         .HasColumnType("int")
                         .HasColumnName("RightBeamType");

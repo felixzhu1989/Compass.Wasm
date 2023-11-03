@@ -50,6 +50,13 @@ public class CjDataService : BaseDataGetService<CjData>, ICjDataService
             data.RightGutterWidth=dto.RightGutterWidth;
             #endregion
 
+            #region 连接NOCJ时的参数
+            data.NocjSide=dto.NocjSide;
+            data.NocjBackSide=dto.NocjBackSide;
+            data.DpSide=dto.DpSide;
+            //data.DpBackSide=dto.DpBackSide;
+            #endregion
+
 
             data.NotifyModified();//通知更新时间
             return new ApiResponse<CjData> { Status = true, Result = dto };
