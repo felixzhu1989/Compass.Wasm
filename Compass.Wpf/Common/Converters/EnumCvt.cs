@@ -57,3 +57,5 @@ public class NocjSideCvt:EnumCvt<NocjSide_e>{}
 public class NocjBackSideCvt : EnumCvt<NocjBackSide_e>{}
 public class DpSideCvt : EnumCvt<DpSide_e> { }
 public class DpBackSideCvt : EnumCvt<DpBackSide_e> { }
+
+public class DpDrainTypeCvt : EnumCvt<DpDrainType_e> { }

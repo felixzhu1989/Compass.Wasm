@@ -33,9 +33,9 @@ public class DpAutoDrawing:BaseAutoDrawing,IDpAutoDrawing
 
             switch (moduleDto.ModelName)
             {
-                //case "BCJ_300":
-                //    CeilingService.Bcj300(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
-                //    break;
+                case "DP_330":
+                    CeilingService.Dp330(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
                 //case "BCJ_330":
                 //    CeilingService.Bcj330(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                 //    break;

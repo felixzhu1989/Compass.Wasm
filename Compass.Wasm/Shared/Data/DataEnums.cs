@@ -128,4 +128,10 @@ public enum DpBackSide_e
 {
     NA, 无背面DP腔, 左背面DP腔, 右背面DP腔, 两背面DP腔
 }
+
+public enum DpDrainType_e
+{
+    NA, 无排水管, 左排水管,右排水管
+}
+
 #endregion

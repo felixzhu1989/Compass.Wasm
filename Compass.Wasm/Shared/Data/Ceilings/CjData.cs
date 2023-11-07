@@ -109,13 +109,6 @@ public class CjData : ModuleData
         get => dpSide;
         set { dpSide = value; OnPropertyChanged(); }
     }
-    //private DpBackSide_e dpBackSide;
-    //public DpBackSide_e DpBackSide
-    //{
-    //    get => dpBackSide;
-    //    set { dpBackSide = value; OnPropertyChanged(); }
-    //}
-
     #endregion
 
 

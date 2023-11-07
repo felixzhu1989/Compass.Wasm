@@ -101,12 +101,12 @@ public class CjDataViewModel : NavigationViewModel
         get => dpSides;
         set { dpSides = value; RaisePropertyChanged(); }
     }
-    private string[] dpBackSides = null!;
-    public string[] DpBackSides
-    {
-        get => dpBackSides;
-        set { dpBackSides = value; RaisePropertyChanged(); }
-    }
+    //private string[] dpBackSides = null!;
+    //public string[] DpBackSides
+    //{
+    //    get => dpBackSides;
+    //    set { dpBackSides = value; RaisePropertyChanged(); }
+    //}
     #endregion
 
     #region 打开网页链接

@@ -129,7 +129,7 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<UcwDataView, UcwDataViewModel>();
 
         containerRegistry.RegisterForNavigation<CjDataView, CjDataViewModel>();
-        //containerRegistry.RegisterForNavigation<DpDataView, DpDataViewModel>();
+        containerRegistry.RegisterForNavigation<DpDataView, DpDataViewModel>();
 
         #endregion
 
