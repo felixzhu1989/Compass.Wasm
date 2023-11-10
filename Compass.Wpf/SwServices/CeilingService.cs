@@ -17,7 +17,6 @@ public class CeilingService : BaseSwService, ICeilingService
         var firstCjDis = (data.Length - 30d * cjNumber) / 2;
         if (firstCjDis < 15d)
         {
-            cjNumber--;
             firstCjDis += 15d;
         }
 
@@ -32,7 +31,7 @@ public class CeilingService : BaseSwService, ICeilingService
         FNCJ0022(swAssyTop, suffix, "FNCJ0022-1", data.Length, data.CjSpigotToRight);
 
         //重命名CJ腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "CJ300", module, "FNCJ0020", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "CJ300", module, "FNCJ0020-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCJ0020(swCompLevel2, data.Length, firstCjDis, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth);
@@ -46,7 +45,6 @@ public class CeilingService : BaseSwService, ICeilingService
         var firstCjDis = (data.Length - 30d * cjNumber) / 2;
         if (firstCjDis < 15d)
         {
-            cjNumber--;
             firstCjDis += 15d;
         }
 
@@ -61,7 +59,7 @@ public class CeilingService : BaseSwService, ICeilingService
         FNCJ0022(swAssyTop, suffix, "FNCJ0022-1", data.Length, data.CjSpigotToRight);
 
         //重命名CJ腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "CJ330", module, "FNCJ0023", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "CJ330", module, "FNCJ0023-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCJ0020(swCompLevel2, data.Length, firstCjDis, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth);
@@ -74,7 +72,6 @@ public class CeilingService : BaseSwService, ICeilingService
         var firstCjDis = (data.Length - 30d * cjNumber) / 2;
         if (firstCjDis < 15d)
         {
-            cjNumber--;
             firstCjDis += 15d;
         }
 
@@ -88,7 +85,7 @@ public class CeilingService : BaseSwService, ICeilingService
 
 
         //重命名BCJ腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "BCJ300", module, "FNCJ0015", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "BCJ300", module, "FNCJ0015-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCJ0015(swCompLevel2, data.Length, firstCjDis, data.CjSpigotToRight);
@@ -103,7 +100,6 @@ public class CeilingService : BaseSwService, ICeilingService
         var firstCjDis = (data.Length - 30d * cjNumber) / 2;
         if (firstCjDis < 15d)
         {
-            cjNumber--;
             firstCjDis += 15d;
         }
 
@@ -117,7 +113,7 @@ public class CeilingService : BaseSwService, ICeilingService
 
 
         //重命名BCJ腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "BCJ330", module, "FNCJ0045", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "BCJ330", module, "FNCJ0045-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCJ0015(swCompLevel2, data.Length, firstCjDis, data.CjSpigotToRight);
@@ -130,10 +126,10 @@ public class CeilingService : BaseSwService, ICeilingService
         NocjSidePanel(swAssyTop, suffix, data.SidePanel, data.NocjBackSide, data.Width, "FNCJ0008-1", "FNCJ0007-1", "FNCJ0009-1", "FNCJ0007-2");
 
         //重命名BCJ腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "NOCJ300", module, "FNCJ0001", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "NOCJ300", module, "FNCJ0001-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
-            FNCJ0001(swCompLevel2, data.Length,data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth,data.NocjSide,data.NocjBackSide);
+            FNCJ0001(swCompLevel2, data.Length, data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth, data.NocjSide, data.NocjBackSide);
         }
     }
 
@@ -143,7 +139,7 @@ public class CeilingService : BaseSwService, ICeilingService
         NocjSidePanel(swAssyTop, suffix, data.SidePanel, data.NocjBackSide, data.Width, "FNCJ0055-1", "FNCJ0054-1", "FNCJ0056-1", "FNCJ0054-2");
 
         //重命名BCJ腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "NOCJ330", module, "FNCJ0051", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "NOCJ330", module, "FNCJ0051-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCJ0001(swCompLevel2, data.Length, data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth, data.NocjSide, data.NocjBackSide);
@@ -153,13 +149,13 @@ public class CeilingService : BaseSwService, ICeilingService
     public void Nocj340(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, CjData data)
     {
         //侧板
-        Nocj340SidePanel(swAssyTop, suffix, data.SidePanel,  data.Width, "FNCS0017-1", "FNCS0020-1", "FNCS0018-1", "FNCS0020-2");
+        Nocj340SidePanel(swAssyTop, suffix, data.SidePanel, data.Width, "FNCS0017-1", "FNCS0020-1", "FNCS0018-1", "FNCS0020-2");
 
         //重命名BCJ腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "NOCJ340", module, "FNCS0016", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "NOCJ340", module, "FNCS0016-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
-            FNCS0016(swCompLevel2, data.Length, data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth, data.NocjSide, data.NocjBackSide,data.DpSide);
+            FNCS0016(swCompLevel2, data.Length, data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth, data.NocjSide, data.NocjBackSide, data.DpSide);
         }
     }
 
@@ -183,19 +179,177 @@ public class CeilingService : BaseSwService, ICeilingService
         FNCS0002(swAssyTop, suffix, "FNCS0002-1", data.Length, data.DpBackSide);
 
         //重命名DP腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "DP330", module, "FNCS0001", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "DP330", module, "FNCS0001-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
-            FNCS0001(swCompLevel2, data.Length, data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth, data.NocjSide, data.NocjBackSide,data.DpSide,data.DpBackSide,data.DpDrainType);
+            FNCS0001(swCompLevel2, data.Length, data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth, data.NocjSide, data.NocjBackSide, data.DpSide, data.DpBackSide, data.DpDrainType);
         }
     }
 
+    public void Dp340(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, DpData data)
+    {
+        //侧板
+        DpSidePanel(swAssyTop, suffix, data.SidePanel, "FNCS0017-1", "FNCS0019-1", "FNCO0016[WPSDP340]-1", "FNCS0018-1", "FNCS0019-2", "FNCO0016[WPSDP340]-2");
+
+        //重命名DP腔体
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "DP340", module, "FNCS0015-1", data.Length, data.Width, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            FNCS0001(swCompLevel2, data.Length, data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth, data.NocjSide, data.NocjBackSide, data.DpSide, data.DpBackSide, data.DpDrainType);
+        }
+    }
+
+    public void DpCj330(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, DpData data)
+    {
+        #region DP部分
+        var swAssyDp = swAssyTop.GetSubAssemblyDoc(out var swModelDp, suffix, "DP_CJ_Inner330-1", Aggregator);
+        //吊装孔
+        const double sideDis = 150d;
+        const double liftingMinDis = 500d;
+        var ligtingNumber = Math.Ceiling((data.Length - 2*sideDis) / liftingMinDis);
+        ligtingNumber = ligtingNumber < 2 ? 2 : ligtingNumber;
+        var ligtingDis = (data.Length - 2*sideDis)/(ligtingNumber-1);
+        swModelDp.ChangeDim("Dis@LocalLPatternLifting", ligtingDis);
+
+        //侧板
+        DpSidePanel(swAssyDp, suffix, data.SidePanel, "FNCS0011-1", "FNCS0013-1", "FNCO0002[WPSDP200]-1", "FNCS0012-1", "FNCS0013-2", "FNCO0002[WPSDP200]-2");
+
+        //重命名DP腔体
+        var swCompDp = swAssyDp.RenameComp(suffix, "DPCJ330", module, "FNCS0001-1", data.Length, data.Width, Aggregator);
+        if (swCompDp != null)
+        {
+            FNCS0001(swCompDp, data.Length, data.Width, data.BcjSide, data.LeftEndDis, data.RightEndDis, data.LeftBeamType, data.LeftDbToRight, data.RightBeamType, data.RightDbToLeft, data.LksSide, data.GutterSide, data.LeftGutterWidth, data.RightGutterWidth, data.NocjSide, data.NocjBackSide, data.DpSide, data.DpBackSide, data.DpDrainType);
+        }
+        #endregion
+
+        #region CJ部分
+        var swAssyCj = swAssyTop.GetSubAssemblyDoc(out var swModelCj, suffix, "CJ_330-1", Aggregator);
+        var cjNumber = (int)((data.Length - 40d) / 30d);//天花烟罩马蹄形CJ孔阵列距离为30
+        var firstCjDis = (data.Length - 30d * cjNumber) / 2;
+        if (firstCjDis < 15d)
+        {
+            firstCjDis += 15d;
+        }
+
+        //CJ脖颈
+        CjSpigot(swAssyCj, suffix, data.CjSpigotDirection, "FNCJ0010-1", "5201990413-1");
+        //侧板
+        CjSidePanel(swAssyCj, suffix, data.SidePanel, "FNCJ0025-1", "FNCJ0027-1", "FNCJ0026-1", "FNCJ0027-2");
+
+        //其余零件
+        swAssyCj.ChangePartLength(suffix, "FNCJ0024-1", "Length@SketchBase", data.Length, Aggregator);
+        swAssyCj.ChangePartLength(suffix, "FNCJ0016-1", "Length@SketchBase", data.Length-10d, Aggregator);
+        FNCJ0022(swAssyCj, suffix, "FNCJ0022-1", data.Length, data.CjSpigotToRight);
+
+        //不需要重命名CJ腔体
+        var swCompCj = swAssyCj.UnSuppress(suffix, "FNCJ0023-1", Aggregator);
+        FNCJ0020(swCompCj, data.Length, firstCjDis, BcjSide_e.NA, 0, 0, BeamType_e.NA, 0, BeamType_e.NA, 0, LksSide_e.NA, GutterSide_e.NA, 0, 0);
+
+        #endregion
+    }
+    #endregion
+
+    #region LFU
+    public void LfuSa(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, LfuData data)
+    {
+        //重命名LFU腔体
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "LFUSA", module, "FNCA0001-1", data.Length, data.Width, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            FNCA0001(swCompLevel2, data.Length, data.Width, data.SidePanel, data.SupplySpigotNumber, data.SupplySpigotDis, data.SupplySpigotDia, data.Japan);
+        }
+
+        #region LFU侧板
+        LfuSaSsSidePanel(swAssyTop, suffix, data.SidePanel, data.Width-2d, "FNCA0002-1", "FNCA0003-1", "FNCA0002-2", "FNCA0003-2");
+        #endregion
+
+        #region 铝网孔板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "LFU_P-1", Aggregator);
+            LfuSaPanel(swAssyLevel1,suffix,module,data.TotalLength,data.Width);
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "LFU_P-1");
+        }
+        #endregion
+
+        #region 日本项目
+        if (data.Japan)
+        {
+            swAssyTop.Suppress(suffix, "FNCE0070-1");
+            swAssyTop.Suppress("LocalLPatternLifting");
+        }
+        else
+        {
+            swAssyTop.UnSuppress(suffix, "FNCE0070-1", Aggregator);
+            swAssyTop.UnSuppress("LocalLPatternLifting");
+        }
+        #endregion
+    }
+
+    public void LfuSc(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, LfuData data)
+    {
+        #region 腔体
+        //国内散流器长度原样给，日本按照网孔板长度加17
+        var netLength = data.Japan ? data.Length +17d : data.Length;
+        //重命名LFU腔体
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "LFUSC", module, "FNCA0012-1", netLength, data.Width, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            FNCA0012(swCompLevel2, netLength, data.SupplySpigotNumber, data.SupplySpigotDis, data.SupplySpigotDia);
+        }
+        #endregion
+
+
+        #region 铝网孔板
+        //国内网孔板长度-10，日本按照原样给
+        var panelLength =data.Japan? data.Length:data.Length-10d;
+        var swCompSidePanel = swAssyTop.RenameComp(suffix, "LFUP", module, "FNCA0014-1", panelLength, 500d, Aggregator);
+        if (swCompSidePanel != null)
+        {
+            var swModelStdPanel = (ModelDoc2)swCompSidePanel.GetModelDoc2();
+            swModelStdPanel.ChangeDim("Length@SketchBase", panelLength);
+        }
+        #endregion
+    }
+
+    public void LfuSs(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, LfuData data)
+    {
+        //重命名LFU腔体
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "LFUSS", module, "FNCA0016-1", data.Length, data.Width, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            FNCA0016(swCompLevel2, data.Length, data.Width, data.SupplySpigotNumber, data.SupplySpigotDis, data.SupplySpigotDia, data.Japan);
+        }
+
+        #region LFU侧板
+        LfuSaSsSidePanel(swAssyTop, suffix, data.SidePanel, data.Width-3d, "FNCA0017-1", "FNCA0028-1", "FNCA0017-2", "FNCA0028-2");
+        #endregion
+
+        #region 型材
+        swAssyTop.ChangePartLength(suffix, "2900600019-1", "Length@Boss-Extrude",data.Length-7d,Aggregator);
+        #endregion
+
+        #region 铝网孔板
+        var panelLength = data.SidePanel is SidePanel_e.双 ? data.Length-7d:data.SidePanel is SidePanel_e.左 or SidePanel_e.右 ? data.Length-4d : data.Length -1d ;
+        var panelWidth = data.Width - 38d;
+        var swCompSidePanel = swAssyTop.RenameComp(suffix, "LFUP", module, "FNCA0018-1", panelLength, panelWidth, Aggregator);
+        if (swCompSidePanel != null)
+        {
+            var swModelStdPanel = (ModelDoc2)swCompSidePanel.GetModelDoc2();
+            swModelStdPanel.ChangeDim("Length@SketchBase", panelLength);
+            swModelStdPanel.ChangeDim("Width@SketchBase", panelWidth);
+        }
+        #endregion
+    }
 
     #endregion
 
-
     #region 通用方法
 
+    #region CJ
     private void CjSpigot(AssemblyDoc swAssyLevel1, string suffix, CjSpigotDirection_e cjSpigotDirection, string upPart, string frontPart)
     {
         if (cjSpigotDirection is CjSpigotDirection_e.CJ脖颈朝上)
@@ -253,7 +407,7 @@ public class CeilingService : BaseSwService, ICeilingService
                     var leftBack = nocjBackSide is NocjBackSide_e.两背面NOCJ腔 or NocjBackSide_e.左背面NOCJ腔;
                     BlindPanel(leftBack, leftBlindPart);
                     HolePanel(rightHolePart);
-                    
+
                     swAssyLevel1.Suppress(suffix, leftHolePart);
                     swAssyLevel1.Suppress(suffix, rightBlindPart);
                     break;
@@ -264,7 +418,7 @@ public class CeilingService : BaseSwService, ICeilingService
                     var rightBack = nocjBackSide is NocjBackSide_e.两背面NOCJ腔 or NocjBackSide_e.右背面NOCJ腔;
                     BlindPanel(rightBack, rightBlindPart);
                     HolePanel(leftHolePart);
-                    
+
                     swAssyLevel1.Suppress(suffix, leftBlindPart);
                     swAssyLevel1.Suppress(suffix, rightHolePart);
                     break;
@@ -295,7 +449,7 @@ public class CeilingService : BaseSwService, ICeilingService
                 }
         }
 
-        void BlindPanel(bool back,string compName)
+        void BlindPanel(bool back, string compName)
         {
             var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, compName, Aggregator);
             swModelLevel2.ChangeDim("Width@SketchBase", width-2d);
@@ -325,13 +479,13 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-    private void Nocj340SidePanel(AssemblyDoc swAssyLevel1, string suffix, SidePanel_e sidePanel,double width, string leftBlindPart, string leftHolePart, string rightBlindPart, string rightHolePart)
+    private void Nocj340SidePanel(AssemblyDoc swAssyLevel1, string suffix, SidePanel_e sidePanel, double width, string leftBlindPart, string leftHolePart, string rightBlindPart, string rightHolePart)
     {
         switch (sidePanel)
         {
             case SidePanel_e.左:
                 {
-                    BlindPanel( leftBlindPart);
+                    BlindPanel(leftBlindPart);
                     HolePanel(rightHolePart);
 
                     swAssyLevel1.Suppress(suffix, leftHolePart);
@@ -351,7 +505,7 @@ public class CeilingService : BaseSwService, ICeilingService
             case SidePanel_e.双:
                 {
                     BlindPanel(leftBlindPart);
-                    
+
                     BlindPanel(rightBlindPart);
 
                     swAssyLevel1.Suppress(suffix, leftHolePart);
@@ -396,44 +550,7 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-
-    private void DpSidePanel(AssemblyDoc swAssyLevel1, string suffix, SidePanel_e sidePanel,string leftBlindPart, string leftHolePart,string leftSealingPart, string rightBlindPart, string rightHolePart, string rightSealingPart)
-    {
-        switch (sidePanel)
-        {
-            case SidePanel_e.左:
-                swAssyLevel1.UnSuppress(suffix, leftBlindPart, Aggregator);
-                swAssyLevel1.UnSuppress(suffix, rightHolePart, Aggregator);
-                swAssyLevel1.Suppress(suffix, leftHolePart);
-                swAssyLevel1.Suppress(suffix, rightBlindPart);
-                break;
-            case SidePanel_e.右:
-                swAssyLevel1.UnSuppress(suffix, leftHolePart, Aggregator);
-                swAssyLevel1.UnSuppress(suffix, rightBlindPart, Aggregator);
-                swAssyLevel1.Suppress(suffix, leftBlindPart);
-                swAssyLevel1.Suppress(suffix, rightHolePart);
-                break;
-            case SidePanel_e.双:
-                swAssyLevel1.UnSuppress(suffix, leftBlindPart, Aggregator);
-                swAssyLevel1.UnSuppress(suffix, rightBlindPart, Aggregator);
-                swAssyLevel1.Suppress(suffix, leftHolePart);
-                swAssyLevel1.Suppress(suffix, rightHolePart);
-                break;
-
-            case SidePanel_e.中:
-            case SidePanel_e.NA:
-            default:
-                swAssyLevel1.UnSuppress(suffix, leftHolePart, Aggregator);
-                swAssyLevel1.UnSuppress(suffix, rightHolePart, Aggregator);
-                swAssyLevel1.Suppress(suffix, leftBlindPart);
-                swAssyLevel1.Suppress(suffix, rightBlindPart);
-                break;
-        }
-
-        WaterproofSealing(swAssyLevel1,suffix,sidePanel,leftSealingPart,rightSealingPart);
-    }
-
-    private void BcjSide(Component2 swCompLevel2,ModelDoc2 swModelLevel2,BcjSide_e bcjSide,ref double leftSbDis,ref double rightSbDis)
+    private void BcjSide(Component2 swCompLevel2, ModelDoc2 swModelLevel2, BcjSide_e bcjSide, ref double leftSbDis, ref double rightSbDis)
     {
         switch (bcjSide)
         {
@@ -467,7 +584,7 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-    private void LeftBeamType(Component2 swCompLevel2, ModelDoc2 swModelLevel2,BeamType_e leftBeamType,LksSide_e lksSide,double length,double leftDbToRight,double leftSbDis,ref double leftLksDis,ref double leftGutterDis)
+    private void LeftBeamType(Component2 swCompLevel2, ModelDoc2 swModelLevel2, BeamType_e leftBeamType, LksSide_e lksSide, double length, double leftDbToRight, double leftSbDis, ref double leftLksDis, ref double leftGutterDis)
     {
         swCompLevel2.Suppress("KUcjDb800Left");
         swCompLevel2.Suppress("KUcjSb535Left");
@@ -525,7 +642,7 @@ public class CeilingService : BaseSwService, ICeilingService
                 break;
             case BeamType_e.KCWSB265:
                 swCompLevel2.UnSuppress("KcwSb265Left");
-                swModelLevel2.ChangeDim("Dis@SketchKcjSb265Left", leftSbDis);
+                swModelLevel2.ChangeDim("Dis@SketchKcwSb265Left", leftSbDis);
                 leftLksDis = leftSbDis + 265d;
                 leftGutterDis =leftLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔 ? 270d : 0d);
                 break;
@@ -565,19 +682,19 @@ public class CeilingService : BaseSwService, ICeilingService
                 swCompLevel2.UnSuppress("KcjSb290Right");
                 swModelLevel2.ChangeDim("Dis@SketchKcjSb290Right", rightSbDis);
                 rightLksDis = rightSbDis + 290d;
-                rightGutterDis =rightLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔? 270d : 0d);
+                rightGutterDis =rightLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔 ? 270d : 0d);
                 break;
             case BeamType_e.KCJSB265:
                 swCompLevel2.UnSuppress("KcjSb265Right");
                 swModelLevel2.ChangeDim("Dis@SketchKcjSb265Right", rightSbDis);
                 rightLksDis = rightSbDis + 265d;
-                rightGutterDis =rightLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔? 270d : 0d);
+                rightGutterDis =rightLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔 ? 270d : 0d);
                 break;
             case BeamType_e.UCJSB385:
                 swCompLevel2.UnSuppress("UcjSb385Right");
                 swModelLevel2.ChangeDim("Dis@SketchUcjSb385Right", rightSbDis);
                 rightLksDis = rightSbDis + 385d;
-                rightGutterDis =rightLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔? 270d : 0d);
+                rightGutterDis =rightLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔 ? 270d : 0d);
                 break;
             case BeamType_e.KUCWDB800:
                 swCompLevel2.Suppress("Bcjright");//确保没有左BCJ
@@ -594,9 +711,9 @@ public class CeilingService : BaseSwService, ICeilingService
                 break;
             case BeamType_e.KCWSB265:
                 swCompLevel2.UnSuppress("KcwSb265Right");
-                swModelLevel2.ChangeDim("Dis@SketchKcjSb265Right", rightSbDis);
+                swModelLevel2.ChangeDim("Dis@SketchKcwSb265Right", rightSbDis);
                 rightLksDis = rightSbDis + 265d;
-                rightGutterDis =rightLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔? 270d : 0d);
+                rightGutterDis =rightLksDis+ (lksSide is LksSide_e.左LK灯腔 or LksSide_e.两LK灯腔 ? 270d : 0d);
                 break;
             case BeamType_e.NA:
             default:
@@ -634,7 +751,7 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-    private void GutterSide(Component2 swCompLevel2, ModelDoc2 swModelLevel2, GutterSide_e gutterSide, double leftGutterDis,double leftGutterWidth, double rightGutterDis,double rightGutterWidth)
+    private void GutterSide(Component2 swCompLevel2, ModelDoc2 swModelLevel2, GutterSide_e gutterSide, double leftGutterDis, double leftGutterWidth, double rightGutterDis, double rightGutterWidth)
     {
         switch (gutterSide)
         {
@@ -671,7 +788,7 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-    private void NocjSide(Component2 swCompLevel2, ModelDoc2 swModelLevel2, NocjSide_e nocjSide,double width, ref double leftSbDis, ref double rightSbDis)
+    private void NocjSide(Component2 swCompLevel2, ModelDoc2 swModelLevel2, NocjSide_e nocjSide, double width, ref double leftSbDis, ref double rightSbDis)
     {
         switch (nocjSide)
         {
@@ -716,22 +833,22 @@ public class CeilingService : BaseSwService, ICeilingService
             case NocjBackSide_e.左背面NOCJ腔:
                 swCompLevel2.UnSuppress("NocjBackLeft");
                 swModelLevel2.ChangeDim("Width@SketchNocjBackLeft", width-2d);
-                
+
                 swCompLevel2.Suppress("NocjBackRight");
                 break;
             case NocjBackSide_e.右背面NOCJ腔:
                 swCompLevel2.UnSuppress("NocjBackRight");
                 swModelLevel2.ChangeDim("Width@SketchNocjBackRight", width-2d);
-                
+
                 swCompLevel2.Suppress("NocjBackLeft");
                 break;
             case NocjBackSide_e.两背面NOCJ腔:
                 swCompLevel2.UnSuppress("NocjBackLeft");
                 swModelLevel2.ChangeDim("Width@SketchNocjBackLeft", width-2d);
-                
+
                 swCompLevel2.UnSuppress("NocjBackRight");
                 swModelLevel2.ChangeDim("Width@SketchNocjBackRight", width-2d);
-                
+
                 break;
 
             case NocjBackSide_e.无背面NOCJ腔:
@@ -742,32 +859,61 @@ public class CeilingService : BaseSwService, ICeilingService
                 break;
         }
     }
+    #endregion
 
-    private void CutDpSide(Component2 swCompLevel2, ModelDoc2 swModelLevel2, DpSide_e dpSide, double width, ref double leftSbDis, ref double rightSbDis)
+    #region DP
+    private void DpSidePanel(AssemblyDoc swAssyLevel1, string suffix, SidePanel_e sidePanel, string leftBlindPart, string leftHolePart, string leftSealingPart, string rightBlindPart, string rightHolePart, string rightSealingPart)
+    {
+        switch (sidePanel)
+        {
+            case SidePanel_e.左:
+                swAssyLevel1.UnSuppress(suffix, leftBlindPart, Aggregator);
+                swAssyLevel1.UnSuppress(suffix, rightHolePart, Aggregator);
+                swAssyLevel1.Suppress(suffix, leftHolePart);
+                swAssyLevel1.Suppress(suffix, rightBlindPart);
+                break;
+            case SidePanel_e.右:
+                swAssyLevel1.UnSuppress(suffix, leftHolePart, Aggregator);
+                swAssyLevel1.UnSuppress(suffix, rightBlindPart, Aggregator);
+                swAssyLevel1.Suppress(suffix, leftBlindPart);
+                swAssyLevel1.Suppress(suffix, rightHolePart);
+                break;
+            case SidePanel_e.双:
+                swAssyLevel1.UnSuppress(suffix, leftBlindPart, Aggregator);
+                swAssyLevel1.UnSuppress(suffix, rightBlindPart, Aggregator);
+                swAssyLevel1.Suppress(suffix, leftHolePart);
+                swAssyLevel1.Suppress(suffix, rightHolePart);
+                break;
+
+            case SidePanel_e.中:
+            case SidePanel_e.NA:
+            default:
+                swAssyLevel1.UnSuppress(suffix, leftHolePart, Aggregator);
+                swAssyLevel1.UnSuppress(suffix, rightHolePart, Aggregator);
+                swAssyLevel1.Suppress(suffix, leftBlindPart);
+                swAssyLevel1.Suppress(suffix, rightBlindPart);
+                break;
+        }
+
+        WaterproofSealing(swAssyLevel1, suffix, sidePanel, leftSealingPart, rightSealingPart);
+    }
+
+    private void CutDpSide(Component2 swCompLevel2, DpSide_e dpSide)
     {
         switch (dpSide)
         {
             case DpSide_e.左DP腔:
                 swCompLevel2.UnSuppress("CutDpLeft");
-                
-                leftSbDis += width;
                 swCompLevel2.Suppress("CutDpRight");
                 break;
             case DpSide_e.右DP腔:
                 swCompLevel2.UnSuppress("CutDpRight");
-                
-                rightSbDis += width;
                 swCompLevel2.Suppress("CutDpLeft");
                 break;
             case DpSide_e.两DP腔:
                 swCompLevel2.UnSuppress("CutDpLeft");
-                
-                leftSbDis += width;
                 swCompLevel2.UnSuppress("CutDpRight");
-                
-                rightSbDis += width;
                 break;
-
             case DpSide_e.无DP腔:
             case DpSide_e.NA:
             default:
@@ -784,25 +930,25 @@ public class CeilingService : BaseSwService, ICeilingService
             case DpSide_e.左DP腔:
                 swCompLevel2.UnSuppress("DpLeft");
                 swModelLevel2.ChangeDim("Dis@SketchDpLeft", leftSbDis);
-                
+
                 leftSbDis += 90;
                 swCompLevel2.Suppress("DpRight");
                 break;
             case DpSide_e.右DP腔:
                 swCompLevel2.UnSuppress("DpRight");
                 swModelLevel2.ChangeDim("Dis@SketchDpRight", rightSbDis);
-                
+
                 rightSbDis += 90;
                 swCompLevel2.Suppress("DpLeft");
                 break;
             case DpSide_e.两DP腔:
                 swCompLevel2.UnSuppress("DpLeft");
                 swModelLevel2.ChangeDim("Dis@SketchDpLeft", leftSbDis);
-                
+
                 leftSbDis += 90;
                 swCompLevel2.UnSuppress("DpRight");
                 swModelLevel2.ChangeDim("Dis@SketchDpRight", rightSbDis);
-                
+
                 rightSbDis += 90;
                 break;
 
@@ -841,7 +987,7 @@ public class CeilingService : BaseSwService, ICeilingService
         }
     }
 
-    private void DpDrainType(Component2 swCompLevel2,DpDrainType_e dpDrainType)
+    private void DpDrainType(Component2 swCompLevel2, DpDrainType_e dpDrainType)
     {
         switch (dpDrainType)
         {
@@ -883,11 +1029,108 @@ public class CeilingService : BaseSwService, ICeilingService
                 break;
         }
     }
+    #endregion
+
+    #region LFU
+    private void LfuSaSsSidePanel(AssemblyDoc swAssyLevel1, string suffix, SidePanel_e sidePanel, double width, string leftBlindPart, string leftHolePart, string rightBlindPart, string rightHolePart)
+    {
+        switch (sidePanel)
+        {
+            case SidePanel_e.左:
+                {
+                    ChangeWidth(leftBlindPart);
+                    ChangeWidth(rightHolePart);
+
+                    swAssyLevel1.Suppress(suffix, leftHolePart);
+                    swAssyLevel1.Suppress(suffix, rightBlindPart);
+                    break;
+                }
+            case SidePanel_e.右:
+                {
+                    ChangeWidth(leftHolePart);
+                    ChangeWidth(rightBlindPart);
+
+                    swAssyLevel1.Suppress(suffix, leftBlindPart);
+                    swAssyLevel1.Suppress(suffix, rightHolePart);
+                    break;
+                }
+            case SidePanel_e.双:
+                {
+                    ChangeWidth(leftBlindPart);
+                    ChangeWidth(rightBlindPart);
+                    
+                    swAssyLevel1.Suppress(suffix, leftHolePart);
+                    swAssyLevel1.Suppress(suffix, rightHolePart);
+                    break;
+                }
+
+            case SidePanel_e.中:
+            case SidePanel_e.NA:
+            default:
+            {
+                ChangeWidth(leftHolePart);
+                ChangeWidth(rightHolePart);
+                    
+                swAssyLevel1.Suppress(suffix, leftBlindPart);
+                swAssyLevel1.Suppress(suffix, rightBlindPart);
+                break;
+                }
+        }
+        void ChangeWidth(string compName)
+        {
+            var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, compName, Aggregator);
+            swModelLevel2.ChangeDim("Width@SketchBase", width);
+        }
+    }
+
+    private void LfuSaPanel(AssemblyDoc swAssyLevel1, string suffix,string module, double totalLength,double width)
+    {
+        var swModelLevel1 = (ModelDoc2)swAssyLevel1;
+        var stdPanelNumber = (int)((totalLength - 500.5d) / 1000d);//1500直接做成一块
+        var sideLength = totalLength - stdPanelNumber * 1000d-100d;//100是两边侧板宽度
+
+        var swCompSidePanel = swAssyLevel1.RenameComp(suffix, "LFUP", module, "FNCA0005-1", sideLength, width-81d, Aggregator);
+        if (swCompSidePanel != null)
+        {
+            var swModelStdPanel = (ModelDoc2)swCompSidePanel.GetModelDoc2();
+            swModelStdPanel.ChangeDim("Length@SketchBase", sideLength);
+            swModelStdPanel.ChangeDim("Width@SketchBase", width-81d);
+        }
+
+        if (stdPanelNumber > 0)
+        {
+            var swCompStdPanel = swAssyLevel1.RenameComp(suffix, "LFUP",$"{module}.Std" , "FNCA0004-1", 1000d, width-81d, Aggregator);
+            if (swCompStdPanel != null)
+            {
+                var swModelStdPanel = (ModelDoc2)swCompStdPanel.GetModelDoc2();
+                swModelStdPanel.ChangeDim("Width@SketchBase",width-81d);
+            }
+        }
+        else
+        {
+            swAssyLevel1.ForceSuppress(suffix, "FNCA0004-1");
+        }
+
+        if (stdPanelNumber > 1)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternStdPanel");
+            swModelLevel1.ChangeDim("Number@LocalLPatternStdPanel",stdPanelNumber);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternStdPanel");
+        }
+
+    }
+
+    #endregion
+
+
+
 
 
 
     #endregion
-
 
     #region 零件方法
 
@@ -913,11 +1156,11 @@ public class CeilingService : BaseSwService, ICeilingService
         var rightGutterDis = rightSbDis + 535d;
 
         #region BCJ腔
-        BcjSide(swCompLevel2, swModelLevel2, bcjSide,ref leftSbDis,ref rightSbDis);
+        BcjSide(swCompLevel2, swModelLevel2, bcjSide, ref leftSbDis, ref rightSbDis);
         #endregion
 
         #region 左侧腔体
-        LeftBeamType(swCompLevel2, swModelLevel2,leftBeamType,lksSide,length,leftDbToRight,leftSbDis,ref leftLksDis,ref leftGutterDis);
+        LeftBeamType(swCompLevel2, swModelLevel2, leftBeamType, lksSide, length, leftDbToRight, leftSbDis, ref leftLksDis, ref leftGutterDis);
         #endregion
 
         #region 右侧腔体right
@@ -925,7 +1168,7 @@ public class CeilingService : BaseSwService, ICeilingService
         #endregion
 
         #region LKS灯腔
-        LksSide(swCompLevel2,swModelLevel2,lksSide,leftLksDis,rightLksDis);
+        LksSide(swCompLevel2, swModelLevel2, lksSide, leftLksDis, rightLksDis);
         #endregion
 
         #region Ansul腔(Gutter)
@@ -942,7 +1185,7 @@ public class CeilingService : BaseSwService, ICeilingService
     }
 
 
-    private void FNCJ0001(Component2 swCompLevel2, double length,double width, BcjSide_e bcjSide, double leftEndDis, double rightEndDis, BeamType_e leftBeamType, double leftDbToRight, BeamType_e rightBeamType, double rightDbToLeft, LksSide_e lksSide, GutterSide_e gutterSide, double leftGutterWidth, double rightGutterWidth,NocjSide_e nocjSide,NocjBackSide_e nocjBackSide)
+    private void FNCJ0001(Component2 swCompLevel2, double length, double width, BcjSide_e bcjSide, double leftEndDis, double rightEndDis, BeamType_e leftBeamType, double leftDbToRight, BeamType_e rightBeamType, double rightDbToLeft, LksSide_e lksSide, GutterSide_e gutterSide, double leftGutterWidth, double rightGutterWidth, NocjSide_e nocjSide, NocjBackSide_e nocjBackSide)
     {
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@SketchBase", length);
@@ -961,7 +1204,7 @@ public class CeilingService : BaseSwService, ICeilingService
         #endregion
 
         #region NOCJ腔
-        NocjSide(swCompLevel2, swModelLevel2, nocjSide,width, ref leftSbDis, ref rightSbDis);
+        NocjSide(swCompLevel2, swModelLevel2, nocjSide, width, ref leftSbDis, ref rightSbDis);
         #endregion
 
         #region NOCJ腔Back
@@ -986,7 +1229,7 @@ public class CeilingService : BaseSwService, ICeilingService
     }
 
     //日本NOCJ340
-    private void FNCS0016(Component2 swCompLevel2, double length, double width, BcjSide_e bcjSide, double leftEndDis, double rightEndDis, BeamType_e leftBeamType, double leftDbToRight, BeamType_e rightBeamType, double rightDbToLeft, LksSide_e lksSide, GutterSide_e gutterSide, double leftGutterWidth, double rightGutterWidth, NocjSide_e nocjSide, NocjBackSide_e nocjBackSide,DpSide_e dpSide)
+    private void FNCS0016(Component2 swCompLevel2, double length, double width, BcjSide_e bcjSide, double leftEndDis, double rightEndDis, BeamType_e leftBeamType, double leftDbToRight, BeamType_e rightBeamType, double rightDbToLeft, LksSide_e lksSide, GutterSide_e gutterSide, double leftGutterWidth, double rightGutterWidth, NocjSide_e nocjSide, NocjBackSide_e nocjBackSide, DpSide_e dpSide)
     {
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@SketchBase", length);
@@ -1004,7 +1247,6 @@ public class CeilingService : BaseSwService, ICeilingService
         BcjSide(swCompLevel2, swModelLevel2, bcjSide, ref leftSbDis, ref rightSbDis);
         #endregion
 
-        //todo:FNCS0016，NOCJ的三角板需要修改
         #region NOCJ腔
         NocjSide(swCompLevel2, swModelLevel2, nocjSide, width, ref leftSbDis, ref rightSbDis);
         #endregion
@@ -1014,7 +1256,7 @@ public class CeilingService : BaseSwService, ICeilingService
         #endregion
 
         #region DP腔(NOCJ340特有)，DP和NOCJ不需要拧螺丝
-        CutDpSide(swCompLevel2,swModelLevel2,dpSide,width,ref leftSbDis,ref rightSbDis);
+        CutDpSide(swCompLevel2, dpSide);
         #endregion
 
         #region 左侧腔体
@@ -1044,10 +1286,10 @@ public class CeilingService : BaseSwService, ICeilingService
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", length);
-        
-        DpBackSide(swCompLevel2,dpBackSide);
+
+        DpBackSide(swCompLevel2, dpBackSide);
     }
-    private void FNCS0001(Component2 swCompLevel2, double length, double width, BcjSide_e bcjSide, double leftEndDis, double rightEndDis, BeamType_e leftBeamType, double leftDbToRight, BeamType_e rightBeamType, double rightDbToLeft, LksSide_e lksSide, GutterSide_e gutterSide, double leftGutterWidth, double rightGutterWidth, NocjSide_e nocjSide, NocjBackSide_e nocjBackSide,DpSide_e dpSide,DpBackSide_e dpBackSide,DpDrainType_e dpDrainType)
+    private void FNCS0001(Component2 swCompLevel2, double length, double width, BcjSide_e bcjSide, double leftEndDis, double rightEndDis, BeamType_e leftBeamType, double leftDbToRight, BeamType_e rightBeamType, double rightDbToLeft, LksSide_e lksSide, GutterSide_e gutterSide, double leftGutterWidth, double rightGutterWidth, NocjSide_e nocjSide, NocjBackSide_e nocjBackSide, DpSide_e dpSide, DpBackSide_e dpBackSide, DpDrainType_e dpDrainType)
     {
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@SketchBase", length);
@@ -1072,19 +1314,19 @@ public class CeilingService : BaseSwService, ICeilingService
         #endregion
 
         #region DP腔体
-        DpSide(swCompLevel2,swModelLevel2,dpSide,ref leftSbDis,ref rightSbDis);
+        DpSide(swCompLevel2, swModelLevel2, dpSide, ref leftSbDis, ref rightSbDis);
         #endregion
 
         #region DP腔体切除顶部
-        CutDpSide(swCompLevel2, swModelLevel2, dpSide, width, ref leftSbDis, ref rightSbDis);
+        CutDpSide(swCompLevel2, dpSide);
         #endregion
 
         #region DP腔体Back
-        DpBackSide(swCompLevel2,dpBackSide);
+        DpBackSide(swCompLevel2, dpBackSide);
         #endregion
 
         #region 排水管位置
-        DpDrainType(swCompLevel2,dpDrainType);
+        DpDrainType(swCompLevel2, dpDrainType);
         #endregion
 
         #region 左侧腔体
@@ -1105,6 +1347,135 @@ public class CeilingService : BaseSwService, ICeilingService
     }
 
     #endregion
+
+    #region LFU
+    private void FNCA0001(Component2 swCompLevel2, double length, double width, SidePanel_e sidePanel, int supplySpigotNumber, double supplySpigotDis, double supplySpigotDia, bool japan)
+    {
+        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2-1)+supplySpigotDis/2d;//脖颈口距离中间位置
+
+        var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+        swModelLevel2.ChangeDim("Length@Base-Flange", length);
+        swModelLevel2.ChangeDim("Width@SketchBase", width-2d);
+
+        #region 均流桶
+        if (supplySpigotNumber == 1)
+        {
+            swCompLevel2.Suppress("LPatternSpigot");
+            swModelLevel2.ChangeDim("Dia@SketchSpigot", supplySpigotDia);
+            swModelLevel2.ChangeDim("ToMiddle@SketchSpigot", 0);
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LPatternSpigot");
+            swModelLevel2.ChangeDim("Dia@SketchSpigot", supplySpigotDia);
+            swModelLevel2.ChangeDim("ToMiddle@SketchSpigot", spigotToMiddle);
+            swModelLevel2.ChangeDim("Number@LPatternSpigot", supplySpigotNumber);
+            swModelLevel2.ChangeDim("Dis@LPatternSpigot", supplySpigotDis);
+        }
+        #endregion
+
+        #region 联接侧边切除
+        switch (sidePanel)
+        {
+            case SidePanel_e.左:
+                swCompLevel2.UnSuppress("CutLeft");
+                swCompLevel2.Suppress("CutRight");
+                break;
+            case SidePanel_e.右:
+                swCompLevel2.UnSuppress("CutRight");
+                swCompLevel2.Suppress("CutLeft");
+                break;
+            case SidePanel_e.双:
+                swCompLevel2.UnSuppress("CutLeft");
+                swCompLevel2.UnSuppress("CutRight");
+                break;
+            case SidePanel_e.NA:
+            case SidePanel_e.中:
+            default:
+                swCompLevel2.Suppress("CutLeft");
+                swCompLevel2.Suppress("CutRight");
+                break;
+        }
+        #endregion
+
+        #region 日本不要吊装孔
+        if (japan)
+        {
+            swCompLevel2.Suppress("LiftingHoles");
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LiftingHoles");
+        }
+        #endregion
+    }
+
+    private void FNCA0012(Component2 swCompLevel2, double length, int supplySpigotNumber, double supplySpigotDis, double supplySpigotDia)
+    {
+        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2-1)+supplySpigotDis/2d;//脖颈口距离中间位置
+        
+        var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+        swModelLevel2.ChangeDim("Length@Base-Flange", length);
+
+        #region 均流桶
+        if (supplySpigotNumber == 1)
+        {
+            swCompLevel2.Suppress("LPatternSpigot");
+            swModelLevel2.ChangeDim("Dia@SketchSpigot", supplySpigotDia);
+            swModelLevel2.ChangeDim("ToMiddle@SketchSpigot", 0);
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LPatternSpigot");
+            swModelLevel2.ChangeDim("Dia@SketchSpigot", supplySpigotDia);
+            swModelLevel2.ChangeDim("ToMiddle@SketchSpigot", spigotToMiddle);
+            swModelLevel2.ChangeDim("Number@LPatternSpigot", supplySpigotNumber);
+            swModelLevel2.ChangeDim("Dis@LPatternSpigot", supplySpigotDis);
+        }
+        #endregion
+
+    }
+
+    private void FNCA0016(Component2 swCompLevel2, double length, double width, int supplySpigotNumber, double supplySpigotDis, double supplySpigotDia, bool japan)
+    {
+        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2-1)+supplySpigotDis/2d;//脖颈口距离中间位置
+
+        var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+        swModelLevel2.ChangeDim("Length@Base-Flange", length);
+        swModelLevel2.ChangeDim("Width@SketchBase", width);
+
+        #region 均流桶
+        if (supplySpigotNumber == 1)
+        {
+            swCompLevel2.Suppress("LPatternSpigot");
+            swModelLevel2.ChangeDim("Dia@SketchSpigot", supplySpigotDia);
+            swModelLevel2.ChangeDim("ToMiddle@SketchSpigot", 0);
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LPatternSpigot");
+            swModelLevel2.ChangeDim("Dia@SketchSpigot", supplySpigotDia);
+            swModelLevel2.ChangeDim("ToMiddle@SketchSpigot", spigotToMiddle);
+            swModelLevel2.ChangeDim("Number@LPatternSpigot", supplySpigotNumber);
+            swModelLevel2.ChangeDim("Dis@LPatternSpigot", supplySpigotDis);
+        }
+        #endregion
+        
+        #region 日本不要吊装孔
+        if (japan)
+        {
+            swCompLevel2.Suppress("LiftingHoles");
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LiftingHoles");
+        }
+        #endregion
+    }
+
+
+    #endregion
+
 
 
     #endregion

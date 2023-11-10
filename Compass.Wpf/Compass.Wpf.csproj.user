@@ -24,6 +24,9 @@
     <Compile Update="Views\Ceilings\KcwDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Ceilings\LfuDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Ceilings\UcjDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -144,6 +147,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Ceilings\KcwDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Ceilings\LfuDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Ceilings\UcjDataView.xaml">

@@ -160,7 +160,7 @@ public class UcjDataViewModel : NavigationViewModel
         Title = $"{CurrentModule.Name} {CurrentModule.ModelName}{specialNotes}";
         GetEnumNames();
         GetDataAsync();
-        UpdateRoles = "admin,pm,manager,designer";
+        UpdateRoles = "admin,pm,mgr,dsr";
     }
 
     #endregion

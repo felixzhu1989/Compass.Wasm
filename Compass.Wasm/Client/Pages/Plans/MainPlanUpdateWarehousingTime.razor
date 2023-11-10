@@ -1,0 +1,30 @@
+﻿@page "/mainplan/update/warehousingtime/{Id}"
+@inject IMainPlanService MainPlanService
+
+@inject NavigationManager NavigationManager
+<PageTitle>更新入库时间</PageTitle>
+<EditForm Model="_mainPlanDto" OnSubmit="Save">
+    <div class="input-group mb-2" style="max-width: 250px">
+        <span class="input-group-text">入库时间</span>
+        <input type="date" class="form-control" @bind-value="@_mainPlanDto.WarehousingTime" />
+    </div>
+    
+    <CompSaveCancelButtons CancelUrl="" />
+</EditForm>
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    private MainPlanDto? _mainPlanDto = new();
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await MainPlanService.GetFirstOrDefault(Guid.Parse(Id));
+        if (!response.Status) NavigationManager.NavigateTo("");
+        _mainPlanDto = response.Result;
+        _mainPlanDto.WarehousingTime=DateTime.Today;
+    }
+    private async Task Save()
+    {
+        var result = await MainPlanService.UpdateStatusesAsync(Guid.Parse(Id), _mainPlanDto);
+        if (result.IsSuccessStatusCode) NavigationManager.NavigateTo("");
+    }
+}

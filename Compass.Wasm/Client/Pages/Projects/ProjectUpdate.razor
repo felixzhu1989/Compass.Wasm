@@ -78,7 +78,7 @@
         var pResponse = await ProjectService.GetFirstOrDefault(Guid.Parse(Id));
         if (!pResponse.Status) NavigationManager.NavigateTo("projects");
         _projectDto = pResponse.Result;
-        var uResponse = await UserService.GetUsersInRolesAsync("pm,designer");
+        var uResponse = await UserService.GetUsersInRolesAsync("pm,dsr");
         if(uResponse.Status) _userDtos = uResponse.Result;
     }
 

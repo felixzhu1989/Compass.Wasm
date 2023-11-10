@@ -130,6 +130,7 @@ public partial class App : PrismApplication
 
         containerRegistry.RegisterForNavigation<CjDataView, CjDataViewModel>();
         containerRegistry.RegisterForNavigation<DpDataView, DpDataViewModel>();
+        containerRegistry.RegisterForNavigation<LfuDataView, LfuDataViewModel>();
 
         #endregion
 
@@ -201,6 +202,7 @@ public partial class App : PrismApplication
 
         containerRegistry.Register<ICjDataService,CjDataService>();
         containerRegistry.Register<IDpDataService,DpDataService>();
+        containerRegistry.Register<ILfuDataService,LfuDataService>();
 
 
 
@@ -227,6 +229,7 @@ public partial class App : PrismApplication
         containerRegistry.Register<IUcwAutoDrawing, UcwAutoDrawing>();
         containerRegistry.Register<ICjAutoDrawing, CjAutoDrawing>();
         containerRegistry.Register<IDpAutoDrawing, DpAutoDrawing>();
+        containerRegistry.Register<ILfuAutoDrawing, LfuAutoDrawing>();
 
         #endregion
 

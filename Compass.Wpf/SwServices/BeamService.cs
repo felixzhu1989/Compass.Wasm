@@ -18,7 +18,7 @@ public class BeamService : BaseSwService, IBeamService
         var filterNumber = (int)((data.Length - data.FilterLeft - data.FilterRight) / 499d) - data.FilterBlindNumber;
         //公共零件
         //重命名排风腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCJDB800", module, "FNCE0115", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCJDB800", module, "FNCE0115-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0115(swCompLevel2, data.Length, UvLightType_e.NA, data.LightCable, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetectorNumber, data.AnsulDetectorEnd, data.AnsulDetectorDis1, data.AnsulDetectorDis2, data.AnsulDetectorDis3, data.AnsulDetectorDis4, data.AnsulDetectorDis5, data.Japan);
@@ -32,8 +32,8 @@ public class BeamService : BaseSwService, IBeamService
         KcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, data.FilterType, "KcjFcFilter-7", "LocalLPatternFc", "Dis@DistanceFc", "KcjKsaFilter-7", "LocalLPatternKsa", "Dis@DistanceKsa");
 
         //过滤器侧板
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 1, "FNCE0109", 1);
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 2, "FNCE0109", 2);
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108-1", "FNCE0109-1");
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108-2", "FNCE0109-2");
 
         //SSP灯板支撑条
         SspSupport(swModelTop, swAssyTop, suffix, data.Length, data.DomeSsp, data.Gutter, data.GutterWidth, "FNCE0035-1", "Dis@DistanceDome1", "FNCE0036-1", "Dis@DistanceFlat1");
@@ -89,7 +89,7 @@ public class BeamService : BaseSwService, IBeamService
         KcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, data.FilterType, "KcjFcFilter-1", "LocalLPatternFc", "Dis@DistanceFc", "KcjKsaFilter-1", "LocalLPatternKssa", "Dis@DistanceKsa");
 
         //过滤器侧板
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 1, "FNCE0109", 1);
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108-1",  "FNCE0109-1");
 
         //SSP灯板支撑条
         SspSupport(swModelTop, swAssyTop, suffix, data.Length, data.DomeSsp, data.Gutter, data.GutterWidth, "FNCE0035-1", "Dis@DistanceDome", "FNCE0036-1", "Dis@DistanceFlat");
@@ -136,7 +136,7 @@ public class BeamService : BaseSwService, IBeamService
         var filterNumber = (int)((data.Length - data.FilterLeft - data.FilterRight) / 499d) - data.FilterBlindNumber;
 
         //重命名排风腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCJSB290", module, "FNCE0127", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCJSB290", module, "FNCE0127-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0127(swCompLevel2, data.Length, UvLightType_e.NA, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
@@ -149,7 +149,7 @@ public class BeamService : BaseSwService, IBeamService
         KcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, data.FilterType, "KcjFcFilter-1", "LocalLPatternFc", "Dis@DistanceFc", "KcjKsaFilter-1", "LocalLPatternKsa", "Dis@DistanceKsa");
 
         //过滤器侧板
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 1, "FNCE0109", 1);
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108-1", "FNCE0109-1");
 
         //SSP灯板支撑条
         SspSupport(swModelTop, swAssyTop, suffix, data.Length, data.DomeSsp, data.Gutter, data.GutterWidth, "FNCE0035-1", "Dis@DistanceDome", "FNCE0036-1", "Dis@DistanceFlat");
@@ -179,7 +179,7 @@ public class BeamService : BaseSwService, IBeamService
         var filterNumber = (int)((data.Length - data.FilterLeft - data.FilterRight) / 499d) - data.FilterBlindNumber;
 
         //重命名排风腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCJSB265", module, "FNCE0125", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCJSB265", module, "FNCE0125-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0127(swCompLevel2, data.Length, UvLightType_e.NA, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
@@ -193,7 +193,7 @@ public class BeamService : BaseSwService, IBeamService
         KcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, data.FilterType, "KcjFcFilter-1", "LocalLPatternFc", "Dis@DistanceFc", "KcjKsaFilter-1", "LocalLPatternKsa", "Dis@DistanceKsa");
 
         //过滤器侧板
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 1, "FNCE0109", 1);
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108-1", "FNCE0109-1");
 
         //SSP灯板支撑条
         SspSupport(swModelTop, swAssyTop, suffix, data.Length, data.DomeSsp, data.Gutter, data.GutterWidth, "FNCE0035-1", "Dis@DistanceDome", "FNCE0036-1", "Dis@DistanceFlat");
@@ -224,7 +224,7 @@ public class BeamService : BaseSwService, IBeamService
         var filterNumber = (int)((data.Length - data.FilterLeft - data.FilterRight) / 499d) - data.FilterBlindNumber;
         //公共零件
         //重命名排风腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "UCJDB800", module, "FNCE0115", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "UCJDB800", module, "FNCE0115-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0115(swCompLevel2, data.Length, data.UvLightType, data.LightCable, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetectorNumber, data.AnsulDetectorEnd, data.AnsulDetectorDis1, data.AnsulDetectorDis2, data.AnsulDetectorDis3, data.AnsulDetectorDis4, data.AnsulDetectorDis5, data.Japan);
@@ -238,8 +238,8 @@ public class BeamService : BaseSwService, IBeamService
         UcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft,  "UcjFcCombi-7", "LocalLPatternFc", "Dis@DistanceFc");
 
         //过滤器侧板
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136", 1, "FNCE0109", 1);
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108", 1, "FNCE0162", 1);
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136-1", "FNCE0109-1");
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0108-1", "FNCE0162-1");
         //带把手过滤器侧板的磁铁支架
         var leftSide = data.FilterSide is FilterSide_e.两过滤器侧板 or FilterSide_e.左过滤器侧板;
         UcjFilterSideSensor(swAssyTop, suffix, data.CeilingLightType, leftSide, "FNCE0100-1", "FNCE0101-1");
@@ -307,7 +307,7 @@ public class BeamService : BaseSwService, IBeamService
         UcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "UcjFcCombi-1", "LocalLPatternFc", "Dis@DistanceFc");
 
         //过滤器侧板
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136", 1, "FNCE0109", 1);
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136-1", "FNCE0109-1");
         //带把手过滤器侧板的磁铁支架
         var leftSide = data.FilterSide is FilterSide_e.两过滤器侧板 or FilterSide_e.左过滤器侧板;
         UcjFilterSideSensor(swAssyTop, suffix, data.CeilingLightType, leftSide, "FNCE0100-1", "FNCE0101-1");
@@ -362,7 +362,7 @@ public class BeamService : BaseSwService, IBeamService
         var filterNumber = (int)((data.Length - data.FilterLeft - data.FilterRight) / 499d) - data.FilterBlindNumber;
 
         //重命名排风腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "UCJSB385", module, "FNCE0129", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "UCJSB385", module, "FNCE0129-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0127(swCompLevel2, data.Length, data.UvLightType, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.AnsulDetector, data.Japan);
@@ -375,7 +375,7 @@ public class BeamService : BaseSwService, IBeamService
         UcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "UcjFcCombi-1", "LocalLPatternFc", "Dis@DistanceFc");
 
         //过滤器侧板
-        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136", 1, "FNCE0109", 1);
+        KcjFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, data.FilterType, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0136-1", "FNCE0109-1");
         //带把手过滤器侧板的磁铁支架
         var leftSide = data.FilterSide is FilterSide_e.两过滤器侧板 or FilterSide_e.左过滤器侧板;
         if (leftSide) swAssyTop.UnSuppress(suffix, "FNCE0100-1", Aggregator);
@@ -428,7 +428,7 @@ public class BeamService : BaseSwService, IBeamService
 
         //公共零件
         //重命名排风腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCWDB800", module, "FNCE0158", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCWDB800", module, "FNCE0158-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0158(swCompLevel2, data.SidePanel, data.Length, UvLightType_e.NA, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, 0, 0, 0, data.Japan);
@@ -452,8 +452,8 @@ public class BeamService : BaseSwService, IBeamService
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-7", "LocalLPatternFc", "Dis@DistanceFc");
 
         //过滤器侧板
-        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058", 1, "FNCE0059", 1);
-        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058", 2, "FNCE0059", 2);
+        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058-1", "FNCE0059-1");
+        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058-2", "FNCE0059-2");
 
 
         //SSP灯板支撑条
@@ -537,7 +537,7 @@ public class BeamService : BaseSwService, IBeamService
         //过滤器
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-1", "LocalLPatternFc", "Dis@DistanceFc");
 
-        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058", 1, "FNCE0059", 1);
+        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058-1", "FNCE0059-1");
 
 
         //SSP灯板支撑条
@@ -602,7 +602,7 @@ public class BeamService : BaseSwService, IBeamService
 
         //公共零件
         //重命名排风腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCWSB265", module, "FNCE0012", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "KCWSB265", module, "FNCE0012-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0012(swCompLevel2, data.SidePanel, data.Length, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.CeilingWaterInlet, data.Japan);
@@ -619,7 +619,7 @@ public class BeamService : BaseSwService, IBeamService
         //过滤器
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-1", "LocalLPatternFc", "Dis@DistanceFc");
 
-        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058", 1, "FNCE0059", 1);
+        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058-1", "FNCE0059-1");
 
         //SSP灯板支撑条
         SspSupport(swModelTop, swAssyTop, suffix, data.Length, data.DomeSsp, data.Gutter, data.GutterWidth, "FNCE0035-1", "Dis@DistanceDome", "FNCE0036-1", "Dis@DistanceFlat");
@@ -665,7 +665,7 @@ public class BeamService : BaseSwService, IBeamService
 
         //公共零件
         //重命名排风腔体
-        var swCompLevel2 = swAssyTop.RenameComp(suffix, "UCWDB800", module, "FNCE0158", 1, data.Length, data.Width, Aggregator);
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "UCWDB800", module, "FNCE0158-1", data.Length, data.Width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0158(swCompLevel2, data.SidePanel, data.Length, data.UvLightType, data.Marvel, data.ExhaustSpigotNumber, data.MiddleToRight, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotDis, data.Ansul, data.AnsulSide, data.BaffleSensorNumber, data.BaffleSensorDis1, data.BaffleSensorDis2, data.Japan);
@@ -689,8 +689,8 @@ public class BeamService : BaseSwService, IBeamService
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-7", "LocalLPatternFc", "Dis@DistanceFc");
 
         //过滤器侧板
-        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058", 1, "FNCE0059", 1);
-        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058", 2, "FNCE0059", 2);
+        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058-1", "FNCE0059-1");
+        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058-2", "FNCE0059-2");
 
 
         //SSP灯板支撑条
@@ -774,7 +774,7 @@ public class BeamService : BaseSwService, IBeamService
         //过滤器
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-1", "LocalLPatternFc", "Dis@DistanceFc");
 
-        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058", 1, "FNCE0059", 1);
+        KcwFilterSide(swModelTop, swAssyTop, suffix, module, data.FilterSide, filterNumber, data.FilterLeft, data.FilterRight, "FNCE0058-1", "FNCE0059-2");
 
 
         //SSP灯板支撑条
@@ -886,7 +886,7 @@ public class BeamService : BaseSwService, IBeamService
     /// <summary>
     /// 过滤器侧板
     /// </summary>
-    private void KcjFilterSide(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, FilterSide_e filterSide, FilterType_e filterType, int filterNumber, double filterLeft, double filterRight, string leftPart, int leftNum, string rightPart, int rightNum)
+    private void KcjFilterSide(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, FilterSide_e filterSide, FilterType_e filterType, int filterNumber, double filterLeft, double filterRight, string leftPart, string rightPart)
     {
         switch (filterSide)
         {
@@ -896,9 +896,9 @@ public class BeamService : BaseSwService, IBeamService
                     if (filterType is FilterType_e.KSA)
                         leftLength = (int)(filterLeft+filterNumber*2d);
 
-                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "BP", module, leftPart, leftNum, leftLength, 250, Aggregator);
+                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "BP", module, leftPart, leftLength, 250, Aggregator);
                     if (swCompLeft != null) ChangeSideLength(swCompLeft, leftLength);
-                    swAssyLevel1.SuppressIfExist(suffix, $"{rightPart}-{rightNum}");
+                    swAssyLevel1.ForceSuppress(suffix, rightPart);
                     break;
                 }
             case FilterSide_e.右过滤器侧板:
@@ -907,9 +907,9 @@ public class BeamService : BaseSwService, IBeamService
                     if (filterType is FilterType_e.KSA)
                         rightLength = (int)(filterRight+filterNumber*2d);
 
-                    var swCompRight = swAssyLevel1.RenameComp(suffix, "BP", module, rightPart, rightNum, rightLength, 250, Aggregator);
+                    var swCompRight = swAssyLevel1.RenameComp(suffix, "BP", module, rightPart, rightLength, 250, Aggregator);
                     if (swCompRight != null) ChangeSideLength(swCompRight, rightLength);
-                    swAssyLevel1.SuppressIfExist(suffix, $"{leftPart}-{leftNum}");
+                    swAssyLevel1.ForceSuppress(suffix, leftPart);
                     break;
                 }
             case FilterSide_e.两过滤器侧板:
@@ -918,22 +918,22 @@ public class BeamService : BaseSwService, IBeamService
                     if (filterType is FilterType_e.KSA)
                         leftLength = (int)(filterLeft+filterNumber*1.5d);
 
-                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "BP", $"{module}.1", leftPart, leftNum, leftLength, 250, Aggregator);
+                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "BP", $"{module}.1", leftPart, leftLength, 250, Aggregator);
                     if (swCompLeft != null) ChangeSideLength(swCompLeft, leftLength);
 
                     var rightLength = (int)(filterRight - filterNumber/2d);
                     if (filterType is FilterType_e.KSA)
                         rightLength = (int)(filterRight+filterNumber*1.5d);
 
-                    var swCompRight = swAssyLevel1.RenameComp(suffix, "BP", $"{module}.2", rightPart, rightNum, rightLength, 250, Aggregator);
+                    var swCompRight = swAssyLevel1.RenameComp(suffix, "BP", $"{module}.2", rightPart, rightLength, 250, Aggregator);
                     if (swCompRight != null) ChangeSideLength(swCompRight, rightLength);
                     break;
                 }
             case FilterSide_e.NA:
             case FilterSide_e.无过滤器侧板:
             default:
-                swAssyLevel1.SuppressIfExist(suffix, $"{leftPart}-{leftNum}");
-                swAssyLevel1.SuppressIfExist(suffix, $"{rightPart}-{rightNum}");
+                swAssyLevel1.ForceSuppress(suffix, leftPart);
+                swAssyLevel1.ForceSuppress(suffix, rightPart);
                 break;
         }
         void ChangeSideLength(Component2 swComp, double sideLength)
@@ -946,42 +946,42 @@ public class BeamService : BaseSwService, IBeamService
     /// <summary>
     /// 水洗过滤器侧板
     /// </summary>
-    private void KcwFilterSide(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, FilterSide_e filterSide, int filterNumber, double filterLeft, double filterRight, string leftPart, int leftNum, string rightPart, int rightNum)
+    private void KcwFilterSide(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, FilterSide_e filterSide, int filterNumber, double filterLeft, double filterRight, string leftPart,string rightPart)
     {
         switch (filterSide)
         {
             case FilterSide_e.左过滤器侧板:
                 {
                     var leftLength = (int)(filterLeft - filterNumber-3d);//水洗需要减去三角板
-                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "BP", module, leftPart, leftNum, leftLength, 250, Aggregator);
+                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "BP", module, leftPart,leftLength, 250, Aggregator);
                     if (swCompLeft != null) ChangeSideLength(swCompLeft, leftLength);
-                    swAssyLevel1.SuppressIfExist(suffix, $"{rightPart}-{rightNum}");
+                    swAssyLevel1.ForceSuppress(suffix, rightPart);
                     break;
                 }
             case FilterSide_e.右过滤器侧板:
                 {
                     var rightLength = (int)(filterRight - filterNumber-3d);
-                    var swCompRight = swAssyLevel1.RenameComp(suffix, "BP", module, rightPart, rightNum, rightLength, 250, Aggregator);
+                    var swCompRight = swAssyLevel1.RenameComp(suffix, "BP", module, rightPart, rightLength, 250, Aggregator);
                     if (swCompRight != null) ChangeSideLength(swCompRight, rightLength);
-                    swAssyLevel1.SuppressIfExist(suffix, $"{leftPart}-{leftNum}");
+                    swAssyLevel1.ForceSuppress(suffix, leftPart);
                     break;
                 }
             case FilterSide_e.两过滤器侧板:
                 {
                     var leftLength = (int)(filterLeft - filterNumber/2d-1.5d);
-                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "BP", $"{module}.1", leftPart, leftNum, leftLength, 250, Aggregator);
+                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "BP", $"{module}.1", leftPart,leftLength, 250, Aggregator);
                     if (swCompLeft != null) ChangeSideLength(swCompLeft, leftLength);
 
                     var rightLength = (int)(filterRight - filterNumber/2d-1.5d);
-                    var swCompRight = swAssyLevel1.RenameComp(suffix, "BP", $"{module}.2", rightPart, rightNum, rightLength, 250, Aggregator);
+                    var swCompRight = swAssyLevel1.RenameComp(suffix, "BP", $"{module}.2", rightPart,rightLength, 250, Aggregator);
                     if (swCompRight != null) ChangeSideLength(swCompRight, rightLength);
                     break;
                 }
             case FilterSide_e.NA:
             case FilterSide_e.无过滤器侧板:
             default:
-                swAssyLevel1.SuppressIfExist(suffix, $"{leftPart}-{leftNum}");
-                swAssyLevel1.SuppressIfExist(suffix, $"{rightPart}-{rightNum}");
+                swAssyLevel1.ForceSuppress(suffix, leftPart);
+                swAssyLevel1.ForceSuppress(suffix, rightPart);
                 break;
         }
         void ChangeSideLength(Component2 swComp, double sideLength)
@@ -1085,7 +1085,7 @@ public class BeamService : BaseSwService, IBeamService
     {
         swModelLevel1.ChangeDim("Number@LocalLPatternBaffleHooking", baffleHookingNumber);
         swModelLevel1.ChangeDim("Dis@LocalLPatternBaffleHooking", baffleHookingDis);
-        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, "BFHT", module, "2200600027", 1, tubeLength, 14d, Aggregator);
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, "BFHT", module, "2200600027-1", tubeLength, 14d, Aggregator);
         if (swCompLevel2 != null)
         {
             //Length@Boss-Extrude
@@ -1241,7 +1241,7 @@ public class BeamService : BaseSwService, IBeamService
     private void NormalLightKcjSb535(AssemblyDoc swAssyLevel1, string suffix, string module, string type, double length, double width, UvLightType_e uvLightType, int sensorNumber, double filterLeft, LightCable_e lightCable, CeilingLightType_e ceilingLightType, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
     {
         //重命名排风腔体
-        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, type, module, "FNCE0111", 1, length, width, Aggregator);
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, type, module, "FNCE0111-1", length, width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0111(swCompLevel2, length, uvLightType, ceilingLightType, lightCable, HclSide_e.NA, 0, 0, marvel, exhaustSpigotNumber, middleToRight, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, ansul, ansulSide, ansulDetector, japan);
@@ -1274,7 +1274,7 @@ public class BeamService : BaseSwService, IBeamService
     private void NormalLightKcwSb535(AssemblyDoc swAssyLevel1, string suffix, string module, string type, SidePanel_e sidePanel, double length, double width, UvLightType_e uvLightType, CeilingLightType_e ceilingLightType, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, int baffleSensorNumber, double baffleSensorDis1, double baffleSensorDis2, bool japan)
     {
         //重命名排风腔体
-        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, type, module, "FNCE0032", 1, length, width, Aggregator);
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, type, module, "FNCE0032-1", length, width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0032(swCompLevel2, sidePanel, length, uvLightType, ceilingLightType, HclSide_e.NA, 0, 0, marvel, exhaustSpigotNumber, middleToRight, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, ansul, ansulSide, baffleSensorNumber, baffleSensorDis1, baffleSensorDis2, japan);
@@ -1334,7 +1334,7 @@ public class BeamService : BaseSwService, IBeamService
         //支撑条上部
         FNCE0091(swAssyLevel1, suffix, "FNCE0091-1", length, hclSide, hclLeft, hclRight);
         //HCL侧板
-        HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092", 1, "FNCE0094", 1);
+        HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092-1", "FNCE0094-1");
     }
 
     private void HclLightKcjSb535(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, string type, double length, double width, UvLightType_e uvLightType, int sensorNumber, double filterLeft, LightCable_e lightCable, CeilingLightType_e ceilingLightType, HclSide_e hclSide, double hclLeft, double hclRight, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, AnsulDetector_e ansulDetector, bool japan)
@@ -1365,7 +1365,7 @@ public class BeamService : BaseSwService, IBeamService
         #endregion
 
         //重命名排风腔体
-        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, type, module, "FNCE0089", 1, length, width, Aggregator);
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, type, module, "FNCE0089-1", length, width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0111(swCompLevel2, length, uvLightType, ceilingLightType, lightCable, hclSide, hclLeft, hclRight, marvel, exhaustSpigotNumber, middleToRight, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, ansul, ansulSide, ansulDetector, japan);
@@ -1390,7 +1390,7 @@ public class BeamService : BaseSwService, IBeamService
         //支撑条上部
         FNCE0091(swAssyLevel1, suffix, "FNCE0091-1", length, hclSide, hclLeft, hclRight);
         //HCL侧板
-        HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092", 1, "FNCE0094", 1);
+        HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092-1", "FNCE0094-1");
     }
 
     private void HclLightKcwDb800(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, double length, HclSide_e hclSide, double hclLeft, double hclRight)
@@ -1426,7 +1426,7 @@ public class BeamService : BaseSwService, IBeamService
         //支撑条上部
         FNCE0091(swAssyLevel1, suffix, "FNCE0091-1", length, hclSide, hclLeft, hclRight);
         //HCL侧板
-        HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092", 1, "FNCE0094", 1);
+        HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092-1", "FNCE0094-1");
     }
 
     private void HclLightKcwSb535(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, string type, SidePanel_e sidePanel, double length, double width, UvLightType_e uvLightType, CeilingLightType_e ceilingLightType, HclSide_e hclSide, double hclLeft, double hclRight, bool marvel, int exhaustSpigotNumber, double middleToRight, double exhaustSpigotLength, double exhaustSpigotWidth, double exhaustSpigotDis, bool ansul, AnsulSide_e ansulSide, int baffleSensorNumber, double baffleSensorDis1, double baffleSensorDis2, bool japan)
@@ -1457,7 +1457,7 @@ public class BeamService : BaseSwService, IBeamService
         #endregion
 
         //重命名排风腔体
-        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, type, module, "FNCE0096", 1, length, width, Aggregator);
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, type, module, "FNCE0096-1", length, width, Aggregator);
         if (swCompLevel2 != null)
         {
             FNCE0032(swCompLevel2, sidePanel, length, uvLightType, ceilingLightType, hclSide, hclLeft, hclRight, marvel, exhaustSpigotNumber, middleToRight, exhaustSpigotLength, exhaustSpigotWidth, exhaustSpigotDis, ansul, ansulSide, baffleSensorNumber, baffleSensorDis1, baffleSensorDis2, japan);
@@ -1468,42 +1468,42 @@ public class BeamService : BaseSwService, IBeamService
         //支撑条上部
         FNCE0091(swAssyLevel1, suffix, "FNCE0091-1", length, hclSide, hclLeft, hclRight);
         //HCL侧板
-        HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092", 1, "FNCE0094", 1);
+        HclSidePanel(swModelLevel1, swAssyLevel1, suffix, module, hclSide, hclLeft, hclRight, "FNCE0092-1", "FNCE0094-1");
     }
 
-    private void HclSidePanel(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, HclSide_e hclSide, double hclLeft, double hclRight, string leftPart, int leftNum, string rightPart, int rightNum)
+    private void HclSidePanel(ModelDoc2 swModelLevel1, AssemblyDoc swAssyLevel1, string suffix, string module, HclSide_e hclSide, double hclLeft, double hclRight, string leftPart,  string rightPart)
     {
         switch (hclSide)
         {
             case HclSide_e.左HCL侧板:
                 {
-                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "HCLSP", module, leftPart, leftNum, hclLeft, 200d, Aggregator);
+                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "HCLSP", module, leftPart, hclLeft, 200d, Aggregator);
                     if (swCompLeft != null) ChangeSideLength(swCompLeft, hclLeft);
-                    swAssyLevel1.SuppressIfExist(suffix, $"{rightPart}-{rightNum}");
+                    swAssyLevel1.ForceSuppress(suffix, rightPart);
                     break;
                 }
 
             case HclSide_e.右HCL侧板:
                 {
-                    var swCompRight = swAssyLevel1.RenameComp(suffix, "HCLSP", module, rightPart, rightNum, hclRight, 200d, Aggregator);
+                    var swCompRight = swAssyLevel1.RenameComp(suffix, "HCLSP", module, rightPart, hclRight, 200d, Aggregator);
                     if (swCompRight != null) ChangeSideLength(swCompRight, hclRight);
-                    swAssyLevel1.SuppressIfExist(suffix, $"{leftPart}-{leftNum}");
+                    swAssyLevel1.ForceSuppress(suffix, leftPart);
                     break;
                 }
             case HclSide_e.两HCL侧板:
                 {
-                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "HCLSP", $"{module}.1", leftPart, leftNum, hclLeft, 200d, Aggregator);
+                    var swCompLeft = swAssyLevel1.RenameComp(suffix, "HCLSP", $"{module}.1", leftPart, hclLeft, 200d, Aggregator);
                     if (swCompLeft != null) ChangeSideLength(swCompLeft, hclLeft);
 
-                    var swCompRight = swAssyLevel1.RenameComp(suffix, "HCLSP", $"{module}.2", rightPart, rightNum, hclRight, 200d, Aggregator);
+                    var swCompRight = swAssyLevel1.RenameComp(suffix, "HCLSP", $"{module}.2", rightPart, hclRight, 200d, Aggregator);
                     if (swCompRight != null) ChangeSideLength(swCompRight, hclRight);
                     break;
                 }
             default:
             case HclSide_e.NA:
             case HclSide_e.无HCL侧板:
-                swAssyLevel1.SuppressIfExist(suffix, $"{leftPart}-{leftNum}");
-                swAssyLevel1.SuppressIfExist(suffix, $"{rightPart}-{rightNum}");
+                swAssyLevel1.ForceSuppress(suffix, leftPart);
+                swAssyLevel1.ForceSuppress(suffix, rightPart);
                 break;
         }
 

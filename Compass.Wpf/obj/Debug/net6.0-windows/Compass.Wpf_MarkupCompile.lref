@@ -1,4 +1,4 @@
-﻿E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
+﻿
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\AboutView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\AddPackingListView.xaml;;
@@ -6,6 +6,7 @@ FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\CjDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\DpDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\KcjDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\KcwDataView.xaml;;
+FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\LfuDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\UcjDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\Ceilings\UcwDataView.xaml;;
 FE:\CSharp\repos\Compass.Wasm\Compass.Wpf\Views\DetailView.xaml;;

@@ -3,14 +3,14 @@
 {
     //虚线分割
     <hr size="1" style="border-top:1px deeppink dashed;">
-    <CompUpdateIcon Roles="admin,pm,manager" Url="@($"lesson/update/{lesson.Id}")" />
+    <CompUpdateIcon Roles="admin,pm,mgr" Url="@($"lesson/update/{lesson.Id}")" />
     <span style="color: dodgerblue">内容：</span>
     <br />
     <CompMultiLineText Text="@lesson.Content" />
     <span style="color: dodgerblue">附件：</span>
     <br/>
     <CompMultiImgs ContentUrl="@lesson.ContentUrl" />
-    <CompFiles Roles="admin,pm,manager"
+    <CompFiles Roles="admin,pm,mgr"
            FileUrls="@lesson.ContentUrl"
            UpLoadUrl="@($"lesson/update/{lesson.Id}")" />
 }

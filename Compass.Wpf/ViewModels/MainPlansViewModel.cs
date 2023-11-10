@@ -237,7 +237,7 @@ public class MainPlansViewModel : NavigationViewModel
         //    ? navigationContext.Parameters.GetValue<int>("Value")
         //    : 0;
         GetDataAsync();
-        UpdateRoles = "admin,pm,manager,pmc";
+        UpdateRoles = "admin,pm,mgr,pmc";
     }
     #endregion
 

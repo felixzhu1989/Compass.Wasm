@@ -103,9 +103,11 @@ public class PackingListViewModel : NavigationViewModel
                         };
                         //更新内容,PackingListId和物料编码及其托盘相同时
                         var oldItem = PackingList.PackingItemDtos.SingleOrDefault(x =>x.PackingListId==PackingList.Id && x.MtlNumber.Equals(newItem.MtlNumber));
+                        
                         if (oldItem != null)
                         {
                             //更新
+                            newItem.Remark = oldItem.Remark;//保留Remarks
                             await _packingItemService.UpdateAsync(oldItem.Id.Value, newItem);
                         }
                         else

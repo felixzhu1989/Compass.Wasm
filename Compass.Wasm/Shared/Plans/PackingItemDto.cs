@@ -81,12 +81,16 @@ public class PackingItemDto : BaseDto
     }//排序 
     #endregion
 
-
-    //从物料模板查询信息
+    //物料编码
+    //1.标准烟罩，由Item和Module组成，$"{module.ItemNumber}({module.Name})"
+    //2.标准物料，从物料模板查询获得信息，MaterialItemDto的
+    //3.自定义信息由用户自己填写，物料编码不要重复
     private string? mtlNumber;
     public string? MtlNumber { get=> mtlNumber;
         set { mtlNumber = value;OnPropertyChanged(); }
-    } //物料编码
+    }
+    
+
 
     private string? description;
     public string? Description 

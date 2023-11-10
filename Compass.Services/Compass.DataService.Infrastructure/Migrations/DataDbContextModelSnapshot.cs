@@ -431,6 +431,36 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("KcwData");
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.LfuData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<bool>("Japan")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Japan");
+
+                    b.Property<double>("SupplySpigotDia")
+                        .HasColumnType("float")
+                        .HasColumnName("SupplySpigotDia");
+
+                    b.Property<double>("SupplySpigotDis")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("SupplySpigotDis");
+
+                    b.Property<int>("SupplySpigotNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("SupplySpigotNumber");
+
+                    b.Property<double>("TotalLength")
+                        .HasColumnType("float")
+                        .HasColumnName("TotalLength");
+
+                    b.HasDiscriminator().HasValue("LfuData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.CmodmData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");

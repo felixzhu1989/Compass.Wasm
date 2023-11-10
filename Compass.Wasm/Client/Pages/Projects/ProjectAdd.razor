@@ -65,7 +65,7 @@
     private List<UserDto> _userDtos = new();
     protected override async Task OnInitializedAsync()
     {
-        var uResponse = await UserService.GetUsersInRolesAsync("pm,designer");
+        var uResponse = await UserService.GetUsersInRolesAsync("pm,dsr");
         if (uResponse.Status) _userDtos = uResponse.Result;
     }
 

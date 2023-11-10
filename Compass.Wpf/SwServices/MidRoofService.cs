@@ -401,9 +401,9 @@ public class MidRoofService : BaseSwService, IMidRoofService
     #region 法国烟罩
     private void FNHM0041(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, LightType_e lightType)
     {
-        //随着烟罩长度的变化，MidRoof侧板根据灯具的不同发生变化，长灯1329，短灯755,多减去1dm
-        var panelLength = (length - 1330d) / 2d;//长
-        if (lightType is LightType_e.短灯) panelLength = (length - 756d) / 2d;//短
+        //随着烟罩长度的变化，MidRoof侧板根据灯具的不同发生变化，长灯1329，短灯755,总长多减去2d
+        var panelLength = (length - 1331d) / 2d;//长
+        if (lightType is LightType_e.短灯) panelLength = (length - 757d) / 2d;//短
 
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", panelLength);

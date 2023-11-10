@@ -36,12 +36,12 @@ public class DpAutoDrawing:BaseAutoDrawing,IDpAutoDrawing
                 case "DP_330":
                     CeilingService.Dp330(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
-                //case "BCJ_330":
-                //    CeilingService.Bcj330(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
-                //    break;
-                //case "BCJ_430":
-                //    CeilingService.Bcj430(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
-                //    break;
+                case "DP_340":
+                    CeilingService.Dp340(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
+                case "DP_CJ_330":
+                    CeilingService.DpCj330(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
             }
 
             #region 保存操作

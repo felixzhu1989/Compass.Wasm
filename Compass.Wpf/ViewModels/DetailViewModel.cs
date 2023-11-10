@@ -425,7 +425,7 @@ public class DetailViewModel : NavigationViewModel
         GetModelTreeDataAsync();
         SidePanels=Enum.GetNames(typeof(SidePanel_e));
         ModulesNavigate();
-        UpdateRoles = "admin,pm,manager,designer";
+        UpdateRoles = "admin,pm,mgr,dsr";
     }
     #endregion
 

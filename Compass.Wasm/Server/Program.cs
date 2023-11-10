@@ -290,6 +290,7 @@ builder.Services.AddScoped<IUcwDataService, UcwDataService>();
 
 builder.Services.AddScoped<ICjDataService, CjDataService>();
 builder.Services.AddScoped<IDpDataService, DpDataService>();
+builder.Services.AddScoped<ILfuDataService, LfuDataService>();
 
 #endregion
 

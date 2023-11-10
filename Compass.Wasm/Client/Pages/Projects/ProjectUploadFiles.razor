@@ -8,7 +8,7 @@
 
 <EditForm Model="project" OnSubmit="Save">
 
-    <AuthorizeView Roles="admin,pm,designer,manager">
+    <AuthorizeView Roles="admin,pm,dsr,mgr">
         <Authorized Context="auth">
             <FileUpload Title="系统合同" FileType="application/pdf" @bind-FileUrl="@project.ContractUrl" />
 

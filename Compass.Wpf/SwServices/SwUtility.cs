@@ -219,6 +219,39 @@ public static class SwUtility
     }
 
     /// <summary>
+    /// 装配体压缩部件(强制，在零件被重命名后)
+    /// </summary>
+    public static void ForceSuppress(this AssemblyDoc swAssy, string suffix, string compName)
+    {
+        var swModel = (ModelDoc2)swAssy;
+        var assyName = Path.GetFileNameWithoutExtension(swModel.GetPathName());
+        var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
+        var num = compName.Split('-').Last();
+
+        //尝试直接选择
+        var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+        if (status)
+        {
+            swAssy.GetComponentByName(compName.AddSuffix(suffix)).SetSuppression2(0);
+        }
+        else
+        {
+            //如果没直接选中，可能是上次重命名过了，尝试遍历零部件再选择
+            var comps = (IEnumerable)swAssy.GetComponents(false);
+            foreach (var comp in comps)
+            {
+                var swComp = (Component2)comp;
+                //Name2的返回值：subAssem1-2/Part1-1，使用Split和Last获取末尾的真实零部件名称
+                var swCompName = swComp.Name2.Split('/').Last();
+                if (!swCompName.Contains(compName)) continue;//不包含就循环下一个
+                if(swCompName.Split("-").Last()!=num) continue;//实例号不对，循环下一个
+                swComp.SetSuppression2(0);
+                break;//压缩后直接退出循环
+            }
+        }
+    }
+
+    /// <summary>
     /// 装配体解压部件，解压零部件根方法，解压后对装配体进行重建
     /// </summary>
     public static Component2 UnSuppress(this AssemblyDoc swAssy, string suffix, string compName, IEventAggregator aggregator)
@@ -245,19 +278,7 @@ public static class SwUtility
             swAssy.Suppress(suffix, compName);
         }
     }
-
-    /// <summary>
-    /// 检查是否存在，如果存在就压缩
-    /// </summary>
-    public static void SuppressIfExist(this AssemblyDoc swAssy, string suffix, string compName)
-    {
-        var swModel = (ModelDoc2)swAssy;
-        var assyName = swModel.GetTitle().Substring(0, swModel.GetTitle().Length - 7);
-        var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
-        var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
-        if (status) { swAssy.Suppress(suffix, compName); }
-    }
-
+    
     /// <summary>
     /// 装配体解压部件，抛出ModelDoc2
     /// </summary>
@@ -280,18 +301,19 @@ public static class SwUtility
     /// <summary>
     /// 重命名零部件
     /// </summary>
-    public static Component2? RenameComp(this AssemblyDoc swAssy, string suffix, string typeName, string module, string compName, int num, double length, double width, IEventAggregator aggregator)
+    public static Component2? RenameComp(this AssemblyDoc swAssy, string suffix, string typeName, string module, string compName,double length, double width, IEventAggregator aggregator)
     {
         var swModel = (ModelDoc2)swAssy;
         var assyName = Path.GetFileNameWithoutExtension(swModel.GetPathName());
-        var originPath = $"{$"{compName}-{num}".AddSuffix(suffix)}@{assyName}";
-        var strRename = $"{compName}[{typeName}-{module}]{{{(int)length}}}({(int)width})";
-        
+        var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
+        var strRename = $"{compName.Split('-').First()}[{typeName}-{module}]{{{(int)length}}}({(int)width})";
+        var num = compName.Split('-').Last();
+
         //尝试直接选择
         var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
         if (status)
         {
-            swAssy.UnSuppress(suffix, $"{compName}-{num}", aggregator);
+            swAssy.UnSuppress(suffix, compName, aggregator);
             swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
             swModel.Extension.RenameDocument(strRename);//执行重命名
         }

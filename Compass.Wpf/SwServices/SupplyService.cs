@@ -40,6 +40,7 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
+
     public void IFr555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection,LightType_e lightType)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_I_FR_555-1", Aggregator);
@@ -84,6 +85,7 @@ public class SupplyService : BaseSwService, ISupplyService
         if (marvel) swAssyLevel1.UnSuppress(suffix, "IR_LHC_2-1", Aggregator);
         else swAssyLevel1.Suppress(suffix, "IR_LHC_2-1");
     }
+
     public void I450(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_I_450-1", Aggregator);
@@ -115,6 +117,7 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
+
     public void I400(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_I_400-1", Aggregator);
@@ -146,8 +149,6 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
-
-
 
     public void F555(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis)
     {
@@ -249,7 +250,6 @@ public class SupplyService : BaseSwService, ISupplyService
         else swAssyLevel1.Suppress(suffix, "IR_LHC_2-1");
     }
 
-
     public void F400(AssemblyDoc swAssyTop, string suffix, double length, double width, double height, ExhaustType_e exhaustType, SidePanel_e sidePanel, UvLightType_e uvLightType, bool bluetooth, bool marvel, bool ledLogo, bool waterCollection, int supplySpigotNumber, double supplySpigotDis)
     {
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Supply_F_400-1", Aggregator);
@@ -295,7 +295,6 @@ public class SupplyService : BaseSwService, ISupplyService
         const string rightPart = "FNHS0006-1";
         WaterCollection(swAssyLevel1, suffix, waterCollection, sidePanel, exhaustType, width, height, suHeight, leftPart, rightPart);
     }
-    
 
     public void BackCj(AssemblyDoc swAssyTop, string suffix, bool backCj, double length, double height, double cjSpigotToRight)
     {
@@ -338,7 +337,6 @@ public class SupplyService : BaseSwService, ISupplyService
 
         FNCJ0016(swAssyLevel1, suffix, "FNCJ0016-1", length);
     }
-
 
     #endregion
 
@@ -797,7 +795,7 @@ public class SupplyService : BaseSwService, ISupplyService
         switch (lightType)
         {
             case LightType_e.短灯:
-                swModelLevel2.ChangeDim("Length@SketchLight", 707d);
+                swModelLevel2.ChangeDim("Length@SketchLight", 708d);
                 break;
 
             case LightType_e.NA:
@@ -806,7 +804,7 @@ public class SupplyService : BaseSwService, ISupplyService
             case LightType_e.HCL:
             case LightType_e.飞利浦三防灯:
             default:
-                swModelLevel2.ChangeDim("Length@SketchLight", 1281d);
+                swModelLevel2.ChangeDim("Length@SketchLight", 1282d);
                 break;
         }
         #endregion

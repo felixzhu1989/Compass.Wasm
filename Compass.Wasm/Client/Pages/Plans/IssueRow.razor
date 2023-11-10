@@ -26,7 +26,7 @@
     <!--改成多张图片显示-->
     @*<img src="@issue.ContentUrl" alt="@Path.GetFileName(issue.ContentUrl)" />*@
     <CompMultiImgs ContentUrl="@issue.ContentUrl"/>
-    <CompFiles Roles="admin,pm,manager,designer"
+    <CompFiles Roles="admin,pm,mgr,dsr"
            FileUrls="@issue.ContentUrl"
            UpLoadUrl="@($"issue/update/{issue.Id}")" />
     <hr size="1" style="border-top:1px green dashed;">
@@ -39,7 +39,7 @@
         @if (issue.Responder == null)
         {
             //todo:指派负责人
-            <AuthorizeView Roles="admin,pm,manager">
+            <AuthorizeView Roles="admin,pm,mgr">
                 <Authorized>
                     <a href="issue/solution/@issue.Id">指派负责人</a> 
                 </Authorized>
@@ -59,7 +59,7 @@
     <span style="color: dodgerblue">附件：</span>
     <br />
     <CompMultiImgs ContentUrl="@issue.SolutionUrl" />
-    <CompFiles Roles="admin,pm,manager,designer"
+    <CompFiles Roles="admin,pm,mgr,dsr"
            FileUrls="@issue.SolutionUrl"
            UpLoadUrl="@($"issue/solution/{issue.Id}")" />
 
