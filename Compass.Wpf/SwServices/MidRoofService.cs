@@ -63,7 +63,14 @@ public class MidRoofService : BaseSwService, IMidRoofService
         var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "MidRoof_Fr-1", Aggregator);
         swAssyLevel1.ChangeDim("Length@DistanceLength", length);
 
+
+        //照明是1500带大侧板开始用短灯,不带大侧板时1400用短灯
+        //筒灯，长1329，锁828，短755，锁居中
+
+
         FNHM0041(swAssyLevel1, suffix, "FNHM0041-1", length, lightType);
+
+
 
         switch (lightType)
         {
@@ -80,7 +87,9 @@ public class MidRoofService : BaseSwService, IMidRoofService
             case LightType_e.筒灯:
                 swAssyLevel1.Suppress(suffix, "5201020404-1");
                 swAssyLevel1.Suppress(suffix, "5201020405-1");
-                swAssyLevel1.UnSuppress(suffix, "FNHM0044-1", Aggregator);
+                
+                FNHM0044(swAssyLevel1, suffix, "FNHM0044-1", length,spotLightNumber,spotLightDistance);
+
                 break;
             case LightType_e.NA:
             case LightType_e.飞利浦三防灯:
@@ -403,10 +412,34 @@ public class MidRoofService : BaseSwService, IMidRoofService
     {
         //随着烟罩长度的变化，MidRoof侧板根据灯具的不同发生变化，长灯1329，短灯755,总长多减去2d
         var panelLength = (length - 1331d) / 2d;//长
-        if (lightType is LightType_e.短灯) panelLength = (length - 757d) / 2d;//短
+        if (lightType is LightType_e.短灯 || (lightType is LightType_e.筒灯 && length<=1400d)) panelLength = (length - 757d) / 2d;//短
 
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
         swModelLevel2.ChangeDim("Length@SketchBase", panelLength);
+
+
+    }
+    //筒灯板
+    private void FNHM0044(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, int spotLightNumber,double spotLightDistance)
+    {
+        //长度小于1400用短灯
+        var panelLength = length <= 1400d ? 755d: 1329d;
+
+        var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
+        swModelLevel2.ChangeDim("Length@SketchBase", panelLength);
+
+
+        //var toMiddle = spotLightNumber%2==0? spotLightDistance / 2d : 0d;
+        //swCompLevel2.UnSuppress("SpotLight");
+        //if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", 0d);
+        //else
+        //{
+        //    swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", toMiddle);
+        //    swCompLevel2.UnSuppress("LPatternSpotLight");
+        //    swModelLevel2.ChangeDim("Number@LPatternSpotLight", spotLightNumber);
+        //    swModelLevel2.ChangeDim("Dis@LPatternSpotLight", spotLightDistance);
+        //}
+
     }
     #endregion
 
@@ -503,19 +536,19 @@ public class MidRoofService : BaseSwService, IMidRoofService
         switch (lightType)
         {
             case LightType_e.筒灯:
+            {
+                swCompLevel2.UnSuppress("SpotLight");
+                swModelLevel2.ChangeDim("ToFront@SketchSpotLight", toFront);
+                if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", 0d);
+                else
                 {
-                    swCompLevel2.UnSuppress("SpotLight");
-                    swModelLevel2.ChangeDim("ToFront@SketchSpotLight", toFront);
-                    if (spotLightNumber == 1) swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", 0d);
-                    else
-                    {
-                        swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", toMiddle);
-                        swCompLevel2.UnSuppress("LPatternSpotLight");
-                        swModelLevel2.ChangeDim("Number@LPatternSpotLight", spotLightNumber);
-                        swModelLevel2.ChangeDim("Dis@LPatternSpotLight", spotLightDistance);
-                    }
-                    break;
+                    swModelLevel2.ChangeDim("ToMiddle@SketchSpotLight", toMiddle);
+                    swCompLevel2.UnSuppress("LPatternSpotLight");
+                    swModelLevel2.ChangeDim("Number@LPatternSpotLight", spotLightNumber);
+                    swModelLevel2.ChangeDim("Dis@LPatternSpotLight", spotLightDistance);
                 }
+                break;
+            }
             case LightType_e.长灯:
                 swCompLevel2.UnSuppress("FsLong");
                 swModelLevel2.ChangeDim("ToFront@SketchFsLong", toFront);

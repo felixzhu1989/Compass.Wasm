@@ -27,6 +27,15 @@ public interface ICeilingService
 
     #endregion
 
+    #region An(Gutter)
+    void An135(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, AnData data);
+    #endregion
 
+    #region SSP
+    void SspFlat(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, SspData data);
+    void SspDome(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, SspData data);
+
+
+    #endregion
 
 }

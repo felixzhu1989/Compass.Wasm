@@ -194,7 +194,7 @@ public static class SwUtility
         feat.SetSuppression2(1, 2, null);
         swAssy.ForceRebuild2(true);
     }
-
+    
     /// <summary>
     /// 装配体根据条件解压或压缩特征
     /// </summary>
@@ -226,6 +226,8 @@ public static class SwUtility
         var swModel = (ModelDoc2)swAssy;
         var assyName = Path.GetFileNameWithoutExtension(swModel.GetPathName());
         var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
+
+        var partName = compName.Split('-').First();
         var num = compName.Split('-').Last();
 
         //尝试直接选择
@@ -243,7 +245,7 @@ public static class SwUtility
                 var swComp = (Component2)comp;
                 //Name2的返回值：subAssem1-2/Part1-1，使用Split和Last获取末尾的真实零部件名称
                 var swCompName = swComp.Name2.Split('/').Last();
-                if (!swCompName.Contains(compName)) continue;//不包含就循环下一个
+                if (!swCompName.Contains(partName)) continue;//不包含就循环下一个
                 if(swCompName.Split("-").Last()!=num) continue;//实例号不对，循环下一个
                 swComp.SetSuppression2(0);
                 break;//压缩后直接退出循环
@@ -262,6 +264,48 @@ public static class SwUtility
         //如果二级装配中的零件被压缩，那么或获取不到零件，因此建议先解压零件,重建装配体，再操作
         swAssy.ForceRebuild2(true);
         return swComp;
+    }
+
+    /// <summary>
+    /// 装配体压缩部件(强制，在零件被重命名后)
+    /// </summary>
+    public static Component2? ForceUnSuppress(this AssemblyDoc swAssy, string suffix, string compName, IEventAggregator aggregator)
+    {
+        var swModel = (ModelDoc2)swAssy;
+        var assyName = Path.GetFileNameWithoutExtension(swModel.GetPathName());
+        var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
+
+        var partName = compName.Split('-').First();
+        var num = compName.Split('-').Last();
+        
+        //尝试直接选择
+        var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+        if (status)
+        {
+            var swComp = swAssy.GetComponentByName(compName.AddSuffix(suffix));
+            swComp.SetSuppression2(2);
+            aggregator.SendMessage($"处理零件:\t{swComp.GetPathName()}", Filter_e.Batch);
+            //如果二级装配中的零件被压缩，那么或获取不到零件，因此建议先解压零件,重建装配体，再操作
+            swAssy.ForceRebuild2(true);
+            return swComp;
+        }
+
+        //如果没直接选中，可能是上次重命名过了，尝试遍历零部件再选择
+        var comps = (IEnumerable)swAssy.GetComponents(false);
+        foreach (var comp in comps)
+        {
+            var swComp = (Component2)comp;
+            //Name2的返回值：subAssem1-2/Part1-1，使用Split和Last获取末尾的真实零部件名称
+            var swCompName = swComp.Name2.Split('/').Last();
+            if (!swCompName.Contains(partName)) continue;//不包含就循环下一个
+            if (swCompName.Split("-").Last()!=num) continue;//实例号不对，循环下一个
+            swComp.SetSuppression2(2);
+            aggregator.SendMessage($"处理零件:\t{swComp.GetPathName()}", Filter_e.Batch);
+            //如果二级装配中的零件被压缩，那么或获取不到零件，因此建议先解压零件,重建装配体，再操作
+            swAssy.ForceRebuild2(true);
+            return swComp;
+        }
+        return null;
     }
 
     /// <summary>
@@ -307,6 +351,8 @@ public static class SwUtility
         var assyName = Path.GetFileNameWithoutExtension(swModel.GetPathName());
         var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
         var strRename = $"{compName.Split('-').First()}[{typeName}-{module}]{{{(int)length}}}({(int)width})";
+        
+        var partName = compName.Split('-').First();
         var num = compName.Split('-').Last();
 
         //尝试直接选择
@@ -326,7 +372,7 @@ public static class SwUtility
                 var swComp=(Component2)comp;
                 //Name2的返回值：subAssem1-2/Part1-1，使用Split和Last获取末尾的真实零部件名称
                 var swCompName =swComp.Name2.Split('/').Last();
-                if (!swCompName.Contains(compName)) continue;//不包含就循环下一个
+                if (!swCompName.Contains(partName)) continue;//不包含就循环下一个
                 swComp.Select2(false, 0);//选择该零部件
                 swModel.Extension.RenameDocument(strRename); //执行重命名
                 break;//重命名后直接退出循环，因此重命名时针对的是第一个零件，多个零件的情况不支持

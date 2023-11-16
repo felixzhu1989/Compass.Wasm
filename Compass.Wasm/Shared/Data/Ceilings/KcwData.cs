@@ -2,8 +2,47 @@
 
 public class KcwData:ModuleData
 {
-    //水洗排风腔需要SidePanel参数
+    #region 水洗挡板
+    //一整条KCW的总长
+    private double totalLength;
+    public double TotalLength
+    {
+        get => totalLength;
+        set { totalLength = value; OnPropertyChanged(); }
+    }
+    private double baffleLeft;
+    public double BaffleLeft
+    {
+        get => baffleLeft;
+        set { baffleLeft = value; OnPropertyChanged(); }
+    }
+    private double baffleRight;
+    public double BaffleRight
+    {
+        get => baffleRight;
+        set { baffleRight = value; OnPropertyChanged(); }
+    }
+    private double baffleW;
+    public double BaffleW
+    {
+        get => baffleW;
+        set { baffleW = value; OnPropertyChanged(); }
+    }
+    private double baffleM;
+    public double BaffleM
+    {
+        get => baffleM;
+        set { baffleM = value; OnPropertyChanged(); }
+    }
+    private int baffleMNumber;
+    public int BaffleMNumber
+    {
+        get => baffleMNumber;
+        set { baffleMNumber = value; OnPropertyChanged(); }
+    }
+    #endregion
 
+    //水洗排风腔需要SidePanel参数
     #region DP排水腔参数
     //油网位置
     private DpSide_e dpSide;
@@ -13,6 +52,8 @@ public class KcwData:ModuleData
         set { dpSide = value; OnPropertyChanged(); }
     }
     #endregion
+
+    
 
     #region 排风口参数
     //中心距离右端

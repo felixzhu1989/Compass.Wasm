@@ -28,6 +28,15 @@ public class KcwDataService : BaseDataGetService<KcwData>, IKcwDataService
             data.SidePanel = dto.SidePanel;
             #endregion
 
+            #region 水洗挡板
+            data.TotalLength=dto.TotalLength;
+            data.BaffleLeft=dto.BaffleLeft;
+            data.BaffleRight=dto.BaffleRight;
+            data.BaffleW=dto.BaffleW;
+            data.BaffleM=dto.BaffleM;
+            data.BaffleMNumber=dto.BaffleMNumber;
+            #endregion
+
             #region DP排水腔参数
             data.DpSide = dto.DpSide;
             #endregion

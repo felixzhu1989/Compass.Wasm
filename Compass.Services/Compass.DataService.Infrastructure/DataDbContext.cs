@@ -76,8 +76,8 @@ public class DataDbContext : BaseDbContext
     public DbSet<CjData> CjData { get; set; }
     public DbSet<DpData> DpData { get; set; }
     public DbSet<LfuData> LfuData { get; set; }
-
-
+    public DbSet<AnData> AnData { get; set; }
+    public DbSet<SspData> SspData { get; set; }
 
 
 

@@ -77,6 +77,93 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.UseTphMappingStrategy();
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.AnData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<bool>("Ansul")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Ansul");
+
+                    b.Property<double>("AnsulDetectorDis1")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis1");
+
+                    b.Property<double>("AnsulDetectorDis2")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis2");
+
+                    b.Property<double>("AnsulDetectorDis3")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis3");
+
+                    b.Property<double>("AnsulDetectorDis4")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis4");
+
+                    b.Property<double>("AnsulDetectorDis5")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDetectorDis5");
+
+                    b.Property<int>("AnsulDetectorEnd")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("AnsulDetectorEnd");
+
+                    b.Property<int>("AnsulDetectorNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("AnsulDetectorNumber");
+
+                    b.Property<double>("AnsulDropDis1")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis1");
+
+                    b.Property<double>("AnsulDropDis2")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis2");
+
+                    b.Property<double>("AnsulDropDis3")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis3");
+
+                    b.Property<double>("AnsulDropDis4")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis4");
+
+                    b.Property<double>("AnsulDropDis5")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropDis5");
+
+                    b.Property<int>("AnsulDropNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("AnsulDropNumber");
+
+                    b.Property<double>("AnsulDropToFront")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("AnsulDropToFront");
+
+                    b.Property<bool>("Marvel")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Marvel");
+
+                    b.HasDiscriminator().HasValue("AnData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.CjData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
@@ -324,6 +411,26 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasColumnName("AnsulSide");
 
+                    b.Property<double>("BaffleLeft")
+                        .HasColumnType("float")
+                        .HasColumnName("BaffleLeft");
+
+                    b.Property<double>("BaffleM")
+                        .HasColumnType("float")
+                        .HasColumnName("BaffleM");
+
+                    b.Property<int>("BaffleMNumber")
+                        .HasColumnType("int")
+                        .HasColumnName("BaffleMNumber");
+
+                    b.Property<double>("BaffleRight")
+                        .HasColumnType("float")
+                        .HasColumnName("BaffleRight");
+
+                    b.Property<double>("BaffleW")
+                        .HasColumnType("float")
+                        .HasColumnName("BaffleW");
+
                     b.Property<int>("CeilingLightType")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
@@ -428,6 +535,11 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("float")
                         .HasColumnName("MiddleToRight");
 
+                    b.Property<double>("TotalLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("TotalLength");
+
                     b.HasDiscriminator().HasValue("KcwData");
                 });
 
@@ -455,10 +567,42 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("SupplySpigotNumber");
 
                     b.Property<double>("TotalLength")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("TotalLength");
 
                     b.HasDiscriminator().HasValue("LfuData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.SspData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<bool>("LedLight")
+                        .HasColumnType("bit")
+                        .HasColumnName("LedLight");
+
+                    b.Property<int>("LeftType")
+                        .HasColumnType("int")
+                        .HasColumnName("LeftType");
+
+                    b.Property<double>("LeftWidth")
+                        .HasColumnType("float")
+                        .HasColumnName("LeftWidth");
+
+                    b.Property<int>("MPanelNumber")
+                        .HasColumnType("int")
+                        .HasColumnName("MPanelNumber");
+
+                    b.Property<int>("RightType")
+                        .HasColumnType("int")
+                        .HasColumnName("RightType");
+
+                    b.Property<double>("RightWidth")
+                        .HasColumnType("float")
+                        .HasColumnName("RightWidth");
+
+                    b.HasDiscriminator().HasValue("SspData");
                 });
 
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Hoods.CmodmData", b =>
@@ -483,30 +627,37 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("AnsulDetector");
 
                     b.Property<double>("AnsulDropDis1")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis1");
 
                     b.Property<double>("AnsulDropDis2")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis2");
 
                     b.Property<double>("AnsulDropDis3")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis3");
 
                     b.Property<double>("AnsulDropDis4")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis4");
 
                     b.Property<double>("AnsulDropDis5")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropDis5");
 
                     b.Property<int>("AnsulDropNumber")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("AnsulDropNumber");
 
                     b.Property<double>("AnsulDropToFront")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropToFront");
 

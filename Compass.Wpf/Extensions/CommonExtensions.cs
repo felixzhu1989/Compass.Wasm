@@ -109,6 +109,16 @@ public static class CommonExtensions
             @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\LFU_SC.SLDASM",
             @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\LFU_SS.SLDASM",
 
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\AN_135.SLDASM",
+
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\SSP_FLAT.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\SSP_DOME.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\SSP_HALF.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\SSP_DLK.SLDASM",
+            @"D:\halton\01 Tech Dept\05 Products Library\01 Ceiling\SSP_SLK.SLDASM",
+
+
+
 
 
         };

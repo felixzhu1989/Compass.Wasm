@@ -12,6 +12,9 @@
     <Compile Update="Views\AboutView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Ceilings\AnDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Ceilings\CjDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -25,6 +28,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Ceilings\LfuDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Ceilings\SspDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Ceilings\UcjDataView.xaml.cs">
@@ -137,6 +143,9 @@
     <Page Update="Views\AboutView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Ceilings\AnDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Ceilings\CjDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -150,6 +159,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Ceilings\LfuDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Ceilings\SspDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Ceilings\UcjDataView.xaml">

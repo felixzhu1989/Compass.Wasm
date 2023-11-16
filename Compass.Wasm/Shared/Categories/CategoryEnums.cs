@@ -27,3 +27,9 @@ public enum CeilingRule_e
 {
     NA,所有项目要,日本项目不要,日本项目单独要
 }
+
+//导图模式
+public enum ExportWay_e
+{
+    标准模式,不导图模式,装配体模式,拷贝模式
+}

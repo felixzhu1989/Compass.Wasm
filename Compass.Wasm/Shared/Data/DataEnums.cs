@@ -134,4 +134,11 @@ public enum DpDrainType_e
     NA, 无排水管, 左排水管,右排水管
 }
 
+
+public enum PanelType_e
+{
+    W,Z
+}
+
+
 #endregion

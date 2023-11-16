@@ -1,4 +1,5 @@
-﻿using SolidWorks.Interop.sldworks;
+﻿using Compass.Wasm.Shared.Data;
+using SolidWorks.Interop.sldworks;
 
 namespace Compass.Wpf.SwServices;
 
@@ -425,6 +426,7 @@ public class BeamService : BaseSwService, IBeamService
         //防水挡板
         WaterproofPanel(swAssyTop, suffix, data.SidePanel, "FNCE0027[WPPSB160]-1");
         WaterproofPanel(swAssyTop, suffix, data.SidePanel, "FNCE0027[WPPSB160]-2");
+        
 
         //公共零件
         //重命名排风腔体
@@ -466,6 +468,18 @@ public class BeamService : BaseSwService, IBeamService
         //侧板
         SidePanelKcwDb(swAssyTop, suffix, "SidePanel_KCW_DB_800-1", data.Length, data.SidePanel, data.DpSide);
 
+        //水洗挡板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            swAssyTop.UnSuppress(suffix, "Baffle_KCW_300-2", Aggregator);
+            var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Baffle_KCW_300-1", Aggregator);
+            BaffleKcw300(swAssyLevel1, suffix, module, data.TotalLength,data.BaffleLeft,data.BaffleRight,data.BaffleW,data.BaffleM,data.BaffleMNumber,UvLightType_e.NA);
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "Baffle_KCW_300-1");
+            swAssyTop.Suppress(suffix, "Baffle_KCW_300-2");
+        }
 
         //日本项目需要压缩零件(吊装垫片和脖颈)
         if (data.Japan)
@@ -549,6 +563,18 @@ public class BeamService : BaseSwService, IBeamService
         //侧板
         SidePanelKcwSb(swAssyTop, suffix, "SidePanel_KCW_SB_535-1", data.Length, data.SidePanel, data.DpSide, "FNCE0044-1", "FNCE0045-1", "FNCO0004[WPSSB535]-1", "FNCO0004[WPSSB535]-2");
 
+        //水洗挡板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Baffle_KCW_300-1", Aggregator);
+            BaffleKcw300(swAssyLevel1, suffix, module, data.TotalLength, data.BaffleLeft, data.BaffleRight, data.BaffleW, data.BaffleM, data.BaffleMNumber, UvLightType_e.NA);
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "Baffle_KCW_300-1");
+        }
+
+
         //日本项目需要压缩零件(吊装垫片和脖颈)
         if (data.Japan)
         {
@@ -627,6 +653,17 @@ public class BeamService : BaseSwService, IBeamService
         //侧板
         SidePanelKcwSb(swAssyTop, suffix, "SidePanel_KCW_SB_265-1", data.Length, data.SidePanel, data.DpSide, "FNCE0010-1", "FNCE0011-1", "FNCO0003[WPSSB265]-1", "FNCO0003[WPSSB265]-2");
 
+        //水洗挡板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Baffle_KCW_300-1", Aggregator);
+            BaffleKcw300(swAssyLevel1, suffix, module, data.TotalLength, data.BaffleLeft, data.BaffleRight, data.BaffleW, data.BaffleM, data.BaffleMNumber, UvLightType_e.NA);
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "Baffle_KCW_300-1");
+        }
+
         //日本项目需要压缩零件(吊装垫片和脖颈)
         if (data.Japan)
         {
@@ -703,6 +740,18 @@ public class BeamService : BaseSwService, IBeamService
         //侧板
         SidePanelKcwDb(swAssyTop, suffix, "SidePanel_KCW_DB_800-1", data.Length, data.SidePanel, data.DpSide);
 
+        //水洗挡板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            swAssyTop.UnSuppress(suffix, "Baffle_KCW_300-2", Aggregator);
+            var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Baffle_KCW_300-1", Aggregator);
+            BaffleKcw300(swAssyLevel1, suffix, module, data.TotalLength, data.BaffleLeft, data.BaffleRight, data.BaffleW, data.BaffleM, data.BaffleMNumber, data.UvLightType);
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "Baffle_KCW_300-1");
+            swAssyTop.Suppress(suffix, "Baffle_KCW_300-2");
+        }
 
         //日本项目需要压缩零件(吊装垫片和脖颈)
         if (data.Japan)
@@ -785,6 +834,17 @@ public class BeamService : BaseSwService, IBeamService
 
         //侧板
         SidePanelKcwSb(swAssyTop, suffix, "SidePanel_KCW_SB_535-1", data.Length, data.SidePanel, data.DpSide, "FNCE0044-1", "FNCE0045-1", "FNCO0004[WPSSB535]-1", "FNCO0004[WPSSB535]-2");
+
+        //水洗挡板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "Baffle_KCW_300-1", Aggregator);
+            BaffleKcw300(swAssyLevel1, suffix, module, data.TotalLength, data.BaffleLeft, data.BaffleRight, data.BaffleW, data.BaffleM, data.BaffleMNumber, data.UvLightType);
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "Baffle_KCW_300-1");
+        }
 
         //日本项目需要压缩零件(吊装垫片和脖颈)
         if (data.Japan)
@@ -1163,6 +1223,117 @@ public class BeamService : BaseSwService, IBeamService
         FNCE0045(swAssyLevel1, suffix, rightPart, sidePanel, dpSide);
     }
 
+    /// <summary>
+    /// 水洗挡板
+    /// </summary>
+    private void BaffleKcw300(AssemblyDoc swAssyLevel1, string suffix, string module, double totalLength,double baffleLeft,double baffleRight, double baffleW, double baffleM, int baffleMNumber,UvLightType_e uvLightType)
+    {
+        var swModelLevel1 = (ModelDoc2)swAssyLevel1;
+        swModelLevel1.ChangeDim("Length@DistanceLength",totalLength-3d);//减去三角板厚度
+
+        #region UL,Baffle_UL_300
+        var swAssyBaffleUl = swAssyLevel1.GetSubAssemblyDoc(suffix, "Baffle_UL_300-1", Aggregator);
+        BaffleUl300(swAssyBaffleUl, suffix, module, baffleLeft);
+        #endregion
+
+        #region UR,Baffle_UR_300
+        var swAssyBaffleUr = swAssyLevel1.GetSubAssemblyDoc(suffix, "Baffle_UR_300-1", Aggregator);
+        BaffleUr300(swAssyBaffleUr, suffix, module, baffleRight);
+        #endregion
+
+        #region W,Baffle_W_300
+        var swAssyBaffleW = swAssyLevel1.GetSubAssemblyDoc(suffix, "Baffle_W_300-3", Aggregator);
+        BaffleW300(swAssyBaffleW, suffix, module, baffleW,uvLightType);
+        #endregion
+        
+        
+        if (baffleMNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffix, "Baffle_W_300-1",Aggregator);
+            var swAssyBaffleM = swAssyLevel1.GetSubAssemblyDoc(suffix, "Baffle_M_300-1", Aggregator);
+            BaffleM300(swAssyBaffleM, suffix, module, baffleM);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffix, "Baffle_M_300-1");
+            swAssyLevel1.Suppress(suffix, "Baffle_W_300-1");
+        }
+
+        if (baffleMNumber > 1)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternBaffle");
+            swModelLevel1.ChangeDim("Number@LocalLPatternBaffle", baffleMNumber);
+            swModelLevel1.ChangeDim("Dis@LocalLPatternBaffle", baffleM+baffleW);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternBaffle");
+        }
+
+    }
+
+    private void BaffleUl300(AssemblyDoc swAssyLevel1, string suffix, string module, 
+        double baffleLeft)
+    {
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, "BFUL", module, "FNCE0119-1", baffleLeft+11d, 200d, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            var swModelStdPanel = (ModelDoc2)swCompLevel2.GetModelDoc2();
+            swModelStdPanel.ChangeDim("Length@SketchBase", baffleLeft-7d);
+        }
+    }
+    private void BaffleUr300(AssemblyDoc swAssyLevel1, string suffix, string module,
+        double baffleRight)
+    {
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, "BFUR", module, "FNCE0118-1", baffleRight+10d, 200d, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            var swModelStdPanel = (ModelDoc2)swCompLevel2.GetModelDoc2();
+            swModelStdPanel.ChangeDim("Length@SketchBase", baffleRight-7d);
+        }
+    }
+    private void BaffleW300(AssemblyDoc swAssyLevel1, string suffix, string module,
+        double baffleW,UvLightType_e uvLightType)
+    {
+        #region 磁铁
+        if (uvLightType is UvLightType_e.NA)
+        {
+            swAssyLevel1.Suppress(suffix, "FNCE0124-1");
+            swAssyLevel1.Suppress(suffix, "2900100016-1");
+        }
+        else
+        {
+            swAssyLevel1.UnSuppress(suffix, "FNCE0124-1", Aggregator);
+            swAssyLevel1.UnSuppress(suffix, "2900100016-1", Aggregator);
+        } 
+        #endregion
+
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, "BFW", module, "FNCE0121-1", baffleW, 200d, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            var swModelStdPanel = (ModelDoc2)swCompLevel2.GetModelDoc2();
+            swModelStdPanel.ChangeDim("Length@SketchBase", baffleW-1d);
+            if (uvLightType is UvLightType_e.NA)
+            {
+                swCompLevel2.Suppress("CutForUv");
+            }
+            else
+            {
+                swCompLevel2.UnSuppress("CutForUv");
+            }
+        }
+    }
+
+    private void BaffleM300(AssemblyDoc swAssyLevel1, string suffix, string module,
+        double baffleM)
+    {
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffix, "BFM", module, "FNCE0120-1", baffleM+35d, 200d, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            var swModelStdPanel = (ModelDoc2)swCompLevel2.GetModelDoc2();
+            swModelStdPanel.ChangeDim("Length@SketchBase", baffleM-1d);
+        }
+    }
 
 
     /// <summary>

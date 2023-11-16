@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\App.xaml
-43-1391211416
+45966662392
 13-1168042479
-2062131559506
+215-917424056
 2541515749234
-Views\AboutView.xaml;Views\AddPackingListView.xaml;Views\Ceilings\CjDataView.xaml;Views\Ceilings\DpDataView.xaml;Views\Ceilings\KcjDataView.xaml;Views\Ceilings\KcwDataView.xaml;Views\Ceilings\LfuDataView.xaml;Views\Ceilings\UcjDataView.xaml;Views\Ceilings\UcwDataView.xaml;Views\DetailView.xaml;Views\Dialogs\AddMemoView.xaml;Views\Dialogs\AddSplMaterialView.xaml;Views\Dialogs\AddStdMaterialView.xaml;Views\Dialogs\AddTodoView.xaml;Views\Dialogs\BatchWorksView.xaml;Views\Dialogs\CutListView.xaml;Views\Dialogs\JobCardView.xaml;Views\Dialogs\LoginView.xaml;Views\Dialogs\MsgView.xaml;Views\DrawingView.xaml;Views\Hoods\CmodfDataView.xaml;Views\Hoods\CmodiDataView.xaml;Views\Hoods\KvfDataView.xaml;Views\Hoods\KviDataView.xaml;Views\Hoods\KvvDataView.xaml;Views\Hoods\KwfDataView.xaml;Views\Hoods\KwiDataView.xaml;Views\Hoods\UvfDataView.xaml;Views\Hoods\UviDataView.xaml;Views\Hoods\UwfDataView.xaml;Views\Hoods\UwiDataView.xaml;Views\IndexView.xaml;Views\MainPlansView.xaml;Views\MainView.xaml;Views\MaterialItemsView.xaml;Views\MemoView.xaml;Views\ModulesView.xaml;Views\PackingInfoView.xaml;Views\PackingListView.xaml;Views\ProcessView.xaml;Views\ProjectsView.xaml;Views\SettingsView.xaml;Views\TodoView.xaml;
+Views\AboutView.xaml;Views\AddPackingListView.xaml;Views\Ceilings\AnDataView.xaml;Views\Ceilings\CjDataView.xaml;Views\Ceilings\DpDataView.xaml;Views\Ceilings\KcjDataView.xaml;Views\Ceilings\KcwDataView.xaml;Views\Ceilings\LfuDataView.xaml;Views\Ceilings\SspDataView.xaml;Views\Ceilings\UcjDataView.xaml;Views\Ceilings\UcwDataView.xaml;Views\DetailView.xaml;Views\Dialogs\AddMemoView.xaml;Views\Dialogs\AddSplMaterialView.xaml;Views\Dialogs\AddStdMaterialView.xaml;Views\Dialogs\AddTodoView.xaml;Views\Dialogs\BatchWorksView.xaml;Views\Dialogs\CutListView.xaml;Views\Dialogs\JobCardView.xaml;Views\Dialogs\LoginView.xaml;Views\Dialogs\MsgView.xaml;Views\DrawingView.xaml;Views\Hoods\CmodfDataView.xaml;Views\Hoods\CmodiDataView.xaml;Views\Hoods\KvfDataView.xaml;Views\Hoods\KviDataView.xaml;Views\Hoods\KvvDataView.xaml;Views\Hoods\KwfDataView.xaml;Views\Hoods\KwiDataView.xaml;Views\Hoods\UvfDataView.xaml;Views\Hoods\UviDataView.xaml;Views\Hoods\UwfDataView.xaml;Views\Hoods\UwiDataView.xaml;Views\IndexView.xaml;Views\MainPlansView.xaml;Views\MainView.xaml;Views\MaterialItemsView.xaml;Views\MemoView.xaml;Views\ModulesView.xaml;Views\PackingInfoView.xaml;Views\PackingListView.xaml;Views\ProcessView.xaml;Views\ProjectsView.xaml;Views\SettingsView.xaml;Views\TodoView.xaml;
 images\compass_64px.ico
 False
 
