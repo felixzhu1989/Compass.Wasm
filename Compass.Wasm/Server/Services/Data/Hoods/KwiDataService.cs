@@ -29,6 +29,8 @@ public class KwiDataService : BaseDataGetService<KwiData>, IKwiDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
 
             #region 排风口参数
@@ -55,7 +57,6 @@ public class KwiDataService : BaseDataGetService<KwiData>, IKwiDataService
             data.BackCj = dto.BackCj;
             data.CjSpigotToRight = dto.CjSpigotToRight;
             data.CoverBoard = dto.CoverBoard;
-            data.Marvel = dto.Marvel;
             #endregion
 
             #region Ansul基本参数

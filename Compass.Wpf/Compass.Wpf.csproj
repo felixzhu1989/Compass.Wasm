@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AccCutList.csv" />
     <None Remove="FinalInspection.xlsx" />
     <None Remove="FinalInspectionEn.xlsx" />
     <None Remove="Images\compass_64px.ico" />
@@ -30,6 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="AccCutList.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="FinalInspection.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Compass.Wasm.Shared.Categories;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -75,7 +76,7 @@ public class BatchWorksService : IBatchWorksService
         var exportDxfService = _provider.Resolve<IExportDxfService>();
         foreach (var moduleDto in moduleDtos)
         {
-            if (!moduleDto.IsFilesOk)
+            if (moduleDto.ExportWay is ExportWay_e.标准模式 && !moduleDto.IsFilesOk)
             {
                 _aggregator.SendMessage($"{moduleDto.ItemNumber}-{moduleDto.Name}-{moduleDto.ModelName}\t******文件不存在,跳过导Dxf图******", Filter_e.Batch);
                 continue;

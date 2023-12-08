@@ -25,6 +25,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\Compass.CategoryService.Domain.AssemblyInfoInputs.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\Compass.CategoryService.Domain.AssemblyInfo.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\Compass.CategoryService.Domain.csproj.CoreCompileInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\Compass.CategoryService.Domain.sourcelink.json
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\Compass.CategoryService.Domain.csproj.CopyComplete
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\Compass.CategoryService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Debug\net6.0\refint\Compass.CategoryService.Domain.dll

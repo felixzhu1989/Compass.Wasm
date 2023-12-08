@@ -4,7 +4,6 @@ using Compass.Dtos;
 using Compass.PlanService.Domain;
 using Compass.Wasm.Server.Events;
 using Compass.Wasm.Server.ExportExcel;
-using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Projects;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -181,11 +180,13 @@ public class ProjectService : IProjectService
     {
         try
         {
+            var project =await _repository.GetProjectByIdAsync(param.ProjectId.Value);
             //先查询项目下的所有图纸Item
             var models = await _repository.GetDrawingsByProjectIdAsync(param.ProjectId.Value);
             var dtos = await _mapper.ProjectTo<DrawingDto>(models).ToListAsync();
             foreach (var dto in dtos)
             {
+                
                 dto.IsDrawingOk = !string.IsNullOrEmpty(dto.DrawingUrl);
                 //再查询图纸下的所有分段Module
                 var modules = await _repository.GetModulesByDrawingIdAsync(dto.Id.Value);
@@ -199,11 +200,19 @@ public class ProjectService : IProjectService
                     moduleDto.Width = moduleData.Width;
                     moduleDto.Height = moduleData.Height;
                     moduleDto.SidePanel = moduleData.SidePanel;
+                    moduleDto.Marvel=moduleData.Marvel;
+                    moduleDto.AssyPath=moduleData.AssyPath;
 
                     moduleDto.IsDrawingOk = dto.IsDrawingOk;
                     moduleDto.DrawingUrl = dto.DrawingUrl;
+                    moduleDto.OdpNumber = project.OdpNumber;
+                    moduleDto.ProjectName = project.Name;
+                    moduleDto.ItemNumber=dto.ItemNumber;
+                    moduleDto.Batch = dto.Batch;
                 }
             }
+
+
             return new ApiResponse<List<DrawingDto>> { Status = true, Result = dtos };
         }
         catch (Exception e)
@@ -259,6 +268,8 @@ public class ProjectService : IProjectService
                 moduleDto.Width = moduleData.Width;
                 moduleDto.Height = moduleData.Height;
                 moduleDto.SidePanel = moduleData.SidePanel;
+                moduleDto.Marvel=moduleData.Marvel;
+                moduleDto.AssyPath=moduleData.AssyPath;
             }
             return new ApiResponse<List<ModuleDto>> { Status = true, Result = dtos };
         }

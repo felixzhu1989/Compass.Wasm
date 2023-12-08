@@ -5,7 +5,7 @@
 	<!--升级文件信息-->
 	<UpdateInfo>
 		<!--升级文件的更新日期-->
-		<UpdateTime Date="2023-11-16 17:00"/>
+		<UpdateTime Date="2023-12-8 17:00"/>
 	</UpdateInfo>
 	<!--升级文件列表-->
 	<UpdateFileList>
@@ -24,6 +24,7 @@
 		<!--4.导入数据csv文件-->
 		<UpdateFile FileName="MaterialItem.csv" />
 		<UpdateFile FileName="MainPlan.csv" />
+		<UpdateFile FileName="AccCutList.csv" />
 		<!--5.打印和导出Excel文件-->
 		<UpdateFile FileName="JobCard.xlsx" />
 		<UpdateFile FileName="JobCardEn.xlsx" />

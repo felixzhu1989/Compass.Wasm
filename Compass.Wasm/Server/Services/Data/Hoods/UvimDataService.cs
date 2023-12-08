@@ -27,6 +27,8 @@ public class UvimDataService : BaseDataGetService<UvimData>, IUvimDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
 
 

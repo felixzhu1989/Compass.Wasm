@@ -46,6 +46,21 @@ public class ModuleData : BaseDto, IAggregateRoot, ISoftDelete, IHasDeletionTime
         set { sidePanel = value; OnPropertyChanged(); }
     }
 
+    private bool marvel;
+    public bool Marvel
+    {
+        get => marvel;
+        set { marvel = value; OnPropertyChanged(); }
+    }
+    //装配体地址
+    private string? assyPath;
+    public string? AssyPath
+    {
+        get => assyPath;
+        set { assyPath = value; OnPropertyChanged(); }
+    }
+
+
     public virtual bool Accept(string model)
     {
         return false;

@@ -13,9 +13,21 @@ public class UcjDataViewModel : NavigationViewModel
             Aggregator.SendMessage(result.Status ? $"{Title} 参数保存成功！" : $"{Title}参数保存失败，{result.Message}");
         });
         OpenHttpLinkCommand = new DelegateCommand(OpenHttpLink);
+        UpdateRoles = "admin,pm,mgr,dsr";
     }
     public DelegateCommand SaveDataCommand { get; }
     public DelegateCommand OpenHttpLinkCommand { get; }
+    #region 打开网页链接
+    private void OpenHttpLink()
+    {
+        foreach (var drwUrl in CurrentModule.DrawingUrl.Split('\n'))
+        {
+            var startInfo = new ProcessStartInfo(drwUrl)
+                { UseShellExecute =true };
+            Process.Start(startInfo);
+        }
+    }
+    #endregion
     #endregion
 
     #region 角色控制属性
@@ -50,6 +62,12 @@ public class UcjDataViewModel : NavigationViewModel
     #endregion
 
     #region 详细参数相关枚举值属性
+    private string[] sidePanels = null!;
+    public string[] SidePanels
+    {
+        get => sidePanels;
+        set { sidePanels = value; RaisePropertyChanged(); }
+    }
     public string[] ExhaustSpigotNumbers { get; set; } = { "1", "2" };
     private string[] filterTypes = null!;
     public string[] FilterTypes
@@ -107,23 +125,12 @@ public class UcjDataViewModel : NavigationViewModel
         set { uvLightTypes = value; RaisePropertyChanged(); }
     }
     #endregion
-
-    #region 打开网页链接
-    private void OpenHttpLink()
-    {
-        foreach (var drwUrl in CurrentModule.DrawingUrl.Split('\n'))
-        {
-            var startInfo = new ProcessStartInfo(drwUrl)
-            { UseShellExecute =true };
-            Process.Start(startInfo);
-        }
-    }
-    #endregion
-
+    
     #region 导航初始化
     private void GetEnumNames()
     {
         //初始化一些枚举值
+        SidePanels = Enum.GetNames(typeof(SidePanel_e));
         FilterTypes=Enum.GetNames(typeof(FilterType_e));
         FilterSides = Enum.GetNames(typeof(FilterSide_e));
         CeilingLightTypes = Enum.GetNames(typeof(CeilingLightType_e));
@@ -160,9 +167,7 @@ public class UcjDataViewModel : NavigationViewModel
         Title = $"{CurrentModule.Name} {CurrentModule.ModelName}{specialNotes}";
         GetEnumNames();
         GetDataAsync();
-        UpdateRoles = "admin,pm,mgr,dsr";
     }
 
     #endregion
-
 }

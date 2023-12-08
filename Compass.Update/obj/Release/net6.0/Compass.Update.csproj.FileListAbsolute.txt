@@ -3,7 +3,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Update\bin\Release\net6.0\Compass.Update.de
 E:\CSharp\repos\Compass.Wasm\Compass.Update\bin\Release\net6.0\Compass.Update.runtimeconfig.json
 E:\CSharp\repos\Compass.Wasm\Compass.Update\bin\Release\net6.0\Compass.Update.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Update\bin\Release\net6.0\Compass.Update.pdb
-E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\Compass.Update.csproj.AssemblyReference.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\Compass.Update.GeneratedMSBuildEditorConfig.editorconfig
 E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\Compass.Update.AssemblyInfoInputs.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\Compass.Update.AssemblyInfo.cs
@@ -13,3 +12,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\refint\Compass.Up
 E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\Compass.Update.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\Compass.Update.genruntimeconfig.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\ref\Compass.Update.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Update\obj\Release\net6.0\Compass.Update.sourcelink.json

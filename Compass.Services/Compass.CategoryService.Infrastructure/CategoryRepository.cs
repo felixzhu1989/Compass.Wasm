@@ -94,5 +94,21 @@ public class CategoryRepository : ICategoryRepository
     {
         return _context.MaterialItems.SingleOrDefaultAsync(x => x.Id.Equals(id));
     }
+    public Task<MaterialItem?> GetMaterialItemByTypeAsync(string type)
+    {
+        return _context.MaterialItems.SingleOrDefaultAsync(x => x.Type.ToUpper()==type.ToUpper());
+    }
+    #endregion
+
+    #region AccCutList
+    public Task<IQueryable<AccCutList>> GetAccCutListsAsync()
+    {
+        return Task.FromResult(_context.AccCutLists.AsQueryable());
+    }
+
+    public Task<AccCutList?> GetAccCutListByIdAsync(Guid id)
+    {
+        return _context.AccCutLists.SingleOrDefaultAsync(x => x.Id.Equals(id));
+    }
     #endregion
 }

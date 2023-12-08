@@ -51,6 +51,13 @@ public class ModelTypeDto:BaseDto
         set { pallet=value; OnPropertyChanged(); }
     }//单独托盘
 
+    //导图模式
+    private ExportWay_e exportWay;
+    public ExportWay_e ExportWay
+    {
+        get => exportWay;
+        set { exportWay=value; OnPropertyChanged(); }
+    }
 
     #region 附加属性
     private string product;

@@ -9,6 +9,8 @@ using Compass.Wasm.Shared.Params;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
+using System.Globalization;
+using Compass.Wpf.ApiServices;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -445,13 +447,28 @@ public class PrintsService : IPrintsService
         //worksheet.Cells[行,列]
         worksheet.Cells[3, 3] = moduleDto.OdpNumber;
         worksheet.Cells[4, 3] = moduleDto.ProjectName;
-        worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";
-        worksheet.Cells[6, 3] = moduleDto.ModelName.Split('_')[0];
-        worksheet.Cells[7, 3] = moduleDto.ProjectType.ToString();
+        worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";//item+分段
+        
+        //todo:如果烟罩带marvel，应当加上UVFMRV
+        //方案一（难实现）：查询ModuleData，如果存在marvel属性，判断marvel属性是否为true，如果是就加上MARVEL
+        //如何从容器中找到对应的数据数据查询服务
+        //var modelName = moduleDto.ModelName.Split('_').First();
+        //var modelNameTitle = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(modelName.ToLower());
+        //var dataType=Type.GetType($"{modelNameTitle}Data");
+        //var serviceType = Type.GetType($"{modelNameTitle}DataService");
+        //var service =(IBaseDataService<dataType>) _provider.Resolve(serviceType);
 
+        //方案二：在Modeule中添加Marvel选项
+        var modelName = moduleDto.ModelName.Split('_').First();
+        if (moduleDto.Marvel) modelName = $"{modelName}MRV";
+        worksheet.Cells[6, 3] = modelName;//带Marvel时加上MRV
+
+        worksheet.Cells[7, 3] = moduleDto.ProjectType.ToString();//项目类型
         worksheet.Cells[11, 7] = moduleDto.DeliveryDate.ToShortDateString();//发货时间
+        //2023.11.24，July提出法国烟罩无法辨认，希望通过黑夹子辨识
+        worksheet.Cells[18, 2] = $"{moduleDto.ItemNumber} {moduleDto.Name}({moduleDto.ModelName})";
 
-        worksheet.Cells[18, 4] = moduleDto.Name;
+        worksheet.Cells[18, 4] = moduleDto.Name;//分段
         worksheet.Cells[18, 5] = moduleDto.Length;
         worksheet.Cells[18, 6] = moduleDto.Width;
         worksheet.Cells[18, 7] = moduleDto.Height;
@@ -532,8 +549,13 @@ public class PrintsService : IPrintsService
         worksheet.Cells[3, 3] = moduleDto.OdpNumber;
         worksheet.Cells[4, 3] = moduleDto.ProjectName;
         worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";
-        worksheet.Cells[6, 3] = moduleDto.ModelName.Split('_')[0];
-        
+
+        //方案二：在Modeule中添加Marvel选项
+        var modelName = moduleDto.ModelName.Split('_').First();
+        if (moduleDto.Marvel) modelName = $"{modelName}MRV";
+        worksheet.Cells[6, 3] = modelName;//带Marvel时加上MRV
+
+
         var qrCodePath = await CreateQrCodeImage(moduleDto);
 
         //将图片插入excel
@@ -547,7 +569,12 @@ public class PrintsService : IPrintsService
         worksheet.Cells[3, 3] = moduleDto.OdpNumber;
         worksheet.Cells[4, 3] = moduleDto.ProjectName;
         worksheet.Cells[5, 3] = $"{moduleDto.ItemNumber} {moduleDto.Name}";
-        worksheet.Cells[6, 3] = moduleDto.ModelName.Split('_')[0];
+
+        //方案二：在Modeule中添加Marvel选项
+        var modelName = moduleDto.ModelName.Split('_').First();
+        if (moduleDto.Marvel) modelName = $"{modelName}MRV";
+        worksheet.Cells[6, 3] = modelName;//带Marvel时加上MRV
+
 
         worksheet.Cells[7, 3] = moduleDto.Length;
         worksheet.Cells[7, 5] = moduleDto.Width;
@@ -643,7 +670,8 @@ public class PrintsService : IPrintsService
 
     private async Task UseExcelPrintPackingListCeiling(Worksheet worksheet, PackingListDto packingListDto)
     {
-        worksheet.PageSetup.LeftHeader = $"项目名称: {packingListDto.ProjectName}";
+        var batch=packingListDto.Batch>0? $"-({packingListDto.Batch})":"";
+        worksheet.PageSetup.LeftHeader = $"项目名称: {packingListDto.ProjectName}{batch}";
         //worksheet.Cells[行,列]
         worksheet.Cells[2, 2] = packingListDto.PackingType;
         worksheet.Cells[3, 2] = packingListDto.DeliveryType;
@@ -652,10 +680,11 @@ public class PrintsService : IPrintsService
         worksheet.Cells[3, 10] = Environment.UserName;
 
         var items = packingListDto.PackingItemDtos;
+        //.OrderBy(x=>x.Order).ThenBy(x=>x.MtlNumber).ToList()
 
         for (var i = 0; i < items.Count; i++)
         {
-            worksheet.Cells[i + 6, 1] = items[i].PalletNumber;
+            worksheet.Cells[i + 6, 1] = items[i].MtlNumber;//产品编号
             worksheet.Cells[i + 6, 2] = items[i].Description;
             worksheet.Cells[i + 6, 3] = items[i].Type;
             worksheet.Cells[i + 6, 4] = items[i].Quantity;

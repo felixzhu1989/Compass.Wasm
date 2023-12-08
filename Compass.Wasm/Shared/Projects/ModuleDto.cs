@@ -1,4 +1,5 @@
-﻿using Compass.Wasm.Shared.Data;
+﻿using Compass.Wasm.Shared.Categories;
+using Compass.Wasm.Shared.Data;
 
 namespace Compass.Wasm.Shared.Projects;
 
@@ -85,6 +86,16 @@ public class ModuleDto : BaseDto
         get => pallet;
         set { pallet=value; OnPropertyChanged(); }
     }//单独托盘
+
+    //导图模式
+    private ExportWay_e exportWay;
+    public ExportWay_e ExportWay
+    {
+        get => exportWay;
+        set { exportWay=value; OnPropertyChanged(); }
+    }
+
+
     #endregion
 
     #region 额外属性
@@ -114,6 +125,7 @@ public class ModuleDto : BaseDto
             OnPropertyChanged();
         }
     }
+
     private SidePanel_e sidePanel;
     public SidePanel_e SidePanel    
     {
@@ -121,8 +133,21 @@ public class ModuleDto : BaseDto
         set { sidePanel = value;OnPropertyChanged(); }
     }
 
+    private bool marvel;
+    public bool Marvel
+    {
+        get => marvel;
+        set { marvel = value; OnPropertyChanged(); }
+    }
+    //装配体地址
+    private string? assyPath;
+    public string? AssyPath
+    {
+        get => assyPath;
+        set { assyPath = value; OnPropertyChanged(); }
+    }
     #endregion
-    
+
     //是否被选中
     private bool isSelected;
     public bool IsSelected

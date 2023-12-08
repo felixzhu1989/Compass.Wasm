@@ -2,7 +2,13 @@
 
 public class DxfData : ModuleData
 {
-    public string AssyPath { get; set; }
+    
+    private string? accNumber;//accessories Number(FCCOMBI-5,UCWUVRACK4L-5)
+    public string? AccNumber
+    {
+        get => accNumber;
+        set { accNumber = value; OnPropertyChanged(); }
+    }
 
     public override bool Accept(string model)
     {

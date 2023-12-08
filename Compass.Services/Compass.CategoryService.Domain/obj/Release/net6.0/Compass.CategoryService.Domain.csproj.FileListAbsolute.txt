@@ -30,3 +30,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Release\net6.0\ref\Compass.CategoryService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\bin\Release\net6.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\bin\Release\net6.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.CategoryService.Domain\obj\Release\net6.0\Compass.CategoryService.Domain.sourcelink.json

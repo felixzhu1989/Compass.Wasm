@@ -40,18 +40,27 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
                 case "UVF_555":
                     Uvf555(data, swModelTop, swAssyTop, suffix);
                     break;
-                case "UVF_FR_555":
-                    UvfFr555(data, swModelTop, swAssyTop, suffix);
-                    break;
+                
                 case "UVF_555_400":
                     Uvf555400(data, swModelTop, swAssyTop, suffix);
                     break;
                 case "UVF_450_400":
                     Uvf450400(data, swModelTop, swAssyTop, suffix);
                     break;
+
                 case "UVF_HW_650":
                     UvfHw650(data, swModelTop, swAssyTop, suffix);
                     break;
+
+                case "UVF_FR_555":
+                    UvfFr555(data, swModelTop, swAssyTop, suffix);
+                    break;
+                case "UVF_FR_450":
+                    UvfFr450(data, swModelTop, swAssyTop, suffix);
+                    break;
+
+
+
             }
 
             #region 保存操作
@@ -110,40 +119,7 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         #endregion
     }
 
-    private void UvfFr555(UvfData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix)
-    {
-        #region 计算中间值与顶层操作
-        //计算烟罩净长度，计算烟罩净深度
-        var netLength = data.SidePanel==SidePanel_e.左||data.SidePanel==SidePanel_e.右 ? data.Length-50d : data.SidePanel==SidePanel_e.双 ? data.Length-100 : data.Length;
-        //赋值为0时为均分一半，否则需要赋值
-        var netMiddleToRight = data.MiddleToRight.Equals(0) ? netLength/2d : data.MiddleToRight;
-        var netWidth = data.BackCj ? data.Width - 90 : data.Width;
-
-        //烟罩宽度，考虑是否右BackCj
-        swModelTop.ChangeDim("Width@DistanceWidth", netWidth);
-        #endregion
-
-        #region  Exhaust_UV_FR_555，UVFR555排风装配
-        ExhaustService.UvFr555(swAssyTop, suffix, netLength, netWidth, data.Height, data.SidePanel, data.UvLightType, netMiddleToRight, data.LightType, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
-
-        #endregion
-
-        #region SidePanel_Fr,大侧板装配
-        SidePanelService.SidePanelFr(swAssyTop, suffix, data.SidePanel, netLength, data.Width, data.Height, data.BackCj, ExhaustType_e.UV);
-        #endregion
-
-        #region MidRoof_Fs,MidRoof装配
-        MidRoofService.MidRoofFr(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.UV, data.UvLightType, data.Bluetooth, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
-        #endregion
-
-        #region Supply_F_FR_555,FFR555新风装配
-        SupplyService.FFr555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis, data.LightType);
-        #endregion
-
-        #region BackCj_Fr,BackCj装配
-        SupplyService.BackCjFr(swAssyTop, suffix, data.BackCj, netLength, data.Height, data.CjSpigotToRight);
-        #endregion
-    }
+    
 
 
 
@@ -217,6 +193,8 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         #endregion
     }
 
+
+
     private void UvfHw650(UvfData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix)
     {
         #region 计算中间值与顶层操作
@@ -248,4 +226,79 @@ public class UvfAutoDrawing : BaseAutoDrawing, IUvfAutoDrawing
         #endregion
 
     }
+
+
+
+    private void UvfFr555(UvfData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix)
+    {
+        #region 计算中间值与顶层操作
+        //计算烟罩净长度，计算烟罩净深度
+        var netLength = data.SidePanel==SidePanel_e.左||data.SidePanel==SidePanel_e.右 ? data.Length-50d : data.SidePanel==SidePanel_e.双 ? data.Length-100 : data.Length;
+        //赋值为0时为均分一半，否则需要赋值
+        var netMiddleToRight = data.MiddleToRight.Equals(0) ? netLength/2d : data.MiddleToRight;
+        var netWidth = data.BackCj ? data.Width - 90 : data.Width;
+
+        //烟罩宽度，考虑是否右BackCj
+        swModelTop.ChangeDim("Width@DistanceWidth", netWidth);
+        #endregion
+
+        #region  Exhaust_UV_FR_555，UVFR555排风装配
+        ExhaustService.UvFr555(swAssyTop, suffix, netLength, netWidth, data.Height, data.SidePanel, data.UvLightType, netMiddleToRight, data.LightType, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
+
+        #endregion
+
+        #region SidePanel_Fr,大侧板装配
+        SidePanelService.SidePanelFr(swAssyTop, suffix, data.SidePanel, netLength, data.Width, data.Height, data.BackCj, ExhaustType_e.UV);
+        #endregion
+
+        #region MidRoof_Fs,MidRoof装配
+        MidRoofService.MidRoofFr(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.UV, data.UvLightType, data.Bluetooth, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
+        #endregion
+
+        #region Supply_F_FR_555,FFR555新风装配
+        SupplyService.FFr555(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis, data.LightType);
+        #endregion
+
+        #region BackCj_Fr,BackCj装配
+        SupplyService.BackCjFr(swAssyTop, suffix, data.BackCj, netLength, data.Height, data.CjSpigotToRight);
+        #endregion
+    }
+
+
+
+    private void UvfFr450(UvfData data, ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix)
+    {
+        #region 计算中间值与顶层操作
+        //计算烟罩净长度，计算烟罩净深度
+        var netLength = data.SidePanel==SidePanel_e.左||data.SidePanel==SidePanel_e.右 ? data.Length-50d : data.SidePanel==SidePanel_e.双 ? data.Length-100 : data.Length;
+        //赋值为0时为均分一半，否则需要赋值
+        var netMiddleToRight = data.MiddleToRight.Equals(0) ? netLength/2d : data.MiddleToRight;
+        var netWidth = data.BackCj ? data.Width - 90 : data.Width;
+
+        //烟罩宽度，考虑是否右BackCj
+        swModelTop.ChangeDim("Width@DistanceWidth", netWidth);
+        #endregion
+
+        #region  Exhaust_UV_FR_450，UVFR450排风装配
+        ExhaustService.UvFr450(swAssyTop, suffix, netLength, netWidth, data.Height, data.SidePanel, data.UvLightType, netMiddleToRight, data.LightType, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
+
+        #endregion
+
+        #region SidePanel_Fr_450,大侧板装配
+        SidePanelService.SidePanelFr450(swAssyTop, suffix, data.SidePanel, netLength, data.Width, data.Height, data.BackCj, ExhaustType_e.UV);
+        #endregion
+
+        #region MidRoof_Fs,MidRoof装配
+        MidRoofService.MidRoofFr(swAssyTop, suffix, netLength, netWidth, ExhaustType_e.UV, data.UvLightType, data.Bluetooth, netMiddleToRight, data.LightType, data.SpotLightNumber, data.SpotLightDistance, data.Marvel, data.Ansul, data.AnsulDropNumber, data.AnsulDropToFront, data.AnsulDropDis1, data.AnsulDropDis2, data.AnsulDropDis3, data.AnsulDropDis4, data.AnsulDropDis5, 0, AnsulDetectorEnd_e.无末端探测器, 0, 0, 0, 0, 0);
+        #endregion
+
+        #region Supply_F_FR_450,FFR450新风装配
+        SupplyService.FFr450(swAssyTop, suffix, netLength, netWidth, data.Height, ExhaustType_e.UV, data.SidePanel, data.UvLightType, data.Bluetooth, data.Marvel, data.LedLogo, data.WaterCollection, data.SupplySpigotNumber, data.SupplySpigotDis, data.LightType);
+        #endregion
+
+        #region BackCj_Fr,BackCj装配
+        SupplyService.BackCjFr(swAssyTop, suffix, data.BackCj, netLength, data.Height, data.CjSpigotToRight);
+        #endregion
+    }
+
 }

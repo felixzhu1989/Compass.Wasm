@@ -44,6 +44,17 @@ public class SspAutoDrawing:BaseAutoDrawing,ISspAutoDrawing
                     CeilingService.SspDome(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
                     break;
 
+                case "SSP_HALF":
+                    CeilingService.SspHalf(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
+
+                case "SSP_DLK":
+                    CeilingService.SspDLk(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
+
+                case "SSP_SLK":
+                    CeilingService.SspSLk(swModelTop, swAssyTop, suffix, moduleDto.Name, data);
+                    break;
 
             }
 

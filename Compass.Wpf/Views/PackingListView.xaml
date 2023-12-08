@@ -5,12 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Compass.Wpf.Views"
              mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
+             d:DesignHeight="600"
+             d:DesignWidth="1024"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
-    <Grid Margin="10">
+    <UserControl.Resources>
+        <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
+    </UserControl.Resources>
+    <Grid Margin="10" IsEnabled="{Binding IsEnable}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -24,9 +27,10 @@
                    FontWeight="Bold"
                    FontSize="25" Margin="5,0,0,0"/>
         <!--第2行,显示PackingList的基本信息-->
-        <StackPanel Grid.Row="1"
+        <WrapPanel Grid.Row="1"
                     Orientation="Horizontal">
-            <materialDesign:Chip Content="更新属性"
+            <materialDesign:Chip Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}"
+                                 Content="更新属性"
                                  Command="{Binding ExecuteCommand}"
                                  CommandParameter="UpdatePackingList"
                                  Background="Orange" />
@@ -35,35 +39,36 @@
             <materialDesign:Chip Content="{Binding PackingList.PackingType}" />
             <materialDesign:Chip Content="{Binding PackingList.DeliveryType}" />
             <materialDesign:Chip Content="{Binding PackingList.AssyPath}" />
-        </StackPanel>
+        </WrapPanel>
         <!--第3行,显示标题-->
         <DockPanel Grid.Row="2"
                    LastChildFill="False" Margin="5">
-            <Button DockPanel.Dock="Left"
-                    Content="①更新清单"
+            <StackPanel DockPanel.Dock="Left"
+                        Orientation="Horizontal"
+                        Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}">
+      
+            <Button Content="① 生成/更新清单"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="ReCreate"
                     Margin="0,0,10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="GreenYellow"
+                    Background="HotPink"
                     BorderThickness="0" />
-            <Button DockPanel.Dock="Left"
-                    Content="②添加标准物料"
+            <Button Content="② 添加标准物料"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="AddStdMaterial"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="Chartreuse"
                     BorderThickness="0" />
-            <Button DockPanel.Dock="Left"
-                    Content="③添加特殊物料"
+            <Button Content="③ 添加特殊物料"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="AddSplMaterial"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="Chartreuse"
                     BorderThickness="0" />
-            
+            </StackPanel>
             <Button DockPanel.Dock="Left"
                     Content="打印装箱清单"
                     Command="{Binding ExecuteCommand}"
@@ -74,12 +79,21 @@
                     BorderThickness="0" />
             
             <Button DockPanel.Dock="Left"
-                    Content="装箱信息表"
+                    Content="装箱信息表(生产)"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="PackingInfo"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="DodgerBlue"
+                    Background="DeepSkyBlue"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Left"
+                    Visibility="{Binding PrintLabelRoles,Converter={StaticResource RolesToVisibilityCvt}}"
+                    Content="勾选并打印标签(生产)"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintLabel"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="HotPink"
                     BorderThickness="0" />
         </DockPanel>
         <!--第4行，PackingItem数据-->
@@ -92,6 +106,24 @@
                   CanUserSortColumns="True"
                   ScrollViewer.VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
+                <!--选择框-->
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        IsReadOnly="False"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
+                    <DataGridCheckBoxColumn.Header>
+                        <Border Background="Transparent">
+                            <CheckBox IsChecked="{Binding DataContext.IsAllItemsSelected, Source={x:Reference DataContextProxy}}" />
+                        </Border>
+                    </DataGridCheckBoxColumn.Header>
+                    <DataGridCheckBoxColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}"
+                               BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Center" />
+                        </Style>
+                    </DataGridCheckBoxColumn.HeaderStyle>
+                </DataGridCheckBoxColumn>
                 <DataGridTextColumn Binding="{Binding PalletNumber}"
                                     Header="托盘号"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -148,10 +180,14 @@
                                     Header="单张标签"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
-                <DataGridTemplateColumn Header="修改">
+                <!--<DataGridTextColumn Binding="{Binding Order}"
+                                    Header="排序"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />-->
+<DataGridTemplateColumn Header="修改">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock>
+                            <TextBlock Visibility="{Binding DataContext.UpdateRoles,Converter={StaticResource RolesToVisibilityCvt},Source={x:Reference DataContextProxy}}">
                                 <materialDesign:PackIcon Kind="Cog"
                                                          Foreground="Blue" />
                                 <behavior:Interaction.Triggers>
@@ -166,7 +202,7 @@
                 <DataGridTemplateColumn Header="删除">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock>
+                            <TextBlock Visibility="{Binding DataContext.UpdateRoles,Converter={StaticResource RolesToVisibilityCvt},Source={x:Reference DataContextProxy}}">
                                 <materialDesign:PackIcon Kind="DeleteForever"
                                                          Foreground="Red" />
                                 <behavior:Interaction.Triggers>

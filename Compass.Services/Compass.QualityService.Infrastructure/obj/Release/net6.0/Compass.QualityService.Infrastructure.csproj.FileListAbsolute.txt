@@ -38,3 +38,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.QualityService.Infrastruct
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.QualityService.Infrastructure\obj\Release\net6.0\ref\Compass.QualityService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.QualityService.Infrastructure\bin\Release\net6.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.QualityService.Infrastructure\bin\Release\net6.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.QualityService.Infrastructure\obj\Release\net6.0\Compass.QualityService.Infrastructure.sourcelink.json

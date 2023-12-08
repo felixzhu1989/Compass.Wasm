@@ -233,6 +233,7 @@ public class DetailViewModel : NavigationViewModel
             CurrentModuleDto.ModelTypeId = currentModelType.Id;
             CurrentModuleDto.ModelName = currentModelType.ModelName;
             CurrentModuleDto.Pallet=currentModelType.Pallet;
+            CurrentModuleDto.ExportWay=currentModelType.ExportWay;
         }
     }
     #endregion
@@ -332,6 +333,7 @@ public class DetailViewModel : NavigationViewModel
                         dto.Height = CurrentModuleDto.Height;
                         dto.SidePanel=CurrentModuleDto.SidePanel;
                         dto.Pallet = CurrentModuleDto.Pallet;
+                        dto.Marvel=CurrentModuleDto.Marvel;
                     }
                 }
                 IsRightDrawerOpen = false;//关闭弹窗
@@ -394,6 +396,12 @@ public class DetailViewModel : NavigationViewModel
         get => sidePanels;
         set { sidePanels = value; RaisePropertyChanged(); }
     }
+    private string[] exportWays = null!;
+    public string[] ExportWays
+    {
+        get => exportWays;
+        set { exportWays = value; RaisePropertyChanged(); }
+    }
     private async void GetModuleTreeDataAsync()
     {
         ProjectParam param = new() { ProjectId = Project.Id };
@@ -424,6 +432,7 @@ public class DetailViewModel : NavigationViewModel
         GetModuleTreeDataAsync();
         GetModelTreeDataAsync();
         SidePanels=Enum.GetNames(typeof(SidePanel_e));
+        exportWays=Enum.GetNames(typeof(ExportWay_e));
         ModulesNavigate();
         UpdateRoles = "admin,pm,mgr,dsr";
     }

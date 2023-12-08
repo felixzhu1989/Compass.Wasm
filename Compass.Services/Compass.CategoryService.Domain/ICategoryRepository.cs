@@ -34,8 +34,12 @@ public interface ICategoryRepository
     #region MaterialItem
     Task<IQueryable<MaterialItem>> GetMaterialItemsAsync();
     Task<MaterialItem?> GetMaterialItemByIdAsync(Guid id);
+    Task<MaterialItem?> GetMaterialItemByTypeAsync(string type);
     #endregion
 
-
+    #region AccCutList
+    Task<IQueryable<AccCutList>> GetAccCutListsAsync();
+    Task<AccCutList?> GetAccCutListByIdAsync(Guid id);
+    #endregion
 
 }

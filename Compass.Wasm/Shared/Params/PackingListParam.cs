@@ -5,4 +5,5 @@ public class PackingListParam:QueryParam
     public Guid? ProjectId { get; set; }
     public int? Batch { get; set; }
     public Guid? MainPlanId { get; set; }
+    public string? ProjectName { get; set; }
 }

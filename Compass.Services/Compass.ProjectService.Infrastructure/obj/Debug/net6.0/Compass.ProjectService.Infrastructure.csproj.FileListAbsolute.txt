@@ -32,6 +32,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.ProjectService.Infrastruct
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.ProjectService.Infrastructure\obj\Debug\net6.0\Compass.ProjectService.Infrastructure.AssemblyInfoInputs.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.ProjectService.Infrastructure\obj\Debug\net6.0\Compass.ProjectService.Infrastructure.AssemblyInfo.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.ProjectService.Infrastructure\obj\Debug\net6.0\Compass.ProjectService.Infrastructure.csproj.CoreCompileInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.ProjectService.Infrastructure\obj\Debug\net6.0\Compass.ProjectService.Infrastructure.sourcelink.json
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.ProjectService.Infrastructure\obj\Debug\net6.0\Compass.ProjectService.Infrastructure.csproj.CopyComplete
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.ProjectService.Infrastructure\obj\Debug\net6.0\Compass.ProjectService.Infrastructure.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Services\Compass.ProjectService.Infrastructure\obj\Debug\net6.0\refint\Compass.ProjectService.Infrastructure.dll

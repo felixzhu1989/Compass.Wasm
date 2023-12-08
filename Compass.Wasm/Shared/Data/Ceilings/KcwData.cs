@@ -52,9 +52,7 @@ public class KcwData:ModuleData
         set { dpSide = value; OnPropertyChanged(); }
     }
     #endregion
-
     
-
     #region 排风口参数
     //中心距离右端
     private double middleToRight;
@@ -167,6 +165,40 @@ public class KcwData:ModuleData
     }
     #endregion
 
+    #region 灯腔侧板参数
+    //玻璃灯板
+    private int longGlassNumber;
+    public int LongGlassNumber
+    {
+        get => longGlassNumber;
+        set { longGlassNumber = value; OnPropertyChanged(); }
+    }
+    private int shortGlassNumber;
+    public int ShortGlassNumber
+    {
+        get => shortGlassNumber;
+        set { shortGlassNumber = value; OnPropertyChanged(); }
+    }
+    private double leftLength;
+    public double LeftLength
+    {
+        get => leftLength;
+        set { leftLength = value; OnPropertyChanged(); }
+    }
+    private double rightLength;
+    public double RightLength
+    {
+        get => rightLength;
+        set { rightLength = value; OnPropertyChanged(); }
+    }
+    private double middleLength;
+    public double MiddleLength
+    {
+        get => middleLength;
+        set { middleLength = value; OnPropertyChanged(); }
+    }
+    #endregion
+
     #region 水洗管入口,KCW265时才需要
     private CeilingWaterInlet_e ceilingWaterInlet;
     public CeilingWaterInlet_e CeilingWaterInlet
@@ -195,13 +227,7 @@ public class KcwData:ModuleData
         get => gutterWidth;
         set { gutterWidth = value; OnPropertyChanged(); }
     }
-    private bool marvel;
-    public bool Marvel
-    {
-        get => marvel;
-        set { marvel = value; OnPropertyChanged(); }
-    }
-
+    
     private bool japan;
     public bool Japan
     {

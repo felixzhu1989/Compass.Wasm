@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="Compass.Wpf.Views.Ceilings.LpDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Compass.Wpf.Views.Ceilings"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters"
+             xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
+    <UserControl.Resources>
+        <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
+        <cvt:SidePanelCvt x:Key="SidePanelCvt" />
+        <cvt:IntToStringCvt x:Key="IntToStringCvt" />
+        <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
+        <cvt:OneToVisibilityCvt x:Key="OneToVisibilityCvt" />
+        <cvt:PanelTypeCvt x:Key="PanelTypeCvt" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0"
+                   Margin="10"
+                   LastChildFill="False">
+            <TextBlock Text="{Binding Title}"
+                       FontSize="20"
+                       DockPanel.Dock="Left" />
+            <Button Command="{Binding OpenHttpLinkCommand}"
+                    Content="点击浏览图纸"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource HyperlinkStyledButton}"
+                    ToolTip="查看PDF图纸"
+                    DockPanel.Dock="Left"
+                    Margin="20,0"
+                    Visibility="{Binding CurrentModule.IsDrawingOk,Converter={StaticResource BoolToVisibilityCvt}}" />
+            <Button DockPanel.Dock="Right"
+                    Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}"
+                    Content="保存参数"
+                    Command="{Binding SaveDataCommand}"
+                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
+                    materialDesign:ButtonAssist.CornerRadius="15" />
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"
+                        Margin="10">
+                <!--SSP基本参数-->
+                <StackPanel>
+                    <TextBlock Text="SSP基本参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <TextBox Text="{Binding DataDto.Length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="长度："
+                             materialDesign:TextFieldAssist.SuffixText="(单块板长度)" />
+                    <TextBox Text="{Binding DataDto.Width,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="宽度："
+                             materialDesign:TextFieldAssist.SuffixText="(不要修改，标准板宽度)" />
+                    <TextBox Text="{Binding DataDto.Height,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="高度："
+                             materialDesign:TextFieldAssist.SuffixText="(不要修改)" />
+                    <!--<ComboBox ItemsSource="{Binding SidePanels}"
+                       Margin="0,5"
+                       SelectedItem="{Binding DataDto.SidePanel,Converter={StaticResource SidePanelCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       materialDesign:TextFieldAssist.PrefixText="侧板:   " />-->
+                </StackPanel>
+                <!--灯板参数-->
+                <StackPanel>
+                    <TextBlock Text="灯板参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <TextBox Text="{Binding DataDto.LeftWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="非标W板宽度：" />
+                    <TextBox Text="{Binding DataDto.RightWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="非标Z板宽度：" />
+                    <TextBox Text="{Binding DataDto.ZPanelNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="Z板数量：" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1"
+                        Margin="10">
+                <!--其他参数-->
+                <StackPanel>
+                    <TextBlock Text="其他参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <CheckBox IsChecked="{Binding DataDto.LedLight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Content="LED灯"
+                              Margin="0,10" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

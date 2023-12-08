@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fyB7gLy4mWdI2L0+ZOz/mgXJFa2Ocd+oDeV3sSp8CzJ/11Lw4a50RqqOxxPwquDSy9sakC/BTOqsrZ+p0HXQbg==",
+  "dgSpecHash": "SXNLuLmSANN/SG/zhflZ4T3/6CWuAtlyRUiq9b3HUchSUFwBZ58V3Fw4EyfBJoBIagcQ2OX3lVbuC/CF3C0+7g==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Wasm\\Server\\Compass.Wasm.Server.csproj",
   "expectedPackageFiles": [

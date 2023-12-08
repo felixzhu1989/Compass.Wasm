@@ -69,7 +69,6 @@ public class MainViewModel : NavigationViewModel, IConfigureService
     void CreateMenuBar()
     {
         MenuBars.Add(new MenuBar { Icon = "Home", Title = "首页", NameSpace = "IndexView" });
-        MenuBars.Add(new MenuBar { Icon = "BarcodeScan", Title = "物料", NameSpace = "MaterialItemsView" });
         MenuBars.Add(new MenuBar { Icon = "Notebook", Title = "待办", NameSpace = "TodoView" });
         MenuBars.Add(new MenuBar { Icon = "NotebookPlus", Title = "备忘", NameSpace = "MemoView" });
         MenuBars.Add(new MenuBar { Icon = "Cog", Title = "设置", NameSpace = "SettingsView" });

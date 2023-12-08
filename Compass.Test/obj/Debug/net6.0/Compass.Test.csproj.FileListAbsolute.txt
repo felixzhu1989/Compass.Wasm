@@ -83,3 +83,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\SolidWorks.Interop.sl
 E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\SolidWorks.Interop.swcommands.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\SolidWorks.Interop.swconst.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Test\bin\Debug\net6.0\SolidWorks.Interop.swpublished.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Test\obj\Debug\net6.0\Compass.Test.sourcelink.json

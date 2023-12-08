@@ -120,6 +120,47 @@ public class KcjData : ModuleData
     }
     #endregion
 
+    #region 灯腔侧板参数
+    //一整条LK的总长
+    private double totalLength;
+    public double TotalLength
+    {
+        get => totalLength;
+        set { totalLength = value; OnPropertyChanged(); }
+    }
+    //玻璃灯板
+    private int longGlassNumber;
+    public int LongGlassNumber
+    {
+        get => longGlassNumber;
+        set { longGlassNumber = value; OnPropertyChanged(); }
+    }
+    private int shortGlassNumber;
+    public int ShortGlassNumber
+    {
+        get => shortGlassNumber;
+        set { shortGlassNumber = value; OnPropertyChanged(); }
+    }
+    private double leftLength;
+    public double LeftLength
+    {
+        get => leftLength;
+        set { leftLength = value; OnPropertyChanged(); }
+    }
+    private double rightLength;
+    public double RightLength
+    {
+        get => rightLength;
+        set { rightLength = value; OnPropertyChanged(); }
+    }
+    private double middleLength;
+    public double MiddleLength
+    {
+        get => middleLength;
+        set { middleLength = value; OnPropertyChanged(); }
+    }
+    #endregion
+
     #region 其他选项
     private bool domeSsp;
     public bool DomeSsp
@@ -139,13 +180,7 @@ public class KcjData : ModuleData
         get => gutterWidth;
         set { gutterWidth = value; OnPropertyChanged(); }
     }
-    private bool marvel;
-    public bool Marvel
-    {
-        get => marvel;
-        set { marvel = value; OnPropertyChanged(); }
-    }
-
+    
     private bool japan;
     public bool Japan
     {

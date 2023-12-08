@@ -135,10 +135,11 @@
         var type = (MainPlanType_e)Enum.Parse(typeof(MainPlanType_e), _planType);
 
         _filterMainPlans = _mainPlans.Where(
-            x => x.MonthOfInvoice.Year.Equals(_year)&& 
-                 (_annual||(_fromMonth&& 
-                            x.MonthOfInvoice.Month>=_month)||
-                  x.MonthOfInvoice.Month.Equals(_month))&&
+            x => x.MonthOfInvoice.Year>=_year&& 
+                 ((_annual && x.MonthOfInvoice.Year==_year)||
+                  (_fromMonth && (x.MonthOfInvoice.Year>_year||
+                                  (x.MonthOfInvoice.Year==_year && x.MonthOfInvoice.Month>=_month)))||
+                  (x.MonthOfInvoice.Year==_year && x.MonthOfInvoice.Month==_month))&&
                  (type.Equals(MainPlanType_e.NA)||
                   x.MainPlanType.Equals(type))&&
                  (string.IsNullOrEmpty(_search)||

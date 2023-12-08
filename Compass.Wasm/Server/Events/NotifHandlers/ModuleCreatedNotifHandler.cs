@@ -30,6 +30,7 @@ public class ModuleCreatedNotifHandler : INotificationHandler<ModuleCreatedNotif
             moduleData.Width = notification.Width == 0 ? modelType.Width : notification.Width;
             moduleData.Height = notification.Height == 0 ? modelType.Height : notification.Height;
             moduleData.SidePanel = notification.SidePanel;
+            moduleData.Marvel=notification.Marvel;
             await _dataDbContext.ModulesData.AddAsync(moduleData, cancellationToken);
             await _dataDbContext.SaveChangesAsync(cancellationToken);
         }

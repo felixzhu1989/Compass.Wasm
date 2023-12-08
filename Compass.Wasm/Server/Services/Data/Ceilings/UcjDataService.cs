@@ -28,6 +28,8 @@ public class UcjDataService:BaseDataGetService<UcjData>,IUcjDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
 
             #region 排风口参数
@@ -55,12 +57,21 @@ public class UcjDataService:BaseDataGetService<UcjData>,IUcjDataService
             data.HclRight = dto.HclRight;
             #endregion
 
+            #region 灯腔侧板参数
+            data.TotalLength=dto.TotalLength;
+            data.LongGlassNumber=dto.LongGlassNumber;
+            data.ShortGlassNumber=dto.ShortGlassNumber;
+
+            data.LeftLength=dto.LeftLength;
+            data.RightLength=dto.RightLength;
+            data.MiddleLength=dto.MiddleLength;
+            #endregion
+
             #region 其他配置
             data.DomeSsp = dto.DomeSsp;
             data.Gutter = dto.Gutter;
             data.GutterWidth = dto.GutterWidth;
             data.Japan = dto.Japan;
-            data.Marvel = dto.Marvel;
             #endregion
 
             #region Ansul基本参数

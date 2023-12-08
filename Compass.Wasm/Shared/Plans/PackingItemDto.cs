@@ -170,6 +170,7 @@ public class PackingItemDto : BaseDto
         set { remark=value; OnPropertyChanged(); }
     }//备注 
     #endregion
+
     #region 状态信息
     private bool pallet;
     public bool Pallet
@@ -191,5 +192,19 @@ public class PackingItemDto : BaseDto
         get => oneLabel;
         set { oneLabel=value; OnPropertyChanged(); }
     }//打印1张标签，默认false表示需要根据数量Quantity打印多张
+    #endregion
+
+    #region 额外属性
+    //是否被选中
+    private bool isSelected;
+    public bool IsSelected
+    {
+        get => isSelected;
+        set
+        {
+            isSelected = value;
+            OnPropertyChanged();
+        }
+    }
     #endregion
 }

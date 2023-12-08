@@ -3,6 +3,7 @@ using Compass.Wasm.Shared;
 using System.ComponentModel.DataAnnotations;
 using Compass.Dtos;
 using Compass.Wasm.Server.Services.Categories;
+using Compass.Wasm.Shared.Params;
 
 namespace Compass.Wasm.Server.Controllers.Categories;
 
@@ -51,5 +52,8 @@ public class MaterialItemController : ControllerBase
 
     [HttpGet("Top50")]
     public async Task<ApiResponse<List<MaterialItemDto>>> GetTop50() => await _service.GetTop50Async();
+
+    [HttpGet("Type")]
+    public async Task<ApiResponse<MaterialItemDto>> GetSingleByType(MaterialItemParam param) => await _service.GetSingleByTypeAsync(param);
     #endregion
 }

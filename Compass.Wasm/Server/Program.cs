@@ -16,7 +16,6 @@ using Compass.Wasm.Server.Services.Data.UL;
 using Compass.Wasm.Server.Services.Plans;
 using Compass.Wasm.Server.Services.Projects;
 using Compass.Wasm.Server.Services.Todos;
-using Compass.Wasm.Shared.Data.Ceilings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -186,7 +185,7 @@ builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddScoped<IModelService,ModelService>();
 builder.Services.AddScoped<IModelTypeService,ModelTypeService>();
 builder.Services.AddScoped<IMaterialItemService, MaterialItemService>();//ŒÔ¡œ
-
+builder.Services.AddScoped<IAccCutListService, AccCutListService>();
 
 #endregion
 
@@ -293,7 +292,10 @@ builder.Services.AddScoped<IDpDataService, DpDataService>();
 builder.Services.AddScoped<ILfuDataService, LfuDataService>();
 builder.Services.AddScoped<IAnDataService, AnDataService>();
 builder.Services.AddScoped<ISspDataService,SspDataService>();
-
+builder.Services.AddScoped<ILkDataService, LkDataService>();
+builder.Services.AddScoped<ILpDataService, LpDataService>();
+builder.Services.AddScoped<IInfDataService, InfDataService>();
+builder.Services.AddScoped<IDxfDataService, DxfDataService>();
 
 
 #endregion

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ORUYFnktWkE3i+R3bXOjsL9x/+NbnzYO2tGRVFSgvZZuQn9+fsOhik6IyglEYtqnKghwfi10g581Dat21nvSjQ==",
+  "dgSpecHash": "kQcQ7gK+9Z2DqCDjP3Zso2UyNP3mO0K/h0w2e3CGDEG9RQEdDCrgsF3z026nZ2HQ/bFOqvUYdqrjSuhIgDKkbQ==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.IdentityService.Infrastructure\\Compass.IdentityService.Infrastructure.csproj",
   "expectedPackageFiles": [

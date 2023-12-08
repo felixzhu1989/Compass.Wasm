@@ -27,8 +27,10 @@ public class CjDataService : BaseDataGetService<CjData>, ICjDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
-            
+
 
             #region CJ脖颈参数
             data.CjSpigotDirection=dto.CjSpigotDirection;

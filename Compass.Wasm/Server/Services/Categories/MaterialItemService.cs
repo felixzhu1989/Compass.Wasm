@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Compass.Dtos;
-using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Categories;
+using Compass.Wasm.Shared.Params;
 
 namespace Compass.Wasm.Server.Services.Categories;
 
@@ -11,7 +11,7 @@ public interface IMaterialItemService : IBaseService<MaterialItemDto>
     Task<ApiResponse<MaterialItemDto>> UpdateInventoryAsync(Guid id, MaterialItemDto dto);
     Task<ApiResponse<MaterialItemDto>> UpdateOtherAsync(Guid id, MaterialItemDto dto);
     Task<ApiResponse<List<MaterialItemDto>>> GetTop50Async();
-
+    Task<ApiResponse<MaterialItemDto>> GetSingleByTypeAsync(MaterialItemParam param);
 }
 
 public class MaterialItemService : IMaterialItemService
@@ -149,6 +149,21 @@ public class MaterialItemService : IMaterialItemService
         catch (Exception e)
         {
             return new ApiResponse<List<MaterialItemDto>> { Status = false, Message = e.Message };
+        }
+    }
+
+    public async Task<ApiResponse<MaterialItemDto>> GetSingleByTypeAsync(MaterialItemParam param)
+    {
+        try
+        {
+            var model = await _repository.GetMaterialItemByTypeAsync(param.Type);
+            if (model == null) return new ApiResponse<MaterialItemDto> { Status = false, Message = "查询数据失败" };
+            var dto = _mapper.Map<MaterialItemDto>(model);
+            return new ApiResponse<MaterialItemDto> { Status = true, Result = dto };
+        }
+        catch (Exception e)
+        {
+            return new ApiResponse<MaterialItemDto> { Status = false, Message = e.Message };
         }
     }
 

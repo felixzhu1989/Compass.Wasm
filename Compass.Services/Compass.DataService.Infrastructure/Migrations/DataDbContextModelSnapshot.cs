@@ -29,6 +29,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
+                    b.Property<string>("AssyPath")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AssyPath");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreationTime");
@@ -57,6 +61,10 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.Property<double>("Length")
                         .HasColumnType("float")
                         .HasColumnName("Length");
+
+                    b.Property<bool>("Marvel")
+                        .HasColumnType("bit")
+                        .HasColumnName("Marvel");
 
                     b.Property<int>("SidePanel")
                         .HasColumnType("int")
@@ -156,11 +164,6 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("float")
                         .HasColumnName("AnsulDropToFront");
 
-                    b.Property<bool>("Marvel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Marvel");
-
                     b.HasDiscriminator().HasValue("AnData");
                 });
 
@@ -235,6 +238,24 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("RightGutterWidth");
 
                     b.HasDiscriminator().HasValue("CjData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.DxfData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<string>("AccNumber")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AccNumber");
+
+                    b.HasDiscriminator().HasValue("DxfData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.InfData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.HasDiscriminator().HasValue("InfData");
                 });
 
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.KcjData", b =>
@@ -380,19 +401,44 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("Japan");
 
+                    b.Property<double>("LeftLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("LeftLength");
+
                     b.Property<int>("LightCable")
                         .HasColumnType("int")
                         .HasColumnName("LightCable");
 
-                    b.Property<bool>("Marvel")
+                    b.Property<int>("LongGlassNumber")
                         .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Marvel");
+                        .HasColumnType("int")
+                        .HasColumnName("LongGlassNumber");
+
+                    b.Property<double>("MiddleLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("MiddleLength");
 
                     b.Property<double>("MiddleToRight")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("MiddleToRight");
+
+                    b.Property<double>("RightLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("RightLength");
+
+                    b.Property<int>("ShortGlassNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("ShortGlassNumber");
+
+                    b.Property<double>("TotalLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("TotalLength");
 
                     b.HasDiscriminator().HasValue("KcjData");
                 });
@@ -525,15 +571,35 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnType("bit")
                         .HasColumnName("Japan");
 
-                    b.Property<bool>("Marvel")
+                    b.Property<double>("LeftLength")
                         .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Marvel");
+                        .HasColumnType("float")
+                        .HasColumnName("LeftLength");
+
+                    b.Property<int>("LongGlassNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("LongGlassNumber");
+
+                    b.Property<double>("MiddleLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("MiddleLength");
 
                     b.Property<double>("MiddleToRight")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("MiddleToRight");
+
+                    b.Property<double>("RightLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("RightLength");
+
+                    b.Property<int>("ShortGlassNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("ShortGlassNumber");
 
                     b.Property<double>("TotalLength")
                         .ValueGeneratedOnUpdateSometimes()
@@ -574,11 +640,89 @@ namespace Compass.DataService.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("LfuData");
                 });
 
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.LkData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<int>("CeilingLightType")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("CeilingLightType");
+
+                    b.Property<bool>("Japan")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("Japan");
+
+                    b.Property<double>("LeftLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("LeftLength");
+
+                    b.Property<int>("LongGlassNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("LongGlassNumber");
+
+                    b.Property<double>("MiddleLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("MiddleLength");
+
+                    b.Property<double>("RightLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("RightLength");
+
+                    b.Property<int>("ShortGlassNumber")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("int")
+                        .HasColumnName("ShortGlassNumber");
+
+                    b.Property<double>("TotalLength")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("TotalLength");
+
+                    b.Property<bool>("WaterWash")
+                        .HasColumnType("bit")
+                        .HasColumnName("WaterWash");
+
+                    b.HasDiscriminator().HasValue("LkData");
+                });
+
+            modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.LpData", b =>
+                {
+                    b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
+
+                    b.Property<bool>("LedLight")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("bit")
+                        .HasColumnName("LedLight");
+
+                    b.Property<double>("LeftWidth")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("LeftWidth");
+
+                    b.Property<double>("RightWidth")
+                        .ValueGeneratedOnUpdateSometimes()
+                        .HasColumnType("float")
+                        .HasColumnName("RightWidth");
+
+                    b.Property<int>("ZPanelNumber")
+                        .HasColumnType("int")
+                        .HasColumnName("ZPanelNumber");
+
+                    b.HasDiscriminator().HasValue("LpData");
+                });
+
             modelBuilder.Entity("Compass.Wasm.Shared.Data.Ceilings.SspData", b =>
                 {
                     b.HasBaseType("Compass.Wasm.Shared.Data.ModuleData");
 
                     b.Property<bool>("LedLight")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("bit")
                         .HasColumnName("LedLight");
 
@@ -587,6 +731,7 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("LeftType");
 
                     b.Property<double>("LeftWidth")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("LeftWidth");
 
@@ -599,6 +744,7 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .HasColumnName("RightType");
 
                     b.Property<double>("RightWidth")
+                        .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("float")
                         .HasColumnName("RightWidth");
 
@@ -724,11 +870,6 @@ namespace Compass.DataService.Infrastructure.Migrations
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("int")
                         .HasColumnName("LightType");
-
-                    b.Property<bool>("Marvel")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("bit")
-                        .HasColumnName("Marvel");
 
                     b.Property<double>("MiddleToRight")
                         .ValueGeneratedOnUpdateSometimes()

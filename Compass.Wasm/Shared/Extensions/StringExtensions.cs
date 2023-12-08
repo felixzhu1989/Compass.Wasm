@@ -1,5 +1,7 @@
-﻿using System.Formats.Asn1;
+﻿using System.Collections.ObjectModel;
+using System.Formats.Asn1;
 using System.Globalization;
+using Compass.Wasm.Shared.Categories;
 
 namespace Compass.Wasm.Shared.Extensions;
 
@@ -48,6 +50,11 @@ public static class StringExtensions
         float similarity = 1 - (float)dif[len1, len2] / Math.Max(str1.Length, str2.Length);
         //Console.WriteLine("相似度：" + similarity);
         return similarity;
+    }
+
+    public static string SubStringBetween(this string str,char chr1,char chr2)
+    {
+        return str.Substring(str.IndexOf(chr1) + 1, str.IndexOf(chr2)-str.IndexOf(chr1)-1);
     }
 
     
@@ -161,4 +168,43 @@ public static class StringExtensions
         return result && boolValue;
     }
 
+    //string Acc
+    public static ObservableCollection<Accessories> StringToAccs(this string value)
+    {
+        var accs= new ObservableCollection<Accessories>();
+        if (!string.IsNullOrEmpty(value))
+        {
+            //使用,分割
+            var accnums = value.Split(',');
+            //使用-号分割
+            foreach (var item in accnums)
+            {
+                var accnum = item.Split('-');
+                Enum.TryParse(accnum.First(), true, out AccType_e name);
+                var acc=new Accessories()
+                {
+                    Type = name,
+                    Number = int.Parse(accnum.Last())
+                };
+                accs.Add(acc);
+            }
+        }
+        return accs;
+    }
+
+    public static string AccsToString(this ObservableCollection<Accessories> value)
+    {
+        var str = string.Empty;
+        if (value.Count > 0)
+        {
+            var accnums=new List<string>();
+            foreach (var item in value)
+            {
+              var accnum=$"{item.Type}-{item.Number}";
+              accnums.Add(accnum);
+            }
+            str= string.Join(",", accnums.ToArray());
+        }
+        return str;
+    }
 }

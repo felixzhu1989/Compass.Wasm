@@ -203,6 +203,9 @@ namespace Compass.ProjectService.Infrastructure.Migrations
                     b.Property<Guid>("DrawingId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("ExportWay")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsCutListOk")
                         .HasColumnType("bit");
 

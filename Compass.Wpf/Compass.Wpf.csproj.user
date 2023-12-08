@@ -9,7 +9,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\AboutView.xaml.cs">
+    <Compile Update="Views\Settings\AboutView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Settings\AccCutListView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Ceilings\AnDataView.xaml.cs">
@@ -21,6 +24,12 @@
     <Compile Update="Views\Ceilings\DpDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Ceilings\DxfDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Ceilings\InfDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Ceilings\KcjDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +37,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Ceilings\LfuDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Ceilings\LkDataView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Ceilings\LpDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Ceilings\SspDataView.xaml.cs">
@@ -93,7 +108,7 @@
     <Compile Update="Views\MainPlansView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\MaterialItemsView.xaml.cs">
+    <Compile Update="Views\Settings\MaterialItemsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\ModulesView.xaml.cs">
@@ -126,7 +141,7 @@
     <Compile Update="Views\ProjectsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\SettingsView.xaml.cs">
+    <Compile Update="Views\Settings\SettingsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\TodoView.xaml.cs">
@@ -140,7 +155,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Update="Views\AboutView.xaml">
+    <Page Update="Views\Settings\AboutView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Settings\AccCutListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Ceilings\AnDataView.xaml">
@@ -152,6 +170,12 @@
     <Page Update="Views\Ceilings\DpDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Ceilings\DxfDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Ceilings\InfDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Ceilings\KcjDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -159,6 +183,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Ceilings\LfuDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Ceilings\LkDataView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Ceilings\LpDataView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Ceilings\SspDataView.xaml">
@@ -224,7 +254,7 @@
     <Page Update="Views\MainPlansView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\MaterialItemsView.xaml">
+    <Page Update="Views\Settings\MaterialItemsView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ModulesView.xaml">
@@ -269,7 +299,7 @@
     <Page Update="Views\ProjectsView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\SettingsView.xaml">
+    <Page Update="Views\Settings\SettingsView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\TodoView.xaml">

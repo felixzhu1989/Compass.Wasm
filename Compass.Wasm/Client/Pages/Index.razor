@@ -190,7 +190,7 @@
     private void OnMonthChange(ChangeEventArgs e)
     {
         _selectedMonth = Convert.ToDateTime(e.Value);
-        _year= _selectedMonth.Year;
+        _year = _selectedMonth.Year;
         _month= _selectedMonth.Month;
         Search(new ChangeEventArgs { Value = _search });
     }
@@ -199,10 +199,11 @@
         _search=e.Value!.ToString()!;
         _filterMainPlanDtos.Clear();
         _filterMainPlanDtos = _mainPlanDtos.Where(
-            x => x.MonthOfInvoice.Year.Equals(_year)&&
-                 (_annual||(_fromMonth&&
-                            x.MonthOfInvoice.Month>=_month)||
-                  x.MonthOfInvoice.Month.Equals(_month))&&
+            x => x.MonthOfInvoice.Year>=_year&&
+                 ((_annual && x.MonthOfInvoice.Year==_year)||
+                  (_fromMonth && (x.MonthOfInvoice.Year>_year||
+                             (x.MonthOfInvoice.Year==_year && x.MonthOfInvoice.Month>=_month)))||
+                  (x.MonthOfInvoice.Year==_year && x.MonthOfInvoice.Month==_month))&&
                  (string.IsNullOrEmpty(_search)||
                   string.IsNullOrEmpty(x.Number)||
     x.Number.Contains(_search, StringComparison.OrdinalIgnoreCase)||

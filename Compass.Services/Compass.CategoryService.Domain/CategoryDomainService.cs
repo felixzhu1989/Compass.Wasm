@@ -67,7 +67,7 @@ public class CategoryDomainService
     public async Task<ModelType> AddModelTypeAsync(ModelTypeDto dto)
     {
         int maxSeq = await _repository.GetMaxSeqOfModelTypesAsync(dto.ModelId);
-        return new ModelType(Guid.NewGuid(), dto.ModelId, maxSeq + 1, dto.Name, dto.Description, dto.Length, dto.Width, dto.Height,dto.Pallet);
+        return new ModelType(Guid.NewGuid(), dto.ModelId, maxSeq + 1, dto.Name, dto.Description, dto.Length, dto.Width, dto.Height,dto.Pallet,dto.ExportWay);
     }
     public async Task SortModelTypesAsync(Guid modelId, Guid[] sortedModelTypeIds)
     {

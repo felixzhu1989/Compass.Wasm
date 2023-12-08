@@ -2,13 +2,6 @@
 
 public class AnData : ModuleData
 {
-    private bool marvel;
-    public bool Marvel
-    {
-        get => marvel;
-        set { marvel = value; OnPropertyChanged(); }
-    }
-
     private bool ansul;
     public bool Ansul
     {

@@ -119,13 +119,6 @@ public class KviData : ModuleData
         get => coverBoard;
         set { coverBoard = value; OnPropertyChanged(); }
     }
-
-    private bool marvel;
-    public bool Marvel
-    {
-        get => marvel;
-        set { marvel = value; OnPropertyChanged(); }
-    }
     #endregion
 
     #region Ansul基本参数

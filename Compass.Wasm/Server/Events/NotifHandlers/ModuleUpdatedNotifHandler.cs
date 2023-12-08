@@ -36,6 +36,7 @@ public class ModuleUpdatedNotifHandler : INotificationHandler<ModuleUpdatedNotif
         moduleData.Width = notification.Width == 0 ? modelType.Width : notification.Width;
         moduleData.Height = notification.Height == 0 ? modelType.Height : notification.Height;
         moduleData.SidePanel = notification.SidePanel;
+        moduleData.Marvel=notification.Marvel;//2023.11.24增加Marvel选项
     }
 
     public async Task Handle(ModuleUpdatedNotif notification, CancellationToken cancellationToken)

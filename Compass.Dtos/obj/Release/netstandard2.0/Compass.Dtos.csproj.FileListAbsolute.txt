@@ -8,3 +8,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Release\netstandard2.0\Compass.Dto
 E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Release\netstandard2.0\Compass.Dtos.csproj.CoreCompileInputs.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Release\netstandard2.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Release\netstandard2.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Release\netstandard2.0\Compass.Dtos.sourcelink.json

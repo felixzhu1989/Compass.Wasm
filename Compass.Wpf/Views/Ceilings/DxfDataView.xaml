@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="Compass.Wpf.Views.Ceilings.DxfDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Compass.Wpf.Views.Ceilings"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters"
+             xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
+    <UserControl.Resources>
+        <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
+        <cvt:SidePanelCvt x:Key="SidePanelCvt" />
+        <cvt:IntToStringCvt x:Key="IntToStringCvt" />
+        <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
+        <cvt:OneToVisibilityCvt x:Key="OneToVisibilityCvt" />
+        <cvt:PanelTypeCvt x:Key="PanelTypeCvt" />
+        <cvt:AssyToVisibilityCvt x:Key="AssyToVisibilityCvt" />
+        <cvt:CopyToVisibilityCvt x:Key="CopyToVisibilityCvt" />
+        <cvt:AccTypeCvt x:Key="AccTypeCvt" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <FrameworkElement x:Name="DataContextProxy"
+                          DataContext="{Binding}" />
+        <DockPanel Grid.Row="0"
+                   Margin="10"
+                   LastChildFill="False">
+            <TextBlock Text="{Binding Title}"
+                       FontSize="20"
+                       DockPanel.Dock="Left" />
+            <Button Command="{Binding OpenHttpLinkCommand}"
+                    Content="点击浏览图纸"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource HyperlinkStyledButton}"
+                    ToolTip="查看PDF图纸"
+                    DockPanel.Dock="Left"
+                    Margin="20,0"
+                    Visibility="{Binding CurrentModule.IsDrawingOk,Converter={StaticResource BoolToVisibilityCvt}}" />
+            <Button DockPanel.Dock="Right"
+                    Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}"
+                    Content="保存参数"
+                    Command="{Binding SaveDataCommand}"
+                    Style="{StaticResource MaterialDesignFlatSecondaryDarkBgButton}"
+                    materialDesign:ButtonAssist.CornerRadius="15" />
+        </DockPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0"
+                        Margin="10"
+                        AllowDrop="True">
+                <!--接受拖拽-->
+                <behavior:Interaction.Triggers>
+                    <behavior:EventTrigger EventName="Drop">
+                        <behavior:InvokeCommandAction Command="{Binding GetDropPathCommand}"
+                                                      PassEventArgsToCommand="True" />
+                    </behavior:EventTrigger>
+                </behavior:Interaction.Triggers>
+                <!--装配体地址参数-->
+                <StackPanel Visibility="{Binding CurrentModule.ExportWay,Converter={StaticResource AssyToVisibilityCvt}}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="装配体地址参数"
+                                   Margin="0,5,0,0"
+                                   Foreground="DodgerBlue" />
+                        <TextBlock Text="(拖拽文件到此处)"
+                                   Margin="0,5,0,0"
+                                   Foreground="Red" />
+                    </StackPanel>
+                    <DockPanel LastChildFill="True">
+                        <Button DockPanel.Dock="Right"
+                                Margin="10,0,0,0"
+                                Content="浏览文件"
+                                Command="{Binding BrowseFileCommand}"
+                                Style="{StaticResource MaterialDesignRaisedSecondaryLightButton}"
+                                materialDesign:ButtonAssist.CornerRadius="15" />
+                        <TextBox Text="{Binding DataDto.AssyPath,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,5"
+                                 materialDesign:TextFieldAssist.PrefixText="地址："
+                                 materialDesign:TextFieldAssist.SuffixText="(不导图时请清空)"
+                                 materialDesign:HintAssist.Hint="(装配体文件地址)"
+                                 materialDesign:TextFieldAssist.HasClearButton="True" />
+                    </DockPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1"
+                        Margin="10">
+                <!--配件数量参数-->
+                <StackPanel Visibility="{Binding CurrentModule.ExportWay,Converter={StaticResource CopyToVisibilityCvt}}">
+                    <TextBlock Text="配件数量参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <DockPanel LastChildFill="True">
+                        <Button DockPanel.Dock="Right"
+                                Margin="10,0,0,0"
+                                Content="更新配件"
+                                Command="{Binding RefreshTextCommand}"
+                                Style="{StaticResource MaterialDesignPaperSecondaryLightButton}"
+                                materialDesign:ButtonAssist.CornerRadius="15" />
+                        <TextBox Text="{Binding DataDto.AccNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,5"
+                                 TextWrapping="WrapWithOverflow"
+                                 IsEnabled="False"
+                                 materialDesign:TextFieldAssist.PrefixText="配件合计：" />
+                    </DockPanel>
+                    <DockPanel LastChildFill="False">
+                        <Button Margin="0,5,0,0"
+                                Content="新增配件"
+                                Command="{Binding AddItemCommand}"
+                                Style="{StaticResource MaterialDesignRaisedLightButton}"
+                                materialDesign:ButtonAssist.CornerRadius="15" />
+                    </DockPanel>
+                </StackPanel>
+            </StackPanel>
+            <!--自定义显示配件和数量列表-->
+            <ScrollViewer Grid.Row="2"
+                          VerticalScrollBarVisibility="Visible"
+                          Margin="10">
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding Accs}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel LastChildFill="True">
+                                    <Button DockPanel.Dock="Right"
+                                            Margin="0,5,10,0"
+                                            Content="删除"
+                                            Command="{Binding DataContext.DeleteItemCommand, Source={x:Reference DataContextProxy}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource MaterialDesignPaperSecondaryLightButton}"
+                                            Background="Pink"
+                                            BorderThickness="0"
+                                            VerticalAlignment="Center"
+                                            materialDesign:ButtonAssist.CornerRadius="15" />
+                                    <TextBox  DockPanel.Dock="Right"
+                                              Text="{Binding Number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                              Margin="20,5"
+                                              Width="100"
+                                              VerticalAlignment="Center"
+                                              materialDesign:TextFieldAssist.PrefixText="数量：" />
+                                    <ComboBox ItemsSource="{Binding DataContext.AccTypes, Source={x:Reference DataContextProxy}}"
+                                              Margin="0,5"
+                                              VerticalAlignment="Center"
+                                              SelectedItem="{Binding Type,Converter={StaticResource AccTypeCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                              materialDesign:TextFieldAssist.PrefixText="配件类型：  " />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

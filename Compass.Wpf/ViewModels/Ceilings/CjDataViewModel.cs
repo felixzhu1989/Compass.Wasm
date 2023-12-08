@@ -13,10 +13,23 @@ public class CjDataViewModel : NavigationViewModel
             Aggregator.SendMessage(result.Status ? $"{Title} 参数保存成功！" : $"{Title}参数保存失败，{result.Message}");
         });
         OpenHttpLinkCommand = new DelegateCommand(OpenHttpLink);
+        UpdateRoles = "admin,pm,mgr,dsr";
     }
     public DelegateCommand SaveDataCommand { get; }
     public DelegateCommand OpenHttpLinkCommand { get; }
+    #region 打开网页链接
+    private void OpenHttpLink()
+    {
+        foreach (var drwUrl in CurrentModule.DrawingUrl.Split('\n'))
+        {
+            var startInfo = new ProcessStartInfo(drwUrl)
+                { UseShellExecute =true };
+            Process.Start(startInfo);
+        }
+    }
     #endregion
+    #endregion
+
     #region 角色控制属性
     private string updateRoles;
     public string UpdateRoles
@@ -25,6 +38,7 @@ public class CjDataViewModel : NavigationViewModel
         set { updateRoles = value; RaisePropertyChanged(); }
     }
     #endregion
+
     #region Module和ModuleData属性
     private ModuleDto currentModule = null!;
     public ModuleDto CurrentModule
@@ -46,6 +60,7 @@ public class CjDataViewModel : NavigationViewModel
         set { dataDto = value; RaisePropertyChanged(); }
     }
     #endregion
+
     #region 详细参数相关枚举值属性
     private string[] sidePanels = null!;
     public string[] SidePanels
@@ -109,17 +124,6 @@ public class CjDataViewModel : NavigationViewModel
     //}
     #endregion
 
-    #region 打开网页链接
-    private void OpenHttpLink()
-    {
-        foreach (var drwUrl in CurrentModule.DrawingUrl.Split('\n'))
-        {
-            var startInfo = new ProcessStartInfo(drwUrl)
-                { UseShellExecute =true };
-            Process.Start(startInfo);
-        }
-    }
-    #endregion
     #region 导航初始化
     private void GetEnumNames()
     {
@@ -161,9 +165,7 @@ public class CjDataViewModel : NavigationViewModel
         Title = $"{CurrentModule.Name} {CurrentModule.ModelName}{specialNotes}";
         GetEnumNames();
         GetDataAsync();
-        UpdateRoles = "admin,pm,mgr,dsr";
     }
 
     #endregion
-
 }

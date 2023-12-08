@@ -185,13 +185,14 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.S
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.MvcApplicationPartsAssemblyInfo.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.RazorAssemblyInfo.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.RazorAssemblyInfo.cs
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.sourcelink.json
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets.build.json
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets.development.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets\msbuild.Compass.Wasm.Server.Microsoft.AspNetCore.StaticWebAssets.props
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets\msbuild.build.Compass.Wasm.Server.props
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Compass.Wasm.Server.props
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Compass.Wasm.Server.props
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets.pack.json
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets.build.json
-E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\staticwebassets.development.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\scopedcss\bundle\Compass.Wasm.Server.styles.css
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.csproj.CopyComplete
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Debug\net6.0\Compass.Wasm.Server.dll

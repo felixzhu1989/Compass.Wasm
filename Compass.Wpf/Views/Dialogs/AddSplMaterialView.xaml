@@ -25,14 +25,14 @@
         <DockPanel Grid.Row="1"
                    LastChildFill="False"
                    Margin="20">
-            <TextBlock Text="物料号在清单中是唯一的，用于识别不同的物料，内容可自定义，如果物料号相同则物料信息将会被覆盖"
+            <TextBlock Text="物料编码在清单中是唯一的，用于识别不同的物料，内容可自定义，如果物料号相同则物料信息将会被覆盖"
                        Foreground="Red"
                        DockPanel.Dock="Top"
                        TextWrapping="Wrap"/>
             
             <TextBox Text="{Binding PackingItemDto.MtlNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                     materialDesign:HintAssist.Hint="请输入唯一的物料号"
-                     ToolTip="请输入唯一的物料号"
+                     materialDesign:HintAssist.Hint="请输入唯一的物料编码"
+                     ToolTip="请输入唯一的物料编码"
                      DockPanel.Dock="Top"
                      Margin="0,5"
                      materialDesign:TextFieldAssist.PrefixText="料号：" />

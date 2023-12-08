@@ -115,6 +115,61 @@ public class SidePanelService : BaseSwService, ISidePanelService
         }
     }
 
+    public void SidePanelFr450(AssemblyDoc swAssyTop, string suffix, SidePanel_e sidePanel, double length, double width, double height, bool backCj, ExhaustType_e exhaustType)
+    {
+        //KV/UV烟罩侧边CJ留出安全距离110
+        //KV/UV450烟罩安全距离140
+        //KW/UW烟罩侧边CJ流出安全距离190
+        var sideCjEnd = 110d;
+        if (height == 555d)
+        {
+            sideCjEnd= exhaustType is ExhaustType_e.KW or ExhaustType_e.UW ? 190d : 110d;
+        }
+        else if (height ==450d)
+        {
+            sideCjEnd = 140d;
+        }
+        if (backCj) sideCjEnd += 90d;//有BackCj时需要让侧面CJ孔避让排风腔
+
+        //todo:是否需要合并M型烟罩
+        var swAssyLevel1 = swAssyTop.GetSubAssemblyDoc(suffix, "SidePanel_Fr_450-1", Aggregator);
+
+
+        if (sidePanel == SidePanel_e.双)
+        {
+            FNHS0073(swAssyLevel1, suffix, "FNHS0085-1", width, height, backCj, sideCjEnd);
+            FNHS0075(swAssyLevel1, suffix, "FNHS0086-1", width, height, backCj);
+
+            FNHS0073(swAssyLevel1, suffix, "FNHS0087-1", width, height, backCj, sideCjEnd);
+            FNHS0075(swAssyLevel1, suffix, "FNHS0088-1", width, height, backCj);
+            swAssyLevel1.ChangeDim("Length@DistanceLeft", length/2d);
+            swAssyLevel1.ChangeDim("Length@DistanceRight", length/2d);
+        }
+        else if (sidePanel == SidePanel_e.左)
+        {
+            FNHS0073(swAssyLevel1, suffix, "FNHS0085-1", width, height, backCj, sideCjEnd);
+            FNHS0075(swAssyLevel1, suffix, "FNHS0086-1", width, height, backCj);
+            swAssyLevel1.Suppress(suffix, "FNHS0087-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0088-1");
+            swAssyLevel1.ChangeDim("Length@DistanceLeft", length/2d);
+        }
+        else if (sidePanel == SidePanel_e.右)
+        {
+            swAssyLevel1.Suppress(suffix, "FNHS0085-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0086-1");
+            FNHS0073(swAssyLevel1, suffix, "FNHS0087-1", width, height, backCj, sideCjEnd);
+            FNHS0075(swAssyLevel1, suffix, "FNHS0088-1", width, height, backCj);
+            swAssyLevel1.ChangeDim("Length@DistanceRight", length/2d);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffix, "FNHS0085-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0086-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0087-1");
+            swAssyLevel1.Suppress(suffix, "FNHS0088-1");
+        }
+    }
+
     public void SidePanelHw(AssemblyDoc swAssyTop, string suffix, SidePanel_e sidePanel, double length, double width, double height, bool backCj, ExhaustType_e exhaustType)
     {
         //KV/UV烟罩侧边CJ留出安全距离110
@@ -158,7 +213,6 @@ public class SidePanelService : BaseSwService, ISidePanelService
             swAssyLevel1.Suppress(suffix, "FNHS0070-1");
         }
     }
-
 
     public void SidePanelNeq(AssemblyDoc swAssyTop, string suffix, SidePanel_e sidePanel, double length, double width, double height,double suHeight, bool backCj, ExhaustType_e exhaustType)
     {
@@ -236,6 +290,7 @@ public class SidePanelService : BaseSwService, ISidePanelService
         if (backCj) swCompLevel2.UnSuppress("BackCj");
         else swCompLevel2.Suppress("BackCj");
     }
+
     private void FNHS0002(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, bool backCj)
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
@@ -270,6 +325,7 @@ public class SidePanelService : BaseSwService, ISidePanelService
             swCompLevel2.Suppress("BackCj");
         }
     }
+
     private void FNHS0075(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, bool backCj)
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out var swModelLevel2, suffix, partName, Aggregator);
@@ -286,12 +342,21 @@ public class SidePanelService : BaseSwService, ISidePanelService
         if (backCj) swCompLevel2.UnSuppress("BackCj");
         else swCompLevel2.Suppress("BackCj");
         //todo:处理MidRoof铆钉孔
-
+        if (width > 1200d)
+        {
+            swCompLevel2.Suppress("DeleteFaceShort");
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("DeleteFaceShort");
+        }
     }
 
 
-    #endregion
 
+
+
+    #endregion
 
     #region 华为烟罩
     private void FNHS0067(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, double height, bool backCj, double sideCjEnd)
@@ -371,5 +436,4 @@ public class SidePanelService : BaseSwService, ISidePanelService
         swModelLevel2.ChangeDim("Width@SketchMidRoofHoles", insidePanelWidth);
     }
     #endregion
-
 }

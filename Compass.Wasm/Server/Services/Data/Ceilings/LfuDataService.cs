@@ -29,9 +29,9 @@ public class LfuDataService:BaseDataGetService<LfuData>,ILfuDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
-            data.TotalLength=dto.TotalLength;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
-
 
             #region 新风口参数
             data.SupplySpigotNumber=dto.SupplySpigotNumber;
@@ -39,6 +39,7 @@ public class LfuDataService:BaseDataGetService<LfuData>,ILfuDataService
             data.SupplySpigotDia=dto.SupplySpigotDia;
             #endregion
 
+            data.TotalLength=dto.TotalLength;
             data.Japan=dto.Japan; 
 
             data.NotifyModified();//通知更新时间

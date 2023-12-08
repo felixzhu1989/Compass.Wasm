@@ -303,7 +303,6 @@ public class CeilingService : BaseSwService, ICeilingService
         }
         #endregion
 
-
         #region 铝网孔板
         //国内网孔板长度-10，日本按照原样给
         var panelLength = data.Japan ? data.Length : data.Length-10d;
@@ -388,33 +387,36 @@ public class CeilingService : BaseSwService, ICeilingService
     #region SSP
     public void SspFlat(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, SspData data)
     {
+        
         //边缘两块W板之间的间距
         var disW = (data.MPanelNumber * 2 - 1) * 500d;
         swAssyTop.ChangeDim("Length@DistanceLength", disW);
 
+        var netLength = data.Length - 10d;
+        var panelLength= data.Length - 10d;
         //边缘两块W板(重命名边缘W板),有Z板时宽度500
         var leftWidthW =data.LeftType is PanelType_e.Z ?  500d:data.LeftWidth;
-        var swCompLeftW= swAssyTop.RenameComp(suffix, "SSPFW", $"{module}.1", "FNCM0017-1", data.Length - 10d, leftWidthW, Aggregator);
+        var swCompLeftW= swAssyTop.RenameComp(suffix, "SSPFW", $"{module}.1", "FNCM0017-1", netLength, leftWidthW, Aggregator);
         if (swCompLeftW != null)
         {
-            SspFlatPanel(swCompLeftW, data.Length - 10d, leftWidthW, data.LedLight);
+            SspFlatPanel(swCompLeftW, panelLength, leftWidthW, data.LedLight);
         }
 
         var rightWidthW = data.RightType is PanelType_e.Z ? 500d : data.RightWidth;
-        var swCompRightW = swAssyTop.RenameComp(suffix, "SSPFW", $"{module}.2", "FNCM0018-1", data.Length - 10d, rightWidthW, Aggregator);
+        var swCompRightW = swAssyTop.RenameComp(suffix, "SSPFW", $"{module}.2", "FNCM0018-1", netLength, rightWidthW, Aggregator);
         if (swCompRightW != null)
         {
-            SspFlatPanel(swCompRightW, data.Length - 10d, rightWidthW, data.LedLight);
+            SspFlatPanel(swCompRightW, panelLength, rightWidthW, data.LedLight);
         }
         
 
         //如果那边有Z板就解压Z板(重命名边缘Z板)
         if (data.LeftType is PanelType_e.Z)
         {
-            var swCompLeftZ = swAssyTop.RenameComp(suffix, "SSPFZ", $"{module}.3", "FNCM0019-1", data.Length - 10d, data.LeftWidth, Aggregator);
+            var swCompLeftZ = swAssyTop.RenameComp(suffix, "SSPFZ", $"{module}.3", "FNCM0019-1", netLength, data.LeftWidth, Aggregator);
             if (swCompLeftZ != null)
             {
-                SspFlatPanel(swCompLeftZ, data.Length - 10d, data.LeftWidth, data.LedLight);
+                SspFlatPanel(swCompLeftZ, panelLength, data.LeftWidth, data.LedLight);
             }
         }
         else
@@ -424,10 +426,10 @@ public class CeilingService : BaseSwService, ICeilingService
 
         if (data.RightType is PanelType_e.Z)
         {
-            var swCompRightZ = swAssyTop.RenameComp(suffix, "SSPFZ", $"{module}.4", "FNCM0020-1", data.Length - 10d, data.RightWidth, Aggregator);
+            var swCompRightZ = swAssyTop.RenameComp(suffix, "SSPFZ", $"{module}.4", "FNCM0020-1", netLength, data.RightWidth, Aggregator);
             if (swCompRightZ != null)
             {
-                SspFlatPanel(swCompRightZ, data.Length - 10d, data.RightWidth, data.LedLight);
+                SspFlatPanel(swCompRightZ, panelLength, data.RightWidth, data.LedLight);
             }
         }
         else
@@ -436,10 +438,10 @@ public class CeilingService : BaseSwService, ICeilingService
         }
 
         //标准M板(有一个驻场，重命名标准M板)
-        var swCompStdM = swAssyTop.RenameComp(suffix, "SSPFM", module, "FNCM0005-1", data.Length - 10d, 500d, Aggregator);
+        var swCompStdM = swAssyTop.RenameComp(suffix, "SSPFM", module, "FNCM0005-1", netLength, 500d, Aggregator);
         if (swCompStdM != null)
         {
-            SspFlatPanel(swCompStdM, data.Length - 10d, 500d, data.LedLight);
+            SspFlatPanel(swCompStdM, panelLength, 500d, data.LedLight);
         }
 
         //(M板数量>1，解压阵列种子，M和W，重命名标准W板)
@@ -447,10 +449,10 @@ public class CeilingService : BaseSwService, ICeilingService
         {
             swAssyTop.ForceUnSuppress(suffix, "FNCM0005-2", Aggregator);
 
-            var swCompStdW = swAssyTop.RenameComp(suffix, "SSPFW", module, "FNCM0004-1", data.Length - 10d, 500d, Aggregator);
+            var swCompStdW = swAssyTop.RenameComp(suffix, "SSPFW", module, "FNCM0004-1", netLength, 500d, Aggregator);
             if (swCompStdW != null)
             {
-                SspFlatPanel(swCompStdW, data.Length - 10d, 500d, data.LedLight);
+                SspFlatPanel(swCompStdW, panelLength, 500d, data.LedLight);
             }
         }
         else
@@ -479,20 +481,21 @@ public class CeilingService : BaseSwService, ICeilingService
         //用于计算焊接支撑板数量
         var panelNumber = data.MPanelNumber * 2 + 1;
 
-
+        var netLength = data.Length - 10d;
+        var panelLength = data.Length - 810d;
         //边缘两块W板(重命名边缘W板),有Z板时宽度500
         var leftWidthW = data.LeftType is PanelType_e.Z ? 500d : data.LeftWidth;
-        var swCompLeftW = swAssyTop.RenameComp(suffix, "SSPDW", $"{module}.1", "FNCM0021-1", data.Length - 10d, leftWidthW, Aggregator);
+        var swCompLeftW = swAssyTop.RenameComp(suffix, "SSPDW", $"{module}.1", "FNCM0021-1", netLength, leftWidthW, Aggregator);
         if (swCompLeftW != null)
         {
-            SspDomePanel(swCompLeftW, data.Length - 810d, leftWidthW, data.LedLight);
+            SspDomePanel(swCompLeftW, panelLength, leftWidthW, data.LedLight);
         }
 
         var rightWidthW = data.RightType is PanelType_e.Z ? 500d : data.RightWidth;
-        var swCompRightW = swAssyTop.RenameComp(suffix, "SSPDW", $"{module}.2", "FNCM0022-1", data.Length - 10d, rightWidthW, Aggregator);
+        var swCompRightW = swAssyTop.RenameComp(suffix, "SSPDW", $"{module}.2", "FNCM0022-1", netLength, rightWidthW, Aggregator);
         if (swCompRightW != null)
         {
-            SspDomePanel(swCompRightW, data.Length - 810d, rightWidthW, data.LedLight);
+            SspDomePanel(swCompRightW, panelLength, rightWidthW, data.LedLight);
         }
 
 
@@ -500,10 +503,10 @@ public class CeilingService : BaseSwService, ICeilingService
         if (data.LeftType is PanelType_e.Z)
         {
             panelNumber++;
-            var swCompLeftZ = swAssyTop.RenameComp(suffix, "SSPDZ", $"{module}.3", "FNCM0023-1", data.Length - 10d, data.LeftWidth, Aggregator);
+            var swCompLeftZ = swAssyTop.RenameComp(suffix, "SSPDZ", $"{module}.3", "FNCM0023-1", netLength, data.LeftWidth, Aggregator);
             if (swCompLeftZ != null)
             {
-                SspDomePanel(swCompLeftZ, data.Length - 810d, data.LeftWidth, data.LedLight);
+                SspDomePanel(swCompLeftZ, panelLength, data.LeftWidth, data.LedLight);
             }
         }
         else
@@ -514,10 +517,10 @@ public class CeilingService : BaseSwService, ICeilingService
         if (data.RightType is PanelType_e.Z)
         {
             panelNumber++;
-            var swCompRightZ = swAssyTop.RenameComp(suffix, "SSPDZ", $"{module}.4", "FNCM0024-1", data.Length - 10d, data.RightWidth, Aggregator);
+            var swCompRightZ = swAssyTop.RenameComp(suffix, "SSPDZ", $"{module}.4", "FNCM0024-1", netLength, data.RightWidth, Aggregator);
             if (swCompRightZ != null)
             {
-                SspDomePanel(swCompRightZ, data.Length - 810d, data.RightWidth, data.LedLight);
+                SspDomePanel(swCompRightZ, panelLength, data.RightWidth, data.LedLight);
             }
         }
         else
@@ -526,10 +529,10 @@ public class CeilingService : BaseSwService, ICeilingService
         }
 
         //标准M板(有一个驻场，重命名标准M板)
-        var swCompStdM = swAssyTop.RenameComp(suffix, "SSPDM", module, "FNCM0002-1", data.Length - 10d, 500d, Aggregator);
+        var swCompStdM = swAssyTop.RenameComp(suffix, "SSPDM", module, "FNCM0002-1", netLength, 500d, Aggregator);
         if (swCompStdM != null)
         {
-            SspDomePanel(swCompStdM, data.Length - 810d, 500d, data.LedLight);
+            SspDomePanel(swCompStdM, panelLength, 500d, data.LedLight);
         }
 
         //(M板数量>1，解压阵列种子，M和W，重命名标准W板)
@@ -537,10 +540,10 @@ public class CeilingService : BaseSwService, ICeilingService
         {
             swAssyTop.ForceUnSuppress(suffix, "FNCM0002-2", Aggregator);
 
-            var swCompStdW = swAssyTop.RenameComp(suffix, "SSPDW", module, "FNCM0001-1", data.Length - 10d, 500d, Aggregator);
+            var swCompStdW = swAssyTop.RenameComp(suffix, "SSPDW", module, "FNCM0001-1", netLength, 500d, Aggregator);
             if (swCompStdW != null)
             {
-                SspDomePanel(swCompStdW, data.Length - 10, 500d, data.LedLight);
+                SspDomePanel(swCompStdW, panelLength, 500d, data.LedLight);
             }
         }
         else
@@ -564,6 +567,784 @@ public class CeilingService : BaseSwService, ICeilingService
         swModelTop.ChangeDim("Number@LocalLPatternSupport", panelNumber*2);
     }
 
+    public void SspHalf(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, SspData data)
+    {
+        //边缘两块W板之间的间距
+        var disW = (data.MPanelNumber * 2 - 1) * 500d;
+        swAssyTop.ChangeDim("Length@DistanceLength", disW);
+        //用于计算焊接支撑板数量
+        var panelNumber = data.MPanelNumber * 2 + 1;
+
+        var netLength = data.Length - 10d;
+        var panelLength = data.Length - 410d;//板块拱板
+        //边缘两块W板(重命名边缘W板),有Z板时宽度500
+        var leftWidthW = data.LeftType is PanelType_e.Z ? 500d : data.LeftWidth;
+        var swCompLeftW = swAssyTop.RenameComp(suffix, "SSPDHFW", $"{module}.1", "FNCM0025-1", netLength, leftWidthW, Aggregator);
+        if (swCompLeftW != null)
+        {
+            SspDomePanel(swCompLeftW, panelLength, leftWidthW, data.LedLight);
+        }
+
+        var rightWidthW = data.RightType is PanelType_e.Z ? 500d : data.RightWidth;
+        var swCompRightW = swAssyTop.RenameComp(suffix, "SSPDHFW", $"{module}.2", "FNCM0026-1", netLength, rightWidthW, Aggregator);
+        if (swCompRightW != null)
+        {
+            SspDomePanel(swCompRightW, panelLength, rightWidthW, data.LedLight);
+        }
+
+
+        //如果那边有Z板就解压Z板(重命名边缘Z板)
+        if (data.LeftType is PanelType_e.Z)
+        {
+            panelNumber++;
+            var swCompLeftZ = swAssyTop.RenameComp(suffix, "SSPDHFZ", $"{module}.3", "FNCM0027-1", netLength, data.LeftWidth, Aggregator);
+            if (swCompLeftZ != null)
+            {
+                SspDomePanel(swCompLeftZ, panelLength, data.LeftWidth, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0027-1");
+        }
+
+        if (data.RightType is PanelType_e.Z)
+        {
+            panelNumber++;
+            var swCompRightZ = swAssyTop.RenameComp(suffix, "SSPDHFZ", $"{module}.4", "FNCM0028-1", netLength, data.RightWidth, Aggregator);
+            if (swCompRightZ != null)
+            {
+                SspDomePanel(swCompRightZ, panelLength, data.RightWidth, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0028-1");
+        }
+
+        //标准M板(有一个驻场，重命名标准M板)
+        var swCompStdM = swAssyTop.RenameComp(suffix, "SSPDHFM", module, "FNCM0015-1", netLength, 500d, Aggregator);
+        if (swCompStdM != null)
+        {
+            SspDomePanel(swCompStdM, panelLength, 500d, data.LedLight);
+        }
+
+        //(M板数量>1，解压阵列种子，M和W，重命名标准W板)
+        if (data.MPanelNumber > 1)
+        {
+            swAssyTop.ForceUnSuppress(suffix, "FNCM0015-2", Aggregator);
+
+            var swCompStdW = swAssyTop.RenameComp(suffix, "SSPDHFW", module, "FNCM0014-1", netLength, 500d, Aggregator);
+            if (swCompStdW != null)
+            {
+                SspDomePanel(swCompStdW, panelLength, 500d, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0014-1");
+            swAssyTop.ForceSuppress(suffix, "FNCM0015-2");
+        }
+
+        //(M板数量>2，解压阵列)
+        if (data.MPanelNumber > 2)
+        {
+            swAssyTop.UnSuppress("LocalLPatternStd");
+            swModelTop.ChangeDim("Number@LocalLPatternStd", data.MPanelNumber-1);
+        }
+        else
+        {
+            swAssyTop.Suppress("LocalLPatternStd");
+        }
+
+        //灯板焊接支撑阵列
+        swModelTop.ChangeDim("Number@LocalLPatternSupport", panelNumber*2);
+    }
+
+    public void SspDLk(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, SspData data)
+    {
+        //边缘两块W板之间的间距
+        var disW = (data.MPanelNumber * 2 - 1) * 500d;
+        swAssyTop.ChangeDim("Length@DistanceLength", disW);
+        //用于计算焊接支撑板数量
+        var panelNumber = data.MPanelNumber * 2 + 1;
+
+        var netLength = data.Length - 10d;
+        var panelLength = data.Length - 270d;//板块拱板
+        //边缘两块W板(重命名边缘W板),有Z板时宽度500
+        var leftWidthW = data.LeftType is PanelType_e.Z ? 500d : data.LeftWidth;
+        var swCompLeftW = swAssyTop.RenameComp(suffix, "SSPDLKW", $"{module}.1", "FNCM0029-1", netLength, leftWidthW, Aggregator);
+        if (swCompLeftW != null)
+        {
+            SspDomePanel(swCompLeftW, panelLength, leftWidthW, data.LedLight);
+        }
+
+        var rightWidthW = data.RightType is PanelType_e.Z ? 500d : data.RightWidth;
+        var swCompRightW = swAssyTop.RenameComp(suffix, "SSPDLKW", $"{module}.2", "FNCM0039-1", netLength, rightWidthW, Aggregator);
+        if (swCompRightW != null)
+        {
+            SspDomePanel(swCompRightW, panelLength, rightWidthW, data.LedLight);
+        }
+
+
+        //如果那边有Z板就解压Z板(重命名边缘Z板)
+        if (data.LeftType is PanelType_e.Z)
+        {
+            panelNumber++;
+            var swCompLeftZ = swAssyTop.RenameComp(suffix, "SSPDLKZ", $"{module}.3", "FNCM0031-1", netLength, data.LeftWidth, Aggregator);
+            if (swCompLeftZ != null)
+            {
+                SspDomePanel(swCompLeftZ, panelLength, data.LeftWidth, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0031-1");
+        }
+
+        if (data.RightType is PanelType_e.Z)
+        {
+            panelNumber++;
+            var swCompRightZ = swAssyTop.RenameComp(suffix, "SSPDLKZ", $"{module}.4", "FNCM0032-1", netLength, data.RightWidth, Aggregator);
+            if (swCompRightZ != null)
+            {
+                SspDomePanel(swCompRightZ, panelLength, data.RightWidth, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0032-1");
+        }
+
+        //标准M板(有一个驻场，重命名标准M板)
+        var swCompStdM = swAssyTop.RenameComp(suffix, "SSPDLKM", module, "FNCM0009-1", netLength, 500d, Aggregator);
+        if (swCompStdM != null)
+        {
+            SspDomePanel(swCompStdM, panelLength, 500d, data.LedLight);
+        }
+
+        //(M板数量>1，解压阵列种子，M和W，重命名标准W板)
+        if (data.MPanelNumber > 1)
+        {
+            swAssyTop.ForceUnSuppress(suffix, "FNCM0009-2", Aggregator);
+
+            var swCompStdW = swAssyTop.RenameComp(suffix, "SSPDLKW", module, "FNCM0008-1", netLength, 500d, Aggregator);
+            if (swCompStdW != null)
+            {
+                SspDomePanel(swCompStdW, panelLength, 500d, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0008-1");
+            swAssyTop.ForceSuppress(suffix, "FNCM0009-2");
+        }
+
+        //(M板数量>2，解压阵列)
+        if (data.MPanelNumber > 2)
+        {
+            swAssyTop.UnSuppress("LocalLPatternStd");
+            swModelTop.ChangeDim("Number@LocalLPatternStd", data.MPanelNumber-1);
+        }
+        else
+        {
+            swAssyTop.Suppress("LocalLPatternStd");
+        }
+
+        //灯板焊接支撑阵列
+        swModelTop.ChangeDim("Number@LocalLPatternSupport", panelNumber*2);
+    }
+
+    public void SspSLk(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, SspData data)
+    {
+        //边缘两块W板之间的间距
+        var disW = (data.MPanelNumber * 2 - 1) * 500d;
+        swAssyTop.ChangeDim("Length@DistanceLength", disW);
+        //用于计算焊接支撑板数量
+        var panelNumber = data.MPanelNumber * 2 + 1;
+
+        var netLength = data.Length - 10d;
+        var panelLength = data.Length - 540d;//板块拱板
+        //边缘两块W板(重命名边缘W板),有Z板时宽度500
+        var leftWidthW = data.LeftType is PanelType_e.Z ? 500d : data.LeftWidth;
+        var swCompLeftW = swAssyTop.RenameComp(suffix, "SSPSLKW", $"{module}.1", "FNCM0033-1", netLength, leftWidthW, Aggregator);
+        if (swCompLeftW != null)
+        {
+            SspDomePanel(swCompLeftW, panelLength, leftWidthW, data.LedLight);
+        }
+
+        var rightWidthW = data.RightType is PanelType_e.Z ? 500d : data.RightWidth;
+        var swCompRightW = swAssyTop.RenameComp(suffix, "SSPSLKW", $"{module}.2", "FNCM0034-1", netLength, rightWidthW, Aggregator);
+        if (swCompRightW != null)
+        {
+            SspDomePanel(swCompRightW, panelLength, rightWidthW, data.LedLight);
+        }
+
+
+        //如果那边有Z板就解压Z板(重命名边缘Z板)
+        if (data.LeftType is PanelType_e.Z)
+        {
+            panelNumber++;
+            var swCompLeftZ = swAssyTop.RenameComp(suffix, "SSPSLKZ", $"{module}.3", "FNCM0035-1", netLength, data.LeftWidth, Aggregator);
+            if (swCompLeftZ != null)
+            {
+                SspDomePanel(swCompLeftZ, panelLength, data.LeftWidth, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0035-1");
+        }
+
+        if (data.RightType is PanelType_e.Z)
+        {
+            panelNumber++;
+            var swCompRightZ = swAssyTop.RenameComp(suffix, "SSPSLKZ", $"{module}.4", "FNCM0036-1", netLength, data.RightWidth, Aggregator);
+            if (swCompRightZ != null)
+            {
+                SspDomePanel(swCompRightZ, panelLength, data.RightWidth, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0036-1");
+        }
+
+        //标准M板(有一个驻场，重命名标准M板)
+        var swCompStdM = swAssyTop.RenameComp(suffix, "SSPSLKM", module, "FNCM0012-1", netLength, 500d, Aggregator);
+        if (swCompStdM != null)
+        {
+            SspDomePanel(swCompStdM, panelLength, 500d, data.LedLight);
+        }
+
+        //(M板数量>1，解压阵列种子，M和W，重命名标准W板)
+        if (data.MPanelNumber > 1)
+        {
+            swAssyTop.ForceUnSuppress(suffix, "FNCM0012-2", Aggregator);
+
+            var swCompStdW = swAssyTop.RenameComp(suffix, "SSPSLKW", module, "FNCM0011-1", netLength, 500d, Aggregator);
+            if (swCompStdW != null)
+            {
+                SspDomePanel(swCompStdW, panelLength, 500d, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCM0011-1");
+            swAssyTop.ForceSuppress(suffix, "FNCM0012-2");
+        }
+
+        //(M板数量>2，解压阵列)
+        if (data.MPanelNumber > 2)
+        {
+            swAssyTop.UnSuppress("LocalLPatternStd");
+            swModelTop.ChangeDim("Number@LocalLPatternStd", data.MPanelNumber-1);
+        }
+        else
+        {
+            swAssyTop.Suppress("LocalLPatternStd");
+        }
+
+        //灯板焊接支撑阵列
+        swModelTop.ChangeDim("Number@LocalLPatternSupport", panelNumber*2);
+    }
+    #endregion
+
+    #region LK
+    public void LightPanelSsGlass(AssemblyDoc swAssyLevel1, string suffx, string module, double totalLength, int longGlassNumber, int shortGlassNumber)
+    {
+        var swModelLevel1 = (ModelDoc2)swAssyLevel1;
+        swModelLevel1.ChangeDim("Length@DistanceLength", totalLength);
+
+        #region 侧板
+        //长玻璃1158+17，558+17
+        var sideLength = (totalLength - 17d - longGlassNumber * 1175d - shortGlassNumber * 575d) / 2d;
+        while (sideLength<29d)
+        {
+            sideLength += 1175d / 2d;//如果侧板太短，则减一块玻璃
+            longGlassNumber--;
+        }
+
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffx, "LKSSP", module, "FNCL0025-1", sideLength, 230d, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+        }
+        #endregion
+
+        #region 长玻璃
+        if (longGlassNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600010-1", Aggregator);
+            //2023.12.6制图时发现，pack出去后实例号3变成了6
+            swAssyLevel1.UnSuppress(suffx, "2200600003-6", Aggregator);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600010-1");
+            swAssyLevel1.Suppress(suffx, "2200600003-6");
+        }
+        if (longGlassNumber > 1)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternLong");
+            swModelLevel1.ChangeDim("Number@LocalLPatternLong", longGlassNumber);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternLong");
+        }
+        #endregion
+
+        #region 短玻璃
+        if (shortGlassNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600011-1", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-2", Aggregator);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600011-1");
+            swAssyLevel1.Suppress(suffx, "2200600003-2");
+        }
+        if (shortGlassNumber > 1)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternShort");
+            swModelLevel1.ChangeDim("Number@LocalLPatternShort", shortGlassNumber);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternShort");
+        }
+        #endregion
+    }
+    public void LightPanelSsLed(AssemblyDoc swAssyLevel1, string suffx, string module, double totalLength)
+    {
+        var swModelLevel1 = (ModelDoc2)swAssyLevel1;
+        swModelLevel1.ChangeDim("Length@DistanceLength", totalLength);
+
+        //LED标准板，1500
+        var stdPanelNumber = (int)((totalLength - 300.5d) / 1500d);//1500+300直接做成一块
+        var sideLength = totalLength - stdPanelNumber * 1500d;
+        var ledNumber = (int)((sideLength - 300d) / 500d)+1;
+
+        #region 非标准板
+        //重命名非标板
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffx, "LKSSPLED", module, "FNCL0023-1", sideLength, 230d, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            if (ledNumber > 0)
+            {
+                swCompLevel2.UnSuppress("LedLight");
+            }
+            else
+            {
+                swCompLevel2.Suppress("LedLight");
+            }
+
+            if (ledNumber > 1)
+            {
+                swCompLevel2.UnSuppress("LPatternLed");
+                swModelLevel2.ChangeDim("Number@LPatternLed", ledNumber);
+            }
+            else
+            {
+                swCompLevel2.Suppress("LPatternLed");
+            }
+        }
+        #endregion
+
+        #region 标准板
+        if (stdPanelNumber > 0)
+        {
+            //重命名标准板
+            var swCompStd = swAssyLevel1.RenameComp(suffx, "LKSSPLED", $"{module}.Std", "FNCL0022-1", 1483d, 230d, Aggregator);
+        }
+        else
+        {
+            swAssyLevel1.ForceSuppress(suffx, "FNCL0022-1");
+            swAssyLevel1.ForceSuppress(suffx, "2200600003-1");
+        }
+
+        if (stdPanelNumber > 1)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternStd");
+            swModelLevel1.ChangeDim("Number@LocalLPatternStd", stdPanelNumber);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternStd");
+        }
+        #endregion
+
+    }
+    public void LightPanelSsJapan(AssemblyDoc swAssyLevel1, string suffx, string module, double totalLength, int longGlassNumber, int shortGlassNumber, double leftLength, double rightLength, double middleLength)
+    {
+        var swModelLevel1 = (ModelDoc2)swAssyLevel1;
+        swModelLevel1.ChangeDim("Length@DistanceLength", totalLength);
+
+        #region 侧板
+        var swCompLeft = swAssyLevel1.RenameComp(suffx, "LKSSP", $"{module}.1", "FNCL0029-1", leftLength, 230d, Aggregator);
+        if (swCompLeft != null)
+        {
+            var swModelLeft = (ModelDoc2)swCompLeft.GetModelDoc2();
+            swModelLeft.ChangeDim("Length@SketchBase", leftLength);
+        }
+        var swCompRight = swAssyLevel1.RenameComp(suffx, "LKSSP", $"{module}.2", "FNCL0030-1", rightLength, 230d, Aggregator);
+        if (swCompRight != null)
+        {
+            var swModelRight = (ModelDoc2)swCompRight.GetModelDoc2();
+            swModelRight.ChangeDim("Length@SketchBase", rightLength);
+        }
+
+        #endregion
+
+        #region 长玻璃,Dis@LocalLPatternLong 1539-295=1244
+        var longGlassDis = middleLength + 1244;
+        if (longGlassNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600015-1", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-1", Aggregator);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600015-1");
+            swAssyLevel1.Suppress(suffx, "2200600003-1");
+        }
+        if (longGlassNumber > 1)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600015-2", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-5", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-6", Aggregator);
+            //中间板
+            var swCompMiddle = swAssyLevel1.RenameComp(suffx, "LKSSP", $"{module}.Mid", "FNCL0031-2", middleLength, 230d, Aggregator);
+            if (swCompMiddle != null)
+            {
+                var swModelMiddle = (ModelDoc2)swCompMiddle.GetModelDoc2();
+                swModelMiddle.ChangeDim("Length@SketchBase", middleLength);
+            }
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600015-2");
+            swAssyLevel1.Suppress(suffx, "2200600003-5");
+            swAssyLevel1.Suppress(suffx, "2200600003-6");
+            swAssyLevel1.ForceSuppress(suffx, "FNCL0031-2");
+        }
+
+        if (longGlassNumber > 2)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternLong");
+            swModelLevel1.ChangeDim("Number@LocalLPatternLong", longGlassNumber);
+            swModelLevel1.ChangeDim("Dis@LocalLPatternLong", longGlassDis);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternLong");
+        }
+        #endregion
+
+        #region 短玻璃,不可能有多块，最多一块
+        if (shortGlassNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600032-1", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-3", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-4", Aggregator);
+            //如果长灯那边重命名了,这里就不改而是直接解压缩，否则要重命名中间板
+            if (longGlassNumber > 1)
+            {
+                swAssyLevel1.ForceUnSuppress(suffx, "FNCL0031-1", Aggregator);
+            }
+            else
+            {
+                //中间板
+                var swCompMiddle2 = swAssyLevel1.RenameComp(suffx, "LKSSP", $"{module}.Mid", "FNCL0031-1", middleLength, 230d, Aggregator);
+                if (swCompMiddle2 != null)
+                {
+                    var swModelMiddle2 = (ModelDoc2)swCompMiddle2.GetModelDoc2();
+                    swModelMiddle2.ChangeDim("Length@SketchBase", middleLength);
+                }
+            }
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600032-1");
+            swAssyLevel1.Suppress(suffx, "2200600003-3");
+            swAssyLevel1.Suppress(suffx, "2200600003-4");
+            swAssyLevel1.ForceSuppress(suffx, "");
+        }
+        //if (shortGlassNumber > 1)
+        //{
+        //    swAssyLevel1.UnSuppress("LocalLPatternShort");
+        //    swModelLevel1.ChangeDim("Number@LocalLPatternShort", shortGlassNumber);
+        //}
+        //else
+        //{
+        //    swAssyLevel1.Suppress("LocalLPatternShort");
+        //}
+        #endregion
+    }
+
+    public void LkSs270(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, LkData data)
+    {
+        //重命名排风腔体
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "LKSS270", module, "FNCL0003-1", data.Length, data.Width, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            FNCL0003(swCompLevel2, data.Length, data.CeilingLightType,data.WaterWash,data.Japan);
+        }
+        //如果是左侧或双侧时，解压灯腔侧板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            if (data.CeilingLightType is CeilingLightType_e.筒灯)
+            {
+                swAssyTop.Suppress(suffix, "LightPanelSs_Glass-1");
+                var swAssyPanelLed = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelSs_Led-1", Aggregator);
+                LightPanelSsLed(swAssyPanelLed, suffix, module, data.TotalLength);
+            }
+            else
+            {
+                swAssyTop.Suppress(suffix, "LightPanelSs_Led-1");
+                var swAssyPanelGlass = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelSs_Glass-1", Aggregator);
+                LightPanelSsGlass(swAssyPanelGlass, suffix, module, data.TotalLength, data.LongGlassNumber, data.ShortGlassNumber);
+            }
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "LightPanelSs_Glass-1");
+            swAssyTop.Suppress(suffix, "LightPanelSs_Led-1");
+        }
+
+
+        //日本项目需要压缩零件(吊装垫片和脖颈)
+        if (data.Japan)
+        {
+            swAssyTop.Suppress(suffix, "FNCE0070-1");
+            swAssyTop.Suppress("LocalLPatternLifting");
+            //如果是左侧或者双侧时解压日本灯腔侧板
+            if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+            {
+                var swAssyPanelJapan = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelSs_Japan-1", Aggregator);
+                LightPanelSsJapan(swAssyPanelJapan, suffix,module,data.TotalLength,data.LongGlassNumber,data.ShortGlassNumber,data.LeftLength,data.RightLength,data.MiddleLength);
+            }
+            else
+            {
+                swAssyTop.Suppress(suffix, "LightPanelSs_Japan-1");
+            }
+        }
+        else
+        {
+            swAssyTop.UnSuppress(suffix, "FNCE0070-1", Aggregator);
+            swAssyTop.UnSuppress("LocalLPatternLifting");
+            swAssyTop.Suppress(suffix, "LightPanelSs_Japan-1");
+        }
+    }
+
+    public void LkSt270(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, LkData data)
+    {
+        //重命名排风腔体
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "LKST270", module, "FNCL0011-1", data.Length, data.Width, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            FNCL0011(swCompLevel2, data.Length, data.CeilingLightType, data.WaterWash, data.Japan);
+        }
+        //如果是左侧或双侧时，解压灯腔侧板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            if (data.CeilingLightType is CeilingLightType_e.筒灯)
+            {
+                swAssyTop.Suppress(suffix, "LightPanelSs_Glass-1");
+                var swAssyPanelLed = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelSs_Led-1", Aggregator);
+                LightPanelSsLed(swAssyPanelLed, suffix, module, data.TotalLength);
+            }
+            else
+            {
+                swAssyTop.Suppress(suffix, "LightPanelSs_Led-1");
+                var swAssyPanelGlass = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelSs_Glass-1", Aggregator);
+                LightPanelSsGlass(swAssyPanelGlass, suffix, module, data.TotalLength, data.LongGlassNumber, data.ShortGlassNumber);
+            }
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "LightPanelSs_Glass-1");
+            swAssyTop.Suppress(suffix, "LightPanelSs_Led-1");
+        }
+
+
+        //日本项目需要压缩零件(吊装垫片和脖颈)
+        if (data.Japan)
+        {
+            swAssyTop.Suppress(suffix, "FNCE0070-1");
+            swAssyTop.Suppress("LocalLPatternLifting");
+            //如果是左侧或者双侧时解压日本灯腔侧板
+            if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+            {
+                var swAssyPanelJapan = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelSs_Japan-1", Aggregator);
+                LightPanelSsJapan(swAssyPanelJapan, suffix, module, data.TotalLength, data.LongGlassNumber, data.ShortGlassNumber, data.LeftLength, data.RightLength, data.MiddleLength);
+            }
+            else
+            {
+                swAssyTop.Suppress(suffix, "LightPanelSs_Japan-1");
+            }
+        }
+        else
+        {
+            swAssyTop.UnSuppress(suffix, "FNCE0070-1", Aggregator);
+            swAssyTop.UnSuppress("LocalLPatternLifting");
+            swAssyTop.Suppress(suffix, "LightPanelSs_Japan-1");
+        }
+    }
+
+    public void LkAl258(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, LkData data)
+    {
+        //重命名排风腔体
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "LKAL258", module, "FNCL0001-1", data.Length, data.Width, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            FNCL0001(swCompLevel2, data.Length, data.CeilingLightType, data.WaterWash, data.Japan);
+        }
+
+        //封板
+        switch (data.SidePanel)
+        {
+            case SidePanel_e.左:
+                swAssyTop.UnSuppress(suffix, "FNCL0042[LKEC]-1", Aggregator);
+                swAssyTop.Suppress(suffix, "FNCL0042[LKEC]-2");
+                swAssyTop.UnSuppress(suffix, "FNCL0016[LKRPS]-1", Aggregator);
+                swAssyTop.UnSuppress(suffix, "FNCL0016[LKRPS]-2", Aggregator);
+                break;
+            case SidePanel_e.右:
+                swAssyTop.UnSuppress(suffix, "FNCL0042[LKEC]-2", Aggregator);
+                swAssyTop.Suppress(suffix, "FNCL0042[LKEC]-1");
+                swAssyTop.Suppress(suffix, "FNCL0016[LKRPS]-1");
+                swAssyTop.Suppress(suffix, "FNCL0016[LKRPS]-2");
+                break;
+            case SidePanel_e.双:
+                swAssyTop.UnSuppress(suffix, "FNCL0042[LKEC]-1", Aggregator);
+                swAssyTop.UnSuppress(suffix, "FNCL0042[LKEC]-2", Aggregator);
+                swAssyTop.Suppress(suffix, "FNCL0016[LKRPS]-1");
+                swAssyTop.Suppress(suffix, "FNCL0016[LKRPS]-2");
+                break;
+            case SidePanel_e.中:
+            case SidePanel_e.NA:
+            default:
+                swAssyTop.Suppress(suffix, "FNCL0042[LKEC]-1");
+                swAssyTop.Suppress(suffix, "FNCL0042[LKEC]-2");
+                swAssyTop.UnSuppress(suffix, "FNCL0016[LKRPS]-1", Aggregator);
+                swAssyTop.UnSuppress(suffix, "FNCL0016[LKRPS]-2", Aggregator);
+                break;
+        }
+
+        //如果是左侧或双侧时，解压灯腔侧板
+        if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+        {
+            if (data.CeilingLightType is CeilingLightType_e.筒灯)
+            {
+                swAssyTop.Suppress(suffix, "LightPanelAl_Glass-1");
+                var swAssyPanelLed = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelAl_Led-1", Aggregator);
+                LightPanelAlLed(swAssyPanelLed, suffix, module, data.TotalLength);
+            }
+            else
+            {
+                swAssyTop.Suppress(suffix, "LightPanelAl_Led-1");
+                var swAssyPanelGlass = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelAl_Glass-1", Aggregator);
+                LightPanelAlGlass(swAssyPanelGlass, suffix, module, data.TotalLength, data.LongGlassNumber, data.ShortGlassNumber);
+            }
+        }
+        else
+        {
+            swAssyTop.Suppress(suffix, "LightPanelAl_Glass-1");
+            swAssyTop.Suppress(suffix, "LightPanelAl_Led-1");
+        }
+
+        //改Y型材长度
+        swAssyTop.ChangePartLength(suffix, "2200600018-1", "Length@Boss-Extrude", data.Length,Aggregator);
+
+        //日本项目需要压缩零件(吊装垫片和脖颈)
+        if (data.Japan)
+        {
+            swAssyTop.Suppress(suffix, "FNCE0070-1");
+            swAssyTop.Suppress("LocalLPatternLifting");
+            //如果是左侧或者双侧时解压日本灯腔侧板
+            if (data.SidePanel is SidePanel_e.左 or SidePanel_e.双)
+            {
+                var swAssyPanelJapan = swAssyTop.GetSubAssemblyDoc(suffix, "LightPanelAl_Japan-1", Aggregator);
+                LightPanelAlJapan(swAssyPanelJapan, suffix, module, data.TotalLength, data.LongGlassNumber, data.ShortGlassNumber, data.LeftLength, data.RightLength, data.MiddleLength);
+            }
+            else
+            {
+                swAssyTop.Suppress(suffix, "LightPanelAl_Japan-1");
+            }
+        }
+        else
+        {
+            swAssyTop.UnSuppress(suffix, "FNCE0070-1", Aggregator);
+            swAssyTop.UnSuppress("LocalLPatternLifting");
+            swAssyTop.Suppress(suffix, "LightPanelAl_Japan-1");
+        }
+    }
+    #endregion
+
+    #region LP,INF
+    public void LpZ(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, LpData data)
+    {
+        //重命名左W板
+        var swCompW = swAssyTop.RenameComp(suffix, "LPW", $"{module}.1", "FNCL0005-1", data.Length-10d, data.LeftWidth, Aggregator);
+        if (swCompW != null)
+        {
+            LpFlatPanel(swCompW, data.Length-10d, data.LeftWidth,data.LedLight);
+        }
+        //重命名右侧Z板
+        if (data.RightWidth > 0)
+        {
+            var swCompZr = swAssyTop.RenameComp(suffix, "LPZ", $"{module}.2", "FNCL0043-1", data.Length-10d, data.RightWidth, Aggregator);
+            if (swCompZr != null)
+            {
+                LpFlatPanel(swCompZr, data.Length-10d, data.RightWidth, data.LedLight);
+            }
+
+            var totalLength = data.LeftWidth + data.RightWidth + data.ZPanelNumber * 500d;
+            swAssyTop.ChangeDim("Length@DistanceLength",totalLength);
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCL0043-1");
+        }
+        //重命名标准Z板
+        if (data.ZPanelNumber > 0)
+        {
+            var swCompZ = swAssyTop.RenameComp(suffix, "LPZ", module, "FNCL0007-1", data.Length-10d, 500d, Aggregator);
+            if (swCompZ != null)
+            {
+                LpFlatPanel(swCompZ, data.Length-10d, 500d, data.LedLight);
+            }
+        }
+        else
+        {
+            swAssyTop.ForceSuppress(suffix, "FNCL0007-1");
+        }
+        //Z板阵列
+        if (data.ZPanelNumber > 1)
+        {
+            swAssyTop.UnSuppress("LocalLPatternZ");
+            swAssyTop.ChangeDim("Number@LocalLPatternZ",data.ZPanelNumber);
+        }
+        else
+        {
+            swAssyTop.Suppress("LocalLPatternZ");
+        }
+    }
+    public void Inf(ModelDoc2 swModelTop, AssemblyDoc swAssyTop, string suffix, string module, InfData data)
+    {
+        //重命名F板
+        var swCompLevel2 = swAssyTop.RenameComp(suffix, "INF", module, "FNCL0038-1", data.Length, data.Width, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            InfPanel(swCompLevel2, data.Length, data.Width);
+        }
+    }
     #endregion
 
     #region 通用方法
@@ -1374,11 +2155,268 @@ public class CeilingService : BaseSwService, ICeilingService
             swCompLevel1.Suppress("LedLight");
         }
     }
+    #endregion
+
+    #region LK
+    private void LightPanelAlGlass(AssemblyDoc swAssyLevel1, string suffx, string module, double totalLength, int longGlassNumber, int shortGlassNumber)
+    {
+        var swModelLevel1 = (ModelDoc2)swAssyLevel1;
+        swModelLevel1.ChangeDim("Length@DistanceLength", totalLength);
+
+        #region 侧板
+        //长玻璃1158+17，558+17
+        var sideLength = (totalLength - 17d - longGlassNumber * 1175d - shortGlassNumber * 575d) / 2d;
+        while (sideLength<29d)
+        {
+            sideLength += 1175d / 2d;//如果侧板太短，则减一块玻璃
+            longGlassNumber--;
+        }
+
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffx, "LKALP", module, "FNCL0024-1", sideLength, 230d, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+        }
+        #endregion
+
+        #region 长玻璃
+        if (longGlassNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600010-1", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-6", Aggregator);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600010-1");
+            swAssyLevel1.Suppress(suffx, "2200600003-6");
+        }
+        if (longGlassNumber > 1)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternLong");
+            swModelLevel1.ChangeDim("Number@LocalLPatternLong", longGlassNumber);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternLong");
+        }
+        #endregion
+
+        #region 短玻璃
+        if (shortGlassNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600011-1", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-2", Aggregator);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600011-1");
+            swAssyLevel1.Suppress(suffx, "2200600003-2");
+        }
+        if (shortGlassNumber > 1)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternShort");
+            swModelLevel1.ChangeDim("Number@LocalLPatternShort", shortGlassNumber);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternShort");
+        }
+        #endregion
+    }
+    private void LightPanelAlLed(AssemblyDoc swAssyLevel1, string suffx, string module, double totalLength)
+    {
+        var swModelLevel1 = (ModelDoc2)swAssyLevel1;
+        swModelLevel1.ChangeDim("Length@DistanceLength", totalLength);
+
+        //LED标准板，1500
+        var stdPanelNumber = (int)((totalLength - 300.5d) / 1500d);//1500+300直接做成一块
+        var sideLength = totalLength - stdPanelNumber * 1500d;
+        var ledNumber = (int)((sideLength - 300d) / 500d)+1;
+
+        #region 非标准板
+        //重命名非标板
+        var swCompLevel2 = swAssyLevel1.RenameComp(suffx, "LKALPLED",module, "FNCL0021-1", sideLength, 230d, Aggregator);
+        if (swCompLevel2 != null)
+        {
+            var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+            swModelLevel2.ChangeDim("Length@SketchBase", sideLength);
+            if (ledNumber > 0)
+            {
+                swCompLevel2.UnSuppress("LedLight");
+            }
+            else
+            {
+                swCompLevel2.Suppress("LedLight");
+            }
+
+            if (ledNumber > 1)
+            {
+                swCompLevel2.UnSuppress("LPatternLed");
+                swModelLevel2.ChangeDim("Number@LPatternLed", ledNumber);
+            }
+            else
+            {
+                swCompLevel2.Suppress("LPatternLed");
+            }
+        }
+        #endregion
+
+        #region 标准板
+        if (stdPanelNumber > 0)
+        {
+            //重命名标准板
+            var swCompStd = swAssyLevel1.RenameComp(suffx, "LKALPLED", $"{module}.Std", "FNCL0020-1", 1483d, 230d, Aggregator);
+        }
+        else
+        {
+            swAssyLevel1.ForceSuppress(suffx, "FNCL0022-1");
+            swAssyLevel1.ForceSuppress(suffx, "2200600003-1");
+        }
+
+        if (stdPanelNumber > 1)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternStd");
+            swModelLevel1.ChangeDim("Number@LocalLPatternStd", stdPanelNumber);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternStd");
+        }
+        #endregion
+
+    }
+    private void LightPanelAlJapan(AssemblyDoc swAssyLevel1, string suffx, string module, double totalLength, int longGlassNumber, int shortGlassNumber, double leftLength, double rightLength, double middleLength)
+    {
+        var swModelLevel1 = (ModelDoc2)swAssyLevel1;
+        swModelLevel1.ChangeDim("Length@DistanceLength", totalLength);
+
+        #region 侧板
+        var swCompLeft = swAssyLevel1.RenameComp(suffx, "LKALP", $"{module}.1", "FNCL0026-1", leftLength, 230d, Aggregator);
+        if (swCompLeft != null)
+        {
+            var swModelLeft = (ModelDoc2)swCompLeft.GetModelDoc2();
+            swModelLeft.ChangeDim("Length@SketchBase", leftLength);
+        }
+        var swCompRight = swAssyLevel1.RenameComp(suffx, "LKALP", $"{module}.2", "FNCL0027-1", rightLength, 230d, Aggregator);
+        if (swCompRight != null)
+        {
+            var swModelRight = (ModelDoc2)swCompRight.GetModelDoc2();
+            swModelRight.ChangeDim("Length@SketchBase", rightLength);
+        }
+
+        #endregion
+
+        #region 长玻璃,Dis@LocalLPatternLong 1539-295=1244
+        var longGlassDis = middleLength + 1244;
+        if (longGlassNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600015-1", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-1", Aggregator);
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600015-1");
+            swAssyLevel1.Suppress(suffx, "2200600003-1");
+        }
+        if (longGlassNumber > 1)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600015-2", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-5", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-6", Aggregator);
+            //中间板
+            var swCompMiddle = swAssyLevel1.RenameComp(suffx, "LKALP", $"{module}.Mid", "FNCL0028-2", middleLength, 230d, Aggregator);
+            if (swCompMiddle != null)
+            {
+                var swModelMiddle = (ModelDoc2)swCompMiddle.GetModelDoc2();
+                swModelMiddle.ChangeDim("Length@SketchBase", middleLength);
+            }
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600015-2");
+            swAssyLevel1.Suppress(suffx, "2200600003-5");
+            swAssyLevel1.Suppress(suffx, "2200600003-6");
+            swAssyLevel1.ForceSuppress(suffx, "FNCL0031-2");
+        }
+
+        if (longGlassNumber > 2)
+        {
+            swAssyLevel1.UnSuppress("LocalLPatternLong");
+            swModelLevel1.ChangeDim("Number@LocalLPatternLong", longGlassNumber);
+            swModelLevel1.ChangeDim("Dis@LocalLPatternLong", longGlassDis);
+        }
+        else
+        {
+            swAssyLevel1.Suppress("LocalLPatternLong");
+        }
+        #endregion
+
+        #region 短玻璃,不可能有多块，最多一块
+        if (shortGlassNumber > 0)
+        {
+            swAssyLevel1.UnSuppress(suffx, "2200600032-1", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-3", Aggregator);
+            swAssyLevel1.UnSuppress(suffx, "2200600003-4", Aggregator);
+            //如果长灯那边重命名了,这里就不改而是直接解压缩，否则要重命名中间板
+            if (longGlassNumber > 1)
+            {
+                swAssyLevel1.ForceUnSuppress(suffx, "FNCL0031-1", Aggregator);
+            }
+            else
+            {
+                //中间板
+                var swCompMiddle2 = swAssyLevel1.RenameComp(suffx, "LKALP", $"{module}.Mid", "FNCL0028-1", middleLength, 230d, Aggregator);
+                if (swCompMiddle2 != null)
+                {
+                    var swModelMiddle2 = (ModelDoc2)swCompMiddle2.GetModelDoc2();
+                    swModelMiddle2.ChangeDim("Length@SketchBase", middleLength);
+                }
+            }
+        }
+        else
+        {
+            swAssyLevel1.Suppress(suffx, "2200600032-1");
+            swAssyLevel1.Suppress(suffx, "2200600003-3");
+            swAssyLevel1.Suppress(suffx, "2200600003-4");
+            swAssyLevel1.ForceSuppress(suffx, "");
+        }
+        //if (shortGlassNumber > 1)
+        //{
+        //    swAssyLevel1.UnSuppress("LocalLPatternShort");
+        //    swModelLevel1.ChangeDim("Number@LocalLPatternShort", shortGlassNumber);
+        //}
+        //else
+        //{
+        //    swAssyLevel1.Suppress("LocalLPatternShort");
+        //}
+        #endregion
+    }
 
     #endregion
 
-
-
+    #region LP,INF
+    private void LpFlatPanel(Component2 swCompLevel1, double length, double width, bool ledLight)
+    {
+        var swModelLevel1 = (ModelDoc2)swCompLevel1.GetModelDoc2();
+        swModelLevel1.ChangeDim("Length@SketchBase", length);
+        swModelLevel1.ChangeDim("Width@SketchBase", width);
+        if (ledLight)
+        {
+            swCompLevel1.UnSuppress("LedLight");
+        }
+        else
+        {
+            swCompLevel1.Suppress("LedLight");
+        }
+    }
+    private void InfPanel(Component2 swCompLevel1, double length, double width)
+    {
+        var swModelLevel1 = (ModelDoc2)swCompLevel1.GetModelDoc2();
+        swModelLevel1.ChangeDim("Length@SketchBase", length);
+        swModelLevel1.ChangeDim("Width@SketchBase", width);
+    }
+    #endregion
 
     #endregion
 
@@ -1601,7 +2639,7 @@ public class CeilingService : BaseSwService, ICeilingService
     #region LFU
     private void FNCA0001(Component2 swCompLevel2, double length, double width, SidePanel_e sidePanel, int supplySpigotNumber, double supplySpigotDis, double supplySpigotDia, bool japan)
     {
-        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2-1)+supplySpigotDis/2d;//脖颈口距离中间位置
+        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2d-1)+supplySpigotDis/2d;//脖颈口距离中间位置
 
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
@@ -1662,7 +2700,7 @@ public class CeilingService : BaseSwService, ICeilingService
 
     private void FNCA0012(Component2 swCompLevel2, double length, int supplySpigotNumber, double supplySpigotDis, double supplySpigotDia)
     {
-        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2-1)+supplySpigotDis/2d;//脖颈口距离中间位置
+        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2d-1)+supplySpigotDis/2d;//脖颈口距离中间位置
 
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
@@ -1688,7 +2726,7 @@ public class CeilingService : BaseSwService, ICeilingService
 
     private void FNCA0016(Component2 swCompLevel2, double length, double width, int supplySpigotNumber, double supplySpigotDis, double supplySpigotDia, bool japan)
     {
-        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2-1)+supplySpigotDis/2d;//脖颈口距离中间位置
+        var spigotToMiddle = supplySpigotDis * (supplySpigotNumber/2d-1)+supplySpigotDis/2d;//脖颈口距离中间位置
 
         var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
         swModelLevel2.ChangeDim("Length@Base-Flange", length);
@@ -1859,6 +2897,154 @@ public class CeilingService : BaseSwService, ICeilingService
     #region SSP
 
 
+
+    #endregion
+
+    #region LK
+    private void FNCL0003(Component2 swCompLevel2, double length, CeilingLightType_e ceilingLightType, bool waterWash, bool japan)
+    {
+        var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+
+        #region 水洗烟罩Tab
+        if (waterWash)
+        {
+            swCompLevel2.UnSuppress("TabUp");
+            swCompLevel2.UnSuppress("TabDown");
+            swCompLevel2.UnSuppress("UnfoldCut");
+            swCompLevel2.UnSuppress("TabCut");
+            swCompLevel2.UnSuppress("FoldCut");
+        }
+        else
+        {
+            swCompLevel2.Suppress("FoldCut");
+            swCompLevel2.Suppress("TabCut");
+            swCompLevel2.Suppress("UnfoldCut");
+            swCompLevel2.Suppress("TabDown");
+            swCompLevel2.Suppress("TabUp");
+        }
+        #endregion
+
+        #region 灯具
+        //todo:核实HCL中的这个LightT特征是什么？
+        if (ceilingLightType is CeilingLightType_e.日光灯 or CeilingLightType_e.HCL)
+            swCompLevel2.UnSuppress("LightT");
+        else
+            swCompLevel2.Suppress("LightT");
+
+        //日本灯射钉
+        if (japan)
+            swCompLevel2.UnSuppress("JapanLight");
+        else
+            swCompLevel2.Suppress("JapanLight");
+        #endregion
+
+        #region 日本项目
+        if (japan)
+        {
+            swCompLevel2.Suppress("LiftingHoles");
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LiftingHoles");
+        }
+        #endregion
+    }
+
+    private void FNCL0011(Component2 swCompLevel2, double length, CeilingLightType_e ceilingLightType, bool waterWash, bool japan)
+    {
+        var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+        swModelLevel2.ChangeDim("Length@SketchBase", length);
+
+        #region 水洗烟罩Tab
+        /*if (waterWash)
+        {
+            swCompLevel2.UnSuppress("TabUp");
+            swCompLevel2.UnSuppress("TabDown");
+            swCompLevel2.UnSuppress("UnfoldCut");
+            swCompLevel2.UnSuppress("TabCut");
+            swCompLevel2.UnSuppress("FoldCut");
+        }
+        else
+        {
+            swCompLevel2.Suppress("FoldCut");
+            swCompLevel2.Suppress("TabCut");
+            swCompLevel2.Suppress("UnfoldCut");
+            swCompLevel2.Suppress("TabDown");
+            swCompLevel2.Suppress("TabUp");
+        }*/
+        #endregion
+
+        #region 灯具
+        //todo:核实HCL中的这个LightT特征是什么？
+        if (ceilingLightType is CeilingLightType_e.日光灯 or CeilingLightType_e.HCL)
+            swCompLevel2.UnSuppress("LightT");
+        else
+            swCompLevel2.Suppress("LightT");
+
+        //日本灯射钉
+        if (japan)
+            swCompLevel2.UnSuppress("JapanLight");
+        else
+            swCompLevel2.Suppress("JapanLight");
+        #endregion
+
+        #region 日本项目
+        if (japan)
+        {
+            swCompLevel2.Suppress("LiftingHoles");
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LiftingHoles");
+        }
+        #endregion
+    }
+
+    private void FNCL0001(Component2 swCompLevel2, double length, CeilingLightType_e ceilingLightType, bool waterWash, bool japan)
+    {
+        var swModelLevel2 = (ModelDoc2)swCompLevel2.GetModelDoc2();
+        swModelLevel2.ChangeDim("Length@Base-Flange", length);
+
+        #region 水洗烟罩Tab
+        /*if (waterWash)
+        {
+            swCompLevel2.UnSuppress("TabUp");
+            swCompLevel2.UnSuppress("TabDown");
+            swCompLevel2.UnSuppress("UnfoldCut");
+            swCompLevel2.UnSuppress("TabCut");
+            swCompLevel2.UnSuppress("FoldCut");
+        }
+        else
+        {
+            swCompLevel2.Suppress("FoldCut");
+            swCompLevel2.Suppress("TabCut");
+            swCompLevel2.Suppress("UnfoldCut");
+            swCompLevel2.Suppress("TabDown");
+            swCompLevel2.Suppress("TabUp");
+        }*/
+        #endregion
+
+        #region 灯具
+        //todo:核实HCL中的这个LightT特征是什么？
+        if (ceilingLightType is CeilingLightType_e.日光灯 or CeilingLightType_e.HCL)
+            swCompLevel2.UnSuppress("LightT");
+        else
+            swCompLevel2.Suppress("LightT");
+
+        #endregion
+
+        #region 日本项目
+        if (japan)
+        {
+            swCompLevel2.Suppress("LiftingHoles");
+        }
+        else
+        {
+            swCompLevel2.UnSuppress("LiftingHoles");
+        }
+        #endregion
+    }
 
     #endregion
 

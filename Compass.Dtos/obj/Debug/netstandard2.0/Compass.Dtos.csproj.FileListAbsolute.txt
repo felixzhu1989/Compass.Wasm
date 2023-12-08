@@ -6,5 +6,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.
 E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.AssemblyInfoInputs.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.AssemblyInfo.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.csproj.CoreCompileInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.sourcelink.json
 E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Dtos\obj\Debug\netstandard2.0\Compass.Dtos.pdb

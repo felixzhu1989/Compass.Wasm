@@ -183,7 +183,8 @@ public class MainPlansViewModel : NavigationViewModel
         var packingListParam = new PackingListParam
         {
             ProjectId = obj.ProjectId,
-            Batch = obj.Batch
+            Batch = obj.Batch,
+            ProjectName = $"{obj.Number}-{obj.Name}"
         };
         var param = new NavigationParameters { { "Value", packingListParam } };
         RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("PackingInfoView", back =>

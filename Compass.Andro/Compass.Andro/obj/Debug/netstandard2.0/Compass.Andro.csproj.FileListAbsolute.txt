@@ -15,3 +15,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Debug\netstandard2.
 E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\bin\Debug\netstandard2.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\bin\Debug\netstandard2.0\Compass.Dtos.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Debug\netstandard2.0\Compass.Andro.csproj.CopyComplete
+E:\CSharp\repos\Compass.Wasm\Compass.Andro\Compass.Andro\obj\Debug\netstandard2.0\Compass.Andro.sourcelink.json

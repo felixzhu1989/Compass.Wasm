@@ -29,12 +29,18 @@ public class DpDataService:BaseDataGetService<DpData>,IDpDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
 
 
             #region CJ脖颈参数
             data.CjSpigotDirection=dto.CjSpigotDirection;
             data.CjSpigotToRight=dto.CjSpigotToRight;
+            #endregion
+
+            #region 排水管参数
+            data.DpDrainType=dto.DpDrainType;
             #endregion
 
             #region 连接排风、BCJ、LKS、Gutter位置参数

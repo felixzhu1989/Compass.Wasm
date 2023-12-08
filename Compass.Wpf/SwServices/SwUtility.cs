@@ -1,6 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Shell;
+using Compass.Wasm.Shared.Categories;
+using Compass.Wasm.Shared.Extensions;
 using SolidWorks.Interop.sldworks;
 using SolidWorks.Interop.swconst;
 
@@ -16,6 +20,7 @@ public static class SwUtility
     //计算机\HKEY_LOCAL_MACHINE\SOFTWARE\Classes\SldWorks.Application\CLSID
     //2021：{0A5BC87B-FDBF-4A0B-BC8A-DE1271220E81}
     //2023：{b2f1524f-6cfe-4386-b472-ab1148dea4f1}
+
     public static ISldWorks ConnectSw(IEventAggregator aggregator)
     {
         if (_swApp != null) return _swApp;
@@ -196,7 +201,7 @@ public static class SwUtility
     }
     
     /// <summary>
-    /// 装配体根据条件解压或压缩特征
+    /// 装配体根据条件解压或压缩特征，true解压，false压缩
     /// </summary>
     public static void SuppressOnCond(this AssemblyDoc swAssy, string suffix, string featureName, bool cond)
     {
@@ -348,44 +353,51 @@ public static class SwUtility
     public static Component2? RenameComp(this AssemblyDoc swAssy, string suffix, string typeName, string module, string compName,double length, double width, IEventAggregator aggregator)
     {
         var swModel = (ModelDoc2)swAssy;
-        var assyName = Path.GetFileNameWithoutExtension(swModel.GetPathName());
-        var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
-        var strRename = $"{compName.Split('-').First()}[{typeName}-{module}]{{{(int)length}}}({(int)width})";
-        
         var partName = compName.Split('-').First();
-        var num = compName.Split('-').Last();
+        var strRename = $"{partName}[{typeName}-{module}]{{{(int)length}}}({(int)width})";
+        //遍历零部件再选择
+        var comps = (IEnumerable)swAssy.GetComponents(false);
+        foreach (var comp in comps)
+        {
+            var swComp = (Component2)comp;
+            //Name2的返回值：subAssem1-2/Part1-1，使用Split和Last获取末尾的真实零部件名称
+            var swCompName = swComp.Name2.Split('/').Last();
+            //如果这个组件是阵列出来的，那么会导致重命名不成功
+            if (swComp.IsPatternInstance()) continue;
+            //不包含就循环下一个。不管实例数
+            if (!swCompName.Contains(partName)) continue;
 
+            swComp.SetSuppression2(2);
+            swAssy.ForceRebuild2(true);
+            swComp.Select2(false, 0);//选择该零部件
+            swModel.Extension.RenameDocument(strRename); //执行重命名
+            return swComp;//重命名后直接退出循环，因此重命名时针对的是第一个零件，多个零件的情况不支持
+        }
+        return null;
+
+        //2023.11.28丢弃该方式
+        //var assyName = Path.GetFileNameWithoutExtension(swModel.GetPathName());
+        //var originPath = $"{compName.AddSuffix(suffix)}@{assyName}";
+        //var num = compName.Split('-').Last();
         //尝试直接选择
-        var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
-        if (status)
-        {
-            swAssy.UnSuppress(suffix, compName, aggregator);
-            swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
-            swModel.Extension.RenameDocument(strRename);//执行重命名
-        }
-        else
-        {
-            //如果没直接选中，可能是上次重命名过了，尝试遍历零部件再选择
-            var comps = (IEnumerable)swAssy.GetComponents(false);
-            foreach (var comp in comps)
-            {
-                var swComp=(Component2)comp;
-                //Name2的返回值：subAssem1-2/Part1-1，使用Split和Last获取末尾的真实零部件名称
-                var swCompName =swComp.Name2.Split('/').Last();
-                if (!swCompName.Contains(partName)) continue;//不包含就循环下一个
-                swComp.Select2(false, 0);//选择该零部件
-                swModel.Extension.RenameDocument(strRename); //执行重命名
-                break;//重命名后直接退出循环，因此重命名时针对的是第一个零件，多个零件的情况不支持
-            }
-        }
-        swModel.ClearSelection2(true);
-        swModel.ForceRebuild3(true);
-        status = swModel.Extension.SelectByID2($"{strRename}-{num}@{assyName}", "COMPONENT", 0, 0, 0, false,
-            0, null, 0);
-        swModel.ClearSelection2(true);
-        return status ? swAssy.GetComponentByName($"{strRename}-{num}") : null;
+        //var status = swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+        //if (status)
+        //{
+        //    swAssy.UnSuppress(suffix, compName, aggregator);
+        //    swModel.Extension.SelectByID2(originPath, "COMPONENT", 0, 0, 0, false, 0, null, 0);
+        //    swModel.Extension.RenameDocument(strRename);//执行重命名
+        //}
+        //else
+        //{
+        //}
+        //swModel.ClearSelection2(true);
+        //swModel.ForceRebuild3(true);
+        //status = swModel.Extension.SelectByID2($"{strRename}-{num}@{assyName}", "COMPONENT", 0, 0, 0, false,
+        //    0, null, 0);
+        //swModel.ClearSelection2(true);
+        //return status ? swAssy.GetComponentByName($"{strRename}-{num}") : null;
     }
-    
+
 
     #endregion
 
@@ -427,9 +439,9 @@ public static class SwUtility
         var swModel = swComp.GetModelDoc2()as ModelDoc2;
         swModel.ForceRebuild3(true);//进行重建
     }
-    
+
     /// <summary>
-    /// 部件根据条件解压或压缩特征
+    /// 部件根据条件解压或压缩特征，true解压，false压缩
     /// </summary>
     public static void SuppressOnCond(this Component2 swComp, string featureName, bool cond)
     {
@@ -543,5 +555,77 @@ public static class SwUtility
 
     #endregion
 
+    #region 获取天花烟罩装箱清单
+    public static List<MaterialItemDto> GetMaterialItems(this ISldWorks? swApp, string assyPath)
+    {
+        swApp.CommandInProgress = true;
+        var mtlItems= new List<MaterialItemDto>();
+        int errors = 0;
+        int warnings = 0;
+        //打开总装配体模型
+        var swModel = swApp.OpenDoc6(assyPath,
+            (int)swDocumentTypes_e.swDocASSEMBLY, (int)
+            swOpenDocOptions_e.swOpenDocOptions_Silent,
+            "", ref errors, ref warnings);
 
+        swModel.ForceRebuild3(true);
+        var swAssy = swModel as AssemblyDoc;
+        //获取所有零部件集合
+        var comps = (IEnumerable)swAssy.GetComponents(false);
+        //遍历集合中的所有零部件对象
+        foreach (var comp in comps)
+        {
+            var swComp = (Component2)comp;
+            //判断零件是否被压缩，零件名称不是以sldprt或SLDPRT结尾
+            //(导出发货清单无需判断可见，封套，无需判断钣金，只要没有被压缩就行了)
+            if (swComp.IsSuppressed() || !Path.GetExtension(swComp.GetPathName()).Equals(".sldprt", StringComparison.OrdinalIgnoreCase)) continue;
+            //判断它的父装配体，是不是被压缩的
+            var swParentComp = swComp.GetParent();
+            if(ParentIsSuppressed(swParentComp)) continue;
+            //判断名字中是否包含[]
+            var partName = Path.GetFileNameWithoutExtension(swComp.GetPathName());
+            if(!partName.Contains('['))continue;
+            var mtlNumber = partName.SubStringBetween('[',']');
+            var length = string.Empty;
+            var width = string.Empty;
+            if (partName.Contains('{')) length = partName.SubStringBetween('{', '}');
+            if (partName.Contains('(')) width = partName.SubStringBetween('(', ')');
+            //判断列表中存不存在，存在就增加数量，不存在就新增对象
+            var existItem =
+                mtlItems.SingleOrDefault(x => x.MtlNumber.Equals(mtlNumber, StringComparison.OrdinalIgnoreCase));
+            if (existItem != null)
+            {
+                existItem.Quantity++;
+            }
+            else
+            {
+                var mtlItem = new MaterialItemDto
+                {
+                    MtlNumber = mtlNumber,
+                    Length = length,
+                    Width = width,
+                    Type = mtlNumber.Split('-').First(),
+                    Quantity = 1
+                };
+                mtlItems.Add(mtlItem);
+            }
+        }
+        //关闭装配体
+        swApp.CloseDoc(assyPath);
+        swApp.CommandInProgress = false;
+
+        return mtlItems;
+
+        //内部方法：递归判断父级零部件是不是压缩的
+        bool ParentIsSuppressed(Component2? swCompCurrent)
+        {
+            if (swCompCurrent == null) return false;
+            if (swCompCurrent.IsSuppressed()) return true;
+            var parent = swCompCurrent.GetParent();
+            return parent != null && ParentIsSuppressed(parent);
+        }
+    }
+
+
+    #endregion
 }

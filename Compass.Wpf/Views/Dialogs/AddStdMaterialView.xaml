@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="Compass.Wpf.Views.Dialogs.AddStdMaterialView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Compass.Wpf.Views.Dialogs"
              mc:Ignorable="d"
-             Width="1280"
+             Width="1440"
              Height="690"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
@@ -54,9 +54,13 @@
                        VerticalAlignment="Center"
                        Foreground="Red"
                        Text="请根据项目情况，修改数量或者其他参数（绿色区域）；点击最后一行可以添加特殊物料；物料号相同的物料将会被覆盖；点击【确定】按钮保存。" />
+            <TextBlock Margin="0,5"
+                       VerticalAlignment="Center"
+                       Foreground="blue"
+                       Text="添加天花烟罩自制件时，请不要修改类型，而是改物料编码，如KCJSB265-B1.1，并填写长宽高材质备注信息。" />
         </StackPanel>
         <!--第2行,数据-->
-<DataGrid Grid.Row="1"
+        <DataGrid Grid.Row="1"
                   ItemsSource="{Binding FilterMtlItemDtos}"
                   CanUserAddRows="True"
                   CanUserSortColumns="True"
@@ -64,34 +68,106 @@
                   HeadersVisibility="All"
                   IsReadOnly="False"
                   ScrollViewer.VerticalScrollBarVisibility="Visible">
-    <DataGrid.Columns>
+            <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding MtlNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                            Header="物料号"
-                            ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Foreground="DarkGreen" />
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="物料编码"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Description,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="描述"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Foreground="DarkGreen"/>
-                <DataGridTextColumn Binding="{Binding Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="类型"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Foreground="DarkGreen"
-                                    Width="65"/>
+                                    Foreground="DarkGreen" >
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="描述"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                
                 <DataGridTextColumn Binding="{Binding Quantity,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="数量"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Foreground="DarkGreen" />
+                                    Foreground="DarkGreen" >
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="数量"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Unit,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     Header="单位"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Type,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen"
+                                    Width="65">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="类型"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
                 
+                <DataGridTextColumn Binding="{Binding CeilingRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="天花规则"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding CalcRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    Header="计算规则"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    IsReadOnly="True" />
+                <DataGridTextColumn Binding="{Binding Length,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" >
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="长"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Width,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="宽"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Height,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" >
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="高"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Material,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" >
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="材质"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Remark,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
+                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                    Foreground="DarkGreen" >
+                    <DataGridTextColumn.Header>
+                        <TextBlock Foreground="DarkGreen"
+                                   Text="备注"></TextBlock>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Inventory,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     Header="参考库存"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -107,48 +183,13 @@
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     IsReadOnly="True" />
-                <DataGridTextColumn Binding="{Binding CalcRule,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="计算规则"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    IsReadOnly="True" />
-                
-                <DataGridTextColumn Binding="{Binding Length,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="长"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Foreground="DarkGreen" />
-                <DataGridTextColumn Binding="{Binding Width,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="宽"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Foreground="DarkGreen" />
-                <DataGridTextColumn Binding="{Binding Height,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="高"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Foreground="DarkGreen" />
-                <DataGridTextColumn Binding="{Binding Material,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="材质"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Foreground="DarkGreen" />
-                <DataGridTextColumn Binding="{Binding Remark,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
-                                    Header="备注"
-                                    ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
-                                    EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                                    Foreground="DarkGreen" />
                 <!--<DataGridCheckBoxColumn Binding="{Binding NoLabel, UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                         Header="标签"
                                         EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
                                         ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
                 </DataGridCheckBoxColumn>-->
             </DataGrid.Columns>
-
-
-
-</DataGrid>
-
+        </DataGrid>
         <StackPanel Orientation="Horizontal"
                     Grid.Row="2"
                     HorizontalAlignment="Right"

@@ -112,10 +112,11 @@
         _search=e.Value!.ToString()!;
         _filterProjectDtos.Clear();
         _filterProjectDtos = _projectDtos.Where(
-            x => x.DeliveryDate.Year.Equals(_year)&&
-                 (_annual||(_fromMonth&&
-                            x.DeliveryDate.Month>=_month)||
-                  x.DeliveryDate.Month.Equals(_month))&&
+            x => x.DeliveryDate.Year>=_year&&
+                 ((_annual && x.DeliveryDate.Year==_year)||
+                  (_fromMonth && (x.DeliveryDate.Year>_year||
+                                  (x.DeliveryDate.Year==_year && x.DeliveryDate.Month>=_month)))||
+                  (x.DeliveryDate.Year==_year && x.DeliveryDate.Month==_month))&&
                  (string.IsNullOrEmpty(_search)||
                   x.OdpNumber.Contains(_search, StringComparison.OrdinalIgnoreCase)|| 
                   x.Name.Contains(_search, StringComparison.OrdinalIgnoreCase)||

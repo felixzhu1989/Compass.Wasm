@@ -26,6 +26,8 @@ public class UcwDataService : BaseDataGetService<UcwData>, IUcwDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
 
             #region 水洗挡板
@@ -65,6 +67,15 @@ public class UcwDataService : BaseDataGetService<UcwData>, IUcwDataService
             data.HclRight = dto.HclRight;
             #endregion
 
+            #region 灯腔侧板参数
+            data.LongGlassNumber=dto.LongGlassNumber;
+            data.ShortGlassNumber=dto.ShortGlassNumber;
+
+            data.LeftLength=dto.LeftLength;
+            data.RightLength=dto.RightLength;
+            data.MiddleLength=dto.MiddleLength;
+            #endregion
+
             #region 水洗管入口,KCW265时才需要
             data.CeilingWaterInlet=dto.CeilingWaterInlet;
             #endregion
@@ -74,7 +85,6 @@ public class UcwDataService : BaseDataGetService<UcwData>, IUcwDataService
             data.Gutter = dto.Gutter;
             data.GutterWidth = dto.GutterWidth;
             data.Japan = dto.Japan;
-            data.Marvel = dto.Marvel;
             #endregion
 
             #region Ansul基本参数

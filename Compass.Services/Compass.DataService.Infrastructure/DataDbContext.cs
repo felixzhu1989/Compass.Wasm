@@ -78,8 +78,10 @@ public class DataDbContext : BaseDbContext
     public DbSet<LfuData> LfuData { get; set; }
     public DbSet<AnData> AnData { get; set; }
     public DbSet<SspData> SspData { get; set; }
-
-
+    public DbSet<LkData> LkData { get; set; }
+    public DbSet<LpData> LpData { get; set; }
+    public DbSet<InfData> InfData { get; set; }
+    public DbSet<DxfData> DxfData { get; set; }
 
     #endregion
 

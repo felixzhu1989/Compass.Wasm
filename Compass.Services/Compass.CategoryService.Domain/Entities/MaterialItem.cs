@@ -122,7 +122,7 @@ public record MaterialItem : AggregateRootEntity, IAggregateRoot, IHasCreationTi
             .ChangeCeiling(dto.Ceiling)
             .ChangeCeilingGroup(dto.CeilingGroup)
             .ChangeCeilingRule(dto.CeilingRule)
-            .ChangeCalcRule(dto.Remark)
+            .ChangeCalcRule(dto.CalcRule)
             .ChangeNoLabel(dto.NoLabel)
             .ChangeOneLabel(dto.OneLabel)
             .ChangeOrder(dto.Order);

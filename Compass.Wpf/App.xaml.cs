@@ -1,4 +1,7 @@
-﻿namespace Compass.Wpf;
+﻿using Compass.Wpf.ViewModels.Settings;
+using Compass.Wpf.Views.Settings;
+
+namespace Compass.Wpf;
 
 /// <summary>
 /// Interaction logic for App.xaml
@@ -86,26 +89,26 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
         containerRegistry.RegisterForNavigation<TodoView, TodoViewModel>();
         containerRegistry.RegisterForNavigation<MemoView, MemoViewModel>();
-        containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
-        containerRegistry.RegisterForNavigation<AboutView>();//设置界面
         containerRegistry.RegisterForNavigation<ProjectsView, ProjectsViewModel>();
         containerRegistry.RegisterForNavigation<DetailView, DetailViewModel>();
-
         containerRegistry.RegisterForNavigation<DrawingView, DrawingViewModel>();
         containerRegistry.RegisterForNavigation<ModulesView, ModulesViewModel>();
-
         containerRegistry.RegisterForNavigation<MainPlansView, MainPlansViewModel>();
-
-        containerRegistry.RegisterForNavigation<MaterialItemsView, MaterialItemsViewModel>();
+        
         containerRegistry.RegisterForNavigation<AddPackingListView, AddPackingListViewModel>();
         containerRegistry.RegisterForNavigation<PackingListView, PackingListViewModel>();
         containerRegistry.RegisterForNavigation<PackingInfoView, PackingInfoViewModel>();
-
+        //设置界面
+        containerRegistry.RegisterForNavigation<SettingsView, SettingsViewModel>();
+        containerRegistry.RegisterForNavigation<AboutView>();
+        containerRegistry.RegisterForNavigation<MaterialItemsView, MaterialItemsViewModel>();
+        containerRegistry.RegisterForNavigation<AccCutListView, AccCutListViewModel>();
 
 
         #endregion
 
         #region 注册Data页面服务,View,ViewModel
+        //普通烟罩
         containerRegistry.RegisterForNavigation<KviDataView, KviDataViewModel>();
         containerRegistry.RegisterForNavigation<KvfDataView, KvfDataViewModel>();
         containerRegistry.RegisterForNavigation<UviDataView, UviDataViewModel>();
@@ -121,6 +124,8 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<CmodiDataView, CmodiDataViewModel>();
         containerRegistry.RegisterForNavigation<CmodfDataView, CmodfDataViewModel>();
 
+        //UL烟罩
+
 
         //天花烟罩
         containerRegistry.RegisterForNavigation<KcjDataView, KcjDataViewModel>();
@@ -134,10 +139,14 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<AnDataView,AnDataViewModel>();
 
         containerRegistry.RegisterForNavigation<SspDataView,SspDataViewModel>();
+        containerRegistry.RegisterForNavigation<LkDataView,LkDataViewModel>();
+        containerRegistry.RegisterForNavigation<LpDataView,LpDataViewModel>();
+        containerRegistry.RegisterForNavigation<InfDataView, InfDataViewModel>();
+        containerRegistry.RegisterForNavigation<DxfDataView, DxfDataViewModel>();
+
 
         #endregion
-
-
+        
         #region 注册页面Api数据服务
         containerRegistry.Register<ILoginService, LoginService>();
         containerRegistry.Register<IFileUploadService, FileUploadService>();
@@ -146,23 +155,21 @@ public partial class App : PrismApplication
         containerRegistry.Register<IProjectService, ProjectService>();
         containerRegistry.Register<IDrawingService, DrawingService>();
         containerRegistry.Register<IModuleService, ModuleService>();
-
         containerRegistry.Register<IMainPlanService, MainPlanService>();
-        containerRegistry.Register<IMaterialItemService, MaterialItemService>();
         containerRegistry.Register<IPackingListService, PackingListService>();
         containerRegistry.Register<IPackingItemService, PackingItemService>();
-
         containerRegistry.Register<ICutListService, CutListService>();
         containerRegistry.Register<IBatchWorksService, BatchWorksService>();
         containerRegistry.Register<IExportDxfService, ExportDxfService>();
         containerRegistry.Register<IPrintsService, PrintsService>();
-
-
-
+        //设置界面
+        containerRegistry.Register<IMaterialItemService, MaterialItemService>();
+        containerRegistry.Register<IAccCutListService,AccCutListService>();
 
         #endregion
-        
+
         #region 模型Data Api数据服务
+        //普通烟罩
         containerRegistry.Register<IKviDataService, KviDataService>();
         containerRegistry.Register<IKvfDataService, KvfDataService>();
         containerRegistry.Register<IUviDataService, UviDataService>();
@@ -181,8 +188,6 @@ public partial class App : PrismApplication
         containerRegistry.Register<ICmodmDataService,CmodmDataService>();
 
         containerRegistry.Register<IKchDataService, KchDataService>();
-
-
 
         //UL烟罩
         containerRegistry.Register<IChDataService, ChDataService>();
@@ -208,10 +213,15 @@ public partial class App : PrismApplication
         containerRegistry.Register<ILfuDataService,LfuDataService>();
         containerRegistry.Register<IAnDataService, AnDataService>();
         containerRegistry.Register<ISspDataService,SspDataService>();
+        containerRegistry.Register<ILkDataService,LkDataService>();
+        containerRegistry.Register<ILpDataService,LpDataService>();
+        containerRegistry.Register<IInfDataService, InfDataService>();
+        containerRegistry.Register<IDxfDataService, DxfDataService>();
 
         #endregion
 
         #region 模型制图服务
+        //普通烟罩
         containerRegistry.Register<IKviAutoDrawing, KviAutoDrawing>();
         containerRegistry.Register<IKvfAutoDrawing, KvfAutoDrawing>();
         containerRegistry.Register<IUviAutoDrawing, UviAutoDrawing>();
@@ -225,6 +235,8 @@ public partial class App : PrismApplication
         containerRegistry.Register<IKvvAutoDrawing, KvvAutoDrawing>();
         containerRegistry.Register<ICmodiAutoDrawing, CmodiAutoDrawing>();
         containerRegistry.Register<ICmodfAutoDrawing, CmodfAutoDrawing>();
+        //UL烟罩
+
         //天花烟罩
         containerRegistry.Register<IKcjAutoDrawing,KcjAutoDrawing>();
         containerRegistry.Register<IUcjAutoDrawing,UcjAutoDrawing>();
@@ -235,7 +247,10 @@ public partial class App : PrismApplication
         containerRegistry.Register<ILfuAutoDrawing, LfuAutoDrawing>();
         containerRegistry.Register<IAnAutoDrawing,AnAutoDrawing>();
         containerRegistry.Register<ISspAutoDrawing,SspAutoDrawing>();
-
+        containerRegistry.Register<ILkAutoDrawing, LkAutoDrawing>();
+        containerRegistry.Register<ILpAutoDrawing, LpAutoDrawing>();
+        containerRegistry.Register<IInfAutoDrawing, InfAutoDrawing>();
+        containerRegistry.Register<IDxfAutoDrawing, DxfAutoDrawing>();
 
 
         #endregion
@@ -247,9 +262,6 @@ public partial class App : PrismApplication
         containerRegistry.Register<IMidRoofService, MidRoofService>();
         containerRegistry.Register<IBeamService, BeamService>();
         containerRegistry.Register<ICeilingService, CeilingService>();
-
-
-
         #endregion
 
         #region 注册自定义弹窗服务
@@ -268,10 +280,6 @@ public partial class App : PrismApplication
         containerRegistry.RegisterForNavigation<CutListView, CutListViewModel>();
         containerRegistry.RegisterForNavigation<JobCardView, JobCardViewModel>();
         containerRegistry.RegisterForNavigation<BatchWorksView, BatchWorksViewModel>();
-
-
-
-
 
         #endregion
     }

@@ -59,3 +59,8 @@ public class DpSideCvt : EnumCvt<DpSide_e> { }
 public class DpBackSideCvt : EnumCvt<DpBackSide_e> { }
 
 public class DpDrainTypeCvt : EnumCvt<DpDrainType_e> { }
+public class PanelTypeCvt:EnumCvt<PanelType_e>{}
+
+public class ExportWayCvt : EnumCvt<ExportWay_e> { }
+public class AccTypeCvt : EnumCvt<AccType_e> { }
+

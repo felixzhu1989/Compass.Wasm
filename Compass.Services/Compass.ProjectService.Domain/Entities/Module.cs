@@ -1,4 +1,5 @@
-﻿using Compass.Wasm.Shared.Data;
+﻿using Compass.Wasm.Shared.Categories;
+using Compass.Wasm.Shared.Data;
 using Compass.Wasm.Shared.Projects;
 using Compass.Wasm.Shared.Projects.Notifs;
 using Zack.DomainCommons.Models;
@@ -16,9 +17,10 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
     public bool IsModuleDataOk { get;private set; }//用于标记图纸得参数是否已经得到修改
     public bool IsCutListOk { get; private set; }
     public bool Pallet { get; private set; }//单独托盘
+    public ExportWay_e ExportWay { get;private set; }//导图模式
 
     private Module() { }
-    public Module(Guid id,Guid drawingId,Guid modelTypeId, string name,string modelName, string? specialNotes,double length,double width,double height,SidePanel_e sidePanel,bool pallet)
+    public Module(Guid id,Guid drawingId,Guid modelTypeId, string name,string modelName, string? specialNotes,double length,double width,double height,SidePanel_e sidePanel,bool pallet,bool marvel,ExportWay_e exportWay)
     {
         Id = id;
         DrawingId = drawingId;
@@ -27,11 +29,12 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         ModelName=modelName;
         SpecialNotes = specialNotes;
         Pallet = pallet;
+        ExportWay=exportWay;
 
         //todo:改成Domain事件,写在Module实体类中
         #region 创建Module的ModuleData参数
         var model = modelName.Split('_')[0];
-        AddDomainEvent(new ModuleCreatedNotif(id, model, modelTypeId, length, width, height, sidePanel));
+        AddDomainEvent(new ModuleCreatedNotif(id, model, modelTypeId, length, width, height, sidePanel,marvel));
         #endregion
 
     }
@@ -45,15 +48,18 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
             .ChangeQrCodeUrl(dto.QrCodeUrl)
             .ChangeIsModuleDataOk(dto.IsModuleDataOk)
             .ChangeIsCutListOk(dto.IsCutListOk)
-            .ChangePallet(dto.Pallet);
+            .ChangePallet(dto.Pallet)
+            .ChangeExportWay(dto.ExportWay);
         NotifyModified();
 
-        //todo:改成领域事件
+        //todo:改成领域事件,redis
         #region 修改Module的ModuleData参数
-        var model = dto.ModelName.Split('_')[0];
-        AddDomainEvent(new ModuleUpdatedNotif(dto.Id.Value, model, dto.ModelTypeId.Value,dto.Length, dto.Width, dto.Height,dto.SidePanel));
+        var model = dto.ModelName.Split('_').First();
+        AddDomainEvent(new ModuleUpdatedNotif(dto.Id.Value, model, dto.ModelTypeId.Value,dto.Length, dto.Width, dto.Height,dto.SidePanel,dto.Marvel));
         #endregion
     }
+
+    
 
     public Module ChangeModelTypeId(Guid modelTypeId)
     {
@@ -96,7 +102,11 @@ public record Module:AggregateRootEntity,IAggregateRoot, IHasCreationTime, ISoft
         Pallet=pallet;
         return this;
     }
-
+    public Module ChangeExportWay(ExportWay_e exportWay)
+    {
+        ExportWay=exportWay;
+        return this;
+    }
     public override void SoftDelete()
     {
         //发出领域事件，删除当前的参数

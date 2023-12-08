@@ -1,11 +1,9 @@
-﻿using System.Collections.Immutable;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using AutoMapper;
 using Compass.Dtos;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;
-using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Plans;
 
@@ -126,7 +124,7 @@ public class PackingListService:IPackingListService
             dto.FinishTime = mainPlan.FinishTime;
             //查询PackingItem列表
             var packingItems = await _repository.GetPackingItemsByListIdAsync(dto.Id.Value);
-            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).OrderBy(x=>x.Order).ThenBy(x=>x.MtlNumber);
+            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).OrderBy(x=>x.Order).ThenBy(x=>x.MtlNumber).ToList();
             dto.PackingItemDtos = new ObservableCollection<PackingItemDto>(piDtos);
 
             return new ApiResponse<PackingListDto> { Status = true, Result = dto };
@@ -153,7 +151,7 @@ public class PackingListService:IPackingListService
             dto.FinishTime = mainPlan.FinishTime;
             //查询PackingItem列表
             var packingItems = await _repository.GetPackingItemsByListIdAsync(dto.Id.Value);
-            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).Where(x => x.Pallet).OrderBy(x => x.Order).ThenBy(x => x.MtlNumber);//过滤掉非托盘信息
+            var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).Where(x => x.Pallet).OrderBy(x => x.Order).ThenBy(x => x.MtlNumber).ToList();//过滤掉非托盘信息
             dto.PackingItemDtos = new ObservableCollection<PackingItemDto>(piDtos);
 
             return new ApiResponse<PackingListDto> { Status = true, Result = dto };

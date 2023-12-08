@@ -29,7 +29,7 @@ public class MaterialItemCsv
     public string? CeilingRule { get; set; }
     public string? CalcRule { get; set; }//计算规则
 
-    public bool NoLabel { get; set; }//不要打印标签，
-    public bool OneLabel { get; set; }//打印1张标签，默认false表示需要根据数量Quantity打印多张
+    public string? NoLabel { get; set; }//不要打印标签，
+    public string? OneLabel { get; set; }//打印1张标签，默认false表示需要根据数量Quantity打印多张
     #endregion
 }

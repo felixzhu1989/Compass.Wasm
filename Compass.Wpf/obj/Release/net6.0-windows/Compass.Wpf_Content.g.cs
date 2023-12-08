@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("acccutlist.csv")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("finalinspection.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("finalinspectionen.xlsx")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("jobcard.xlsx")]

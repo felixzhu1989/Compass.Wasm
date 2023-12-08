@@ -29,9 +29,11 @@ public class AnDataService:BaseDataGetService<AnData>,IAnDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
 
-            data.Marvel = dto.Marvel;
+
 
             #region Ansul基本参数
             data.Ansul = dto.Ansul;

@@ -28,8 +28,10 @@ public class CmodmDataService : BaseDataGetService<CmodmData>, ICmodmDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
-            
+
 
             data.NotifyModified();//通知更新时间
             return new ApiResponse<CmodmData> { Status = true, Result = dto };

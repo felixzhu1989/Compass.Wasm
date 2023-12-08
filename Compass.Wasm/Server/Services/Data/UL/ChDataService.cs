@@ -29,6 +29,8 @@ public class ChDataService : BaseDataGetService<ChData>, IChDataService
             data.Width = dto.Width;
             data.Height = dto.Height;
             data.SidePanel = dto.SidePanel;
+            data.Marvel = dto.Marvel;
+            data.AssyPath=dto.AssyPath;
             #endregion
 
             #region 排风口参数

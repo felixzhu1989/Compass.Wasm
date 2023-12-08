@@ -8,6 +8,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Debug\net6.0\Compass.Wasm.S
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Debug\net6.0\Compass.Wasm.Shared.AssemblyInfoInputs.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Debug\net6.0\Compass.Wasm.Shared.AssemblyInfo.cs
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Debug\net6.0\Compass.Wasm.Shared.csproj.CoreCompileInputs.cache
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Debug\net6.0\Compass.Wasm.Shared.sourcelink.json
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Debug\net6.0\Compass.Wasm.Shared.csproj.CopyComplete
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Debug\net6.0\Compass.Wasm.Shared.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Shared\obj\Debug\net6.0\refint\Compass.Wasm.Shared.dll

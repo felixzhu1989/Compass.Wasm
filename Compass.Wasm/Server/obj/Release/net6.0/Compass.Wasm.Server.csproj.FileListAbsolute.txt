@@ -199,3 +199,4 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Newtonsoft.J
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\RestSharp.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\bin\Release\net6.0\Compass.Dtos.pdb
+E:\CSharp\repos\Compass.Wasm\Compass.Wasm\Server\obj\Release\net6.0\Compass.Wasm.Server.sourcelink.json

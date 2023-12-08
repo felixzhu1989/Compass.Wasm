@@ -23,6 +23,7 @@
             </ResourceDictionary.MergedDictionaries>
             <cvt:SidePanelCvt x:Key="SidePanelCvt" />
             <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
+            <cvt:ExportWayCvt x:Key="ExportWayCvt" />
         </ResourceDictionary>
     </UserControl.Resources>
     <materialDesign:DialogHost>
@@ -112,11 +113,10 @@
                                                ToolTip="{Binding Description}">
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} [{1}]">
-                                                <Binding Path="ModelName"/>
-                                                <Binding Path="Description"/>
+                                                <Binding Path="ModelName" />
+                                                <Binding Path="Description" />
                                             </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
+                                        </TextBlock.Text></TextBlock>
                                 </StackPanel>
                             </DataTemplate>
                         </TreeView.Resources>
@@ -136,34 +136,49 @@
                                  MinHeight="70"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True" />
-                        <CheckBox IsChecked="{Binding CurrentModuleDto.Pallet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                  Content="独立托盘"
-                                  Margin="0,10" />
-                        <TextBox Text="{Binding CurrentModuleDto.Length}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="长度: "
-                                 materialDesign:TextFieldAssist.SuffixText="(为默认值时可不填写)" />
-                        <TextBox Text="{Binding CurrentModuleDto.Width}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="宽度: "
-                                 materialDesign:TextFieldAssist.SuffixText="(为默认值时可不填写)" />
-                        <TextBox Text="{Binding CurrentModuleDto.Height}"
-                                 Margin="0,5"
-                                 VerticalAlignment="Center"
-                                 materialDesign:TextFieldAssist.PrefixText="高度: "
-                                 materialDesign:TextFieldAssist.SuffixText="(为默认值时可不填写)" />
-                        <ComboBox ItemsSource="{Binding SidePanels}"
-                                  Margin="0,5"
-                                  SelectedItem="{Binding CurrentModuleDto.SidePanel,Converter={StaticResource SidePanelCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                  materialDesign:TextFieldAssist.PrefixText="侧板:   " />
-                        <CheckBox IsChecked="{Binding CurrentModuleDto.IsModuleDataOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                  Content="分段数据已经OK"
-                                  Margin="0,10" />
-                        <CheckBox IsChecked="{Binding CurrentModuleDto.IsCutListOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                  Content="CutList已经OK"
-                                  Margin="0,10" />
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="0,0,20,0">
+                                <TextBox Text="{Binding CurrentModuleDto.Length}"
+                                         Margin="0,5"
+                                         VerticalAlignment="Center"
+                                         materialDesign:TextFieldAssist.PrefixText="长度: "
+                                         materialDesign:TextFieldAssist.SuffixText="(默认时不填)" />
+                                <TextBox Text="{Binding CurrentModuleDto.Width}"
+                                         Margin="0,5"
+                                         VerticalAlignment="Center"
+                                         materialDesign:TextFieldAssist.PrefixText="宽度: "
+                                         materialDesign:TextFieldAssist.SuffixText="(默认时不填)" />
+                                <TextBox Text="{Binding CurrentModuleDto.Height}"
+                                         Margin="0,5"
+                                         VerticalAlignment="Center"
+                                         materialDesign:TextFieldAssist.PrefixText="高度: "
+                                         materialDesign:TextFieldAssist.SuffixText="(默认时不填)" />
+                                <ComboBox ItemsSource="{Binding SidePanels}"
+                                          Margin="0,5"
+                                          SelectedItem="{Binding CurrentModuleDto.SidePanel,Converter={StaticResource SidePanelCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                          materialDesign:TextFieldAssist.PrefixText="侧板:   " />
+                                <CheckBox IsChecked="{Binding CurrentModuleDto.Marvel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                          Content="Marvel"
+                                          Margin="0,10" />
+                            </StackPanel>
+                            <StackPanel>
+                                
+                                <ComboBox Margin="0,5"
+                                          ItemsSource="{Binding ExportWays}"
+                                          SelectedItem="{Binding CurrentModuleDto.ExportWay,Converter={StaticResource ExportWayCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                          materialDesign:TextFieldAssist.PrefixText="导图模式:   " />
+                                
+                                <CheckBox IsChecked="{Binding CurrentModuleDto.Pallet,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                          Content="独立托盘"
+                                          Margin="0,10" />
+                                <CheckBox IsChecked="{Binding CurrentModuleDto.IsModuleDataOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                          Content="分段数据已经OK"
+                                          Margin="0,10" />
+                                <CheckBox IsChecked="{Binding CurrentModuleDto.IsCutListOk,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                          Content="CutList已经OK"
+                                          Margin="0,10" />
+                            </StackPanel>
+                        </StackPanel>
                         <Button Content="保存分段"
                                 Command="{Binding ExecuteCommand}"
                                 CommandParameter="Save"
@@ -171,7 +186,6 @@
                     </StackPanel>
                 </Grid>
             </materialDesign:DrawerHost.RightDrawerContent>
-            
             <!--主要内容-->
             <Grid>
                 <Grid.RowDefinitions>
@@ -202,7 +216,7 @@
                 <Grid Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <!--分割线-->
                     <Border Grid.Column="0"

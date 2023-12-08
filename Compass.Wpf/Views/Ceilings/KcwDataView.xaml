@@ -158,27 +158,48 @@
                                  materialDesign:TextFieldAssist.PrefixText="HCL右侧板长度：" />
                     </StackPanel>
                 </StackPanel>
-                <!--通用配置参数-->
+                <!--灯腔侧板参数-->
                 <StackPanel>
-                    <TextBlock Text="通用配置参数"
+                    <TextBlock Text="灯腔侧板参数(SB385、SB290和SB265时不要填)"
                                Margin="0,5,0,0"
                                Foreground="DodgerBlue" />
-                    <CheckBox IsChecked="{Binding DataDto.DomeSsp,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              Content="SSP是拱板"
-                              Margin="0,10" />
-                    <CheckBox IsChecked="{Binding DataDto.Gutter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              Content="带Gutter"
-                              Margin="0,10" />
-                    <TextBox Text="{Binding DataDto.GutterWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Visibility="{Binding DataDto.Gutter,Converter={StaticResource BoolToVisibilityCvt}}"
-                             Margin="0,5"
-                             materialDesign:TextFieldAssist.PrefixText="Gutter宽度：" />
-                    <CheckBox IsChecked="{Binding DataDto.Marvel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              Content="Marvel"
-                              Margin="0,10" />
-                    <CheckBox IsChecked="{Binding DataDto.Japan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              Content="日本项目"
-                              Margin="0,10" />
+                    <!--<ComboBox ItemsSource="{Binding SidePanels}"
+                              Margin="0,5"
+                              SelectedItem="{Binding DataDto.SidePanel,Converter={StaticResource SidePanelCvt},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              materialDesign:TextFieldAssist.PrefixText="侧板:   " />-->
+                    <StackPanel Visibility="{Binding DataDto.SidePanel,Converter={StaticResource ShowLeftSideCvt}}">
+                        <TextBox Text="{Binding DataDto.TotalLength,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,5"
+                                 materialDesign:TextFieldAssist.PrefixText="总长："
+                                 materialDesign:TextFieldAssist.SuffixText="(LK[左或双]时填总长)" />
+                        <!--玻璃灯腔侧板参数-->
+                        <StackPanel>
+                            <TextBlock Text="玻璃(包括日本)灯腔侧板参数"
+                                       Margin="0,5,0,0"
+                                       Foreground="DodgerBlue" />
+                            <TextBox Text="{Binding DataDto.LongGlassNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,5"
+                                     materialDesign:TextFieldAssist.PrefixText="长玻璃数量：" />
+                            <TextBox Text="{Binding DataDto.ShortGlassNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,5"
+                                     materialDesign:TextFieldAssist.PrefixText="短玻璃数量：" />
+                        </StackPanel>
+                        <!--日本灯腔侧板参数-->
+                        <StackPanel Visibility="{Binding DataDto.Japan,Converter={StaticResource BoolToVisibilityCvt}}">
+                            <TextBlock Text="日本灯腔侧板参数"
+                                       Margin="0,5,0,0"
+                                       Foreground="DodgerBlue" />
+                            <TextBox Text="{Binding DataDto.LeftLength,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,5"
+                                     materialDesign:TextFieldAssist.PrefixText="左灯腔侧板长度：" />
+                            <TextBox Text="{Binding DataDto.RightLength,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,5"
+                                     materialDesign:TextFieldAssist.PrefixText="左灯腔侧板长度：" />
+                            <TextBox Text="{Binding DataDto.MiddleLength,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,5"
+                                     materialDesign:TextFieldAssist.PrefixText="中灯腔侧板长度：" />
+                        </StackPanel>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="2"
@@ -207,21 +228,43 @@
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="一条烟罩总长："
                              materialDesign:TextFieldAssist.SuffixText="([左或双侧]时填总长)" />
-                    <TextBox Text="{Binding DataDto.HclLeft,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding DataDto.BaffleLeft,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="水洗挡板UL长度：" />
-                    <TextBox Text="{Binding DataDto.HclRight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding DataDto.BaffleRight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="水洗挡板UR板长度：" />
-                    <TextBox Text="{Binding DataDto.HclLeft,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding DataDto.BaffleW,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="水洗挡板W长度：" />
-                    <TextBox Text="{Binding DataDto.HclRight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    <TextBox Text="{Binding DataDto.BaffleM,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="水洗挡板M长度：" />
                     <TextBox Text="{Binding DataDto.BaffleMNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Margin="0,5"
                              materialDesign:TextFieldAssist.PrefixText="水洗挡板M数量：" />
+                </StackPanel>
+                <!--通用配置参数-->
+                <StackPanel>
+                    <TextBlock Text="通用配置参数"
+                               Margin="0,5,0,0"
+                               Foreground="DodgerBlue" />
+                    <CheckBox IsChecked="{Binding DataDto.DomeSsp,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Content="SSP是拱板"
+                              Margin="0,10" />
+                    <CheckBox IsChecked="{Binding DataDto.Gutter,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Content="带Gutter"
+                              Margin="0,10" />
+                    <TextBox Text="{Binding DataDto.GutterWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Visibility="{Binding DataDto.Gutter,Converter={StaticResource BoolToVisibilityCvt}}"
+                             Margin="0,5"
+                             materialDesign:TextFieldAssist.PrefixText="Gutter宽度：" />
+                    <CheckBox IsChecked="{Binding DataDto.Marvel,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Content="Marvel"
+                              Margin="0,10" />
+                    <CheckBox IsChecked="{Binding DataDto.Japan,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Content="日本项目"
+                              Margin="0,10" />
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="3"
