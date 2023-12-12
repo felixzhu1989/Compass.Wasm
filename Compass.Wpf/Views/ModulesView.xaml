@@ -12,6 +12,7 @@
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors">
     <UserControl.Resources>
         <cvt:BoolToVisibilityCvt x:Key="BoolToVisibilityCvt" />
+        <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -40,13 +41,16 @@
                     </behavior:EventTrigger>
                 </behavior:Interaction.Triggers>
             </ComboBox>
+            <StackPanel DockPanel.Dock="Left"
+                        Visibility="{Binding DrawingRoles,Converter={StaticResource RolesToVisibilityCvt}}"
+                        Orientation="Horizontal">
             <Button DockPanel.Dock="Left"
                     Content="自动作图"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="AutoDrawing"
                     Margin="20,0,10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="GreenYellow"
+                        Background="	Lime"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
                     Content="导出Dxf图"
@@ -54,7 +58,7 @@
                     CommandParameter="ExportDxf"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="Chartreuse"
+                        Background="PaleGreen"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
                     Content="打印CutList"
@@ -62,7 +66,7 @@
                     CommandParameter="PrintCutList"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="Lime"
+                        Background="LightSkyBlue"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
                     Content="打印JobCard"
@@ -70,7 +74,7 @@
                     CommandParameter="PrintJobCard"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="LimeGreen"
+                        Background="DeepSkyBlue"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
                     Content="打印英文JobCard"
@@ -78,7 +82,7 @@
                     CommandParameter="PrintEnJobCard"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="LimeGreen"
+                        Background="SkyBlue"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
                     Content="同步文件"
@@ -88,13 +92,14 @@
                     materialDesign:ButtonAssist.CornerRadius="15"
                     Background="Orange"
                     BorderThickness="0" />
+            </StackPanel>
             <Button DockPanel.Dock="Left"
                     Content="装箱清单"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="PackingList"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="LightSkyBlue"
+                    Background="HotPink"
                     BorderThickness="0" />
         </DockPanel>
         <!--分段数据-->
@@ -221,6 +226,7 @@
         <DockPanel Grid.Row="2"
                    LastChildFill="False"
                    IsEnabled="{Binding CanBatchWorks}"
+                   Visibility="{Binding DrawingRoles,Converter={StaticResource RolesToVisibilityCvt}}"
                    Margin="10">
             <Button DockPanel.Dock="Left"
                     Content="打印最终检验页"
@@ -237,7 +243,7 @@
                     CommandParameter="PrintEnFinal"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="DarkTurquoise"
+                    Background="MediumTurquoise"
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
                     Content="打印截图页"
@@ -245,7 +251,7 @@
                     CommandParameter="PrintScreenShot"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="LightSkyBlue"
+                    Background="DarkTurquoise"
                     BorderThickness="0" 
                     Visibility="Hidden"/>
             <Button DockPanel.Dock="Left"
@@ -254,7 +260,7 @@
                     CommandParameter="PrintEnScreenShot"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="SkyBlue"
+                    Background="LightSeaGreen"
                     BorderThickness="0"/>
 
         </DockPanel>

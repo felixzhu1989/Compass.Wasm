@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="AccCutList.csv" />
+    <None Remove="CeilingLabel.xlsx" />
     <None Remove="FinalInspection.xlsx" />
     <None Remove="FinalInspectionEn.xlsx" />
     <None Remove="Images\compass_64px.ico" />
@@ -25,6 +26,7 @@
     <None Remove="PackingList.xlsx" />
     <None Remove="PackingListCeiling.xlsx" />
     <None Remove="PackingListHood.xlsx" />
+    <None Remove="PalletLabel.xlsx" />
     <None Remove="ScreenShot.xlsx" />
     <None Remove="ScreenShotEn.xlsx" />
     <None Remove="UpdateList.xml" />
@@ -32,6 +34,12 @@
 
   <ItemGroup>
     <Content Include="AccCutList.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PalletLabel.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CeilingLabel.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="FinalInspection.xlsx">
@@ -82,6 +90,7 @@
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="QRCoder" Version="1.4.3" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
     <PackageReference Include="Visiativ.SOLIDWORKS.Interop" Version="31.1.0" />
   </ItemGroup>
 

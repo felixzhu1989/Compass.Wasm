@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Compass.Wpf.Views"
              mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800"
+             d:DesignHeight="600"
+             d:DesignWidth="1024"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:behavior="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:cvt="clr-namespace:Compass.Wpf.Common.Converters">
@@ -15,8 +15,10 @@
         <cvt:TypeToVisibilityCvt x:Key="TypeToVisibilityCvt"/>
         <cvt:BoolToHeightCvt x:Key="BoolToHeightCvt"/>
         <cvt:BoolToHeightInverseCvt x:Key="BoolToHeightInverseCvt"/>
+        <cvt:RolesToVisibilityCvt x:Key="RolesToVisibilityCvt" />
     </UserControl.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10"
+          IsEnabled="{Binding IsEnable}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -36,16 +38,25 @@
                        Text="{Binding PackingList.ProjectName}"
                        Margin="20,0,0,0" 
                        VerticalAlignment="Center"/>
-            
             <Button DockPanel.Dock="Right"
-                    Content="装箱清单"
+                    Visibility="{Binding PrintLabelRoles,Converter={StaticResource RolesToVisibilityCvt}}"
+                    Content="勾选并打印托盘标签(仓库)"
+                    Command="{Binding ExecuteCommand}"
+                    CommandParameter="PrintLabel"
+                    Margin="10,0"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="HotPink"
+                    BorderThickness="0" />
+            <Button DockPanel.Dock="Right"
+                    Content="->装箱清单(配件明细)"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="PackingList"
                     Margin="10,0"
                     materialDesign:ButtonAssist.CornerRadius="15"
-                    Background="LightSkyBlue"
+                    Background="DeepSkyBlue"
                     BorderThickness="0" />
             <StackPanel DockPanel.Dock="Right"
+                        Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}"
                         Orientation="Horizontal">
                 <TextBlock Text="填表" VerticalAlignment="Center"></TextBlock>
                 <ToggleButton IsChecked="{Binding Preview}"
@@ -77,6 +88,24 @@
                   IsReadOnly="False"
                   ScrollViewer.VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
+                <!--选择框-->
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        IsReadOnly="False"
+                                        EditingElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnEditingStyle}"
+                                        ElementStyle="{StaticResource MaterialDesignDataGridCheckBoxColumnStyle}">
+                    <DataGridCheckBoxColumn.Header>
+                        <Border Background="Transparent">
+                            <CheckBox IsChecked="{Binding DataContext.IsAllItemsSelected, Source={x:Reference DataContextProxy}}" />
+                        </Border>
+                    </DataGridCheckBoxColumn.Header>
+                    <DataGridCheckBoxColumn.HeaderStyle>
+                        <Style TargetType="{x:Type DataGridColumnHeader}"
+                               BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Center" />
+                        </Style>
+                    </DataGridCheckBoxColumn.HeaderStyle>
+                </DataGridCheckBoxColumn>
                 <DataGridTextColumn Binding="{Binding PalletNumber,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
                                     Header="托盘号"
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -131,14 +160,30 @@
                                     ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
                                     EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                     Foreground="DarkGreen" />
+                <DataGridTemplateColumn Header="删除">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Visibility="{Binding DataContext.UpdateRoles,Converter={StaticResource RolesToVisibilityCvt},Source={x:Reference DataContextProxy}}"
+                                       IsEnabled="{Binding Type,Converter={StaticResource TypeToEnableCvt}}">
+                                <materialDesign:PackIcon Kind="DeleteForever"
+                                                         Foreground="Red" />
+                                <behavior:Interaction.Triggers>
+                                    <behavior:EventTrigger EventName="MouseLeftButtonDown">
+                                        <behavior:InvokeCommandAction Command="{Binding DataContext.DeleteItem,Source={x:Reference DataContextProxy}}"
+                                                                      CommandParameter="{Binding}" />
+                                    </behavior:EventTrigger>
+                                </behavior:Interaction.Triggers></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!--第3行,显示项目名称-->
+        <!--第3行,预览装箱信息表-->
         <ScrollViewer Grid.Row="2"
                       VerticalScrollBarVisibility="Auto"
                       Height="{Binding Preview,Converter={StaticResource BoolToHeightCvt}}">
-            <Grid >
+            <Grid Height="180">
                 <ItemsControl ItemsSource="{Binding PackingList.PackingItemDtos}"
                               Margin="5">
                     <ItemsControl.ItemsPanel>
@@ -329,6 +374,7 @@
                                         Margin="3"
                                         Background="Red"
                                         BorderBrush="Red"
+                                        Visibility="{Binding DataContext.UpdateRoles,Converter={StaticResource RolesToVisibilityCvt},Source={x:Reference DataContextProxy}}"
                                         IsEnabled="{Binding Type,Converter={StaticResource TypeToEnableCvt}}"
                                         Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryDarkButton}"
                                         Command="{Binding DataContext.DeleteItem,Source={x:Reference DataContextProxy}}"
@@ -344,9 +390,12 @@
                 
             </Grid>
         </ScrollViewer>
+
+        <!--第4行,修改装箱信息-->
         <DockPanel Grid.Row="3"
                    LastChildFill="False"
-                   Margin="5">
+                   Margin="5"
+                   Visibility="{Binding UpdateRoles,Converter={StaticResource RolesToVisibilityCvt}}">
             <Button DockPanel.Dock="Left"
                     Content="添加托盘"
                     Command="{Binding ExecuteCommand}"

@@ -13,10 +13,12 @@ public class MainPlansViewModel : NavigationViewModel
     #region ctor
     private readonly IMainPlanService _mainPlanService;
     private readonly IProjectService _projectService;
+    private readonly IPackingListService _packingListService;
     public MainPlansViewModel(IContainerProvider provider) : base(provider)
     {
         _mainPlanService = provider.Resolve<IMainPlanService>();
         _projectService = provider.Resolve<IProjectService>();
+        _packingListService= provider.Resolve<IPackingListService>();
 
         MainPlanDtos = new ObservableCollection<MainPlanDto>();
         FilterMainPlanDtos = new ObservableCollection<MainPlanDto>();
@@ -177,7 +179,7 @@ public class MainPlansViewModel : NavigationViewModel
     /// 导航到装箱信息界面
     /// </summary>
     /// <param name="obj"></param>
-    private void PackingInfo(MainPlanDto obj)
+    private async void PackingInfo(MainPlanDto obj)
     {
         if (obj.ProjectId==null||obj.ProjectId.Equals(Guid.Empty)) return;
         var packingListParam = new PackingListParam
@@ -186,11 +188,22 @@ public class MainPlansViewModel : NavigationViewModel
             Batch = obj.Batch,
             ProjectName = $"{obj.Number}-{obj.Name}"
         };
-        var param = new NavigationParameters { { "Value", packingListParam } };
-        RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("PackingInfoView", back =>
+        
+        //先判断能不能导航：
+        //根据项目ID和分批获取装箱信息表
+        var response = await _packingListService.GetPackingInfoAsync(packingListParam);
+        if (response.Status)
         {
-            Journal = back.Context.NavigationService.Journal;
-        }, param);
+            var param = new NavigationParameters { { "Value", packingListParam } };
+            RegionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("PackingInfoView", back =>
+            {
+                Journal = back.Context.NavigationService.Journal;
+            }, param);
+        }
+        else
+        {
+            Aggregator.SendMessage("技术部还没出装箱清单！");
+        }
     }
 
 

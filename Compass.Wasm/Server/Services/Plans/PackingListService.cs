@@ -125,6 +125,7 @@ public class PackingListService:IPackingListService
             //查询PackingItem列表
             var packingItems = await _repository.GetPackingItemsByListIdAsync(dto.Id.Value);
             var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).OrderBy(x=>x.Order).ThenBy(x=>x.MtlNumber).ToList();
+            piDtos.ForEach(x=>x.OdpNumber=mainPlan.Number);//存储额外属性ODP号
             dto.PackingItemDtos = new ObservableCollection<PackingItemDto>(piDtos);
 
             return new ApiResponse<PackingListDto> { Status = true, Result = dto };
@@ -152,6 +153,7 @@ public class PackingListService:IPackingListService
             //查询PackingItem列表
             var packingItems = await _repository.GetPackingItemsByListIdAsync(dto.Id.Value);
             var piDtos = _mapper.ProjectTo<PackingItemDto>(packingItems).Where(x => x.Pallet).OrderBy(x => x.Order).ThenBy(x => x.MtlNumber).ToList();//过滤掉非托盘信息
+            piDtos.ForEach(x => x.OdpNumber=mainPlan.Number);//存储额外属性ODP号
             dto.PackingItemDtos = new ObservableCollection<PackingItemDto>(piDtos);
 
             return new ApiResponse<PackingListDto> { Status = true, Result = dto };

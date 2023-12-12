@@ -1,5 +1,7 @@
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Compass.Update.exe
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\AccCutList.csv
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\PalletLabel.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\CeilingLabel.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\FinalInspection.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\FinalInspectionEn.xlsx
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\JobCard.xlsx
@@ -60,6 +62,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Micr
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Microsoft.IdentityModel.Tokens.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Microsoft.Office.Interop.Excel.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Microsoft.SqlServer.Server.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Microsoft.Win32.SystemEvents.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Microsoft.Xaml.Behaviors.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Office.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Newtonsoft.Json.dll
@@ -68,6 +71,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Pris
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Prism.Wpf.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\QRCoder.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\RestSharp.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\System.Drawing.Common.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\System.IdentityModel.Tokens.Jwt.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\System.Memory.Data.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\System.Runtime.Caching.dll
@@ -85,6 +89,7 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\runt
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\publish\Compass.Dtos.dll

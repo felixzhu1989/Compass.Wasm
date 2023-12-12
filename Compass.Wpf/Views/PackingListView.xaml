@@ -70,7 +70,7 @@
                     BorderThickness="0" />
             </StackPanel>
             <Button DockPanel.Dock="Left"
-                    Content="打印装箱清单"
+                    Content="打印装箱清单(配件明细)"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="Print"
                     Margin="10,0"
@@ -79,7 +79,7 @@
                     BorderThickness="0" />
             
             <Button DockPanel.Dock="Left"
-                    Content="装箱信息表(生产)"
+                    Content="->装箱信息表(托盘)"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="PackingInfo"
                     Margin="10,0"
@@ -88,7 +88,7 @@
                     BorderThickness="0" />
             <Button DockPanel.Dock="Left"
                     Visibility="{Binding PrintLabelRoles,Converter={StaticResource RolesToVisibilityCvt}}"
-                    Content="勾选并打印标签(生产)"
+                    Content="勾选并打印天花标签(生产)"
                     Command="{Binding ExecuteCommand}"
                     CommandParameter="PrintLabel"
                     Margin="10,0"

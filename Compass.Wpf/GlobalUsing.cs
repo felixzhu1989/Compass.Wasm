@@ -1,4 +1,6 @@
-﻿global using Compass.Wpf.Common;
+﻿//WPF项目
+global using Compass.Dtos;
+global using Compass.Wpf.Common;
 global using Compass.Wpf.Common.Models;
 global using Compass.Wpf.Extensions;
 

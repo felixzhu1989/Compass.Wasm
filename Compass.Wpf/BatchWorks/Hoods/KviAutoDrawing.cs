@@ -157,7 +157,7 @@ public class KviAutoDrawing : BaseAutoDrawing, IKviAutoDrawing
         #endregion
 
         #region  Exhaust_KV_FR_555，KVFR555排风装配
-        ExhaustService.KvFr555(swAssyTop, suffix, netLength, data.Width, data.Height, data.SidePanel, UvLightType_e.NA, netMiddleToRight, data.LightType, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
+        ExhaustService.KvFr555(swAssyTop, suffix, netLength, netWidth, data.Height, data.SidePanel, UvLightType_e.NA, netMiddleToRight, data.LightType, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
         #endregion
 
         #region SidePanel_Fr,大侧板装配
@@ -192,7 +192,7 @@ public class KviAutoDrawing : BaseAutoDrawing, IKviAutoDrawing
         #endregion
 
         #region  Exhaust_KV_FR_450，KVFR450排风装配
-        ExhaustService.KvFr450(swAssyTop, suffix, netLength, data.Width, data.Height, data.SidePanel, UvLightType_e.NA, netMiddleToRight, data.LightType, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
+        ExhaustService.KvFr450(swAssyTop, suffix, netLength, netWidth, data.Height, data.SidePanel, UvLightType_e.NA, netMiddleToRight, data.LightType, data.ExhaustSpigotNumber, data.ExhaustSpigotLength, data.ExhaustSpigotWidth, data.ExhaustSpigotHeight, data.ExhaustSpigotDis, data.DrainType, data.WaterCollection, data.BackToBack, data.Marvel, data.Ansul, data.AnsulSide, data.AnsulDetector);
         #endregion
 
         #region SidePanel_Fr_450,大侧板装配

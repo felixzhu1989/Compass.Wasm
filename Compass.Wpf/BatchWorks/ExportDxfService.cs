@@ -6,7 +6,6 @@ using Compass.Wasm.Shared.Categories;
 using Compass.Wasm.Shared.Extensions;
 using Compass.Wasm.Shared.Params;
 using SolidWorks.Interop.swconst;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -161,6 +160,7 @@ public class ExportDxfService : IExportDxfService
     /// <returns></returns>
     private bool CheckSheetMetal(Component2 swComp)
     {
+        Debug.Print(swComp.Name);
         var bodies = swComp.GetBodies3((int)swBodyType_e.swSolidBody, out _);
         foreach (var body in (IEnumerable)bodies)
         {

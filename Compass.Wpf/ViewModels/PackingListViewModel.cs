@@ -33,6 +33,7 @@ public class PackingListViewModel : NavigationViewModel
     public DelegateCommand<PackingItemDto> UpdateItem { get; }
     public DelegateCommand<PackingItemDto> DeleteItem { get; }
     #endregion
+
     #region 角色控制属性
     private string updateRoles;
     public string UpdateRoles
@@ -47,6 +48,7 @@ public class PackingListViewModel : NavigationViewModel
         set { printLabelRoles = value; RaisePropertyChanged(); }
     }
     #endregion
+
     #region 属性
     private bool isEnable;
     public bool IsEnable
@@ -178,7 +180,9 @@ public class PackingListViewModel : NavigationViewModel
                 Width = module.Width.ToString(),
                 Height = module.Height.ToString(),
                 Pallet=true,//单独托盘
-                Order = 0
+                Order = 0,
+                NoLabel = true,//不要打印标签
+                OneLabel = false,
             };
             //查询发货清单，看看是否有重复，重复则直接覆盖
             await AddOrUpdatePackingItem(newItem);
@@ -253,8 +257,7 @@ public class PackingListViewModel : NavigationViewModel
             await _packingItemService.AddAsync(newItem);
         }
     }
-
-
+    
     /// <summary>
     /// 添加标准物料
     /// </summary>
@@ -286,7 +289,6 @@ public class PackingListViewModel : NavigationViewModel
 
         await GetDataAsync();
     }
-
     /// <summary>
     /// 添加特殊自定义物料
     /// </summary>
@@ -301,7 +303,6 @@ public class PackingListViewModel : NavigationViewModel
         await _packingItemService.AddAsync(newItem);
         await GetDataAsync();
     }
-
     private async void UpdatePackingItem(PackingItemDto obj)
     {
         //弹出修改界面
@@ -320,7 +321,6 @@ public class PackingListViewModel : NavigationViewModel
         await _packingItemService.DeleteAsync(obj.Id.Value);
         await GetDataAsync();
     }
-
     /// <summary>
     /// 打印装箱清单
     /// </summary>
@@ -329,7 +329,11 @@ public class PackingListViewModel : NavigationViewModel
         IsEnable = false;
         //打印询问
         var dialogResult = await DialogHost.Question("打印确认", "确认要打印装箱清单吗?");
-        if (dialogResult.Result != ButtonResult.OK) return;
+        if (dialogResult.Result != ButtonResult.OK)
+        {
+            IsEnable = true;
+            return;
+        }
         await Task.Delay(500);//防止卡屏
         await _printsService.PrintPackingListAsync(PackingList);
         Aggregator.SendMessage("打印装箱清单完成！");
@@ -344,10 +348,14 @@ public class PackingListViewModel : NavigationViewModel
         IsEnable = false;
         //打印询问
         var dialogResult = await DialogHost.Question("打印确认", "确认要打印标签吗?");
-        if (dialogResult.Result != ButtonResult.OK) return;
+        if (dialogResult.Result != ButtonResult.OK)
+        {
+            IsEnable = true; 
+            return;
+        }
         await Task.Delay(500);//防止卡屏
 
-        //获取勾选的Item
+        //获取勾选的Item，并筛选需要打标签的行
         var selectItemDtos = PackingList.PackingItemDtos.Where(x => x.IsSelected && x.NoLabel==false).ToList();
         if (selectItemDtos.Count == 0)
         {
@@ -356,10 +364,8 @@ public class PackingListViewModel : NavigationViewModel
             return;
         }
 
-        //await _printsService.PrintPackingItemLabelAsync(selectItemDtos);
-
-        await Task.Delay(3000);
-
+        await _printsService.PrintPackingItemLabelAsync(selectItemDtos);
+        
         Aggregator.SendMessage("打印标签完成！");
         IsEnable = true;
     }
@@ -380,8 +386,7 @@ public class PackingListViewModel : NavigationViewModel
             Journal = back.Context.NavigationService.Journal;
         }, param);
     }
-
-
+    
     #endregion
 
     #region 初始化

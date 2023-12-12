@@ -5,7 +5,7 @@
 	<!--升级文件信息-->
 	<UpdateInfo>
 		<!--升级文件的更新日期-->
-		<UpdateTime Date="2023-12-8 9:00"/>
+		<UpdateTime Date="2023-12-12 12:00"/>
 	</UpdateInfo>
 	<!--升级文件列表-->
 	<UpdateFileList>
@@ -20,6 +20,7 @@
 
 		<!--3.依赖类库-->
 		<UpdateFile FileName="CsvHelper.dll" />
+		<UpdateFile FileName="System.Drawing.Common.dll" />
 
 		<!--4.导入数据csv文件-->
 		<UpdateFile FileName="MaterialItem.csv" />
@@ -36,7 +37,8 @@
 		<UpdateFile FileName="PackingListCeiling.xlsx" />
 		<UpdateFile FileName="PackingListHood.xlsx" />
 		<UpdateFile FileName="PackingInfo.xlsx" />
-		
+		<UpdateFile FileName="CeilingLabel.xlsx" />
+		<UpdateFile FileName="PalletLabel.xlsx" />
 		
 	</UpdateFileList>
 </autoUpdater>

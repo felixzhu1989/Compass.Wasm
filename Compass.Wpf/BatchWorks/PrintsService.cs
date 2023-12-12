@@ -9,8 +9,7 @@ using Compass.Wasm.Shared.Params;
 using Application = Microsoft.Office.Interop.Excel.Application;
 using Range = Microsoft.Office.Interop.Excel.Range;
 using Worksheet = Microsoft.Office.Interop.Excel.Worksheet;
-using System.Globalization;
-using Compass.Wpf.ApiServices;
+using Compass.Wasm.Shared.Projects;
 
 namespace Compass.Wpf.BatchWorks;
 
@@ -30,7 +29,10 @@ public interface IPrintsService
     Task BatchPrintEnScreenShotAsync(List<ModuleDto> moduleDtos);
 
     Task PrintPackingListAsync(PackingListDto packingListDto);
-    
+    Task PrintPackingItemLabelAsync(List<PackingItemDto> itemDtos);
+    Task PrintPalletLabelAsync(List<PackingItemDto> itemDtos);
+
+
     Task ExportPackingInfoAsync(PackingListDto packingListDto);
 }
 
@@ -129,6 +131,7 @@ public class PrintsService : IPrintsService
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
     }
+
     /// <summary>
     /// 批量打印英文JobCard
     /// </summary>
@@ -155,10 +158,9 @@ public class PrintsService : IPrintsService
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
     }
-
-
+    
     /// <summary>
-    /// 单独打印
+    /// 单独打印JobCard
     /// </summary>
     public async Task PrintOneJobCardAsync(ModuleDto moduleDto)
     {
@@ -176,8 +178,7 @@ public class PrintsService : IPrintsService
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
     }
-
-
+    
     /// <summary>
     /// 批量打印最终检验
     /// </summary>
@@ -204,7 +205,7 @@ public class PrintsService : IPrintsService
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
     }
-
+    
     /// <summary>
     /// 单独打印最终检验
     /// </summary>
@@ -299,8 +300,7 @@ public class PrintsService : IPrintsService
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
     }
-
-
+    
     /// <summary>
     /// 打印装箱清单
     /// </summary>
@@ -324,6 +324,48 @@ public class PrintsService : IPrintsService
             await UseExcelPrintPackingListCeiling(worksheet, packingListDto);
         }
         
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
+    /// <summary>
+    /// 打印天花烟罩标签
+    /// </summary>
+    public async Task PrintPackingItemLabelAsync(List<PackingItemDto> itemDtos)
+    {
+        var tempPath = "CeilingLabel.xlsx";
+        var template = Path.Combine(Environment.CurrentDirectory, tempPath);
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+        //调试时预览
+        //excelApp.Visible = true;
+
+        await UseExcelPrintCeilingLabel(excelApp, worksheet, itemDtos);
+
+        KillProcess(excelApp);
+        excelApp = null;//对象置空
+        GC.Collect(); //垃圾回收机制
+    }
+
+    /// <summary>
+    /// 打印托盘标签（二维码）
+    /// </summary>
+    public async Task PrintPalletLabelAsync(List<PackingItemDto> itemDtos)
+    {
+        var tempPath = "PalletLabel.xlsx";
+        var template = Path.Combine(Environment.CurrentDirectory, tempPath);
+        //如果报错就添加COM引用，Microsoft Office 16.0 Object Library1.9
+        var excelApp = new Application();
+        excelApp.Workbooks.Add(template);
+        var worksheet = (Worksheet)excelApp.Worksheets[1];
+        //调试时预览
+        //excelApp.Visible = true;
+
+        await UseExcelPrintPalletLabel(excelApp, worksheet, itemDtos);
+
         KillProcess(excelApp);
         excelApp = null;//对象置空
         GC.Collect(); //垃圾回收机制
@@ -614,7 +656,7 @@ public class PrintsService : IPrintsService
         worksheet.Cells[2, 12] = DateTime.Now.ToShortDateString();
         worksheet.Cells[3, 12] = Environment.UserName;
 
-        var items = packingListDto.PackingItemDtos.Where(x=>x.Pallet==true).ToArray();
+        var items = packingListDto.PackingItemDtos.Where(x=>x.Pallet).ToArray();
         var pCount= items.Length;
         for (var i = 0; i < pCount; i++)
         {
@@ -720,7 +762,106 @@ public class PrintsService : IPrintsService
     }
     #endregion
 
-    #region PackingInfo
+    #region 天花烟罩标签
+    private async Task UseExcelPrintCeilingLabel(Application excelApp,Worksheet worksheet, List<PackingItemDto> itemDtos)
+    {
+        var i = 0;
+        //worksheet.Cells[行,列]
+        foreach (var itemDto in itemDtos)
+        {
+            worksheet.Cells[1, 1] = itemDto.OdpNumber;
+            worksheet.Cells[2, 1] = itemDto.Description;
+            worksheet.Cells[3, 1] = itemDto.EnDescription;
+            worksheet.Cells[4, 1] = itemDto.MtlNumber;
+            worksheet.Cells[5, 1] = $"{itemDto.Quantity}-{itemDto.Unit}";
+            worksheet.Cells[6, 1] = itemDto.Material;
+            worksheet.Cells[7, 1] = $"{itemDto.Length}x{itemDto.Width}x{itemDto.Height}(mm)";
+
+            //打印多张标签
+            if (!itemDto.OneLabel)
+            {
+                for (var j = 0; j < itemDto.Quantity; j++)
+                {
+                    PrintLabel();
+                }
+            }
+            else
+            {
+                PrintLabel();
+            }
+
+            void PrintLabel()
+            {
+                //打印设置，如果第一次打印就弹出预览对话框，手动打印第一张
+                if (i == 0)
+                {
+                    excelApp.Visible = true;
+                    //调试时预览
+                    worksheet.PrintPreview(true);
+                }
+                else
+                {
+                    excelApp.Visible = false;
+                    worksheet.PrintOutEx();
+                }
+                i++;
+            }
+        }
+    }
+    #endregion
+
+    #region 打印托盘标签，导出装箱信息
+    private async Task UseExcelPrintPalletLabel(Application excelApp, Worksheet worksheet, List<PackingItemDto> itemDtos)
+    {
+        var i = 0;
+        //worksheet.Cells[行,列]
+        foreach (var itemDto in itemDtos)
+        {
+            worksheet.Cells[1, 1] = itemDto.OdpNumber;
+            worksheet.Cells[2, 2] = itemDto.PalletNumber;
+            worksheet.Cells[3, 1] = itemDto.MtlNumber;
+            worksheet.Cells[3, 2] = itemDto.Type.Equals("托盘") ? "配件" : itemDto.Type;
+            worksheet.Cells[4, 1] = $"{itemDto.PalletLength}x{itemDto.PalletWidth}x{itemDto.PalletHeight}";
+            worksheet.Cells[4, 2] = $"G{itemDto.GrossWeight}/N{itemDto.NetWeight}";
+            worksheet.Cells[5, 1] = itemDto.Remark;
+
+            //二维码(信息不能太长，否则超出二维码大小)
+            //var qrInfo =$"pallet_{itemDto.OdpNumber}_{itemDto.PalletNumber}_{itemDto.MtlNumber}_{itemDto.Type}_{itemDto.PalletLength}x{itemDto.PalletWidth}x{itemDto.PalletHeight}_G{itemDto.GrossWeight}/N{itemDto.NetWeight}_{itemDto.Id}";
+
+            var qrInfo =
+                $"pallet_{itemDto.OdpNumber}_{itemDto.PalletNumber}_{itemDto.MtlNumber}_{itemDto.Type}_{itemDto.Id}";
+            var qrBmp = qrInfo.GetQrCodeBitmap();
+            var qrCodePath = Path.Combine(Environment.CurrentDirectory, "palletqrcode.png");
+            qrBmp.Save(qrCodePath);
+
+            //将图片插入excel
+            worksheet.Shapes.AddPicture(qrCodePath, MsoTriState.msoFalse, MsoTriState.msoTrue, 10, 75, 200, 200);//左，上，宽度，高度
+
+
+            //每个托盘打印两张标签
+            PrintLabel();
+            PrintLabel();
+            
+
+            void PrintLabel()
+            {
+                //打印设置，如果第一次打印就弹出预览对话框，手动打印第一张
+                if (i == 0)
+                {
+                    excelApp.Visible = true;
+                    //调试时预览
+                    worksheet.PrintPreview(true);
+                }
+                else
+                {
+                    excelApp.Visible = false;
+                    worksheet.PrintOutEx();
+                }
+                i++;
+            }
+        }
+    }
+
     private async Task UseExcelExportPackingInfo(Worksheet worksheet, PackingListDto packingListDto)
     {
         //表的页眉页脚
@@ -755,8 +896,6 @@ public class PrintsService : IPrintsService
             worksheet.Cells[2+i*7, 5]=items[i].Remark;
         }
     }
-
-   
     #endregion
 
     #endregion

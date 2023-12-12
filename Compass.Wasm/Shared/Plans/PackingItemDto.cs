@@ -5,7 +5,6 @@ namespace Compass.Wasm.Shared.Plans;
 public class PackingItemDto : BaseDto
 {
     #region 基本信息
-
     private Guid? packingListId;
     public Guid? PackingListId
     {
@@ -205,6 +204,13 @@ public class PackingItemDto : BaseDto
             isSelected = value;
             OnPropertyChanged();
         }
+    }
+
+    private string? odpNumber;
+    public string? OdpNumber
+    {
+        get => odpNumber;
+        set { odpNumber=value; OnPropertyChanged(); }
     }
     #endregion
 }

@@ -17,12 +17,29 @@ public class ModulesViewModel : NavigationViewModel
         ShowCutListCommand = new DelegateCommand<ModuleDto>(ShowCutList);
         ShowFilesCommand=new DelegateCommand<ModuleDto>(ShowFiles);
         ShowJobCardCommand = new DelegateCommand<ModuleDto>(ShowJobCard);
+        DrawingRoles = "admin,pm,mgr,dsr";
+        PrintRoles = "admin,pm,mgr,dsr";
     }
     public DelegateCommand<string> ExecuteCommand { get; }
     public DelegateCommand<ModuleDto> ShowCutListCommand { get; }
     public DelegateCommand<ModuleDto> ShowFilesCommand { get; }
     public DelegateCommand<ModuleDto> ShowJobCardCommand { get; }
 
+    #endregion
+
+    #region 角色控制属性
+    private string drawingRoles;
+    public string DrawingRoles
+    {
+        get => drawingRoles;
+        set { drawingRoles = value; RaisePropertyChanged(); }
+    }
+    private string printRoles;
+    public string PrintRoles
+    {
+        get => printRoles;
+        set { printRoles = value; RaisePropertyChanged(); }
+    }
     #endregion
 
     #region 项目内容属性

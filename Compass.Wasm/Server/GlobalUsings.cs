@@ -1,4 +1,5 @@
-﻿global using Microsoft.EntityFrameworkCore;
+﻿//Server项目
+global using Microsoft.EntityFrameworkCore;
 global using System.Reflection;
 global using FluentValidation;
 global using FluentValidation.AspNetCore;

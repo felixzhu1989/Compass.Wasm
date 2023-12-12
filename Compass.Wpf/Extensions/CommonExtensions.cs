@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 
@@ -10,6 +11,10 @@ namespace Compass.Wpf.Extensions;
 
 public static class CommonExtensions
 {
+    //调用win api将指定名称的打印机设置为默认打印机
+    [DllImport("winspool.drv")]
+    public static extern bool SetDefaultPrinter(string printerName);
+
     /// <summary>
     /// 生成二维码
     /// </summary>

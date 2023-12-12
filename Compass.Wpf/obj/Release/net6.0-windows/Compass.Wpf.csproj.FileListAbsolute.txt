@@ -216,3 +216,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Settin
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Settings\AccCutListView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Settings\MaterialItemsView.baml
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\obj\Release\net6.0-windows\Views\Settings\SettingsView.baml
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\CeilingLabel.xlsx
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\Microsoft.Win32.SystemEvents.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\System.Drawing.Common.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Release\net6.0-windows\PalletLabel.xlsx

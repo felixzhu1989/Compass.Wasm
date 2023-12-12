@@ -1220,10 +1220,6 @@ public class ExhaustService : BaseSwService, IExhaustService
 
         MeshFilter(swAssyLevel1, suffix, length, ansul, ansulSide, "FNHE0012-1", "FNHE0013-1");
 
-        //UV Door Length@SketchBase
-        var doorLength = uvLightType is UvLightType_e.UVR4L or UvLightType_e.UVR6L or UvLightType_e.UVR8L? 1740d:1040d;
-        swAssyLevel1.ChangePartLength(suffix,"FNHB0058-1", "Length@SketchBase", doorLength,Aggregator);
-        
     }
     private void FNHE0200(AssemblyDoc swAssyLevel1, string suffix, string partName, double length, bool ansul, AnsulDetector_e ansulDetector)
     {
@@ -1494,6 +1490,9 @@ public class ExhaustService : BaseSwService, IExhaustService
 
         MeshFilter(swAssyLevel1, suffix, length, ansul, ansulSide, "FNHE0012-1", "FNHE0013-1");
 
+        //UV Door Length@SketchBase
+        var doorLength = uvLightType is UvLightType_e.UVR4L or UvLightType_e.UVR6L or UvLightType_e.UVR8L ? 1740d : 1040d;
+        swAssyLevel1.ChangePartLength(suffix, "FNHB0058-1", "Length@SketchBase", doorLength, Aggregator);
     }
     private void FNHE0224(AssemblyDoc swAssyLevel1, string suffix, string partName, double length)
     {

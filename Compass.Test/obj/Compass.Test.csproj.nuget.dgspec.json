@@ -120,6 +120,10 @@
               "target": "Package",
               "version": "[30.0.1, )"
             },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Visiativ.SOLIDWORKS.Interop": {
               "target": "Package",
               "version": "[31.3.0, )"
