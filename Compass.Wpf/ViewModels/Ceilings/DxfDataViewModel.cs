@@ -82,13 +82,7 @@ public class DxfDataViewModel : NavigationViewModel
         get => dataDto;
         set { dataDto = value; RaisePropertyChanged(); }
     }
-
-    private ObservableCollection<Accessories> accs;
-    public ObservableCollection<Accessories> Accs
-    {
-        get => accs;
-        set { accs = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<Accessories> Accs { get; }
 
     #endregion
 
@@ -157,7 +151,7 @@ public class DxfDataViewModel : NavigationViewModel
         if (dataResult.Status)
         {
             DataDto = dataResult.Result;
-            Accs = DataDto.AccNumber.StringToAccs();
+            Accs.AddRange(DataDto.AccNumber.StringToAccs());
         }
         else
         {

@@ -321,7 +321,7 @@ public class PrintsService : IPrintsService
         }
         else
         {
-            await UseExcelPrintPackingListCeiling(worksheet, packingListDto);
+            await UseExcelPrintPackingListCeiling(excelApp,worksheet, packingListDto);
         }
         
         KillProcess(excelApp);
@@ -710,7 +710,7 @@ public class PrintsService : IPrintsService
     }
 
 
-    private async Task UseExcelPrintPackingListCeiling(Worksheet worksheet, PackingListDto packingListDto)
+    private async Task UseExcelPrintPackingListCeiling(Application excelApp,Worksheet worksheet, PackingListDto packingListDto)
     {
         var batch=packingListDto.Batch>0? $"-({packingListDto.Batch})":"";
         worksheet.PageSetup.LeftHeader = $"项目名称: {packingListDto.ProjectName}{batch}";
@@ -753,9 +753,10 @@ public class PrintsService : IPrintsService
         //((Range)worksheet.Cells[1, 10]).ColumnWidth = 8;
 
         //调试时预览
-        //worksheet.PrintPreview(true);
+        excelApp.Visible = true;
+        worksheet.PrintPreview(true);
         //打印
-        worksheet.PrintOutEx();
+        //worksheet.PrintOutEx();
         //清空打印内容,11行到末尾
         var rows = (Range)worksheet.Rows[$"7:{items.Count + 6}", Missing.Value];
         rows.Delete(XlDirection.xlDown);

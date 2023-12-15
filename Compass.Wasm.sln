@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Compass.Andro.Android", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Dtos", "Compass.Dtos\Compass.Dtos.csproj", "{C18D3155-5C87-4D45-9375-E0BCC8FC937F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Compass.Maui", "Compass.Maui\Compass.Maui.csproj", "{B0A6FA4C-4030-4E00-9C13-8D47C7A08DEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,12 @@ Global
 		{C18D3155-5C87-4D45-9375-E0BCC8FC937F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C18D3155-5C87-4D45-9375-E0BCC8FC937F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C18D3155-5C87-4D45-9375-E0BCC8FC937F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A6FA4C-4030-4E00-9C13-8D47C7A08DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A6FA4C-4030-4E00-9C13-8D47C7A08DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A6FA4C-4030-4E00-9C13-8D47C7A08DEF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B0A6FA4C-4030-4E00-9C13-8D47C7A08DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A6FA4C-4030-4E00-9C13-8D47C7A08DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A6FA4C-4030-4E00-9C13-8D47C7A08DEF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

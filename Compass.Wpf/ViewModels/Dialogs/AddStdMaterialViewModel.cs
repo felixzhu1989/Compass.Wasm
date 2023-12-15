@@ -32,18 +32,9 @@ public class AddStdMaterialViewModel : BindableBase, IDialogHostAware
         get => packingList;
         set { packingList = value; RaisePropertyChanged(); }
     }
-    private ObservableCollection<MaterialItemDto> materialItemDtos;
-    public ObservableCollection<MaterialItemDto> MaterialItemDtos
-    {
-        get => materialItemDtos;
-        set { materialItemDtos = value; RaisePropertyChanged(); }
-    }
-    private ObservableCollection<MaterialItemDto> filterMtlItemDtos;
-    public ObservableCollection<MaterialItemDto> FilterMtlItemDtos
-    {
-        get => filterMtlItemDtos;
-        set { filterMtlItemDtos = value; RaisePropertyChanged(); }
-    }
+    
+    public ObservableCollection<MaterialItemDto> MaterialItemDtos { get; }
+    public ObservableCollection<MaterialItemDto> FilterMtlItemDtos { get; }
     #endregion
 
     #region 筛选属性

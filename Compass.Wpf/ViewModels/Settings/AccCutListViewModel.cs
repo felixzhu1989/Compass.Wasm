@@ -25,14 +25,8 @@ public class AccCutListViewModel : NavigationViewModel
     public DelegateCommand OpenCsvCommand { get; }
     public DelegateCommand UpdateCommand { get; }
     #endregion
-
     #region 属性
-    private ObservableCollection<AccCutListDto> accCutListDtos;
-    public ObservableCollection<AccCutListDto> AccCutListDtos
-    {
-        get => accCutListDtos;
-        set { accCutListDtos = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<AccCutListDto> AccCutListDtos { get; }
     private string search;
     /// <summary>
     /// 搜索条件属性

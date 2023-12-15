@@ -33,19 +33,8 @@ public class IndexViewModel : NavigationViewModel
     #endregion
 
     #region 属性
-    private ObservableCollection<TaskBar> statusTaskBars = null!;
-    public ObservableCollection<TaskBar> StatusTaskBars
-    {
-        get => statusTaskBars;
-        set { statusTaskBars = value; RaisePropertyChanged(); }
-    }
-
-    private ObservableCollection<TaskBar> todoTaskBars = null!;
-    public ObservableCollection<TaskBar> TodoTaskBars
-    {
-        get => todoTaskBars;
-        set { todoTaskBars = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<TaskBar> StatusTaskBars { get; }
+    public ObservableCollection<TaskBar> TodoTaskBars { get; }
     //ToDoDtos和MemoDtos包含在TodoSummary中
     private TodoSummaryDto todoSummary = null!;
     public TodoSummaryDto TodoSummary

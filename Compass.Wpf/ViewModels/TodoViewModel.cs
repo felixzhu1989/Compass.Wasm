@@ -36,12 +36,8 @@ public class TodoViewModel : NavigationViewModel
         set { rightDrawerTitle = value; RaisePropertyChanged(); }
     }
 
-    private ObservableCollection<TodoDto> todoDtos;
-    public ObservableCollection<TodoDto> TodoDtos
-    {
-        get => todoDtos;
-        set { todoDtos = value; RaisePropertyChanged(); }
-    }
+    
+    public ObservableCollection<TodoDto> TodoDtos { get; }
     private TodoDto currentDto;
     /// <summary>
     /// 当前Todo对象，添加或编辑

@@ -13,12 +13,7 @@ public class SettingsViewModel : NavigationViewModel
     #endregion
 
     #region 属性
-    private ObservableCollection<MenuBar> menuBars;
-    public ObservableCollection<MenuBar> MenuBars
-    {
-        get => menuBars;
-        set { menuBars = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<MenuBar> MenuBars { get; }
     #endregion
 
     #region 导航

@@ -2880,7 +2880,7 @@ public class CeilingService : BaseSwService, ICeilingService
     private void FNCE0001(AssemblyDoc swAssyLevel1, string suffix, string partName, double width, bool ansul)
     {
         var swCompLevel2 = swAssyLevel1.UnSuppress(out ModelDoc2 swModelLevel2, suffix, partName, Aggregator);
-        swModelLevel2.ChangeDim("Width@SketchBase", width);
+        swModelLevel2.ChangeDim("Width@SketchBase", width-2d);
         #region Marvel
         if (ansul)
         {

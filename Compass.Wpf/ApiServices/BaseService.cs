@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Compass.Dtos;
 
 namespace Compass.Wpf.ApiService;
 

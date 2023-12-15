@@ -47,13 +47,7 @@ public class CutListViewModel : BindableBase, IDialogHostAware
         get => moduleDto;
         set { moduleDto = value; RaisePropertyChanged(); }
     }
-    private ObservableCollection<CutListDto> cutListDtos;
-    public ObservableCollection<CutListDto> CutListDtos
-    {
-        get => cutListDtos;
-        set { cutListDtos = value; RaisePropertyChanged(); }
-    }
-
+    public ObservableCollection<CutListDto> CutListDtos { get; }
     private bool isRightDrawerOpen;
     /// <summary>
     /// 右侧窗口是否展开
@@ -193,7 +187,7 @@ public class CutListViewModel : BindableBase, IDialogHostAware
         var result = await _cutListService.GetAllByModuleIdAsync(param);
         if (result.Status)
         {
-            CutListDtos =new ObservableCollectionListSource<CutListDto>(result.Result);
+            CutListDtos.AddRange(result.Result);
         }
     } 
     #endregion

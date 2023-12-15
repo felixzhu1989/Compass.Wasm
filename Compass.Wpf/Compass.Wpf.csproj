@@ -95,7 +95,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Compass.Services\Compass.PlanService.Domain\Compass.PlanService.Domain.csproj" />
     <ProjectReference Include="..\Compass.Update\Compass.Update.csproj" />
     <ProjectReference Include="..\Compass.Wasm\Shared\Compass.Wasm.Shared.csproj" />
   </ItemGroup>

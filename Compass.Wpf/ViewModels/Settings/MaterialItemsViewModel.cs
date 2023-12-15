@@ -23,12 +23,7 @@ public class MaterialItemsViewModel : NavigationViewModel
     #endregion
 
     #region 属性
-    private ObservableCollection<MaterialItemDto> materialItemDtos;
-    public ObservableCollection<MaterialItemDto> MaterialItemDtos
-    {
-        get => materialItemDtos;
-        set { materialItemDtos = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<MaterialItemDto> MaterialItemDtos { get; }
     private string search;
     /// <summary>
     /// 搜索条件属性

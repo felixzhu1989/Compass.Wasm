@@ -87,10 +87,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\runtimes\win-x
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Dtos.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.PlanService.Domain.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Update.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wasm.Shared.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.PlanService.Domain.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Update.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Wasm.Shared.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Wpf\bin\Debug\net6.0-windows\Compass.Dtos.pdb

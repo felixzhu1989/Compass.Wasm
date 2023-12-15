@@ -69,12 +69,7 @@ public class DetailViewModel : NavigationViewModel
 
     #region 图纸-分段树属性
     //当前树内容，图纸-分段
-    private ObservableCollection<DrawingDto> drawingDtos = null!;
-    public ObservableCollection<DrawingDto> DrawingDtos
-    {
-        get => drawingDtos;
-        set { drawingDtos = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<DrawingDto> DrawingDtos { get; }
     //当前选择得树节点
     private object? _selectedItem;
     public object? SelectedItem
@@ -111,19 +106,8 @@ public class DetailViewModel : NavigationViewModel
     #endregion
 
     #region 模型分类列表属性
-    private ObservableCollection<ProductDto> productDtos = null!;
-    public ObservableCollection<ProductDto> ProductDtos
-    {
-        get => productDtos;
-        set { productDtos = value; RaisePropertyChanged(); }
-    }
-
-    private ObservableCollection<ModelDto> filterModelDtos = null!;
-    public ObservableCollection<ModelDto> FilterModelDtos
-    {
-        get => filterModelDtos;
-        set { filterModelDtos = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<ProductDto> ProductDtos { get; }
+    public ObservableCollection<ModelDto> FilterModelDtos { get; }
 
     //当前选择的模型
     private object? selectedModel;

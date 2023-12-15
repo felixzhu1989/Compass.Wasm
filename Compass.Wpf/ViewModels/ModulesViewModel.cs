@@ -69,20 +69,8 @@ public class ModulesViewModel : NavigationViewModel
     #endregion
 
     #region DataGrid数据属性
-
-    private ObservableCollection<ModuleDto> allModules;
-    public ObservableCollection<ModuleDto> AllModules 
-    { 
-        get=> allModules; 
-        set { allModules=value;RaisePropertyChanged(); }
-    }
-    
-    private ObservableCollection<ModuleDto> moduleDtos;
-    public ObservableCollection<ModuleDto> ModuleDtos
-    {
-        get => moduleDtos;
-        set { moduleDtos = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<ModuleDto> AllModules { get; }
+    public ObservableCollection<ModuleDto> ModuleDtos { get; }
 
     public bool? IsAllModuleDtosSelected
     {
@@ -287,19 +275,15 @@ public class ModulesViewModel : NavigationViewModel
     {
         var param = new ProjectParam { ProjectId = Project.Id };
         var moduleDtosResult = await _projectService.GetModuleListAsync(param);
+        AllModules.Clear();
+
         if (moduleDtosResult.Status)
-        {
-            AllModules.Clear();
-            AllModules.AddRange(moduleDtosResult.Result);
+        { AllModules.AddRange(moduleDtosResult.Result);
             Batchs = AllModules.Select(x => x.Batch).Distinct().ToArray();
             if (Batchs.Length != 0)
             {
                 SelectedBatch = Batchs[0];
             }
-        }
-        else
-        {
-            AllModules = new ObservableCollection<ModuleDto>();
         }
         //绑定勾选数据变更
         foreach (var model in AllModules)
@@ -327,7 +311,7 @@ public class ModulesViewModel : NavigationViewModel
         ModuleDtos.Clear();
         if (Batchs.Length == 0)
         {
-            ModuleDtos = new ObservableCollection<ModuleDto>();//初始化
+            ModuleDtos.Clear();//初始化
         }
         else
         {

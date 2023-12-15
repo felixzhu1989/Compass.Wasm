@@ -1471,19 +1471,6 @@
           "bin/placeholder/Compass.Dtos.dll": {}
         }
       },
-      "Compass.PlanService.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "Compass.Wasm.Shared": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Compass.PlanService.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Compass.PlanService.Domain.dll": {}
-        }
-      },
       "Compass.Update/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -4388,11 +4375,6 @@
       "path": "../Compass.Dtos/Compass.Dtos.csproj",
       "msbuildProject": "../Compass.Dtos/Compass.Dtos.csproj"
     },
-    "Compass.PlanService.Domain/1.0.0": {
-      "type": "project",
-      "path": "../Compass.Services/Compass.PlanService.Domain/Compass.PlanService.Domain.csproj",
-      "msbuildProject": "../Compass.Services/Compass.PlanService.Domain/Compass.PlanService.Domain.csproj"
-    },
     "Compass.Update/1.0.0": {
       "type": "project",
       "path": "../Compass.Update/Compass.Update.csproj",
@@ -4406,7 +4388,6 @@
   },
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
-      "Compass.PlanService.Domain >= 1.0.0",
       "Compass.Update >= 1.0.0",
       "Compass.Wasm.Shared >= 1.0.0",
       "CsvHelper >= 30.0.1",
@@ -4455,9 +4436,6 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "projectReferences": {
-            "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj": {
-              "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.PlanService.Domain\\Compass.PlanService.Domain.csproj"
-            },
             "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Update\\Compass.Update.csproj": {
               "projectPath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Update\\Compass.Update.csproj"
             },

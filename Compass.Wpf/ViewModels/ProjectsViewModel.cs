@@ -19,12 +19,7 @@ public class ProjectsViewModel : NavigationViewModel
     #endregion
 
     #region 属性
-    private ObservableCollection<ProjectDto> projectDtos;
-    public ObservableCollection<ProjectDto> ProjectDtos
-    {
-        get => projectDtos;
-        set { projectDtos = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<ProjectDto> ProjectDtos { get; }
     private string search;
     /// <summary>
     /// 搜索条件属性

@@ -31,15 +31,10 @@ public class MainViewModel : NavigationViewModel, IConfigureService
     #endregion
 
     #region 属性
-    private ObservableCollection<MenuBar> menuBars = null!;
     /// <summary>
     /// 菜单集合
     /// </summary>
-    public ObservableCollection<MenuBar> MenuBars
-    {
-        get => menuBars;
-        set { menuBars = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<MenuBar> MenuBars { get; }
     //用于绑定菜单栏显示用户名
     private string userName = null!;
     public string UserName

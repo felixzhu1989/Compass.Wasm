@@ -47,19 +47,8 @@ public class MainPlansViewModel : NavigationViewModel
     #endregion
 
     #region 属性
-    private ObservableCollection<MainPlanDto> mainPlanDtos;
-    public ObservableCollection<MainPlanDto> MainPlanDtos
-    {
-        get => mainPlanDtos;
-        set { mainPlanDtos = value; RaisePropertyChanged(); }
-    }
-
-    private ObservableCollection<MainPlanDto> filterMainPlanDtos;
-    public ObservableCollection<MainPlanDto> FilterMainPlanDtos
-    {
-        get => filterMainPlanDtos;
-        set { filterMainPlanDtos = value; RaisePropertyChanged(); }
-    }
+    public ObservableCollection<MainPlanDto> MainPlanDtos { get; }
+    public ObservableCollection<MainPlanDto> FilterMainPlanDtos { get; }
 
     private string search;
     /// <summary>
@@ -68,7 +57,7 @@ public class MainPlansViewModel : NavigationViewModel
     public string Search
     {
         get => search;
-        set { search = value; RaisePropertyChanged(); }
+        set => SetProperty(ref search,value);
     }
     #endregion
 

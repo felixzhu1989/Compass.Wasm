@@ -33,13 +33,8 @@ public class MemoViewModel : NavigationViewModel
         get => rightDrawerTitle;
         set { rightDrawerTitle = value; RaisePropertyChanged(); }
     }
-
-    private ObservableCollection<MemoDto> memoDtos;
-    public ObservableCollection<MemoDto> MemoDtos
-    {
-        get => memoDtos;
-        set { memoDtos = value; RaisePropertyChanged(); }
-    }
+    
+    public ObservableCollection<MemoDto> MemoDtos { get; }
     private MemoDto currentDto;
     /// <summary>
     /// 当前Todo对象，添加或编辑

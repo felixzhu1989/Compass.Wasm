@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Compass.Maui</name>
+    </assembly>
+    <members>
+        <member name="T:Compass.Maui.ApiServices.HttpRestClient">
+            <summary>
+            封装RestSharp请求代码
+            </summary>
+        </member>
+        <member name="T:Compass.Maui.AppSession">
+            <summary>
+            保存用户登录信息
+            </summary>
+        </member>
+        <member name="M:Compass.Maui.AppSession.AllocConsole">
+            <summary>
+            Allocates a new console for current process.
+            </summary>
+        </member>
+        <member name="M:Compass.Maui.AppSession.FreeConsole">
+            <summary>
+            Frees the console.
+            </summary>
+        </member>
+        <member name="M:Compass.Maui.Extensions.CollectionExtens.AddRange``1(System.Collections.ObjectModel.Collection{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Collection批量添加
+            </summary>
+        </member>
+        <member name="T:Compass.Maui.ServiceLocator">
+            <summary>
+            服务定位器
+            </summary>
+        </member>
+    </members>
+</doc>
