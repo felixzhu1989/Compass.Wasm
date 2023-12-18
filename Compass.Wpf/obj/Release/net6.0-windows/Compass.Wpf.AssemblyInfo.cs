@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Compass.Wpf")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0c89fa58579b9f9f4b93369f5531ea006b3d65c4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Compass.Wpf")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Compass.Wpf")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

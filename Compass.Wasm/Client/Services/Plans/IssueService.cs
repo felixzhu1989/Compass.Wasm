@@ -1,7 +1,6 @@
 ﻿using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Plans;
 using System.Net.Http.Json;
-using Compass.Dtos;
 
 namespace Compass.Wasm.Client.Services.Plans;
 public interface IIssueService : IBaseService<IssueDto>

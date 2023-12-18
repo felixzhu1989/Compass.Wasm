@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Compass.Dtos;
+using Compass.Wasm.Shared;
 using Newtonsoft.Json;
 using RestSharp;
 

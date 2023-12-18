@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="Compass.Maui.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Compass.Maui"
-    xmlns:views="clr-namespace:Compass.Maui.Views"
-    Shell.FlyoutBehavior="Disabled"
-    Title="Compass.Maui">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:MainView}"
-        Route="MainPage" />
-
+<Shell x:Class="Compass.Maui.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Compass.Maui"
+       xmlns:views="clr-namespace:Compass.Maui.Views"
+       Shell.FlyoutBehavior="Disabled"
+       Title="Compass.Maui">
+    <ShellContent Title="Home"
+                  ContentTemplate="{DataTemplate views:MainView}"
+                  Route="MainView" />
 </Shell>

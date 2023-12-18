@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Compass.Dtos;
 using Compass.Wasm.Server.Services.Categories;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Categories;

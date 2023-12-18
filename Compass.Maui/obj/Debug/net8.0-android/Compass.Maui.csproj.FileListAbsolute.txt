@@ -2075,10 +2075,8 @@ E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\lp\147\jl\fil
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\lp\149\jl\files.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\lp\151\jl\files.cache
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\lp\158\jl\files.cache
-E:\CSharp\repos\Compass.Wasm\Compass.Maui\bin\Debug\net8.0-android\Compass.Dtos.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\bin\Debug\net8.0-android\Compass.Wasm.Shared.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\bin\Debug\net8.0-android\Compass.Wasm.Shared.pdb
-E:\CSharp\repos\Compass.Wasm\Compass.Maui\bin\Debug\net8.0-android\Compass.Dtos.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\Compass.Maui.csproj.CopyComplete
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\AsmResolver.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\AsmResolver.DotNet.dll
@@ -2088,8 +2086,6 @@ E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\asset
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\Azure.Identity.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\CommunityToolkit.Mvvm.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\CommunityToolkit.Mvvm.pdb
-E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\Compass.Dtos.dll
-E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\Compass.Dtos.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\Compass.Wasm.Shared.dll
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\Compass.Wasm.Shared.pdb
 E:\CSharp\repos\Compass.Wasm\Compass.Maui\obj\Debug\net8.0-android\android\assets\FluentValidation.dll

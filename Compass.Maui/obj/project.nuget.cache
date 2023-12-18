@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "icwvQ/hNwNAUlq62ur8SGq4gJTbV0OhJ8Qx/EXPi85YfOG9UVW+kWvTtfVXfwgkqpuKsPAueViaMDi71aDvgSA==",
+  "dgSpecHash": "KMs0K+L8Uk2Sx0nIQLLtMnY6vG4/wjeeoAR23ID1NzDvM62QVRIYH0cBAIAXZ6GqqO2cglvQSMsgZY3d37YSEw==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Maui\\Compass.Maui.csproj",
   "expectedPackageFiles": [
@@ -103,8 +103,8 @@
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.security.securestring\\4.3.0\\system.security.securestring.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encoding.codepages\\5.0.0\\system.text.encoding.codepages.5.0.0.nupkg.sha512",
-    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.json\\7.0.2\\system.text.json.7.0.2.nupkg.sha512",
+    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\Felix.Zhu\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512",

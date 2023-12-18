@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "AwBRbVlGDKxySVrE/1CrR5Wi/wubnTlX8xoizKno3RB92TmuKDhT30EH+Er6XstWSrOZjOaVh82qtV1xaEtk6g==",
+  "dgSpecHash": "L9IKzOScwVLIDlM28sp9vNZLeU5fXvzY97TQRQsgziiTFlUple9lAHjXcbdXJGN+52Z8n8xVnCl8hiXWHKyvdQ==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.DataService.Domain\\Compass.DataService.Domain.csproj",
   "expectedPackageFiles": [

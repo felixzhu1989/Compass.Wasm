@@ -9,7 +9,6 @@
     ".NETStandard,Version=v2.0/": {
       "Compass.Andro/1.0.0": {
         "dependencies": {
-          "Compass.Dtos": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "Newtonsoft.Json": "13.0.3",
           "Prism.DryIoc.Forms": "8.1.97",
@@ -317,14 +316,6 @@
             "fileVersion": "2.4.1.0"
           }
         }
-      },
-      "Compass.Dtos/1.0.0": {
-        "dependencies": {
-          "RestSharp": "110.2.0"
-        },
-        "runtime": {
-          "Compass.Dtos.dll": {}
-        }
       }
     }
   },
@@ -543,11 +534,6 @@
       "sha512": "sha512-7z+MfL8TbfE36s1GGvrnlkhLUOV5dgdn1gYhUb3GU2W6YXzpfF39k6EqkmFsyNm1O07evTaKFgh7UTOqcWub3g==",
       "path": "zxing.net.mobile.forms/2.4.1",
       "hashPath": "zxing.net.mobile.forms.2.4.1.nupkg.sha512"
-    },
-    "Compass.Dtos/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

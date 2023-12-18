@@ -860,14 +860,6 @@
           }
         }
       },
-      "Compass.Dtos/1.0.0": {
-        "dependencies": {
-          "RestSharp": "110.2.0"
-        },
-        "runtime": {
-          "Compass.Dtos.dll": {}
-        }
-      },
       "Compass.Update/1.0.0": {
         "runtime": {
           "Compass.Update.dll": {}
@@ -875,8 +867,8 @@
       },
       "Compass.Wasm.Shared/1.0.0": {
         "dependencies": {
-          "Compass.Dtos": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.1",
+          "RestSharp": "110.2.0",
           "Zack.DomainCommons": "1.1.3",
           "Zack.Commons": "1.1.11"
         },
@@ -1514,11 +1506,6 @@
       "sha512": "sha512-Per+5iL5rPDdb3n5F4ydSlD2RoB38jMciA0YRLS9JelSdJPemsH/bVeSofKckTxjZFgwbc1EHtxnMdoAqDZygw==",
       "path": "zack.domaincommons/1.1.3",
       "hashPath": "zack.domaincommons.1.1.3.nupkg.sha512"
-    },
-    "Compass.Dtos/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "Compass.Update/1.0.0": {
       "type": "project",

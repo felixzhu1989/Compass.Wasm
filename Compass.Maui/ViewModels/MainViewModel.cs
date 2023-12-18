@@ -1,55 +1,65 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Compass.Maui.ApiServices;
-using Compass.Wasm.Shared.Plans;
-using System.Collections.ObjectModel;
-using Compass.Maui.Extensions;
-using RestSharp;
-using Compass.Dtos;
-using Newtonsoft.Json;
-using System.Net;
-using System.Net.Http.Json;
+﻿using Compass.Maui.Services;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using Compass.Maui.Extensions;
 
 namespace Compass.Maui.ViewModels;
 
-public class MainViewModel:ObservableObject, IQueryAttributable
+public class MainViewModel:BaseViewModel
 {
-    #region ctor
-    private readonly IServiceProvider _provider;
-    private readonly IMainPlanService _mainPlanService;
-    public MainViewModel(IServiceProvider provider)
+    private readonly MainPlanService _mainPlanService;
+    public MainViewModel(MainPlanService mainPlanService)
     {
-        _provider = provider;
-        _mainPlanService = provider.GetService<IMainPlanService>();
-        MainPlanDtos = new ObservableCollection<MainPlanDto>();
-       
+        _mainPlanService = mainPlanService;
+        Title = "Main Plan";
+        GetMainPlanDtosCommand = new AsyncRelayCommand(async () => await GetMainPlanDtosAsync());
+        GetMainPlanDtosRestCommand = new AsyncRelayCommand(async () => await GetMainPlanDtosRestAsync());
     }
-    #endregion
+    public ICommand GetMainPlanDtosCommand { get; }
+    public ICommand GetMainPlanDtosRestCommand { get; }
+    public ObservableCollection<MainPlanDto> MainPlanDtos { get; } = new();
 
-    private AsyncRelayCommand showCommand;
-    public AsyncRelayCommand ShowCommand => showCommand ??= new AsyncRelayCommand(async () => { await GetDataAsync();});
-    private AsyncRelayCommand linkCommand;
-    public AsyncRelayCommand LinkCommand => linkCommand ??= new AsyncRelayCommand(async () => { await Launcher.Default.OpenAsync("http://10.9.18.31"); });
-    public ObservableCollection<MainPlanDto> MainPlanDtos { get; }
 
-    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    private async Task GetMainPlanDtosAsync()
     {
-
-      
-        
+        if (IsBusy) return;
+        try
+        {
+            IsBusy=true;
+            var dtos = await _mainPlanService.GetMainPlanDtosAsync();
+            if (MainPlanDtos.Count!=0) MainPlanDtos.Clear();
+            MainPlanDtos.AddRange(dtos);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+            await Shell.Current.DisplayAlert("Error!", $"Unable to get mainplans:{ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy=false;
+        }
     }
-
-
-
-
-    public async Task GetDataAsync()
+    private async Task GetMainPlanDtosRestAsync()
     {
-        var httpClient = new HttpClient();//先使用不规范的方式试试
-        var response = await httpClient.GetAsync("http://10.9.18.31/api/MainPlan/All");
-        var result = await response.Content.ReadFromJsonAsync<ApiResponse<List<MainPlanDto>>>();
-        MainPlanDtos.Clear();
-        MainPlanDtos.AddRange(result.Result);
+        if (IsBusy) return;
+        try
+        {
+            IsBusy=true;
+            var dtos = await _mainPlanService.GetMainPlanDtosRestAsync();
+            if (MainPlanDtos.Count!=0) MainPlanDtos.Clear();
+            MainPlanDtos.AddRange(dtos);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex);
+            await Shell.Current.DisplayAlert("Error!", $"Unable to get mainplans:{ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy=false;
+        }
     }
-    
-
 }

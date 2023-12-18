@@ -2,7 +2,7 @@
 using Compass.Wasm.Server.Services.Plans;
 using Compass.Wasm.Shared.Plans;
 using System.ComponentModel.DataAnnotations;
-using Compass.Dtos;
+using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Controllers.Plans;
 

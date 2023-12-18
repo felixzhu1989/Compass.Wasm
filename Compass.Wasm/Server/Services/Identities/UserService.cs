@@ -1,5 +1,4 @@
-﻿using Compass.Dtos;
-using Compass.IdentityService.Domain.Entities;
+﻿using Compass.IdentityService.Domain.Entities;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Identities;
 

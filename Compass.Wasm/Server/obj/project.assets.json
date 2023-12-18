@@ -3954,19 +3954,6 @@
           "bin/placeholder/Compass.DataService.Infrastructure.dll": {}
         }
       },
-      "Compass.Dtos/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "RestSharp": "110.2.0"
-        },
-        "compile": {
-          "bin/placeholder/Compass.Dtos.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Compass.Dtos.dll": {}
-        }
-      },
       "Compass.FileService.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -4164,8 +4151,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Compass.Dtos": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.1",
+          "RestSharp": "110.2.0",
           "zack.DomainCommons": "1.1.3",
           "zack.commons": "1.1.11"
         },
@@ -11127,11 +11114,6 @@
       "type": "project",
       "path": "../../Compass.Services/Compass.DataService.Infrastructure/Compass.DataService.Infrastructure.csproj",
       "msbuildProject": "../../Compass.Services/Compass.DataService.Infrastructure/Compass.DataService.Infrastructure.csproj"
-    },
-    "Compass.Dtos/1.0.0": {
-      "type": "project",
-      "path": "../../Compass.Dtos/Compass.Dtos.csproj",
-      "msbuildProject": "../../Compass.Dtos/Compass.Dtos.csproj"
     },
     "Compass.FileService.Domain/1.0.0": {
       "type": "project",

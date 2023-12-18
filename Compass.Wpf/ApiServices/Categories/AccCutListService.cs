@@ -1,6 +1,6 @@
-﻿using Compass.Dtos;
-using Compass.Wasm.Shared.Categories;
+﻿using Compass.Wasm.Shared.Categories;
 using System.Collections.Generic;
+using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Params;
 
 namespace Compass.Wpf.ApiServices.Categories;

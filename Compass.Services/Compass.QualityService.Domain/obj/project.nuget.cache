@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "TB5FxDCzheQ8jrlsd1GcKlCxbg3ubpzxsSX/jiaf4j4m3acDlR+hCebc4uwNTPZ3qQ2gU698MD+P+jyf8CMnWg==",
+  "dgSpecHash": "caqljqZfpA5Vh/XLOGPq3DRZX9YbsUnyP5wjB58YqNat3qD+3I5TOfkoE0FVSsOLYrmSWJ5OFpKYO1ukZXOi4A==",
   "success": true,
   "projectFilePath": "E:\\CSharp\\repos\\Compass.Wasm\\Compass.Services\\Compass.QualityService.Domain\\Compass.QualityService.Domain.csproj",
   "expectedPackageFiles": [

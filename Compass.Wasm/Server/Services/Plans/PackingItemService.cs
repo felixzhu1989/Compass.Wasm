@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Compass.Dtos;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;

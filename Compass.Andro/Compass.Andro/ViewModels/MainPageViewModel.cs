@@ -8,6 +8,10 @@ using Prism.Ioc;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Compass.Andro.Dtos.Plans;
+using System.Threading.Tasks;
+using System;
 
 namespace Compass.Andro.ViewModels
 {
@@ -15,11 +19,15 @@ namespace Compass.Andro.ViewModels
     {
         #region ctor
         private readonly IFileUploadService _fileUploadService;
+        private readonly IMainPlanService _mainPlanService;
         public MainPageViewModel(INavigationService navigationService, IContainerProvider provider)
             : base(navigationService)
         {
             _fileUploadService = provider.Resolve<IFileUploadService>();
+            _mainPlanService = provider.Resolve<IMainPlanService>();
+
             Title = "Main Page";
+            GetMainPlanDtosCommand = new DelegateCommand(async () => await GetMainPlanDtosAsync());
             ScannerCommand = new DelegateCommand(Scanner);
             UploadCommand = new DelegateCommand<string>(Upload);
             MultiImagesCommand = new DelegateCommand(MultiImages);
@@ -29,7 +37,7 @@ namespace Compass.Andro.ViewModels
         }
 
 
-
+        public ICommand GetMainPlanDtosCommand { get; }
         public DelegateCommand ScannerCommand { get; }
         public DelegateCommand<string> UploadCommand { get; }
         public DelegateCommand MultiImagesCommand { get; }
@@ -37,6 +45,8 @@ namespace Compass.Andro.ViewModels
         #endregion
 
         #region 属性
+        public ObservableCollection<MainPlanDto> MainPlanDtos { get; } = new ObservableCollection<MainPlanDto>();
+
         private ImageSource logoImage;
         public ImageSource LogoImage
         {
@@ -158,6 +168,25 @@ namespace Compass.Andro.ViewModels
             if (pickResult==null) return;
             UploadStatus = $"选择了文件：{pickResult.FileName}";
         }
+
+        private async Task GetMainPlanDtosAsync()
+        {
+            
+            try
+            {
+                var dtos = await _mainPlanService.GetMainPlanDtosAsync();
+                if (MainPlanDtos.Count!=0) MainPlanDtos.Clear();
+                foreach (var dto in dtos)
+                    MainPlanDtos.Add(dto);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                await Shell.Current.DisplayAlert("Error!", $"Unable to get mainplans:{ex.Message}", "OK");
+            }
+            
+        }
+
 
         //接收导航到页面时传递的参数
         public override void OnNavigatedTo(INavigationParameters parameters)

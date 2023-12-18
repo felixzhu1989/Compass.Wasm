@@ -1421,19 +1421,6 @@
           "lib/net6.0/Zack.Infrastructure.dll": {}
         }
       },
-      "Compass.Dtos/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "RestSharp": "110.2.0"
-        },
-        "compile": {
-          "bin/placeholder/Compass.Dtos.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Compass.Dtos.dll": {}
-        }
-      },
       "Compass.TodoService.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
@@ -1451,8 +1438,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Compass.Dtos": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.1",
+          "RestSharp": "110.2.0",
           "zack.DomainCommons": "1.1.3",
           "zack.commons": "1.1.11"
         },
@@ -4101,11 +4088,6 @@
         "zack.infrastructure.1.1.3.nupkg.sha512",
         "zack.infrastructure.nuspec"
       ]
-    },
-    "Compass.Dtos/1.0.0": {
-      "type": "project",
-      "path": "../../Compass.Dtos/Compass.Dtos.csproj",
-      "msbuildProject": "../../Compass.Dtos/Compass.Dtos.csproj"
     },
     "Compass.TodoService.Domain/1.0.0": {
       "type": "project",

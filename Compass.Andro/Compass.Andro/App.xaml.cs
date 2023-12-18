@@ -42,6 +42,9 @@ namespace Compass.Andro
 
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
             containerRegistry.Register<IFileUploadService,FileUploadService>();
+            containerRegistry.Register<IMainPlanService, MainPlanService>();
+
+
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();

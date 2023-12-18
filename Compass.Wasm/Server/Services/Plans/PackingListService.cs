@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using AutoMapper;
-using Compass.Dtos;
 using Compass.PlanService.Domain;
 using Compass.PlanService.Domain.Entities;
 using Compass.PlanService.Infrastructure;
+using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Params;
 using Compass.Wasm.Shared.Plans;
 

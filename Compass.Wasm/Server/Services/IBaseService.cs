@@ -1,5 +1,4 @@
-﻿using Compass.Dtos;
-using Compass.Wasm.Shared;
+﻿using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Services;
 

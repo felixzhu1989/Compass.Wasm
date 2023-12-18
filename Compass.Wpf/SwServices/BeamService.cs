@@ -306,6 +306,7 @@ public class BeamService : BaseSwService, IBeamService
         //过滤器盲板
         FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0107[BP-500]{500}-1", "LocalLPatternBlind", "Dis@DistanceBlind");
         FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0107[BP-500]{500}-5", "LocalLPatternBlind", "Dis@DistanceBlind");
+
         //过滤器
         UcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft,  "UcjFcCombi-1", "LocalLPatternFc", "Dis@DistanceFc");
         UcjFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft,  "UcjFcCombi-7", "LocalLPatternFc", "Dis@DistanceFc");
@@ -588,6 +589,10 @@ public class BeamService : BaseSwService, IBeamService
         FNCE0003(swAssyTop, suffix, "FNCE0074-1", data.Length, data.SidePanel);
 
 
+        //过滤器盲板
+        FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0037[BP-500]{500}-1", "LocalLPatternBlind", "Dis@DistanceBlind");
+        FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0037[BP-500]{500}-5", "LocalLPatternBlind", "Dis@DistanceBlind");
+
         //过滤器
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-1", "LocalLPatternFc", "Dis@DistanceFc");
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-7", "LocalLPatternFc", "Dis@DistanceFc");
@@ -725,6 +730,10 @@ public class BeamService : BaseSwService, IBeamService
 
         FNCE0003(swAssyTop, suffix, "FNCE0003-1", data.Length, data.SidePanel);
 
+
+        //过滤器盲板
+        FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0037[BP-500]{500}-1", "LocalLPatternBlind", "Dis@DistanceBlind");
+
         //过滤器
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-1", "LocalLPatternFc", "Dis@DistanceFc");
 
@@ -856,6 +865,9 @@ public class BeamService : BaseSwService, IBeamService
         FNCE0007(swAssyTop, suffix, "FNCE0008-1", data.Length, data.CeilingWaterInlet);
         FNCE0003(swAssyTop, suffix, "FNCE0003-1", data.Length, data.SidePanel);
 
+        //过滤器盲板
+        FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0037[BP-500]{500}-1", "LocalLPatternBlind", "Dis@DistanceBlind");
+
         //过滤器
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-1", "LocalLPatternFc", "Dis@DistanceFc");
 
@@ -934,6 +946,9 @@ public class BeamService : BaseSwService, IBeamService
         FNCE0003(swAssyTop, suffix, "FNCE0003-1", data.Length, data.SidePanel);
         FNCE0003(swAssyTop, suffix, "FNCE0074-1", data.Length, data.SidePanel);
 
+        //过滤器盲板
+        FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0037[BP-500]{500}-1", "LocalLPatternBlind", "Dis@DistanceBlind");
+        FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0037[BP-500]{500}-5", "LocalLPatternBlind", "Dis@DistanceBlind");
 
         //过滤器
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-1", "LocalLPatternFc", "Dis@DistanceFc");
@@ -1067,6 +1082,9 @@ public class BeamService : BaseSwService, IBeamService
         FNCE0007(swAssyTop, suffix, "FNCE0008-1", data.Length, CeilingWaterInlet_e.NA);
 
         FNCE0003(swAssyTop, suffix, "FNCE0003-1", data.Length, data.SidePanel);
+
+        //过滤器盲板
+        FilterBlind(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, data.FilterLeft, "FNCE0037[BP-500]{500}-1", "LocalLPatternBlind", "Dis@DistanceBlind");
 
         //过滤器
         KcwFilter(swModelTop, swAssyTop, suffix, data.FilterBlindNumber, filterNumber, data.FilterLeft, "2200600002-1", "LocalLPatternFc", "Dis@DistanceFc");
@@ -2327,7 +2345,7 @@ public class BeamService : BaseSwService, IBeamService
                 swCompLevel2.UnSuppress("UvRack");
                 swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
                 swModelLevel2.ChangeDim("UvRack@SketchUvRack", 1600d);
-                swModelLevel2.ChangeDim("UvCable@SketchUvRack", 1200);
+                swModelLevel2.ChangeDim("UvCable@SketchUvRack", 1200d);
                 break;
             case UvLightType_e.UVR4S:
             case UvLightType_e.UVR6S:
@@ -2336,7 +2354,7 @@ public class BeamService : BaseSwService, IBeamService
                 swCompLevel2.UnSuppress("UvRack");
                 swModelLevel2.ChangeDim("ToRight@SketchUvRack", middleToRight);
                 swModelLevel2.ChangeDim("UvRack@SketchUvRack", 893d);
-                swModelLevel2.ChangeDim("UvCable@SketchUvRack", 600);
+                swModelLevel2.ChangeDim("UvCable@SketchUvRack", 600d);
                 break;
             case UvLightType_e.NA:
             default:

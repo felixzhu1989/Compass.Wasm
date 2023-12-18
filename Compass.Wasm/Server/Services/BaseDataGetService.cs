@@ -1,5 +1,4 @@
 ﻿using Compass.DataService.Domain;
-using Compass.Dtos;
 using Compass.Wasm.Shared;
 
 namespace Compass.Wasm.Server.Services;

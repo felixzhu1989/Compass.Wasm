@@ -1,38 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             BindingContext="{Binding MainViewModel,Source={StaticResource ServiceLocator}}"
+             xmlns:model="clr-namespace:Compass.Wasm.Shared.Plans;assembly=Compass.Wasm.Shared"
+             xmlns:viewmodel="clr-namespace:Compass.Maui.ViewModels"
+             x:DataType="viewmodel:MainViewModel"
+             Title="{Binding Title}"
              x:Class="Compass.Maui.Views.MainView">
-    <Grid RowDefinitions="auto,*,auto">
-        <Button Text="Show"
-                Grid.Row="0"
-                Command="{Binding ShowCommand}"
-                HorizontalOptions="Fill" />
-        <CollectionView ItemsSource="{Binding MainPlanDtos}"
-                        Grid.Row="1"
-                    Margin="20"
-                    SelectionMode="Single">
-        <!-- Designate how the collection of items are laid out -->
-        <CollectionView.ItemsLayout>
-            <LinearItemsLayout Orientation="Vertical"
-                               ItemSpacing="10" />
-        </CollectionView.ItemsLayout>
-        <!-- Define the appearance of each item in the list -->
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <StackLayout>
-                    <Label Text="{Binding Number}"
-                           FontSize="22" />
-                    <Label Text="{Binding Name}"
-                           FontSize="14"
-                           TextColor="Silver" />
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
+    <Grid ColumnDefinitions="*,*"
+          ColumnSpacing="5"
+          RowDefinitions="*,Auto">
+        <CollectionView Grid.ColumnSpan="2"
+                        ItemsSource="{Binding MainPlanDtos}"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:MainPlanDto">
+                    <Frame Style="{StaticResource CardView}"
+                           HeightRequest="125">
+                        <VerticalStackLayout Padding="10"
+                                             VerticalOptions="Center">
+                            <Label Text="{Binding Number}"
+                                   Style="{StaticResource LargeLabel}" />
+                            <Label Text="{Binding Name}"
+                                   Style="{StaticResource SmallLabel}" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="OpenCompassWeb"
-                Grid.Row="2"
-                Command="{Binding LinkCommand}"
-                HorizontalOptions="Fill" />
+        <Button Text="Get MainPlan"
+                Command="{Binding GetMainPlanDtosCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Grid.Row="1"
+                Margin="8"
+                Style="{StaticResource ButtonOutline}" />
+        <Button Text="Rest MainPlan"
+                Command="{Binding GetMainPlanDtosRestCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8"
+                Style="{StaticResource ButtonOutline}" />
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"
+                           Grid.RowSpan="2"
+                           Grid.ColumnSpan="2" />
     </Grid>
 </ContentPage>

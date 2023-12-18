@@ -1,5 +1,4 @@
-﻿using Compass.Maui.ApiServices;
-using Compass.Maui.ViewModels;
+﻿using Compass.Maui.ViewModels;
 
 namespace Compass.Maui;
 /// <summary>
@@ -15,14 +14,14 @@ public class ServiceLocator
 
 
         //ViewModel
-        sc.AddSingleton<MainViewModel>();
+        //sc.AddSingleton<MainViewModel>();
         //sc.AddScoped<IMainPlanService, MainPlanService>();
 
         _provider = sc.BuildServiceProvider();
 
     }
     //依赖注入，IOC
-    public MainViewModel MainViewModel => _provider.GetService<MainViewModel>();
+    //public MainViewModel MainViewModel => _provider.GetService<MainViewModel>();
 
 
 

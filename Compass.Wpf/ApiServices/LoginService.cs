@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text.Json;
-using Compass.Dtos;
+using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Identities;
 
 namespace Compass.Wpf.ApiService;

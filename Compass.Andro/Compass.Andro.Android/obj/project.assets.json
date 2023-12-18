@@ -2155,7 +2155,6 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "Compass.Dtos": "1.0.0",
           "Newtonsoft.Json": "13.0.3",
           "Prism.DryIoc.Forms": "8.1.97",
           "RestSharp": "110.2.0",
@@ -2168,19 +2167,6 @@
         },
         "runtime": {
           "bin/placeholder/Compass.Andro.dll": {}
-        }
-      },
-      "Compass.Dtos/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "RestSharp": "110.2.0"
-        },
-        "compile": {
-          "bin/placeholder/Compass.Dtos.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Compass.Dtos.dll": {}
         }
       }
     }
@@ -4394,11 +4380,6 @@
       "type": "project",
       "path": "../Compass.Andro/Compass.Andro.csproj",
       "msbuildProject": "../Compass.Andro/Compass.Andro.csproj"
-    },
-    "Compass.Dtos/1.0.0": {
-      "type": "project",
-      "path": "../../Compass.Dtos/Compass.Dtos.csproj",
-      "msbuildProject": "../../Compass.Dtos/Compass.Dtos.csproj"
     }
   },
   "projectFileDependencyGroups": {

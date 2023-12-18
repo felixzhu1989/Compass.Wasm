@@ -173,7 +173,6 @@ public class MonoPackageManager_Resources {
 		"Microsoft.Maui.Controls.resources.dll",
 		"Microsoft.Maui.Controls.resources.dll",
 		"Microsoft.Maui.Controls.resources.dll",
-		"Compass.Dtos.dll",
 		"Compass.Wasm.Shared.dll",
 		"_Microsoft.Android.Resource.Designer.dll",
 	};

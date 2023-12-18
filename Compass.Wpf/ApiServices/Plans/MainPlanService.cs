@@ -1,4 +1,4 @@
-﻿using Compass.Dtos;
+﻿using Compass.Wasm.Shared;
 
 namespace Compass.Wpf.ApiServices.Plans;
 

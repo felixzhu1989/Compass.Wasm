@@ -3,7 +3,7 @@ using RestSharp;
 using System.Net;
 using System.Threading.Tasks;
 using System;
-using Compass.Dtos;
+using Compass.Andro.Dtos;
 
 namespace Compass.Andro.ApiService
 {

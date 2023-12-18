@@ -1,6 +1,5 @@
 ﻿using Compass.Wasm.Shared;
 using System.Net.Http.Json;
-using Compass.Dtos;
 
 namespace Compass.Wasm.Client.Services;
 

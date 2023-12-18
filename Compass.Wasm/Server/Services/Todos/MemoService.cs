@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Compass.Dtos;
 using Compass.TodoService.Domain;
 using Compass.TodoService.Domain.Entities;
 using Compass.TodoService.Infrastructure;

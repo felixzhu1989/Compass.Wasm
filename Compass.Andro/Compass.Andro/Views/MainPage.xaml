@@ -19,6 +19,19 @@
             </Label>
             <!--<Image Source="halton_logo.png"></Image>-->
             <Image Source="{Binding LogoImage}"></Image>
+            <Button Text="获取数据"
+                    Command="{Binding GetMainPlanDtosCommand}"
+                    HorizontalOptions="FillAndExpand"></Button>
+            <CollectionView ItemsSource="{Binding MainPlanDtos}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding Number}"/>
+                            <Label Text="{Binding Name}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <Button Text="扫码"
                     Command="{Binding ScannerCommand}"
                     HorizontalOptions="FillAndExpand"></Button>

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Compass.Dtos;
+using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Params;
 
 namespace Compass.Wpf.ApiServices.Todos;

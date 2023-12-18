@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Compass.DataService.Infrastructure;
-using Compass.Dtos;
 using Compass.Wasm.Server.Services.Data;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Data;

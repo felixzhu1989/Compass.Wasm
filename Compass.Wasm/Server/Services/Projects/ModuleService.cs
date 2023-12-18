@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Compass.DataService.Domain;
-using Compass.Dtos;
 using Compass.Wasm.Shared;
 using Compass.Wasm.Shared.Projects;
 

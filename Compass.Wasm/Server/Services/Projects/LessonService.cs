@@ -1,7 +1,6 @@
 ﻿using Compass.Wasm.Shared.Projects;
 using Compass.Wasm.Shared;
 using AutoMapper;
-using Compass.Dtos;
 
 namespace Compass.Wasm.Server.Services.Projects;
 public interface ILessonService : IBaseService<LessonDto>

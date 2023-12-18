@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Compass.Wasm.Shared;
 
 namespace Compass.Wpf.ApiService;
 
